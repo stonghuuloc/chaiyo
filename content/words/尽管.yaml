@@ -1,0 +1,14 @@
+# content/words/尽管.yaml
+id: 尽管
+hanzi: 尽管
+pinyin: jǐnguǎn
+hanviet: tận quản
+level: 5
+pos: [ conj ]
+senses:
+  - { vi: mặc dù }
+parts:
+  - { hanzi: 尽, pinyin: jǐn, hanviet: tận, vi: "hết, dù" }
+  - { hanzi: 管, pinyin: guǎn, hanviet: quản, vi: "quản, ống" }
+examples: [ s-h5-01-15 ]
+image: { file: words/h5-01/w17.png, prompt: "The takin sits in a rainy street smiling under a tiny umbrella while holding a big sun hat, as the red panda laughs kindly. Only the red panda and the takin." }

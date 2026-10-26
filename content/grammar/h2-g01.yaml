@@ -1,0 +1,10 @@
+# content/grammar/h2-g01.yaml
+id: h2-g01
+level: 2
+std: [ 44 ]
+title: "Nói giờ: 点 · 刻 · 半"
+pattern: 数字 + 点 + (一刻 / 半 / 数字分)
+explain: "Giờ đúng: số + 点, ví dụ 七点. 一刻 là 15 phút, 半 là 30 phút, đặt ngay sau 点: 七点一刻, 八点半. Hỏi giờ dùng 几点, đặt vào đúng chỗ của số: 你几点起床？"
+examples: [ s-h2-01-11, s-h2-01-12 ]
+pitfalls:
+  - { wrong: 七一刻点, right: 七点一刻 }

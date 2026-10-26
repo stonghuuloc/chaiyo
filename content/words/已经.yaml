@@ -1,0 +1,14 @@
+# content/words/已经.yaml
+id: 已经
+hanzi: 已经
+pinyin: yǐjīng
+hanviet: dĩ kinh
+level: 2
+pos: [ adv ]
+senses:
+  - { vi: "đã, rồi" }
+parts:
+  - { hanzi: 已, pinyin: yǐ, hanviet: dĩ, vi: "đã, rồi" }
+  - { hanzi: 经, pinyin: jīng, hanviet: kinh, vi: trải qua }
+examples: [ s-h2-01-05 ]
+image: { file: words/h2-01/w09.png, prompt: The red panda looks pleasantly surprised at a clock showing a late hour while the takin is already dressed and ready. Only the red panda and the takin. }

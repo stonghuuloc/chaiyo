@@ -1,0 +1,14 @@
+# content/words/熟悉.yaml
+id: 熟悉
+hanzi: 熟悉
+pinyin: shúxī
+hanviet: thục tất
+level: 5
+pos: [ adj ]
+senses:
+  - { vi: "quen thuộc, biết rõ" }
+parts:
+  - { hanzi: 熟, pinyin: shú, hanviet: thục, vi: "chín, quen" }
+  - { hanzi: 悉, pinyin: xī, hanviet: tất, vi: biết rõ }
+examples: [ s-h5-01-06 ]
+image: { file: words/h5-01/w15.png, prompt: The red panda greets a friendly village elder by name on a lane while the takin looks surprised that everyone knows each other. Only the red panda and the takin. }

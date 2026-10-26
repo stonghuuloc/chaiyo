@@ -1,0 +1,14 @@
+# content/words/分钟.yaml
+id: 分钟
+hanzi: 分钟
+pinyin: fēnzhōng
+hanviet: phân chung
+level: 2
+pos: [ n ]
+senses:
+  - { vi: phút }
+parts:
+  - { hanzi: 分, pinyin: fēn, hanviet: phân, vi: chia }
+  - { hanzi: 钟, pinyin: zhōng, hanviet: chung, vi: "đồng hồ, chuông" }
+examples: [ s-h2-01-06 ]
+image: { file: words/h2-01/w03.png, prompt: The takin trots along a short path toward a small school while a little hourglass floats beside him. Only the takin. }

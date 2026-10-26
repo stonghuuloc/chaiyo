@@ -1,0 +1,14 @@
+# content/words/题目.yaml
+id: 题目
+hanzi: 题目
+pinyin: tímù
+hanviet: đề mục
+level: 3
+pos: [ n ]
+senses:
+  - { vi: "đề bài, câu hỏi" }
+parts:
+  - { hanzi: 题, pinyin: tí, hanviet: đề, vi: đề bài }
+  - { hanzi: 目, pinyin: mù, hanviet: mục, vi: "mục, con mắt" }
+examples: [ s-h3-01-03 ]
+image: { file: words/h3-01/w04.png, prompt: "The red panda and the takin lean over one big sheet of exam questions on a desk, the takin scratching its head. Only the red panda and the takin." }

@@ -1,0 +1,14 @@
+# content/words/亲密.yaml
+id: 亲密
+hanzi: 亲密
+pinyin: qīnmì
+hanviet: thân mật
+level: 4
+pos: [ adj ]
+senses:
+  - { vi: "thân mật, gần gũi" }
+parts:
+  - { hanzi: 亲, pinyin: qīn, hanviet: thân, vi: "thân, ruột thịt" }
+  - { hanzi: 密, pinyin: mì, hanviet: mật, vi: "khít, sát" }
+examples: [ s-h4-01-01 ]
+image: { file: words/h4-01/w02.png, prompt: "The red panda and the takin sit shoulder to shoulder under one blanket, drinking tea from one pot." }

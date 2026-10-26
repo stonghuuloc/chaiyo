@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Luyện tập</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+  @font-face { font-family: "UKaiDict"; src: url("fonts/ukai-dict.woff2?v=1") format("woff2"); font-display: swap; }
+  :root { --font-hanzi: "UKaiDict", "Kaiti SC", "STKaiti", "KaiTi", serif; }
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 120px); }
+  header { padding: calc(env(safe-area-inset-top, 0px) + 54px) var(--s5) 0; }
+  h1 { font: 600 var(--t-hero)/1 var(--font-display); letter-spacing: -.01em; }
+
+  .today { margin-top: var(--s5); padding: var(--s5); border-radius: 22px; background: #fff; box-shadow: 0 1px 0 rgba(45,25,10,.04), 0 8px 24px rgba(45,25,10,.07); }
+  .today h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .today h2 span { color: var(--ink-3); font-weight: 500; }
+  .mix { margin-top: var(--s3); display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .mix span { height: 30px; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; border-radius: var(--r-pill); background: var(--paper); font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+  .mix .ic { font-size: 16px; color: var(--ink-3); }
+  .today p { margin-top: var(--s3); font-size: 14px; color: var(--ink-3); }
+  .cta { margin-top: var(--s4); width: 100%; height: 58px; display: flex; align-items: center; justify-content: center; gap: var(--s3); border-radius: var(--r-cta); background: var(--vermilion); color: #fff; font: 600 var(--t-cta) var(--font-display); box-shadow: 0 10px 24px rgba(168, 38, 20, .28), inset 0 1px 0 rgba(255,255,255,.18); transition: transform .12s, background .12s; }
+  .cta:active { transform: scale(.985); background: var(--vermilion-press); }
+  .cta .go { font-size: 18px; opacity: .85; }
+  .today.clear { background: transparent; box-shadow: none; border: 1px solid var(--ink-5); }
+
+  .grp { margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  .grp h2 { font: 600 19px/1.2 var(--font-display); }
+  .grp .sub { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .skills { margin-top: var(--s3); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+  .sk { position: relative; min-height: 104px; padding: var(--s4); border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); display: flex; flex-direction: column; justify-content: space-between; text-align: left; }
+  .sk:active { background: var(--paper-2); }
+  .sk .ic { font-size: 26px; color: var(--ink-1); }
+  .sk b { display: block; margin-top: var(--s3); font-size: 16px; font-weight: 600; }
+  .sk small { display: block; margin-top: 2px; font-size: 13px; color: var(--ink-3); }
+  .sk small.due { color: var(--vermilion-text); font-weight: 600; }
+  .sk.soon { border-style: dashed; background: transparent; }
+  .sk.soon .ic { color: var(--ink-4); }
+
+  .mine b { display: block; font-weight: 600; }
+  .mine { margin-top: var(--s2); display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s3) var(--s4); border-radius: 18px; border: 1px solid var(--ink-5); background: rgba(255,255,255,.55); }
+  .mine .hzs { display: block; margin-top: 2px; font-size: 20px; color: var(--ink-2); letter-spacing: .06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mine .go { color: var(--ink-4); font-size: 16px; }
+  .mine.mock { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .mine .mi { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); font-size: 24px; color: var(--ink-2); }
+  .mine small { display: block; margin-top: 2px; font-size: 13px; color: var(--ink-3); }
+  .lvs { margin: var(--s2) calc(-1 * var(--s5)) 0; padding: 0 var(--s5); display: flex; gap: var(--s2); overflow-x: auto; scrollbar-width: none; }
+  .lvs::-webkit-scrollbar { display: none; }
+  .lvs button { flex: none; height: 36px; padding: 0 var(--s3); display: inline-flex; align-items: center; gap: 4px; border-radius: var(--r-pill); border: 1px solid var(--ink-5); font-size: 14px; font-weight: 600; color: var(--ink-2); background: rgba(255,255,255,.4); }
+  .lvs button .ic { font-size: 13px; color: var(--ink-4); }
+  .lvs button[aria-selected="true"] { background: var(--ink-1); border-color: var(--ink-1); color: var(--paper); }
+  .lvs button[aria-selected="true"] .ic { color: rgba(247,243,234,.7); }
+</style>
+</head>
+<body>
+
+<header><h1>Luyện tập</h1></header>
+<main id="main"></main>
+
+<nav class="tabs" aria-label="Điều hướng chính">
+  <span class="pill" aria-hidden="true"></span>
+  <a class="tab" href="home-glass.html"><svg class="ic"><use href="icons.svg#i-regular-house"/></svg>Hôm nay</a>
+  <a class="tab" href="t2-roadmap.html"><svg class="ic"><use href="icons.svg#i-regular-path"/></svg>Lộ trình</a>
+  <a class="tab" href="t3-practice.html" aria-current="page"><svg class="ic"><use href="icons.svg#i-regular-brain"/></svg>Luyện tập</a>
+  <a class="tab" href="t4-me.html"><svg class="ic"><use href="icons.svg#i-regular-user-circle"/></svg>Tôi</a>
+</nav>
+
+<script type="module" src="tabs.js?v=4"></script>
+<script type="module">
+import { lexicon, session, dueIn, minutes, resetReviews } from './data/lexicon.js?v=5';
+import { LEVELS, SPEAKING_FROM } from './data/roadmap.js';
+const $ = (s) => document.querySelector(s);
+const ic = (id, cls = 'ic') => `<svg class="${cls}"><use href="icons.svg#i-${id}"/></svg>`;
+if (new URLSearchParams(location.search).has('reset')) resetReviews();   // ?reset demo
+const LEVEL = 1;                                                          // learner's current HSK level (demo)
+
+function render() {
+  const all = lexicon(), today = session(all);
+  const n = (s) => today.filter((x) => x.skill === s).length;
+  const MIX = [['the', 'fill-cards', 'thẻ từ'], ['nghe', 'fill-headphones', 'nghe'], ['viet', 'fill-pen', 'viết chữ']];
+  const card = today.length
+    ? `<section class="today"><h2>Luyện hôm nay <span>· khoảng ${minutes(today)} phút</span></h2>
+        <div class="mix">${MIX.filter(([s]) => n(s)).map(([s, i, l]) => `<span>${ic(i)}${n(s)} ${l}</span>`).join('')}</div>
+        <p>Toàn những từ bạn sắp quên, trộn đủ thẻ, nghe và viết. Làm xong là yên tâm cho hôm nay.</p>
+        <button class="cta" id="go">Bắt đầu${ic('regular-caret-right', 'ic go')}</button></section>`
+    : `<section class="today clear"><h2>Hôm nay xong bài rồi!</h2><p>Chưa có từ nào sắp quên. Còn hứng thì luyện thêm một kỹ năng bên dưới.</p></section>`;
+  const due = (s) => { const k = dueIn(s, all).length; return k ? `<small class="due">${k} từ cần ôn</small>` : '<small>Không có từ cần ôn</small>'; };
+  const SK = [
+    ['p1-session.html?skill=the', 'fill-cards', 'Thẻ từ', due('the')],
+    ['p1-session.html?skill=nghe', 'fill-headphones', 'Nghe', due('nghe')],
+    ['p1-session.html?skill=viet', 'fill-pen', 'Viết chữ', due('viet')],
+    ['p2-skill.html?k=noi', 'fill-microphone', 'Nói', '<small>Đọc to, app chấm thanh điệu · sắp có</small>', 'soon'],
+    ['p2-skill.html?k=doan', 'fill-notebook', 'Viết đoạn', `<small>${LEVEL >= 3 ? 'Viết câu, đoạn ngắn' : 'Mở từ HSK 3'}</small>`, 'soon'],
+  ];
+  $('#main').innerHTML = `${card}
+    <section class="grp"><h2>Luyện riêng từng kỹ năng</h2><p class="sub">Muốn tập trung một kỹ năng thì vào đây.</p>
+      <div class="skills">${SK.map(([href, i, l, sub, cls = '']) => `<a class="sk ${cls}" href="${href}">${ic(i)}<span><b>${l}</b>${sub}</span></a>`).join('')}</div></section>
+    <section class="grp"><h2>Thi thử</h2><p class="sub">Làm đề như thi thật, đỗ là lên cấp.</p>
+      <div class="lvs" role="tablist" aria-label="Cấp thi thử">${LEVELS.map((L) => `<button role="tab" data-lv="${L.level}">${L.level > LEVEL ? ic('fill-lock-simple') : ''}${L.title}</button>`).join('')}</div>
+      <div id="mocks"></div></section>
+    <section class="grp"><h2>Từ của tôi</h2>
+      <a class="mine" href="t3-words.html"><span><b>${all.length} từ đã học và đã lưu</b><span class="hz hzs">${all.slice(0, 8).map((w) => w.hz).join(' ')}</span></span>${ic('regular-caret-right', 'ic go')}</a></section>`;
+  $('#go')?.addEventListener('click', () => (location.href = 'p1-session.html'));
+  document.querySelectorAll('[data-lv]').forEach((b) => (b.onclick = () => { mockLv = +b.dataset.lv; mocks(); }));
+  mocks();
+}
+// mock tests per level, same unlock rule as the roadmap: current level opens after its last lesson,
+// higher levels after passing the level below, passed levels stay open for retakes
+let mockLv = LEVEL;
+const lastLesson = (lv) => LEVELS.filter((x) => x.level <= lv).reduce((k, x) => k + x.topics.reduce((m, t) => m + t.lessons.length, 0), 0);
+function mocks() {
+  document.querySelectorAll('[data-lv]').forEach((b) => b.setAttribute('aria-selected', +b.dataset.lv === mockLv));
+  const L = LEVELS.find((x) => x.level === mockLv);
+  const why = mockLv < LEVEL ? 'đã đỗ · làm lại bất cứ lúc nào' : mockLv === LEVEL ? `mở khi qua Bài ${lastLesson(mockLv)}` : `mở khi đỗ thi thử HSK ${mockLv - 1}`;
+  const open = mockLv < LEVEL;
+  const rows = [['viet', 'fill-diploma', `Thi thử ${L.title}`, 'nghe · đọc' + (mockLv >= 3 ? ' · viết' : '')]]
+    .concat(mockLv >= SPEAKING_FROM ? [['noi', 'fill-microphone', `Thi thử ${L.title} · Nói`, 'nhắc lại · tả tranh · trả lời']] : []);
+  $('#mocks').innerHTML = rows.map(([k, i, t, sub]) => `<a class="mine mock" href="p2-skill.html?k=thi&m=${k}&lv=${mockLv}"><span class="mi">${ic(i)}</span><span><b>${t}</b><small>${sub} · ${why}</small></span>${ic(open ? 'regular-caret-right' : 'fill-lock-simple', 'ic go')}</a>`).join('');
+}
+render();
+addEventListener('pageshow', (e) => e.persisted && render());
+</script>
+</body>
+</html>

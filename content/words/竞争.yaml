@@ -1,0 +1,14 @@
+# content/words/竞争.yaml
+id: 竞争
+hanzi: 竞争
+pinyin: jìngzhēng
+hanviet: cạnh tranh
+level: 5
+pos: [ v ]
+senses:
+  - { vi: cạnh tranh }
+parts:
+  - { hanzi: 竞, pinyin: jìng, hanviet: cạnh, vi: "đua, thi đua" }
+  - { hanzi: 争, pinyin: zhēng, hanviet: tranh, vi: tranh giành }
+examples: [ s-h5-01-04 ]
+image: { file: words/h5-01/w04.png, prompt: "The takin and the red panda race each other on a track toward a ribbon at the finish line, both panting and determined. Only the red panda and the takin." }

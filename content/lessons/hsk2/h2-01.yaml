@@ -1,0 +1,134 @@
+# content/lessons/hsk2/h2-01.yaml
+id: h2-01
+level: 2
+topic: Thói quen hằng ngày
+order: 1
+title: Mấy giờ bạn dậy?
+titleHanzi: 你几点起床
+goal: Hỏi và nói giờ giấc, kể thói quen buổi sáng của mình
+scene:
+  file: lessons/h2-01.png
+  cast: [ redpanda, takin ]
+  prompt: The red panda and the takin stand in a sunny morning garden beside a big round clock with hands, the takin stretching proudly after waking up while the red panda holds a small towel and smiles. Only the red panda and the takin.
+sentences:
+  - { id: s-h2-01-01, hanzi: 你一般几点起床？, pinyin: nǐ yībān jǐ diǎn qǐchuáng?, spoken: ní yìbān jǐ diǎn qǐchuáng?, vi: Bạn thường mấy giờ dậy?, speaker: redpanda }
+  - { id: s-h2-01-02, hanzi: 我一般七点一刻起床。, pinyin: wǒ yībān qī diǎn yī kè qǐchuáng., spoken: wǒ yìbān qī diǎn yí kè qǐchuáng., vi: Tớ thường dậy lúc bảy giờ mười lăm., speaker: takin }
+  - { id: s-h2-01-03, hanzi: 起床以后，你先做什么？, pinyin: "qǐchuáng yǐhòu, nǐ xiān zuò shénme?", spoken: "qǐchuáng yǐhòu, ní xiān zuò shénme?", vi: "Sau khi dậy, bạn làm gì trước?", speaker: redpanda }
+  - { id: s-h2-01-04, hanzi: 我先洗澡，然后吃早饭。, pinyin: "wǒ xiān xǐzǎo, ránhòu chī zǎofàn.", spoken: "wǒ xiān xízǎo, ránhòu chī zǎofàn.", vi: "Tớ tắm trước, rồi mới ăn sáng.", speaker: takin }
+  - { id: s-h2-01-05, hanzi: 你已经有好习惯了！, pinyin: nǐ yǐjīng yǒu hǎo xíguàn le!, spoken: ní yǐjīng yóu hǎo xíguàn le!, vi: Bạn đã có thói quen tốt rồi đó!, speaker: redpanda }
+  - { id: s-h2-01-06, hanzi: 我八点出门，二十分钟就到学校。, pinyin: "wǒ bā diǎn chūmén, èrshí fēnzhōng jiù dào xuéxiào.", vi: "Tám giờ tớ ra khỏi nhà, hai mươi phút là tới trường.", speaker: takin }
+  - { id: s-h2-01-07, hanzi: 你经常运动吗？, pinyin: nǐ jīngcháng yùndòng ma?, spoken: ní jīngcháng yùndòng ma?, vi: Bạn có thường xuyên tập thể dục không?, speaker: redpanda }
+  - { id: s-h2-01-08, hanzi: 经常！我早上运动半个小时。, pinyin: jīngcháng! wǒ zǎoshang yùndòng bàn gè xiǎoshí., spoken: jīngcháng! wó zǎoshang yùndòng bàn gè xiǎoshí., vi: Thường xuyên chứ! Sáng nào tớ cũng tập nửa tiếng., speaker: takin }
+  - { id: s-h2-01-09, hanzi: 运动以后，你累不累？, pinyin: "yùndòng yǐhòu, nǐ lèi bu lèi?", vi: "Tập xong, bạn có mệt không?", speaker: redpanda }
+  - { id: s-h2-01-10, hanzi: 不累，我觉得很舒服。, pinyin: "bú lèi, wǒ juéde hěn shūfu.", vi: "Không mệt, tớ thấy rất dễ chịu.", speaker: takin }
+  - { id: s-h2-01-11, hanzi: 现在七点一刻。, pinyin: xiànzài qī diǎn yī kè., spoken: xiànzài qī diǎn yí kè., vi: Bây giờ là bảy giờ mười lăm. }
+  - { id: s-h2-01-12, hanzi: 我八点半出门。, pinyin: wǒ bā diǎn bàn chūmén., vi: Tám rưỡi tớ ra khỏi nhà. }
+  - { id: s-h2-01-13, hanzi: 你先洗澡，然后睡觉。, pinyin: "nǐ xiān xǐzǎo, ránhòu shuìjiào.", spoken: "ní xiān xízǎo, ránhòu shuìjiào.", vi: "Bạn tắm trước, rồi đi ngủ." }
+sections:
+  warmup: {}
+  words:
+    ids: [ 起床, 刻, 分钟, 经常, 然后, 习惯, 洗澡, 一般, 已经, 出门, 运动, 以后 ]
+  grammar:
+    ids: [ h2-g01, h2-g02, h2-g03 ]
+    drills: []
+  dialogue:
+    parts:
+      - title: Buổi sáng của Linh Ngưu
+        lines: [ s-h2-01-01, s-h2-01-02, s-h2-01-03, s-h2-01-04, s-h2-01-05 ]
+      - title: Đi học và tập thể dục
+        lines: [ s-h2-01-06, s-h2-01-07, s-h2-01-08, s-h2-01-09, s-h2-01-10 ]
+    questions: []
+  listenSpeak:
+    items: []
+  writing:
+    chars: [ 床, 洗, 刻, 习 ]
+gate:
+  draw: 6
+  pool:
+    - id: q-h2-01-x01
+      type: choice
+      tests: { words: [ 起床 ] }
+      prompt: { kind: vi, text: Nghĩa của 起床? }
+      optionKind: vi
+      options: [ thức dậy, đi ngủ, ăn sáng, đi học ]
+      answer: 0
+    - id: q-h2-01-x02
+      type: choice
+      tests: { words: [ 习惯, 洗澡, 出门, 运动 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “tắm” }
+      optionKind: hanzi
+      options: [ 洗澡, 运动, 出门, 习惯 ]
+      answer: 0
+    - id: q-h2-01-x03
+      type: choice
+      tests: { words: [ 刻 ] }
+      prompt: { kind: vi, text: 七点一刻 là mấy giờ? }
+      optionKind: vi
+      options: [ 7:15, 7:30, 7:45, 1:07 ]
+      answer: 0
+    - id: q-h2-01-x04
+      type: choice
+      tests: { words: [ 分钟 ] }
+      prompt: { kind: vi, text: Nghĩa của 分钟? }
+      optionKind: vi
+      options: [ phút, giờ, ngày, tuần ]
+      answer: 0
+    - id: q-h2-01-x05
+      type: choice
+      tests: { words: [ 然后, 洗澡, 一般, 已经 ] }
+      prompt: { kind: vi, text: "Điền từ: 我先洗澡，___吃早饭。" }
+      optionKind: hanzi
+      options: [ 然后, 已经, 一般, 以前 ]
+      answer: 0
+    - id: q-h2-01-x06
+      type: choice
+      tests: { words: [ 经常, 一般, 已经, 以后 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “thường xuyên” }
+      optionKind: hanzi
+      options: [ 经常, 已经, 以后, 一般 ]
+      answer: 0
+    - id: q-h2-01-x07
+      type: choice
+      tests: { words: [ 已经, 以后 ] }
+      prompt: { kind: vi, text: Nghĩa của 已经 và 以后? }
+      optionKind: vi
+      options: [ "đã, rồi / sau khi", "sau khi / đã, rồi", thường / luôn, ra ngoài / tập ]
+      answer: 0
+    - id: q-h2-01-x08
+      type: choice
+      tests: { words: [ 一般 ] }
+      prompt: { kind: vi, text: Nghĩa của 一般? }
+      optionKind: vi
+      options: [ thường thì, đã, sau đó, ngay lập tức ]
+      answer: 0
+    - id: q-h2-01-x09
+      type: choice
+      tests: { words: [ 起床, 洗澡, 出门, 运动 ] }
+      prompt: { kind: vi, text: “Ra khỏi nhà” là từ nào? }
+      optionKind: hanzi
+      options: [ 出门, 起床, 洗澡, 运动 ]
+      answer: 0
+    - id: q-h2-01-x10
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h2-01-02 }
+      optionKind: vi
+      options: [ Tớ thường dậy lúc bảy giờ mười lăm., Tám rưỡi tớ ra khỏi nhà., Bây giờ là bảy giờ mười lăm. ]
+      answer: 0
+    - id: q-h2-01-x11
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h2-01-08 }
+      optionKind: vi
+      options: [ Thường xuyên chứ! Sáng nào tớ cũng tập nửa tiếng., "Tập xong, bạn có mệt không?", Bạn đã có thói quen tốt rồi đó! ]
+      answer: 0
+    - id: q-h2-01-x12
+      type: order
+      tests: { words: [ 起床, 一般 ] }
+      tiles: [ 起床, 你, 几点, 一般 ]
+      answer: s-h2-01-01
+    - id: q-h2-01-x13
+      type: order
+      tests: { words: [ 然后, 洗澡 ] }
+      tiles: [ 吃早饭, 我, 然后, 洗澡, 先 ]
+      answer: s-h2-01-04

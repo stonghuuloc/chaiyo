@@ -1,0 +1,14 @@
+# content/words/误会.yaml
+id: 误会
+hanzi: 误会
+pinyin: wùhuì
+hanviet: ngộ hội
+level: 4
+pos: [ n ]
+senses:
+  - { vi: hiểu lầm }
+parts:
+  - { hanzi: 误, pinyin: wù, hanviet: ngộ, vi: "nhầm, lỡ" }
+  - { hanzi: 会, pinyin: huì, hanviet: hội, vi: "hiểu, hội ngộ" }
+examples: [ s-h4-01-08 ]
+image: { file: words/h4-01/w09.png, prompt: "The takin and the red panda stand back to back, each wrongly pointing a paw at the other, with puzzled faces." }

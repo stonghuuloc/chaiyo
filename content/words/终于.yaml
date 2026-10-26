@@ -1,0 +1,14 @@
+# content/words/终于.yaml
+id: 终于
+hanzi: 终于
+pinyin: zhōngyú
+hanviet: chung ư
+level: 3
+pos: [ adv ]
+senses:
+  - { vi: cuối cùng (sau khi chờ lâu) }
+parts:
+  - { hanzi: 终, pinyin: zhōng, hanviet: chung, vi: cuối cùng }
+  - { hanzi: 于, pinyin: yú, hanviet: ư, vi: "ở, tại" }
+examples: [ s-h3-01-13 ]
+image: { file: words/h3-01/w12.png, prompt: "The red panda and the takin stand at the classroom door at dawn, looking relieved as the day they waited for has finally come. Only the red panda and the takin." }

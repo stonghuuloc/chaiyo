@@ -1,0 +1,15 @@
+# content/words/对不起.yaml
+id: 对不起
+hanzi: 对不起
+pinyin: duìbuqǐ
+hanviet: đối bất khởi
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: xin lỗi }
+parts:
+  - { hanzi: 对, pinyin: duì, hanviet: đối, vi: "đúng, đối với" }
+  - { hanzi: 不, pinyin: bu, hanviet: bất, vi: không }
+  - { hanzi: 起, pinyin: qǐ, hanviet: khởi, vi: "dậy, nổi" }
+examples: [ s-h1-01-15 ]
+image: { file: words/duibuqi.png }

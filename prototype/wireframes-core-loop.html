@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Wireframes — core loop (lo-fi)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ecebe8; color: #111; font: 14px/1.4 -apple-system, "Helvetica Neue", Arial, sans-serif; padding: 40px; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .lede { color: #555; margin-bottom: 28px; max-width: 900px; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: #555; margin: 36px 0 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+  .cell { width: 360px; }
+  .cap { font-weight: 700; margin-bottom: 8px; }
+  .cap span { font-weight: 400; color: #666; }
+  .notes { margin-top: 10px; color: #333; font-size: 12.5px; padding-left: 18px; }
+  .notes li { margin-bottom: 3px; }
+
+  /* phone */
+  .phone { width: 360px; height: 740px; background: #fff; border: 2px solid #111; border-radius: 28px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .phone.tall { height: auto; min-height: 740px; }
+  .bar { height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-bottom: 1px solid #ddd; flex: none; }
+  .bar .t { font-weight: 600; flex: 1; }
+  .ic { width: 24px; height: 24px; border: 1.5px solid #111; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; flex: none; }
+  .prog { display: flex; gap: 3px; flex: 1; }
+  .prog i { height: 6px; flex: 1; background: #ddd; border-radius: 3px; }
+  .prog i.on { background: #111; }
+  .body { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+  .foot { padding: 12px 16px 22px; border-top: 1px solid #ddd; display: flex; flex-direction: column; gap: 8px; flex: none; }
+  .btn { height: 48px; border-radius: 12px; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+  .btn.ghost { background: #fff; color: #111; border: 1.5px solid #111; }
+  .btn.dis { background: #ccc; color: #fff; }
+  .link { text-align: center; color: #444; text-decoration: underline; font-size: 13px; }
+  .ph { background: repeating-linear-gradient(45deg, #eee 0 8px, #e4e4e4 8px 16px); border: 1px dashed #aaa; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #777; font-size: 12px; text-align: center; padding: 8px; }
+  .hz { font-family: "Kaiti SC", "STKaiti", "KaiTi", serif; }
+  .muted { color: #666; }
+  .small { font-size: 12px; }
+  .box { border: 1.5px solid #111; border-radius: 12px; padding: 12px; }
+  .box.soft { border-color: #bbb; }
+  .box.sel { border-width: 2.5px; }
+  .box.dash { border-style: dashed; border-color: #999; color: #777; }
+  .chip { display: inline-flex; align-items: center; gap: 4px; border: 1.5px solid #111; border-radius: 999px; padding: 2px 10px; font-size: 12px; }
+  .chip.soft { border-color: #bbb; color: #555; }
+  .chip.on { background: #111; color: #fff; }
+  .sec { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; }
+  .sec .n { flex: 1; }
+  .sec .n b { display: block; }
+  .dot { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #111; flex: none; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .dot.done { background: #111; color: #fff; }
+  .dot.half { background: linear-gradient(90deg, #111 50%, #fff 50%); }
+  .dot.lock { border-style: dashed; color: #888; border-color: #999; }
+  .opt { border: 1.5px solid #111; border-radius: 12px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .tag { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: #e0412b; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; z-index: 5; }
+  .line { display: flex; gap: 10px; align-items: flex-start; }
+  .line.r { flex-direction: row-reverse; }
+  .av { width: 34px; height: 34px; border-radius: 50%; flex: none; }
+  .bub { border: 1.5px solid #111; border-radius: 12px; padding: 8px 10px; max-width: 230px; }
+  .bub.play { border-width: 2.5px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tiles { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tile { border: 1.5px solid #111; border-radius: 10px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .tile.slot { border-style: dashed; border-color: #999; }
+  .tile.used { border-color: #ccc; color: #ccc; }
+  .tzg { width: 240px; height: 240px; margin: 0 auto; border: 1.5px solid #111; position: relative; display: flex; align-items: center; justify-content: center; }
+  .tzg::before, .tzg::after { content: ""; position: absolute; background: none; border: 0 dashed #bbb; }
+  .tzg::before { left: 50%; top: 0; bottom: 0; border-left-width: 1px; }
+  .tzg::after { top: 50%; left: 0; right: 0; border-top-width: 1px; }
+  .kv { display: grid; grid-template-columns: 90px 1fr; gap: 6px 10px; font-size: 13px; }
+  .kv dt { color: #666; }
+  hr.s { border: 0; border-top: 1px solid #eee; }
+  .scrim { position: absolute; inset: 0; background: rgba(0,0,0,.18); z-index: 3; }
+  .pop { position: absolute; left: 16px; right: 16px; background: #fff; border: 2px solid #111; border-radius: 14px; padding: 14px; z-index: 4; box-shadow: 0 6px 0 rgba(0,0,0,.12); }
+  .pop::before { content: ""; position: absolute; top: -9px; left: var(--ax, 120px); width: 14px; height: 14px; background: #fff; border-left: 2px solid #111; border-top: 2px solid #111; transform: rotate(45deg); }
+  .hit { outline: 2.5px solid #e0412b; outline-offset: 2px; border-radius: 4px; position: relative; z-index: 4; background: #fff; }
+</style>
+</head>
+<body>
+
+<h1>Wireframes — core loop (lo-fi)</h1>
+<p class="lede">Structure only: layout, hierarchy, one primary action per screen. No colour, type or art decisions; those come from <code>DESIGN.md</code> in hi-fi. Content is real HSK1 Bài 1 data from <code>docs/content-schema.md</code>. Black button = the screen's one primary action. Red numbers = notes under each phone.</p>
+
+<!-- ============ PLACEMENT ============ -->
+<h2>Placement · O2–O3</h2>
+<div class="row">
+  <div class="cell">
+    <div class="cap">O2 Kiểm tra trình độ <span>· Test runner · HSK2 block</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Kiểm tra trình độ</span><span class="small muted">HSK2 · 4/10</span></div>
+      <div class="body">
+        <div style="display:flex;gap:6px"><span class="chip on">HSK1 ✓</span><span class="chip">HSK2</span><span class="chip soft">HSK3</span><span class="chip soft">HSK4</span><span class="chip soft">HSK5</span></div>
+        <div class="small muted">Chọn nghĩa đúng</div>
+        <div class="box" style="text-align:center;padding:28px 12px">
+          <div class="hz" style="font-size:44px">已经</div>
+          <div class="small muted">không hiện pinyin</div>
+        </div>
+        <div class="grid">
+          <div class="opt" style="font-size:15px">đã, rồi</div>
+          <div class="opt" style="font-size:15px">vẫn còn</div>
+          <div class="opt" style="font-size:15px">sắp sửa</div>
+          <div class="opt" style="font-size:15px">thường xuyên</div>
+        </div>
+        <div class="box soft" style="text-align:center">Không biết</div>
+      </div>
+      <div class="foot"><div class="btn dis">Câu tiếp</div></div>
+      <span class="tag" style="top:62px;left:250px">1</span>
+      <span class="tag" style="top:452px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>One block of 10 questions per level, ~2 min. Level chips show where you are; no per-question feedback.</li>
+      <li>"Không biết" counts as wrong but stops blind guessing (4 options → 25% free points would inflate 80%).</li>
+      <li>Mix: 6 reading (hanzi→nghĩa, no pinyin) + 4 listening (audio→chữ). No speaking or writing: no mic prompt on first run.</li>
+    </ol>
+  </div>
+
+  <div class="cell">
+    <div class="cap">O2b Qua cấp <span>· between blocks</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Kiểm tra trình độ</span></div>
+      <div class="body" style="justify-content:center;text-align:center">
+        <div class="ph" style="height:150px">scene: Gấu Trúc leo lên bậc</div>
+        <div style="font-size:22px;font-weight:700">Qua HSK2</div>
+        <div>9/10 câu đúng</div>
+        <div class="small muted">Đã đủ để mở ~105 bài HSK1–2.<br>Thử tiếp HSK3? Khoảng 2 phút.</div>
+      </div>
+      <div class="foot"><div class="btn">Thử HSK3</div><div class="link">Dừng ở đây, bắt đầu học</div></div>
+      <span class="tag" style="top:560px;left:8px">1</span>
+    </div>
+    <ol class="notes">
+      <li>Learner may stop after any passed block; result = levels passed so far. Fail a block → straight to O3.</li>
+    </ol>
+  </div>
+
+  <div class="cell">
+    <div class="cap">O3 Kết quả xếp lớp <span>· Result · placed at HSK3</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Kết quả</span></div>
+      <div class="body">
+        <div class="ph" style="height:150px">scene: Nai Con mở cửa lớp</div>
+        <div style="text-align:center">
+          <div class="small muted">Bạn bắt đầu ở</div>
+          <div style="font-size:40px;font-weight:800">HSK3 · Bài 1</div>
+        </div>
+        <div class="kv box soft">
+          <dt>Đã mở</dt><dd>HSK1–2 · ~105 bài</dd>
+          <dt>Từ của tôi</dt><dd>+1.272 từ, chưa ôn</dd>
+          <dt>Ôn dần</dt><dd>~20 từ mỗi ngày, xen với bài mới</dd>
+        </div>
+        <div class="small muted">HSK3: 6/10 câu đúng. Làm lại bất cứ lúc nào ở Tôi → Cài đặt.</div>
+      </div>
+      <div class="foot"><div class="btn">Bắt đầu HSK3 Bài 1</div><div class="link">Xem lộ trình</div></div>
+      <span class="tag" style="top:330px;left:8px">1</span>
+    </div>
+    <ol class="notes">
+      <li>Words from unlocked levels enter the Lexicon as new cards trickled in (~20/day), not all due today. Otherwise placing at HSK3 dumps 1,272 reviews on day 1.</li>
+      <li>Failed HSK1 → "Bắt đầu Bài 1", same layout, no "Đã mở" row.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ LESSON ============ -->
+<h2>Lesson · L1–L9</h2>
+<div class="row">
+
+  <!-- L1 -->
+  <div class="cell">
+    <div class="cap">L1 Bài học <span>· hub · Hub template</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Bài 1 · Xin chào <span class="hz">你好</span></span></div>
+      <div class="body">
+        <div class="ph" style="height:150px">scene: Gấu Trúc chào Nai Con<br>(3:2, full width)</div>
+        <div class="small muted">HSK1 · Chủ đề 1 · 2/6 phần xong · ~70 phút</div>
+        <div>
+          <div class="sec"><span class="dot done">✓</span><span class="n"><b>Khởi động</b><span class="small muted">Bài 1 — bỏ qua</span></span></div>
+          <div class="sec"><span class="dot done">✓</span><span class="n"><b>Từ mới</b><span class="small muted">10 từ · đã vào Từ của tôi</span></span></div>
+          <div class="sec"><span class="dot half"></span><span class="n"><b>Ngữ pháp</b><span class="small muted">1 điểm · 2/5 bước</span></span><span class="small">›</span></div>
+          <div class="sec"><span class="dot"></span><span class="n"><b>Hội thoại</b><span class="small muted">2 đoạn · 7 câu</span></span><span class="small">›</span></div>
+          <div class="sec"><span class="dot"></span><span class="n"><b>Nghe &amp; nói</b><span class="small muted">6 bài · cần micro</span></span><span class="small">›</span></div>
+          <div class="sec"><span class="dot"></span><span class="n"><b>Luyện viết</b><span class="small muted">你 · 好 · 们</span></span><span class="small">›</span></div>
+          <div class="sec" style="border:0"><span class="dot lock">–</span><span class="n"><b class="muted">Kiểm tra</b><span class="small muted">Xong 6 phần để mở · cần ≥80%</span></span></div>
+        </div>
+      </div>
+      <div class="foot"><div class="btn">Tiếp tục: Ngữ pháp</div></div>
+      <span class="tag" style="top:248px;left:8px">1</span>
+      <span class="tag" style="top:600px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Rows are open in any order after Khởi động. Each row shows its own progress.</li>
+      <li>Gate row is locked until every section is done. Passed lesson → row shows best score and "Làm lại".</li>
+      <li>CTA always resumes the first unfinished section. Offline download sits in the ✕ bar overflow (not shown).</li>
+    </ol>
+  </div>
+
+  <!-- L2 -->
+  <div class="cell">
+    <div class="cap">L2 Khởi động <span>· Step flow · shown for Bài 2</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div><span class="small muted">3/6</span></div>
+      <div class="body">
+        <div class="small muted">Nghe rồi chọn chữ đúng</div>
+        <div class="box" style="height:150px;display:flex;align-items:center;justify-content:center;gap:12px">
+          <span class="ic" style="width:56px;height:56px;border-radius:50%;font-size:20px">▶</span>
+          <span class="chip">0.7×</span>
+        </div>
+        <div class="grid">
+          <div class="opt hz">再见</div>
+          <div class="opt hz">谢谢</div>
+          <div class="opt hz">没关系</div>
+          <div class="opt hz">对不起</div>
+        </div>
+      </div>
+      <div class="foot"><div class="btn dis">Kiểm tra</div></div>
+      <span class="tag" style="top:96px;left:8px">1</span>
+    </div>
+    <ol class="notes">
+      <li>Same card engine as R1 Review: due words first, then the previous lesson's words.</li>
+      <li>Step flow template: ✕ (saves, back to hub) · segmented progress · content · one bottom CTA. CTA disabled until an answer is picked.</li>
+    </ol>
+  </div>
+
+  <!-- L3 -->
+  <div class="cell">
+    <div class="cap">L3 Từ mới <span>· Step flow · word 5/10</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div><span class="small muted">5/10</span></div>
+      <div class="body">
+        <div class="ph" style="height:140px">picture: Gấu Trúc vẫy chào Nai Con</div>
+        <div style="text-align:center">
+          <div class="hz" style="font-size:64px;line-height:1.1">你好</div>
+          <div style="font-size:18px">nǐ hǎo <span class="small muted">· đọc: <b>ní</b> hǎo</span></div>
+          <div class="muted">nhĩ hảo</div>
+          <div style="font-size:17px;font-weight:600;margin-top:4px">xin chào</div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <span class="chip">▶ nghe</span><span class="chip">0.7×</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div class="box soft" style="flex:1"><span class="hz" style="font-size:22px">你</span> <span class="small">nǐ · nhĩ · bạn</span></div>
+          <div class="box soft" style="flex:1"><span class="hz" style="font-size:22px">好</span> <span class="small">hǎo · hảo · tốt</span></div>
+        </div>
+        <div class="box soft small"><span class="hz" style="font-size:16px">你好！</span> Chào bạn! <span class="muted">▶</span></div>
+      </div>
+      <div class="foot"><div class="btn">Tiếp</div></div>
+      <span class="tag" style="top:262px;left:8px">1</span>
+      <span class="tag" style="top:478px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Citation pinyin first, spoken form (sandhi) beside it. Hán Việt always on.</li>
+      <li>Char chips open a char sheet (radical, strokes, 4-anchor mnemonic). Word card visuals are still parked — this fixes order only.</li>
+      <li>Every 3 words → one mini-check step (same engine as L2).</li>
+    </ol>
+  </div>
+
+  <!-- L4 -->
+  <div class="cell">
+    <div class="cap">L4 Ngữ pháp <span>· Step flow · explain step</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div><span class="small muted">2/5</span></div>
+      <div class="body">
+        <div class="small muted">Điểm ngữ pháp 1</div>
+        <div style="font-size:20px;font-weight:700">Chào hỏi: A + 好</div>
+        <div class="box" style="text-align:center;font-size:22px"><span class="hz">你 / 您 / 你们</span> + <span class="hz">好</span></div>
+        <div>Thêm <span class="hz">好</span> (hảo, "tốt") sau người được chào. <span class="hz">您</span> (nâm) là cách lịch sự với người lớn tuổi, thầy cô.</div>
+        <div class="box soft">
+          <div><span class="hz" style="font-size:18px">您好！</span> <span class="muted">▶</span></div>
+          <div class="small muted">nín hǎo · Chào ông/bà!</div>
+          <hr class="s" style="margin:8px 0">
+          <div><span class="hz" style="font-size:18px">你们好！</span> <span class="muted">▶</span></div>
+          <div class="small muted">nǐmen hǎo · Chào các bạn!</div>
+        </div>
+        <div class="box soft small"><b>Sai:</b> <span class="hz">好你</span> &nbsp;→&nbsp; <b>Đúng:</b> <span class="hz">你好</span></div>
+        <div class="link" style="text-align:left">Xem thêm</div>
+      </div>
+      <div class="foot"><div class="btn">Làm bài</div></div>
+      <span class="tag" style="top:150px;left:8px">1</span>
+      <span class="tag" style="top:560px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Pattern box is the anchor; explanation ≤3 lines, Vietnamese, Hán Việt inline.</li>
+      <li>Long explanations collapse behind "Xem thêm". Drill steps reuse the choice/order/fill layouts.</li>
+    </ol>
+  </div>
+
+  <!-- L5 -->
+  <div class="cell">
+    <div class="cap">L5 Hội thoại <span>· Step flow · part 1/2</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i></i><i></i></div><span class="small muted">Đoạn 1/2</span></div>
+      <div class="body">
+        <div style="display:flex;gap:8px"><span class="chip on">Pinyin</span><span class="chip on">Nghĩa</span><span class="chip soft" style="margin-left:auto">▶ 0.7×</span></div>
+        <div class="line"><div class="ph av">C</div><div class="bub"><div class="hz" style="font-size:20px">你好！</div><div class="small muted">nǐ hǎo · Chào bạn!</div></div></div>
+        <div class="line r"><div class="ph av">U</div><div class="bub"><div class="hz" style="font-size:20px">你好！</div><div class="small muted">nǐ hǎo · Chào bạn!</div></div></div>
+        <div class="line r"><div class="ph av">U</div><div class="bub play"><div class="hz" style="font-size:20px">对不起！</div><div class="small muted">duìbuqǐ · Xin lỗi!</div></div></div>
+        <div class="line"><div class="ph av">C</div><div class="bub" style="opacity:.45"><div class="hz" style="font-size:20px">没关系。</div><div class="small muted">méi guānxi · Không sao.</div></div></div>
+      </div>
+      <div class="foot">
+        <div style="display:flex;gap:8px"><div class="btn ghost" style="flex:1">↺ Phát lại</div><div class="btn" style="flex:2">⏸ Đang phát 3/4</div></div>
+      </div>
+      <span class="tag" style="top:98px;left:170px">1</span>
+      <span class="tag" style="top:300px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Pinyin / Nghĩa toggles persist per Learner (default level: open decision #1).</li>
+      <li>Lines reveal as they play; thick border = playing. Tap a line → replay it; tap a hanzi → X1 lookup.</li>
+      <li>After the last line the CTA becomes "Trả lời câu hỏi" (choice steps).</li>
+    </ol>
+  </div>
+
+  <!-- L6 -->
+  <div class="cell">
+    <div class="cap">L6 Nghe &amp; nói <span>· read-aloud, scored</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><span class="small muted">5/6</span></div>
+      <div class="body">
+        <div class="small muted">Đọc to câu này</div>
+        <div class="box" style="text-align:center;padding:20px 12px">
+          <div class="hz" style="font-size:40px">不客气。</div>
+          <div style="font-size:18px">bú kèqi</div>
+          <div class="muted">Không có gì.</div>
+          <div style="margin-top:8px"><span class="chip">▶ nghe mẫu</span></div>
+        </div>
+        <div class="small muted">Kết quả lần 1</div>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <div class="box" style="text-align:center;width:80px"><div class="hz" style="font-size:22px">不</div><div class="small">bú ✓</div></div>
+          <div class="box" style="text-align:center;width:80px"><div class="hz" style="font-size:22px">客</div><div class="small">kè ✓</div></div>
+          <div class="box sel" style="text-align:center;width:80px;border-style:dashed"><div class="hz" style="font-size:22px">气</div><div class="small">qi · thanh nhẹ?</div></div>
+        </div>
+        <div class="small muted" style="text-align:center">Đúng 2/3 âm · đủ để qua</div>
+      </div>
+      <div class="foot">
+        <div class="btn" style="height:64px;border-radius:32px">● Giữ để nói lại</div>
+        <div class="link">Tiếp</div>
+      </div>
+      <span class="tag" style="top:330px;left:8px">1</span>
+      <span class="tag" style="top:640px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Per-syllable result: tone + initial/final. Weak syllable gets a dashed box and a hint.</li>
+      <li>Hold-to-record is primary until passed, then "Tiếp" takes over. Mic denied → step skipped, section still completes.</li>
+      <li>Recording is discarded after scoring (CONTEXT: Speaking Answer).</li>
+    </ol>
+  </div>
+
+  <!-- L7 -->
+  <div class="cell">
+    <div class="cap">L7 Luyện viết <span>· Hanzi Writer · char 1/3</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i></i><i></i></div><span class="small muted">1/3</span></div>
+      <div class="body">
+        <div style="display:flex;align-items:baseline;gap:10px"><span class="hz" style="font-size:28px">你</span><span>nǐ · nhĩ · bạn</span><span class="small muted" style="margin-left:auto">nét 3/7</span></div>
+        <div class="tzg"><span class="hz" style="font-size:180px;color:#ddd">你</span></div>
+        <div style="display:flex;gap:8px;justify-content:center"><span class="chip">Xem mẫu</span><span class="chip">Gợi ý nét</span><span class="chip soft">Viết lại</span></div>
+        <div class="small muted" style="text-align:center">Lần 1: viết theo nét mờ · Lần 2: không có nét mờ</div>
+      </div>
+      <div class="foot"><div class="btn dis">Tiếp (khi viết xong)</div><div class="link">Bỏ qua chữ này</div></div>
+      <span class="tag" style="top:120px;left:8px">1</span>
+    </div>
+    <ol class="notes">
+      <li>田字格 grid, ~240px. Two passes per char: traced, then from memory.</li>
+      <li>CTA enables on completion; skipping a char is allowed (screens.md L7).</li>
+    </ol>
+  </div>
+
+  <!-- L8 -->
+  <div class="cell">
+    <div class="cap">L8 Kiểm tra <span>· Test runner · order question</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Kiểm tra Bài 1</span><span class="small muted">4/10</span></div>
+      <div class="body">
+        <div class="small muted">Xếp thành câu: "Chào các bạn!"</div>
+        <div class="tiles" style="justify-content:center;padding:24px 0;border-bottom:1.5px solid #111">
+          <div class="tile hz">你</div><div class="tile hz">们</div><div class="tile slot"></div>
+        </div>
+        <div class="tiles" style="justify-content:center;padding-top:12px">
+          <div class="tile hz used">们</div><div class="tile hz used">你</div><div class="tile hz">好</div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="small muted" style="text-align:center">Không hiện đáp án đến khi nộp bài</div>
+      </div>
+      <div class="foot"><div class="btn dis">Câu tiếp</div></div>
+      <span class="tag" style="top:96px;left:8px">1</span>
+      <span class="tag" style="top:600px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Test runner: counter instead of progress segments; no back step; ✕ asks "Thoát? Không lưu điểm".</li>
+      <li>No feedback per question; last question's CTA is "Nộp bài".</li>
+    </ol>
+  </div>
+
+  <!-- L9 -->
+  <div class="cell">
+    <div class="cap">L9 Kết quả <span>· Result · pass state</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Kết quả</span></div>
+      <div class="body">
+        <div class="ph" style="height:150px">scene: Nai Con nhảy mừng</div>
+        <div style="text-align:center">
+          <div style="font-size:44px;font-weight:800">90%</div>
+          <div>9/10 câu đúng · cần 80%</div>
+          <div class="small muted">Đã mở Bài 2 · Streak +1 hôm nay</div>
+        </div>
+        <div class="small muted">Câu sai (1)</div>
+        <div class="box soft">
+          <div class="small muted">Gõ pinyin: <span class="hz">再见</span></div>
+          <div>Bạn: <s>zaijian</s> → <b>zàijiàn</b></div>
+        </div>
+      </div>
+      <div class="foot"><div class="btn">Học Bài 2</div><div class="link">Về bài học</div></div>
+      <span class="tag" style="top:250px;left:8px">1</span>
+      <span class="tag" style="top:390px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Fail state: same layout, score vs 80% line, CTA "Làm lại" (fresh draw), no shame copy.</li>
+      <li>Only wrong answers listed; Badge earned → toast over this screen.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ REVIEW ============ -->
+<h2>Review · R1–R2</h2>
+<div class="row">
+  <div class="cell">
+    <div class="cap">R1 Ôn tập <span>· Step flow · vi → type pinyin</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog" style="gap:0"><i class="on" style="flex:7;border-radius:3px 0 0 3px"></i><i style="flex:23;border-radius:0 3px 3px 0"></i></div><span class="small muted">7/30</span></div>
+      <div class="body">
+        <div class="small muted">Gõ pinyin của từ này</div>
+        <div class="box" style="text-align:center;padding:28px 12px">
+          <div style="font-size:24px;font-weight:700">tạm biệt</div>
+          <div class="small muted">Bài 1 · 2 âm tiết</div>
+        </div>
+        <div class="box" style="font-size:20px;display:flex;align-items:center">zài<span style="border-left:2px solid #111;height:22px;margin-left:2px"></span></div>
+        <div style="display:flex;gap:6px;justify-content:center"><span class="chip">ā</span><span class="chip">á</span><span class="chip">ǎ</span><span class="chip">à</span><span class="chip soft">hoặc gõ số: zai4</span></div>
+        <div style="flex:1"></div>
+        <div class="ph" style="height:150px">system keyboard</div>
+      </div>
+      <div class="foot"><div class="btn">Kiểm tra</div></div>
+      <span class="tag" style="top:62px;left:300px">1</span>
+      <span class="tag" style="top:330px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Card types rotate: hanzi→nghĩa · nghe→chữ · nghĩa→pinyin · chữ→Hán Việt. Cap 30, then "Ôn tiếp?".</li>
+      <li>Tone marks or digits both accepted. Wrong → answer + mini Word Page summary, then CTA "Tiếp".</li>
+      <li>Fully offline; Attempts sync later.</li>
+    </ol>
+  </div>
+
+  <div class="cell">
+    <div class="cap">R2 Xong phần ôn <span>· Result</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><span class="t">Xong phần ôn</span></div>
+      <div class="body">
+        <div class="ph" style="height:150px">scene: Gấu Đỏ nằm nghỉ</div>
+        <div style="text-align:center">
+          <div style="font-size:44px;font-weight:800">30</div>
+          <div>từ đã ôn · đúng 26 (87%)</div>
+          <div class="small muted">Hôm nay đã tính vào Streak</div>
+        </div>
+        <div class="kv box soft">
+          <dt>Lần ôn tới</dt><dd>ngày mai · 12 từ</dd>
+          <dt>Hay sai</dt><dd><span class="hz">没关系</span> · <span class="hz">不客气</span></dd>
+        </div>
+      </div>
+      <div class="foot"><div class="btn">Về Hôm nay</div><div class="link">Ôn thêm 20 từ</div></div>
+      <span class="tag" style="top:420px;left:8px">1</span>
+    </div>
+    <ol class="notes">
+      <li>"Hay sai" words link to W1. More due → secondary "Ôn thêm"; never a second black button.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ LOOKUP ============ -->
+<h2>Lookup · W1, X1</h2>
+<div class="row">
+  <div class="cell">
+    <div class="cap">W1 Word Page <span>· Detail · full scroll</span></div>
+    <div class="phone tall">
+      <div class="bar"><span class="ic">‹</span><span class="t">Từ của tôi</span><span class="ic">⋯</span></div>
+      <div class="body" style="overflow:visible">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div>
+            <div class="hz" style="font-size:56px;line-height:1.1">你好</div>
+            <div style="font-size:17px">nǐ hǎo <span class="small muted">· đọc: ní hǎo</span></div>
+            <div class="muted">nhĩ hảo · <b style="color:#111">xin chào</b></div>
+          </div>
+          <span class="ic" style="width:48px;height:48px;border-radius:50%;margin-left:auto;font-size:18px">▶</span>
+        </div>
+        <div class="ph" style="height:130px">picture: Gấu Trúc vẫy chào Nai Con</div>
+        <div class="small muted">Chữ</div>
+        <div class="box soft" style="display:flex;gap:10px;align-items:center"><span class="hz" style="font-size:30px">你</span><div class="small">nǐ · nhĩ · bạn<br><span class="muted">⿰亻尔 · bộ 亻 · 7 nét</span></div><span class="chip soft" style="margin-left:auto">nét ▶</span></div>
+        <div class="box soft" style="display:flex;gap:10px;align-items:center"><span class="hz" style="font-size:30px">好</span><div class="small">hǎo / hào · hảo · tốt<br><span class="muted">bộ 女 · 6 nét</span></div><span class="chip soft" style="margin-left:auto">nét ▶</span></div>
+        <div class="small muted">Ví dụ</div>
+        <div class="box soft small"><span class="hz" style="font-size:17px">你好！</span> Chào bạn! <span class="muted">▶</span></div>
+        <div class="small muted">Có trong bài</div>
+        <div style="display:flex;gap:6px"><span class="chip">Bài 1 · dạy</span><span class="chip soft">Bài 1 · hội thoại</span></div>
+        <div class="small muted">Ôn tập của tôi</div>
+        <div class="kv box soft"><dt>Trạng thái</dt><dd>đang nhớ · đúng 5/6</dd><dt>Lần tới</dt><dd>3 ngày nữa</dd></div>
+        <div class="link" style="text-align:left;margin-bottom:12px">Báo lỗi</div>
+      </div>
+      <span class="tag" style="top:62px;left:8px">1</span>
+      <span class="tag" style="top:340px;left:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Head = same order as L3 (hanzi · pinyin · HV · meaning). Play is the one primary action.</li>
+      <li>Char rows open the char sheet; polyphones list every reading (好 hǎo / hào).</li>
+      <li>W2 (untaught) = head + "Thêm vào từ của tôi" only.</li>
+    </ol>
+  </div>
+
+  <div class="cell">
+    <div class="cap">X1 Tra nhanh <span>· Sheet over L5</span></div>
+    <div class="phone">
+      <div class="bar"><span class="ic">✕</span><div class="prog"><i class="on"></i><i></i><i></i></div><span class="small muted">Đoạn 1/2</span></div>
+      <div class="body">
+        <div class="line"><div class="ph av">C</div><div class="bub"><div class="hz" style="font-size:20px">你好！</div><div class="small muted">nǐ hǎo · Chào bạn!</div></div></div>
+        <div class="line r"><div class="ph av">U</div><div class="bub"><div class="hz" style="font-size:20px">对不起！</div><div class="small muted">duìbuqǐ · Xin lỗi!</div></div></div>
+        <div class="line"><div class="ph av">C</div><div class="bub" style="position:relative;z-index:4;background:#fff"><div class="hz" style="font-size:20px"><span class="hit">没关系</span>。</div><div class="small muted">méi guānxi · Không sao.</div></div></div>
+      </div>
+      <div class="scrim"></div>
+      <div class="pop" style="top:300px;--ax:72px">
+        <div style="display:flex;gap:6px;margin-bottom:10px"><span class="chip soft hz">没</span><span class="chip on hz">没关系</span></div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="hz" style="font-size:34px">没关系</span>
+          <span class="ic" style="width:36px;height:36px;border-radius:50%;margin-left:auto">▶</span>
+        </div>
+        <div>méi guānxi · <span class="muted">một quan hệ</span></div>
+        <div style="font-weight:600;margin:4px 0 12px">không sao, không có gì</div>
+        <div class="btn" style="height:42px">Xem chi tiết</div>
+        <div style="display:flex;justify-content:space-between;margin-top:8px" class="small"><span class="link">Thêm vào từ của tôi</span><span class="link">Báo lỗi</span></div>
+      </div>
+      <span class="tag" style="top:240px;left:8px">1</span>
+      <span class="tag" style="top:300px;right:8px">2</span>
+    </div>
+    <ol class="notes">
+      <li>Tapped word stays visible and outlined; popup anchors below it (above if no room). Never covers it.</li>
+      <li>Chip row picks the span: longest dictionary match by default, single chars available.</li>
+      <li>Tap scrim to close; lesson state untouched.</li>
+    </ol>
+  </div>
+</div>
+
+</body>
+</html>

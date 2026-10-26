@@ -1,0 +1,14 @@
+# content/words/心态.yaml
+id: 心态
+hanzi: 心态
+pinyin: xīntài
+hanviet: tâm thái
+level: 5
+pos: [ n ]
+senses:
+  - { vi: "tâm thái, trạng thái tinh thần" }
+parts:
+  - { hanzi: 心, pinyin: xīn, hanviet: tâm, vi: tấm lòng }
+  - { hanzi: 态, pinyin: tài, hanviet: thái, vi: "thái độ, dáng vẻ" }
+examples: [ s-h5-01-10 ]
+image: { file: words/h5-01/w13.png, prompt: "The red panda sits peacefully in a meadow with a calm smile, a soft sunny glow around it, while the takin watches with curiosity. Only the red panda and the takin." }

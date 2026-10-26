@@ -1,0 +1,10 @@
+# content/grammar/h3-g01.yaml
+id: h3-g01
+level: 3
+std: [ 130 ]
+title: "Sắp xảy ra: 就要……了"
+pattern: 主语 + 就要 + 动词 + 了
+explain: Đặt 就要 trước động từ và 了 ở cuối câu để nói việc gì đó sắp xảy ra. Có thể thêm mốc thời gian ở đầu câu, như 下个星期.
+examples: [ s-h3-01-01, s-h3-01-19 ]
+pitfalls:
+  - { wrong: 考试了就要, right: 考试就要了 }

@@ -1,0 +1,14 @@
+# content/words/提前.yaml
+id: 提前
+hanzi: 提前
+pinyin: tíqián
+hanviet: đề tiền
+level: 3
+pos: [ adv ]
+senses:
+  - { vi: sớm hơn dự định }
+parts:
+  - { hanzi: 提, pinyin: tí, hanviet: đề, vi: nhấc lên }
+  - { hanzi: 前, pinyin: qián, hanviet: tiền, vi: trước }
+examples: [ s-h3-01-06 ]
+image: { file: words/h3-01/w08.png, prompt: "The takin in pajamas sits up in bed at sunrise next to a clock whose hands show early morning, holding a notebook. Only the takin." }

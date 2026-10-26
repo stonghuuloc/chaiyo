@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Hôm nay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+
+  /* hero */
+  .hero { position: relative; height: 400px; overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .hero::before { content: ""; position: absolute; inset: 0 0 auto; height: 150px; background: linear-gradient(rgba(28, 16, 8, .5), rgba(28, 16, 8, 0)); z-index: 1; }
+  .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 120px; background: linear-gradient(rgba(247, 243, 234, 0), var(--paper) 92%); z-index: 1; }
+  .top { position: absolute; z-index: 2; inset: 0 0 auto; padding: calc(env(safe-area-inset-top, 0px) + 54px) var(--s5) 0; display: flex; align-items: center; justify-content: space-between; }
+  .top h1 { font: 600 var(--t-hero)/1 var(--font-display); color: #fff; letter-spacing: -.01em; text-shadow: 0 1px 12px rgba(20, 10, 4, .35); }
+
+  /* frost chip over the hero */
+  .chip { position: relative; display: flex; align-items: center; gap: var(--s2); height: 40px; padding: 0 var(--s4); border-radius: var(--r-pill); font: 600 15px var(--font-ui); color: var(--ink-1);
+    background: var(--frost-tint); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat)); backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat)); }
+  .chip::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: inset 0 1px 0 var(--frost-rim), inset 0 0 0 .5px rgba(255,255,255,.55), inset 0 -1px 1px rgba(40,20,10,.12), var(--frost-shadow); }
+  .chip > span, .chip > svg { position: relative; z-index: 1; }
+  .chip .fire { color: var(--vermilion); --duo: 1; --duo-c: #f2cfc6; font-size: 19px; }
+  .chip .freeze { color: var(--freeze); font-size: 18px; }
+  .chip .sep { width: 1px; height: 18px; background: rgba(40, 25, 15, .18); }
+
+  /* primary action */
+  .next { position: relative; z-index: 3; margin: -56px var(--s5) 0; }
+  .cta { width: 100%; height: 62px; display: flex; align-items: center; justify-content: center; gap: var(--s3); border-radius: var(--r-cta); background: var(--vermilion); color: #fff; font: 600 var(--t-cta) var(--font-display); box-shadow: 0 10px 24px rgba(168, 38, 20, .28), inset 0 1px 0 rgba(255,255,255,.18); transition: transform .12s, background .12s; }
+  .cta:active { transform: scale(.985); background: var(--vermilion-press); }
+  .cta .ic { font-size: 22px; }
+  .cta .go { font-size: 18px; opacity: .85; }
+  .next p { text-align: center; margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .practice { margin-top: var(--s4); display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s3) var(--s4); border-radius: 18px; background: #fff; box-shadow: 0 1px 0 rgba(45,25,10,.04), 0 6px 18px rgba(45,25,10,.06); }
+  .practice[hidden] { display: none; }
+  .practice .pi { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); font-size: 24px; color: var(--ink-1); }
+  .practice b { display: block; font-weight: 600; }
+  .practice small { display: block; font-size: 13px; color: var(--ink-3); }
+  .practice .go { color: var(--ink-4); font-size: 16px; }
+
+  /* sections */
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 120px); }
+  section { padding-top: var(--s6); }
+  section + section { border-top: 1px solid var(--ink-5); margin-top: var(--s5); }
+  .next + main section:first-child { border-top: 1px solid var(--ink-5); margin-top: var(--s5); }
+  .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--s3); }
+  h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .more { display: inline-flex; align-items: center; gap: 2px; font-size: 14px; font-weight: 500; color: var(--vermilion-text); }
+  .more .ic { font-size: 13px; }
+
+
+  /* week */
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .day { display: grid; justify-items: center; gap: var(--s2); padding: var(--s2) 0 10px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.35); }
+  .day span { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .day .m { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; }
+  .day.ok .m { background: var(--vermilion); color: #fff; }
+  .day.frozen .m { color: var(--freeze); font-size: 21px; }
+  .day.today { border-color: var(--vermilion); background: var(--vermilion-wash); }
+  .day.today span { color: var(--ink-1); font-weight: 700; }
+  .day.today .m { border: 2px solid var(--vermilion); }
+  .day.later .m { border: 1.5px solid var(--ink-4); }
+  .streak-line { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+
+  /* friends */
+  .friends { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+  .friend { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+  .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 600 17px var(--font-display); flex: none; }
+  .friend b { display: block; font-size: 15px; font-weight: 600; }
+  .friend small { display: flex; align-items: center; gap: 3px; line-height: 1.35; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+  .friend small .ic { color: var(--vermilion); --duo: 1; --duo-c: #f2cfc6; font-size: 13px; }
+
+  #streak-chip { position: absolute; z-index: 5; top: calc(env(safe-area-inset-top, 0px) + 50px); right: var(--s5); }
+  @media (prefers-reduced-motion: reduce) { .cta { transition: none; } }
+  .page { background: var(--paper); }
+</style>
+</head>
+<body>
+
+<div id="root">
+<div class="page">
+<header class="hero">
+  <img id="hero-img" src="../assets/home/reviews-due.png" alt="Gấu Đỏ ngồi bên bàn gỗ, giơ một tấm thẻ ôn tập">
+  <div class="top">
+    <h1>Hôm nay</h1>
+  </div>
+</header>
+
+<div class="next">
+  <button class="cta" onclick="location.href='l1-hub.html'"><svg class="ic"><use href="icons.svg#i-regular-play"/></svg>Tiếp tục Bài 1<svg class="ic go"><use href="icons.svg#i-regular-caret-right"/></svg></button>
+  <p>Xin chào 你好 · phần Từ mới</p>
+  <a class="practice" id="practice" href="p1-session.html" hidden><span class="pi"><svg class="ic"><use href="icons.svg#i-fill-brain"/></svg></span><span><b id="pr-t"></b><small id="pr-s"></small></span><svg class="ic go"><use href="icons.svg#i-regular-caret-right"/></svg></a>
+</div>
+
+<main>
+  <section>
+    <div class="head"><h2>Lộ trình</h2><a class="more" href="t2-roadmap.html">Xem tất cả<svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></a></div>
+    <ol class="path">
+      <li class="done" data-href="l0-hub.html" role="link" tabindex="0"><span class="mark"><svg class="ic"><use href="icons.svg#i-bold-check"/></svg></span><div><b>Bài 0 <span>· Nhập môn 拼音</span></b><small>Đã xong · pinyin và thanh điệu</small></div><svg class="ic go"><use href="icons.svg#i-regular-caret-right"/></svg></li>
+      <li class="now" data-href="l1-hub.html" role="link" tabindex="0"><span class="mark"><i></i></span><div><b>Bài 1 <span>· Xin chào 你好</span></b><small>Đang học · phần Từ mới</small></div><svg class="ic go"><use href="icons.svg#i-regular-caret-right"/></svg></li>
+      <li class="locked"><span class="mark"><svg class="ic"><use href="icons.svg#i-fill-lock-simple"/></svg></span><div><b>Bài 2 <span>· Bạn tên gì?</span></b><small>Mở khi qua Bài 1</small></div><svg class="ic go"><use href="icons.svg#i-regular-caret-right"/></svg></li>
+      <li class="locked"><span class="mark"><svg class="ic"><use href="icons.svg#i-fill-lock-simple"/></svg></span><div><b>Bài 3 <span>· Gia đình</span></b><small>Mở khi qua Bài 2</small></div><svg class="ic go"><use href="icons.svg#i-regular-caret-right"/></svg></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="head"><h2>Tuần này</h2><button class="more" id="fz-info">Đóng băng là gì?<svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></button></div>
+    <div class="week" id="week" role="button" tabindex="0" aria-label="Xem cách tính chuỗi ngày"></div>
+    <p class="streak-line" id="streak-line"></p>
+  </section>
+
+  <section>
+    <div class="head"><h2>Bạn bè</h2><a class="more" href="#">Xem tất cả<svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></a></div>
+    <div class="friends">
+      <div class="friend"><span class="av" style="background:#e9dcc6;color:#6a4b25">M</span><div><b>Minh</b><small><svg class="ic"><use href="icons.svg#i-fill-fire"/></svg>30 ngày</small><small>Bài 14</small></div></div>
+      <div class="friend"><span class="av" style="background:#efd6cf;color:#8a3324">L</span><div><b>Lan</b><small><svg class="ic"><use href="icons.svg#i-fill-fire"/></svg>4 ngày</small><small>Bài 6</small></div></div>
+      <div class="friend"><span class="av" style="background:#fff3d6;color:#594001">H</span><div><b>Huy</b><small><svg class="ic"><use href="icons.svg#i-fill-fire"/></svg>9 ngày</small><small>Bài 9</small></div></div>
+    </div>
+  </section>
+</main>
+</div>
+
+<button class="chip" id="streak-chip">
+      <svg class="ic fire"><use href="icons.svg#i-fill-fire"/></svg><span id="chip-n"></span>
+      <span class="sep"></span>
+      <svg class="ic freeze"><use href="icons.svg#i-regular-snowflake"/></svg><span id="chip-f"></span>
+    </button>
+
+<nav class="tabs" aria-label="Điều hướng chính">
+  <span class="pill" aria-hidden="true"></span>
+  <a class="tab" href="home-glass.html" aria-current="page"><svg class="ic"><use href="icons.svg#i-regular-house"/></svg>Hôm nay</a>
+  <a class="tab" href="t2-roadmap.html"><svg class="ic"><use href="icons.svg#i-regular-path"/></svg>Lộ trình</a>
+  <a class="tab" href="t3-practice.html"><svg class="ic"><use href="icons.svg#i-regular-brain"/></svg>Luyện tập</a>
+  <a class="tab" href="t4-me.html"><svg class="ic"><use href="icons.svg#i-regular-user-circle"/></svg>Tôi</a>
+</nav>
+</div>
+
+<script type="module" src="tabs.js?v=4"></script>
+<script>
+document.querySelectorAll('[data-href]').forEach((li) => { const go = () => (location.href = li.dataset.href); li.onclick = go; li.onkeydown = (e) => e.key === 'Enter' && go(); });
+</script>
+<script type="module">
+import { streak, resetStreak, freezeUsed, freezeInfo, dayDone } from './streak.js?v=10';
+const P = new URLSearchParams(location.search);
+if (P.has('reset') || P.has('fire')) resetStreak();                 // ?reset: today not counted yet
+// ?fire demo: count today now → flame popup; the strip below renders with T6 ticked
+if (P.has('fire')) { sessionStorage.setItem('freeze-told', 1); history.replaceState(null, '', 'home-glass.html'); dayDone(); }
+const s = streak(), ic = (id) => `<svg class="ic"><use href="icons.svg#i-${id}"/></svg>`;
+document.getElementById('week').innerHTML = s.week.map((w) => `<div class="day ${w.st}"><span>${w.d}</span><i class="m">${w.st === 'ok' ? ic('bold-check') : w.st === 'frozen' ? ic('regular-snowflake') : ''}</i></div>`).join('');
+document.getElementById('streak-line').textContent = s.counted
+  ? `Hôm nay đã tính rồi, chuỗi ${s.n} ngày. Mai gặp lại nha!`
+  : `${s.missed} bạn nghỉ nên app dùng 1 lượt đóng băng. Học xong một phần bài hôm nay là chuỗi lên ${s.n + 1}.`;
+document.getElementById('chip-n').textContent = `${s.n} ngày`;
+document.getElementById('chip-f').textContent = s.freeze;
+const chip = document.getElementById('streak-chip');
+chip.setAttribute('aria-label', `Chuỗi ${s.n} ngày, còn ${s.freeze} lượt đóng băng. Bấm để xem cách tính`);
+[chip, document.getElementById('fz-info'), document.getElementById('week')].forEach((el) => (el.onclick = freezeInfo));
+// a freeze was spent since the last visit → tell the learner once (demo: ?missed always shows it)
+if (!P.has('fire') && (P.has('missed') || (!s.counted && !sessionStorage.getItem('freeze-told')))) { sessionStorage.setItem('freeze-told', 1); setTimeout(freezeUsed, 500); }
+</script>
+<script type="module">
+import { session, minutes } from './data/lexicon.js?v=5';
+const today = session();
+if (today.length) {
+  const n = (s) => today.filter((x) => x.skill === s).length, L = { the: 'thẻ', nghe: 'nghe', viet: 'viết' };
+  document.getElementById('pr-t').textContent = `Luyện hôm nay · khoảng ${minutes(today)} phút`;
+  document.getElementById('pr-s').textContent = Object.keys(L).filter(n).map((s) => `${n(s)} ${L[s]}`).join(' · ');
+  document.getElementById('practice').hidden = false;
+}
+</script>
+</body>
+</html>

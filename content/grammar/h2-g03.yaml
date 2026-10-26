@@ -1,0 +1,10 @@
+# content/grammar/h2-g03.yaml
+id: h2-g03
+level: 2
+std: [ 64 ]
+title: "Thói quen: 一般 / 经常 + động từ"
+pattern: 主语 + 一般 / 经常 + 动词
+explain: "一般 (thường thì) và 经常 (thường xuyên) là phó từ, đứng ngay trước động từ, sau chủ ngữ. Dùng với 点 thì giờ đứng sau phó từ: 我一般七点起床."
+examples: [ s-h2-01-01, s-h2-01-07 ]
+pitfalls:
+  - { wrong: 我起床一般七点, right: 我一般七点起床 }

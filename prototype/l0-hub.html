@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Bài 0 · Nhập môn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="primer.css">
+<style>
+  #root { position: relative; }
+  .hero { position: relative; height: 270px; overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38% 70%; }
+  .hero::before { content: ""; position: absolute; inset: 0 0 auto; height: 110px; background: linear-gradient(rgba(28,16,8,.38), rgba(28,16,8,0)); z-index: 1; }
+  .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 90px; background: linear-gradient(rgba(247,243,234,0), var(--paper) 94%); z-index: 1; }
+  .gbtn { position: absolute; z-index: 5; top: calc(env(safe-area-inset-top, 0px) + 14px); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 20px; color: var(--ink-1);
+    background: rgba(250,246,238,.72); -webkit-backdrop-filter: blur(24px) saturate(175%); backdrop-filter: blur(24px) saturate(175%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 10px 30px rgba(45,25,10,.16), 0 1px 3px rgba(45,25,10,.08); }
+  #close { left: var(--s5); }
+
+  header.title { position: relative; z-index: 2; padding: 0 var(--s5); margin-top: -34px; }
+  .kicker { font-size: var(--t-meta); color: var(--ink-3); }
+  h1 { margin-top: 6px; display: flex; align-items: baseline; gap: var(--s3); font: 600 var(--t-hero)/1 var(--font-display); letter-spacing: -.01em; }
+  h1 .hz { font-size: 32px; color: var(--ink-2); letter-spacing: .04em; }
+  .meta { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+  .bar6 { margin-top: var(--s3); display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .bar6 i { height: 4px; border-radius: 2px; background: var(--ink-5); }
+  .bar6 i.on { background: var(--vermilion); }
+  .prog { margin-top: var(--s3); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--s3); }
+  .prog .bar6 { margin-top: 0; }
+  .prog span { font-size: var(--t-meta); font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 150px); }
+  section { padding-top: var(--s6); }
+  section:first-child { border-top: 1px solid var(--ink-5); margin-top: var(--s5); }
+  .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--s2); }
+  h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+
+  .parts { list-style: none; }
+  .parts li + li { border-top: 1px solid var(--ink-5); }
+  .parts a { display: grid; grid-template-columns: 36px 1fr 16px; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s2) 0; }
+  .mark { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; }
+  .done .mark { background: var(--vermilion); color: #fff; font-size: 17px; }
+  .now .mark { background: conic-gradient(var(--vermilion) calc(var(--p) * 1%), var(--ink-5) 0); }
+  .now .mark::before { content: ""; width: 31px; height: 31px; border-radius: 50%; background: var(--paper); grid-area: 1 / 1; }
+  .now .mark i { width: 12px; height: 12px; border-radius: 50%; background: var(--vermilion); grid-area: 1 / 1; position: relative; }
+  .todo .mark { border: 1.5px solid var(--ink-4); }
+  .ref .mark { background: var(--paper-2); color: var(--ink-2); font-size: 18px; }
+  .parts b { display: block; font: 600 17px/1.3 var(--font-display); }
+  .now b { color: var(--vermilion-text); }
+  .parts small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+  .parts .go { color: var(--ink-4); font-size: 16px; } .now .go { color: var(--vermilion); }
+  .note { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+
+  .foot .link { display: block; margin-top: var(--s3); padding: var(--s2) 0; text-align: center; font-weight: 600; font-size: 15px; color: var(--vermilion-text); }
+</style>
+</head>
+<body>
+<div id="root">
+<div class="page">
+  <header class="hero">
+    <img src="../assets/home/lesson-next.png" alt="Gấu Trúc bước ra cửa nhà, sẵn sàng đi trên con đường nhỏ">
+  </header>
+
+  <header class="title">
+    <p class="kicker">HSK1 · Trước Bài 1 · Bài 0</p>
+    <h1>Nhập môn <span class="hz">拼音</span></h1>
+    <p class="meta">5 phần · không học từ mới · khoảng 25 phút</p>
+    <div class="prog"><div class="bar6" id="bar" aria-hidden="true"></div><span id="cnt"></span></div>
+  </header>
+
+  <main>
+    <section>
+      <div class="head"><h2>Các phần</h2></div>
+      <ul class="parts" id="parts"></ul>
+    </section>
+  </main>
+</div>
+  <a id="close" class="gbtn" href="home-glass.html" aria-label="Đóng bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+</div>
+
+<div class="foot">
+  <a class="cta" id="cta"></a>
+  <a class="link" href="l0-gate.html">Đã biết pinyin? Làm bài kiểm tra luôn</a>
+</div>
+
+<script type="module">
+import { PRIMER, SECTIONS, progress, ic } from './primer.js?v=2';
+
+const d = progress.get(), done = d.done || {};
+const nDone = SECTIONS.filter((k) => done[k]).length;
+const next = SECTIONS.find((k) => !done[k]);
+const caret = ic('regular-caret-right', 'ic go');
+
+document.getElementById('bar').innerHTML = SECTIONS.map((k) => `<i class="${done[k] ? 'on' : ''}"></i>`).join('');
+document.getElementById('cnt').textContent = `${nDone}/5 phần`;
+
+const row = (cls, href, mark, title, sub, style = '') => `<li class="${cls}" ${style}><a href="${href}"><span class="mark">${mark}</span><span><b>${title}</b><small>${sub}</small></span>${caret}</a></li>`;
+const rows = SECTIONS.map((k) => {
+  const s = PRIMER.sections[k], cls = done[k] ? 'done' : k === next ? 'now' : 'todo';
+  const sub = done[k] ? `${done[k].ok}/${done[k].total} câu luyện đúng` : `${s.cards.length} thẻ · ${s.drills.length} câu luyện · ${s.hint}`;
+  return row(cls, `l0-section.html?s=${k}`, done[k] ? ic('bold-check') : k === next ? '<i></i>' : '', s.title, sub, k === next ? 'style="--p:0"' : '');
+});
+rows.push(row('ref', 'w3-pinyin.html', ic('regular-book-open-text'), 'Bảng pinyin', 'Chạm một âm để nghe đủ bốn thanh · tra cứu, không chấm điểm'));
+rows.push(row(d.passed ? 'done' : 'todo', 'l0-gate.html', d.passed ? ic('bold-check') : '', 'Kiểm tra Nhập môn', d.passed ? `Đã qua · điểm cao nhất ${d.best}%` : 'Mở sẵn · 10 câu · đạt từ 80% thì mở Bài 1'));
+document.getElementById('parts').innerHTML = rows.join('');
+
+const cta = document.getElementById('cta');
+if (d.passed || !next) {
+  cta.innerHTML = `${ic('regular-play')}Học Bài 1${caret}`; cta.href = 'l1-hub.html';
+} else {
+  cta.innerHTML = `${ic('regular-play')}${nDone ? 'Tiếp tục' : 'Bắt đầu'}: ${PRIMER.sections[next].title}${caret}`; cta.href = `l0-section.html?s=${next}`;
+}
+</script>
+</body>
+</html>

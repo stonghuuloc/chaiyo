@@ -1,0 +1,14 @@
+# content/words/差距.yaml
+id: 差距
+hanzi: 差距
+pinyin: chājù
+hanviet: sai cự
+level: 5
+pos: [ n ]
+senses:
+  - { vi: "chênh lệch, khoảng cách" }
+parts:
+  - { hanzi: 差, pinyin: chā, hanviet: sai, vi: "chênh, lệch" }
+  - { hanzi: 距, pinyin: jù, hanviet: cự, vi: khoảng cách }
+examples: [ s-h5-01-08 ]
+image: { file: words/h5-01/w01.png, prompt: "The red panda and the takin stand on two cliff edges with a wide gap between them, the takin on the taller edge looking down and the red panda on the lower edge looking up. Only the red panda and the takin." }

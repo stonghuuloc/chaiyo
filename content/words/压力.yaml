@@ -1,0 +1,14 @@
+# content/words/压力.yaml
+id: 压力
+hanzi: 压力
+pinyin: yālì
+hanviet: áp lực
+level: 3
+pos: [ n ]
+senses:
+  - { vi: áp lực }
+parts:
+  - { hanzi: 压, pinyin: yā, hanviet: áp, vi: "đè, nén" }
+  - { hanzi: 力, pinyin: lì, hanviet: lực, vi: sức }
+examples: [ s-h3-01-04 ]
+image: { file: words/h3-01/w06.png, prompt: "The takin stands with a huge pile of heavy books balanced on its back, knees trembling, in a classroom. Only the takin." }

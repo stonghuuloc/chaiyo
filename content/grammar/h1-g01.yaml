@@ -1,0 +1,13 @@
+# content/grammar/h1-g01.yaml
+id: h1-g01
+level: 1
+std: []
+title: "Chào hỏi: A + 好"
+pattern: 你 / 您 / 你们 + 好
+explain: |-
+  Thêm 好 (hảo, “tốt”) sau người được chào. 您 (nâm) là cách lịch sự với người lớn tuổi, thầy cô.
+
+  Người kia chỉ cần chào lại bằng đúng câu đó: 你好！ → 你好！. 你们 = 你 + 们 (môn, số nhiều), nên 你们好 là chào cả nhóm.
+examples: [ s-h1-01-08, s-h1-01-09 ]
+pitfalls:
+  - { wrong: 好你, right: 你好 }

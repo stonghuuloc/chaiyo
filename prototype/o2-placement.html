@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Kiểm tra trình độ · Chaiyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="onboard.css">
+<style>
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .t { text-align: center; }
+  .card { margin-top: var(--s5); padding: var(--s6) 0; border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); text-align: center; }
+  .card .hz { font-size: 64px; line-height: 1.1; }
+  .idk { margin-top: var(--s3); width: 100%; min-height: 52px; border-radius: var(--r-cell); border: 1px dashed var(--ink-4); color: var(--ink-2); font-weight: 600; font-size: 15px; }
+  .idk:active { background: var(--paper-2); }
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="x" id="exit" aria-label="Thoát bài kiểm tra"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></button>
+  <span class="t">Kiểm tra trình độ</span>
+  <span></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h2 id="sh-t">Thoát bài kiểm tra?</h2>
+    <p>Kết quả sẽ không được lưu.</p>
+    <div class="row">
+      <button class="cta" id="keep">Làm tiếp</button>
+      <button class="ghost" id="leave">Thoát</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { $, cta, hint, choice, shuffle, audio } from './step.js?v=9';
+import { BLOCKS, PASS, questions } from './data/placement.js?v=2';
+
+// One run, easy → hard. Learner never sees levels. Grading in the background:
+// each level has 10 items; the run stops the moment a level can no longer reach PASS.
+const MAX_MISS = 10 - PASS + 1;
+let level = Math.min(Math.max(+new URLSearchParams(location.search).get('lv') || 1, 1), 5);   // ?lv=N demo shortcut
+let passed = level - 1, qs = questions(BLOCKS[level - 1]), i = 0, miss = 0;
+
+function show() {
+  const q = qs[i];
+  const done = (ok) => { audio.pause(); answer(ok); };
+  if (q.t === 'read') choice({ ask: 'Chọn nghĩa', title: 'Từ này nghĩa là gì?', kind: 'text', ans: q.ans, opts: shuffle(q.opts), feedback: false,
+    promptHtml: `<div class="card"><div class="hz">${q.hz}</div></div>` }, done);
+  else choice({ ask: 'Nghe và chọn chữ', title: 'Bạn nghe được từ nào?', kind: 'hz', key: q.key, ans: q.ans, opts: shuffle(q.opts), feedback: false }, done);
+  $('.opts').insertAdjacentHTML('afterend', '<button class="idk" id="idk">Không biết</button>');
+  $('#idk').onclick = () => done(false);
+  hint('');
+  scrollTo(0, 0);
+}
+
+function answer(ok) {
+  if (!ok && ++miss >= MAX_MISS) return finish();           // this level is out of reach → stop now
+  if (++i < qs.length) return show();
+  passed = level;                                            // level cleared silently
+  if (level === 5) return finish();
+  level++; qs = questions(BLOCKS[level - 1]); i = 0; miss = 0;
+  show();
+}
+
+function finish() {
+  sessionStorage.setItem('placement', JSON.stringify({ passed }));
+  location.href = 'o3-result.html';
+}
+
+const scrim = $('#scrim');
+$('#exit').onclick = () => { scrim.hidden = false; $('#keep').focus(); };
+$('#keep').onclick = () => { scrim.hidden = true; };
+$('#leave').onclick = () => (location.href = 'home-glass.html');
+scrim.onclick = (e) => { if (e.target === scrim) scrim.hidden = true; };
+addEventListener('keydown', (e) => { if (e.key === 'Escape') scrim.hidden = true; });
+
+cta('Câu tiếp', { disabled: true });
+show();
+</script>
+</body>
+</html>

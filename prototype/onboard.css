@@ -1,0 +1,41 @@
+/* P2 login + O1–O3 onboarding. Loads after lesson.css. */
+@font-face { font-family: "UKaiOnboard"; src: url("fonts/ukai-onboard.woff2?v=3") format("woff2"); font-display: block; }
+:root { --font-hanzi: "UKaiOnboard", "Kaiti SC", "STKaiti", "KaiTi", serif; }
+
+.pic { aspect-ratio: 3 / 2; border-radius: var(--r-cell); overflow: hidden; background: var(--paper-2); }
+.pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lead { margin-top: var(--s2); color: var(--ink-2); line-height: 1.5; }
+.meta { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); line-height: 1.5; }
+
+/* secondary actions */
+.ghost { width: 100%; height: 56px; display: flex; align-items: center; justify-content: center; gap: var(--s2); border-radius: var(--r-cta); border: 1px solid var(--ink-5);
+  background: rgba(255,255,255,.5); font: 600 17px var(--font-display); color: var(--ink-1); }
+.ghost:active { background: var(--paper-2); }
+.ghost:disabled { color: var(--ink-4); cursor: default; }
+.ghost .ic { font-size: 20px; color: var(--ink-3); }
+.link { display: block; width: 100%; margin-top: var(--s2); padding: var(--s3) 0; text-align: center; font-weight: 600; font-size: 15px; color: var(--vermilion-text); }
+.foot .ghost { margin-top: var(--s2); }
+
+/* text field */
+.field { display: block; margin-top: var(--s4); }
+.field span { display: block; font-size: var(--t-meta); color: var(--ink-3); margin-bottom: 6px; }
+.field input { width: 100%; height: 56px; padding: 0 var(--s4); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.6);
+  font: 500 17px var(--font-ui); color: var(--ink-1); outline: 0; }
+.field input:focus { border: 2px solid var(--ink-1); padding: 0 calc(var(--s4) - 1px); background: #fff; }
+.err { margin-top: 6px; font-size: var(--t-meta); color: var(--vermilion-text); }
+
+/* notice banner */
+.note { margin-top: var(--s4); display: grid; grid-template-columns: 22px 1fr; gap: var(--s2); padding: var(--s3) var(--s4); border-radius: var(--r-cell);
+  background: var(--vermilion-wash); color: var(--ink-1); font-size: 14.5px; line-height: 1.45; }
+.note .ic { font-size: 22px; color: var(--vermilion-text); margin-top: -1px; --duo: .3; }
+
+/* bottom sheet over a scrim (same as l8-gate) */
+.scrim { position: fixed; inset: 0; z-index: 50; background: rgba(29,24,20,.5); display: flex; align-items: flex-end; justify-content: center; animation: fade .15s ease-out; }
+.scrim[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; } }
+.sheet { width: min(430px, 100%); background: var(--paper); border-top: 1px solid var(--ink-5); border-radius: var(--r-cta) var(--r-cta) 0 0; padding: var(--s6) var(--s5) calc(env(safe-area-inset-bottom, 0px) + var(--s5)); }
+.sheet h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+.sheet p { margin-top: var(--s2); color: var(--ink-2); line-height: 1.5; }
+.sheet .row { margin-top: var(--s5); display: grid; gap: var(--s2); }
+.sheet .cta { height: 56px; }
+@media (prefers-reduced-motion: reduce) { .scrim { animation: none; } }

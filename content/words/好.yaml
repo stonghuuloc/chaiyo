@@ -1,0 +1,14 @@
+# content/words/好.yaml
+id: 好
+hanzi: 好
+pinyin: hǎo
+hanviet: hảo
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: "tốt, khỏe, hay" }
+parts:
+  - { hanzi: 女, name: nữ, vi: người mẹ }
+  - { hanzi: 子, name: tử, vi: đứa con }
+examples: [ s-h1-01-11 ]
+image: { file: words/hao.png }

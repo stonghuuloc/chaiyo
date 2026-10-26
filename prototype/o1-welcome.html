@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Chào mừng · Chaiyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="onboard.css">
+<style>
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .x svg { transform: rotate(180deg); }
+  .top .x[hidden] { display: grid; visibility: hidden; }
+  h2.big { margin-top: var(--s4); font: 600 28px/1.2 var(--font-display); }
+
+  /* step 1: profile */
+  .me { margin-top: var(--s6); display: grid; justify-items: center; }
+  .av { position: relative; width: 112px; height: 112px; }
+  .av span { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; background: var(--vermilion-wash); color: var(--vermilion-text); font: 600 40px var(--font-display); overflow: hidden; }
+  .av span img { width: 100%; height: 100%; object-fit: cover; }
+  .av button { position: absolute; right: -2px; bottom: -2px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink-1); color: var(--paper); font-size: 20px; border: 3px solid var(--paper); }
+  .me small { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+
+  /* step 2: reminder */
+  .label { margin-top: var(--s6); font-size: var(--t-meta); font-weight: 600; color: var(--ink-3); }
+  .times { margin-top: var(--s2); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+  .times button { height: 64px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; align-content: center; gap: 2px; }
+  .times b { font: 600 19px var(--font-display); font-variant-numeric: tabular-nums; }
+  .times small { font-size: 12.5px; color: var(--ink-3); }
+  .times button[aria-pressed="true"] { border: 2px solid var(--ink-1); background: #fff; }
+  .other { margin-top: var(--s2); display: flex; align-items: center; gap: var(--s3); min-height: 48px; padding: 0 var(--s4); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); }
+  .other.on { border: 2px solid var(--ink-1); background: #fff; padding: 0 calc(var(--s4) - 1px); }
+  .other span { flex: 1; font-size: 15px; color: var(--ink-2); }
+  .other input { font: 600 17px var(--font-ui); color: var(--ink-1); border: 0; background: transparent; outline: 0; }
+  .chans { list-style: none; margin-top: var(--s2); border-top: 1px solid var(--ink-5); }
+  .chans li { display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--ink-5); }
+  .chans .ci { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); color: var(--ink-1); font-size: 22px; --duo: .3; }
+  .chans b { display: block; font-weight: 600; font-size: 16px; }
+  .chans small { display: block; font-size: var(--t-meta); color: var(--ink-3); overflow-wrap: anywhere; }
+  .chans small.warn { color: var(--vermilion-text); }
+  .sw { position: relative; width: 52px; height: 32px; border-radius: 16px; background: var(--ink-5); transition: background .15s; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .15s; }
+  .sw[aria-checked="true"] { background: var(--ink-1); }
+  .sw[aria-checked="true"]::after { transform: translateX(20px); }
+  .sw:disabled { opacity: .45; cursor: default; }
+  @media (prefers-reduced-motion: reduce) { .sw, .sw::after { transition: none; } }
+
+  /* step 3: placement offer */
+  .pic { margin-top: var(--s4); }
+  .ticks { list-style: none; margin-top: var(--s4); display: grid; gap: var(--s2); }
+  .ticks li { display: grid; grid-template-columns: 22px 1fr; gap: var(--s2); color: var(--ink-2); line-height: 1.45; }
+  .ticks .ic { font-size: 18px; color: var(--vermilion-text); margin-top: 2px; }
+  main { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 170px); }
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="x" id="back" aria-label="Quay lại"><svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></button>
+  <div class="seg" id="seg"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot" id="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<script type="module">
+import { $, $$, ic, bar, cta } from './step.js?v=9';
+
+// Name + photo come from Google. Prototype values; ?push=denied shows the blocked-notifications state.
+const G = { name: 'Tống Lộc', email: 'tong.loc@gmail.com' };
+const forceDenied = new URLSearchParams(location.search).get('push') === 'denied';
+const st = { name: G.name, photo: null, time: '21:00', push: false, pushDenied: forceDenied, email: true, telegram: false };
+const initials = (n) => n.trim().split(/\s+/).map((w) => w[0]).slice(-2).join('').toUpperCase() || '?';
+
+function profile() {
+  $('#main').innerHTML = `<div class="step">
+    <h2 class="big">Chào bạn!</h2>
+    <p class="lead">Đây là tên và ảnh bạn bè sẽ thấy. Lấy từ tài khoản Google, sửa được.</p>
+    <div class="me">
+      <div class="av"><span id="avi">${st.photo ? `<img src="${st.photo}" alt="">` : initials(st.name)}</span>
+        <button id="photo" aria-label="Đổi ảnh">${ic('fill-camera')}</button></div>
+      <input id="file" type="file" accept="image/*" hidden>
+      <small>${G.email}</small>
+    </div>
+    <label class="field"><span>Tên hiển thị</span><input id="nm" type="text" autocomplete="name" maxlength="30" value="${st.name}"></label></div>`;
+  const nm = $('#nm');
+  nm.oninput = () => { st.name = nm.value; if (!st.photo) $('#avi').textContent = initials(nm.value); $('#cta').disabled = !nm.value.trim(); };
+  $('#photo').onclick = () => $('#file').click();
+  $('#file').onchange = (e) => { const f = e.target.files[0]; if (f) { st.photo = URL.createObjectURL(f); $('#avi').innerHTML = `<img src="${st.photo}" alt="">`; } };
+  cta('Tiếp', { disabled: !st.name.trim(), onClick: () => go(1) });
+}
+
+const TIMES = [['07:00', 'Sáng'], ['12:30', 'Trưa'], ['21:00', 'Tối']];
+function reminder() {
+  const preset = TIMES.some(([t]) => t === st.time);
+  const pushNote = st.pushDenied
+    ? '<small class="warn">Trình duyệt đang chặn thông báo. Nhắc qua Email hoặc Telegram, hoặc bật lại trong cài đặt trình duyệt.</small>'
+    : '<small>Trên máy này</small>';
+  $('#main').innerHTML = `<div class="step">
+    <h2 class="big">Nhắc học mỗi ngày</h2>
+    <p class="lead">Mỗi ngày một lời nhắc, đúng giờ bạn chọn.</p>
+    <p class="label">Giờ nhắc</p>
+    <div class="times" role="group" aria-label="Giờ nhắc">${TIMES.map(([t, l]) => `<button data-t="${t}" aria-pressed="${st.time === t}"><b>${t}</b><small>${l}</small></button>`).join('')}</div>
+    <label class="other ${preset ? '' : 'on'}" id="other"><span>Giờ khác</span><input id="tm" type="time" value="${preset ? '' : st.time}" aria-label="Chọn giờ khác"></label>
+    <p class="label">Nhắc qua</p>
+    <ul class="chans">
+      <li><span class="ci">${ic('fill-bell')}</span><span><b>Thông báo</b>${pushNote}</span>
+        <button class="sw" id="sw-push" role="switch" aria-checked="${st.push}" aria-label="Thông báo" ${st.pushDenied ? 'disabled' : ''}></button></li>
+      <li><span class="ci">${ic('fill-letter')}</span><span><b>Email</b><small>${G.email}</small></span>
+        <button class="sw" id="sw-email" role="switch" aria-checked="${st.email}" aria-label="Email"></button></li>
+      <li><span class="ci">${ic('fill-plain')}</span><span><b>Telegram</b><small>${st.telegram ? 'Đã kết nối @ChaiyoBot' : 'Mở @ChaiyoBot để kết nối'}</small></span>
+        <button class="sw" id="sw-telegram" role="switch" aria-checked="${st.telegram}" aria-label="Telegram"></button></li>
+    </ul>
+    <p class="meta">Đổi lúc nào cũng được ở Tôi → Cài đặt.</p></div>`;
+  $$('.times button').forEach((b) => (b.onclick = () => { st.time = b.dataset.t; reminder(); }));
+  $('#tm').oninput = (e) => { if (e.target.value) { st.time = e.target.value; $$('.times button').forEach((b) => b.setAttribute('aria-pressed', 'false')); $('#other').classList.add('on'); } };
+  $('#sw-email').onclick = () => { st.email = !st.email; reminder(); };
+  $('#sw-telegram').onclick = () => { st.telegram = !st.telegram; reminder(); };
+  $('#sw-push').onclick = async () => {
+    if (st.push) { st.push = false; return reminder(); }
+    // Real permission prompt; anything but "granted" → denied state, keep the other channels.
+    const p = 'Notification' in window ? await Notification.requestPermission().catch(() => 'denied') : 'denied';
+    if (p === 'granted') st.push = true; else st.pushDenied = true;
+    reminder();
+  };
+  const none = !st.push && !st.email && !st.telegram;
+  cta('Tiếp', { onClick: () => go(2), hint: none ? 'Không chọn kênh nào: sẽ không có lời nhắc' : '' });
+}
+
+function offer() {
+  $('#main').innerHTML = `<div class="step">
+    <div class="pic"><img src="../assets/onboard/start-b0.png" alt="" onerror="this.src='../assets/home/lesson-next.png'"></div>
+    <h2 class="big">Bạn đã biết tiếng Trung chưa?</h2>
+    <p class="lead">Làm bài kiểm tra để bỏ qua phần đã biết.</p>
+    <ul class="ticks">
+      <li>${ic('bold-check')}<span>Chỉ đọc và nghe.</span></li>
+      <li>${ic('bold-check')}<span>Câu khó dần. Không biết thì bấm “Không biết”.</span></li>
+      <li>${ic('bold-check')}<span>Bài tự dừng khi tới trình độ của bạn.</span></li>
+    </ul></div>`;
+  cta('Kiểm tra trình độ', { onClick: () => (location.href = 'o2-placement.html') });
+  $('#hint').innerHTML = '<a class="link" href="home-glass.html">Học từ đầu</a>';
+}
+
+const STEPS = [profile, reminder, offer];
+let at = 0;
+function go(i) {
+  at = i;
+  bar(i + 1, STEPS.length, '');
+  $('#back').hidden = i === 0;
+  STEPS[i]();
+  scrollTo(0, 0);
+}
+$('#back').onclick = () => at > 0 && go(at - 1);
+go(Math.min(+new URLSearchParams(location.search).get('at') || 0, 2));
+</script>
+</body>
+</html>

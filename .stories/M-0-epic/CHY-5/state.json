@@ -1,0 +1,30 @@
+{
+  "story": "CHY-5",
+  "title": "Sync docs with the final prototype",
+  "stage": "slicing",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "docs sync",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-5.1"
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-5",
+  "log": [
+    "2026-10-26 init",
+    "2026-10-26 +S1 docs sync [AC1,AC2,AC3]"
+  ],
+  "updated": "2026-10-26T13:14:50+07:00"
+}

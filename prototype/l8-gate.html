@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Kiểm tra · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .top { grid-template-columns: 44px 1fr auto; }
+  .top .t { text-align: center; }
+
+  .big { margin-top: var(--s5); padding: var(--s5) 0; border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); text-align: center; }
+  .big .hz { font-size: 64px; line-height: 1.1; }
+  .big p { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .big.vi .hz { font: 600 26px/1.25 var(--font-display); }
+
+  /* typePinyin */
+  .field { margin-top: var(--s5); display: block; }
+  .field input { width: 100%; height: 60px; padding: 0 var(--s4); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.55);
+    font: 500 24px var(--font-display); color: var(--ink-1); outline: 0; }
+  .field input:focus { border: 2px solid var(--ink-1); padding: 0 calc(var(--s4) - 1px); background: #fff; }
+  .field input::placeholder { color: var(--ink-4); font: 400 16px var(--font-ui); }
+  .live { margin-top: var(--s3); min-height: 32px; display: flex; align-items: baseline; gap: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+  .live b { font: 600 22px var(--font-display); color: var(--ink-1); }
+  .tones { margin-top: var(--s3); display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s2); }
+  .tones button { height: 52px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); font: 500 24px var(--font-display); }
+  .tones button:active { background: var(--paper-2); border-color: var(--ink-1); }
+  .tip { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+
+  /* order tiles */
+  .slots, .pool { display: flex; justify-content: center; gap: var(--s2); }
+  .slots { margin-top: var(--s5); padding: var(--s5) 0; border-bottom: 1px solid var(--ink-1); }
+  .pool { padding-top: var(--s5); }
+  .tile { width: 72px; height: 72px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: #fff; display: grid; place-items: center; font-size: 40px; line-height: 1; }
+  .slots .tile { border-color: var(--ink-1); }
+  .slots .tile.empty { background: transparent; border: 1px dashed var(--ink-4); }
+  .pool .tile:active { border-color: var(--ink-1); }
+  .pool .tile.used { background: transparent; border: 1px dashed var(--ink-5); color: transparent; pointer-events: none; }
+
+  /* exit confirm: flat paper panel over a dim scrim */
+  .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(29,24,20,.5); display: flex; align-items: flex-end; justify-content: center; animation: fade .15s ease-out; }
+  .scrim[hidden] { display: none; }
+  @keyframes fade { from { opacity: 0; } }
+  .sheet { width: min(430px, 100%); background: var(--paper); border-top: 1px solid var(--ink-5); border-radius: var(--r-cta) var(--r-cta) 0 0; padding: var(--s6) var(--s5) calc(env(safe-area-inset-bottom, 0px) + var(--s5)); }
+  .sheet h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .sheet p { margin-top: var(--s2); color: var(--ink-2); }
+  .sheet .row { margin-top: var(--s5); display: grid; gap: var(--s2); }
+  .sheet .cta { height: 56px; }
+  .ghost { height: 56px; border-radius: var(--r-cta); border: 1px solid var(--ink-5); font: 600 18px var(--font-display); color: var(--ink-2); }
+  .ghost:active { background: var(--paper-2); }
+  @media (prefers-reduced-motion: reduce) { .scrim { animation: none; } }
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="x" id="exit" aria-label="Thoát bài kiểm tra"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></button>
+  <span class="t">Kiểm tra Bài 1</span>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h2 id="sh-t">Thoát bài kiểm tra?</h2>
+    <p>Điểm sẽ không được lưu.</p>
+    <div class="row">
+      <button class="cta" id="keep">Làm tiếp</button>
+      <button class="ghost" id="leave">Thoát</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { $, $$, ic, bar, cta, hint, choice, shuffle } from './step.js?v=9';
+import { WORDS, word } from './data/h1-01.js?v=2';
+
+const HINT = 'Không hiện đáp án đến khi nộp bài';
+const retry = new URLSearchParams(location.search).has('retry');
+
+// ── tone helpers (typePinyin)
+const MARK = { a: 'āáǎàa', e: 'ēéěèe', i: 'īíǐìi', o: 'ōóǒòo', u: 'ūúǔùu', ü: 'ǖǘǚǜü' };
+const BASE = {}; for (const [b, s] of Object.entries(MARK)) for (const c of s) BASE[c] = b;
+const strip = (s) => [...s].map((c) => BASE[c] || c).join('');
+function addTone(syl, t) {
+  const base = strip(syl).replace(/v/g, 'ü');
+  if (!t || t === 5) return base;
+  let i = base.indexOf('a'); if (i < 0) i = base.indexOf('e');
+  if (i < 0) i = base.indexOf('ou') >= 0 ? base.indexOf('ou') : -1;
+  if (i < 0) { for (let k = base.length - 1; k >= 0; k--) if (MARK[base[k]]) { i = k; break; } }
+  return i < 0 ? base : base.slice(0, i) + MARK[base[i]][t - 1] + base.slice(i + 1);
+}
+const toMarks = (s) => s.replace(/([a-zA-Zü]+)([1-5])/g, (_, syl, t) => addTone(syl.toLowerCase(), +t));
+const norm = (s) => toMarks(s).toLowerCase().replace(/\s+/g, '').normalize('NFC');
+const SYL = /(?:zh|ch|sh|[bpmfdtnlgkhjqxzcsryw])?[aeiouü]+(?:ng|n|r)?/g;
+function toneLast(value, t) {
+  const m = /[a-zA-Zü\u0100-\u01dc]+\d?$/.exec(value);
+  if (!m) return value;
+  const run = m[0].replace(/\d$/, ''), plain = strip(run).toLowerCase().replace(/v/g, 'ü');
+  const last = [...plain.matchAll(SYL)].pop();
+  if (!last) return value;
+  const at = last.index, len = last[0].length;
+  return value.slice(0, m.index) + run.slice(0, at) + addTone(run.slice(at, at + len), t) + run.slice(at + len);
+}
+
+// ── in-page question types (no feedback; they call done(ok, yours))
+function typePinyin(q, done) {
+  $('#main').innerHTML = `<div class="step">
+    <p class="ask">${q.ask}</p><h2>${q.title}</h2>
+    <div class="big"><div class="hz">${q.hz}</div><p>${q.vi}</p></div>
+    <label class="field"><input id="ty" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="zai4jian4 hoặc zàijiàn" aria-label="Pinyin"></label>
+    <div class="live" id="live"><small>Hiển thị:</small><b id="pv"></b></div>
+    <div class="tones" role="group" aria-label="Thêm thanh điệu cho âm tiết cuối">${[1, 2, 3, 4, 5].map((t) => `<button type="button" data-t="${t}" aria-label="Thanh ${t === 5 ? 'nhẹ' : t}">${addTone('a', t)}</button>`).join('')}</div>
+    <p class="tip">Gõ số thanh (zai4jian4) hoặc bấm nút thanh cho âm tiết cuối.</p></div>`;
+  const inp = $('#ty'), upd = () => {
+    $('#pv').textContent = toMarks(inp.value) || '…';
+    $('#cta').disabled = !inp.value.trim();
+  };
+  inp.oninput = upd;
+  $$('.tones button').forEach((b) => (b.onclick = () => { inp.value = toneLast(inp.value, +b.dataset.t); inp.focus(); upd(); }));
+  cta(q.last ? 'Nộp bài' : 'Câu tiếp', { disabled: true, caret: true, hint: HINT,
+    onClick: () => { const v = inp.value.trim(); if (v) done(norm(v) === norm(q.ans), toMarks(v)); } });
+}
+
+function order(q, done) {
+  const slots = Array(q.tiles.length).fill(null);
+  const pool = shuffle(q.tiles);
+  const draw = () => {
+    $('#slots').innerHTML = slots.map((p, i) => p === null
+      ? '<span class="tile empty"></span>'
+      : `<button class="tile hz" data-s="${i}" aria-label="Bỏ ${pool[p]} ra">${pool[p]}</button>`).join('');
+    $('#pool').innerHTML = pool.map((c, i) => `<button class="tile hz ${slots.includes(i) ? 'used' : ''}" data-p="${i}" ${slots.includes(i) ? 'tabindex="-1"' : ''}>${c}</button>`).join('');
+    $$('[data-s]').forEach((b) => (b.onclick = () => { slots[+b.dataset.s] = null; draw(); }));
+    $$('[data-p]').forEach((b) => (b.onclick = () => { const k = slots.indexOf(null); if (k >= 0) { slots[k] = +b.dataset.p; draw(); } }));
+    $('#cta').disabled = slots.includes(null);
+  };
+  $('#main').innerHTML = `<div class="step">
+    <p class="ask">${q.ask}</p><h2>${q.title}</h2>
+    <div class="slots" id="slots"></div><div class="pool" id="pool"></div></div>`;
+  draw();
+  cta(q.last ? 'Nộp bài' : 'Câu tiếp', { disabled: true, caret: true, hint: HINT,
+    onClick: () => { if (slots.includes(null)) return; const y = slots.map((p) => pool[p]).join(''); done(y === q.ans, y); } });
+}
+
+// ── the 10 questions (all Bài 1 content)
+const vi = (hz) => word(hz).vi;
+const audioQ = (hz, others) => ({ t: 'choice', rp: 'Nghe và chọn chữ', ask: 'Nghe và chọn', title: 'Bạn nghe được từ nào?', key: word(hz).a, kind: 'hz', ans: hz, opts: [hz, ...others] });
+const meanQ = (hz, others) => ({ t: 'choice', rp: `${hz} nghĩa là gì?`, ask: 'Chọn nghĩa', title: 'Từ này nghĩa là gì?', kind: 'text', ans: vi(hz), opts: [vi(hz), ...others.map(vi)],
+  promptHtml: `<div class="big"><div class="hz">${hz}</div></div>` });
+const QUESTIONS = [
+  audioQ('谢谢', ['没关系', '不客气', '对不起']),
+  meanQ('对不起', ['没关系', '谢谢', '再见']),
+  { t: 'choice', rp: `“${vi('没关系')}” viết thế nào?`, ask: 'Chọn chữ', title: `“${vi('没关系')}” viết thế nào?`, kind: 'hz', ans: '没关系', opts: ['没关系', '对不起', '谢谢', '再见'] },
+  { t: 'order', rp: 'Xếp câu “Chào các bạn!”', ask: 'Xếp câu', title: 'Xếp thành câu: “Chào các bạn!”', tiles: ['们', '你', '好'], ans: '你们好' },
+  audioQ('你们', ['你好', '您', '谢谢']),
+  { t: 'pinyin', rp: 'Pinyin của 再见', ask: 'Gõ pinyin', title: 'Viết pinyin cho từ này', hz: '再见', vi: vi('再见'), ans: 'zàijiàn' },
+  meanQ('好', ['你', '您', '谢谢'].map((x) => x)),
+  { t: 'pinyin', rp: 'Pinyin của 谢谢', ask: 'Gõ pinyin', title: 'Viết pinyin cho từ này', hz: '谢谢', vi: vi('谢谢'), ans: 'xièxie' },
+  audioQ('不客气', ['谢谢', '没关系', '再见']),
+  { t: 'choice', rp: 'Chào thầy cô (lịch sự)', ask: 'Chọn câu đúng', title: 'Chào thầy cô (lịch sự)', kind: 'hz', ans: '您好', opts: ['您好', '你好', '你们好', '好你'] },
+];
+const qs = retry ? shuffle(QUESTIONS) : QUESTIONS;
+qs.forEach((q, i) => { q.last = i === qs.length - 1; });
+
+// ── runner
+let i = 0, score = 0; const wrong = [];
+function next(q, ok, yours) {
+  if (ok) score++; else wrong.push({ prompt: q.rp, yours: String(yours), answer: q.ans });
+  if (++i < qs.length) show(); else submit();
+}
+function show() {
+  const q = qs[i];
+  bar(i, qs.length);
+  const done = (ok, y) => next(q, ok, y);
+  if (q.t === 'choice') {
+    const { rp, t, ...rest } = q;
+    choice({ ...rest, opts: shuffle(q.opts), feedback: false }, done);
+    $$('.opt').forEach((b) => b.addEventListener('click', () => hint(HINT)));
+    hint(HINT);
+  } else if (q.t === 'pinyin') typePinyin(q, done);
+  else order(q, done);
+  scrollTo(0, 0);
+}
+function submit() {
+  const total = qs.length;
+  const pct = Math.round((score / total) * 100);
+  let best = pct;
+  try { best = Math.max(pct, +localStorage.getItem('gate-h1-01-best') || 0); localStorage.setItem('gate-h1-01-best', best); } catch {}
+  sessionStorage.setItem('gate-h1-01', JSON.stringify({ score, total, wrong, best }));
+  location.href = 'l9-result.html';
+}
+
+// ── exit confirm
+const scrim = $('#scrim');
+const open = () => { scrim.hidden = false; $('#keep').focus(); };
+const close = () => { scrim.hidden = true; $('#exit').focus(); };
+$('#exit').onclick = open;
+$('#keep').onclick = close;
+$('#leave').onclick = () => (location.href = 'l1-hub.html');
+scrim.onclick = (e) => { if (e.target === scrim) close(); };
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && !scrim.hidden) close(); });
+
+show();
+</script>
+</body>
+</html>

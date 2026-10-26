@@ -1,0 +1,10 @@
+# content/grammar/h3-g03.yaml
+id: h3-g03
+level: 3
+std: [ 205 ]
+title: "Phủ định mạnh: 一点儿也不……"
+pattern: 主语 + 一点儿也不 + 形容词
+explain: 一点儿也不 đặt trước tính từ nghĩa là “không … chút nào”. 也 và 不 phải đứng ngay sau 一点儿 theo đúng thứ tự này.
+examples: [ s-h3-01-02, s-h3-01-21 ]
+pitfalls:
+  - { wrong: 我不一点儿也紧张, right: 我也一点儿不紧张 }

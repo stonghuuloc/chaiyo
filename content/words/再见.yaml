@@ -1,0 +1,14 @@
+# content/words/再见.yaml
+id: 再见
+hanzi: 再见
+pinyin: zàijiàn
+hanviet: tái kiến
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: tạm biệt }
+parts:
+  - { hanzi: 再, pinyin: zài, hanviet: tái, vi: "lại, nữa" }
+  - { hanzi: 见, pinyin: jiàn, hanviet: kiến, vi: "gặp, thấy" }
+examples: [ s-h1-01-19 ]
+image: { file: words/zaijian.png }

@@ -1,0 +1,14 @@
+# content/words/你.yaml
+id: 你
+hanzi: 你
+pinyin: nǐ
+hanviet: nhĩ
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: "bạn, anh, chị" }
+parts:
+  - { hanzi: 亻, name: nhân đứng, vi: người }
+  - { hanzi: 尔, name: nhĩ, vi: phần đọc }
+examples: [ s-h1-01-10 ]
+image: { file: words/ni.png }

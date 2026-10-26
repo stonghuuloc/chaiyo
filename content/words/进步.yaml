@@ -1,0 +1,14 @@
+# content/words/进步.yaml
+id: 进步
+hanzi: 进步
+pinyin: jìnbù
+hanviet: tiến bộ
+level: 3
+pos: [ v ]
+senses:
+  - { vi: tiến bộ }
+parts:
+  - { hanzi: 进, pinyin: jìn, hanviet: tiến, vi: tiến lên }
+  - { hanzi: 步, pinyin: bù, hanviet: bộ, vi: bước }
+examples: [ s-h3-01-11 ]
+image: { file: words/h3-01/w11.png, prompt: "The takin climbs a staircase of books, one step higher than before, with a cheerful red panda waiting at the top. Only the red panda and the takin." }

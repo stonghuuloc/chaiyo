@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Ngữ pháp · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .kick { font-size: var(--t-meta); color: var(--ink-3); }
+  .kick + h2 { margin-top: 4px; font: 600 var(--t-h2)/1.2 var(--font-display); }
+
+  /* pattern anchor: the slot is open (dashed, paper), 好 is fixed (solid ink). No red: nothing here is an action. */
+  .pattern { margin-top: var(--s5); display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: var(--s2); }
+  .pattern .slot { min-height: 88px; padding: 0 var(--s3); border-radius: var(--r-cell); border: 1.5px dashed var(--ink-4); background: rgba(255,255,255,.4);
+    display: grid; place-items: center; text-align: center; align-content: center; }
+  .pattern .slot .hz { font-size: 30px; white-space: nowrap; }
+  .pattern .slot small { display: block; margin-top: 2px; font: 400 12px/1.2 var(--font-ui); color: var(--ink-3); }
+  .pattern .plus { font-size: 20px; color: var(--ink-3); }
+  .pattern .fix { width: 88px; height: 88px; border-radius: var(--r-cell); background: var(--paper-2); border: 1.5px solid var(--ink-1); color: var(--ink-1); display: grid; place-items: center; align-content: center; line-height: 1; }
+  .pattern .fix .hz { font-size: 48px; }
+  .pattern .fix small { display: block; margin-top: -4px; font: 400 12px/1 var(--font-ui); color: var(--ink-3); text-align: center; }
+  .pattern .fix span { display: block; }
+  .legend { margin-top: var(--s2); display: grid; grid-template-columns: 1fr 96px; gap: var(--s2); font-size: 12px; color: var(--ink-3); text-align: center; }
+  .explain { margin-top: var(--s5); font-size: var(--t-body); line-height: 1.55; color: var(--ink-2); }
+  .explain .hz { font-size: 19px; color: var(--ink-1); }
+
+  .ex { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--s3); padding: var(--s2) 0; }
+  .ex + .ex { border-top: 1px solid var(--ink-5); }
+  .ex .hz { font-size: 26px; line-height: 1.25; }
+  .ex p { font-size: 15px; color: var(--ink-3); }
+  .ex p + p { color: var(--ink-1); font-size: var(--t-body); margin-top: 2px; }
+
+  .fix2 { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s3); }
+  .fix2 > div { min-height: 64px; padding: var(--s2) var(--s3); border-radius: var(--r-cell); border: 1px solid var(--ink-5); display: grid; place-items: center; text-align: center; }
+  .fix2 .hz { font-size: 28px; line-height: 1.2; }
+  .fix2 small { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 4px; justify-content: center; }
+  .fix2 .no { background: var(--paper-2); color: var(--ink-3); }
+  .fix2 .no .hz { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .fix2 .yes { background: rgba(255,255,255,.55); border: 2px solid var(--ink-1); }
+  .fix2 .ic { font-size: 13px; }
+  .fix2 .go { color: var(--ink-4); font-size: 16px; }
+
+  .more { margin-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  .more button { width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 500; color: var(--ink-2); }
+  .more .ic { font-size: 18px; transition: transform .2s; }
+  .more button[aria-expanded="true"] .ic { transform: rotate(180deg); }
+  .more p { padding-bottom: var(--s3); font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+  .more p .hz { font-size: 18px; color: var(--ink-1); }
+  .more p[hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) { .more .ic { transition: none; } }
+
+  /* order drill */
+  .prompt { margin-top: var(--s5); padding: var(--s4); border-radius: var(--r-cell); background: var(--paper-2); font: 600 var(--t-h2)/1.25 var(--font-display); }
+  .prompt small { display: block; margin-bottom: 2px; font: 400 var(--t-meta) var(--font-ui); color: var(--ink-3); }
+  .slots, .pool { display: flex; justify-content: center; gap: var(--s3); }
+  .slots { margin-top: var(--s6); }
+  .pool { margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  .slot-b, .tile { width: 64px; height: 64px; border-radius: var(--r-cell); display: grid; place-items: center; font-size: 36px; line-height: 1; position: relative; }
+  .slot-b { border: 1.5px dashed var(--ink-4); background: rgba(255,255,255,.3); }
+  .tile { border: 1px solid var(--ink-5); background: #fff; transition: opacity .12s; }
+  .tile:active { background: var(--paper-2); }
+  .slots .tile { border: 2px solid var(--ink-1); }
+  .pool .gone { background: transparent; border: 1px dashed var(--ink-5); color: transparent; pointer-events: none; }
+  .pool[hidden] { display: none; }
+  .slots.checked .tile { pointer-events: none; }
+  .slots.right .tile { border: 2px solid var(--vermilion); background: var(--vermilion-wash); }
+  .slots.wrong .tile { border: 2px solid var(--ink-3); background: var(--paper-2); color: var(--ink-3); }
+  .order .say { text-align: center; }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l1-hub.html" aria-label="Lưu và về bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <div class="seg" id="seg" aria-hidden="true"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<script type="module">
+import { $, $$, ic, go, play, bar, cta, hint, choice, doneStep, shuffle } from './step.js?v=9';
+import { GRAMMAR as G, SENTENCES as S } from './data/h1-01.js?v=2';
+
+const hz = (t) => t.replace(/[\u4e00-\u9fff]+/g, '<span class="hz">$&</span>');
+const TOTAL = 4;
+let step = 0;                                        // 0 explain, 1–2 choice, 3 order, 4 done
+let open = false;
+
+function explain() {
+  const ex = ['s08', 's09'].map((k) => S[k]);
+  $('#main').innerHTML = `<div class="step">
+    <p class="kick">Điểm ngữ pháp 1</p><h2>${hz(G.title)}</h2>
+    <div class="pattern" role="img" aria-label="Người được chào cộng 好">
+      <div class="slot"><span class="hz">${G.pattern[0]}</span><small>người được chào</small></div><span class="plus">+</span>
+      <div class="fix"><span class="hz">${G.pattern[1]}</span><small>luôn có</small></div>
+    </div>
+    <p class="explain">${hz(G.explain)}</p>
+    <section><h3>Ví dụ</h3>${ex.map((s, i) => `<div class="ex"><div><span class="hz">${s.hz}</span><p>${s.py}</p><p>${s.vi}</p></div>
+      <button class="round" data-i="${i}" aria-label="Nghe ${s.hz}">${ic('regular-speaker-high')}</button></div>`).join('')}</section>
+    <section><h3>Hay nhầm</h3>
+      <div class="fix2"><div class="no"><span class="hz">好你</span><small>${ic('regular-x')} Sai</small></div>${go()}
+        <div class="yes"><span class="hz">你好</span><small>${ic('bold-check')} Đúng</small></div></div></section>
+    <div class="more"><button id="more" aria-expanded="${open}" aria-controls="moreText">Xem thêm${ic('regular-caret-down')}</button>
+      <p id="moreText" ${open ? '' : 'hidden'}>${hz(G.more)}</p></div>
+  </div>`;
+  $$('.round').forEach((b) => (b.onclick = () => play(ex[b.dataset.i].a, b)));
+  $('#more').onclick = (e) => {
+    open = !open; e.currentTarget.setAttribute('aria-expanded', open); $('#moreText').hidden = !open;
+  };
+  cta('Làm bài', { hint: '3 câu luyện nhanh', onClick: () => { step = 1; render(); } });
+}
+
+const DRILLS = [
+  { ask: 'Câu 1/3 · Chọn câu chào đúng', title: 'Chào thầy cô (lịch sự)', opts: ['你好', '您好', '你们好'], ans: '您好',
+    explain: (a) => `<span class="hz">${a}</span> nín hǎo · dùng với người lớn tuổi, thầy cô` },
+  { ask: 'Câu 2/3 · Chọn câu chào đúng', title: 'Chào cả nhóm bạn', opts: ['你好', '您好', '你们好'], ans: '你们好',
+    explain: (a) => `<span class="hz">${a}</span> nǐmen hǎo · 们 chỉ số nhiều` },
+];
+
+function order() {
+  const ans = '你们好', target = 'Chào các bạn!';
+  let pool, placed = [], checked = false;
+  do pool = shuffle([...ans]); while (pool.join('') === ans);
+  $('#main').innerHTML = `<div class="step order">
+    <p class="ask">Câu 3/3 · Xếp thành câu</p><h2>Xếp các chữ thành câu chào</h2>
+    <div class="prompt"><small>Tiếng Việt</small>${target}</div>
+    <div class="slots" id="slots"></div><p class="say" id="say"></p>
+    <div class="pool" id="pool"></div></div>`;
+  const draw = () => {
+    $('#slots').innerHTML = [0, 1, 2].map((i) => placed[i] != null
+      ? `<button class="tile hz" data-s="${i}" aria-label="Bỏ chữ ${pool[placed[i]]} ra">${pool[placed[i]]}</button>` : '<span class="slot-b"></span>').join('');
+    $('#pool').innerHTML = pool.map((c, i) => placed.includes(i)
+      ? `<span class="tile gone hz">${c}</span>` : `<button class="tile hz" data-p="${i}" aria-label="Đặt chữ ${c}">${c}</button>`).join('');
+    $$('[data-p]').forEach((b) => (b.onclick = () => { if (checked) return; placed.push(+b.dataset.p); draw(); }));
+    $$('[data-s]').forEach((b) => (b.onclick = () => { if (checked) return; placed.splice(+b.dataset.s, 1); draw(); }));
+    if (checked) return;
+    const full = placed.length === 3;
+    cta('Kiểm tra', { disabled: !full, caret: false, hint: full ? '' : 'Chạm các chữ để xếp theo thứ tự', onClick: grade });
+  };
+  const grade = () => {
+    checked = true; $('#pool').hidden = true;
+    const got = placed.map((i) => pool[i]).join(''), ok = got === ans;
+    $('#slots').classList.add('checked', ok ? 'right' : 'wrong');
+    $('#say').innerHTML = ok ? '<b>Đúng rồi.</b> <span class="hz">你们好</span> nǐmen hǎo'
+      : `<b>Chưa đúng.</b> Đáp án là <span class="hz">${ans}</span> nǐmen hǎo`;
+    cta('Tiếp', { hint: ok ? '' : 'Câu này sẽ quay lại ở phần ôn', onClick: () => { step = 4; render(); } });
+  };
+  draw();
+}
+
+function render() {
+  scrollTo(0, 0);
+  if (step === 4) { bar(TOTAL, TOTAL, `${TOTAL}/${TOTAL}`);
+    return doneStep({ title: 'Xong phần Ngữ pháp', text: 'Mẫu A + 好 đã vào phần ôn tập, sẽ quay lại cùng các câu hỏi khác.',
+      gridHtml: `<div class="grid"><span class="hz">你好</span><span class="hz">您好</span><span class="hz">你们好</span></div>`, next: 'Hội thoại', label: 'Phần tiếp theo', href: 'l5-dialogue.html' }); }
+  bar(step, TOTAL, `${step + 1}/${TOTAL}`);
+  if (step === 0) explain();
+  else if (step === 3) order();
+  else choice(DRILLS[step - 1], () => { step++; render(); });
+}
+render();
+</script>
+</body>
+</html>

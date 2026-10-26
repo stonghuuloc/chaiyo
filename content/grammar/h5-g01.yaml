@@ -1,0 +1,10 @@
+# content/grammar/h5-g01.yaml
+id: h5-g01
+level: 5
+std: [ 296 ]
+title: "Theo đà phát triển: 随着…"
+pattern: 随着 + sự việc đang thay đổi + ， + 主语 + 越来越 + 形容词
+explain: 随着 (tuỳ trước) đặt ở đầu câu, theo sau là một sự việc đang thay đổi (发展, 交通…). Vế sau nêu kết quả đi cùng, thường dùng 越来越 + tính từ. Hai vế cách nhau bằng dấu phẩy.
+examples: [ s-h5-01-09, s-h5-01-18 ]
+pitfalls:
+  - { wrong: 乡村越来越繁荣随着交通的发展, right: 随着交通的发展，乡村越来越繁荣 }

@@ -1,0 +1,153 @@
+# content/lessons/hsk5/h5-01.yaml
+id: h5-01
+level: 5
+topic: Xã hội
+order: 1
+title: Thành thị và nông thôn
+titleHanzi: 城市与乡村
+goal: Nói về cuộc sống ở thành phố và nông thôn, so sánh ưu điểm, nhược điểm và sự thay đổi của hai nơi
+scene:
+  file: lessons/h5-01.png
+  cast: [ redpanda, takin ]
+  prompt: The red panda and the takin walk along a path where a busy city skyline with tall buildings meets green countryside fields and a small village, the takin looking proud and the red panda pointing kindly toward the village. Only the red panda and the takin.
+sentences:
+  - { id: s-h5-01-01, hanzi: 你一直住在城市里吗？, pinyin: nǐ yīzhí zhù zài chéngshì lǐ ma?, spoken: nǐ yìzhí zhù zài chéngshì lǐ ma?, vi: Bạn vẫn luôn sống ở thành phố à?, speaker: redpanda }
+  - { id: s-h5-01-02, hanzi: 对。我家在市中心，买东西、坐车都很便利。, pinyin: "duì. wǒ jiā zài shì zhōngxīn, mǎi dōngxi, zuò chē dōu hěn biànlì.", vi: "Ừ. Nhà mình ở trung tâm, mua đồ hay đi xe đều rất tiện.", speaker: takin }
+  - { id: s-h5-01-03, hanzi: 可是城里物价高，空气也有污染吧？, pinyin: "kěshì chéng lǐ wùjià gāo, kōngqì yě yǒu wūrǎn ba?", spoken: "kěshì chéng lǐ wùjià gāo, kōngqì yé yǒu wūrǎn ba?", vi: "Nhưng trong thành phố giá cả cao, không khí chắc cũng ô nhiễm nhỉ?", speaker: redpanda }
+  - { id: s-h5-01-04, hanzi: 没错，竞争压力也很大，大家每天都很忙。, pinyin: "méi cuò, jìngzhēng yālì yě hěn dà, dàjiā měitiān dōu hěn máng.", spoken: "méi cuò, jìngzhēng yālì yé hěn dà, dàjiā měitiān dōu hěn máng.", vi: "Đúng vậy, áp lực cạnh tranh cũng lớn, ai cũng bận rộn mỗi ngày.", speaker: takin }
+  - { id: s-h5-01-05, hanzi: 那你想过去郊区住一段时间吗？, pinyin: nà nǐ xiǎng guo qù jiāoqū zhù yī duàn shíjiān ma?, spoken: nà ní xiǎng guo qù jiāoqū zhù yí duàn shíjiān ma?, vi: Thế bạn có từng nghĩ đến ra ngoại ô sống một thời gian không?, speaker: redpanda }
+  - { id: s-h5-01-06, hanzi: 我连现在的邻居都不熟悉，搬到郊区就更没有朋友了。, pinyin: "wǒ lián xiànzài de línjū dōu bù shúxī, bāndào jiāoqū jiù gèng méiyǒu péngyou le.", vi: "Mình còn chẳng quen hàng xóm hiện giờ, chuyển ra ngoại ô thì càng không có bạn.", speaker: takin }
+  - { id: s-h5-01-07, hanzi: 上个周末我去了一次乡村，那里的变化真大。, pinyin: "shàng ge zhōumò wǒ qù le yī cì xiāngcūn, nàlǐ de biànhuà zhēn dà.", spoken: "shàng ge zhōumò wǒ qù le yí cì xiāngcūn, nàlǐ de biànhuà zhēn dà.", vi: "Cuối tuần trước mình về nông thôn một lần, ở đó thay đổi nhiều thật.", speaker: redpanda }
+  - { id: s-h5-01-08, hanzi: 是吗？我以为乡村和城市的差距还很大呢。, pinyin: shì ma? wǒ yǐwéi xiāngcūn hé chéngshì de chājù hái hěn dà ne., spoken: shì ma? wó yǐwéi xiāngcūn hé chéngshì de chājù hái hěn dà ne., vi: Vậy à? Mình tưởng khoảng cách giữa nông thôn và thành phố vẫn còn lớn lắm., speaker: takin }
+  - { id: s-h5-01-09, hanzi: 差距还在，不过随着交通的发展，乡村越来越繁荣了。, pinyin: "chājù hái zài, bùguò suízhe jiāotōng de fāzhǎn, xiāngcūn yuè lái yuè fánróng le.", spoken: "chājù hái zài, búguò suízhe jiāotōng de fāzhǎn, xiāngcūn yuè lái yuè fánróng le.", vi: "Khoảng cách vẫn còn, nhưng cùng với sự phát triển của giao thông, nông thôn ngày càng thịnh vượng.", speaker: redpanda }
+  - { id: s-h5-01-10, hanzi: 听起来不错。那里的人心态一定很轻松吧？, pinyin: tīng qǐlái bù cuò. nàlǐ de rén xīntài yīdìng hěn qīngsōng ba?, spoken: tīng qǐlái bú cuò. nàlǐ de rén xīntài yídìng hěn qīngsōng ba?, vi: Nghe cũng hay đấy. Tâm thái người ở đó chắc thoải mái lắm nhỉ?, speaker: takin }
+  - { id: s-h5-01-11, hanzi: 是啊，大家有空就聊天，生活很休闲。你也去享受一下吧。, pinyin: "shì a, dàjiā yǒu kòng jiù liáotiān, shēnghuó hěn xiūxián. nǐ yě qù xiǎngshòu yīxià ba.", spoken: "shì a, dàjiā yǒu kòng jiù liáotiān, shēnghuó hěn xiūxián. ní yě qù xiǎngshòu yíxià ba.", vi: "Ừ, rảnh là mọi người tán gẫu, cuộc sống rất thư thả. Bạn cũng đi tận hưởng thử đi.", speaker: redpanda }
+  - { id: s-h5-01-12, hanzi: 好吧，下次我跟你去。说不定我也会爱上那里。, pinyin: "hǎo ba, xià cì wǒ gēn nǐ qù. shuō bù dìng wǒ yě huì àishàng nàlǐ.", spoken: "hǎo ba, xià cì wǒ gēn nǐ qù. shuō bú dìng wó yě huì àishàng nàlǐ.", vi: "Được rồi, lần sau mình đi với bạn. Biết đâu mình cũng sẽ yêu nơi đó.", speaker: takin }
+  - { id: s-h5-01-13, hanzi: 城市和乡村，是两种很不一样的生活。, pinyin: "chéngshì hé xiāngcūn, shì liǎng zhǒng hěn bù yīyàng de shēnghuó.", spoken: "chéngshì hé xiāngcūn, shì liáng zhóng hěn bù yíyàng de shēnghuó.", vi: Thành thị và nông thôn là hai kiểu sống rất khác nhau. }
+  - { id: s-h5-01-14, hanzi: 城市里工作机会多，交通和购物都很便利，但是物价高，污染也比较严重。, pinyin: "chéngshì lǐ gōngzuò jīhuì duō, jiāotōng hé gòuwù dōu hěn biànlì, dànshì wùjià gāo, wūrǎn yě bǐjiào yánzhòng.", spoken: "chéngshì lǐ gōngzuò jīhuì duō, jiāotōng hé gòuwù dōu hěn biànlì, dànshì wùjià gāo, wūrán yé bǐjiào yánzhòng.", vi: "Thành phố nhiều cơ hội việc làm, đi lại và mua sắm đều tiện, nhưng giá cả cao và ô nhiễm khá nặng." }
+  - { id: s-h5-01-15, hanzi: 尽管住在同一座楼里，邻居们却很少说话。, pinyin: "jǐnguǎn zhù zài tóng yī zuò lóu lǐ, línjūmen què hěn shǎo shuōhuà.", spoken: "jínguǎn zhù zài tóng yí zuò lóu lǐ, línjūmen què hén shǎo shuōhuà.", vi: "Dù sống chung một tòa nhà, hàng xóm lại ít khi nói chuyện với nhau." }
+  - { id: s-h5-01-16, hanzi: 乡村的生活比较安静，人们彼此都很熟悉，见面就打招呼。, pinyin: "xiāngcūn de shēnghuó bǐjiào ānjìng, rénmen bǐcǐ dōu hěn shúxī, jiànmiàn jiù dǎ zhāohu.", spoken: "xiāngcūn de shēnghuó bǐjiào ānjìng, rénmen bícǐ dōu hěn shúxī, jiànmiàn jiù dǎ zhāohu.", vi: "Cuộc sống ở nông thôn khá yên tĩnh, mọi người đều quen nhau, gặp là chào." }
+  - { id: s-h5-01-17, hanzi: 尽管乡村的医疗和教育条件和城市还有差距，但是生活正在慢慢变好。, pinyin: "jǐnguǎn xiāngcūn de yīliáo hé jiàoyù tiáojiàn hé chéngshì hái yǒu chājù, dànshì shēnghuó zhèngzài mànmàn biàn hǎo.", spoken: "jínguǎn xiāngcūn de yīliáo hé jiàoyù tiáojiàn hé chéngshì hái yǒu chājù, dànshì shēnghuó zhèngzài mànmàn biàn hǎo.", vi: "Dù điều kiện y tế, giáo dục ở nông thôn còn kém thành phố, cuộc sống đang dần tốt lên." }
+  - { id: s-h5-01-18, hanzi: 近年来，随着国家的发展，越来越多的人在城乡之间流动。, pinyin: "jìnnián lái, suízhe guójiā de fāzhǎn, yuè lái yuè duō de rén zài chéngxiāng zhījiān liúdòng.", vi: "Những năm gần đây, cùng với sự phát triển của đất nước, ngày càng nhiều người di chuyển qua lại giữa thành thị và nông thôn." }
+  - { id: s-h5-01-19, hanzi: 有些年轻人去城市工作，也有些人从城市回到乡村，重新开始生活。, pinyin: "yǒuxiē niánqīng rén qù chéngshì gōngzuò, yě yǒuxiē rén cóng chéngshì huídào xiāngcūn, chóngxīn kāishǐ shēnghuó.", spoken: "yǒuxiē niánqīng rén qù chéngshì gōngzuò, yé yǒuxiē rén cóng chéngshì huídào xiāngcūn, chóngxīn kāishǐ shēnghuó.", vi: "Có người trẻ lên thành phố làm việc, cũng có người từ thành phố về quê, bắt đầu lại cuộc sống." }
+  - { id: s-h5-01-20, hanzi: 城市也在改变，新的社区里有公园和图书馆，居民们可以在家门口休闲。, pinyin: "chéngshì yě zài gǎibiàn, xīn de shèqū lǐ yǒu gōngyuán hé túshūguǎn, jūmínmen kěyǐ zài jiā ménkǒu xiūxián.", spoken: "chéngshì yě zài gǎibiàn, xīn de shèqū lí yǒu gōngyuán hé túshūguǎn, jūmínmen kéyǐ zài jiā ménkǒu xiūxián.", vi: "Thành phố cũng đang đổi thay: khu dân cư mới có công viên và thư viện, cư dân có thể thư giãn ngay trước cửa nhà." }
+  - { id: s-h5-01-21, hanzi: 其实，无论住在哪里，心态才是最重要的。, pinyin: "qíshí, wúlùn zhù zài nǎlǐ, xīntài cái shì zuì zhòngyào de.", spoken: "qíshí, wúlùn zhù zài nálǐ, xīntài cái shì zuì zhòngyào de.", vi: "Thật ra, dù sống ở đâu, tâm thái mới là điều quan trọng nhất." }
+  - { id: s-h5-01-22, hanzi: 只要懂得享受生活，城市和乡村都可以成为我们的家。, pinyin: "zhǐyào dǒngde xiǎngshòu shēnghuó, chéngshì hé xiāngcūn dōu kěyǐ chéngwéi wǒmen de jiā.", spoken: "zhǐyào dǒngde xiǎngshòu shēnghuó, chéngshì hé xiāngcūn dōu kéyǐ chéngwéi wǒmen de jiā.", vi: "Chỉ cần biết tận hưởng cuộc sống, thành thị hay nông thôn đều có thể là nhà của chúng ta." }
+sections:
+  warmup: {}
+  words:
+    ids: [ 差距, 繁荣, 污染, 竞争, 邻居, 乡村, 社区, 便利, 郊区, 物价, 休闲, 享受, 心态, 流动, 熟悉, 随着, 尽管 ]
+  grammar:
+    ids: [ h5-g01, h5-g02 ]
+    drills: []
+  dialogue:
+    parts:
+      - title: Sống trong thành phố
+        lines: [ s-h5-01-01, s-h5-01-02, s-h5-01-03, s-h5-01-04, s-h5-01-05, s-h5-01-06 ]
+      - title: Một chuyến về quê
+        lines: [ s-h5-01-07, s-h5-01-08, s-h5-01-09, s-h5-01-10, s-h5-01-11, s-h5-01-12 ]
+    questions: []
+  reading:
+    title: Hai nơi để sống
+    lines: [ s-h5-01-13, s-h5-01-14, s-h5-01-15, s-h5-01-16, s-h5-01-17, s-h5-01-18, s-h5-01-19, s-h5-01-20, s-h5-01-21, s-h5-01-22 ]
+  listenSpeak:
+    items: []
+  writing:
+    chars: [ 乡, 村, 区, 闲, 熟 ]
+gate:
+  draw: 7
+  pool:
+    - id: q-h5-01-x01
+      type: choice
+      tests: { words: [ 差距 ] }
+      prompt: { kind: vi, text: Nghĩa của 差距? }
+      optionKind: vi
+      options: [ "chênh lệch, khoảng cách", ô nhiễm, hàng xóm, thư giãn ]
+      answer: 0
+    - id: q-h5-01-x02
+      type: choice
+      tests: { words: [ 繁荣, 竞争, 邻居, 流动 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “cạnh tranh” }
+      optionKind: hanzi
+      options: [ 竞争, 繁荣, 邻居, 流动 ]
+      answer: 0
+    - id: q-h5-01-x03
+      type: choice
+      tests: { words: [ 邻居, 乡村, 社区, 郊区 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “hàng xóm” }
+      optionKind: hanzi
+      options: [ 邻居, 社区, 郊区, 乡村 ]
+      answer: 0
+    - id: q-h5-01-x04
+      type: choice
+      tests: { words: [ 繁荣, 污染, 物价, 心态 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “giá cả hàng hóa” }
+      optionKind: hanzi
+      options: [ 物价, 污染, 心态, 繁荣 ]
+      answer: 0
+    - id: q-h5-01-x05
+      type: choice
+      tests: { words: [ 便利, 休闲, 享受, 熟悉 ] }
+      prompt: { kind: vi, text: "Chọn từ có nghĩa “thư giãn, giải trí”" }
+      optionKind: hanzi
+      options: [ 休闲, 享受, 熟悉, 便利 ]
+      answer: 0
+    - id: q-h5-01-x06
+      type: choice
+      tests: { words: [ 繁荣, 竞争, 乡村, 享受, 随着, 尽管 ] }
+      prompt: { kind: vi, text: "Điền vào chỗ trống: （　）交通的发展，乡村越来越繁荣了。" }
+      optionKind: vi
+      options: [ 随着, 尽管, 享受, 竞争 ]
+      answer: 0
+    - id: q-h5-01-x07
+      type: choice
+      tests: { words: [ 邻居, 心态, 流动, 随着, 尽管 ] }
+      prompt: { kind: vi, text: "Điền vào chỗ trống: （　）住在同一座楼里，邻居们却很少说话。" }
+      optionKind: vi
+      options: [ 尽管, 随着, 心态, 流动 ]
+      answer: 0
+    - id: q-h5-01-x08
+      type: choice
+      tests: { words: [ 心态 ] }
+      prompt: { kind: vi, text: Nghĩa của 心态? }
+      optionKind: vi
+      options: [ "tâm thái, trạng thái tinh thần", giá cả hàng hóa, vùng ngoại ô, khu dân cư ]
+      answer: 0
+    - id: q-h5-01-x09
+      type: choice
+      tests: { words: [ 流动 ] }
+      prompt: { kind: vi, text: Nghĩa của 流动? }
+      optionKind: vi
+      options: [ "di chuyển, lưu thông", tận hưởng, quen thuộc, thịnh vượng ]
+      answer: 0
+    - id: q-h5-01-x10
+      type: choice
+      tests: { words: [ 差距, 社区, 便利, 郊区 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “vùng ngoại ô” }
+      optionKind: hanzi
+      options: [ 郊区, 社区, 便利, 差距 ]
+      answer: 0
+    - id: q-h5-01-x11
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h5-01-03 }
+      optionKind: vi
+      options: [ "Nhưng trong thành phố giá cả cao, không khí chắc cũng ô nhiễm nhỉ?", Thế bạn có từng nghĩ đến ra ngoại ô sống một thời gian không?, Bạn vẫn luôn sống ở thành phố à? ]
+      answer: 0
+    - id: q-h5-01-x12
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h5-01-22 }
+      optionKind: vi
+      options: [ "Chỉ cần biết tận hưởng cuộc sống, thành thị hay nông thôn đều có thể là nhà của chúng ta.", "Dù sống ở đâu, tâm thái mới là điều quan trọng nhất.", "Cuộc sống ở nông thôn khá yên tĩnh, mọi người đều quen nhau." ]
+      answer: 0
+    - id: q-h5-01-x13
+      type: order
+      tests: { words: [ 繁荣, 乡村 ] }
+      tiles: [ 繁荣, 乡村, 越来越, 了 ]
+      answer: 乡村越来越繁荣了
+    - id: q-h5-01-x14
+      type: order
+      tests: { words: [ 邻居, 熟悉 ] }
+      tiles: [ 都不熟悉, 我连, 邻居 ]
+      answer: 我连邻居都不熟悉

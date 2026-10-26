@@ -1,0 +1,14 @@
+# content/words/了解.yaml
+id: 了解
+hanzi: 了解
+pinyin: liǎojiě
+hanviet: liễu giải
+level: 4
+pos: [ v ]
+senses:
+  - { vi: "hiểu rõ, tìm hiểu" }
+parts:
+  - { hanzi: 了, pinyin: liǎo, hanviet: liễu, vi: "rõ ràng, thấu" }
+  - { hanzi: 解, pinyin: jiě, hanviet: giải, vi: "gỡ, hiểu" }
+examples: [ s-h4-01-02 ]
+image: { file: words/h4-01/w03.png, prompt: "The takin looks closely at a small open notebook of drawings while the red panda explains each one, both nodding." }

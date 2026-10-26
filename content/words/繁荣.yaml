@@ -1,0 +1,14 @@
+# content/words/繁荣.yaml
+id: 繁荣
+hanzi: 繁荣
+pinyin: fánróng
+hanviet: phồn vinh
+level: 5
+pos: [ adj ]
+senses:
+  - { vi: "thịnh vượng, phát đạt" }
+parts:
+  - { hanzi: 繁, pinyin: fán, hanviet: phồn, vi: "nhiều, rậm rạp" }
+  - { hanzi: 荣, pinyin: róng, hanviet: vinh, vi: "vẻ vang, tươi tốt" }
+examples: [ s-h5-01-09 ]
+image: { file: words/h5-01/w02.png, prompt: "The red panda stands in a lively village market full of colourful stalls and happy villagers while the takin looks on, impressed. Only the red panda and the takin." }

@@ -1,0 +1,14 @@
+# content/words/成绩.yaml
+id: 成绩
+hanzi: 成绩
+pinyin: chéngjì
+hanviet: thành tích
+level: 2
+pos: [ n ]
+senses:
+  - { vi: "thành tích, điểm số" }
+parts:
+  - { hanzi: 成, pinyin: chéng, hanviet: thành, vi: "nên, thành" }
+  - { hanzi: 绩, pinyin: jì, hanviet: tích, vi: công lao }
+examples: [ s-h3-01-08 ]
+image: { file: words/h3-01/w10.png, prompt: "The takin proudly holds up a paper covered with gold stars, with the red panda smiling next to it. Only the red panda and the takin." }

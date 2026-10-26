@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandarin app flow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Be+Vietnam+Pro:wght@400;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #f7f3ea;
+      --color-ink:    #1d1814;
+      --color-muted:  #4a423a;
+      --color-accent: #c6301d;
+      --font-sans:  'Be Vietnam Pro', system-ui, sans-serif;
+      --font-serif: 'Literata', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--color-paper); color: var(--color-ink); padding: 3rem 2rem; }
+    .frame { max-width: 1280px; margin: 0 auto; }
+    section + section { margin-top: 3.5rem; }
+    .diagram-container { width: 100%; overflow-x: auto; }
+    .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 0.5rem; }
+    h1 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.5rem; }
+    h2 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+    svg { width: 100%; min-width: 1280px; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Screens · docs/screens.md</p>
+    <h1>Mandarin app flow</h1>
+
+    <section>
+      <h2>1 · App map</h2>
+      <div class="diagram-container">
+        <svg viewBox="0 0 1280 592" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-title map-desc">
+          <title id="map-title">App map</title>
+          <desc id="map-desc">Login sends returning learners to Hôm nay and first-time learners through placement first. Hôm nay, Từ điển, Lộ trình and Tôi are the four tabs. Hôm nay's Next button opens the lesson or the review session, Từ điển starts a review of your own words, and Lộ trình opens lessons and mock tests. Lessons, reviews and mock tests run full screen with the tab bar hidden. Tapping any hanzi opens the lookup popup.</desc>
+          <defs>
+            <marker id="map-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4a423a"/></marker>
+            <marker id="map-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c6301d"/></marker>
+          </defs>
+
+          <rect width="100%" height="100%" fill="#f7f3ea"/>
+
+          <!-- zones -->
+          <rect x="280" y="64" width="400" height="456" rx="8" fill="rgba(29,24,20,0.02)" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+          <rect x="420" y="58" width="120" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="480" y="67" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">TAB BAR · 4 TABS</text>
+
+          <rect x="780" y="64" width="460" height="456" rx="8" fill="rgba(29,24,20,0.02)" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+          <rect x="900" y="58" width="220" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="1010" y="67" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">FULL SCREEN · TAB BAR HIDDEN</text>
+
+          <!-- arrows (before nodes) -->
+          <!-- login -> hom nay (returning) -->
+          <line x1="220" y1="120" x2="318" y2="120" stroke="#4a423a" stroke-width="1.2" marker-end="url(#map-arrow)"/>
+          <rect x="226" y="100" width="48" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="250" y="109" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">RETURN</text>
+
+          <!-- login -> first run -->
+          <line x1="130" y1="144" x2="130" y2="258" stroke="#4a423a" stroke-width="1.2" marker-end="url(#map-arrow)"/>
+          <rect x="138" y="196" width="76" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="176" y="205" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">FIRST LOGIN</text>
+
+          <!-- first run -> hom nay -->
+          <path d="M220,292 H252 Q260,292 260,284 V160 Q260,152 268,152 H318" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#map-arrow)"/>
+          <rect x="268" y="220" width="44" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="290" y="229" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">PLACED</text>
+
+          <!-- hom nay -> lesson (headline path) -->
+          <line x1="640" y1="120" x2="818" y2="120" stroke="#c6301d" stroke-width="1.4" marker-end="url(#map-arrow-accent)"/>
+          <rect x="682" y="100" width="56" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="710" y="109" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">NEXT</text>
+
+          <!-- hom nay -> review -->
+          <path d="M640,152 H752 Q760,152 760,160 V224 Q760,232 768,232 H818" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#map-arrow)"/>
+          <rect x="768" y="184" width="40" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="788" y="193" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">DUE</text>
+
+          <!-- tu dien -> review -->
+          <line x1="640" y1="256" x2="818" y2="256" stroke="#4a423a" stroke-width="1.2" marker-end="url(#map-arrow)"/>
+          <rect x="660" y="236" width="80" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="700" y="245" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">MY WORDS</text>
+
+          <!-- lo trinh -> mock -->
+          <line x1="640" y1="352" x2="818" y2="352" stroke="#4a423a" stroke-width="1.2" marker-end="url(#map-arrow)"/>
+          <rect x="660" y="332" width="80" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="700" y="341" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">LEVEL TEST</text>
+
+          <!-- nodes -->
+          <!-- login (start) -->
+          <rect x="40" y="96" width="180" height="48" rx="24" fill="#f7f3ea"/>
+          <rect x="40" y="96" width="180" height="48" rx="24" fill="rgba(74,66,58,0.10)" stroke="#655c51" stroke-width="1"/>
+          <text x="130" y="117" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Landing → Login</text>
+          <text x="130" y="131" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Google · magic link</text>
+
+          <!-- first run -->
+          <rect x="40" y="260" width="180" height="64" rx="6" fill="#f7f3ea"/>
+          <rect x="40" y="260" width="180" height="64" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="130" y="284" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">First run</text>
+          <text x="130" y="300" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">name · reminder time</text>
+          <text x="130" y="313" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Placement Test (skippable)</text>
+
+          <!-- hom nay (focal) -->
+          <rect x="320" y="96" width="320" height="80" rx="6" fill="#f7f3ea"/>
+          <rect x="320" y="96" width="320" height="80" rx="6" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1.2"/>
+          <text x="480" y="128" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Hôm nay</text>
+          <text x="480" y="148" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">one Next button · streak · freeze</text>
+          <text x="480" y="162" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">week strip · roadmap slice · friends</text>
+
+          <!-- tu dien -->
+          <rect x="320" y="208" width="320" height="72" rx="6" fill="#f7f3ea"/>
+          <rect x="320" y="208" width="320" height="72" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="480" y="236" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Từ điển</text>
+          <text x="480" y="254" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Của tôi (Lexicon) · Tra từ (Dictionary)</text>
+          <text x="480" y="268" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">→ Word Page</text>
+
+          <!-- lo trinh -->
+          <rect x="320" y="316" width="320" height="72" rx="6" fill="#f7f3ea"/>
+          <rect x="320" y="316" width="320" height="72" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="480" y="344" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Lộ trình</text>
+          <text x="480" y="362" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">HSK1 → 5 · ~350 lessons</text>
+          <text x="480" y="376" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">also opens any unlocked lesson</text>
+
+          <!-- toi -->
+          <rect x="320" y="424" width="320" height="72" rx="6" fill="#f7f3ea"/>
+          <rect x="320" y="424" width="320" height="72" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="480" y="452" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Tôi</text>
+          <text x="480" y="470" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">stats · badges · friends · profiles</text>
+          <text x="480" y="484" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">settings · admin (reports, analytics)</text>
+
+          <!-- lesson -->
+          <rect x="820" y="96" width="380" height="80" rx="6" fill="#f7f3ea"/>
+          <rect x="820" y="96" width="380" height="80" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="1010" y="128" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Lesson</text>
+          <text x="1010" y="148" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">hub · 6 resumable sections</text>
+          <text x="1010" y="162" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Gate Test ≥80% → next lesson</text>
+
+          <!-- review -->
+          <rect x="820" y="208" width="380" height="72" rx="6" fill="#f7f3ea"/>
+          <rect x="820" y="208" width="380" height="72" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="1010" y="236" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Review session</text>
+          <text x="1010" y="254" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">mixed recall · FSRS · ~30 cards</text>
+          <text x="1010" y="268" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">works fully offline</text>
+
+          <!-- mock -->
+          <rect x="820" y="316" width="380" height="72" rx="6" fill="#f7f3ea"/>
+          <rect x="820" y="316" width="380" height="72" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="1010" y="344" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Mock Test</text>
+          <text x="1010" y="362" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Exam (timed) · Practice (instant answers)</text>
+          <text x="1010" y="376" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">HSK 3.0 format</text>
+
+          <!-- callout -->
+          <text x="820" y="448" fill="#4a423a" font-size="14" font-style="italic" font-family="'Literata', serif">Tap any hanzi on any screen</text>
+          <text x="820" y="470" fill="#4a423a" font-size="14" font-style="italic" font-family="'Literata', serif">→ lookup popup → Word Page or Báo lỗi.</text>
+
+          <!-- legend -->
+          <line x1="40" y1="544" x2="1240" y2="544" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+          <text x="40" y="568" fill="#4a423a" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
+          <rect x="120" y="560" width="16" height="10" rx="5" fill="rgba(74,66,58,0.10)" stroke="#655c51" stroke-width="1"/>
+          <text x="144" y="568" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">entry</text>
+          <rect x="208" y="560" width="16" height="10" rx="2" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1"/>
+          <text x="232" y="568" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">home base</text>
+          <rect x="320" y="560" width="16" height="10" rx="2" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="344" y="568" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">screen</text>
+          <line x1="412" y1="565" x2="444" y2="565" stroke="#c6301d" stroke-width="1.4"/>
+          <text x="452" y="568" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">daily core loop</text>
+          <line x1="580" y1="565" x2="612" y2="565" stroke="#4a423a" stroke-width="1.2"/>
+          <text x="620" y="568" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">navigation</text>
+        </svg>
+      </div>
+    </section>
+
+    <section>
+      <h2>2 · What the Next button opens</h2>
+      <div class="diagram-container">
+        <svg viewBox="0 0 1280 312" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="next-title next-desc">
+          <title id="next-title">Next button priority</title>
+          <desc id="next-desc">Opening Hôm nay checks three things in order. Reviews due opens the review session. Otherwise an open lesson opens the lesson. Otherwise a finished level opens the mock tests. Otherwise the day is done.</desc>
+          <defs>
+            <marker id="next-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4a423a"/></marker>
+            <marker id="next-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c6301d"/></marker>
+          </defs>
+
+          <rect width="100%" height="100%" fill="#f7f3ea"/>
+
+          <!-- arrows -->
+          <line x1="200" y1="80" x2="246" y2="80" stroke="#4a423a" stroke-width="1.2" marker-end="url(#next-arrow)"/>
+
+          <line x1="392" y1="80" x2="486" y2="80" stroke="#4a423a" stroke-width="1.2" marker-end="url(#next-arrow)"/>
+          <rect x="425" y="60" width="28" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="439" y="69" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">NO</text>
+
+          <line x1="632" y1="80" x2="726" y2="80" stroke="#4a423a" stroke-width="1.2" marker-end="url(#next-arrow)"/>
+          <rect x="665" y="60" width="28" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="679" y="69" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">NO</text>
+
+          <line x1="872" y1="80" x2="998" y2="80" stroke="#4a423a" stroke-width="1.2" marker-end="url(#next-arrow)"/>
+          <rect x="921" y="60" width="28" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="935" y="69" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">NO</text>
+
+          <line x1="320" y1="120" x2="320" y2="174" stroke="#c6301d" stroke-width="1.4" marker-end="url(#next-arrow-accent)"/>
+          <rect x="328" y="140" width="32" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="344" y="149" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">YES</text>
+
+          <line x1="560" y1="120" x2="560" y2="174" stroke="#4a423a" stroke-width="1.2" marker-end="url(#next-arrow)"/>
+          <rect x="568" y="140" width="32" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="584" y="149" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">YES</text>
+
+          <line x1="800" y1="120" x2="800" y2="174" stroke="#4a423a" stroke-width="1.2" marker-end="url(#next-arrow)"/>
+          <rect x="808" y="140" width="32" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="824" y="149" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">YES</text>
+
+          <!-- nodes -->
+          <rect x="40" y="56" width="160" height="48" rx="24" fill="#f7f3ea"/>
+          <rect x="40" y="56" width="160" height="48" rx="24" fill="rgba(74,66,58,0.10)" stroke="#655c51" stroke-width="1"/>
+          <text x="120" y="84" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Open Hôm nay</text>
+
+          <polygon points="248,80 320,40 392,80 320,120" fill="#f7f3ea"/>
+          <polygon points="248,80 320,40 392,80 320,120" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1.2"/>
+          <text x="320" y="84" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Reviews due?</text>
+
+          <polygon points="488,80 560,40 632,80 560,120" fill="#f7f3ea"/>
+          <polygon points="488,80 560,40 632,80 560,120" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="560" y="84" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Lesson open?</text>
+
+          <polygon points="728,80 800,40 872,80 800,120" fill="#f7f3ea"/>
+          <polygon points="728,80 800,40 872,80 800,120" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="800" y="84" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Level done?</text>
+
+          <rect x="1000" y="56" width="200" height="48" rx="24" fill="#f7f3ea"/>
+          <rect x="1000" y="56" width="200" height="48" rx="24" fill="rgba(74,66,58,0.10)" stroke="#655c51" stroke-width="1"/>
+          <text x="1100" y="77" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Xong hôm nay</text>
+          <text x="1100" y="91" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">day done · no button</text>
+
+          <rect x="220" y="176" width="200" height="56" rx="6" fill="#f7f3ea"/>
+          <rect x="220" y="176" width="200" height="56" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="320" y="200" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Review session</text>
+          <text x="320" y="216" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">old words before new</text>
+
+          <rect x="460" y="176" width="200" height="56" rx="6" fill="#f7f3ea"/>
+          <rect x="460" y="176" width="200" height="56" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="560" y="200" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Lesson</text>
+          <text x="560" y="216" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">resumes at last section</text>
+
+          <rect x="700" y="176" width="200" height="56" rx="6" fill="#f7f3ea"/>
+          <rect x="700" y="176" width="200" height="56" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="800" y="200" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Mock Test list</text>
+          <text x="800" y="216" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">for the finished level</text>
+
+          <!-- legend -->
+          <line x1="40" y1="264" x2="1240" y2="264" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+          <text x="40" y="288" fill="#4a423a" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
+          <rect x="120" y="280" width="16" height="10" rx="5" fill="rgba(74,66,58,0.10)" stroke="#655c51" stroke-width="1"/>
+          <text x="144" y="288" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">start / end</text>
+          <polygon points="236,285 244,280 252,285 244,290" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="260" y="288" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">check</text>
+          <rect x="324" y="280" width="16" height="10" rx="2" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="348" y="288" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">screen it opens</text>
+          <line x1="468" y1="285" x2="500" y2="285" stroke="#c6301d" stroke-width="1.4"/>
+          <text x="508" y="288" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">reviews always win</text>
+        </svg>
+      </div>
+    </section>
+
+    <section>
+      <h2>3 · Lesson loop</h2>
+      <div class="diagram-container">
+        <svg viewBox="0 0 1280 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-title loop-desc">
+          <title id="loop-title">Lesson loop</title>
+          <desc id="loop-desc">The lesson hub opens six sections that save on exit and return to the hub. When all six are done the Gate Test unlocks. Scoring 80 percent or more unlocks the next lesson; a lower score retries the Gate Test with fresh questions.</desc>
+          <defs>
+            <marker id="loop-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4a423a"/></marker>
+            <marker id="loop-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c6301d"/></marker>
+          </defs>
+
+          <rect width="100%" height="100%" fill="#f7f3ea"/>
+
+          <!-- forward arrows -->
+          <line x1="200" y1="100" x2="238" y2="100" stroke="#4a423a" stroke-width="1.2" marker-end="url(#loop-arrow)"/>
+          <line x1="460" y1="100" x2="486" y2="100" stroke="#4a423a" stroke-width="1.2" marker-end="url(#loop-arrow)"/>
+
+          <line x1="632" y1="100" x2="670" y2="100" stroke="#4a423a" stroke-width="1.2" marker-end="url(#loop-arrow)"/>
+          <rect x="637" y="80" width="28" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="651" y="89" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">YES</text>
+
+          <line x1="832" y1="100" x2="858" y2="100" stroke="#4a423a" stroke-width="1.2" marker-end="url(#loop-arrow)"/>
+
+          <line x1="1004" y1="100" x2="1042" y2="100" stroke="#c6301d" stroke-width="1.4" marker-end="url(#loop-arrow-accent)"/>
+          <rect x="1009" y="80" width="28" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="1023" y="89" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">YES</text>
+
+          <!-- returns -->
+          <path d="M320,128 V168 Q320,176 312,176 H128 Q120,176 120,168 V130" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#loop-arrow)"/>
+          <rect x="176" y="184" width="88" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="220" y="193" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">SAVE ON EXIT</text>
+
+          <path d="M560,140 V200 Q560,208 552,208 H88 Q80,208 80,200 V130" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#loop-arrow)"/>
+          <rect x="568" y="164" width="28" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="582" y="173" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">NO</text>
+
+          <path d="M932,140 V168 Q932,176 924,176 H760 Q752,176 752,168 V130" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#loop-arrow)"/>
+          <rect x="784" y="184" width="116" height="12" rx="2" fill="#f7f3ea"/>
+          <text x="842" y="193" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">NO · NEW QUESTIONS</text>
+
+          <!-- nodes -->
+          <rect x="40" y="72" width="160" height="56" rx="6" fill="#f7f3ea"/>
+          <rect x="40" y="72" width="160" height="56" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="120" y="96" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Lesson hub</text>
+          <text x="120" y="112" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">progress per section</text>
+
+          <rect x="240" y="72" width="220" height="56" rx="6" fill="#f7f3ea"/>
+          <rect x="240" y="72" width="220" height="56" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="350" y="96" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Section × 6</text>
+          <text x="350" y="112" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">warm-up first, then any order</text>
+
+          <polygon points="488,100 560,60 632,100 560,140" fill="#f7f3ea"/>
+          <polygon points="488,100 560,60 632,100 560,140" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="560" y="104" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">All 6 done?</text>
+
+          <rect x="672" y="72" width="160" height="56" rx="6" fill="#f7f3ea"/>
+          <rect x="672" y="72" width="160" height="56" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="752" y="96" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Gate Test</text>
+          <text x="752" y="112" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">fresh question draw</text>
+
+          <polygon points="860,100 932,60 1004,100 932,140" fill="#f7f3ea"/>
+          <polygon points="860,100 932,60 1004,100 932,140" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="932" y="104" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">≥ 80%?</text>
+
+          <rect x="1044" y="76" width="196" height="48" rx="24" fill="#f7f3ea"/>
+          <rect x="1044" y="76" width="196" height="48" rx="24" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1.2"/>
+          <text x="1142" y="97" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Next lesson unlocks</text>
+          <text x="1142" y="111" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">counts for streak</text>
+
+          <!-- legend -->
+          <line x1="40" y1="244" x2="1240" y2="244" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+          <text x="40" y="268" fill="#4a423a" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
+          <rect x="120" y="260" width="16" height="10" rx="2" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="144" y="268" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">screen</text>
+          <polygon points="212,265 220,260 228,265 220,270" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+          <text x="236" y="268" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">check</text>
+          <rect x="300" y="260" width="16" height="10" rx="5" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1"/>
+          <text x="324" y="268" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">goal</text>
+          <line x1="380" y1="265" x2="412" y2="265" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="5,4"/>
+          <text x="420" y="268" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">goes back</text>
+        </svg>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

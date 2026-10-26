@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Kiểm tra · Nhập môn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="primer.css">
+<style>
+  .top .t { text-align: center; }
+
+  /* exit confirm (same as L8) */
+  .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(29,24,20,.5); display: flex; align-items: flex-end; justify-content: center; animation: fade .15s ease-out; }
+  .scrim[hidden] { display: none; }
+  @keyframes fade { from { opacity: 0; } }
+  .sheet { width: min(430px, 100%); background: var(--paper); border-top: 1px solid var(--ink-5); border-radius: var(--r-cta) var(--r-cta) 0 0; padding: var(--s6) var(--s5) calc(env(safe-area-inset-bottom, 0px) + var(--s5)); }
+  .sheet h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .sheet p { margin-top: var(--s2); color: var(--ink-2); }
+  .sheet .row { margin-top: var(--s5); display: grid; gap: var(--s2); }
+  .sheet .cta { height: 56px; }
+  .ghost { height: 56px; border-radius: var(--r-cta); border: 1px solid var(--ink-5); font: 600 18px var(--font-display); color: var(--ink-2); }
+  .ghost:active { background: var(--paper-2); }
+  @media (prefers-reduced-motion: reduce) { .scrim { animation: none; } }
+
+  /* result (same as L9) */
+  .pic { aspect-ratio: 3 / 2; border-radius: var(--r-cell); overflow: hidden; background: var(--paper-2); }
+  .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .chaiyo { margin-top: var(--s5); font: 700 34px/1.1 var(--font-display); letter-spacing: -.01em; color: var(--vermilion-text); }
+  .score { margin-top: var(--s3); display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; }
+  .score b { font: 700 56px/1 var(--font-display); letter-spacing: -.01em; }
+  .score span { color: var(--ink-2); }
+  .meter { position: relative; margin-top: var(--s5); height: 8px; border-radius: 4px; background: var(--ink-5); }
+  .meter i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ink-3); }
+  .meter.pass i { background: var(--vermilion); }
+  .meter u { position: absolute; top: -5px; bottom: -5px; left: 80%; width: 2px; background: var(--ink-1); }
+  .scale { position: relative; height: 20px; margin-top: 8px; font-size: 12.5px; color: var(--ink-3); }
+  .scale span { position: absolute; left: 80%; transform: translateX(-50%); white-space: nowrap; }
+  .msg { margin-top: var(--s3); display: flex; align-items: center; gap: var(--s2); font-weight: 600; color: var(--vermilion-text); }
+  .msg .ic { font-size: 18px; }
+  .calm { margin-top: var(--s3); font: 600 var(--t-h2)/1.25 var(--font-display); }
+  .best { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .wrongs { list-style: none; }
+  .wrongs li { padding: var(--s3) 0; }
+  .wrongs li + li { border-top: 1px solid var(--ink-5); }
+  .wrongs .q { font-size: var(--t-meta); color: var(--ink-3); }
+  .wrongs .q .hz { font-size: 16px; }
+  .wrongs .y { margin-top: 2px; font-size: 15px; color: var(--ink-3); }
+  .wrongs .y s { text-decoration-thickness: 1px; color: var(--ink-2); font-size: 18px; }
+  .wrongs .a { margin-top: 2px; font-size: 20px; font-weight: 600; }
+  .wrongs .a small { font-weight: 400; font-size: var(--t-meta); color: var(--ink-3); margin-left: 6px; }
+  .clean { color: var(--ink-2); }
+  .foot .link { display: block; margin-top: var(--s3); padding: var(--s2) 0; text-align: center; font-weight: 600; font-size: 15px; color: var(--vermilion-text); }
+  .foot .link[hidden] { display: none; }
+  main.result { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 170px); }
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="x" id="exit" aria-label="Thoát bài kiểm tra"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></button>
+  <span class="t" id="ttl">Kiểm tra Nhập môn</span>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><a class="link" id="alt" href="l0-hub.html" hidden>Về Nhập môn</a><p id="hint"></p></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h2 id="sh-t">Thoát bài kiểm tra?</h2>
+    <p>Điểm sẽ không được lưu.</p>
+    <div class="row">
+      <button class="cta" id="keep">Làm tiếp</button>
+      <button class="ghost" id="leave">Thoát</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { $, ic, bar, cta, hint, shuffle, celebrate } from './step.js?v=9';
+import { PRIMER, SECTIONS, drill, shown, plain, progress, esc } from './primer.js?v=2';
+
+const HINT = 'Không hiện đáp án đến khi nộp bài';
+const NEED = 80;
+const demo = new URLSearchParams(location.search).get('demo');
+
+// 10 questions: 2 per section from the pool (covers all five), shuffled
+const { pool, draw } = PRIMER.gate;
+const per = draw / SECTIONS.length;
+const qs = shuffle(SECTIONS.flatMap((s) => shuffle(pool.filter((q) => q.s === s)).slice(0, per)));
+qs.forEach((q, i) => { q.last = i === qs.length - 1; });
+
+let i = 0, score = 0; const wrong = [];
+function show() {
+  const q = qs[i];
+  bar(i, qs.length);
+  drill(q, (ok, pick) => {
+    if (ok) score++; else wrong.push({ q, yours: pick });
+    if (++i < qs.length) show(); else result({ score, total: qs.length, wrong });
+  }, { ask: `Câu ${i + 1}/${qs.length}`, feedback: false, last: q.last });
+  hint(HINT);
+  document.querySelectorAll('.opt').forEach((b) => b.addEventListener('click', () => hint(HINT)));
+  scrollTo(0, 0);
+}
+
+function result(r) {
+  const pct = Math.round((r.score / r.total) * 100), pass = pct >= NEED;
+  if (!demo) progress.gate(pct, pass);
+  const best = Math.max(pct, progress.get().best || 0);
+  document.title = `Kết quả · ${pct}%`;
+  $('#ttl').textContent = 'Kết quả Nhập môn'; $('#count').textContent = '';
+  $('#seg')?.remove();
+  const rows = r.wrong.map(({ q, yours }) => `<li><p class="q">${q.prompt ? q.prompt : esc(plain(q))}</p>
+    <p class="y">Bạn: <s class="py">${esc(shown(q, yours))}</s></p>
+    <p class="a"><span class="py">${esc(shown(q, q.ans))}</span>${q.why ? `<small>${esc(q.why)}</small>` : ''}</p></li>`).join('');
+  const main = $('#main'); main.className = 'result';
+  main.innerHTML = `<div class="step">
+    <div class="pic"><img src="../assets/results/b0-${pass ? 'pass' : 'fail'}.png" alt="" onerror="this.onerror = () => this.remove(); this.src = '../assets/${pass ? 'samples/happy' : 'home/lesson-next'}.png'"></div>
+    ${pass ? '<p class="chaiyo">Chaiyo!</p>' : ''}
+    <div class="score"><b>${pct}%</b><span>${r.score}/${r.total} câu đúng · cần ${NEED}%</span></div>
+    <div class="meter ${pass ? 'pass' : ''}" role="img" aria-label="${pct}%, mốc ${NEED}%"><i style="width:${pct}%"></i><u></u></div>
+    <div class="scale" aria-hidden="true"><span>${NEED}%</span></div>
+    ${pass ? `<p class="msg">${ic('bold-check')}Đã mở Bài 1</p>` : `<p class="calm">Gần được rồi. Cần ${NEED}% để mở Bài&nbsp;1.</p>`}
+    <p class="best">Điểm cao nhất: ${best}%</p>
+    <section><h3>${r.wrong.length ? `Câu chưa đúng (${r.wrong.length})` : 'Câu chưa đúng'}</h3>
+      ${r.wrong.length ? `<ul class="wrongs">${rows}</ul>` : '<p class="clean">Không sai câu nào.</p>'}</section></div>`;
+  const alt = $('#alt'); alt.hidden = false;
+  if (pass) {
+    cta('Học Bài 1', { onClick: () => (location.href = 'l1-hub.html') });
+    setTimeout(celebrate, 250);
+  } else {
+    cta('Làm lại', { onClick: () => (location.href = 'l0-gate.html') });
+    alt.textContent = 'Ôn lại các phần'; alt.href = 'l0-hub.html';
+  }
+  $('#exit').onclick = () => (location.href = 'l0-hub.html');
+  scrollTo(0, 0);
+}
+
+// ── exit confirm
+const scrim = $('#scrim');
+const open = () => { scrim.hidden = false; $('#keep').focus(); };
+const close = () => { scrim.hidden = true; $('#exit').focus(); };
+$('#exit').onclick = open;
+$('#keep').onclick = close;
+$('#leave').onclick = () => (location.href = 'l0-hub.html');
+scrim.onclick = (e) => { if (e.target === scrim) close(); };
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && !scrim.hidden) close(); });
+
+if (demo === 'pass' || demo === 'fail') {
+  // preview of the result screen without playing the 10 questions
+  const w = shuffle(pool).slice(0, demo === 'fail' ? 4 : 1).map((q) => ({ q, yours: q.opts.find((o) => o !== q.ans) }));
+  result({ score: 10 - w.length, total: 10, wrong: w });
+} else show();
+</script>
+</body>
+</html>

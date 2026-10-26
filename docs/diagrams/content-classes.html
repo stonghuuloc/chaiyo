@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson content classes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Be+Vietnam+Pro:wght@400;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; background: #f7f3ea; color: #1d1814; padding: 3rem 2rem; }
+    .frame { max-width: 1280px; margin: 0 auto; }
+    section + section { margin-top: 3.5rem; }
+    .diagram-container { width: 100%; overflow-x: auto; }
+    .eyebrow { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #4a423a; margin-bottom: 0.5rem; }
+    h1 { font-family: 'Literata', serif; font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.5rem; }
+    h2 { font-family: 'Literata', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .note { font-family: 'Literata', serif; font-style: italic; color: #4a423a; margin-bottom: 1rem; }
+    svg { width: 100%; min-width: 1280px; display: block; }
+    @media print { .diagram-container { overflow-x: visible; } svg { min-width: 0; } }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Content · docs/content-schema.md</p>
+    <h1>Lesson content classes</h1>
+    <section>
+      <h2>1 · Content model</h2>
+      <p class="note">Sentence is the atom: audio, tap lookup and Error Report context hang off its id.</p>
+      <div class="diagram-container">
+<svg viewBox="0 0 1280 712" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cm-title cm-desc">
+<title id="cm-title">Content model</title>
+<desc id="cm-desc">A Lesson owns its Sentences and Questions, and references one or more Grammar Points and 8 to 15 Words. A Word groups one or more Chars and references 1 to 3 example Sentences. A Question uses Sentences as prompts. A dialogue Sentence may name one Cast member as its speaker. Sentence is the focal class: audio and tap lookup derive from it.</desc>
+<defs>
+<marker id="cm-tri" markerWidth="16" markerHeight="12" refX="15" refY="6" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 16 6, 0 12" fill="#f7f3ea" stroke="#1d1814" stroke-width="1"/></marker>
+<marker id="cm-tri-accent" markerWidth="16" markerHeight="12" refX="15" refY="6" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 16 6, 0 12" fill="#f7f3ea" stroke="#c6301d" stroke-width="1.2"/></marker>
+<marker id="cm-dfill" markerWidth="18" markerHeight="10" refX="0" refY="5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 5, 9 0, 18 5, 9 10" fill="#1d1814"/></marker>
+<marker id="cm-dhollow" markerWidth="18" markerHeight="10" refX="0" refY="5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 5, 9 0, 18 5, 9 10" fill="#f7f3ea" stroke="#1d1814" stroke-width="1"/></marker>
+<marker id="cm-open" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4 L0,8" fill="none" stroke="#4a423a" stroke-width="1"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f7f3ea"/>
+<path d="M500,100 H322" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#cm-open)"/>
+<rect x="476" y="80" width="16" height="12" rx="2" fill="#f7f3ea"/>
+<text x="484" y="89" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1</text>
+<rect x="324" y="80" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="340" y="89" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">0..*</text>
+<path d="M780,100 H978" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#cm-open)"/>
+<rect x="788" y="80" width="16" height="12" rx="2" fill="#f7f3ea"/>
+<text x="796" y="89" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1</text>
+<rect x="932" y="80" width="40" height="12" rx="2" fill="#f7f3ea"/>
+<text x="952" y="89" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">8..15</text>
+<path d="M640,220 V316" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#cm-dfill)"/>
+<rect x="652" y="290" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="668" y="299" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1..*</text>
+<path d="M500,196 H188 Q180,196 180,204 V316" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#cm-dfill)"/>
+<rect x="192" y="290" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="208" y="299" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1..*</text>
+<rect x="422" y="176" width="60" height="12" rx="2" fill="#f7f3ea"/>
+<text x="452" y="185" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">QUESTIONS</text>
+<path d="M320,380 H498" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#cm-open)"/>
+<rect x="388" y="360" width="44" height="12" rx="2" fill="#f7f3ea"/>
+<text x="410" y="369" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">PROMPT</text>
+<path d="M640,480 V558" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#cm-open)"/>
+<rect x="652" y="490" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="668" y="499" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">0..*</text>
+<rect x="652" y="534" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="668" y="543" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">0..1</text>
+<rect x="580" y="514" width="48" height="12" rx="2" fill="#f7f3ea"/>
+<text x="604" y="523" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">SPEAKER</text>
+<path d="M1110,220 V316" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#cm-dhollow)"/>
+<rect x="1122" y="290" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="1138" y="299" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1..*</text>
+<rect x="1130" y="234" width="16" height="12" rx="2" fill="#f7f3ea"/>
+<text x="1138" y="243" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1</text>
+<path d="M980,196 H888 Q880,196 880,204 V392 Q880,400 872,400 H782" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#cm-open)"/>
+<rect x="948" y="176" width="16" height="12" rx="2" fill="#f7f3ea"/>
+<text x="956" y="185" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1</text>
+<rect x="788" y="380" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="804" y="389" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1..3</text>
+<rect x="884" y="294" width="56" height="12" rx="2" fill="#f7f3ea"/>
+<text x="912" y="303" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">EXAMPLES</text>
+<rect x="500" y="56" width="280" height="162" rx="6" fill="#f7f3ea"/>
+<rect x="500" y="56" width="280" height="162" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="640" y="76" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Lesson</text>
+<line x1="500" y1="88" x2="780" y2="88" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="512" y="106" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: LessonId  · level · order</text>
+<text x="512" y="120" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ topic: TopicId</text>
+<text x="512" y="134" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ title · titleHanzi: string</text>
+<text x="512" y="148" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ sections: words · grammar · dialogue …</text>
+<text x="512" y="162" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ gate: { pool: Question[], draw }</text>
+<line x1="500" y1="174" x2="780" y2="174" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="512" y="192" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ drawGate(): Question[]</text>
+<text x="512" y="206" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ knownChars(): Set&lt;char&gt;</text>
+<rect x="40" y="56" width="280" height="118" rx="6" fill="#f7f3ea"/>
+<rect x="40" y="56" width="280" height="118" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="180" y="76" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">GrammarPoint</text>
+<line x1="40" y1="88" x2="320" y2="88" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="106" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: string  (h1-g01)</text>
+<text x="52" y="120" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ std?: GF0025-2021 ref</text>
+<text x="52" y="134" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ title · pattern: string</text>
+<text x="52" y="148" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ explain: markdown (vi)</text>
+<text x="52" y="162" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ examples: SentenceId[]</text>
+<rect x="980" y="56" width="260" height="162" rx="6" fill="#f7f3ea"/>
+<rect x="980" y="56" width="260" height="162" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="1110" y="76" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Word</text>
+<line x1="980" y1="88" x2="1240" y2="88" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="992" y="106" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: string  (你好 · 行-hang)</text>
+<text x="992" y="120" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ pinyin: citation</text>
+<text x="992" y="134" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ level · pos[]</text>
+<text x="992" y="148" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ senses: { vi }[]</text>
+<text x="992" y="162" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ image?: Cast picture</text>
+<line x1="980" y1="174" x2="1240" y2="174" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="992" y="192" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ hanviet(): string</text>
+<text x="992" y="206" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ taughtIn(): LessonId</text>
+<rect x="40" y="316" width="280" height="120" rx="6" fill="#f7f3ea"/>
+<rect x="40" y="316" width="280" height="120" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="180" y="336" fill="#1d1814" font-size="12" font-weight="600" font-style="italic" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Question</text>
+<line x1="40" y1="348" x2="320" y2="348" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="366" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: string</text>
+<text x="52" y="380" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ type: choice | tone | … (8)</text>
+<text x="52" y="394" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ tests: words · grammar · tone</text>
+<line x1="40" y1="406" x2="320" y2="406" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="424" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ grade(answer): Result</text>
+<rect x="500" y="316" width="280" height="162" rx="6" fill="#f7f3ea"/>
+<rect x="500" y="316" width="280" height="162" rx="6" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1.2"/>
+<text x="640" y="336" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Sentence</text>
+<line x1="500" y1="348" x2="780" y2="348" stroke="rgba(198,48,29,0.40)" stroke-width="0.8"/>
+<text x="512" y="366" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: SentenceId</text>
+<text x="512" y="380" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ hanzi · pinyin · vi</text>
+<text x="512" y="394" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ speaker?: CastId</text>
+<text x="512" y="408" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ seg?: string[]</text>
+<text x="512" y="422" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ unknown?: 80% escape hatch</text>
+<line x1="500" y1="434" x2="780" y2="434" stroke="rgba(198,48,29,0.40)" stroke-width="0.8"/>
+<text x="512" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ spoken(): string  (sandhi)</text>
+<text x="512" y="466" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ audioKey(rate): string</text>
+<rect x="980" y="316" width="260" height="104" rx="6" fill="#f7f3ea"/>
+<rect x="980" y="316" width="260" height="104" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="1110" y="336" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Char</text>
+<line x1="980" y1="348" x2="1240" y2="348" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="992" y="366" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ hanzi: one code point</text>
+<text x="992" y="380" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ readings: { pinyin, hanviet }[]</text>
+<text x="992" y="394" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ radical · ids · strokes</text>
+<text x="992" y="408" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ mnemonic?: 4 neo (vault)</text>
+<rect x="500" y="560" width="280" height="90" rx="6" fill="#f7f3ea"/>
+<rect x="500" y="560" width="280" height="90" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="640" y="580" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Cast</text>
+<line x1="500" y1="592" x2="780" y2="592" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="512" y="610" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: CastId</text>
+<text x="512" y="624" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ name: string</text>
+<text x="512" y="638" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ voice: id  (after spike)</text>
+
+<line x1="40" y1="652" x2="1240" y2="652" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+<text x="40" y="676" fill="#4a423a" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
+<path d="M120,673 H160" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#cm-tri)"/>
+<text x="170" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">inherits</text>
+<path d="M252,673 H292" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#cm-tri)"/>
+<text x="302" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">implements</text>
+<path d="M396,673 H436" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#cm-dfill)"/>
+<text x="446" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">owns · dies with</text>
+<path d="M572,673 H612" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#cm-dhollow)"/>
+<text x="622" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">has · independent</text>
+<path d="M756,673 H796" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#cm-open)"/>
+<text x="806" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">references</text>
+<path d="M900,673 H940" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#cm-open)"/>
+<text x="950" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">uses</text>
+<rect x="1012" y="668" width="16" height="10" rx="2" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1"/>
+<text x="1036" y="676" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">focal</text>
+
+</svg>
+      </div>
+    </section>
+    <section>
+      <h2>2 · Question kinds</h2>
+      <p class="note">The schema has 8 question types; grouped here by how each one is graded.</p>
+      <div class="diagram-container">
+<svg viewBox="0 0 1280 488" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="qm-title qm-desc">
+<title id="qm-title">Question kinds</title>
+<desc id="qm-desc">Question is abstract and owns an optional Prompt. Three kinds extend it, grouped by how they grade: pick questions by exact match, typed questions by normalised tones, spoken questions by Azure pronunciation score and a rubric. Every Attempt references one Question and maps to an FSRS rating.</desc>
+<defs>
+<marker id="qm-tri" markerWidth="16" markerHeight="12" refX="15" refY="6" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 16 6, 0 12" fill="#f7f3ea" stroke="#1d1814" stroke-width="1"/></marker>
+<marker id="qm-tri-accent" markerWidth="16" markerHeight="12" refX="15" refY="6" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 16 6, 0 12" fill="#f7f3ea" stroke="#c6301d" stroke-width="1.2"/></marker>
+<marker id="qm-dfill" markerWidth="18" markerHeight="10" refX="0" refY="5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 5, 9 0, 18 5, 9 10" fill="#1d1814"/></marker>
+<marker id="qm-dhollow" markerWidth="18" markerHeight="10" refX="0" refY="5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 5, 9 0, 18 5, 9 10" fill="#f7f3ea" stroke="#1d1814" stroke-width="1"/></marker>
+<marker id="qm-open" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4 L0,8" fill="none" stroke="#4a423a" stroke-width="1"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f7f3ea"/>
+<path d="M320,116 H498" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#qm-open)"/>
+<rect x="324" y="96" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="340" y="105" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">0..*</text>
+<rect x="476" y="96" width="16" height="12" rx="2" fill="#f7f3ea"/>
+<text x="484" y="105" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">1</text>
+<path d="M780,116 H980" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#qm-dfill)"/>
+<rect x="940" y="96" width="32" height="12" rx="2" fill="#f7f3ea"/>
+<text x="956" y="105" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">0..1</text>
+<path d="M640,300 V178" fill="none" stroke="#c6301d" stroke-width="1.2" marker-end="url(#qm-tri-accent)"/>
+<path d="M180,300 V248 Q180,240 188,240 H562 Q570,240 570,232 V178" fill="none" stroke="#c6301d" stroke-width="1.2" marker-end="url(#qm-tri-accent)"/>
+<path d="M1110,300 V248 Q1110,240 1102,240 H718 Q710,240 710,232 V178" fill="none" stroke="#c6301d" stroke-width="1.2" marker-end="url(#qm-tri-accent)"/>
+<rect x="500" y="56" width="280" height="120" rx="6" fill="#f7f3ea"/>
+<rect x="500" y="56" width="280" height="120" rx="6" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1.2"/>
+<text x="640" y="76" fill="#1d1814" font-size="12" font-weight="600" font-style="italic" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Question</text>
+<line x1="500" y1="88" x2="780" y2="88" stroke="rgba(198,48,29,0.40)" stroke-width="0.8"/>
+<text x="512" y="106" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ id: string</text>
+<text x="512" y="120" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ tests: words · grammar · tone</text>
+<text x="512" y="134" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ prompt?: Prompt</text>
+<line x1="500" y1="146" x2="780" y2="146" stroke="rgba(198,48,29,0.40)" stroke-width="0.8"/>
+<text x="512" y="164" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ grade(answer): Result</text>
+<rect x="980" y="56" width="260" height="90" rx="6" fill="#f7f3ea"/>
+<rect x="980" y="56" width="260" height="90" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="1110" y="76" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Prompt</text>
+<line x1="980" y1="88" x2="1240" y2="88" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="992" y="106" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ kind: hanzi | audio | image | vi</text>
+<text x="992" y="120" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ ref: SentenceId | WordId</text>
+<text x="992" y="134" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ text?: string  (vi only)</text>
+<rect x="40" y="56" width="280" height="120" rx="6" fill="#f7f3ea"/>
+<rect x="40" y="56" width="280" height="120" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="180" y="76" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">Attempt</text>
+<line x1="40" y1="88" x2="320" y2="88" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="106" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ learner_id · question_id</text>
+<text x="52" y="120" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ content_sha: string</text>
+<text x="52" y="134" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ answer · correct · ms · at</text>
+<line x1="40" y1="146" x2="320" y2="146" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="164" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ toFsrsRating(): Rating</text>
+<rect x="40" y="300" width="280" height="120" rx="6" fill="#f7f3ea"/>
+<rect x="40" y="300" width="280" height="120" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="180" y="320" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">PickQuestion</text>
+<line x1="40" y1="332" x2="320" y2="332" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="350" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ type: choice | fill | trueFalse | tone</text>
+<text x="52" y="364" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ options: string[]</text>
+<text x="52" y="378" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ answer: index | bool | 1–5</text>
+<line x1="40" y1="390" x2="320" y2="390" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="52" y="408" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ grade(): exact match</text>
+<rect x="500" y="300" width="280" height="106" rx="6" fill="#f7f3ea"/>
+<rect x="500" y="300" width="280" height="106" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="640" y="320" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">TypedQuestion</text>
+<line x1="500" y1="332" x2="780" y2="332" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="512" y="350" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ type: typePinyin | order</text>
+<text x="512" y="364" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ answer: string | SentenceId</text>
+<line x1="500" y1="376" x2="780" y2="376" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="512" y="394" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ grade(): tone marks or digits</text>
+<rect x="980" y="300" width="260" height="106" rx="6" fill="#f7f3ea"/>
+<rect x="980" y="300" width="260" height="106" rx="6" fill="#ffffff" stroke="#1d1814" stroke-width="1"/>
+<text x="1110" y="320" fill="#1d1814" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', system-ui, sans-serif" text-anchor="middle">SpokenQuestion</text>
+<line x1="980" y1="332" x2="1240" y2="332" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="992" y="350" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ type: readAloud | freeAnswer</text>
+<text x="992" y="364" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ sentence | rubric: string[]</text>
+<line x1="980" y1="376" x2="1240" y2="376" stroke="rgba(29,24,20,0.20)" stroke-width="0.8"/>
+<text x="992" y="394" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">+ grade(): Azure score · rubric</text>
+
+<line x1="40" y1="428" x2="1240" y2="428" stroke="rgba(29,24,20,0.10)" stroke-width="0.8"/>
+<text x="40" y="452" fill="#4a423a" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
+<path d="M120,449 H160" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#qm-tri)"/>
+<text x="170" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">inherits</text>
+<path d="M252,449 H292" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#qm-tri)"/>
+<text x="302" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">implements</text>
+<path d="M396,449 H436" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#qm-dfill)"/>
+<text x="446" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">owns · dies with</text>
+<path d="M572,449 H612" fill="none" stroke="#4a423a" stroke-width="1.2" marker-start="url(#qm-dhollow)"/>
+<text x="622" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">has · independent</text>
+<path d="M756,449 H796" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#qm-open)"/>
+<text x="806" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">references</text>
+<path d="M900,449 H940" fill="none" stroke="#4a423a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#qm-open)"/>
+<text x="950" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">uses</text>
+<rect x="1012" y="444" width="16" height="10" rx="2" fill="rgba(198,48,29,0.08)" stroke="#c6301d" stroke-width="1"/>
+<text x="1036" y="452" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">focal</text>
+
+</svg>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

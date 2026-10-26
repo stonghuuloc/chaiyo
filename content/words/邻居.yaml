@@ -1,0 +1,14 @@
+# content/words/邻居.yaml
+id: 邻居
+hanzi: 邻居
+pinyin: línjū
+hanviet: lân cư
+level: 5
+pos: [ n ]
+senses:
+  - { vi: hàng xóm }
+parts:
+  - { hanzi: 邻, pinyin: lín, hanviet: lân, vi: bên cạnh }
+  - { hanzi: 居, pinyin: jū, hanviet: cư, vi: "ở, cư trú" }
+examples: [ s-h5-01-06 ]
+image: { file: words/h5-01/w05.png, prompt: The takin and the red panda lean out of two neighbouring apartment windows and wave politely at each other. Only the red panda and the takin. }

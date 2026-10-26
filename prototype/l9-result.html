@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Kết quả · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .t { text-align: center; }
+  .pic { aspect-ratio: 3 / 2; border-radius: var(--r-cell); overflow: hidden; background: var(--paper-2); }
+  .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .score { margin-top: var(--s5); display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; }
+  .score b { font: 700 var(--t-hero)/1 var(--font-display); font-size: 56px; letter-spacing: -.01em; }
+  .score span { color: var(--ink-2); }
+  .meter { position: relative; margin-top: var(--s5); height: 8px; border-radius: 4px; background: var(--ink-5); }
+  .meter i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ink-3); }
+  .meter.pass i { background: var(--vermilion); }
+  .meter u { position: absolute; top: -5px; bottom: -5px; left: 80%; width: 2px; background: var(--ink-1); }
+  .scale { position: relative; height: 20px; margin-top: 8px; font-size: 12.5px; color: var(--ink-3); }
+  .scale span { position: absolute; left: 80%; transform: translateX(-50%); white-space: nowrap; }
+  .msg { margin-top: var(--s3); display: flex; align-items: center; gap: var(--s2); font-weight: 600; }
+  .msg.ok { color: var(--vermilion-text); }
+  .msg .ic { font-size: 18px; }
+  .calm { margin-top: var(--s3); font: 600 var(--t-h2)/1.25 var(--font-display); }
+  .best { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+
+  .wrongs { list-style: none; }
+  .wrongs li { padding: var(--s3) 0; }
+  .wrongs li + li { border-top: 1px solid var(--ink-5); }
+  .wrongs .q { font-size: var(--t-meta); color: var(--ink-3); }
+  .wrongs .y { margin-top: 2px; font-size: 15px; color: var(--ink-3); overflow-wrap: anywhere; }
+  .wrongs .y s { text-decoration-thickness: 1px; color: var(--ink-2); }
+  .wrongs .a { margin-top: 2px; font-weight: 600; overflow-wrap: anywhere; }
+  .wrongs .a .hz { font-size: 24px; font-weight: 400; margin-right: 6px; }
+  .wrongs .a small { font-weight: 400; font-size: var(--t-meta); color: var(--ink-3); }
+  .wrongs .y .hz { font-size: 18px; }
+  .clean { color: var(--ink-2); }
+
+  .link { display: block; margin-top: var(--s3); text-align: center; font-weight: 600; font-size: 15px; color: var(--vermilion-text); }
+  .foot .link { margin: var(--s3) 0 0; padding: var(--s2) 0; }
+  main { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 170px); }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l1-hub.html" aria-label="Về bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <span class="t">Kết quả Bài 1</span>
+  <span></span>
+</div>
+<main id="main"></main>
+<div class="foot"><a class="cta" id="cta"></a><a class="link" href="l1-hub.html">Về bài học</a></div>
+
+<script type="module">
+import { $, ic, celebrate } from './step.js?v=9';
+import { WORDS, SENTENCES } from './data/h1-01.js?v=2';
+
+const NEED = 80;
+const demo = new URLSearchParams(location.search).get('demo');
+const DEMOS = {
+  pass: { score: 9, total: 10, wrong: [{ prompt: 'Pinyin của 再见', yours: 'zàijian', answer: 'zàijiàn' }] },
+  fail: { score: 6, total: 10, wrong: [
+    { prompt: 'Pinyin của 再见', yours: 'zàijian', answer: 'zàijiàn' },
+    { prompt: '对不起 nghĩa là gì?', yours: 'không sao', answer: 'xin lỗi' },
+    { prompt: 'Xếp câu “Chào các bạn!”', yours: '你好们', answer: '你们好' },
+    { prompt: '“không sao” viết thế nào?', yours: '谢谢', answer: '没关系' } ] },
+};
+let data = null;
+if (!demo) { try { data = JSON.parse(sessionStorage.getItem('gate-h1-01')); } catch {} }
+data = data && data.total ? data : DEMOS[demo === 'fail' ? 'fail' : 'pass'];
+
+const pct = Math.round((data.score / data.total) * 100);
+const best = Math.max(pct, data.best || 0);
+const pass = pct >= NEED;
+
+// pinyin lookup for any hanzi answer (words + sentences)
+const PY = new Map();
+WORDS.forEach((w) => PY.set(w.hz, w.py));
+Object.values(SENTENCES).forEach((s) => PY.set(s.hz.replace(/[！。？]/g, ''), s.py));
+const hasHz = (s) => /[\u4e00-\u9fff]/.test(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const span = (s) => (hasHz(s) ? `<span class="hz">${esc(s)}</span>` : esc(s));
+
+const rows = data.wrong.map((w) => `<li>
+  <p class="q">${esc(w.prompt)}</p>
+  <p class="y">Bạn: <s>${span(w.yours)}</s></p>
+  <p class="a">${span(w.answer)}${PY.has(w.answer) ? `<small>${PY.get(w.answer)}</small>` : ''}</p></li>`).join('');
+
+document.title = `Kết quả · ${pct}%`;
+$('#main').innerHTML = `<div class="step">
+  <div class="pic"><img src="../assets/results/b1-${pass ? 'pass' : 'fail'}.png" alt="" onerror="this.onerror = () => this.remove(); this.src = '../assets/home/${pass ? 'day-done' : 'lesson-next'}.png'"></div>
+  <div class="score"><b id="pct">${pct}%</b><span>${data.score}/${data.total} câu đúng · cần ${NEED}%</span></div>
+  <div class="meter ${pass ? 'pass' : ''}" role="img" aria-label="${pct}%, mốc ${NEED}%"><i style="width:${pct}%"></i><u></u></div>
+  <div class="scale" aria-hidden="true"><span>${NEED}%</span></div>
+  ${pass ? `<p class="msg ok">${ic('bold-check')}Đã mở Bài 2 · +1 ngày chuỗi</p>`
+         : `<p class="calm">Gần được rồi. Cần ${NEED}% để mở Bài 2.</p>`}
+  <p class="best">Điểm cao nhất: ${best}%</p>
+  <section><h3>${data.wrong.length ? `Câu chưa đúng (${data.wrong.length})` : 'Câu chưa đúng'}</h3>
+    ${data.wrong.length ? `<ul class="wrongs">${rows}</ul>` : '<p class="clean">Không sai câu nào.</p>'}</section></div>`;
+
+const c = $('#cta');
+c.textContent = pass ? 'Về trang chủ' : 'Làm lại';
+c.insertAdjacentHTML('beforeend', ic('regular-caret-right', 'ic go'));
+c.href = pass ? 'home-glass.html' : 'l8-gate.html?retry=1';
+if (pass) setTimeout(celebrate, 250);
+</script>
+</body>
+</html>

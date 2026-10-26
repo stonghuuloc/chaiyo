@@ -1,0 +1,14 @@
+# content/words/流动.yaml
+id: 流动
+hanzi: 流动
+pinyin: liúdòng
+hanviet: lưu động
+level: 5
+pos: [ v ]
+senses:
+  - { vi: "di chuyển, lưu thông" }
+parts:
+  - { hanzi: 流, pinyin: liú, hanviet: lưu, vi: chảy }
+  - { hanzi: 动, pinyin: dòng, hanviet: động, vi: chuyển động }
+examples: [ s-h5-01-18 ]
+image: { file: words/h5-01/w14.png, prompt: The red panda and the takin watch a stream of people with suitcases walking along a road that connects a faraway village and a city. Only the red panda and the takin. }

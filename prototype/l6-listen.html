@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Nghe &amp; nói · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  /* tone question */
+  .opts.tones .opt { min-height: 104px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .opt .syl { font: 500 30px/1 var(--font-ui); }
+  .opt .contour { width: 44px; height: 24px; color: var(--ink-3); }
+  .opt .contour path { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .opt[aria-pressed="true"] .contour { color: var(--ink-1); }
+  .opt.right .contour { color: var(--vermilion-text); }
+  .opt.wrong .contour { color: var(--ink-4); }
+  .say .py { font-weight: 500; }
+
+  /* speaking */
+  .target { margin-top: var(--s5); padding: var(--s5) 0 var(--s4); border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); }
+  .target .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+  .target .big { font-size: 60px; line-height: 1.1; white-space: nowrap; }
+  .target .py { margin-top: var(--s3); font-size: 22px; font-weight: 500; }
+  .target .note { margin-top: 4px; font-size: var(--t-meta); color: var(--ink-3); }
+  .target .note em { font-style: normal; font-weight: 600; color: var(--ink-1); }
+  .target .mean { margin-top: var(--s3); font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .scene { margin-top: var(--s5); padding: var(--s5) 0; border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); }
+  .scene p { font-size: var(--t-body); color: var(--ink-2); }
+  .scene p + p { margin-top: 6px; font-size: var(--t-meta); color: var(--ink-3); }
+
+  .rec { margin-top: var(--s5); min-height: 148px; }
+  .rec .idle { display: flex; align-items: center; gap: var(--s3); color: var(--ink-3); font-size: 15px; padding-top: var(--s4); }
+  .rec .idle .ic { font-size: 22px; color: var(--ink-4); }
+  .meter { display: flex; align-items: center; gap: var(--s4); padding-top: var(--s4); }
+  .bars { flex: 1; height: 64px; display: flex; align-items: center; gap: 3px; }
+  .bars i { flex: 1; min-height: 3px; height: 3px; border-radius: 2px; background: var(--ink-4); }
+  .bars i.hot { background: var(--vermilion); }
+  .time { font: 600 22px var(--font-display); font-variant-numeric: tabular-nums; min-width: 48px; text-align: right; }
+  .meter-cap { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+
+  .tiles { display: flex; gap: var(--s2); padding-top: var(--s4); }
+  .tile { position: relative; flex: 1; min-width: 0; padding: 10px 4px 8px; text-align: center; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); }
+  .tile .hz { display: block; font-size: 38px; line-height: 1.1; }
+  .tile b { display: block; margin-top: 2px; font-size: 15px; font-weight: 500; }
+  .tile .tk { position: absolute; top: 6px; right: 6px; width: 18px; height: 18px; border-radius: 50%; background: var(--vermilion); color: #fff; display: grid; place-items: center; font-size: 10px; }
+  .tile.weak { border: 1.5px dashed var(--ink-3); background: var(--paper-2); }
+  .weakhint { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-2); }
+  .sum { margin-top: var(--s3); font-size: 15px; color: var(--ink-2); }
+  .sum b { font-weight: 600; color: var(--ink-1); }
+  .sample { margin-top: 2px; font-size: 12.5px; color: var(--ink-3); }
+  .again { margin-top: var(--s3); min-height: 44px; padding: 0 var(--s4); border-radius: var(--r-pill); border: 1px solid var(--ink-5); background: rgba(255,255,255,.5); display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; }
+  .again .ic { font-size: 18px; }
+  .again:active { background: var(--paper-2); }
+  .skipnote { margin-top: var(--s5); padding: var(--s4); border-radius: var(--r-cell); background: var(--paper-2); font-size: 15px; color: var(--ink-2); }
+
+  .answer { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--ink-5); }
+  .answer h3 { margin-bottom: var(--s2); }
+  .answer .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+  .answer .big { font-size: 44px; line-height: 1.1; }
+  .answer .py { margin-top: 4px; font-size: 18px; font-weight: 500; }
+  .answer .py small { font-size: var(--t-meta); font-weight: 400; color: var(--ink-3); margin-left: 6px; }
+
+  .cta.hold { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  .cta.hold.live { background: var(--vermilion-press); transform: scale(.985); }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l1-hub.html" aria-label="Lưu và về bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <div class="seg" id="seg" aria-hidden="true"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<script type="module">
+import { $, $$, ic, play, bar, cta, hint, choice, stageHtml, wireStage, doneStep } from './step.js?v=9';
+import { word as find } from './data/h1-01.js?v=2';
+
+const TOTAL = 5;
+const el = () => $('#cta');
+const resetCta = () => { const b = el(); b.onpointerdown = b.onpointerup = b.onpointercancel = b.onkeydown = b.onkeyup = b.oncontextmenu = null; b.classList.remove('hold', 'live'); b.onclick = null; };
+let stopMic = null;   // tears down an active recording if the step changes mid-hold
+
+// ── 1 · tone question
+const TONES = [
+  ['hāo', 'M4 5H40'],
+  ['háo', 'M4 19L40 5'],
+  ['hǎo', 'M4 7Q18 26 40 5'],
+  ['hào', 'M4 4L40 20'],
+];
+function toneStep() {
+  const ans = 'hǎo'; let pick = null;
+  $('#main').innerHTML = `<div class="step">
+    <p class="ask">Câu 1/3 · Nghe</p><h2>Nghe rồi chọn thanh điệu</h2>
+    ${stageHtml()}
+    <div class="opts tones">${TONES.map(([s, d]) => `<button class="opt" data-o="${s}" aria-pressed="false" aria-label="${s}"><span class="syl">${s}</span><svg class="contour" viewBox="0 0 44 24" aria-hidden="true"><path d="${d}"/></svg></button>`).join('')}</div>
+    <p class="say" id="say"></p></div>`;
+  wireStage('02');
+  let checked = false;
+  $$('.opt').forEach((b) => (b.onclick = () => {
+    if (checked) return;
+    pick = b.dataset.o;
+    $$('.opt').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    el().disabled = false; hint('');
+  }));
+  cta('Kiểm tra', { disabled: true, hint: 'Chọn một đáp án', onClick: () => {
+    if (!pick) return; checked = true;
+    $$('.opt').forEach((b) => {
+      if (b.dataset.o === ans) { b.classList.add('right'); b.insertAdjacentHTML('beforeend', `<span class="badge">${ic('bold-check')}</span>`); }
+      else if (b.dataset.o === pick) { b.classList.add('wrong'); b.insertAdjacentHTML('beforeend', `<span class="badge">${ic('regular-x')}</span>`); }
+    });
+    $('#say').innerHTML = `${pick === ans ? '<b>Đúng rồi.</b> ' : '<b>Chưa đúng.</b> Đáp án là '}<span class="hz">好</span> <span class="py">hǎo</span> · thanh 3`;
+    cta('Tiếp', { hint: pick === ans ? '' : 'Câu này sẽ quay lại ở phần ôn', onClick: () => (step = 2, render()) });
+  } });
+}
+
+// ── 2, 3 · listening choices
+const wordExplain = (a) => { const w = find(a); return `<span class="hz">${w.hz}</span> ${w.py} · ${w.vi}`; };
+function listenWord() {
+  choice({ ask: 'Câu 2/3 · Nghe', title: 'Bạn nghe thấy từ nào?', key: '05', kind: 'hz', opts: ['你好', '你们', '您', '再见'], ans: '你好',
+    explain: wordExplain }, () => (step = 3, render()));
+}
+function listenMeaning() {
+  choice({ ask: 'Câu 3/3 · Nghe', title: 'Câu này nghĩa là gì?', key: '17', kind: 'text', opts: ['Không có gì.', 'Xin lỗi!', 'Cảm ơn!', 'Tạm biệt!'], ans: 'Không có gì.',
+    explain: () => `<span class="hz">不客气。</span> bù kèqi · Không có gì.` }, () => (step = 4, render()));
+}
+
+// ── 4, 5 · hold-to-record. Scoring is NOT wired: results are a fixed sample. Audio is analysed live and discarded.
+const SAMPLE_NOTE = 'Kết quả mẫu (chưa chấm thật)';
+const tile = (hz, py, weak) => `<div class="tile ${weak ? 'weak' : ''}"><span class="hz">${hz}</span><b>${py}</b>${weak ? '' : `<span class="tk">${ic('bold-check')}</span>`}</div>`;
+
+function speakStep(cfg) {
+  resetCta();
+  $('#main').innerHTML = `<div class="step">${cfg.head}<div class="rec" id="rec"><div class="idle">${ic('regular-microphone')}<span>Giữ nút đỏ bên dưới khi nói, nói xong thì thả.</span></div></div></div>`;
+  wireListen();
+  const BARS = 28, rec = () => $('#rec');
+  let holding = false, session = 0, live = null, done = false;
+
+  const showSkip = () => {
+    resetCta(); done = true;
+    rec().innerHTML = `<p class="skipnote">Không dùng được micro — bỏ qua phần nói, phần học vẫn tính là xong.</p>${cfg.reveal ? cfg.reveal() : ''}`;
+    wireListen();
+    cta('Bỏ qua', { hint: '' }); setTimeout(() => (el().onclick = cfg.next), 350);
+  };
+  const showResult = () => {
+    resetCta(); done = true;
+    rec().innerHTML = `${cfg.result()}<button class="again" id="again">${ic('regular-arrow-counter-clockwise')}Nói lại</button>`;
+    wireListen();
+    $('#again').onclick = () => { done = false; speakStep(cfg); };
+    cta('Tiếp', { hint: '' }); setTimeout(() => (el().onclick = cfg.next), 350);
+  };
+
+  const end = (keep) => {
+    if (!live) return null;
+    const l = live; live = null; cancelAnimationFrame(l.raf); clearInterval(l.tm);
+    l.stream.getTracks().forEach((t) => t.stop()); l.ctx.close().catch(() => {});
+    el().classList.remove('live'); el().innerHTML = `${ic('fill-microphone')}Giữ để nói`;
+    return Date.now() - l.t0;
+  };
+  stopMic = () => { session++; holding = false; end(); };
+
+  async function press() {
+    if (holding || done) return;
+    holding = true; const me = ++session;
+    rec().innerHTML = `<div class="idle">${ic('fill-microphone')}<span>Đang bật micro…</span></div>`;
+    let stream;
+    try {
+      if (!navigator.mediaDevices?.getUserMedia) throw new Error('no mic');
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch { if (me === session) showSkip(); return; }
+    if (!holding || me !== session) { stream.getTracks().forEach((t) => t.stop()); hint('Giữ nút trong lúc nói'); return; }
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const an = ctx.createAnalyser(); an.fftSize = 1024; ctx.createMediaStreamSource(stream).connect(an);
+    const buf = new Uint8Array(an.fftSize), lv = new Array(BARS).fill(0);
+    rec().innerHTML = `<div class="meter"><div class="bars" id="bars">${'<i></i>'.repeat(BARS)}</div><span class="time" id="time">0:00</span></div><p class="meter-cap">Đang nghe… thả nút khi nói xong</p>`;
+    const bars = $$('#bars i'), t0 = Date.now();
+    el().classList.add('live'); el().innerHTML = `${ic('fill-microphone')}Thả khi nói xong`; hint('');
+    const tick = () => {
+      an.getByteTimeDomainData(buf);
+      let s = 0; for (const v of buf) { const d = (v - 128) / 128; s += d * d; }
+      lv.push(Math.min(1, Math.sqrt(s / buf.length) * 5)); lv.shift();
+      bars.forEach((b, i) => { b.style.height = `${3 + lv[i] * 58}px`; b.classList.toggle('hot', lv[i] > .6); });
+      live.raf = requestAnimationFrame(tick);
+    };
+    live = { stream, ctx, t0, raf: 0, tm: setInterval(() => { const t = $('#time'); if (t) { const sec = Math.floor((Date.now() - t0) / 1000); t.textContent = `0:${String(sec).padStart(2, '0')}`; } }, 200) };
+    tick();
+  }
+  function release() {
+    if (!holding) return;
+    holding = false;
+    const ms = end();
+    if (ms === null) return;
+    if (ms < 700) { rec().innerHTML = `<div class="idle">${ic('regular-microphone')}<span>Ngắn quá — giữ nút lâu hơn một chút rồi nói.</span></div>`; return; }
+    showResult();
+  }
+
+  const b = el(); b.disabled = false; b.classList.add('hold');
+  b.innerHTML = `${ic('fill-microphone')}Giữ để nói`; hint('Chưa chấm điểm thật · kết quả chỉ là mẫu');
+  b.onpointerdown = (e) => { e.preventDefault(); b.setPointerCapture?.(e.pointerId); press(); };
+  b.onpointerup = release; b.onpointercancel = release;
+  b.onkeydown = (e) => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); press(); } };
+  b.onkeyup = (e) => { if (e.key === ' ' || e.key === 'Enter') release(); };
+  b.oncontextmenu = (e) => e.preventDefault();
+}
+function wireListen() { $$('[data-play]').forEach((b) => (b.onclick = () => play(b.dataset.play, b))); }
+
+function readAloud() {
+  speakStep({
+    head: `<p class="ask">Nói · đọc to</p><h2>Đọc to câu này</h2>
+      <div class="target">
+        <div class="row"><span class="big hz">不客气。</span><button class="round" data-play="17" aria-label="Nghe mẫu (bấm lần nữa để nghe chậm)">${ic('regular-speaker-high')}</button></div>
+        <p class="py">bú kèqi</p>
+        <p class="note"><em>不</em> đọc là <em>bú</em> trước thanh 4 (客 kè).</p>
+        <p class="mean">Không có gì.</p>
+      </div>`,
+    result: () => `<div class="tiles">${tile('不', 'bú')}${tile('客', 'kè')}${tile('气', 'qi', true)}</div>
+      <p class="weakhint">气 — đọc nhẹ và ngắn hơn. Nghe mẫu rồi thử lại nếu muốn.</p>
+      <p class="sum"><b>Đúng 2/3 âm</b> · đủ để qua</p><p class="sample">${SAMPLE_NOTE}</p>`,
+    next: () => (stopMic?.(), step = 5, render()),
+  });
+}
+
+function freeAnswer() {
+  const answer = () => `<div class="answer"><h3>Có thể nói</h3><div class="row"><span class="big hz">对不起！</span><button class="round" data-play="14" aria-label="Nghe đáp án">${ic('regular-speaker-high')}</button></div>
+    <p class="py">duìbuqǐ<small>Xin lỗi!</small></p></div>`;
+  speakStep({
+    head: `<p class="ask">Nói · trả lời</p><h2>Bạn làm đổ trà của bạn mình. Nói gì?</h2>
+      <div class="scene"><p>Trả lời bằng tiếng Trung, một câu ngắn.</p><p>Đáp án sẽ hiện sau khi bạn nói.</p></div>`,
+    reveal: answer,
+    result: () => `<div class="tiles">${tile('对', 'duì')}${tile('不', 'bu')}${tile('起', 'qǐ')}</div>
+      <p class="sum"><b>Đúng 3/3 âm</b> · đủ để qua</p><p class="sample">${SAMPLE_NOTE}</p>${answer()}`,
+    next: () => (stopMic?.(), step = 6, render()),
+  });
+}
+
+let step = 1;
+function render() {
+  stopMic?.(); stopMic = null; resetCta();
+  if (step === 6) { bar(TOTAL, TOTAL, '5/5'); return doneStep({ title: 'Xong phần Nghe & nói', text: 'Bạn đã nghe và nói thử các câu của Bài 1.', next: 'Luyện viết', label: 'Phần tiếp theo', href: 'l7-writing.html' }); }
+  bar(step - 1, TOTAL, `${step}/${TOTAL}`);
+  [toneStep, listenWord, listenMeaning, readAloud, freeAnswer][step - 1]();
+  scrollTo(0, 0);
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# content/words/经常.yaml
+id: 经常
+hanzi: 经常
+pinyin: jīngcháng
+hanviet: kinh thường
+level: 2
+pos: [ adv ]
+senses:
+  - { vi: thường xuyên }
+parts:
+  - { hanzi: 经, pinyin: jīng, hanviet: kinh, vi: "đi qua, trải qua" }
+  - { hanzi: 常, pinyin: cháng, hanviet: thường, vi: "thường, hay" }
+examples: [ s-h2-01-07 ]
+image: { file: words/h2-01/w04.png, prompt: "The takin jogs past the same old tree again and again, with several faint copies of him showing each lap. Only the takin." }

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Cài đặt · Chaiyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 48px); }
+  .top { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px var(--s2); background: var(--paper); }
+  .top .t { text-align: center; font: 600 17px/1.3 var(--font-display); }
+  .x { width: 44px; height: 44px; display: grid; place-items: center; font-size: 22px; color: var(--ink-2); border-radius: 50%; }
+  .x .ic { transform: scaleX(-1); }
+
+  section { margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  section:first-of-type { border-top: 0; margin-top: var(--s2); padding-top: 0; }
+  section h2 { font: 600 19px/1.25 var(--font-display); }
+  section > .sub { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .label { margin-top: var(--s4); font-size: var(--t-meta); font-weight: 600; color: var(--ink-3); }
+  button { cursor: pointer; }
+
+  /* banner */
+  .pending { margin-top: var(--s2); padding: var(--s4); border-radius: 18px; background: var(--paper-2); border: 1px solid var(--ink-5); display: grid; gap: var(--s3); }
+  .pending b { font: 600 17px/1.3 var(--font-display); display: block; }
+  .pending p { font-size: 14px; color: var(--ink-2); line-height: 1.45; }
+  .pending .ok { height: 48px; border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font-weight: 600; font-size: 16px; }
+  .locked { opacity: .45; pointer-events: none; }
+
+  /* profile */
+  .me { margin-top: var(--s4); display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: var(--s4); align-items: center; }
+  .av { position: relative; width: 88px; height: 88px; }
+  .av > span { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; background: #efd6cf; color: #8a3324; font: 600 32px var(--font-display); overflow: hidden; }
+  .av img { width: 100%; height: 100%; object-fit: cover; }
+  .other input::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
+  .av button { position: absolute; right: -4px; bottom: -4px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--ink-1); color: var(--paper); font-size: 20px; border: 3px solid var(--paper); }
+  .field { display: grid; gap: 6px; }
+  .field span { font-size: var(--t-meta); font-weight: 600; color: var(--ink-3); }
+  .field input { width: 100%; height: 48px; padding: 0 var(--s4); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.6); font: 500 16px var(--font-ui); color: var(--ink-1); outline: 0; -webkit-appearance: none; }
+  .field input:focus { border-color: var(--ink-1); }
+  .field small { font-size: 12.5px; color: var(--ink-3); }
+  .rm { margin-top: var(--s2); font-size: 14px; font-weight: 600; color: var(--ink-3); min-height: 44px; display: none; }
+  .rm.on { display: inline-block; }
+
+  /* reminder */
+  .times { margin-top: var(--s2); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
+  .times button { height: 64px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; align-content: center; gap: 2px; }
+  .times b { font: 600 19px var(--font-display); font-variant-numeric: tabular-nums; }
+  .times small { font-size: 12.5px; color: var(--ink-3); }
+  .times button[aria-pressed="true"] { border: 2px solid var(--ink-1); background: #fff; }
+  .other { margin-top: var(--s2); display: flex; align-items: center; gap: var(--s3); min-height: 48px; padding: 0 var(--s4); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); }
+  .other.on { border: 2px solid var(--ink-1); background: #fff; padding: 0 calc(var(--s4) - 1px); }
+  .other span { flex: 1; font-size: 15px; color: var(--ink-2); }
+  .other input { font: 600 17px var(--font-ui); color: var(--ink-1); border: 0; background: transparent; outline: 0; min-height: 44px; }
+
+  /* cards + rows */
+  .card { margin-top: var(--s2); list-style: none; border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); overflow: hidden; }
+  .card li + li { border-top: 1px solid var(--ink-5); }
+  .row { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s2) var(--s4); width: 100%; text-align: left; }
+  .row .mi { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); color: var(--ink-1); font-size: 22px; --duo: .3; }
+  .row b { display: block; font-weight: 600; font-size: 16px; }
+  .row small { display: block; margin-top: 1px; font-size: 13px; color: var(--ink-3); overflow-wrap: anywhere; }
+  .row small.warn { color: var(--vermilion-text); }
+  .row .go { color: var(--ink-4); font-size: 16px; }
+  .sw { position: relative; width: 52px; height: 44px; background: none; }
+  .sw::before { content: ""; position: absolute; left: 0; top: 6px; width: 52px; height: 32px; border-radius: 16px; background: var(--ink-5); transition: background .15s; }
+  .sw::after { content: ""; position: absolute; top: 9px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .15s; }
+  .sw[aria-checked="true"]::before { background: var(--ink-1); }
+  .sw[aria-checked="true"]::after { transform: translateX(20px); }
+  @media (prefers-reduced-motion: reduce) { .sw::before, .sw::after { transition: none; } }
+
+  /* hanzi style */
+  @font-face { font-family: "UKaiDict"; src: url("fonts/ukai-dict.woff2?v=1") format("woff2"); font-display: swap; }
+  .seg { margin-top: var(--s3); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); }
+  .seg button { padding: var(--s3) var(--s2); border-radius: 18px; border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; justify-items: center; gap: 2px; text-align: center; min-height: 44px; }
+  .seg button[aria-checked="true"] { border: 2px solid var(--ink-1); background: #fff; padding: calc(var(--s3) - 1px) calc(var(--s2) - 1px); }
+  .seg .p { font-size: 54px; line-height: 1.2; color: var(--ink-1); }
+  .seg .kai { font-family: "Kaiti SC", "STKaiti", "KaiTi", serif; }
+  .seg .xing { font-family: "Xingkai SC", "STXingkai", cursive; }
+  .seg b { font-weight: 600; font-size: 15px; }
+  .seg small { font-size: 12.5px; color: var(--ink-3); }
+  .hint { margin-top: var(--s2); font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+
+  .plain { width: 100%; }
+  .plain .mi { --duo: .3; }
+
+  /* sheets */
+  .scrim { position: fixed; inset: 0; z-index: 20; background: rgba(30,20,15,.38); opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .scrim.on { opacity: 1; pointer-events: auto; }
+  .sheet { position: fixed; z-index: 21; left: 50%; bottom: 0; width: min(430px, 100%); transform: translate(-50%, 105%); transition: transform .24s ease; background: var(--paper); border-radius: 26px 26px 0 0; padding: var(--s3) var(--s5) calc(env(safe-area-inset-bottom, 0px) + var(--s5)); box-shadow: 0 -12px 40px rgba(0,0,0,.18); max-height: 92vh; overflow: auto; }
+  .sheet.on { transform: translate(-50%, 0); }
+  @media (prefers-reduced-motion: reduce) { .scrim, .sheet { transition: none; } }
+  .grab { width: 40px; height: 4px; border-radius: 2px; background: var(--ink-5); margin: 0 auto var(--s4); }
+  .sheet h3 { font: 600 22px/1.25 var(--font-display); }
+  .sheet > p { margin-top: var(--s2); font-size: 15px; color: var(--ink-2); line-height: 1.45; }
+  .steps { list-style: none; margin-top: var(--s4); display: grid; gap: var(--s3); counter-reset: s; }
+  .steps li { display: grid; grid-template-columns: 28px 1fr; gap: var(--s3); align-items: start; line-height: 1.45; counter-increment: s; }
+  .steps li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; background: var(--paper-2); display: grid; place-items: center; font: 600 14px var(--font-display); }
+  .btn { margin-top: var(--s3); width: 100%; height: 52px; border-radius: var(--r-cta); display: flex; align-items: center; justify-content: center; gap: var(--s2); font: 600 17px var(--font-display); }
+  .btn.dark { background: var(--ink-1); color: var(--paper); }
+  .btn.line { border: 1px solid var(--ink-5); color: var(--ink-1); background: rgba(255,255,255,.5); }
+  .btn.red { background: var(--vermilion); color: #fff; box-shadow: 0 10px 24px rgba(168, 38, 20, .28), inset 0 1px 0 rgba(255,255,255,.18); }
+  .btn.red:disabled { opacity: .4; box-shadow: none; cursor: default; }
+  .btn:active { transform: scale(.985); }
+  .sheet .field { margin-top: var(--s4); }
+  .sheet .ghost { margin-top: var(--s2); width: 100%; min-height: 44px; font-weight: 600; font-size: 15px; color: var(--ink-3); }
+
+  .toast { position: fixed; z-index: 30; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -8px); opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 40px);
+    padding: 10px var(--s4); border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font-size: 14px; font-weight: 500; transition: opacity .18s, transform .18s; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<div class="top"><a class="x" id="back" href="t4-me.html" aria-label="Quay lại"><svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></a><span class="t">Cài đặt</span><span></span></div>
+<div class="toast" id="toast" role="status"></div>
+<main id="main"></main>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="tgSheet" role="dialog" aria-modal="true" aria-labelledby="tgT" inert>
+  <div class="grab"></div>
+  <h3 id="tgT">Kết nối Telegram</h3>
+  <p>Chaiyo nhắn bạn qua bot, ba bước là xong.</p>
+  <ol class="steps">
+    <li><span>Bấm <b>Mở Telegram</b> bên dưới.</span></li>
+    <li><span>Trong khung chat với @ChaiyoBot, bấm <b>Start</b>.</span></li>
+    <li><span>Quay lại đây và bấm <b>Tôi đã bấm Start</b>.</span></li>
+  </ol>
+  <a class="btn dark" id="tgOpen" href="https://t.me/ChaiyoBot?start=demo" target="_blank" rel="noopener">Mở Telegram</a>
+  <button class="btn line" id="tgDone">Tôi đã bấm Start</button>
+  <button class="ghost" id="tgCancel">Để sau</button>
+</div>
+<div class="sheet" id="delSheet" role="dialog" aria-modal="true" aria-labelledby="delT" inert>
+  <div class="grab"></div>
+  <h3 id="delT">Xoá tài khoản?</h3>
+  <p>Tài khoản sẽ được giữ 7 ngày rồi xoá hẳn, gồm từ đã học, chuỗi ngày và bạn bè. Trong 7 ngày đó bạn khôi phục lại được bất cứ lúc nào.</p>
+  <label class="field"><span>Gõ XOÁ để xác nhận</span><input id="delIn" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XOÁ"></label>
+  <button class="btn red" id="delGo" disabled>Xoá tài khoản</button>
+  <button class="ghost" id="delCancel">Thôi, giữ lại</button>
+</div>
+
+<script type="module">
+const $ = (s) => document.querySelector(s);
+const ic = (id, cls = 'ic') => `<svg class="${cls}"><use href="icons.svg#i-${id}"/></svg>`;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const KEY = 'settings-v1';
+const EMAIL = 'tong.loc@gmail.com';
+const TIMES = [['07:00', 'Sáng'], ['12:30', 'Trưa'], ['21:00', 'Tối']];
+
+if (/t4-me/.test(document.referrer)) $('#back').onclick = (e) => { e.preventDefault(); history.back(); };
+if (new URLSearchParams(location.search).has('reset')) localStorage.removeItem(KEY);
+
+const DEF = { name: 'Tống Lộc', photo: null, time: '21:00', push: false, pushDenied: false, email: true, telegram: false, font: 'kai', hidden: false, deleteAt: null };
+let st = { ...DEF };
+try { st = { ...DEF, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch { toast('Ảnh lớn quá, chưa lưu được'); } };
+let tt; function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2200); }
+const initials = (n) => n.trim().split(/\s+/).map((w) => w[0]).slice(-2).join('').toUpperCase() || '?';
+
+const DAY = 864e5;
+const daysLeft = () => Math.max(0, Math.ceil((st.deleteAt - Date.now()) / DAY));
+
+function sw(id, on, label) { return `<button class="sw" id="${id}" role="switch" aria-checked="${on}" aria-label="${label}"></button>`; }
+
+function render() {
+  const pending = !!st.deleteAt;
+  const preset = TIMES.some(([t]) => t === st.time);
+  const blocked = st.pushDenied || ('Notification' in window && Notification.permission === 'denied');
+  const pushNote = blocked
+    ? '<small class="warn">Trình duyệt đang chặn thông báo. Nhắc qua Email hoặc Telegram, hoặc bật lại trong cài đặt trình duyệt.</small>'
+    : '<small>Trên máy này</small>';
+  const kaiOn = st.font === 'kai';
+  $('#main').innerHTML = `
+  ${pending ? `<div class="pending" id="pend"><div><b>Đang chờ xoá · còn ${daysLeft()} ngày</b></div>
+      <p>Tài khoản sẽ được xoá hẳn sau ${daysLeft()} ngày nữa. Bạn đổi ý thì khôi phục ngay, mọi thứ vẫn nguyên.</p>
+      <button class="ok" id="restore">Khôi phục tài khoản</button></div>` : ''}
+  <div id="body" class="${pending ? 'locked' : ''}" ${pending ? 'inert' : ''}>
+  <section>
+    <h2>Hồ sơ</h2>
+    <p class="sub">Tên và ảnh bạn bè sẽ thấy.</p>
+    <div class="me">
+      <div class="av"><span id="avi">${st.photo ? `<img src="${st.photo}" alt="">` : esc(initials(st.name))}</span>
+        <button id="photo" aria-label="Đổi ảnh">${ic('fill-camera')}</button></div>
+      <label class="field"><span>Tên hiển thị</span><input id="nm" type="text" autocomplete="name" maxlength="30" value="${esc(st.name)}"><small>${EMAIL}</small></label>
+    </div>
+    <input id="file" type="file" accept="image/*" hidden>
+    <button class="rm ${st.photo ? 'on' : ''}" id="rmPhoto">Bỏ ảnh</button>
+  </section>
+
+  <section>
+    <h2>Nhắc học</h2>
+    <p class="sub">Mỗi ngày một lời nhắc, đúng giờ bạn chọn.</p>
+    <p class="label">Giờ nhắc</p>
+    <div class="times" role="group" aria-label="Giờ nhắc">${TIMES.map(([t, l]) => `<button data-t="${t}" aria-pressed="${st.time === t}"><b>${t}</b><small>${l}</small></button>`).join('')}</div>
+    <label class="other ${preset ? '' : 'on'}" id="other"><span>Giờ khác</span><input id="tm" type="time" value="${preset ? '' : st.time}" aria-label="Chọn giờ khác"></label>
+    <p class="label">Nhắc qua</p>
+    <ul class="card">
+      <li class="row"><span class="mi">${ic('fill-bell')}</span><span><b>Thông báo</b>${pushNote}</span>${sw('sw-push', st.push, 'Thông báo')}</li>
+      <li class="row"><span class="mi">${ic('fill-letter')}</span><span><b>Email</b><small>${EMAIL}</small></span>${sw('sw-email', st.email, 'Email')}</li>
+      <li class="row"><span class="mi">${ic('fill-plain')}</span><span><b>Telegram</b><small>${st.telegram ? 'Đã kết nối @ChaiyoBot' : 'Mở @ChaiyoBot để kết nối'}</small></span>${sw('sw-tg', st.telegram, 'Telegram')}</li>
+    </ul>
+    ${!st.push && !st.email && !st.telegram ? '<p class="hint">Không chọn kênh nào: sẽ không có lời nhắc.</p>' : ''}
+  </section>
+
+  <section>
+    <h2>Chữ Hán</h2>
+    <p class="sub">Kiểu chữ hiện trên thẻ từ và bài học.</p>
+    <div class="seg" role="radiogroup" aria-label="Kiểu chữ Hán">
+      <button role="radio" id="f-kai" aria-checked="${kaiOn}"><span class="p hz kai" lang="zh-Hans">你好</span><b>Khải thư</b><small>Nét rõ, dễ tập viết</small></button>
+      <button role="radio" id="f-xing" aria-checked="${!kaiOn}"><span class="p hz xing" lang="zh-Hans">你好</span><b>Hành thư</b><small>Xem trước</small></button>
+    </div>
+    <p class="hint">Hành thư chỉ là bản xem trước, đang dùng font gần giống. Máy bạn chưa có thì sẽ hiện nét tay bình thường.</p>
+  </section>
+
+  <section>
+    <h2>Quyền riêng tư</h2>
+    <ul class="card">
+      <li class="row"><span class="mi">${ic('regular-eye-slash')}</span><span><b>Ẩn hồ sơ công khai</b><small>Bật thì người lạ không tìm thấy bạn. Bạn bè đã kết bạn vẫn thấy như thường.</small></span>${sw('sw-hide', st.hidden, 'Ẩn hồ sơ công khai')}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Tài khoản</h2>
+    <ul class="card">
+      <li><a class="row" id="logout" href="p2-login.html"><span class="mi">${ic('fill-logout')}</span><span><b>Đăng xuất</b><small>Hẹn mai gặp lại nhé</small></span>${ic('regular-caret-right', 'ic go')}</a></li>
+      <li><button class="row" id="del"><span class="mi">${ic('fill-trash')}</span><span><b>Xoá tài khoản</b><small>Giữ 7 ngày rồi xoá hẳn</small></span>${ic('regular-caret-right', 'ic go')}</button></li>
+    </ul>
+  </section>
+  </div>`;
+  wire();
+}
+
+function wire() {
+  const nm = $('#nm');
+  nm.oninput = () => { const v = nm.value.trim(); if (v) { st.name = v; save(); if (!st.photo) $('#avi').textContent = initials(v); } };
+  nm.onblur = () => { if (!nm.value.trim()) nm.value = st.name; };
+  $('#photo').onclick = () => $('#file').click();
+  $('#file').onchange = (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const url = URL.createObjectURL(f), im = new Image();
+    im.onload = () => {
+      const c = document.createElement('canvas'), s = 256, m = Math.min(im.width, im.height);
+      c.width = c.height = s;
+      c.getContext('2d').drawImage(im, (im.width - m) / 2, (im.height - m) / 2, m, m, 0, 0, s, s);
+      st.photo = c.toDataURL('image/jpeg', .85); URL.revokeObjectURL(url); save();
+      $('#avi').innerHTML = `<img src="${st.photo}" alt="">`; $('#rmPhoto').classList.add('on'); toast('Ảnh đẹp đó!');
+    };
+    im.onerror = () => toast('Ảnh này chưa mở được, thử ảnh khác nhé');
+    im.src = url;
+  };
+  $('#rmPhoto').onclick = () => { st.photo = null; save(); render(); };
+
+  document.querySelectorAll('.times button').forEach((b) => (b.onclick = () => { st.time = b.dataset.t; save(); render(); }));
+  $('#tm').onchange = (e) => { if (e.target.value) { st.time = e.target.value; save(); render(); } };
+  $('#tm').oninput = (e) => { if (e.target.value) { st.time = e.target.value; save(); document.querySelectorAll('.times button').forEach((b) => b.setAttribute('aria-pressed', 'false')); $('#other').classList.add('on'); } };
+
+  $('#sw-email').onclick = () => { st.email = !st.email; save(); render(); };
+  $('#sw-hide').onclick = () => { st.hidden = !st.hidden; save(); render(); toast(st.hidden ? 'Hồ sơ đã ẩn' : 'Hồ sơ đã hiện lại'); };
+  $('#sw-push').onclick = async () => {
+    if (st.push) { st.push = false; save(); return render(); }
+    const p = 'Notification' in window ? await Promise.race([Notification.requestPermission().catch(() => 'denied'), new Promise((r) => setTimeout(() => r(Notification.permission), 4000))]) : 'denied';
+    if (p === 'granted') st.push = true; else st.pushDenied = true;
+    save(); render();
+  };
+  $('#sw-tg').onclick = () => {
+    if (st.telegram) { st.telegram = false; save(); render(); return toast('Đã ngắt Telegram'); }
+    openSheet('tgSheet');
+  };
+
+  const pick = (k) => { st.font = k; save(); render(); };
+  $('#f-kai').onclick = () => pick('kai');
+  $('#f-xing').onclick = () => pick('xing');
+
+  $('#del').onclick = () => { $('#delIn').value = ''; $('#delGo').disabled = true; openSheet('delSheet'); };
+  const r = $('#restore');
+  if (r) r.onclick = () => { st.deleteAt = null; save(); render(); toast('Mừng bạn quay lại!'); };
+}
+
+let openId = null, lastFocus = null;
+function openSheet(id) {
+  lastFocus = document.activeElement; openId = id;
+  $('#scrim').classList.add('on'); const s = $('#' + id); s.removeAttribute('inert'); s.classList.add('on');
+}
+function closeSheet() {
+  if (!openId) return;
+  const s = $('#' + openId); s.classList.remove('on'); s.setAttribute('inert', ''); $('#scrim').classList.remove('on'); openId = null;
+  lastFocus && lastFocus.focus && lastFocus.focus();
+}
+$('#scrim').onclick = closeSheet;
+addEventListener('keydown', (e) => e.key === 'Escape' && closeSheet());
+
+$('#tgDone').onclick = () => { st.telegram = true; save(); closeSheet(); render(); toast('Telegram đã kết nối'); };
+$('#tgCancel').onclick = closeSheet;
+$('#delCancel').onclick = closeSheet;
+$('#delIn').oninput = (e) => { $('#delGo').disabled = e.target.value.trim().toLocaleUpperCase('vi') !== 'XOÁ'; };
+$('#delGo').onclick = () => { st.deleteAt = Date.now() + 7 * DAY; save(); closeSheet(); render(); scrollTo(0, 0); };
+
+render();
+</script>
+</body>
+</html>

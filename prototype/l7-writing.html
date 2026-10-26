@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Luyện viết · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .head { display: flex; align-items: baseline; gap: var(--s3); }
+  .head .hz { font-size: 32px; line-height: 1; }
+  .head p { font-size: 16px; min-width: 0; }
+  .head p b { font-weight: 600; }
+  .head p span { color: var(--ink-3); }
+  .head .n { margin-left: auto; flex: none; font-size: var(--t-meta); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .head .n b { color: var(--ink-1); font-weight: 600; }
+
+  .pad { margin-top: var(--s5); display: grid; place-items: center; }
+  .sq { position: relative; width: var(--sq); height: var(--sq); border-radius: 10px; border: 1px solid var(--ink-5); touch-action: none; user-select: none; -webkit-user-select: none;
+    background: rgba(255,255,255,.45) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cg stroke='%23ddd5c8' stroke-width='.8' vector-effect='non-scaling-stroke' fill='none'%3E%3Cpath d='M50 0V100M0 50H100'/%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke-dasharray='3 3'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100%; }
+  .sq svg { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
+  .sq.busy { pointer-events: none; }
+
+  .status { margin-top: var(--s4); min-height: 24px; display: flex; align-items: center; justify-content: center; gap: var(--s2); font-size: var(--t-body); color: var(--ink-1); text-align: center; }
+  .status .ic { color: var(--vermilion); font-size: 18px; }
+  .status.idle { color: var(--ink-3); font-size: var(--t-meta); }
+
+  .tools { margin-top: var(--s3); display: flex; justify-content: center; gap: var(--s2); flex-wrap: wrap; }
+  .tool { height: 44px; padding: 0 var(--s4); border-radius: var(--r-pill); border: 1px solid var(--ink-5); background: rgba(255,255,255,.5); font-size: 15px; font-weight: 500; color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+  .tool .ic { font-size: 18px; color: var(--ink-3); }
+  .tool:active { background: var(--paper-2); }
+  .tool:disabled { opacity: .45; cursor: default; }
+
+  .skip { display: block; margin: var(--s4) auto 0; padding: var(--s2) var(--s3); font-size: var(--t-meta); color: var(--ink-3); text-decoration: underline; text-decoration-color: var(--ink-5); text-underline-offset: 3px; }
+  .skip:active { color: var(--ink-1); }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l1-hub.html" aria-label="Lưu và về bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <div class="seg" id="seg" aria-hidden="true"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
+<script type="module">
+import { $, ic, bar, cta, hint, doneStep, loadChar, STROKE } from './step.js?v=9';
+import { word } from './data/h1-01.js?v=2';
+
+const info = (c) => { const w = word(c); return w ? [w.py, w.hv, w.vi] : ['men', 'môn', 'chỉ số nhiều (các, những)']; };
+const CHARS = [...'你好们'];
+const CAPTION = ['Lần 1: viết theo nét mờ', 'Lần 2: tự viết, không có nét mờ'];
+
+let step = 0;                                  // 0..5 = char*2 + pass
+let writer = null, total = 0, next = 0, miss = 0, done = false, gen = 0;
+
+function show() {
+  const c = CHARS[step >> 1], pass = step & 1, [py, hv, vi] = info(c), me = ++gen;
+  done = false; next = 0; miss = 0; total = 0;
+  bar(step, 6, `${step + 1}/6`);
+  $('#main').innerHTML = `<div class="step">
+    <div class="head"><span class="hz">${c}</span><p><b>${py}</b> <span>· ${hv} · ${vi}</span></p><span class="n" id="n">nét <b>0</b>/–</span></div>
+    <div class="pad"><div class="sq" id="sq" style="--sq:min(280px, calc(100vw - 40px))"></div></div>
+    <p class="status idle" id="status">${CAPTION[pass]}</p>
+    <div class="tools">
+      <button class="tool" id="demo">${ic('regular-play')}Xem mẫu</button>
+      <button class="tool" id="tip">${ic('regular-lightbulb')}Gợi ý</button>
+      <button class="tool" id="redo">${ic('regular-arrow-counter-clockwise')}Viết lại</button>
+    </div>
+    <button class="skip" id="skip">Bỏ qua chữ này</button>
+  </div>`;
+  cta('Tiếp', { disabled: true, hint: 'Viết xong để tiếp', onClick: advance });
+  $('#demo').onclick = demo; $('#tip').onclick = tip; $('#redo').onclick = () => { if (writer) { reset(); quiz(); } };
+  $('#skip').onclick = () => { step = ((step >> 1) + 1) * 2; render(); };
+  if (!window.HanziWriter) return setStatus('Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại.');
+
+  const sq = $('#sq'), w = sq.clientWidth;
+  writer = HanziWriter.create(sq, c, {
+    width: w, height: w, padding: Math.round(w * .08),
+    showCharacter: false, showOutline: pass === 0, outlineColor: STROKE.outline,
+    strokeColor: STROKE.rest, radicalColor: STROKE.radical, highlightColor: STROKE.radical,
+    drawingColor: STROKE.rest, drawingWidth: 48, strokeAnimationSpeed: 1.4, delayBetweenStrokes: 120,
+    showHintAfterMisses: pass === 0 ? 2 : 3, highlightOnComplete: false, leniency: 1.2,
+    charDataLoader: loadChar,
+    onLoadCharDataSuccess: (d) => { if (me !== gen) return; total = d.strokes.length; count(); quiz(); },
+    onLoadCharDataError: () => setStatus('Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại.'),
+  });
+}
+
+const setStatus = (t, ok = false) => { const s = $('#status'); s.className = `status${ok ? '' : ' idle'}`; s.innerHTML = ok ? `${ic('bold-check')}<span>${t}</span>` : t; };
+const count = () => { $('#n').innerHTML = `nét <b>${next}</b>/${total || '–'}`; };
+
+function reset() { done = false; next = 0; miss = 0; count(); setStatus(CAPTION[step & 1]); $('#tip').disabled = false; cta('Tiếp', { disabled: true, hint: 'Viết xong để tiếp' }); }
+
+function quiz() {
+  const me = gen;
+  writer.quiz({
+    onCorrectStroke: (d) => { if (me !== gen) return; next = d.strokeNum + 1; miss = d.totalMistakes; count(); },
+    onMistake: (d) => { if (me !== gen) return; miss = d.totalMistakes; },
+    onComplete: (d) => {
+      if (me !== gen) return;
+      done = true; miss = d.totalMistakes; next = total; count();
+      setStatus(miss ? `Viết xong · ${miss} nét sai` : 'Viết xong · không sai nét nào', true);
+      $('#tip').disabled = true;
+      cta('Tiếp', { onClick: advance, hint: step === 5 ? 'Chữ cuối của phần này' : '' });
+    },
+  });
+}
+
+async function demo() {
+  if (!writer) return;
+  const me = gen, sq = $('#sq'); sq.classList.add('busy'); $('#demo').disabled = true;
+  writer.cancelQuiz(); writer.hideCharacter();
+  await writer.animateCharacter();
+  if (me !== gen) return;
+  sq.classList.remove('busy'); $('#demo').disabled = false;
+  reset(); quiz();
+}
+
+function tip() { if (writer && !done && next < total) writer.highlightStroke(next); }
+
+function advance() { step++; render(); }
+
+function render() {
+  if (step >= 6) {
+    bar(6, 6, '6/6');
+    return doneStep({ title: 'Xong phần Luyện viết', text: 'Bạn đã viết 3 chữ: 你, 好 và 们. Phần này đã đủ để mở bài kiểm tra.',
+      gridHtml: `<div class="grid">${CHARS.map((c) => `<span class="hz" style="font-size:30px">${c}</span>`).join('')}</div>`, label: 'Làm bài kiểm tra', next: 'Kiểm tra cuối bài', href: 'l8-gate.html' });
+  }
+  show(); scrollTo(0, 0);
+}
+render();
+</script>
+</body>
+</html>

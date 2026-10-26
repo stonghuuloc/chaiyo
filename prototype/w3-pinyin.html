@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Bảng pinyin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="primer.css">
+<style>
+  body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .t { text-align: center; }
+
+  .wrap { flex: 1; min-height: 0; overflow: auto; border-top: 1px solid var(--ink-5); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+  table { border-collapse: separate; border-spacing: 0; }
+  th, td { padding: 0; text-align: center; border-right: 1px solid #cdc3b3; border-bottom: 1px solid #cdc3b3; background: #fff; }
+  thead th { position: sticky; top: 0; z-index: 2; height: 40px; min-width: 56px; font: 700 15px var(--font-pinyin); color: var(--paper); background: var(--ink-1); border-color: var(--ink-2); }
+  tbody th { position: sticky; left: 0; z-index: 1; width: 52px; min-width: 52px; font: 700 16px var(--font-pinyin); color: var(--vermilion-text); background: var(--vermilion-wash); border-right: 2px solid var(--vermilion); }
+  thead th:first-child { left: 0; z-index: 3; min-width: 52px; padding: 0 2px; font: 600 10px/1.15 var(--font-ui); color: var(--paper); background: var(--vermilion); border-right: 2px solid var(--vermilion); }
+  td button { display: block; width: 100%; height: 46px; font: 600 16px var(--font-pinyin); color: var(--ink-1); }
+  td button:active { background: var(--paper-2); }
+  td.none { background: var(--paper-2) repeating-linear-gradient(135deg, transparent 0 6px, rgba(148,138,126,.35) 6px 7px); }  /* invalid syllable */
+  td.on button { background: #fff; box-shadow: inset 0 0 0 2px var(--ink-1); }
+
+  .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(29,24,20,.5); display: flex; align-items: flex-end; justify-content: center; animation: fade .15s ease-out; }
+  .scrim[hidden] { display: none; }
+  @keyframes fade { from { opacity: 0; } }
+  .sheet { width: min(430px, 100%); background: var(--paper); border-top: 1px solid var(--ink-5); border-radius: var(--r-cta) var(--r-cta) 0 0; padding: var(--s5) var(--s5) calc(env(safe-area-inset-bottom, 0px) + var(--s5)); }
+  .sheet .hd { display: flex; align-items: baseline; justify-content: space-between; }
+  .sheet h2 { font: 500 34px/1.1 var(--font-pinyin); }
+  .sheet .close { font-size: 14px; font-weight: 600; color: var(--ink-2); padding: var(--s2) 0 var(--s2) var(--s3); }
+  .sheet p { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .tn { margin-top: var(--s4); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s2); }
+  .tn button { position: relative; min-height: 104px; padding: var(--s3) 2px var(--s2); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .tn button:active:not(:disabled) { background: var(--paper-2); }
+  .tn .sy { font: 500 22px/1.1 var(--font-pinyin); }
+  .tn .contour { width: 36px; height: 20px; color: var(--ink-3); }
+  .tn .contour path { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tn .hzc { font-size: 24px; line-height: 1.2; color: var(--ink-2); }
+  .tn button.on { border: 2px solid var(--ink-1); background: #fff; }
+  .tn .sp { position: absolute; top: 5px; right: 5px; width: 12px; height: 12px; color: var(--ink-4); }
+  .tn button.on .sp { color: var(--vermilion); }
+  .tn button:disabled { border-style: dashed; background: none; cursor: default; }
+  .tn button:disabled .sy, .tn button:disabled .hzc { color: var(--ink-4); }
+  @media (prefers-reduced-motion: reduce) { .scrim { animation: none; } }
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="x" id="back" aria-label="Quay lại"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></button>
+  <span class="t">Bảng pinyin</span>
+  <span></span>
+</div>
+<div class="wrap" id="wrap"><table id="grid" aria-label="Bảng âm tiết pinyin"></table></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <div class="hd"><h2 id="sh-t"></h2><button class="close" id="shut">Đóng</button></div>
+    <p>Chạm một thanh để nghe. Chạm lần nữa để nghe chậm.</p>
+    <div class="tn" id="tn"></div>
+  </div>
+</div>
+
+<script type="module">
+import { INITIALS, FINALS, SYL, cell } from './data/syllables.js';
+import { $, $$, ic, play } from './step.js?v=9';
+import { contour, nfc } from './primer.js?v=2';
+
+// ✕ goes back to wherever the learner came from; hub if opened directly
+$('#back').onclick = () => (history.length > 1 && document.referrer ? history.back() : (location.href = 'l0-hub.html'));
+
+
+$('#grid').innerHTML = `<thead><tr><th scope="col" aria-label="Thanh mẫu · vận mẫu"></th>${FINALS.map((f) => `<th scope="col" class="py">${f}</th>`).join('')}</tr></thead><tbody>${
+  INITIALS.map((i) => `<tr><th scope="row" class="py">${i || '&#x2205;'}</th>${
+    FINALS.map((f) => { const s = cell(i, f); return s ? `<td><button class="py" data-s="${s}">${s}</button></td>` : '<td class="none"></td>'; }).join('')}</tr>`).join('')
+}</tbody>`;
+
+const TONES = ['1', '2', '3', '4', '5'];
+let current = null;
+function openSheet(td, spelled) {
+  $$('td.on').forEach((x) => x.classList.remove('on')); td.classList.add('on');
+  const e = SYL[spelled];
+  $('#sh-t').textContent = spelled; $('#sh-t').className = 'py';
+  const show = TONES.slice(0, 4);
+  const tn = $('#tn');
+  tn.innerHTML = show.map((t) => {
+    const x = e.tones[t];
+    return x ? `<button data-k="${x.key}" aria-label="Nghe thanh ${t}: ${nfc(x.py)}"><span class="sy py">${nfc(x.py)}</span>${contour(+t)}<span class="hz hzc">${x.hz}</span>${ic('fill-speaker-high', 'ic sp')}</button>`
+             : `<button disabled aria-label="Thanh ${t}: chưa có âm"><span class="sy">&ndash;</span>${contour(+t)}<span class="hzc">&nbsp;</span></button>`;
+  }).join('');
+  $$('#tn button[data-k]').forEach((b) => (b.onclick = () => play(`py/${b.dataset.k}`, b)));
+  $('#scrim').hidden = false;
+  current = td;
+}
+$$('td button').forEach((b) => (b.onclick = () => openSheet(b.parentElement, b.dataset.s)));
+const close = () => { $('#scrim').hidden = true; current?.classList.remove('on'); current?.querySelector('button').focus(); };
+$('#shut').onclick = close;
+$('#scrim').onclick = (e) => { if (e.target === $('#scrim')) close(); };
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#scrim').hidden) close(); });
+const pre = new URLSearchParams(location.search).get('open');   // ?open=ba opens that cell's sheet (review aid)
+if (pre) $(`td button[data-s="${pre}"]`)?.click();
+</script>
+</body>
+</html>

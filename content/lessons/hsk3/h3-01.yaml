@@ -1,0 +1,178 @@
+# content/lessons/hsk3/h3-01.yaml
+id: h3-01
+level: 3
+topic: Trường lớp
+order: 1
+title: Kỳ thi sắp đến
+titleHanzi: 考试就要到了
+goal: Nói về kỳ thi, kế hoạch ôn tập và cảm giác của mình trước khi thi
+scene:
+  file: lessons/h3-01.png
+  cast: [ redpanda, takin ]
+  prompt: The red panda and the takin sit side by side at a school desk in a bright classroom, the red panda patiently pointing at an open textbook while the takin, looking worried, hugs a stack of notebooks.
+sentences:
+  - { id: s-h3-01-01, hanzi: 下个星期就要考试了，你复习得怎么样？, pinyin: "xià ge xīngqī jiù yào kǎoshì le, nǐ fùxí de zěnmeyàng?", vi: "Tuần sau là thi rồi, bạn ôn tập thế nào rồi?", speaker: redpanda }
+  - { id: s-h3-01-02, hanzi: 我一点儿也不紧张！其实我还没开始复习。, pinyin: wǒ yìdiǎnr yě bù jǐnzhāng! qíshí wǒ hái méi kāishǐ fùxí., vi: Tớ chẳng hồi hộp chút nào! Thật ra tớ còn chưa bắt đầu ôn., speaker: takin }
+  - { id: s-h3-01-03, hanzi: 听说这次的题目很难，难度比上次大。, pinyin: "tīngshuō zhè cì de tímù hěn nán, nándù bǐ shàngcì dà.", vi: "Nghe nói đề lần này rất khó, độ khó lớn hơn lần trước.", speaker: redpanda }
+  - { id: s-h3-01-04, hanzi: 真的？那我压力好大，怎么办？, pinyin: "zhēn de? nà wǒ yālì hǎo dà, zěnme bàn?", vi: "Thật á? Vậy áp lực của tớ lớn quá, làm sao đây?", speaker: takin }
+  - { id: s-h3-01-05, hanzi: 别怕，我们先一起安排一下时间吧。, pinyin: "bié pà, wǒmen xiān yìqǐ ānpái yíxià shíjiān ba.", vi: "Đừng sợ, mình cùng sắp xếp thời gian trước đã.", speaker: redpanda }
+  - { id: s-h3-01-06, hanzi: 好，我每天提前半个小时起床复习。, pinyin: "hǎo, wǒ měitiān tíqián bàn ge xiǎoshí qǐchuáng fùxí.", spoken: "hǎo, wó měitiān tíqián bàn ge xiǎoshí qǐchuáng fùxí.", vi: "Được, mỗi ngày tớ sẽ dậy sớm nửa tiếng để ôn bài.", speaker: takin }
+  - { id: s-h3-01-07, hanzi: 这个办法不错。你要保证每天都复习。, pinyin: zhè ge bànfǎ búcuò. nǐ yào bǎozhèng měitiān dōu fùxí., vi: Cách này hay đấy. Bạn phải bảo đảm ngày nào cũng ôn., speaker: redpanda }
+  - { id: s-h3-01-08, hanzi: 我保证！我一定要考出好成绩。, pinyin: wǒ bǎozhèng! wǒ yídìng yào kǎochū hǎo chéngjì., spoken: wó bǎozhèng! wǒ yídìng yào kǎochū hǎo chéngjì., vi: Tớ hứa! Tớ nhất định sẽ thi ra điểm cao., speaker: takin }
+  - { id: s-h3-01-09, hanzi: 对，先复习课本，再做以前的题目。, pinyin: "duì, xiān fùxí kèběn, zài zuò yǐqián de tímù.", vi: "Đúng rồi, ôn sách giáo khoa trước, rồi làm các đề cũ.", speaker: redpanda }
+  - { id: s-h3-01-10, hanzi: 你的成绩一直很好，能教教我吗？, pinyin: "nǐ de chéngjì yìzhí hěn hǎo, néng jiāojiao wǒ ma?", spoken: "nǐ de chéngjì yìzhí hén hǎo, néng jiāojiao wǒ ma?", vi: "Điểm của bạn lúc nào cũng tốt, dạy tớ với được không?", speaker: takin }
+  - { id: s-h3-01-11, hanzi: 当然可以。只有每天努力，才会有进步。, pinyin: "dāngrán kěyǐ. zhǐyǒu měitiān nǔlì, cái huì yǒu jìnbù.", spoken: "dāngrán kéyǐ. zhíyǒu měitiān nǔlì, cái huì yǒu jìnbù.", vi: Tất nhiên rồi. Phải ngày nào cũng cố gắng thì mới tiến bộ., speaker: redpanda }
+  - { id: s-h3-01-12, hanzi: 太好了！考完试，我请你吃饭。, pinyin: "tài hǎo le! kǎowán shì, wǒ qǐng nǐ chīfàn.", spoken: "tài hǎo le! káowán shì, wó qíng nǐ chīfàn.", vi: Tuyệt quá! Thi xong tớ mời bạn ăn cơm., speaker: takin }
+  - { id: s-h3-01-13, hanzi: 考试那天终于到了，小红和阿牛都来到了教室。, pinyin: "kǎoshì nà tiān zhōngyú dào le, Xiǎo Hóng hé Ā Niú dōu láidào le jiàoshì.", spoken: "kǎoshì nà tiān zhōngyú dào le, Xiáo Hóng hé Ā Niú dōu láidào le jiàoshì.", vi: "Ngày thi cuối cùng cũng đến, Tiểu Hồng (gấu đỏ) và A Ngưu (linh ngưu) đều đến lớp.", unknown: [ 阿 ] }
+  - { id: s-h3-01-14, hanzi: 阿牛有点儿紧张，不过题目不太难。, pinyin: "Ā Niú yǒudiǎnr jǐnzhāng, búguò tímù bú tài nán.", spoken: "Ā Niú yóudiǎnr jǐnzhāng, búguò tímù bú tài nán.", vi: "A Ngưu hơi hồi hộp, nhưng đề không quá khó.", unknown: [ 阿 ] }
+  - { id: s-h3-01-15, hanzi: 因为他提前复习了很多次。, pinyin: yīnwèi tā tíqián fùxí le hěn duō cì., vi: Vì cậu ấy đã ôn trước rất nhiều lần. }
+  - { id: s-h3-01-16, hanzi: 一个星期以后，老师公布了成绩。, pinyin: "yí ge xīngqī yǐhòu, lǎoshī gōngbù le chéngjì.", spoken: "yí ge xīngqī yǐhòu, láoshī gōngbù le chéngjì.", vi: "Một tuần sau, thầy cô công bố điểm." }
+  - { id: s-h3-01-17, hanzi: 阿牛的成绩有了很大的进步！, pinyin: Ā Niú de chéngjì yǒu le hěn dà de jìnbù!, vi: Điểm của A Ngưu tiến bộ rất nhiều!, unknown: [ 阿 ] }
+  - { id: s-h3-01-18, hanzi: 小红笑着说：“你看，努力就有好成绩！”, pinyin: "Xiǎo Hóng xiàozhe shuō: “nǐ kàn, nǔlì jiù yǒu hǎo chéngjì!”", spoken: "Xiáo Hóng xiàozhe shuō: “nǐ kàn, nǔlì jiù yóu hǎo chéngjì!”", vi: "Tiểu Hồng cười nói: “Thấy chưa, cố gắng là có điểm tốt!”" }
+  - { id: s-h3-01-19, hanzi: 老师就要来了，快坐好！, pinyin: "lǎoshī jiù yào lái le, kuài zuòhǎo!", spoken: "láoshī jiù yào lái le, kuài zuòhǎo!", vi: "Thầy cô sắp đến rồi, mau ngồi ngay ngắn!" }
+  - { id: s-h3-01-20, hanzi: 只有提前复习，才能考出好成绩。, pinyin: "zhǐyǒu tíqián fùxí, cái néng kǎochū hǎo chéngjì.", spoken: "zhíyǒu tíqián fùxí, cái néng kǎochū hǎo chéngjì.", vi: Phải ôn bài sớm thì mới thi được điểm cao. }
+  - { id: s-h3-01-21, hanzi: 这个题目一点儿也不难。, pinyin: zhè ge tímù yìdiǎnr yě bù nán., vi: Câu này chẳng khó chút nào. }
+sections:
+  warmup: {}
+  words:
+    ids: [ 复习, 紧张, 其实, 题目, 难度, 压力, 安排, 提前, 保证, 成绩, 进步, 终于, 公布 ]
+  grammar:
+    ids: [ h3-g01, h3-g02, h3-g03 ]
+    drills: []
+  dialogue:
+    parts:
+      - title: Sắp thi rồi
+        lines: [ s-h3-01-01, s-h3-01-02, s-h3-01-03, s-h3-01-04, s-h3-01-05, s-h3-01-06 ]
+      - title: Lời hứa ôn bài
+        lines: [ s-h3-01-07, s-h3-01-08, s-h3-01-09, s-h3-01-10, s-h3-01-11, s-h3-01-12 ]
+    questions: []
+  reading:
+    title: Ngày thi
+    lines: [ s-h3-01-13, s-h3-01-14, s-h3-01-15, s-h3-01-16, s-h3-01-17, s-h3-01-18 ]
+  listenSpeak:
+    items: []
+  writing:
+    chars: [ 复, 习, 紧, 压, 进 ]
+gate:
+  draw: 9
+  pool:
+    - id: q-h3-01-x01
+      type: choice
+      tests: { words: [ 复习 ] }
+      prompt: { kind: vi, text: Nghĩa của 复习? }
+      optionKind: vi
+      options: [ ôn tập, nghỉ ngơi, công bố, sắp xếp ]
+      answer: 0
+    - id: q-h3-01-x02
+      type: choice
+      tests: { words: [ 紧张, 提前, 成绩, 终于 ] }
+      prompt: { kind: vi, text: "Chọn từ có nghĩa “hồi hộp, căng thẳng”" }
+      optionKind: hanzi
+      options: [ 紧张, 提前, 成绩, 终于 ]
+      answer: 0
+    - id: q-h3-01-x03
+      type: choice
+      tests: { words: [ 其实 ] }
+      prompt: { kind: vi, text: Nghĩa của 其实? }
+      optionKind: vi
+      options: [ thật ra, cuối cùng, sớm hơn, bảo đảm ]
+      answer: 0
+    - id: q-h3-01-x04
+      type: choice
+      tests: { words: [ 题目, 难度, 压力, 安排 ] }
+      prompt: { kind: vi, text: "Chọn từ có nghĩa “đề bài, câu hỏi”" }
+      optionKind: hanzi
+      options: [ 题目, 难度, 压力, 安排 ]
+      answer: 0
+    - id: q-h3-01-x05
+      type: choice
+      tests: { words: [ 难度 ] }
+      prompt: { kind: vi, text: Nghĩa của 难度? }
+      optionKind: vi
+      options: [ độ khó, áp lực, tiến bộ, thành tích ]
+      answer: 0
+    - id: q-h3-01-x06
+      type: choice
+      tests: { words: [ 紧张, 压力, 保证, 进步 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “áp lực” }
+      optionKind: hanzi
+      options: [ 压力, 紧张, 进步, 保证 ]
+      answer: 0
+    - id: q-h3-01-x07
+      type: choice
+      tests: { words: [ 复习, 安排, 保证, 公布 ] }
+      prompt: { kind: vi, text: "Điền vào chỗ trống: 我们先一起___一下时间吧。" }
+      optionKind: hanzi
+      options: [ 安排, 公布, 保证, 复习 ]
+      answer: 0
+    - id: q-h3-01-x08
+      type: choice
+      tests: { words: [ 提前 ] }
+      prompt: { kind: vi, text: Nghĩa của 提前? }
+      optionKind: vi
+      options: [ sớm hơn dự định, cuối cùng, tiến bộ, hồi hộp ]
+      answer: 0
+    - id: q-h3-01-x09
+      type: choice
+      tests: { words: [ 其实, 保证, 成绩, 终于 ] }
+      prompt: { kind: vi, text: "Chọn từ có nghĩa “bảo đảm, hứa chắc”" }
+      optionKind: hanzi
+      options: [ 保证, 成绩, 终于, 其实 ]
+      answer: 0
+    - id: q-h3-01-x10
+      type: choice
+      tests: { words: [ 成绩 ] }
+      prompt: { kind: vi, text: Nghĩa của 成绩? }
+      optionKind: vi
+      options: [ "thành tích, điểm số", đề bài, áp lực, công bố ]
+      answer: 0
+    - id: q-h3-01-x11
+      type: choice
+      tests: { words: [ 题目, 难度, 压力, 进步 ] }
+      prompt: { kind: vi, text: "Điền vào chỗ trống: 只有努力，才会有___。" }
+      optionKind: hanzi
+      options: [ 进步, 题目, 压力, 难度 ]
+      answer: 0
+    - id: q-h3-01-x12
+      type: choice
+      tests: { words: [ 终于 ] }
+      prompt: { kind: vi, text: Nghĩa của 终于? }
+      optionKind: vi
+      options: [ cuối cùng (sau khi chờ lâu), thật ra, công bố, sắp xếp ]
+      answer: 0
+    - id: q-h3-01-x13
+      type: choice
+      tests: { words: [ 紧张, 安排, 提前, 成绩, 公布 ] }
+      prompt: { kind: vi, text: "Điền vào chỗ trống: 老师___了成绩。" }
+      optionKind: hanzi
+      options: [ 公布, 提前, 紧张, 安排 ]
+      answer: 0
+    - id: q-h3-01-x14
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h3-01-02 }
+      optionKind: vi
+      options: [ Tớ chẳng hồi hộp chút nào! Thật ra tớ còn chưa bắt đầu ôn., "Tuần sau là thi rồi, bạn ôn tập thế nào rồi?", "Thật á? Vậy áp lực của tớ lớn quá, làm sao đây?" ]
+      answer: 0
+    - id: q-h3-01-x15
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h3-01-11 }
+      optionKind: vi
+      options: [ "Tất nhiên rồi. Chỉ cần bạn cố gắng, nhất định sẽ tiến bộ.", Tớ hứa! Tớ nhất định sẽ thi ra điểm cao., "Đừng sợ, mình cùng sắp xếp thời gian trước đã." ]
+      answer: 0
+    - id: q-h3-01-x16
+      type: order
+      tests: {}
+      tiles: [ 就要, 下个星期, 了, 考试 ]
+      answer: 下个星期就要考试了
+    - id: q-h3-01-x17
+      type: order
+      tests: { words: [ 进步 ] }
+      tiles: [ 才会, 只有, 进步, 努力 ]
+      answer: 只有努力才会进步
+    - id: q-h3-01-x18
+      type: order
+      tests: { words: [ 复习, 保证 ] }
+      tiles: [ 每天都复习, 我, 保证 ]
+      answer: 我保证每天都复习

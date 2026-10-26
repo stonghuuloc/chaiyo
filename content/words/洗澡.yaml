@@ -1,0 +1,14 @@
+# content/words/洗澡.yaml
+id: 洗澡
+hanzi: 洗澡
+pinyin: xǐzǎo
+hanviet: tẩy táo
+level: 2
+pos: [ v ]
+senses:
+  - { vi: tắm }
+parts:
+  - { hanzi: 洗, pinyin: xǐ, hanviet: tẩy, vi: "rửa, giặt" }
+  - { hanzi: 澡, pinyin: zǎo, hanviet: táo, vi: tắm }
+examples: [ s-h2-01-04 ]
+image: { file: words/h2-01/w07.png, prompt: "The takin sits in a wooden tub full of bubbles with a duck toy, looking very pleased. Only the takin." }

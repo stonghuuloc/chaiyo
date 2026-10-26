@@ -1,0 +1,14 @@
+# content/words/社区.yaml
+id: 社区
+hanzi: 社区
+pinyin: shèqū
+hanviet: xã khu
+level: 5
+pos: [ n ]
+senses:
+  - { vi: "khu dân cư, cộng đồng" }
+parts:
+  - { hanzi: 社, pinyin: shè, hanviet: xã, vi: "xã hội, tổ chức" }
+  - { hanzi: 区, pinyin: qū, hanviet: khu, vi: khu vực }
+examples: [ s-h5-01-20 ]
+image: { file: words/h5-01/w07.png, prompt: "The red panda and the takin stroll through a tidy neighbourhood park with a small library, children playing and elderly people chatting on benches. Only the red panda and the takin." }

@@ -1,0 +1,14 @@
+# content/words/一般.yaml
+id: 一般
+hanzi: 一般
+pinyin: yībān
+hanviet: nhất ban
+level: 2
+pos: [ adv ]
+senses:
+  - { vi: "thường thì, nói chung" }
+parts:
+  - { hanzi: 一, pinyin: yī, hanviet: nhất, vi: một }
+  - { hanzi: 般, pinyin: bān, hanviet: ban, vi: "loại, kiểu" }
+examples: [ s-h2-01-01 ]
+image: { file: words/h2-01/w08.png, prompt: The red panda tilts her head thoughtfully at a row of identical mornings drawn as small sunrises in a line. Only the red panda. }

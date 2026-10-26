@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Tôi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+  main { padding: calc(env(safe-area-inset-top, 0px) + 40px) var(--s5) calc(env(safe-area-inset-bottom, 0px) + 120px); }
+
+  /* who: compact, the hero below is the focus */
+  .me { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: var(--s3); }
+  .av { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: #efd6cf; color: #8a3324; font: 600 21px var(--font-display); }
+  .me h1 { font: 600 22px/1.15 var(--font-display); }
+  .me p { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .edit { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-2); font-size: 20px; border: 1px solid var(--ink-5); }
+
+  /* hero: the current level is the one thing to look at; streak rides along underneath */
+  .hero { margin-top: var(--s5); padding: var(--s5); border-radius: 24px; background: #fff; box-shadow: 0 1px 0 rgba(45,25,10,.04), 0 10px 28px rgba(45,25,10,.08); }
+  .lv { display: grid; grid-template-columns: 84px minmax(0, 1fr); align-items: center; gap: var(--s4); }
+  .seal { width: 84px; height: 84px; border-radius: 22px; background: var(--vermilion); color: #fff; display: grid; place-items: center; align-content: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 8px 18px rgba(168,38,20,.25); }
+  .seal small { font-size: 12px; font-weight: 700; letter-spacing: .12em; opacity: .85; }
+  .seal b { font: 600 40px/1 var(--font-display); }
+  .lv .k { font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--vermilion-text); }
+  .lv h2 { margin-top: 2px; font: 600 23px/1.2 var(--font-display); }
+  .lv p { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .prog { margin-top: var(--s4); display: grid; gap: var(--s3); }
+  .prog div { display: grid; grid-template-columns: 1fr auto; row-gap: 6px; font-size: 14px; }
+  .prog span { color: var(--ink-2); } .prog b { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .prog .track { grid-column: 1 / -1; height: 10px; border-radius: 5px; background: var(--paper-2); overflow: hidden; }
+  .prog .track i { display: block; height: 100%; min-width: 6px; border-radius: 5px; background: var(--vermilion); }
+  .goal { margin-top: var(--s4); display: flex; align-items: center; gap: var(--s2); padding: var(--s3); border-radius: 14px; background: var(--paper); font-size: 14px; color: var(--ink-2); }
+  .goal .ic { flex: none; font-size: 20px; color: var(--ink-2); }
+  .streak { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--ink-5); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); font-size: 13.5px; color: var(--ink-3); }
+  .streak span { display: inline-flex; align-items: center; gap: 6px; }
+  .streak b { color: var(--ink-1); font-weight: 600; }
+  .streak .ic { font-size: 17px; }
+  .streak .fire { color: var(--vermilion); --duo: 1; --duo-c: #f2cfc6; }
+  .streak .fz { color: var(--freeze); }
+
+  /* sections, divided like Home */
+  section { margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  .sh { display: flex; align-items: baseline; justify-content: space-between; }
+  .sh h2 { font: 600 19px/1.2 var(--font-display); }
+  .sh a, .sh button { font-size: 14px; font-weight: 600; color: var(--ink-3); display: inline-flex; align-items: center; gap: 2px; min-height: 40px; }
+  .sh .ic { font-size: 14px; }
+  .sub { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .sub b { color: var(--ink-1); font-weight: 600; }
+
+  /* memory per skill */
+  .mem { margin-top: var(--s4); list-style: none; display: grid; gap: var(--s3); }
+  .mem li { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: center; gap: var(--s3); }
+  .mem .k { display: flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 600; }
+  .mem .k .ic { font-size: 17px; color: var(--ink-3); }
+  .bar { height: 12px; border-radius: 6px; background: var(--paper-2); display: flex; overflow: hidden; }
+  .bar i { display: block; height: 100%; }
+  .bar .s { background: var(--vermilion); } .bar .w { background: #eaa596; }
+  .mem small { grid-column: 2; margin-top: -6px; font-size: 12.5px; color: var(--ink-3); }
+  .mem .k small { display: none; }
+
+  /* badges */
+  .badges { margin: var(--s3) calc(-1 * var(--s5)) 0; padding: 0 var(--s5); display: flex; gap: var(--s2); overflow-x: auto; scrollbar-width: none; }
+  .badges::-webkit-scrollbar { display: none; }
+  .bd { flex: none; width: 116px; padding: var(--s3) var(--s2); border-radius: 18px; background: #fff; text-align: center; }
+  .bd img { display: block; margin: 0 auto; width: 84px; height: 84px; border-radius: 50%; }
+  .bd b { display: block; margin-top: var(--s2); font-size: 13.5px; font-weight: 600; line-height: 1.25; }
+  .bd small { display: block; margin-top: 2px; font-size: 12px; color: var(--ink-3); }
+  .bd.locked { background: transparent; border: 1px dashed var(--ink-5); }
+  .bd.locked img { filter: grayscale(1); opacity: .45; }
+  .bd .pg { margin: 6px var(--s2) 0; height: 4px; border-radius: 2px; background: var(--paper-2); overflow: hidden; }
+  .bd .pg i { display: block; height: 100%; background: var(--ink-3); }
+
+  /* menu */
+  .menu { margin-top: var(--s3); list-style: none; border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); overflow: hidden; }
+  .menu li + li { border-top: 1px solid var(--ink-5); }
+  .menu a, .menu button { width: 100%; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s2) var(--s4); text-align: left; }
+  .menu .mi { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); font-size: 22px; color: var(--ink-1); }
+  .menu b { display: block; font-weight: 600; }
+  .menu small { display: block; margin-top: 1px; font-size: 13px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .menu .go { color: var(--ink-4); font-size: 16px; }
+  .out { margin-top: var(--s5); width: 100%; min-height: 48px; font-size: 15px; font-weight: 600; color: var(--ink-3); }
+  .ver { text-align: center; font-size: 12px; color: var(--ink-4); }
+
+</style>
+</head>
+<body>
+<main id="main"></main>
+
+<nav class="tabs" aria-label="Điều hướng chính">
+  <span class="pill" aria-hidden="true"></span>
+  <a class="tab" href="home-glass.html"><svg class="ic"><use href="icons.svg#i-regular-house"/></svg>Hôm nay</a>
+  <a class="tab" href="t2-roadmap.html"><svg class="ic"><use href="icons.svg#i-regular-path"/></svg>Lộ trình</a>
+  <a class="tab" href="t3-practice.html"><svg class="ic"><use href="icons.svg#i-regular-brain"/></svg>Luyện tập</a>
+  <a class="tab" href="t4-me.html" aria-current="page"><svg class="ic"><use href="icons.svg#i-regular-user-circle"/></svg>Tôi</a>
+</nav>
+
+<script type="module" src="tabs.js?v=4"></script>
+<script type="module">
+import { lexicon, strength, SKILLS } from './data/lexicon.js?v=5';
+import { PROGRESS, LEVELS } from './data/roadmap.js';
+// current level from the roadmap (lesson numbers run across levels; Bài 0 primer sits outside the count)
+const counts = LEVELS.map((L) => L.topics.reduce((m, t) => m + t.lessons.length, 0));
+const lvIdx = LEVELS.findIndex((L) => L.level === 1), LV = LEVELS[lvIdx], nextLv = LEVELS[lvIdx + 1];
+const lvFirst = counts.slice(0, lvIdx).reduce((a, b) => a + b, 0) + 1, lvCount = counts[lvIdx], lvLast = lvFirst + lvCount - 1;
+const lvDone = Object.keys(PROGRESS.passed).filter((n) => +n >= lvFirst && +n <= lvLast).length;
+const lvLine = lvDone === 0 ? `Vừa vào cấp, đang học Bài ${PROGRESS.current.n}. Khởi đầu ngon rồi đó!`
+  : lvDone < lvCount / 2 ? `Đang học Bài ${PROGRESS.current.n}. Đi được một đoạn rồi, cứ đều đều nhé.`
+  : lvDone < lvCount ? `Đang học Bài ${PROGRESS.current.n}. Gần tới đích rồi!` : 'Học xong cả cấp, giờ chỉ còn thi thử thôi!';
+const $ = (s) => document.querySelector(s);
+const ic = (id, cls = 'ic') => `<svg class="${cls}"><use href="icons.svg#i-${id}"/></svg>`;
+const P = new URLSearchParams(location.search);
+
+// demo learner (Google profile from P2/O1; streak/freeze match Home)
+const ME = { name: 'Tống Lộc', joined: 'tháng 10/2026', level: 1, streak: 12, best: 12, freeze: 1, reminder: '21:00', channels: 'email', friends: 3 };
+const all = lexicon();
+const pctLv = Math.round(((lvDone / lvCount) + Math.min(1, all.length / LV.words)) / 2 * 100);
+const lessonsDone = Object.keys(PROGRESS.passed).length;
+const initials = ME.name.split(' ').map((x) => x[0]).slice(-2).join('');
+
+// the line under the streak changes with how the learner is doing
+const hello = ME.streak >= 7 ? 'Không bỏ buổi nào. Giữ phong độ này nhé!'
+  : ME.streak ? `Mai học tiếp là thành ${ME.streak + 1} ngày!` : 'Hôm nay học một chút là bắt đầu chuỗi mới rồi.';
+
+// memory per skill: share of practised words that are solid / still shaky / not practised yet
+const mem = Object.keys(SKILLS).map((s) => {
+  const xs = all.filter((w) => w.sk[s]), n = xs.length;
+  const strong = xs.filter((w) => strength(w.sk[s]) >= 2).length, weak = xs.filter((w) => w.sk[s].tries && strength(w.sk[s]) < 2).length;
+  return { s, n, strong, weak };
+});
+const ICON = { the: 'fill-cards', nghe: 'fill-headphones', viet: 'fill-pen' };
+
+// fixed badge set (art: assets/badges/<id>.png, cast v2); earned/locked derived from state, never invented
+const BADGES = [
+  { id: 'first', t: 'Bước đầu tiên', ok: 0 in PROGRESS.passed, sub: 'Qua Bài 0' },
+  { id: 'streak7', t: 'Chuỗi 7 ngày', ok: ME.best >= 7, sub: 'Học 7 ngày liền' },
+  { id: 'streak30', t: 'Chuỗi 30 ngày', ok: ME.best >= 30, have: ME.best, need: 30 },
+  { id: 'words100', t: '100 từ', ok: all.length >= 100, have: all.length, need: 100 },
+  { id: 'hsk1', t: 'Đỗ HSK 1', ok: false, sub: 'Qua thi thử HSK 1' },
+];
+const earned = BADGES.filter((b) => b.ok), next = BADGES.filter((b) => !b.ok);
+const badge = (b) => `<div class="bd ${b.ok ? '' : 'locked'}"><img src="../assets/badges/${b.id}.png?v=1" alt="" loading="lazy"><b>${b.t}</b>
+  ${b.need && !b.ok ? `<small>${b.have}/${b.need}</small><div class="pg"><i style="width:${Math.round((b.have / b.need) * 100)}%"></i></div>` : `<small>${b.ok ? 'Đã có' : b.sub}</small>`}</div>`;
+
+const ADMIN = P.has('admin');
+const menu = [
+  ['u2', 'fill-users', 'Bạn bè', `${ME.friends} người · bảng xếp hạng tuần`],
+  ['u4', 'fill-settings', 'Cài đặt', `Nhắc học ${ME.reminder} · hồ sơ · kiểu chữ`],
+  ...(ADMIN ? [['a1', 'fill-shield', 'Báo lỗi nội dung', 'Quản trị · hộp thư báo lỗi'], ['a2', 'fill-chart', 'Số liệu sử dụng', 'Quản trị · người học bỏ ở đâu']] : []),
+];
+
+$('#main').innerHTML = `
+  <div class="me"><span class="av" aria-hidden="true">${initials}</span>
+    <div><h1>${ME.name}</h1><p>Học từ ${ME.joined}</p></div>
+    <button class="edit" data-soon="u4" aria-label="Sửa hồ sơ">${ic('fill-pen-edit')}</button></div>
+
+  <div class="hero">
+    <div class="lv"><span class="seal"><small>HSK</small><b>${ME.level}</b></span>
+      <div><p class="k">Cấp đang học</p><h2>${LV.title} · ${pctLv}%</h2><p>${lvLine}</p></div></div>
+    <div class="prog">
+      <div><span>Bài học</span><b>${lvDone}/${lvCount}</b><span class="track"><i style="width:${(lvDone / lvCount) * 100}%"></i></span></div>
+      <div><span>Từ vựng</span><b>${all.length}/${LV.words}</b><span class="track"><i style="width:${(all.length / LV.words) * 100}%"></i></span></div>
+    </div>
+    <p class="goal">${ic('fill-diploma')}<span>Mốc tiếp theo: <b>Thi thử ${LV.title}</b> sau Bài ${lvLast}, đỗ là mở ${nextLv ? nextLv.title : 'chứng chỉ'}.</span></p>
+    <div class="streak"><span>${ic('fill-fire', 'ic fire')}<b>${ME.streak} ngày liền</b></span><span>${ic('fill-snowflake', 'ic fz')}Còn ${ME.freeze} lượt đóng băng</span><span>Kỷ lục ${ME.best} ngày</span></div>
+  </div>
+
+  <section><div class="sh"><h2>Độ nhớ theo kỹ năng</h2><a href="t3-words.html">Từ của tôi${ic('regular-caret-right')}</a></div>
+    <p class="sub">Kỹ năng nào bar ngắn là đang đuối, luyện thêm nhé.</p>
+    <ul class="mem">${mem.map((m) => `<li><span class="k">${ic(ICON[m.s])}${SKILLS[m.s].label}</span>
+      <span class="bar" role="img" aria-label="${SKILLS[m.s].label}: ${m.strong} nhớ chắc, ${m.weak} còn lơ mơ, ${m.n - m.strong - m.weak} chưa luyện"><i class="s" style="width:${(m.strong / m.n) * 100}%"></i><i class="w" style="width:${(m.weak / m.n) * 100}%"></i></span>
+      <small>${m.strong} nhớ chắc · ${m.weak} còn lơ mơ · ${m.n - m.strong - m.weak} chưa luyện</small></li>`).join('')}</ul></section>
+
+  <section><div class="sh"><h2>Huy hiệu</h2><button data-soon="u1">Xem hết${ic('regular-caret-right')}</button></div>
+    <p class="sub">Có ${earned.length}/${BADGES.length}. ${next[0] ? `Cái tiếp theo: ${next[0].t}.` : 'Đủ bộ rồi!'}</p>
+    <div class="badges">${[...earned, ...next].map(badge).join('')}</div></section>
+
+  <section><ul class="menu">${menu.map(([k, i, t, s]) => `<li><button data-soon="${k}"><span class="mi">${ic(i)}</span><span><b>${t}</b><small>${s}</small></span>${ic('regular-caret-right', 'ic go')}</button></li>`).join('')}</ul>
+    <button class="out" id="out">Đăng xuất</button>
+    <p class="ver">Chaiyo · bản thử</p></section>`;
+
+// each row opens its screen; badges tap → U1
+const ROUTE = { u1: 'u1-badges.html', u2: 'u2-friends.html', u4: 'u4-settings.html', a1: 'a1-reports.html', a2: 'a2-usage.html' };
+document.querySelectorAll('[data-soon]').forEach((b) => (b.onclick = () => (location.href = ROUTE[b.dataset.soon])));
+document.querySelectorAll('.bd').forEach((b) => { b.style.cursor = 'pointer'; b.onclick = () => (location.href = ROUTE.u1); });
+$('#out').onclick = () => (location.href = 'p2-login.html');
+</script>
+</body>
+</html>

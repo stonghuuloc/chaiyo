@@ -1,0 +1,14 @@
+# content/words/想念.yaml
+id: 想念
+hanzi: 想念
+pinyin: xiǎngniàn
+hanviet: tưởng niệm
+level: 4
+pos: [ v ]
+senses:
+  - { vi: nhớ (người ở xa) }
+parts:
+  - { hanzi: 想, pinyin: xiǎng, hanviet: tưởng, vi: "nghĩ, nhớ" }
+  - { hanzi: 念, pinyin: niàn, hanviet: niệm, vi: "nhớ, nghĩ đến" }
+examples: [ s-h4-01-16 ]
+image: { file: words/h4-01/w12.png, prompt: "The panda sits alone by a window at dusk, holding a small photo of the fawn and gazing at the sky." }

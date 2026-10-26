@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Talking red panda — free sample</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f7f3ea; color: #1d1814; font: 15px/1.4 -apple-system, "Be Vietnam Pro", system-ui, sans-serif; display: flex; justify-content: center; padding: 24px 16px; }
+  .wrap { width: 360px; display: flex; flex-direction: column; gap: 12px; }
+  .hint { color: #655c51; font-size: 13px; }
+  .stage { border: 1.5px solid #1d1814; border-radius: 16px; background: #f7f3ea; display: flex; flex-direction: column; align-items: center; padding: 12px 12px 14px; gap: 10px; }
+  canvas { width: 220px; height: 220px; transition: transform .08s; }
+  .ctl { display: flex; gap: 10px; align-items: center; }
+  .play { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid #1d1814; background: #fff; font-size: 18px; cursor: pointer; }
+  .chip { border: 1.5px solid #1d1814; border-radius: 999px; padding: 3px 12px; background: #fff; font-size: 13px; cursor: pointer; }
+  .chip.on { background: #1d1814; color: #fff; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opt { border: 1.5px solid #1d1814; border-radius: 12px; height: 56px; display: flex; align-items: center; justify-content: center; font: 24px "Kaiti SC", "STKaiti", "KaiTi", serif; background: #fff; cursor: pointer; }
+  .opt.ok { background: #e6f0e1; } .opt.bad { background: #f6dcd6; }
+  .pick { display: flex; gap: 6px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hint">Mẫu miễn phí · 1 ảnh + miệng vẽ bằng code theo âm lượng · giọng edge-tts Xiaoxiao</div>
+  <div class="pick" id="pick"></div>
+  <div class="hint">Nghe rồi chọn chữ đúng</div>
+  <div class="stage">
+    <canvas id="cv" width="1024" height="1024"></canvas>
+    <div class="ctl"><button class="play" id="play">▶</button><button class="chip" id="slow">0.7×</button></div>
+  </div>
+  <div class="grid" id="opts"></div>
+</div>
+<script>
+const items = [
+  { file: 'talk/nihao.mp3', answer: '你好', opts: ['你好', '谢谢', '再见', '对不起'] },
+  { file: 'talk/duibuqi.mp3', answer: '对不起', opts: ['没关系', '对不起', '不客气', '你们好'] },
+  { file: 'talk/meiguanxi.mp3', answer: '没关系，我们是好朋友。', opts: ['没关系，我们是好朋友。', '不客气，我们是好朋友。'] },
+];
+let cur = 0, slow = false, raf = 0;
+const cv = document.getElementById('cv'), g = cv.getContext('2d');
+const img = new Image(); img.src = 'talk/panda-closed.png';
+const audio = new Audio(); audio.preservesPitch = true;
+let face = '#fbf9f4';
+const INK = '#3a2320';
+
+function draw(open, blink) {
+  g.drawImage(img, 0, 0, 1024, 1024);
+  if (blink) for (const x of [380, 640]) {
+    g.fillStyle = face; g.beginPath(); g.ellipse(x, 488, 66, 62, 0, 0, 7); g.fill();
+    g.strokeStyle = INK; g.lineWidth = 14; g.lineCap = 'round';
+    g.beginPath(); g.moveTo(x - 48, 486); g.quadraticCurveTo(x, 520, x + 48, 486); g.stroke();
+  }
+  if (open > 0.04) {
+    g.fillStyle = face; g.beginPath(); g.ellipse(510, 598, 80, 58, 0, 0, 7); g.fill();
+    const h = 10 + 44 * open, w = 30 + 14 * open;
+    g.fillStyle = INK; g.beginPath(); g.ellipse(510, 588 + h / 2, w, h / 2 + 6, 0, 0, 7); g.fill();
+    g.fillStyle = '#f3a7a7'; g.beginPath(); g.ellipse(510, 588 + h * 0.85, w * 0.62, h * 0.22 + 3, 0, 0, 7); g.fill();
+    g.strokeStyle = INK; g.lineWidth = 12; g.lineCap = 'round';
+    g.beginPath(); g.moveTo(452, 572); g.quadraticCurveTo(480, 596, 510, 574); g.quadraticCurveTo(540, 596, 568, 572); g.stroke();
+  }
+}
+let nextBlink = performance.now() + 2500, blinkUntil = 0, level = 0;
+function tick(t) {
+  let target = 0;
+  const env = envs[cur];
+  if (env && !audio.paused && !audio.ended) target = env[Math.floor(audio.currentTime / 0.02)] || 0;
+  level += (target - level) * (target > level ? 0.6 : 0.35);
+  if (t > nextBlink) { blinkUntil = t + 130; nextBlink = t + 2500 + Math.random() * 2500; }
+  draw(level, t < blinkUntil);
+  cv.style.transform = `translateY(${(-6 * level).toFixed(1)}px) rotate(${(Math.sin(t / 140) * 1.5 * level).toFixed(2)}deg)`;
+  raf = requestAnimationFrame(tick);
+}
+img.onload = () => {
+  const p = g; p.drawImage(img, 0, 0); const d = p.getImageData(512, 760, 1, 1).data; face = `rgb(${d[0]},${d[1]},${d[2]})`;
+  const c = p.getImageData(8, 8, 1, 1).data; document.querySelector('.stage').style.background = `rgb(${c[0]},${c[1]},${c[2]})`;
+  requestAnimationFrame(tick);
+};
+const envs = [];
+async function envelope(i) {
+  const ac = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 44100, 44100);
+  const ab = await ac.decodeAudioData(await (await fetch(items[i].file)).arrayBuffer());
+  const d = ab.getChannelData(0), win = Math.round(ab.sampleRate * 0.02), out = [];
+  for (let s = 0; s < d.length; s += win) { let e = 0; for (let k = s; k < s + win && k < d.length; k++) e += d[k] * d[k]; out.push(Math.sqrt(e / win)); }
+  const max = Math.max(...out);
+  envs[i] = out.map(v => Math.min(1, (v / max) * 1.3));
+}
+items.forEach((_, i) => envelope(i));
+function play() {
+  audio.src = items[cur].file; audio.playbackRate = slow ? 0.7 : 1; audio.play();
+}
+function load(i) {
+  cur = i;
+  document.querySelectorAll('#pick .chip').forEach((c, j) => c.classList.toggle('on', j === i));
+  const o = document.getElementById('opts'); o.innerHTML = '';
+  for (const t of items[i].opts) {
+    const b = document.createElement('div'); b.className = 'opt'; b.textContent = t;
+    if (t.length > 4) { b.style.fontSize = '17px'; b.style.gridColumn = '1 / -1'; }
+    b.onclick = () => b.classList.add(t === items[i].answer ? 'ok' : 'bad');
+    o.appendChild(b);
+  }
+}
+items.forEach((it, i) => { const c = document.createElement('button'); c.className = 'chip'; c.textContent = `Mẫu ${i + 1}`; c.onclick = () => load(i); document.getElementById('pick').appendChild(c); });
+document.getElementById('play').onclick = play;
+document.getElementById('slow').onclick = e => { slow = !slow; e.target.classList.toggle('on', slow); play(); };
+load(0);
+</script>
+</body>
+</html>

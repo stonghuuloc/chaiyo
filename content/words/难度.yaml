@@ -1,0 +1,14 @@
+# content/words/难度.yaml
+id: 难度
+hanzi: 难度
+pinyin: nándù
+hanviet: nan độ
+level: 3
+pos: [ n ]
+senses:
+  - { vi: độ khó }
+parts:
+  - { hanzi: 难, pinyin: nán, hanviet: nan, vi: khó }
+  - { hanzi: 度, pinyin: dù, hanviet: độ, vi: mức độ }
+examples: [ s-h3-01-03 ]
+image: { file: words/h3-01/w05.png, prompt: "The red panda stands at the bottom of a tall staircase of books looking up at the high top step, while the takin watches from the side. Only the red panda and the takin." }

@@ -1,0 +1,14 @@
+# content/words/乡村.yaml
+id: 乡村
+hanzi: 乡村
+pinyin: xiāngcūn
+hanviet: hương thôn
+level: 5
+pos: [ n ]
+senses:
+  - { vi: "nông thôn, làng quê" }
+parts:
+  - { hanzi: 乡, pinyin: xiāng, hanviet: hương, vi: quê hương }
+  - { hanzi: 村, pinyin: cūn, hanviet: thôn, vi: làng }
+examples: [ s-h5-01-07 ]
+image: { file: words/h5-01/w06.png, prompt: "The red panda walks down a quiet village lane lined with small houses, rice fields and a wooden bridge, smiling in the sunshine. Only the red panda." }

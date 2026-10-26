@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Nhập môn · Bài 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="primer.css">
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l0-hub.html" aria-label="Lưu và về Nhập môn"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <div class="seg" id="seg" aria-hidden="true"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<script type="module">
+import { $, bar, cta, doneStep } from './step.js?v=9';
+import { PRIMER, SECTIONS, chipHtml, wireChips, contour, drill, progress, label } from './primer.js?v=2';
+import { toneOf } from './data/h0-00.js?v=2';
+
+const key = new URLSearchParams(location.search).get('s');
+const k = SECTIONS.includes(key) ? key : 'tones';
+const sec = PRIMER.sections[k];
+const nextKey = SECTIONS[SECTIONS.indexOf(k) + 1];
+const STEPS = [...sec.cards.map((c) => ({ card: c })), ...sec.drills.map((q) => ({ q }))];
+document.title = `${sec.title} · Bài 0`;
+
+const pairRow = ([a, b]) => `<div class="pair">${chipHtml(a)}<i>với</i>${chipHtml(b)}</div>`;
+function cardStep(c, i) {
+  const nCards = sec.cards.length;
+  const single = k === 'tones' && c.syllables.length === 1 && toneOf(c.syllables[0]) <= 4;
+  $('#main').innerHTML = `<div class="step">
+    <p class="ask">${sec.title} · Thẻ ${i + 1}/${nCards}</p><h2>${c.title}</h2>
+    ${single ? `<div class="cardtop"><span class="bigsyl py">${label(c.syllables[0])}</span>${contour(toneOf(c.syllables[0]), 'big-contour')}</div>` : ''}
+    <p class="exp">${c.explain}</p>
+    ${c.syllables.length ? `<div class="chips ${c.syllables.some((s) => /\d\D/.test(s.split('=')[0])) ? 'wide' : ''}">${c.syllables.map(chipHtml).join('')}</div>` : ''}
+    ${c.pairs ? `<div class="pairs"><h3>${c.syllables.length ? 'Nghe so sánh' : 'Nghe từng cặp'}</h3>${c.pairs.map(pairRow).join('')}</div>` : ''}
+    ${c.syllables.length || c.pairs ? '<p class="tap">Chạm vào âm để nghe. Chạm lần nữa để nghe chậm.</p>' : ''}</div>`;
+  wireChips();
+}
+
+let got = [];
+function render(i) {
+  scrollTo(0, 0);
+  if (i === STEPS.length) return finish();
+  bar(i, STEPS.length);
+  const s = STEPS[i];
+  if (s.card) {
+    cardStep(s.card, i);
+    cta('Tiếp', { onClick: () => render(i + 1) });
+  } else {
+    const n = i - sec.cards.length + 1;
+    drill(s.q, (ok) => { got.push(ok); render(i + 1); }, { ask: `${sec.title} · Luyện ${n}/${sec.drills.length}` });
+  }
+}
+function finish() {
+  const ok = got.filter(Boolean).length;
+  progress.section(k, ok, got.length);
+  bar(STEPS.length, STEPS.length, `${STEPS.length}/${STEPS.length}`);
+  const picks = sec.cards.flatMap((c) => c.syllables).filter((v, i, a) => a.indexOf(v) === i).slice(0, 10);
+  doneStep({
+    title: `Xong phần ${sec.title}`,
+    text: `${ok}/${got.length} câu luyện đúng · ${ok === got.length ? 'tai bạn bắt tốt rồi' : 'có thể quay lại nghe thêm bất cứ lúc nào'}`,
+    gridHtml: `<div class="grid">${picks.map((v) => `<span>${label(v)}</span>`).join('')}</div>`,
+    label: nextKey ? 'Phần tiếp theo' : 'Về Nhập môn',
+    next: nextKey ? PRIMER.sections[nextKey].title : 'Kiểm tra Nhập môn',
+    href: nextKey ? `l0-section.html?s=${nextKey}` : 'l0-hub.html',
+  });
+}
+render(Math.min(+new URLSearchParams(location.search).get('at') || 0, STEPS.length - 1));   // ?at=N jumps to a step (review aid)
+</script>
+</body>
+</html>

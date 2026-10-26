@@ -1,0 +1,90 @@
+/* Tab roots (Hôm nay, Lộ trình, …): tokens, base, lesson path list, frost tab bar. */
+/* Be Vietnam Pro lacks ǎ ǐ ǒ ǔ ǖ–ǜ: those code points come from Onest (same files as primer.css) */
+@font-face { font-family: "PinyinMarks"; font-weight: 400; src: url("fonts/pinyin-onest-400.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; }
+@font-face { font-family: "PinyinMarks"; font-weight: 500; src: url("fonts/pinyin-onest-500.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; }
+@font-face { font-family: "PinyinMarks"; font-weight: 600 700; src: url("fonts/pinyin-onest-600.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; }
+:root {
+  /* colour */
+  --paper: #f7f3ea;
+  --paper-2: #efe9dc;
+  --ink-1: #1d1814;
+  --ink-2: #4a423a;
+  --ink-3: #655c51;
+  --ink-4: #948a7e;
+  --ink-5: #ddd5c8;
+  --vermilion: #c6301d;
+  --vermilion-press: #a72614;
+  --vermilion-wash: #f6e1db;
+  --vermilion-text: #a72614;
+  --freeze: #3f73b0;
+  /* type */
+  --font-display: "Literata", "PinyinMarks", serif;
+  --font-ui: "Be Vietnam Pro", "PinyinMarks", system-ui, sans-serif;
+  --font-hanzi: "Kaiti SC", "STKaiti", "KaiTi", serif;
+  --t-hero: 36px; --t-h2: 23px; --t-cta: 21px; --t-body: 16px; --t-meta: 13.5px; --t-tab: 11.5px;
+  /* space + radius */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px; --s8: 32px;
+  --r-cell: 12px; --r-cta: 18px; --r-pill: 999px;
+  /* frost */
+  --frost-tint: rgba(250, 246, 238, .72);
+  --frost-blur: 24px;
+  --frost-sat: 175%;
+  --frost-rim: rgba(255, 255, 255, .9);
+  --frost-edge: rgba(40, 25, 15, .10);
+  --frost-shadow: 0 10px 30px rgba(45, 25, 10, .16), 0 1px 3px rgba(45, 25, 10, .08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--paper); -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-ui); color: var(--ink-1); background: var(--paper); max-width: 430px; margin: 0 auto; min-height: 100vh; }
+.ic { width: 1em; height: 1em; fill: currentColor; flex: none; }
+button, a { font: inherit; color: inherit; text-decoration: none; }
+button { background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2.5px solid var(--vermilion); outline-offset: 3px; border-radius: 8px; }
+.hz { font-family: var(--font-hanzi); font-weight: 400; }
+
+/* lesson path: done ✓ · now ◉ · locked 🔒, joined by a rail */
+.path { list-style: none; position: relative; }
+.path li { position: relative; display: grid; grid-template-columns: 36px 1fr 16px; align-items: center; gap: var(--s3); padding: var(--s2) 0; min-height: 60px; }
+.path li::before { content: ""; position: absolute; left: 17px; top: 0; bottom: 0; width: 2px; background: var(--ink-5); }
+.path li:first-child::before { top: 50%; } .path li:last-child::before { bottom: 50%; }
+.path li[data-href], .path li.locked { cursor: pointer; }
+.path li.done::before, .path li.done + li.now::before { background: var(--vermilion); }
+.path li.done + li.now::before { bottom: 50%; }
+.mark { position: relative; z-index: 1; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--paper); }
+.done .mark { background: var(--vermilion); color: #fff; font-size: 17px; }
+.now .mark { border: 2.5px solid var(--vermilion); }
+.now .mark i { width: 14px; height: 14px; border-radius: 50%; background: var(--vermilion); }
+.locked .mark { background: var(--paper-2); color: var(--ink-3); font-size: 15px; }
+.path b { display: block; font: 600 17px/1.3 var(--font-display); }
+.path b span { color: var(--ink-3); font-weight: 500; }
+.now b, .now b span { color: var(--vermilion-text); }
+.locked b { color: var(--ink-2); }
+.path small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+.path .go { color: var(--ink-4); font-size: 16px; } .now .go { color: var(--vermilion); }
+
+/* frost tab bar */
+.tabs { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); width: min(402px, calc(100% - 28px)); height: 66px; border-radius: var(--r-pill); display: grid; grid-template-columns: repeat(4, 1fr); padding: 5px; isolation: isolate;
+  background: var(--frost-tint);
+  -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat));
+  backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat));
+  border: .5px solid var(--frost-edge);
+  box-shadow: inset 0 1px 0 var(--frost-rim), inset 0 -1px 1px rgba(40,20,10,.08), var(--frost-shadow); }
+.tabs::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,0) 42%), radial-gradient(120% 90% at 50% 120%, rgba(255,255,255,.25), transparent 60%); }
+.tab { display: grid; justify-items: center; align-content: center; gap: 3px; border-radius: var(--r-pill); font-size: var(--t-tab); font-weight: 600; color: var(--ink-2); -webkit-tap-highlight-color: transparent; }
+.tab .icw { position: relative; width: 24px; height: 24px; }
+.tab .icw .ic { position: absolute; inset: 0; font-size: 24px; transition: opacity .26s ease; }
+.tab .icw .f { color: var(--vermilion-wash); --duo: 1; --duo-c: var(--vermilion); opacity: 0; }
+.tab .icw.on .f { opacity: 1; }
+/* brain: its duo layer is the whole shape, so fill it half-strength and keep the folds solid (true two-tone) */
+.tab .icw .f.n-brain { color: var(--vermilion); --duo: .42; }
+.tab .icw.on .l { opacity: 0; }
+.tab[aria-current="page"] { color: var(--ink-1); }
+.tabs { touch-action: none; user-select: none; -webkit-user-select: none; }
+.tab { position: relative; z-index: 1; }
+/* selection pill: milky frost, springs to the picked tab; grows a little while held */
+.pill { position: absolute; z-index: 0; left: 5px; top: 5px; bottom: 5px; border-radius: var(--r-pill); pointer-events: none;
+  background: rgba(255,255,255,.62); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 4px rgba(45,25,10,.10);
+  transition: scale .18s cubic-bezier(.3,1.4,.5,1); will-change: transform; }
+.tabs.held .pill { scale: 1.08 1.12; background: rgba(255,255,255,.75); }
+@media (prefers-reduced-motion: reduce) { .tab .icw .ic { transition: opacity .15s; } .pill { transition: none; } }

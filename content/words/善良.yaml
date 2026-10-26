@@ -1,0 +1,14 @@
+# content/words/善良.yaml
+id: 善良
+hanzi: 善良
+pinyin: shànliáng
+hanviet: thiện lương
+level: 4
+pos: [ adj ]
+senses:
+  - { vi: "lương thiện, tốt bụng" }
+parts:
+  - { hanzi: 善, pinyin: shàn, hanviet: thiện, vi: "lành, tốt" }
+  - { hanzi: 良, pinyin: liáng, hanviet: lương, vi: "tốt, lành" }
+examples: [ s-h4-01-14 ]
+image: { file: words/h4-01/w14.png, prompt: "The panda gently carries a tiny lost bird in both paws toward its nest in a tree, with a tender smile." }

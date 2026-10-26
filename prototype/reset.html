@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đặt lại demo</title>
+</head>
+<body style="font-family:system-ui;padding:40px;background:#f7f3ea;color:#1d1814">
+<p id="m">Đang đặt lại…</p>
+<script>
+// demo helper: wipes every prototype key (streak, practice log, settings, follows, reports…) then goes Home
+const n = localStorage.length;
+localStorage.clear(); sessionStorage.clear();
+document.getElementById('m').textContent = `Đã xoá ${n} mục dữ liệu demo. Đang về Hôm nay…`;
+setTimeout(() => location.replace('home-glass.html?missed'), 700);
+</script>
+</body>
+</html>

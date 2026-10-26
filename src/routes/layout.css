@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@import '../lib/styles/tokens.css';
+
+@layer base {
+	html {
+		-webkit-text-size-adjust: 100%;
+	}
+
+	body {
+		min-height: 100dvh;
+		background: var(--color-background);
+		color: var(--color-text);
+		font-family: var(--font-body);
+		font-size: var(--text-body);
+		line-height: var(--text-body--line-height);
+		-webkit-font-smoothing: antialiased;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-headline);
+		font-weight: var(--text-headline--font-weight);
+		line-height: var(--text-headline--line-height);
+	}
+
+	:focus-visible {
+		outline: 2.5px solid var(--color-primary);
+		outline-offset: 3px;
+	}
+
+	[lang|='zh'] {
+		font-family: var(--font-hanzi);
+	}
+}

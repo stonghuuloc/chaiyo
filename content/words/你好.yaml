@@ -1,0 +1,15 @@
+# content/words/你好.yaml
+id: 你好
+hanzi: 你好
+pinyin: nǐ hǎo
+spoken: ní hǎo
+hanviet: nhĩ hảo
+level: 0
+pos: [ phrase ]
+senses:
+  - { vi: xin chào }
+parts:
+  - { hanzi: 你, pinyin: nǐ, hanviet: nhĩ, vi: bạn }
+  - { hanzi: 好, pinyin: hǎo, hanviet: hảo, vi: tốt }
+examples: [ s-h1-01-14 ]
+image: { file: words/nihao.png }

@@ -1,0 +1,14 @@
+# content/words/诚实.yaml
+id: 诚实
+hanzi: 诚实
+pinyin: chéngshí
+hanviet: thành thực
+level: 4
+pos: [ adj ]
+senses:
+  - { vi: thành thật }
+parts:
+  - { hanzi: 诚, pinyin: chéng, hanviet: thành, vi: chân thành }
+  - { hanzi: 实, pinyin: shí, hanviet: thực, vi: thật }
+examples: [ s-h4-01-06 ]
+image: { file: words/h4-01/w07.png, prompt: "The takin holds up an empty cookie jar and admits with an honest, embarrassed face while the red panda listens kindly." }

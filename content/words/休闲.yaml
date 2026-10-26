@@ -1,0 +1,14 @@
+# content/words/休闲.yaml
+id: 休闲
+hanzi: 休闲
+pinyin: xiūxián
+hanviet: hưu nhàn
+level: 5
+pos: [ v ]
+senses:
+  - { vi: "thư giãn, giải trí" }
+parts:
+  - { hanzi: 休, pinyin: xiū, hanviet: hưu, vi: nghỉ ngơi }
+  - { hanzi: 闲, pinyin: xián, hanviet: nhàn, vi: rảnh rỗi }
+examples: [ s-h5-01-11 ]
+image: { file: words/h5-01/w11.png, prompt: "The red panda relaxes in a hammock under a tree beside a village pond, sipping tea and reading a book in a calm afternoon. Only the red panda." }

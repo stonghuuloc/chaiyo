@@ -1,0 +1,21 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# Miscellaneous
+/static/
+
+# Non-app sources
+/prototype/
+/assets/
+/docs/
+/.impeccable/
+/.claude/
+/supabase/
+/messages/
+*.md
+design.tokens.json
+src/lib/styles/tokens.css

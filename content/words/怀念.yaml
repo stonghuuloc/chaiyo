@@ -1,0 +1,14 @@
+# content/words/怀念.yaml
+id: 怀念
+hanzi: 怀念
+pinyin: huáiniàn
+hanviet: hoài niệm
+level: 4
+pos: [ v ]
+senses:
+  - { vi: "nhớ về, hoài niệm" }
+parts:
+  - { hanzi: 怀, pinyin: huái, hanviet: hoài, vi: "ôm trong lòng, nhớ" }
+  - { hanzi: 念, pinyin: niàn, hanviet: niệm, vi: "nhớ, nghĩ đến" }
+examples: [ s-h4-01-17 ]
+image: { file: words/h4-01/w13.png, prompt: "The panda flips through an old photo album full of pictures of the panda and the fawn playing, smiling softly." }

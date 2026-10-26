@@ -1,0 +1,14 @@
+# content/words/期待.yaml
+id: 期待
+hanzi: 期待
+pinyin: qīdài
+hanviet: kỳ đãi
+level: 4
+pos: [ v ]
+senses:
+  - { vi: mong chờ }
+parts:
+  - { hanzi: 期, pinyin: qī, hanviet: kỳ, vi: "kỳ hạn, hẹn" }
+  - { hanzi: 待, pinyin: dài, hanviet: đãi, vi: đợi }
+examples: [ s-h4-01-19 ]
+image: { file: words/h4-01/w15.png, prompt: "The panda waits by a gate with a bunch of flowers, bouncing on tiptoe and looking down the road with bright eyes." }

@@ -1,0 +1,13 @@
+# content/words/谢谢.yaml
+id: 谢谢
+hanzi: 谢谢
+pinyin: xièxie
+hanviet: tạ tạ
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: cảm ơn }
+parts:
+  - { hanzi: 谢, pinyin: xiè, hanviet: tạ, vi: cảm tạ }
+examples: [ s-h1-01-17 ]
+image: { file: words/xiexie.png }

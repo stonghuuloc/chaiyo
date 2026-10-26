@@ -1,0 +1,14 @@
+# content/words/紧张.yaml
+id: 紧张
+hanzi: 紧张
+pinyin: jǐnzhāng
+hanviet: khẩn trương
+level: 3
+pos: [ adj ]
+senses:
+  - { vi: "hồi hộp, căng thẳng" }
+parts:
+  - { hanzi: 紧, pinyin: jǐn, hanviet: khẩn, vi: "chặt, gấp" }
+  - { hanzi: 张, pinyin: zhāng, hanviet: trương, vi: căng ra }
+examples: [ s-h3-01-02 ]
+image: { file: words/h3-01/w02.png, prompt: "The takin sits stiffly at a school desk with wide eyes and clenched hooves, a pencil gripped tight, in a quiet classroom. Only the takin." }

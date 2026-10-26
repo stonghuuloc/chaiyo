@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Số liệu sử dụng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 40px); }
+  .top { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px var(--s2); background: var(--paper); }
+  .top .t { text-align: center; font: 600 17px/1.3 var(--font-display); }
+  .x { width: 44px; height: 44px; display: grid; place-items: center; font-size: 22px; color: var(--ink-2); border-radius: 50%; }
+  .x .ic { transform: scaleX(-1); }
+  .admin { display: inline-flex; align-items: center; gap: 5px; margin-top: var(--s2); padding: 4px 10px; border-radius: var(--r-pill); background: var(--paper-2); border: 1px solid var(--ink-5); font-size: 12px; font-weight: 600; color: var(--ink-2); }
+  .admin .ic { font-size: 14px; }
+  h1 { margin-top: var(--s3); font: 700 var(--t-h2)/1.25 var(--font-display); }
+  .sub { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .few { margin-top: var(--s4); padding: var(--s3) var(--s4); border-radius: var(--r-cell); background: var(--paper-2); border: 1px solid var(--ink-5); font-size: 14px; color: var(--ink-2); }
+
+  .seg { margin-top: var(--s4); display: grid; grid-template-columns: 1fr 1fr; padding: 3px; border-radius: var(--r-pill); background: var(--paper-2); border: 1px solid var(--ink-5); }
+  .seg button { min-height: 44px; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; color: var(--ink-3); }
+  .seg button[aria-pressed="true"] { background: var(--ink-1); color: var(--paper); }
+
+  section { margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  h2 { font: 600 19px/1.3 var(--font-display); }
+  section > p { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  h3 { margin-top: var(--s4); font-size: 13.5px; font-weight: 600; color: var(--ink-3); }
+
+  .card { margin-top: var(--s3); border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { padding: 12px var(--s4); text-align: right; font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
+  tr + tr td, tbody tr + tr th { border-top: 1px solid var(--ink-5); }
+  td b { font-weight: 700; }
+  td small { color: var(--ink-3); font-size: 12.5px; }
+
+  .bars { list-style: none; padding: var(--s2) var(--s4); }
+  .bars li { display: grid; grid-template-columns: 92px minmax(0, 1fr) 30px; align-items: center; gap: var(--s3); min-height: 38px; font-size: 14px; }
+  .bars li > b { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .bar { height: 10px; border-radius: 5px; background: var(--ink-5); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 5px; background: var(--ink-1); }
+  .bars.rem li { grid-template-columns: 70px minmax(0, 1fr) 30px; }
+  .chan { margin-top: var(--s3); }
+  .chan > b { display: flex; align-items: center; gap: var(--s2); font-weight: 600; font-size: 15px; }
+  .chan > b .ic { font-size: 18px; color: var(--ink-2); }
+  .chan .card { margin-top: var(--s2); }
+</style>
+</head>
+<body>
+<div class="top"><a class="x" id="back" href="t4-me.html" aria-label="Quay lại"><svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></a><span class="t">Số liệu sử dụng</span><span></span></div>
+<main id="main"></main>
+
+<script type="module">
+if (/t4-me/.test(document.referrer)) document.getElementById('back').onclick = (e) => { e.preventDefault(); history.back(); };
+const $ = (s) => document.querySelector(s);
+const ic = (id, cls = 'ic') => `<svg class="${cls}"><use href="icons.svg#i-${id}"/></svg>`;
+const SECTIONS = ['Khởi động', 'Từ mới', 'Ngữ pháp', 'Hội thoại', 'Nghe', 'Luyện viết', 'Kiểm tra'];
+// Mock numbers (demo). Raw counts only, small population on purpose.
+const ACTIVE = { today: 6, d7: 14, d30: 23 };
+const DATA = {
+  7: {
+    gate: [['Bài 0', 11, 2], ['Bài 1', 9, 4]],
+    drop: { 'Bài 0': [14, 14, 13, 12, 12, 11, 11], 'Bài 1': [12, 12, 11, 10, 9, 9, 9] },
+    rem: [['Email', 'letter', 14, 9, 6], ['Telegram', 'plain', 10, 8, 6], ['Thông báo đẩy', 'bell', 7, 3, 1]],
+  },
+  30: {
+    gate: [['Bài 0', 21, 5], ['Bài 1', 16, 7]],
+    drop: { 'Bài 0': [23, 22, 21, 20, 19, 18, 17], 'Bài 1': [19, 18, 17, 14, 13, 12, 11] },
+    rem: [['Email', 'letter', 48, 27, 17], ['Telegram', 'plain', 36, 29, 21], ['Thông báo đẩy', 'bell', 22, 9, 4]],
+  },
+};
+const KEY = 'chaiyo.a2.range';
+if (new URLSearchParams(location.search).has('reset')) localStorage.removeItem(KEY);
+let range = localStorage.getItem(KEY) === '30' ? 30 : 7;
+
+const bar = (n, max) => `<span class="bar"><i style="width:${max ? Math.round((n / max) * 100) : 0}%"></i></span>`;
+function render() {
+  const D = DATA[range], label = range === 7 ? '7 ngày qua' : '30 ngày qua';
+  const gate = D.gate.map(([l, t, f]) => `<tr><td>${l}</td><td>${t}</td><td>${f}</td><td><b>${f}/${t}</b></td></tr>`).join('');
+  const drop = Object.entries(D.drop).map(([lesson, ns]) => `<h3>${lesson}: người còn học tới từng phần</h3>
+    <div class="card"><ul class="bars">${SECTIONS.map((s, i) => `<li><span>${s}</span>${bar(ns[i], ns[0])}<b>${ns[i]}</b></li>`).join('')}</ul></div>`).join('');
+  const rem = D.rem.map(([name, icon, sent, opened, studied]) => `<div class="chan"><b>${ic('fill-' + icon)}${name}</b>
+    <div class="card"><ul class="bars rem"><li><span>Đã gửi</span>${bar(sent, sent)}<b>${sent}</b></li><li><span>Đã mở</span>${bar(opened, sent)}<b>${opened}</b></li><li><span>Đã học</span>${bar(studied, sent)}<b>${studied}</b></li></ul></div></div>`).join('');
+  $('#main').innerHTML = `
+    <span class="admin">${ic('fill-shield')}Quản trị</span>
+    <h1>Số liệu sử dụng</h1><p class="sub">Dữ liệu demo, ${ACTIVE.d30} người học.</p>
+    <p class="few">Ít người dùng: số thô, chưa đủ để kết luận.</p>
+    <div class="seg" role="group" aria-label="Khoảng thời gian">
+      <button type="button" data-r="7" aria-pressed="${range === 7}">7 ngày</button>
+      <button type="button" data-r="30" aria-pressed="${range === 30}">30 ngày</button></div>
+
+    <section><h2>Người đang học</h2><p>Số người có mở bài học.</p>
+      <div class="card"><table><thead><tr><th>Khoảng</th><th>Người học</th></tr></thead><tbody>
+        <tr><td>Hôm nay</td><td><b>${ACTIVE.today}</b></td></tr><tr><td>7 ngày</td><td><b>${ACTIVE.d7}</b></td></tr><tr><td>30 ngày</td><td><b>${ACTIVE.d30}</b></td></tr></tbody></table></div></section>
+
+    <section><h2>Kiểm tra cổng bài</h2><p>Số lượt làm bài kiểm tra, ${label}.</p>
+      <div class="card"><table><thead><tr><th>Bài</th><th>Lượt thi</th><th>Trượt</th><th>Trượt/thi</th></tr></thead><tbody>${gate}</tbody></table></div></section>
+
+    <section><h2>Bỏ giữa chừng</h2><p>Số người học tới từng phần, ${label}. Thanh dài bằng số người bắt đầu bài.</p>${drop}</section>
+
+    <section><h2>Nhắc học hiệu quả không?</h2><p>Từ lúc gửi nhắc tới lúc học, ${label}.</p>${rem}</section>`;
+}
+$('#main').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-r]'); if (!b) return;
+  range = +b.dataset.r; localStorage.setItem(KEY, String(range)); render();
+});
+render();
+</script>
+</body>
+</html>

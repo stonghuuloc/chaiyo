@@ -1,0 +1,10 @@
+# content/grammar/h4-g03.yaml
+id: h4-g03
+level: 4
+std: [ 268 ]
+title: 哪怕……，也……
+pattern: 哪怕 + giả thiết + ， + 主语 + 也 / 还 + động từ
+explain: "哪怕 (nả phạ) nêu một tình huống giả định, kể cả khi nó xảy ra thì vế sau với 也 hoặc 还 vẫn không đổi: “dù … cũng …”. Hay đi với 再 + tính từ: 哪怕再忙 = dù bận đến mấy."
+examples: [ s-h4-01-20, s-h4-01-23 ]
+pitfalls:
+  - { wrong: 哪怕也很忙，我会打电话, right: 哪怕再忙，我也会打电话 }

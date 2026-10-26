@@ -1,0 +1,14 @@
+# content/words/郊区.yaml
+id: 郊区
+hanzi: 郊区
+pinyin: jiāoqū
+hanviet: giao khu
+level: 5
+pos: [ n ]
+senses:
+  - { vi: vùng ngoại ô }
+parts:
+  - { hanzi: 郊, pinyin: jiāo, hanviet: giao, vi: ngoại thành }
+  - { hanzi: 区, pinyin: qū, hanviet: khu, vi: khu vực }
+examples: [ s-h5-01-05 ]
+image: { file: words/h5-01/w09.png, prompt: The red panda and the takin look from a hill at a town edge where tall city buildings give way to small houses and green fields. Only the red panda and the takin. }

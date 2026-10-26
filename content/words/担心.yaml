@@ -1,0 +1,14 @@
+# content/words/担心.yaml
+id: 担心
+hanzi: 担心
+pinyin: dānxīn
+hanviet: đảm tâm
+level: 4
+pos: [ v ]
+senses:
+  - { vi: lo lắng }
+parts:
+  - { hanzi: 担, pinyin: dān, hanviet: đảm, vi: "gánh, mang" }
+  - { hanzi: 心, pinyin: xīn, hanviet: tâm, vi: lòng }
+examples: [ s-h4-01-07 ]
+image: { file: words/h4-01/w08.png, prompt: "The red panda watches the rain from the window with a worried face, paws clasped, a coat and umbrella ready by the door." }

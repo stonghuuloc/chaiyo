@@ -1,0 +1,53 @@
+# content/lessons/hsk1/h1-01.yaml
+id: h1-01
+level: 1
+topic: Chào hỏi
+order: 1
+title: Xin chào
+titleHanzi: 你好
+goal: Chào hỏi, xin lỗi, cảm ơn và tạm biệt
+scene:
+  file: lessons/h1-01.png
+  cast: [ panda, fawn ]
+  prompt: The panda and the fawn meeting on a path by a calm lake, waving hello
+sentences:
+  - { id: s-h1-01-01, hanzi: 你好！, pinyin: nǐ hǎo, spoken: ní hǎo, vi: Chào bạn!, speaker: redpanda }
+  - { id: s-h1-01-02, hanzi: 你好！, pinyin: nǐ hǎo, spoken: ní hǎo, vi: Chào bạn!, speaker: takin }
+  - { id: s-h1-01-03, hanzi: 对不起！, pinyin: duìbuqǐ, vi: Xin lỗi!, speaker: takin }
+  - { id: s-h1-01-04, hanzi: 没关系。, pinyin: méi guānxi, vi: Không sao., speaker: redpanda }
+  - { id: s-h1-01-05, hanzi: 谢谢！, pinyin: xièxie, vi: Cảm ơn!, speaker: redpanda }
+  - { id: s-h1-01-06, hanzi: 不客气。, pinyin: bù kèqi, spoken: bú kèqi, vi: Không có gì., speaker: takin }
+  - { id: s-h1-01-07, hanzi: 再见！, pinyin: zàijiàn, vi: Tạm biệt!, speaker: takin }
+  - { id: s-h1-01-08, hanzi: 您好！, pinyin: nín hǎo, vi: Chào ông/bà! (lịch sự) }
+  - { id: s-h1-01-09, hanzi: 你们好！, pinyin: nǐmen hǎo, vi: Chào các bạn! }
+  - { id: s-h1-01-10, hanzi: 你好！, pinyin: nǐ hǎo, vi: Chào bạn! }
+  - { id: s-h1-01-11, hanzi: 你好！, pinyin: nǐ hǎo, vi: Chào bạn! }
+  - { id: s-h1-01-12, hanzi: 您好！, pinyin: nín hǎo, vi: Chào ông/bà! }
+  - { id: s-h1-01-13, hanzi: 你们好！, pinyin: nǐmen hǎo, vi: Chào các bạn! }
+  - { id: s-h1-01-14, hanzi: 你们好！, pinyin: nǐmen hǎo, vi: Chào các bạn! }
+  - { id: s-h1-01-15, hanzi: 对不起！, pinyin: duìbuqǐ, vi: Xin lỗi! }
+  - { id: s-h1-01-16, hanzi: 没关系。, pinyin: méi guānxi, vi: Không sao. }
+  - { id: s-h1-01-17, hanzi: 谢谢！, pinyin: xièxie, vi: Cảm ơn! }
+  - { id: s-h1-01-18, hanzi: 不客气。, pinyin: bú kèqi, vi: Không có gì. }
+  - { id: s-h1-01-19, hanzi: 再见！, pinyin: zàijiàn, vi: Tạm biệt! }
+sections:
+  warmup: {}
+  words:
+    ids: [ 你, 好, 您, 你们, 你好, 对不起, 没关系, 谢谢, 不客气, 再见 ]
+  grammar:
+    ids: [ h1-g01 ]
+    drills: []
+  dialogue:
+    parts:
+      - title: Gặp nhau
+        lines: [ s-h1-01-01, s-h1-01-02, s-h1-01-03, s-h1-01-04 ]
+      - title: Chia tay
+        lines: [ s-h1-01-05, s-h1-01-06, s-h1-01-07 ]
+    questions: []
+  listenSpeak:
+    items: []
+  writing:
+    chars: [ 你, 好, 们 ]
+gate:
+  draw: 10
+  pool: []

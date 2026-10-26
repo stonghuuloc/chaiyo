@@ -1,0 +1,14 @@
+# content/words/秘密.yaml
+id: 秘密
+hanzi: 秘密
+pinyin: mìmì
+hanviet: bí mật
+level: 4
+pos: [ n ]
+senses:
+  - { vi: bí mật }
+parts:
+  - { hanzi: 秘, pinyin: mì, hanviet: bí, vi: "kín, giấu" }
+  - { hanzi: 密, pinyin: mì, hanviet: mật, vi: "kín, bí mật" }
+examples: [ s-h4-01-04 ]
+image: { file: words/h4-01/w05.png, prompt: The takin whispers into the red panda's ear behind a paw while both look around the garden with wide eyes. }

@@ -1,0 +1,16 @@
+# content/words/不客气.yaml
+id: 不客气
+hanzi: 不客气
+pinyin: bù kèqi
+spoken: bú kèqi
+hanviet: bất khách khí
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: không có gì }
+parts:
+  - { hanzi: 不, pinyin: bù, hanviet: bất, vi: không }
+  - { hanzi: 客, pinyin: kè, hanviet: khách, vi: khách }
+  - { hanzi: 气, pinyin: qi, hanviet: khí, vi: "khí, khách sáo" }
+examples: [ s-h1-01-18 ]
+image: { file: words/bukeqi.png }

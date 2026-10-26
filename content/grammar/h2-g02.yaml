@@ -1,0 +1,10 @@
+# content/grammar/h2-g02.yaml
+id: h2-g02
+level: 2
+std: [ 110 ]
+title: "Kể thứ tự: 先……，然后……"
+pattern: 先 + hành động 1 + ， + 然后 + hành động 2
+explain: "先 (tiên) nói việc làm trước, 然后 (rồi) nói việc làm sau. Hai vế đều có động từ riêng, chủ ngữ chỉ cần nói một lần. 以后 đứng sau một việc để nói “sau khi việc đó”: 起床以后."
+examples: [ s-h2-01-04, s-h2-01-13 ]
+pitfalls:
+  - { wrong: 然后我洗澡，先吃早饭, right: 我先洗澡，然后吃早饭 }

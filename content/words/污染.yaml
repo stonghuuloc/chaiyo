@@ -1,0 +1,14 @@
+# content/words/污染.yaml
+id: 污染
+hanzi: 污染
+pinyin: wūrǎn
+hanviet: ô nhiễm
+level: 5
+pos: [ v ]
+senses:
+  - { vi: ô nhiễm }
+parts:
+  - { hanzi: 污, pinyin: wū, hanviet: ô, vi: bẩn }
+  - { hanzi: 染, pinyin: rǎn, hanviet: nhiễm, vi: "nhuộm, lây" }
+examples: [ s-h5-01-03 ]
+image: { file: words/h5-01/w03.png, prompt: "The red panda and the takin stand on a city street under a grey haze from factory chimneys, both covering their noses with their paws. Only the red panda and the takin." }

@@ -1,0 +1,44 @@
+{
+  "story": "CHY-3",
+  "title": "App shell + tab bar",
+  "stage": "slicing",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "SPA routes, tab roots, pushed screens, auth guard",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC5"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-3.1"
+    },
+    {
+      "id": "S2",
+      "name": "frost tab bar + line-to-fill crossfade",
+      "acs": [
+        "AC3",
+        "AC4"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-3.2"
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-3",
+  "log": [
+    "2026-10-26 init",
+    "2026-10-26 +S1 SPA routes, tab roots, pushed screens, auth guard [AC1,AC2,AC5]",
+    "2026-10-26 +S2 frost tab bar + line-to-fill crossfade [AC3,AC4]"
+  ],
+  "updated": "2026-10-26T13:14:48+07:00"
+}

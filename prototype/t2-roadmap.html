@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Lộ trình</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+  header { padding: calc(env(safe-area-inset-top, 0px) + 54px) var(--s5) 0; }
+  h1 { font: 600 var(--t-hero)/1 var(--font-display); letter-spacing: -.01em; }
+  .sum { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+  /* HSK | Chuyên đề segmented switch */
+  .mode { margin-top: var(--s4); display: grid; grid-template-columns: 1fr 1fr; padding: 3px; border-radius: var(--r-pill); background: var(--paper-2); }
+  .mode button { height: 38px; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; color: var(--ink-3); }
+  .mode button[aria-selected="true"] { background: #fff; color: var(--ink-1); box-shadow: 0 1px 4px rgba(45,25,10,.12); }
+
+  /* level strip: sticky frost bar, one cell per HSK level; tap swaps the list below */
+  .levels-bar { position: sticky; top: 0; z-index: 8; margin-top: var(--s4); padding: calc(env(safe-area-inset-top, 0px) + 8px) var(--s5) 10px;
+    background: var(--frost-tint); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat)); backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat));
+    border-bottom: .5px solid var(--frost-edge); }
+  .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .lv { display: grid; justify-items: center; align-content: center; gap: 6px; height: 52px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.5); font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
+  .lv b { font: 600 17px/1 var(--font-display); color: var(--ink-2); }
+  .lv .ic { font-size: 12px; }
+  .lv .bar { width: 60%; height: 4px; border-radius: 2px; background: var(--ink-5); overflow: hidden; }
+  .lv .bar i { display: block; height: 100%; background: var(--vermilion); }
+  .lv.on { border: 2px solid var(--ink-1); background: #fff; }
+  .lv.on b { color: var(--ink-1); }
+
+  /* current lesson card: the one primary action */
+  .now-card { margin: var(--s5) var(--s5) 0; border-radius: 20px; overflow: hidden; background: #fff; border: 1px solid var(--ink-5); }
+  .now-card img { display: block; width: 100%; aspect-ratio: 16 / 8; object-fit: cover; object-position: 50% 45%; }
+  .now-card .body { padding: var(--s4); }
+  .now-card .k { font-size: 12.5px; font-weight: 600; color: var(--vermilion-text); letter-spacing: .02em; text-transform: uppercase; }
+  .now-card h2 { margin-top: 4px; font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .now-card h2 .hz { font-size: 22px; color: var(--ink-2); }
+  .now-card p { margin-top: 4px; font-size: var(--t-meta); color: var(--ink-3); }
+  .cta { margin-top: var(--s4); width: 100%; height: 56px; display: flex; align-items: center; justify-content: center; gap: var(--s3); border-radius: var(--r-cta); background: var(--vermilion); color: #fff; font: 600 19px var(--font-display); box-shadow: 0 10px 24px rgba(168, 38, 20, .28), inset 0 1px 0 rgba(255,255,255,.18); transition: transform .12s, background .12s; }
+  .cta:active { transform: scale(.985); background: var(--vermilion-press); }
+  .cta .ic { font-size: 20px; } .cta .go { font-size: 17px; opacity: .85; }
+
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 120px); }
+  .level { padding-top: var(--s2); }
+  .lock-note { display: flex; gap: var(--s2); align-items: center; margin-top: var(--s4); padding: var(--s3) var(--s4); border-radius: var(--r-cell); background: var(--paper-2); font-size: 14px; color: var(--ink-2); }
+  .lock-note .ic { font-size: 15px; color: var(--ink-3); }
+  /* topic accordion */
+  .topic { border-bottom: 1px solid var(--ink-5); }
+  .topic summary { list-style: none; display: grid; grid-template-columns: 1fr auto 18px; gap: var(--s2); align-items: center; min-height: 54px; cursor: pointer; font: 600 15px var(--font-ui); color: var(--ink-1); -webkit-tap-highlight-color: transparent; }
+  .topic summary::-webkit-details-marker { display: none; }
+  .topic summary .c { font-weight: 500; font-size: 13.5px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+  .topic summary .chev { font-size: 16px; color: var(--ink-4); transition: transform .2s; }
+  .topic[open] summary .chev { transform: rotate(180deg); }
+  .topic[open] .path { padding-bottom: var(--s3); }
+  .locked-level .path b { color: var(--ink-2); }
+  .path small .hz { font-size: 15px; color: var(--ink-2); }
+  .path .score { color: var(--ink-2); font-weight: 600; }
+  .path li.mock .mark { border-radius: 10px; }
+  .path li.mock.locked .mark { color: var(--ink-3); font-size: 19px; }
+  .path li.end-note { display: block; min-height: 0; padding: var(--s1) 0 0 48px; font-size: 13px; color: var(--ink-3); }
+  .path li.end-note::before { display: none; }
+  /* Chuyên đề catalogue */
+  .tracks { padding-top: var(--s4); }
+  .track { border: 1px solid var(--ink-5); border-radius: 16px; background: rgba(255,255,255,.45); margin-bottom: var(--s3); }
+  .track summary { list-style: none; display: grid; grid-template-columns: 44px 1fr 18px; gap: var(--s3); align-items: center; padding: var(--s3) var(--s4); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .track summary::-webkit-details-marker { display: none; }
+  .tk-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); color: var(--ink-2); font-size: 22px; --duo: .4; }
+  .tk-t b { display: block; font: 600 17px/1.3 var(--font-display); }
+  .tk-t b .hz { font-size: 16px; color: var(--ink-3); font-weight: 400; }
+  .tk-t small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+  .tk-t .need { display: flex; align-items: center; gap: 4px; color: var(--ink-2); font-weight: 600; font-size: 12.5px; }
+  .tk-t .need .ic { font-size: 11px; color: var(--ink-3); }
+  .track summary .chev { font-size: 16px; color: var(--ink-4); transition: transform .2s; }
+  .track[open] summary .chev { transform: rotate(180deg); }
+  .track .path { padding: 0 var(--s4) var(--s3); }
+  .track .path b { color: var(--ink-2); }
+
+  /* floating frost chip: back to the current lesson once it scrolls away */
+  .jump { position: fixed; z-index: 9; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 94px); transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+    display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 var(--s4); border-radius: var(--r-pill); font: 600 14px var(--font-ui); color: var(--vermilion-text);
+    background: var(--frost-tint); -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat)); backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-sat));
+    border: .5px solid var(--frost-edge); box-shadow: inset 0 1px 0 var(--frost-rim), var(--frost-shadow); transition: opacity .2s, transform .2s; }
+  .jump.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .jump .ic { font-size: 17px; }
+
+  /* toast for locked taps */
+  .toast { position: fixed; z-index: 11; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -8px); opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 40px);
+    display: flex; align-items: center; gap: var(--s2); padding: 10px var(--s4); border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font-size: 14px; font-weight: 500; transition: opacity .18s, transform .18s; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast .ic { font-size: 15px; flex: none; }
+  @media (prefers-reduced-motion: reduce) { .cta, .jump, .toast { transition: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Lộ trình</h1>
+  <div class="mode" id="mode" role="tablist" aria-label="Loại lộ trình"><button role="tab" data-m="hsk">HSK</button><button role="tab" data-m="tracks">Chuyên đề</button></div>
+  <p class="sum" id="sum"></p>
+</header>
+<div class="levels-bar" id="levels-bar"><nav class="levels" id="levels" aria-label="Cấp độ"></nav></div>
+
+<section class="now-card" id="now" aria-label="Bài đang học"></section>
+<main id="main"></main>
+
+<button class="jump" id="jump" aria-label="Về bài đang học"><svg class="ic"><use href="icons.svg#i-regular-target"/></svg><span id="jump-t"></span></button>
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="ic"><use href="icons.svg#i-fill-lock-simple"/></svg><span></span></div>
+
+<nav class="tabs" aria-label="Điều hướng chính">
+  <span class="pill" aria-hidden="true"></span>
+  <a class="tab" href="home-glass.html"><svg class="ic"><use href="icons.svg#i-regular-house"/></svg>Hôm nay</a>
+  <a class="tab" href="t2-roadmap.html" aria-current="page"><svg class="ic"><use href="icons.svg#i-regular-path"/></svg>Lộ trình</a>
+  <a class="tab" href="t3-practice.html"><svg class="ic"><use href="icons.svg#i-regular-brain"/></svg>Luyện tập</a>
+  <a class="tab" href="t4-me.html"><svg class="ic"><use href="icons.svg#i-regular-user-circle"/></svg>Tôi</a>
+</nav>
+
+<script type="module" src="tabs.js?v=4"></script>
+<script type="module">
+import { LEVELS, PROGRESS, SPEAKING_FROM, TRACKS } from './data/roadmap.js';
+const $ = (s) => document.querySelector(s);
+const ic = (id, cls = 'ic') => `<svg class="${cls}"><use href="icons.svg#i-${id}"/></svg>`;
+const go = ic('regular-caret-right', 'ic go');
+const { passed, current } = PROGRESS;
+
+// number every lesson across levels; HSK1 rows are [vi, hz], later levels plain vi strings
+let n = 0;
+const levels = LEVELS.map((L) => ({ ...L, topics: L.topics.map((t) => ({ ...t, lessons: t.lessons.map((x) => (Array.isArray(x) ? { n: ++n, vi: x[0], hz: x[1] } : { n: ++n, vi: x })) })) }));
+levels.forEach((L) => { const all = L.topics.flatMap((t) => t.lessons); L.first = all[0].n; L.last = all.at(-1).n; L.count = all.length; });
+const state = (k) => (k in passed ? 'done' : k === current.n ? 'now' : 'locked');
+const curLevel = levels.find((L) => current.n >= L.first && current.n <= L.last).level;
+const done = (L) => L.topics.flatMap((t) => t.lessons).filter((l) => l.n in passed).length;
+
+// level tabs (sticky): pick a level, list swaps in place, no scrolling. Hash: #lvN or #tracks
+let mode = location.hash === '#tracks' ? 'tracks' : 'hsk';
+let shown = +(location.hash.match(/^#lv(\d)$/)?.[1] ?? curLevel);
+const passedLevel = curLevel - 1;   // highest HSK mock passed (prototype: none)
+const paintTabs = () => ($('#levels').innerHTML = levels.map((L) => {
+  const on = L.level === shown, open = L.level <= curLevel;
+  const inner = open ? `<span class="bar"><i style="width:${Math.max(4, (done(L) / L.count) * 100)}%"></i></span>` : ic('fill-lock-simple');
+  return `<button class="lv ${on ? 'on' : ''}" data-lv="${L.level}" aria-pressed="${on}"><b>${L.level}</b>${inner}</button>`;
+}).join(''));
+
+const cur = levels.flatMap((L) => L.topics.flatMap((t) => t.lessons)).find((l) => l.n === current.n);
+$('#now').innerHTML = `<img src="${current.img}" alt="">
+  <div class="body"><p class="k">Đang học</p><h2>Bài ${cur.n} · ${cur.vi} <span class="hz">${cur.hz}</span></h2><p>Phần ${current.section} · cần 80% bài kiểm tra để mở Bài ${cur.n + 1}</p>
+  <button class="cta" id="cta">${ic('regular-play')}Tiếp tục Bài ${cur.n}${go}</button></div>`;
+$('#cta').onclick = () => (location.href = current.href);
+
+const row = (l, L) => {
+  const s = state(l.n);
+  const mark = s === 'done' ? ic('bold-check') : s === 'now' ? '<i></i>' : ic('fill-lock-simple');
+  const why = L.level > curLevel ? `Mở khi đỗ thi thử HSK ${L.level - 1}` : `Mở khi qua Bài ${l.n - 1}`;
+  const sub = s === 'done' ? `Đã xong · điểm cao nhất <span class="score">${passed[l.n]}%</span>`
+    : s === 'now' ? `Đang học · phần ${current.section}` : why;
+  const href = l.n === 0 ? L.primer.href : l.n === current.n ? current.href : '';
+  const attrs = s === 'locked' ? `data-lock="${L.level > curLevel ? `Đỗ thi thử HSK ${L.level - 1} để mở ${L.title}` : `Qua Bài ${l.n - 1} để mở Bài ${l.n}`}" role="button" tabindex="0"`
+    : `data-href="${href}" role="link" tabindex="0"`;
+  return `<li class="${s}" id="b${l.n}" ${attrs}><span class="mark">${mark}</span><div><b>Bài ${l.n} <span>· ${l.vi}</span></b><small>${l.hz ? `<span class="hz">${l.hz}</span> · ` : ''}${sub}</small></div>${go}</li>`;
+};
+const group = (title, count, rows, open) => `<details class="topic" ${open ? 'open' : ''}><summary><span class="t">${title}</span><span class="c">${count}</span>${ic('regular-caret-down', 'ic chev')}</summary><ol class="path">${rows}</ol></details>`;
+
+const examRow = (L, kind) => {
+  const [name, icon, sub] = kind === 'noi'
+    ? ['Nói', 'regular-microphone', 'nhắc lại · tả tranh · trả lời câu hỏi']
+    : ['Viết', 'regular-diploma', 'nghe · đọc · viết'];
+  const label = L.level >= SPEAKING_FROM ? `Thi thử ${L.title} · ${name}` : `Thi thử ${L.title}`;
+  return `<li class="locked mock" data-lock="Qua Bài ${L.last} để mở thi thử ${L.title}" role="button" tabindex="0"><span class="mark">${ic(icon)}</span><div><b>${label}</b><small>${sub} · mở khi qua Bài ${L.last}</small></div>${go}</li>`;
+};
+
+const renderHsk = () => {
+  const L = levels.find((x) => x.level === shown), locked = L.level > curLevel;
+  paintTabs();
+  $('#sum').textContent = `${L.title} · ${done(L)}/${L.count} bài · ${L.words} từ mới`;
+  $('#now').hidden = L.level !== curLevel;
+  const lockNote = locked ? `<p class="lock-note">${ic('fill-lock-simple')}Mở khi đỗ thi thử HSK ${L.level - 1}. Xem trước các bài bên dưới.</p>` : '';
+  const primer = L.primer ? group('Khởi đầu', `${0 in passed ? 1 : 0}/1`, row({ n: 0, vi: L.primer.title, hz: L.primer.hz }, L), false) : '';
+  const topics = L.topics.map((t, i) => {
+    const hasNow = t.lessons.some((l) => l.n === current.n);
+    return group(`Chủ đề ${i + 1} · ${t.title}`, `${t.lessons.filter((l) => l.n in passed).length}/${t.lessons.length}`, t.lessons.map((l) => row(l, L)).join(''), hasNow || (locked && i === 0));
+  }).join('');
+  const exams = L.level >= SPEAKING_FROM ? [examRow(L, 'viet'), examRow(L, 'noi')] : [examRow(L, 'viet')];
+  const endNote = L.level >= SPEAKING_FROM ? '<li class="end-note">Từ HSK 3, đỗ cấp cần đỗ cả phần Viết và phần Nói.</li>' : '';
+  const mock = group('Cuối cấp', `0/${exams.length}`, exams.join('') + endNote, false);
+  $('#main').innerHTML = `<section class="level ${locked ? 'locked-level' : ''}">${lockNote}${primer}${topics}${mock}</section>`;
+};
+
+// Chuyên đề: catalogue of side tracks, each gated by an HSK level; open one to preview its lessons
+const renderTracks = () => {
+  $('#now').hidden = true;
+  const open = TRACKS.filter((t) => passedLevel >= t.need).length;
+  $('#sum').textContent = `${TRACKS.length} chuyên đề · ${open} đã mở · học song song với HSK`;
+  $('#main').innerHTML = `<section class="level tracks">${TRACKS.map((t) => {
+    const locked = passedLevel < t.need;
+    const why = `Đỗ thi thử HSK ${t.need} để mở ${t.title}`;
+    const rows = t.lessons.map((vi, i) => `<li class="locked" data-lock="${locked ? why : `Qua bài ${i} để mở bài ${i + 1}`}" role="button" tabindex="0"><span class="mark">${ic('fill-lock-simple')}</span><div><b>Bài ${i + 1} <span>· ${vi}</span></b></div>${go}</li>`).join('');
+    return `<details class="track"><summary><span class="tk-ic">${ic(`fill-${t.icon}`)}</span><span class="tk-t"><b>${t.title} <span class="hz">${t.hz}</span></b><small>${t.note}</small><small class="need">${locked ? ic('fill-lock-simple') : ''}Cần HSK ${t.need} · ${t.lessons.length} bài</small></span>${ic('regular-caret-down', 'ic chev')}</summary><ol class="path">${rows}</ol></details>`;
+  }).join('')}</section>`;
+};
+
+const render = () => {
+  document.querySelectorAll('#mode [data-m]').forEach((b) => b.setAttribute('aria-selected', b.dataset.m === mode));
+  $('#levels-bar').hidden = mode !== 'hsk';
+  mode === 'hsk' ? renderHsk() : renderTracks();
+  wire();
+  watchJump();
+};
+$('#mode').onclick = (e) => {
+  const b = e.target.closest('[data-m]'); if (!b || b.dataset.m === mode) return;
+  mode = b.dataset.m; history.replaceState(null, '', mode === 'tracks' ? '#tracks' : `#lv${shown}`); render(); scrollTo({ top: 0 });
+};
+
+// taps: open, or say why it's locked
+let tt;
+const toast = (msg) => { const t = $('#toast'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2200); };
+const wire = () => document.querySelectorAll('#main [data-href],#main [data-lock]').forEach((el) => {
+  const act = () => (el.dataset.href ? (location.href = el.dataset.href) : toast(el.dataset.lock));
+  el.onclick = act; el.onkeydown = (e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), act());
+});
+$('#levels').onclick = (e) => {
+  const b = e.target.closest('[data-lv]'); if (!b || +b.dataset.lv === shown) return;
+  shown = +b.dataset.lv; history.replaceState(null, '', `#lv${shown}`); render();
+  scrollTo({ top: 0 });
+};
+
+// jump chip: shown while the current lesson is off screen, or another level is open
+const jump = $('#jump'), seen = new Set();
+$('#jump-t').textContent = `Bài ${current.n} đang học`;
+const io = new IntersectionObserver((es) => {
+  es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
+  jump.classList.toggle('show', mode !== 'hsk' || shown !== curLevel || seen.size === 0);
+});
+const watchJump = () => {
+  io.disconnect(); seen.clear();
+  const r = mode === 'hsk' ? $(`#b${current.n}`) : null;
+  if (r) io.observe(r);
+  if (!$('#now').hidden) io.observe($('#now'));
+  jump.classList.toggle('show', mode !== 'hsk' || shown !== curLevel);
+};
+jump.onclick = () => {
+  if (mode !== 'hsk' || shown !== curLevel) { mode = 'hsk'; shown = curLevel; history.replaceState(null, '', `#lv${shown}`); render(); }
+  $(`#b${current.n}`).scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+};
+render();
+</script>
+</body>
+</html>

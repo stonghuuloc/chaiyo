@@ -1,0 +1,70 @@
+{
+  "story": "CHY-1",
+  "title": "Git repo + CI checks",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "git init + ignores + cast-name scrub",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC7"
+      ],
+      "repo": "",
+      "stage": "execute",
+      "reviews": 0,
+      "note": "Loc skipped picture; executing PLAN rev 2",
+      "jira": "CHY-1.1"
+    },
+    {
+      "id": "S3",
+      "name": "R2 upload + pull of ignored art and audio",
+      "acs": [
+        "AC6"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-1.3"
+    },
+    {
+      "id": "S2",
+      "name": "CI workflow green on main",
+      "acs": [
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "blocked on S3 (public push needs art on R2)",
+      "jira": "CHY-1.2"
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-1",
+  "log": [
+    "2026-10-26 init",
+    "2026-10-26 +S1 git init + ignores [AC1,AC2]",
+    "2026-10-26 +S2 CI workflow green on main [AC3,AC4]",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 +S3 R2 upload + pull of ignored art and audio [AC6]",
+    "2026-10-26 reordered slices S1,S3,S2 (S3 before public push)",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 S1 \u2192 discuss",
+    "2026-10-26 S1 \u2192 spec",
+    "2026-10-26 S1 \u2192 plan",
+    "2026-10-26 S1 \u2192 plan",
+    "2026-10-26 S1 \u2192 execute"
+  ],
+  "updated": "2026-10-26T16:02:25+07:00"
+}

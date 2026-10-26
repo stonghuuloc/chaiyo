@@ -1,0 +1,14 @@
+# content/words/你们.yaml
+id: 你们
+hanzi: 你们
+pinyin: nǐmen
+hanviet: nhĩ môn
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: các bạn }
+parts:
+  - { hanzi: 你, pinyin: nǐ, hanviet: nhĩ, vi: bạn }
+  - { hanzi: 们, pinyin: men, hanviet: môn, vi: chỉ số nhiều }
+examples: [ s-h1-01-13 ]
+image: { file: words/nimen.png }

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Đăng nhập · Chaiyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="onboard.css">
+<style>
+  main { padding: calc(env(safe-area-inset-top, 0px) + 20px) var(--s5) calc(env(safe-area-inset-bottom, 0px) + 200px); }
+  .hero { margin: calc(-20px - env(safe-area-inset-top, 0px)) calc(-1 * var(--s5)) 0; aspect-ratio: 1 / 1; overflow: hidden;
+    -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; display: block; }
+  .name { text-align: center; }
+  .name img { display: block; width: 112px; height: 112px; margin: -56px auto 0; position: relative; filter: drop-shadow(0 6px 14px rgba(45,25,10,.18)); }
+  .name h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .name p { margin-top: var(--s3); font-size: 17px; color: var(--ink-2); }
+  .name p .hz { font-size: 1.35em; line-height: 1; color: var(--ink-1); }
+  h1 { font: 600 28px/1.2 var(--font-display); }
+  .back { margin: 0 0 var(--s4) -10px; }
+  .sent { margin-top: var(--s8); text-align: center; }
+  .sent .mark { width: 72px; height: 72px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; background: var(--paper-2); color: var(--ink-1); font-size: 34px; }
+  .sent h1 { margin-top: var(--s5); font-size: 28px; }
+  .sent .lead b { color: var(--ink-1); overflow-wrap: anywhere; }
+  .g { width: 30px; height: 30px; border-radius: 50%; background: #fff; display: grid; place-items: center; flex: none; }
+  .g svg { width: 18px; height: 18px; }
+  .legal { margin-top: var(--s2); text-align: center; font-size: 12.5px; color: var(--ink-4); }
+  .legal a { text-decoration: underline; text-underline-offset: 2px; }
+  .foot .link { margin-top: var(--s1); }
+  .foot p:empty { display: none; }
+</style>
+</head>
+<body>
+<main id="main"></main>
+<div class="foot" id="foot"></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h2 id="sh-t">Khôi phục tài khoản?</h2>
+    <p><b>tong.loc@gmail.com</b> sẽ bị xoá sau <b>5 ngày</b>. Khôi phục để giữ bài học và từ vựng.</p>
+    <div class="row">
+      <button class="cta" id="restore">Khôi phục</button>
+      <button class="ghost" id="cancel">Để sau</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { $, ic } from './step.js?v=9';
+
+// Demo states: ?s=expired (magic link expired) · ?s=restore (Google account pending deletion)
+const demo = new URLSearchParams(location.search).get('s');
+const G = `<span class="g"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg></span>`;
+let email = demo === 'expired' ? 'tong.loc@gmail.com' : '';
+const okEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+function start() {
+  $('#main').innerHTML = `<div class="step">
+    <div class="hero"><img src="../assets/onboard/welcome.png" alt="" onerror="this.src='../assets/home/lesson-next.png'"></div>
+    <div class="name"><img src="../static/brand/logo.png?v=2" alt=""><h1>Chaiyo!</h1><p>Mỗi ngày một chút. <span class="hz">加油</span>!</p></div></div>`;
+  $('#foot').innerHTML = `<button class="cta" id="google">${G}Tiếp tục với Google</button>
+    <button class="link" id="mail">Dùng email</button>
+    <p class="legal"><a href="#">Điều khoản</a> · <a href="#">Quyền riêng tư</a></p>`;
+  $('#google').onclick = google;
+  $('#mail').onclick = () => emailForm();
+}
+
+function emailForm(expired = false) {
+  $('#main').innerHTML = `<div class="step">
+    <button class="x back" id="back" aria-label="Quay lại">${ic('regular-caret-right')}</button>
+    <h1>Đăng nhập bằng email</h1>
+    <p class="lead">Không cần mật khẩu.</p>
+    ${expired ? `<div class="note" role="status">${ic('fill-clock')}<span>Link đã hết hạn. Gửi link mới nhé.</span></div>` : ''}
+    <label class="field"><span>Email</span><input id="em" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="ban@gmail.com" value="${email}"></label>
+    <p class="err" id="err" hidden>Email chưa đúng</p></div>`;
+  $('#back svg').style.transform = 'rotate(180deg)';
+  $('#back').onclick = start;
+  $('#foot').innerHTML = `<button class="cta" id="send">Gửi link</button><p></p>`;
+  const inp = $('#em'), sync = () => { $('#send').disabled = !inp.value.trim(); $('#err').hidden = true; };
+  inp.oninput = sync; sync();
+  inp.onkeydown = (e) => e.key === 'Enter' && $('#send').click();
+  $('#send').onclick = () => {
+    const v = inp.value.trim();
+    if (!okEmail(v)) { $('#err').hidden = false; inp.focus(); return; }
+    email = v; sent();
+  };
+  if (!expired) inp.focus();
+}
+
+let timer;
+function sent() {
+  $('#main').innerHTML = `<div class="step sent">
+    <div class="mark">${ic('fill-letter')}</div>
+    <h1>Mở email của bạn</h1>
+    <p class="lead">Đã gửi link tới <b>${email}</b></p>
+    <p class="meta">Không thấy? Xem mục Spam.</p></div>`;
+  $('#foot').innerHTML = `<button class="ghost" id="again" disabled></button><button class="link" id="change">Đổi email</button>`;
+  $('#change').onclick = () => emailForm();
+  let s = 60;
+  const tick = () => {
+    const b = $('#again'); if (!b) return clearInterval(timer);
+    b.disabled = s > 0; b.textContent = s > 0 ? `Gửi lại sau ${s}s` : 'Gửi lại link';
+    s--;
+  };
+  clearInterval(timer); tick(); timer = setInterval(tick, 1000);
+  $('#again').onclick = () => sent();
+}
+
+// Google: first login → O1. Pending-deletion account → restore sheet first.
+const scrim = $('#scrim');
+function google() {
+  if (demo === 'restore') { scrim.hidden = false; $('#restore').focus(); return; }
+  location.href = 'o1-welcome.html';
+}
+$('#restore').onclick = () => (location.href = 'home-glass.html');
+$('#cancel').onclick = () => { scrim.hidden = true; };
+scrim.onclick = (e) => { if (e.target === scrim) scrim.hidden = true; };
+addEventListener('keydown', (e) => { if (e.key === 'Escape') scrim.hidden = true; });
+
+if (demo === 'expired') emailForm(true); else start();
+</script>
+</body>
+</html>

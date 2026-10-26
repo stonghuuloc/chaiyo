@@ -1,0 +1,10 @@
+# content/grammar/h4-g02.yaml
+id: h4-g02
+level: 4
+std: [ 277 ]
+title: 连……也/都……
+pattern: 连 + điều bất ngờ + 也 / 都 + động từ
+explain: "连 (liên) đặt trước điều ít ngờ nhất, rồi 也 hoặc 都 đi trước động từ: “đến cả … cũng …”."
+examples: [ s-h4-01-04, s-h4-01-22 ]
+pitfalls:
+  - { wrong: 我们什么都说，秘密连也告诉对方, right: 我们什么都说，连秘密也告诉对方 }

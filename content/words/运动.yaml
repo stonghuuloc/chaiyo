@@ -1,0 +1,14 @@
+# content/words/运动.yaml
+id: 运动
+hanzi: 运动
+pinyin: yùndòng
+hanviet: vận động
+level: 2
+pos: [ v ]
+senses:
+  - { vi: "tập thể dục, vận động" }
+parts:
+  - { hanzi: 运, pinyin: yùn, hanviet: vận, vi: "vận chuyển, chuyển động" }
+  - { hanzi: 动, pinyin: dòng, hanviet: động, vi: "động, cử động" }
+examples: [ s-h2-01-08 ]
+image: { file: words/h2-01/w11.png, prompt: The takin and the red panda stretch and jog together on a grassy field at sunrise. Only the takin and the red panda. }

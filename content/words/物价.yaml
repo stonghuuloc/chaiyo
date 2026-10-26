@@ -1,0 +1,14 @@
+# content/words/物价.yaml
+id: 物价
+hanzi: 物价
+pinyin: wùjià
+hanviet: vật giá
+level: 5
+pos: [ n ]
+senses:
+  - { vi: giá cả hàng hóa }
+parts:
+  - { hanzi: 物, pinyin: wù, hanviet: vật, vi: đồ vật }
+  - { hanzi: 价, pinyin: jià, hanviet: giá, vi: giá cả }
+examples: [ s-h5-01-03 ]
+image: { file: words/h5-01/w10.png, prompt: The takin holds up a shopping basket and stares at a shelf of price tags with a shocked face while the red panda watches. Only the red panda and the takin. }

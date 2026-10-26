@@ -1,0 +1,14 @@
+# content/words/其实.yaml
+id: 其实
+hanzi: 其实
+pinyin: qíshí
+hanviet: kỳ thực
+level: 3
+pos: [ adv ]
+senses:
+  - { vi: thật ra }
+parts:
+  - { hanzi: 其, pinyin: qí, hanviet: kỳ, vi: cái đó }
+  - { hanzi: 实, pinyin: shí, hanviet: thực, vi: thật }
+examples: [ s-h3-01-02 ]
+image: { file: words/h3-01/w03.png, prompt: "The takin waves a hoof and shrugs with a smug grin while a sheepish look crosses its face, in a classroom. Only the takin." }

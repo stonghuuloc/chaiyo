@@ -1,0 +1,14 @@
+# content/words/您.yaml
+id: 您
+hanzi: 您
+pinyin: nín
+hanviet: nâm
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: "ông, bà, thầy cô (lịch sự)" }
+parts:
+  - { hanzi: 你, name: nhĩ, vi: bạn }
+  - { hanzi: 心, name: tâm, vi: tấm lòng }
+examples: [ s-h1-01-12 ]
+image: { file: words/nin.png }

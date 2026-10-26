@@ -1,0 +1,14 @@
+# content/words/争论.yaml
+id: 争论
+hanzi: 争论
+pinyin: zhēnglùn
+hanviet: tranh luận
+level: 4
+pos: [ v ]
+senses:
+  - { vi: tranh luận }
+parts:
+  - { hanzi: 争, pinyin: zhēng, hanviet: tranh, vi: "giành, tranh" }
+  - { hanzi: 论, pinyin: lùn, hanviet: luận, vi: bàn luận }
+examples: [ s-h4-01-10 ]
+image: { file: words/h4-01/w10.png, prompt: "The red panda and the takin face each other across a map, both pointing at different places and talking loudly." }

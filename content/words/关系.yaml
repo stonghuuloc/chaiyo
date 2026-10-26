@@ -1,0 +1,14 @@
+# content/words/关系.yaml
+id: 关系
+hanzi: 关系
+pinyin: guānxi
+hanviet: quan hệ
+level: 3
+pos: [ n ]
+senses:
+  - { vi: "quan hệ, mối quan hệ" }
+parts:
+  - { hanzi: 关, pinyin: guān, hanviet: quan, vi: liên quan }
+  - { hanzi: 系, pinyin: xi, hanviet: hệ, vi: "nối, buộc" }
+examples: [ s-h4-01-02 ]
+image: { file: words/h4-01/w01.png, prompt: "The red panda and the takin hold the two ends of one rope tied between them, smiling at each other." }

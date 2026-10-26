@@ -1,0 +1,514 @@
+{
+  "color": {
+    "$type": "color",
+    "lantern-red": {
+      "$value": "#c6301d",
+      "$description": "Next action, done marks, today, focus ring"
+    },
+    "lantern-red-press": {
+      "$value": "#a72614",
+      "$description": "Pressed primary action"
+    },
+    "lantern-red-text": {
+      "$value": "#a72614",
+      "$description": "Red text under 18px: links, current lesson title (APCA Lc 76 on paper)"
+    },
+    "lantern-red-wash": {
+      "$value": "#f6e1db",
+      "$description": "Quiet red fill: today's day cell"
+    },
+    "sunflower": {
+      "$value": "#fec33e",
+      "$description": "Secondary, the logo tile yellow: brand and reward fills (splash, gate pass, milestone chips). Fill only; text on it is Ink (10.97:1), never white (1.6:1)"
+    },
+    "sunflower-wash": {
+      "$value": "#fff3d6",
+      "$description": "Quiet sunflower fill: reward card or banner background behind Ink text (15.96:1)"
+    },
+    "freeze-blue": {
+      "$value": "#3f73b0",
+      "$description": "Streak Freeze only"
+    },
+    "notebook-paper": {
+      "$value": "#f7f3ea",
+      "$description": "Page background"
+    },
+    "shaded-paper": {
+      "$value": "#efe9dc",
+      "$description": "Recessed fill: locked lesson marks"
+    },
+    "ink": {
+      "$value": "#1d1814",
+      "$description": "Headings, primary text, active tab label"
+    },
+    "graphite": {
+      "$value": "#4a423a",
+      "$description": "Secondary text, inactive tab labels and icons"
+    },
+    "pencil": {
+      "$value": "#655c51",
+      "$description": "Meta text, captions, day labels"
+    },
+    "faint-pencil": {
+      "$value": "#948a7e",
+      "$description": "Chevrons, empty future-day rings"
+    },
+    "ruled-line": {
+      "$value": "#ddd5c8",
+      "$description": "Section dividers, cell borders, path line"
+    },
+    "white": {
+      "$value": "#ffffff",
+      "$description": "Label and icons on Lantern Red"
+    },
+    "primary": {
+      "$value": "{color.lantern-red}"
+    },
+    "secondary": {
+      "$value": "{color.sunflower}"
+    },
+    "text": {
+      "$value": "{color.ink}"
+    },
+    "muted": {
+      "$value": "{color.pencil}"
+    },
+    "background": {
+      "$value": "{color.notebook-paper}"
+    },
+    "border": {
+      "$value": "{color.ruled-line}"
+    }
+  },
+  "font": {
+    "$type": "fontFamily",
+    "serif": {
+      "$value": [
+        "Literata",
+        "serif"
+      ]
+    },
+    "sans": {
+      "$value": [
+        "Be Vietnam Pro",
+        "system-ui",
+        "sans-serif"
+      ]
+    },
+    "pinyin": {
+      "$value": [
+        "Onest",
+        "system-ui",
+        "sans-serif"
+      ],
+      "$description": "Pinyin with tone marks; Be Vietnam Pro lacks ǎ ǐ ǒ ǔ ǖ ǘ ǚ ǜ (U+01CD–01DC)"
+    },
+    "hanzi": {
+      "$value": [
+        "AR PL UKai CN",
+        "Kaiti SC",
+        "STKaiti",
+        "KaiTi",
+        "serif"
+      ]
+    },
+    "hanzi-xingshu": {
+      "$value": [
+        "Zhi Mang Xing",
+        "cursive"
+      ],
+      "$description": "Learner toggle only"
+    }
+  },
+  "type": {
+    "display": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.serif}",
+        "fontSize": {
+          "value": 36,
+          "unit": "px"
+        },
+        "fontWeight": 600,
+        "lineHeight": 1,
+        "letterSpacing": {
+          "value": -0.01,
+          "unit": "em"
+        }
+      }
+    },
+    "headline": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.serif}",
+        "fontSize": {
+          "value": 23,
+          "unit": "px"
+        },
+        "fontWeight": 600,
+        "lineHeight": 1.2
+      }
+    },
+    "title": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.serif}",
+        "fontSize": {
+          "value": 17,
+          "unit": "px"
+        },
+        "fontWeight": 600,
+        "lineHeight": 1.3
+      }
+    },
+    "action": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.serif}",
+        "fontSize": {
+          "value": 21,
+          "unit": "px"
+        },
+        "fontWeight": 600,
+        "lineHeight": 1
+      }
+    },
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": {
+          "value": 16,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "lineHeight": 1.5
+      }
+    },
+    "label": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": {
+          "value": 13.5,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "lineHeight": 1.35
+      }
+    },
+    "tab": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": {
+          "value": 11.5,
+          "unit": "px"
+        },
+        "fontWeight": 600,
+        "lineHeight": 1
+      }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "s1": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "s2": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "s3": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "s4": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "s5": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "s6": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "s8": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "cell": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "action": {
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      }
+    },
+    "pill": {
+      "$value": {
+        "value": 999,
+        "unit": "px"
+      }
+    }
+  },
+  "frost": {
+    "tint": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98039,
+          0.96471,
+          0.93333
+        ],
+        "alpha": 0.72
+      },
+      "$description": "rgba(250,246,238,.72): milky fill behind blur for the tab bar and chips"
+    },
+    "blur": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "backdrop-filter blur radius"
+    },
+    "saturate": {
+      "$type": "number",
+      "$value": 1.75,
+      "$description": "backdrop-filter saturate(175%)"
+    },
+    "rim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.9
+      },
+      "$description": "1px inset white top highlight"
+    },
+    "edge": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.15686,
+          0.09804,
+          0.05882
+        ],
+        "alpha": 0.1
+      },
+      "$description": "rgba(40,25,15,.10): .5px tab-bar border"
+    },
+    "shadow": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.17647,
+              0.09804,
+              0.03922
+            ],
+            "alpha": 0.16
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 10,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 30,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.17647,
+              0.09804,
+              0.03922
+            ],
+            "alpha": 0.08
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Frost float: soft brown ambient shadow under tab bar and chips"
+    },
+    "pill": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.62
+      },
+      "$description": "Selection pill at rest; white top rim, faint shadow"
+    }
+  },
+  "icon": {
+    "duo": {
+      "$type": "number",
+      "$value": 0.5,
+      "$description": "--duo: opacity of the Solar duotone second layer (default; 1 on red icons)"
+    },
+    "duo-c": {
+      "$type": "color",
+      "$value": "#f2cfc6",
+      "$description": "--duo-c: second-layer colour on the streak flame; default elsewhere is currentColor, so ink at 50%. The active tab inverts it: Lantern Red --duo-c at --duo 1 with Lantern Red Wash detail"
+    }
+  },
+  "$extensions": {
+    "community.design-tokens.contrast": {
+      "pairs": [
+        [
+          "ink",
+          "notebook-paper",
+          "body"
+        ],
+        [
+          "graphite",
+          "notebook-paper",
+          "body"
+        ],
+        [
+          "pencil",
+          "notebook-paper",
+          "body"
+        ],
+        [
+          "lantern-red",
+          "notebook-paper",
+          "non-body"
+        ],
+        [
+          "lantern-red-text",
+          "notebook-paper",
+          "body"
+        ],
+        [
+          "ink",
+          "lantern-red-wash",
+          "body"
+        ],
+        [
+          "lantern-red",
+          "lantern-red-wash",
+          "graphic"
+        ],
+        [
+          "white",
+          "lantern-red",
+          "non-body"
+        ],
+        [
+          "white",
+          "lantern-red-press",
+          "non-body"
+        ],
+        [
+          "pencil",
+          "shaded-paper",
+          "graphic"
+        ],
+        [
+          "faint-pencil",
+          "notebook-paper",
+          "graphic"
+        ],
+        [
+          "ink",
+          "sunflower",
+          "body"
+        ],
+        [
+          "ink",
+          "sunflower-wash",
+          "body"
+        ],
+        [
+          "lantern-red",
+          "sunflower",
+          "graphic"
+        ],
+        [
+          "freeze-blue",
+          "notebook-paper",
+          "graphic"
+        ]
+      ]
+    },
+    "community.design-tokens.brand": {
+      "mood": [
+        "calm",
+        "bookish",
+        "warm"
+      ],
+      "imageryStyle": "Cast art in a cute chibi style with thin dark brown outlines and flat pale colours, tiny shiny dot eyes and pink blush ovals, as the one rich, warm image per screen, cropped 3:2, with no text inside it; the interface around it stays flat ink on notebook paper.",
+      "avoid": [
+        "emoji in the interface",
+        "toy-like or bouncy cartoon UI",
+        "rainbow gradients",
+        "busy multi-colour dashboards",
+        "card shadows on scrolling content"
+      ]
+    }
+  }
+}

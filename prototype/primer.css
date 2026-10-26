@@ -1,0 +1,65 @@
+/* Bài 0 · Nhập môn: shared styles for the Primer pages (load after lesson.css) */
+/* Primer hanzi (拼音, 妈麻马骂, sandhi words, table chars). Replaces lesson.css's Bài 1 subset on these pages only. */
+@font-face { font-family: "UKai"; src: url("fonts/ukai-h0-00.woff2") format("woff2"); font-display: block; }
+
+/* Pinyin glyphs. Be Vietnam Pro has no precomposed ǎ ǐ ǒ ǔ ǖ ǘ ǚ ǜ (U+01CD–01DC), so Chrome fell back to a system font or
+   stacked a mismatched combining mark. Onest (OFL, geometric, round like Be Vietnam Pro) has the full set; fonts/pinyin-onest-*.woff2 are
+   subsets of Latin + every tone-marked vowel.
+   "Pinyin"      = whole pinyin words (class .py / --font-pinyin).
+   "PinyinMarks" = same files, but only the code points Be Vietnam Pro / Literata lack, so pinyin inside Vietnamese prose still renders. */
+@font-face { font-family: "Pinyin"; font-weight: 400; src: url("fonts/pinyin-onest-400.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Pinyin"; font-weight: 500; src: url("fonts/pinyin-onest-500.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Pinyin"; font-weight: 600; src: url("fonts/pinyin-onest-600.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "PinyinMarks"; font-weight: 400; src: url("fonts/pinyin-onest-400.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; font-display: block; }
+@font-face { font-family: "PinyinMarks"; font-weight: 500; src: url("fonts/pinyin-onest-500.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; font-display: block; }
+@font-face { font-family: "PinyinMarks"; font-weight: 600; src: url("fonts/pinyin-onest-600.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; font-display: block; }
+@font-face { font-family: "PinyinMarks"; font-weight: 700; src: url("fonts/pinyin-onest-600.woff2") format("woff2"); unicode-range: U+01CD-01DC, U+01F9, U+1E3F; font-display: block; }
+:root {
+  --font-pinyin: "Pinyin", "Be Vietnam Pro", system-ui, sans-serif;
+  --font-ui: "Be Vietnam Pro", "PinyinMarks", system-ui, sans-serif;
+  --font-display: "Literata", "PinyinMarks", serif;
+}
+.py { font-family: var(--font-pinyin); font-variant-ligatures: none; }
+
+/* question prompt: optional text + play button */
+.prompt { margin-top: var(--s5); display: grid; justify-items: center; align-content: center; gap: var(--s4); min-height: 148px; padding: var(--s5) var(--s4); border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); text-align: center; }
+.prompt .pt { font: 600 21px/1.35 var(--font-display); }
+.prompt .pt .hz { font-size: 26px; font-weight: 400; }
+.prompt .play { width: 56px; height: 56px; font-size: 24px; }
+
+/* tone options with contour glyphs (same as L6) */
+.opts.tones .opt { min-height: 104px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.opt .syl { font: 500 30px/1 var(--font-pinyin); }
+.opt .contour { width: 44px; height: 24px; color: var(--ink-3); }
+.opt .contour path, .big-contour path { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.opt[aria-pressed="true"] .contour { color: var(--ink-1); }
+.opt.right .contour { color: var(--vermilion-text); }
+.opt.wrong .contour { color: var(--ink-4); }
+.opts.text .opt.py { font-size: 22px; font-weight: 500; }
+.say .hz { font-size: 18px; }
+
+/* card step */
+.cardtop { display: flex; align-items: center; justify-content: center; gap: var(--s5); margin-top: var(--s5); padding: var(--s5) 0; border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); }
+.cardtop .bigsyl { font: 500 64px/1 var(--font-pinyin); }
+.big-contour { width: 88px; height: 48px; color: var(--ink-2); }
+.exp { margin-top: var(--s5); font-size: 17px; line-height: 1.5; color: var(--ink-1); }
+.chips { margin-top: var(--s5); display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: var(--s2); }
+.chip { position: relative; min-height: 80px; padding: 10px var(--s3); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; justify-items: center; align-content: center; gap: 2px; transition: border-color .12s, background .12s; }
+.chip:active { background: var(--paper-2); }
+.chip .cp { font: 500 26px/1.15 var(--font-pinyin); white-space: nowrap; }
+.chip .cp small { display: block; text-align: center; font-size: 12px; font-weight: 400; color: var(--ink-3); }
+.chip .ch { font-size: 19px; line-height: 1.2; color: var(--ink-2); }
+.chip .say2 { font-size: 12.5px; color: var(--ink-3); }
+.chip .sp { position: absolute; top: 7px; right: 7px; font-size: 14px; color: var(--ink-4); }
+.chip.on { border: 2px solid var(--ink-1); padding: 9px 11px; background: #fff; }
+.chip.on .sp { color: var(--ink-1); }
+.chips.wide { grid-template-columns: 1fr 1fr; }
+.pairs { margin-top: var(--s5); }
+.pairs h3 { margin-bottom: var(--s2); }
+.pair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s2); }
+.pair + .pair { margin-top: var(--s2); }
+.pair i { font-style: normal; font-size: 13px; color: var(--ink-3); }
+.pair .chip { min-height: 64px; }
+.tap { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+
+.done .grid span { font-size: 20px; }

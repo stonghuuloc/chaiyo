@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Bạn bè</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="roots.css?v=2">
+<style>
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 40px); }
+  .top { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px var(--s2); background: var(--paper); }
+  .top .t { text-align: center; font: 600 17px/1.3 var(--font-display); }
+  .x { width: 44px; height: 44px; display: grid; place-items: center; font-size: 22px; color: var(--ink-2); border-radius: 50%; }
+  .x .ic { transform: scaleX(-1); }
+
+  .lead { margin-top: var(--s2); font-size: 14px; color: var(--ink-3); }
+  .seg { margin-top: var(--s4); display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: var(--r-pill); background: var(--paper-2); }
+  .seg button { min-height: 44px; border-radius: var(--r-pill); font: 600 14.5px var(--font-ui); color: var(--ink-3); transition: background .15s, color .15s, box-shadow .15s; }
+  .seg button[aria-pressed="true"] { background: #fff; color: var(--ink-1); box-shadow: 0 1px 3px rgba(45,25,10,.12); }
+
+  .board { margin-top: var(--s4); list-style: none; border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); overflow: hidden; }
+  .board li + li { border-top: 1px solid var(--ink-5); }
+  .row { display: grid; grid-template-columns: 28px 44px minmax(0, 1fr) auto; align-items: center; gap: var(--s3); min-height: 68px; padding: var(--s2) var(--s4); }
+  .board li.me { background: #fff; box-shadow: inset 3px 0 0 var(--ink-1); }
+  .rk { display: grid; place-items: center; font: 600 15px var(--font-display); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .rk .ic { font-size: 24px; }
+  .rk.g1 { color: #c4962b; } .rk.g2 { color: #9a9fa6; } .rk.g3 { color: #b0713f; }
+  .av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 600 17px var(--font-display); }
+  .who b { display: block; font-weight: 600; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who small { display: block; margin-top: 1px; font-size: 13px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tag { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font: 600 11.5px var(--font-ui); vertical-align: 2px; }
+  .val { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .val .ic { font-size: 17px; }
+  .val .fire { color: var(--vermilion); --duo: 1; --duo-c: #f2cfc6; }
+  .val small { font-weight: 400; font-size: 13px; color: var(--ink-3); }
+
+  .empty { margin-top: var(--s5); padding: var(--s5) var(--s4); text-align: center; border-radius: 18px; border: 1px dashed var(--ink-5); }
+  .empty .ic { font-size: 40px; color: var(--ink-4); }
+  .empty h2 { margin-top: var(--s2); font: 600 19px/1.25 var(--font-display); }
+  .empty p { margin-top: 4px; font-size: 14.5px; color: var(--ink-3); }
+
+  section { margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  section h2 { font: 600 19px/1.2 var(--font-display); }
+  .sub { margin-top: 2px; font-size: 14px; color: var(--ink-3); }
+  .box { position: relative; margin-top: var(--s3); }
+  .box .ic { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 18px; color: var(--ink-3); pointer-events: none; }
+  .box input { width: 100%; height: 46px; padding: 0 16px 0 42px; border-radius: var(--r-pill); border: 1px solid var(--ink-5); background: rgba(255,255,255,.6); font: 500 16px var(--font-ui); color: var(--ink-1); outline: 0; -webkit-appearance: none; }
+  .box input:focus { border-color: var(--ink-1); }
+
+  .dir { margin-top: var(--s3); list-style: none; border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); overflow: hidden; }
+  .dir li + li { border-top: 1px solid var(--ink-5); }
+  .dir li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--s2); padding-right: var(--s3); }
+  .dir a { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: var(--s3); min-height: 68px; padding: var(--s2) 0 var(--s2) var(--s4); }
+  .dir .none { display: block; padding: var(--s5) var(--s4); color: var(--ink-3); font-size: 15px; grid-column: 1 / -1; }
+  .fol { min-width: 112px; min-height: 44px; padding: 0 var(--s3); display: inline-flex; align-items: center; justify-content: center; gap: 4px; border-radius: var(--r-pill); font: 600 14px var(--font-ui); background: var(--ink-1); color: var(--paper); border: 1px solid var(--ink-1); transition: background .12s, color .12s; }
+  .fol .ic { font-size: 15px; }
+  .fol[aria-pressed="true"] { background: transparent; color: var(--ink-2); border-color: var(--ink-4); }
+
+  .invite { margin-top: var(--s4); width: 100%; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s2) var(--s4); text-align: left; border-radius: 18px; background: rgba(255,255,255,.55); border: 1px solid var(--ink-5); }
+  .invite .mi { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); font-size: 22px; }
+  .invite b { display: block; font-weight: 600; }
+  .invite small { display: block; margin-top: 1px; font-size: 13px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .invite .go { font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+
+  .toast { position: fixed; z-index: 11; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -8px); opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 40px);
+    padding: 10px var(--s4); border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font-size: 14px; font-weight: 500; transition: opacity .18s, transform .18s; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<div class="top"><a class="x" id="back" href="t4-me.html" aria-label="Quay lại"><svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></a><span class="t">Bạn bè</span><span></span></div>
+<main id="main"></main>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module">
+import { ME, LEARNERS, follows, setFollow, resetFollows, clearFollows } from './data/friends.js?v=2';
+if (/t4-me/.test(document.referrer)) document.getElementById('back').onclick = (e) => { e.preventDefault(); history.back(); };
+const $ = (s) => document.querySelector(s);
+const ic = (id, cls = 'ic') => `<svg class="${cls}"><use href="icons.svg#i-${id}"/></svg>`;
+const P = new URLSearchParams(location.search);
+if (P.has('reset')) resetFollows();
+if (P.has('none')) clearFollows();                    // ?none demo: brand-new learner, nobody followed
+let tt; const toast = (t) => { const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2200); };
+const fold = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase();
+const INVITE = 'https://chaiyo.app/moi/loc';
+
+const VISIBLE = LEARNERS.filter((l) => !l.hidden);   // hidden profiles never appear anywhere here
+let mode = 'streak', q = '';
+const MODES = { streak: { label: 'Chuỗi ngày', of: (l) => l.streak }, week: { label: 'Từ trong tuần', of: (l) => l.week } };
+
+const av = (l) => `<span class="av" style="background:${l.bg};color:${l.fg}" aria-hidden="true">${l.initial}</span>`;
+const valHtml = (l) => mode === 'streak'
+  ? `<span class="val">${ic('fill-fire', 'ic fire')}${l.streak}<small>ngày</small></span>`
+  : `<span class="val">${l.week}<small>từ</small></span>`;
+const rank = (i) => i < 3 ? `<span class="rk g${i + 1}" aria-label="Hạng ${i + 1}">${ic('fill-medal')}</span>` : `<span class="rk">${i + 1}</span>`;
+
+function board() {
+  const fs = follows(), mates = VISIBLE.filter((l) => fs.includes(l.id));
+  if (!mates.length) return `<div class="empty">${ic('fill-users')}<h2>Chưa có ai trong bảng</h2><p>Học một mình hơi buồn, rủ bạn vào đua cho vui nhé!</p></div>`;
+  const xs = [ME, ...mates].sort((a, b) => MODES[mode].of(b) - MODES[mode].of(a) || (a === ME ? -1 : 0));
+  return `<ul class="board">${xs.map((l, i) => l === ME
+    ? `<li class="me"><div class="row">${rank(i)}${av(l)}<span class="who"><b>${l.name}<span class="tag">Bạn</span></b></span>${valHtml(l)}</div></li>`
+    : `<li><a class="row" href="u3-profile.html?u=${l.id}">${rank(i)}${av(l)}<span class="who"><b>${l.name}</b><small>Bài ${l.lesson}</small></span>${valHtml(l)}</a></li>`).join('')}</ul>`;
+}
+function dir() {
+  const f = fold(q.trim()), fs = follows();
+  const xs = VISIBLE.filter((l) => !f || fold(l.name).includes(f));
+  if (!xs.length) return `<li><span class="none">Không thấy ai tên “${q.replace(/[&<>"]/g, '')}”. Thử tên khác nhé.</span></li>`;
+  return xs.map((l) => { const on = fs.includes(l.id);
+    return `<li><a href="u3-profile.html?u=${l.id}">${av(l)}<span class="who"><b>${l.name}</b><small>HSK ${l.hsk} · Bài ${l.lesson}</small></span></a>
+      <button class="fol" data-id="${l.id}" aria-pressed="${on}" aria-label="${on ? 'Bỏ theo dõi' : 'Theo dõi'} ${l.name}">${on ? ic('bold-check') + 'Đang theo dõi' : 'Theo dõi'}</button></li>`; }).join('');
+}
+
+const sub = () => follows().length ? `Bạn đứng ở bảng của ${follows().filter((id) => VISIBLE.some((l) => l.id === id)).length} người bạn theo dõi.` : '';
+function paintDir() {
+  $('#dir').innerHTML = dir();
+  $('#dir').querySelectorAll('.fol').forEach((b) => (b.onclick = () => {
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    setFollow(b.dataset.id, on);
+    toast(on ? `Đã theo dõi ${VISIBLE.find((l) => l.id === b.dataset.id).name}` : `Đã bỏ theo dõi ${VISIBLE.find((l) => l.id === b.dataset.id).name}`);
+    paint();
+  }));
+}
+function paint() {
+  $('#board').innerHTML = board();
+  $('#sub').textContent = sub();
+  document.querySelectorAll('.seg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === mode)));
+  paintDir();
+}
+
+$('#main').innerHTML = `
+  <p class="lead" id="sub"></p>
+  <div class="seg" role="group" aria-label="Xếp hạng theo">${Object.entries(MODES).map(([k, m]) => `<button data-m="${k}">${m.label}</button>`).join('')}</div>
+  <div id="board"></div>
+  <section><h2>Theo dõi thêm</h2><p class="sub">Tìm bạn theo tên rồi bấm theo dõi.</p>
+    <label class="box">${ic('fill-magnifer')}<input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Tìm bạn theo tên" aria-label="Tìm bạn theo tên"></label>
+    <ul class="dir" id="dir"></ul>
+    <button class="invite" id="inv"><span class="mi">${ic('fill-link-round')}</span><span><b>Rủ bạn vào học chung</b><small>${INVITE.replace('https://', '')}</small></span><span class="go">Chép link</span></button>
+  </section>`;
+document.querySelectorAll('.seg button').forEach((b) => (b.onclick = () => { mode = b.dataset.m; paint(); }));
+$('#q').oninput = (e) => { q = e.target.value; paintDir(); };
+const legacyCopy = () => { const t = document.createElement('textarea'); t.value = INVITE; document.body.append(t); t.select(); try { document.execCommand('copy'); } catch {} t.remove(); };
+$('#inv').onclick = () => {
+  if (navigator.clipboard) navigator.clipboard.writeText(INVITE).catch(legacyCopy); else legacyCopy();
+  toast('Đã chép link, gửi cho bạn bè nhé!');
+};
+paint();
+addEventListener('pageshow', (e) => e.persisted && paint());   // back from a profile after (un)following
+</script>
+</body>
+</html>

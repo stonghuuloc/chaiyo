@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Hôm nay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* colour */
+    --paper: #f7f3ea;
+    --paper-2: #efe9dc;
+    --ink-1: #1d1814;
+    --ink-2: #4a423a;
+    --ink-3: #655c51;
+    --ink-4: #948a7e;
+    --ink-5: #ddd5c8;
+    --vermilion: #c6301d;
+    --vermilion-press: #a72614;
+    --vermilion-wash: #f6e1db;
+    --frost: #3f73b0;
+    /* type */
+    --font-display: "Literata", serif;
+    --font-ui: "Be Vietnam Pro", system-ui, sans-serif;
+    --font-hanzi: "Kaiti SC", "STKaiti", "KaiTi", serif;
+    --t-hero: 36px; --t-h2: 23px; --t-cta: 21px; --t-body: 16px; --t-meta: 13.5px; --t-tab: 11.5px;
+    /* space + radius */
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px; --s8: 32px;
+    --r-cell: 12px; --r-cta: 18px; --r-pill: 999px;
+    /* glass */
+    --glass-tint: rgba(250, 246, 238, .72);
+    --glass-blur: 24px;
+    --glass-sat: 175%;
+    --glass-rim: rgba(255, 255, 255, .9);
+    --glass-edge: rgba(40, 25, 15, .10);
+    --glass-shadow: 0 10px 30px rgba(45, 25, 10, .16), 0 1px 3px rgba(45, 25, 10, .08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); -webkit-text-size-adjust: 100%; }
+  body { font-family: var(--font-ui); color: var(--ink-1); background: var(--paper); max-width: 430px; margin: 0 auto; min-height: 100vh; }
+  .ic { width: 1em; height: 1em; fill: currentColor; flex: none; }
+  button, a { font: inherit; color: inherit; text-decoration: none; }
+  button { background: none; border: 0; cursor: pointer; }
+  :focus-visible { outline: 2.5px solid var(--vermilion); outline-offset: 3px; border-radius: 8px; }
+
+  /* hero */
+  .hero { position: relative; height: 400px; overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .hero::before { content: ""; position: absolute; inset: 0 0 auto; height: 150px; background: linear-gradient(rgba(28, 16, 8, .5), rgba(28, 16, 8, 0)); z-index: 1; }
+  .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 120px; background: linear-gradient(rgba(247, 243, 234, 0), var(--paper) 92%); z-index: 1; }
+  .top { position: absolute; z-index: 2; inset: 0 0 auto; padding: calc(env(safe-area-inset-top, 0px) + 54px) var(--s5) 0; display: flex; align-items: center; justify-content: space-between; }
+  .top h1 { font: 600 var(--t-hero)/1 var(--font-display); color: #fff; letter-spacing: -.01em; text-shadow: 0 1px 12px rgba(20, 10, 4, .35); }
+
+  /* glass chip: WebGL refraction of the hero behind it, CSS rim on top */
+  .chip { position: relative; display: flex; align-items: center; gap: var(--s2); height: 40px; padding: 0 var(--s4); border-radius: var(--r-pill); font: 600 15px var(--font-ui); color: var(--ink-1); }
+  .chip canvas { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: inherit; }
+  .chip::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: inset 0 1px 0 var(--glass-rim), inset 0 0 0 .5px rgba(255,255,255,.55), inset 0 -1px 1px rgba(40,20,10,.12), var(--glass-shadow); }
+  .chip > span, .chip > svg { position: relative; z-index: 1; }
+  .chip .fire { color: var(--vermilion); font-size: 19px; }
+  .chip .frost { color: var(--frost); font-size: 18px; }
+  .chip .sep { width: 1px; height: 18px; background: rgba(40, 25, 15, .18); }
+
+  /* primary action */
+  .next { position: relative; z-index: 3; margin: -56px var(--s5) 0; }
+  .cta { width: 100%; height: 62px; display: flex; align-items: center; justify-content: center; gap: var(--s3); border-radius: var(--r-cta); background: var(--vermilion); color: #fff; font: 600 var(--t-cta) var(--font-display); box-shadow: 0 10px 24px rgba(168, 38, 20, .28), inset 0 1px 0 rgba(255,255,255,.18); transition: transform .12s, background .12s; }
+  .cta:active { transform: scale(.985); background: var(--vermilion-press); }
+  .cta .ic { font-size: 22px; }
+  .cta .go { font-size: 18px; opacity: .85; }
+  .next p { text-align: center; margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+
+  /* sections */
+  main { padding: 0 var(--s5) calc(env(safe-area-inset-bottom, 0px) + 120px); }
+  section { padding-top: var(--s6); }
+  section + section { border-top: 1px solid var(--ink-5); margin-top: var(--s5); }
+  .next + main section:first-child { border-top: 1px solid var(--ink-5); margin-top: var(--s5); }
+  .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--s3); }
+  h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .more { display: inline-flex; align-items: center; gap: 2px; font-size: 14px; font-weight: 500; color: var(--vermilion); }
+  .more .ic { font-size: 13px; }
+
+  /* path */
+  .path { list-style: none; position: relative; }
+  .path li { position: relative; display: grid; grid-template-columns: 36px 1fr 16px; align-items: center; gap: var(--s3); padding: var(--s2) 0; min-height: 60px; }
+  .path li::before { content: ""; position: absolute; left: 17px; top: 0; bottom: 0; width: 2px; background: var(--ink-5); }
+  .path li:first-child::before { top: 50%; } .path li:last-child::before { bottom: 50%; }
+  .path li.done::before, .path li.done + li.now::before { background: var(--vermilion); }
+  .path li.done + li.now::before { bottom: 50%; }
+  .mark { position: relative; z-index: 1; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--paper); }
+  .done .mark { background: var(--vermilion); color: #fff; font-size: 17px; }
+  .now .mark { border: 2.5px solid var(--vermilion); }
+  .now .mark i { width: 14px; height: 14px; border-radius: 50%; background: var(--vermilion); }
+  .locked .mark { background: var(--paper-2); color: var(--ink-3); font-size: 15px; }
+  .path b { display: block; font: 600 17px/1.3 var(--font-display); }
+  .path b span { color: var(--ink-3); font-weight: 500; }
+  .now b, .now b span { color: var(--vermilion); }
+  .locked b { color: var(--ink-2); }
+  .path small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+  .path .go { color: var(--ink-4); font-size: 16px; } .now .go { color: var(--vermilion); }
+
+  /* week */
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .day { display: grid; justify-items: center; gap: var(--s2); padding: var(--s2) 0 10px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.35); }
+  .day span { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .day .m { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; }
+  .day.ok .m { background: var(--vermilion); color: #fff; }
+  .day.frozen .m { color: var(--frost); font-size: 21px; }
+  .day.today { border-color: var(--vermilion); background: var(--vermilion-wash); }
+  .day.today span { color: var(--ink-1); font-weight: 700; }
+  .day.today .m { border: 2px solid var(--vermilion); }
+  .day.later .m { border: 1.5px solid var(--ink-4); }
+  .streak-line { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+
+  /* friends */
+  .friends { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+  .friend { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+  .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 600 17px var(--font-display); flex: none; }
+  .friend b { display: block; font-size: 15px; font-weight: 600; }
+  .friend small { display: flex; align-items: center; gap: 3px; line-height: 1.35; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+  .friend small .ic { color: var(--vermilion); font-size: 13px; }
+
+  /* glass tab bar */
+  .tabs { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); width: min(402px, calc(100% - 28px)); height: 66px; border-radius: var(--r-pill); display: grid; grid-template-columns: repeat(4, 1fr); padding: 5px; isolation: isolate;
+    background: var(--glass-tint);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    border: .5px solid var(--glass-edge);
+    box-shadow: inset 0 1px 0 var(--glass-rim), inset 0 -1px 1px rgba(40,20,10,.08), var(--glass-shadow); }
+  html.refract .tabs { backdrop-filter: url(#tab-lens) blur(var(--glass-blur)) saturate(var(--glass-sat)); }
+  .tabs::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+    background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,0) 42%), radial-gradient(120% 90% at 50% 120%, rgba(255,255,255,.25), transparent 60%); }
+  .tab { display: grid; justify-items: center; align-content: center; gap: 3px; border-radius: var(--r-pill); font-size: var(--t-tab); font-weight: 600; color: var(--ink-2); }
+  .tab .ic { font-size: 24px; }
+  .tab[aria-current="page"] { color: var(--vermilion); background: rgba(198, 48, 29, .11); box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 0 0 .5px rgba(198,48,29,.18); }
+
+  @media (prefers-reduced-motion: reduce) { .cta { transition: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-duotone-book-open-text" viewBox="0 0 256 256"><path d="M232,56V200H160a32,32,0,0,0-32,32V88a32,32,0,0,1,32-32Z" opacity="0.2"/><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></symbol><symbol id="i-duotone-cards" viewBox="0 0 256 256"><path d="M192,88V200a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V88a8,8,0,0,1,8-8H184A8,8,0,0,1,192,88Z" opacity="0.2"/><path d="M184,72H40A16,16,0,0,0,24,88V200a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V88A16,16,0,0,0,184,72Zm0,128H40V88H184V200ZM232,56V176a8,8,0,0,1-16,0V56H64a8,8,0,0,1,0-16H216A16,16,0,0,1,232,56Z"/></symbol><symbol id="i-duotone-caret-right" viewBox="0 0 256 256"><path d="M176,128,96,208V48Z" opacity="0.2"/><path d="M181.66,122.34l-80-80A8,8,0,0,0,88,48V208a8,8,0,0,0,13.66,5.66l80-80A8,8,0,0,0,181.66,122.34ZM104,188.69V67.31L164.69,128Z"/></symbol><symbol id="i-duotone-check" viewBox="0 0 256 256"><path d="M232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Z" opacity="0.2"/><path d="M205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-duotone-fire" viewBox="0 0 256 256"><path d="M208,144a80,80,0,0,1-160,0c0-30.57,14.42-58.26,31-80l33,32,26.27-72C159.86,41.92,208,88.15,208,144Z" opacity="0.2"/><path d="M183.89,153.34a57.6,57.6,0,0,1-46.56,46.55A8.75,8.75,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68ZM216,144a88,88,0,0,1-176,0c0-27.92,11-56.47,32.66-84.85a8,8,0,0,1,11.93-.89l24.12,23.41,22-60.41a8,8,0,0,1,12.63-3.41C165.21,36,216,84.55,216,144Zm-16,0c0-46.09-35.79-85.92-58.21-106.33L119.52,98.74a8,8,0,0,1-13.09,3L80.06,76.16C64.09,99.21,56,122,56,144a72,72,0,0,0,144,0Z"/></symbol><symbol id="i-duotone-house" viewBox="0 0 256 256"><path d="M216,120v96H152V152H104v64H40V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,216,120Z" opacity="0.2"/><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol><symbol id="i-duotone-lock-simple" viewBox="0 0 256 256"><path d="M216,96V208a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V96a8,8,0,0,1,8-8H208A8,8,0,0,1,216,96Z" opacity="0.2"/><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></symbol><symbol id="i-duotone-path" viewBox="0 0 256 256"><path d="M224,200a24,24,0,1,1-24-24A24,24,0,0,1,224,200Z" opacity="0.2"/><path d="M200,168a32.06,32.06,0,0,0-31,24H72a32,32,0,0,1,0-64h96a40,40,0,0,0,0-80H72a8,8,0,0,0,0,16h96a24,24,0,0,1,0,48H72a48,48,0,0,0,0,96h97a32,32,0,1,0,31-40Zm0,48a16,16,0,1,1,16-16A16,16,0,0,1,200,216Z"/></symbol><symbol id="i-duotone-snowflake" viewBox="0 0 256 256"><path d="M220,128a92,92,0,1,1-92-92A92.1,92.1,0,0,1,220,128Z" opacity="0.2"/><path d="M223.77,150.09a8,8,0,0,1-5.86,9.68l-24.64,6,6.46,24.11a8,8,0,0,1-5.66,9.8A8.25,8.25,0,0,1,192,200a8,8,0,0,1-7.72-5.93l-7.72-28.8L136,141.86v46.83l21.66,21.65a8,8,0,0,1-11.32,11.32L128,203.31l-18.34,18.35a8,8,0,0,1-11.32-11.32L120,188.69V141.86L79.45,165.27l-7.72,28.8A8,8,0,0,1,64,200a8.25,8.25,0,0,1-2.08-.27,8,8,0,0,1-5.66-9.8l6.46-24.11-24.64-6a8,8,0,0,1,3.82-15.54l29.45,7.23L112,128,71.36,104.54l-29.45,7.23A7.85,7.85,0,0,1,40,112a8,8,0,0,1-1.91-15.77l24.64-6L56.27,66.07a8,8,0,0,1,15.46-4.14l7.72,28.8L120,114.14V67.31L98.34,45.66a8,8,0,0,1,11.32-11.32L128,52.69l18.34-18.35a8,8,0,0,1,11.32,11.32L136,67.31v46.83l40.55-23.41,7.72-28.8a8,8,0,0,1,15.46,4.14l-6.46,24.11,24.64,6A8,8,0,0,1,216,112a7.85,7.85,0,0,1-1.91-.23l-29.45-7.23L144,128l40.64,23.46,29.45-7.23A8,8,0,0,1,223.77,150.09Z"/></symbol><symbol id="i-duotone-user-circle" viewBox="0 0 256 256"><path d="M224,128a95.76,95.76,0,0,1-31.8,71.37A72,72,0,0,0,128,160a40,40,0,1,0-40-40,40,40,0,0,0,40,40,72,72,0,0,0-64.2,39.37h0A96,96,0,1,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></symbol><symbol id="i-fill-book-open-text" viewBox="0 0 256 256"><path d="M232,48H168a32,32,0,0,0-32,32v87.73a8.17,8.17,0,0,1-7.47,8.25,8,8,0,0,1-8.53-8V80A32,32,0,0,0,88,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,23.94,7.9,7.9,0,0,0,5.12,7.55A8,8,0,0,0,136,232a24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM208,168H168.27a8.17,8.17,0,0,1-8.25-7.47,8,8,0,0,1,8-8.53h39.73a8.17,8.17,0,0,1,8.25,7.47A8,8,0,0,1,208,168Zm0-32H168.27a8.17,8.17,0,0,1-8.25-7.47,8,8,0,0,1,8-8.53h39.73a8.17,8.17,0,0,1,8.25,7.47A8,8,0,0,1,208,136Zm0-32H168.27A8.17,8.17,0,0,1,160,96.53,8,8,0,0,1,168,88h39.73A8.17,8.17,0,0,1,216,95.47,8,8,0,0,1,208,104Z"/></symbol><symbol id="i-fill-cards" viewBox="0 0 256 256"><path d="M200,88V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V88A16,16,0,0,1,40,72H184A16,16,0,0,1,200,88Zm16-48H64a8,8,0,0,0,0,16H216V176a8,8,0,0,0,16,0V56A16,16,0,0,0,216,40Z"/></symbol><symbol id="i-fill-caret-right" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80A8,8,0,0,1,88,208V48a8,8,0,0,1,13.66-5.66l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol><symbol id="i-bold-check" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></symbol><symbol id="i-fill-check" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-fill-fire" viewBox="0 0 256 256"><path d="M143.38,17.85a8,8,0,0,0-12.63,3.41l-22,60.41L84.59,58.26a8,8,0,0,0-11.93.89C51,87.53,40,116.08,40,144a88,88,0,0,0,176,0C216,84.55,165.21,36,143.38,17.85Zm40.51,135.49a57.6,57.6,0,0,1-46.56,46.55A7.65,7.65,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68Z"/></symbol><symbol id="i-fill-house" viewBox="0 0 256 256"><path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"/></symbol><symbol id="i-fill-lock-simple" viewBox="0 0 256 256"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96Z"/></symbol><symbol id="i-fill-path" viewBox="0 0 256 256"><path d="M228,200a28,28,0,0,1-54.83,8H72a48,48,0,0,1,0-96h96a24,24,0,0,0,0-48H72a8,8,0,0,1,0-16h96a40,40,0,0,1,0,80H72a32,32,0,0,0,0,64H173.17A28,28,0,0,1,228,200Z"/></symbol><symbol id="i-fill-snowflake" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm42.37,119.22,18.94-6.76a8,8,0,1,1,5.38,15.08l-15.48,5.52,4.52,16.87a8,8,0,0,1-5.66,9.8A8.23,8.23,0,0,1,176,184a8,8,0,0,1-7.73-5.93l-5.57-20.8L136,141.86v30.83l13.66,13.65a8,8,0,0,1-11.32,11.32L128,187.31l-10.34,10.35a8,8,0,0,1-11.32-11.32L120,172.69V141.86L93.3,157.27l-5.57,20.8A8,8,0,0,1,80,184a8.23,8.23,0,0,1-2.07-.27,8,8,0,0,1-5.66-9.8l4.52-16.87-15.48-5.52a8,8,0,0,1,5.38-15.08l18.94,6.76L112,128,85.63,112.78l-18.94,6.76A8.18,8.18,0,0,1,64,120a8,8,0,0,1-2.69-15.54l15.48-5.52L72.27,82.07a8,8,0,0,1,15.46-4.14l5.57,20.8L120,114.14V83.31L106.34,69.66a8,8,0,0,1,11.32-11.32L128,68.69l10.34-10.35a8,8,0,0,1,11.32,11.32L136,83.31v30.83l26.7-15.41,5.57-20.8a8,8,0,0,1,15.46,4.14l-4.52,16.87,15.48,5.52A8,8,0,0,1,192,120a8.18,8.18,0,0,1-2.69-.46l-18.94-6.76L144,128Z"/></symbol><symbol id="i-fill-user-circle" viewBox="0 0 256 256"><path d="M172,120a44,44,0,1,1-44-44A44.05,44.05,0,0,1,172,120Zm60,8A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88.09,88.09,0,0,0-91.47-87.93C77.43,41.89,39.87,81.12,40,128.25a87.65,87.65,0,0,0,22.24,58.16A79.71,79.71,0,0,1,84,165.1a4,4,0,0,1,4.83.32,59.83,59.83,0,0,0,78.28,0,4,4,0,0,1,4.83-.32,79.71,79.71,0,0,1,21.79,21.31A87.62,87.62,0,0,0,216,128Z"/></symbol><symbol id="i-regular-book-open-text" viewBox="0 0 256 256"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></symbol><symbol id="i-regular-cards" viewBox="0 0 256 256"><path d="M184,72H40A16,16,0,0,0,24,88V200a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V88A16,16,0,0,0,184,72Zm0,128H40V88H184V200ZM232,56V176a8,8,0,0,1-16,0V56H64a8,8,0,0,1,0-16H216A16,16,0,0,1,232,56Z"/></symbol><symbol id="i-regular-caret-right" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol><symbol id="i-regular-check" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-regular-fire" viewBox="0 0 256 256"><path d="M183.89,153.34a57.6,57.6,0,0,1-46.56,46.55A8.75,8.75,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68ZM216,144a88,88,0,0,1-176,0c0-27.92,11-56.47,32.66-84.85a8,8,0,0,1,11.93-.89l24.12,23.41,22-60.41a8,8,0,0,1,12.63-3.41C165.21,36,216,84.55,216,144Zm-16,0c0-46.09-35.79-85.92-58.21-106.33L119.52,98.74a8,8,0,0,1-13.09,3L80.06,76.16C64.09,99.21,56,122,56,144a72,72,0,0,0,144,0Z"/></symbol><symbol id="i-regular-house" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol><symbol id="i-regular-lock-simple" viewBox="0 0 256 256"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></symbol><symbol id="i-regular-path" viewBox="0 0 256 256"><path d="M200,168a32.06,32.06,0,0,0-31,24H72a32,32,0,0,1,0-64h96a40,40,0,0,0,0-80H72a8,8,0,0,0,0,16h96a24,24,0,0,1,0,48H72a48,48,0,0,0,0,96h97a32,32,0,1,0,31-40Zm0,48a16,16,0,1,1,16-16A16,16,0,0,1,200,216Z"/></symbol><symbol id="i-regular-snowflake" viewBox="0 0 256 256"><path d="M223.77,150.09a8,8,0,0,1-5.86,9.68l-24.64,6,6.46,24.11a8,8,0,0,1-5.66,9.8A8.25,8.25,0,0,1,192,200a8,8,0,0,1-7.72-5.93l-7.72-28.8L136,141.86v46.83l21.66,21.65a8,8,0,0,1-11.32,11.32L128,203.31l-18.34,18.35a8,8,0,0,1-11.32-11.32L120,188.69V141.86L79.45,165.27l-7.72,28.8A8,8,0,0,1,64,200a8.25,8.25,0,0,1-2.08-.27,8,8,0,0,1-5.66-9.8l6.46-24.11-24.64-6a8,8,0,0,1,3.82-15.54l29.45,7.23L112,128,71.36,104.54l-29.45,7.23A7.85,7.85,0,0,1,40,112a8,8,0,0,1-1.91-15.77l24.64-6L56.27,66.07a8,8,0,0,1,15.46-4.14l7.72,28.8L120,114.14V67.31L98.34,45.66a8,8,0,0,1,11.32-11.32L128,52.69l18.34-18.35a8,8,0,0,1,11.32,11.32L136,67.31v46.83l40.55-23.41,7.72-28.8a8,8,0,0,1,15.46,4.14l-6.46,24.11,24.64,6A8,8,0,0,1,216,112a7.85,7.85,0,0,1-1.91-.23l-29.45-7.23L144,128l40.64,23.46,29.45-7.23A8,8,0,0,1,223.77,150.09Z"/></symbol><symbol id="i-regular-user-circle" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="tab-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB" primitiveUnits="userSpaceOnUse">
+    <feImage id="tab-map" x="0" y="0" width="402" height="66" result="map" preserveAspectRatio="none"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header class="hero">
+  <img id="hero-img" src="../assets/home/reviews-due.png" alt="Gấu Đỏ đang xếp chồng thẻ ôn tập trên bàn gỗ">
+  <div class="top">
+    <h1>Hôm nay</h1>
+    <div class="chip" id="streak-chip" aria-label="Chuỗi 12 ngày, còn 1 lượt đóng băng">
+      <canvas aria-hidden="true"></canvas>
+      <svg class="ic fire"><use href="#i-fill-fire"/></svg><span>12 ngày</span>
+      <span class="sep"></span>
+      <svg class="ic frost"><use href="#i-regular-snowflake"/></svg><span>1</span>
+    </div>
+  </div>
+</header>
+
+<div class="next">
+  <button class="cta"><svg class="ic"><use href="#i-regular-cards"/></svg>Ôn 23 thẻ<svg class="ic go"><use href="#i-regular-caret-right"/></svg></button>
+  <p>≈ 6 phút · rồi học tiếp Bài 4</p>
+</div>
+
+<main>
+  <section>
+    <div class="head"><h2>Lộ trình</h2><a class="more" href="#">Xem tất cả<svg class="ic"><use href="#i-regular-caret-right"/></svg></a></div>
+    <ol class="path">
+      <li class="done"><span class="mark"><svg class="ic"><use href="#i-bold-check"/></svg></span><div><b>Bài 3 <span>· Hoa quả</span></b><small>Đã qua bài kiểm tra</small></div><svg class="ic go"><use href="#i-regular-caret-right"/></svg></li>
+      <li class="now"><span class="mark"><i></i></span><div><b>Bài 4 <span>· Bạn thích gì?</span></b><small>Đang học · phần ngữ pháp</small></div><svg class="ic go"><use href="#i-regular-caret-right"/></svg></li>
+      <li class="locked"><span class="mark"><svg class="ic"><use href="#i-fill-lock-simple"/></svg></span><div><b>Bài 5 <span>· Gia đình</span></b><small>Mở khi qua Bài 4</small></div><svg class="ic go"><use href="#i-regular-caret-right"/></svg></li>
+      <li class="locked"><span class="mark"><svg class="ic"><use href="#i-fill-lock-simple"/></svg></span><div><b>Bài 6 <span>· Con số</span></b><small>Mở khi qua Bài 5</small></div><svg class="ic go"><use href="#i-regular-caret-right"/></svg></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="head"><h2>Tuần này</h2></div>
+    <div class="week">
+      <div class="day ok"><span>T2</span><i class="m"><svg class="ic"><use href="#i-bold-check"/></svg></i></div>
+      <div class="day ok"><span>T3</span><i class="m"><svg class="ic"><use href="#i-bold-check"/></svg></i></div>
+      <div class="day frozen"><span>T4</span><i class="m"><svg class="ic"><use href="#i-regular-snowflake"/></svg></i></div>
+      <div class="day ok"><span>T5</span><i class="m"><svg class="ic"><use href="#i-bold-check"/></svg></i></div>
+      <div class="day today"><span>T6</span><i class="m"></i></div>
+      <div class="day later"><span>T7</span><i class="m"></i></div>
+      <div class="day later"><span>CN</span><i class="m"></i></div>
+    </div>
+    <p class="streak-line">T4 dùng 1 lượt đóng băng. Học hôm nay để giữ chuỗi 12 ngày.</p>
+  </section>
+
+  <section>
+    <div class="head"><h2>Bạn bè</h2><a class="more" href="#">Xem tất cả<svg class="ic"><use href="#i-regular-caret-right"/></svg></a></div>
+    <div class="friends">
+      <div class="friend"><span class="av" style="background:#e9dcc6;color:#6a4b25">M</span><div><b>Minh</b><small><svg class="ic"><use href="#i-fill-fire"/></svg>30 ngày</small><small>Bài 14</small></div></div>
+      <div class="friend"><span class="av" style="background:#efd6cf;color:#8a3324">L</span><div><b>Lan</b><small><svg class="ic"><use href="#i-fill-fire"/></svg>4 ngày</small><small>Bài 6</small></div></div>
+      <div class="friend"><span class="av" style="background:#d9e2e6;color:#2f5568">H</span><div><b>Huy</b><small><svg class="ic"><use href="#i-fill-fire"/></svg>9 ngày</small><small>Bài 9</small></div></div>
+    </div>
+  </section>
+</main>
+
+<nav class="tabs" aria-label="Điều hướng chính">
+  <a class="tab" href="#" aria-current="page"><svg class="ic"><use href="#i-fill-house"/></svg>Hôm nay</a>
+  <a class="tab" href="#"><svg class="ic"><use href="#i-regular-path"/></svg>Lộ trình</a>
+  <a class="tab" href="#"><svg class="ic"><use href="#i-regular-book-open-text"/></svg>Từ của tôi</a>
+  <a class="tab" href="#"><svg class="ic"><use href="#i-regular-user-circle"/></svg>Tôi</a>
+</nav>
+
+<script>
+// Chromium only: backdrop-filter url() refracts live content under the tab bar.
+const tabs = document.querySelector('.tabs');
+function lensMap(w, h, r, bezel) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d'), img = g.createImageData(w, h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const px = x + .5 - w / 2, py = y + .5 - h / 2;
+    const qx = Math.abs(px) - (w / 2 - r), qy = Math.abs(py) - (h / 2 - r);
+    const ox = Math.max(qx, 0), oy = Math.max(qy, 0);
+    const d = Math.hypot(ox, oy) + Math.min(Math.max(qx, qy), 0) - r;
+    let nx = 0, ny = 0;
+    if (qx > 0 || qy > 0) { const l = Math.hypot(ox, oy) || 1; nx = Math.sign(px) * ox / l; ny = Math.sign(py) * oy / l; }
+    else if (qx > qy) nx = Math.sign(px); else ny = Math.sign(py);
+    const e = Math.max(0, 1 + d / bezel) ** 2;
+    const i = (y * w + x) * 4;
+    img.data[i] = 128 - nx * e * 127; img.data[i + 1] = 128 - ny * e * 127; img.data[i + 2] = 128; img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0); return c.toDataURL();
+}
+if (navigator.userAgentData) {
+  const { width: w, height: h } = tabs.getBoundingClientRect();
+  const map = document.getElementById('tab-map');
+  map.setAttribute('width', w); map.setAttribute('height', h);
+  map.setAttribute('href', lensMap(Math.round(w), Math.round(h), h / 2, 16));
+  document.documentElement.classList.add('refract');
+}
+
+// WebGL glass over the hero image: real refraction on every browser, incl. iOS.
+const VS = `attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
+const FS = `precision mediump float;
+varying vec2 v;
+uniform sampler2D tex; uniform vec2 size; uniform vec2 origin; uniform vec2 heroSize; uniform vec4 cover; uniform float radius;
+float sdf(vec2 p){ vec2 q = abs(p - size * .5) - (size * .5 - radius); return length(max(q, 0.)) + min(max(q.x, q.y), 0.) - radius; }
+vec3 sampleHero(vec2 hp){
+  vec2 uv = (hp - cover.xy) / cover.zw;
+  vec3 c = texture2D(tex, clamp(uv, 0., 1.)).rgb;
+  float scrim = .5 * (1. - clamp(hp.y / 150., 0., 1.));
+  return mix(c, vec3(.11, .063, .031), scrim);
+}
+void main(){
+  vec2 p = vec2(v.x, 1. - v.y) * size;
+  float d = sdf(p);
+  vec2 e = vec2(1., 0.);
+  vec2 n = normalize(vec2(sdf(p + e.xy) - sdf(p - e.xy), sdf(p + e.yx) - sdf(p - e.yx)) + 1e-5);
+  float bend = pow(clamp(1. + d / 12., 0., 1.), 2.);
+  vec2 hp = origin + p - n * bend * 14.;
+  vec3 col = vec3(0.);
+  for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) col += sampleHero(hp + vec2(float(i), float(j)) * 2.6);
+  col /= 25.;
+  float l = dot(col, vec3(.299, .587, .114));
+  col = mix(vec3(l), col, 1.35);
+  col = mix(col, vec3(.98, .965, .935), .58);
+  float rim = pow(clamp(1. + d / 3., 0., 1.), 3.) * max(0., dot(n, normalize(vec2(-.35, -1.))));
+  col += rim * .55;
+  float a = clamp(-d + .5, 0., 1.);
+  gl_FragColor = vec4(col * a, a);
+}`;
+function glassChip(chip, img, hero) {
+  const cv = chip.querySelector('canvas');
+  const gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true });
+  if (!gl) return;
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr); gl.useProgram(pr);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const tx = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tx);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+  const draw = () => {
+    const dpr = devicePixelRatio || 1, c = chip.getBoundingClientRect(), h = hero.getBoundingClientRect();
+    cv.width = Math.round(c.width * dpr); cv.height = Math.round(c.height * dpr); gl.viewport(0, 0, cv.width, cv.height);
+    const s = Math.max(h.width / img.naturalWidth, h.height / img.naturalHeight), iw = img.naturalWidth * s, ih = img.naturalHeight * s;
+    const u = (k) => gl.getUniformLocation(pr, k);
+    gl.uniform2f(u('size'), c.width, c.height);
+    gl.uniform2f(u('origin'), c.left - h.left, c.top - h.top);
+    gl.uniform2f(u('heroSize'), h.width, h.height);
+    gl.uniform4f(u('cover'), (h.width - iw) * .5, (h.height - ih) * .4, iw, ih);
+    gl.uniform1f(u('radius'), c.height / 2);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
+  draw(); addEventListener('resize', draw);
+}
+const heroImg = document.getElementById('hero-img');
+const start = () => glassChip(document.getElementById('streak-chip'), heroImg, document.querySelector('.hero'));
+heroImg.complete ? start() : heroImg.addEventListener('load', start);
+</script>
+</body>
+</html>

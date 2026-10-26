@@ -1,0 +1,15 @@
+# content/words/没关系.yaml
+id: 没关系
+hanzi: 没关系
+pinyin: méi guānxi
+hanviet: một quan hệ
+level: 1
+pos: [ phrase ]
+senses:
+  - { vi: không sao }
+parts:
+  - { hanzi: 没, pinyin: méi, hanviet: một, vi: không có }
+  - { hanzi: 关, pinyin: guān, hanviet: quan, vi: liên quan }
+  - { hanzi: 系, pinyin: xi, hanviet: hệ, vi: "nối, buộc" }
+examples: [ s-h1-01-16 ]
+image: { file: words/meiguanxi.png }

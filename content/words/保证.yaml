@@ -1,0 +1,14 @@
+# content/words/保证.yaml
+id: 保证
+hanzi: 保证
+pinyin: bǎozhèng
+hanviet: bảo chứng
+level: 3
+pos: [ v ]
+senses:
+  - { vi: "bảo đảm, hứa chắc" }
+parts:
+  - { hanzi: 保, pinyin: bǎo, hanviet: bảo, vi: giữ gìn }
+  - { hanzi: 证, pinyin: zhèng, hanviet: chứng, vi: chứng minh }
+examples: [ s-h3-01-07 ]
+image: { file: words/h3-01/w09.png, prompt: "The takin raises one hoof in a solemn promise with its other hoof on its chest, while the red panda nods. Only the red panda and the takin." }

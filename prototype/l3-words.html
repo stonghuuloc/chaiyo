@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Từ mới · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .pic { aspect-ratio: 3 / 2; border-radius: var(--r-cell); overflow: hidden; background: var(--paper-2); }
+  .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .word { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--s4); margin-top: var(--s5); }
+  .write { position: relative; display: flex; gap: 6px; padding: 0; border-radius: var(--r-cell); }
+  .sq { position: relative; width: var(--sq); height: var(--sq); border-radius: 10px; border: 1px solid var(--ink-5); display: grid; place-items: center;
+    background: rgba(255,255,255,.45) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cg stroke='%23ddd5c8' stroke-width='.8' vector-effect='non-scaling-stroke' fill='none'%3E%3Cpath d='M50 0V100M0 50H100'/%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke-dasharray='3 3'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100%; }
+  .sq > span { font-size: calc(var(--sq) * .78); line-height: 1; }
+  .sq svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .word .play { width: 48px; height: 48px; font-size: 22px; }
+  .py { margin-top: var(--s3); display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px var(--s3); }
+  .py b { font-size: 22px; font-weight: 500; }
+  .py small { font-size: var(--t-meta); color: var(--ink-3); }
+  .py small em { font-style: normal; font-weight: 600; color: var(--ink-1); }
+  .hv { margin-top: 6px; font-size: 13.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+  .hv span { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ink-3); margin-right: 6px; }
+  .mean { margin-top: var(--s3); font: 600 var(--t-h2)/1.2 var(--font-display); }
+
+  .chars { list-style: none; }
+  .chars li { display: grid; grid-template-columns: 52px 1fr 16px; align-items: center; gap: var(--s3); min-height: 64px; padding: 6px 0; }
+  .chars li + li { border-top: 1px solid var(--ink-5); }
+  .cell { width: 52px; height: 52px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; place-items: center; font-size: 34px; }
+  .chars b { display: block; font-size: 16px; font-weight: 600; }
+  .chars b span { font-weight: 400; color: var(--ink-3); }
+  .chars small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+  .chars .go { color: var(--ink-4); font-size: 16px; }
+
+  .ex { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--s3); padding-top: var(--s1); }
+  .ex .hz { font-size: 26px; line-height: 1.25; }
+  .ex p { font-size: 15px; color: var(--ink-3); }
+  .ex p + p { color: var(--ink-1); font-size: var(--t-body); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l1-hub.html" aria-label="Lưu và về bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <div class="seg" id="seg" aria-hidden="true"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
+<script type="module">
+import { $, ic, go, play, bar, cta, choice, doneStep, loadChar, STROKE } from './step.js?v=9';
+import { WORDS as W, word as find } from './data/h1-01.js?v=2';
+
+// one listening check after every 3rd word
+const CHECK = { 3: { a: '03', ans: '您', opts: ['你', '您', '好'] },
+                6: { a: '06', ans: '对不起', opts: ['你们', '对不起', '你好', '您'] },
+                9: { a: '09', ans: '不客气', opts: ['谢谢', '没关系', '不客气', '对不起'] } };
+
+let n = Math.min(Math.max(+new URLSearchParams(location.search).get('w') || 1, 1), 10);
+let mode = 'word';                                     // word | check | done
+
+function showWord() {
+  const w = W[n - 1];
+  const rows = w.parts
+    ? w.parts.map(([c, hv, m]) => `<li><span class="cell hz">${c}</span><span><b>${hv} <span>· ${m}</span></b></span><span></span></li>`).join('')
+    : w.chars.map(([c, py, hv, m]) => `<li><span class="cell hz">${c}</span><span><b>${py} <span>· ${hv}</span></b><small>${m}</small></span>${go()}</li>`).join('');
+  $('#main').innerHTML = `<div class="step">
+    <div class="pic"><img src="../assets/words/${w.img}.png" alt="" onerror="this.remove()"></div>
+    <div class="word"><button class="write" id="write" style="--sq:${Math.min(88, Math.floor((286 - 6 * (w.hz.length - 1)) / w.hz.length))}px" aria-label="Xem lại cách viết ${w.hz}">${[...w.hz].map((c) => `<span class="sq"><span class="hz">${c}</span></span>`).join('')}</button>
+      <button class="play" id="play" aria-label="Nghe (bấm lần nữa để nghe chậm)">${ic('fill-speaker-high')}</button></div>
+    <div class="py"><b>${w.py}</b>${w.say ? `<small>đọc là <em>${w.say[0]}</em>${w.say[1]} · ${w.say[2]}</small>` : ''}</div>
+    <p class="hv"><span>Hán Việt</span>${w.hv}</p>
+    <p class="mean">${w.vi}</p>
+    <section><h3>${w.parts ? 'Cấu tạo' : 'Từng chữ'}</h3><ul class="chars">${rows}</ul></section>
+    <section><h3>Ví dụ</h3><div class="ex"><div><span class="hz">${w.ex[0]}</span><p>${w.ex[1]}</p><p>${w.ex[2]}</p></div>
+      <button class="round" id="exp" aria-label="Nghe câu ví dụ">${ic('regular-speaker-high')}</button></div></section>
+  </div>`;
+  $('#play').onclick = (e) => play(w.a, e.currentTarget);
+  $('#exp').onclick = () => play(w.ex[3]);
+  strokes([...w.hz]);
+  const next = Object.keys(CHECK).map(Number).find((k) => k >= n);
+  cta('Tiếp', { hint: n === 10 ? 'Từ cuối của phần này' : next ? (next === n ? 'Tiếp theo: kiểm tra nhanh' : `Kiểm tra nhanh sau từ ${next}`) : `Còn ${10 - n} từ`,
+    onClick: () => { if (CHECK[n]) mode = 'check'; else if (n === 10) mode = 'done'; else n++; render(); } });
+}
+
+// stroke order: radical red, rest navy, char by char; tap replays
+let gen = 0;
+function strokes(chars) {
+  const me = ++gen, box = $('#write');
+  if (!window.HanziWriter) return;
+  const sq = [...box.querySelectorAll('.sq')];
+  const writers = chars.map((c, i) => HanziWriter.create(sq[i], c, {
+    width: sq[i].clientWidth, height: sq[i].clientHeight, padding: Math.round(sq[i].clientWidth * .08),
+    showCharacter: false, showOutline: true, strokeColor: STROKE.rest, radicalColor: STROKE.radical, outlineColor: STROKE.outline,
+    delayBetweenStrokes: 120, strokeAnimationSpeed: 1.4, charDataLoader: loadChar,
+    onLoadCharDataSuccess: () => sq[i].querySelector('.hz')?.remove(), onLoadCharDataError: () => {},
+  }));
+  const run = async () => {
+    const g = gen; box.classList.add('busy');
+    writers.forEach((wr) => wr.hideCharacter());
+    for (const wr of writers) { if (g !== gen) return; await wr.animateCharacter(); }
+    if (g === gen) box.classList.remove('busy');
+  };
+  box.onclick = () => { gen++; run(); };
+  setTimeout(() => me === gen && run(), 250);
+}
+
+function showCheck() {
+  const c = CHECK[n];
+  choice({ ask: 'Kiểm tra nhanh', title: 'Nghe rồi chọn từ đúng', key: c.a, opts: c.opts, ans: c.ans,
+    explain: (a) => { const w = find(a); return `<span class="hz">${w.hz}</span> ${w.py} · ${w.vi}`; },
+    missHint: 'Từ này sẽ quay lại ở phần ôn' },
+  () => { mode = 'word'; n++; render(); });
+}
+
+function render() {
+  if (mode === 'done') { bar(10, 10, '10/10'); return doneStep({ title: 'Xong phần Từ mới', text: '10 từ đã vào Từ của tôi. Chúng sẽ quay lại trong phần ôn tập.',
+    gridHtml: `<div class="grid">${W.map((w) => `<span class="hz">${w.hz}</span>`).join('')}</div>`, next: 'Ngữ pháp', label: 'Phần tiếp theo', href: 'l4-grammar.html' }); }
+  bar(mode === 'check' ? n : n - 1, 10, `${n}/10`);
+  (mode === 'check' ? showCheck : showWord)();
+  scrollTo(0, 0);
+}
+render();
+</script>
+</body>
+</html>

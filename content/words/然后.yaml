@@ -1,0 +1,14 @@
+# content/words/然后.yaml
+id: 然后
+hanzi: 然后
+pinyin: ránhòu
+hanviet: nhiên hậu
+level: 2
+pos: [ conj ]
+senses:
+  - { vi: "sau đó, rồi thì" }
+parts:
+  - { hanzi: 然, pinyin: rán, hanviet: nhiên, vi: như vậy }
+  - { hanzi: 后, pinyin: hòu, hanviet: hậu, vi: sau }
+examples: [ s-h2-01-04 ]
+image: { file: words/h2-01/w05.png, prompt: "The takin washes up at a basin on the left, and an arrow of footprints leads to a breakfast bowl on the right. Only the takin." }

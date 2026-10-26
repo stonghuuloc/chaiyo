@@ -1,0 +1,14 @@
+# content/words/刻.yaml
+id: 刻
+hanzi: 刻
+pinyin: kè
+hanviet: khắc
+level: 2
+pos: [ mw ]
+senses:
+  - { vi: mười lăm phút (một phần tư giờ) }
+parts:
+  - { hanzi: 亥, name: hợi, vi: phần đọc }
+  - { hanzi: 刂, name: đao, vi: con dao }
+examples: [ s-h2-01-02 ]
+image: { file: words/h2-01/w02.png, prompt: The red panda points at a clock whose minute hand sits exactly one quarter of the way round the dial. Only the red panda. }

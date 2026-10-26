@@ -1,0 +1,14 @@
+# content/words/随着.yaml
+id: 随着
+hanzi: 随着
+pinyin: suízhe
+hanviet: tuỳ trước
+level: 5
+pos: [ prep ]
+senses:
+  - { vi: "cùng với, theo đà" }
+parts:
+  - { hanzi: 随, pinyin: suí, hanviet: tuỳ, vi: đi theo }
+  - { hanzi: 着, pinyin: zhe, hanviet: trước, vi: trợ từ chỉ trạng thái }
+examples: [ s-h5-01-09 ]
+image: { file: words/h5-01/w16.png, prompt: "The red panda and the takin watch a new road and a bridge being built across a village valley, with small houses growing around it. Only the red panda and the takin." }

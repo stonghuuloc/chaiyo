@@ -1,0 +1,14 @@
+# content/words/轻易.yaml
+id: 轻易
+hanzi: 轻易
+pinyin: qīngyì
+hanviet: khinh dịch
+level: 4
+pos: [ adv ]
+senses:
+  - { vi: "dễ dàng, tùy tiện" }
+parts:
+  - { hanzi: 轻, pinyin: qīng, hanviet: khinh, vi: nhẹ }
+  - { hanzi: 易, pinyin: yì, hanviet: dịch, vi: dễ }
+examples: [ s-h4-01-12 ]
+image: { file: words/h4-01/w11.png, prompt: The takin and the red panda hold hands tightly while the fawn tries to pull them apart and cannot. }

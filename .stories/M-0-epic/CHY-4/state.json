@@ -1,0 +1,56 @@
+{
+  "story": "CHY-4",
+  "title": "Design-system primitives in Svelte",
+  "stage": "slicing",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "icon sprite + duotone",
+      "acs": [
+        "AC1",
+        "AC2"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-4.1"
+    },
+    {
+      "id": "S2",
+      "name": "tokens + self-hosted fonts",
+      "acs": [
+        "AC4",
+        "AC5"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-4.2"
+    },
+    {
+      "id": "S3",
+      "name": "primitive components",
+      "acs": [
+        "AC3"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-4.3"
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-4",
+  "log": [
+    "2026-10-26 init",
+    "2026-10-26 +S1 icon sprite + duotone [AC1,AC2]",
+    "2026-10-26 +S2 tokens + self-hosted fonts [AC4,AC5]",
+    "2026-10-26 +S3 primitive components [AC3]"
+  ],
+  "updated": "2026-10-26T13:14:49+07:00"
+}

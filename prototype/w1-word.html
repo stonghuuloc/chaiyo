@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Từ · Chaiyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="primer.css">
+<link rel="stylesheet" href="onboard.css">
+<style>
+  @font-face { font-family: "UKaiDict"; src: url("fonts/ukai-dict.woff2?v=1") format("woff2"); font-display: swap; }
+  :root { --font-hanzi: "UKaiDict", "Kaiti SC", "STKaiti", "KaiTi", serif; }
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .t { text-align: center; }
+  .top .x svg { transform: rotate(180deg); }
+  main { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 140px); }
+
+  /* stroke-order squares on top: auto-play once, tap to replay; radical red */
+  .write { margin-top: var(--s3); display: flex; gap: 8px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .sq { position: relative; flex: none; width: var(--sq); height: var(--sq); border-radius: 14px; border: 1px solid var(--ink-5); display: grid; place-items: center;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cg stroke='%23ddd5c8' stroke-width='.8' vector-effect='non-scaling-stroke' fill='none'%3E%3Cpath d='M50 0V100M0 50H100'/%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke-dasharray='3 3'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100%; }
+  .sq > span { font-size: calc(var(--sq) * .78); line-height: 1; }
+  .sq svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sq.on { border-color: var(--ink-3); }
+  .wh { margin-top: 6px; font-size: 12.5px; color: var(--ink-4); }
+  .head { margin-top: var(--s4); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--s4); }
+  .head .py { font-size: 24px; font-weight: 500; }
+  .head .py small { font: 400 var(--t-meta) var(--font-ui); color: var(--ink-3); margin-left: 6px; }
+  .head .py small em { font-style: normal; font-weight: 600; color: var(--ink-1); }
+  .hv { margin-top: 6px; font-size: 13.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+  .mean { margin-top: var(--s3); font: 600 var(--t-h2)/1.25 var(--font-display); }
+  /* word tabs: underline strip, swaps the panel in place */
+  .wtabs { margin: var(--s5) calc(-1 * var(--s5)) 0; padding: 0 var(--s5); display: flex; gap: var(--s5); border-bottom: 1px solid var(--ink-5); overflow-x: auto; scrollbar-width: none; }
+  .wtabs button { flex: none; height: 44px; font-size: 15.5px; font-weight: 600; color: var(--ink-3); border-bottom: 2.5px solid transparent; margin-bottom: -1px; }
+  .wtabs button[aria-selected="true"] { color: var(--ink-1); border-color: var(--vermilion); }
+  #panel { padding-top: var(--s3); min-height: 120px; }
+  .rd + .rd { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px dashed var(--ink-5); }
+  .rh { font-size: 14px; color: var(--ink-3); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .rh .py { font-size: 18px; color: var(--ink-1); text-transform: none; letter-spacing: 0; }
+  .senses { margin-top: var(--s2); padding-left: 1.6em; display: grid; gap: 6px; font-size: 16.5px; line-height: 1.45; }
+  .senses li::marker { color: var(--ink-4); font-weight: 600; font-size: 14px; }
+  .cmp { list-style: none; }
+  .cmp li + li { border-top: 1px solid var(--ink-5); }
+  .cmp a { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: var(--s3); align-items: center; min-height: 60px; padding: 6px 0; }
+  .cmp .hz { font-size: 24px; white-space: nowrap; }
+  .cmp b { font-weight: 600; font-size: 15px; }
+  .cmp b small { font-weight: 400; color: var(--ink-3); margin-left: 6px; font-size: 13.5px; }
+  .cmp .v { display: block; font-size: 14px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cmp .lv { font-size: 12.5px; color: var(--ink-3); }
+  .pos { margin-top: var(--s4); display: inline-block; padding: 3px 10px; border-radius: var(--r-pill); background: var(--vermilion-wash); color: var(--vermilion-text); font-size: 13px; font-weight: 700; }
+  .rd > .pos:first-child, .rh + .pos { margin-top: var(--s2); }
+  .senses li b { font-weight: 600; }
+  .sx { margin-top: 6px; padding: var(--s2) var(--s3); border-left: 2px solid var(--ink-5); display: grid; grid-template-columns: 1fr auto; gap: var(--s2); align-items: center; }
+  .sx .hz { font-size: 20px; line-height: 1.35; }
+  .sx .hz em { font-style: normal; color: var(--vermilion-text); }
+  .sx .py { font-size: 14px; color: var(--ink-3); }
+  .sx .v { font-size: 15px; color: var(--ink-2); }
+  .sp { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-3); font-size: 18px; border: 1px solid var(--ink-5); }
+  .sp.on { color: var(--vermilion); border-color: var(--vermilion); }
+  .kv2 { margin-top: var(--s4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); font-size: 14px; color: var(--ink-3); }
+  .kv2 span { min-width: 76px; font-weight: 600; }
+  .kv2 a { min-width: 40px; height: 36px; padding: 0 10px; display: grid; place-items: center; border-radius: var(--r-cell); border: 1px solid var(--ink-5); font-size: 20px; color: var(--ink-1); }
+  .ai { margin-top: var(--s4); font-size: 12.5px; color: var(--ink-4); }
+  .sxs { display: inline-block; margin-top: 2px; font-size: 11.5px; color: var(--ink-4); text-decoration: none; }
+  a.sxs { text-decoration: underline; text-underline-offset: 2px; }
+  .more { margin-top: var(--s3); min-height: 44px; display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+  .more .ic { width: 18px; height: 18px; transition: transform .2s; }
+  .more .ic.up { transform: rotate(180deg); }
+  .lvl { margin-top: var(--s3); display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .lvl span { height: 28px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: var(--r-pill); background: var(--paper-2); font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .bars { display: inline-flex; gap: 3px; align-items: flex-end; height: 14px; }
+  .bars i { width: 5px; border-radius: 2px; background: var(--ink-5); }
+  .bars i:nth-child(1) { height: 6px; } .bars i:nth-child(2) { height: 10px; } .bars i:nth-child(3) { height: 14px; }
+  .bars.s1 i:nth-child(-n+1), .bars.s2 i:nth-child(-n+2), .bars.s3 i { background: var(--ink-1); }
+  dl.kv dd a { color: var(--vermilion-text); text-decoration: underline; text-underline-offset: 3px; }
+  .pic { margin-top: var(--s5); }
+
+  .chars { list-style: none; }
+  .chars button { width: 100%; display: grid; grid-template-columns: 52px 1fr 16px; align-items: center; gap: var(--s3); min-height: 64px; padding: 6px 0; text-align: left; }
+  .chars li + li { border-top: 1px solid var(--ink-5); }
+  .cell { width: 52px; height: 52px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; place-items: center; font-size: 34px; }
+  .chars b { display: block; font-size: 16px; font-weight: 600; }
+  .chars b span { font-weight: 400; color: var(--ink-3); margin-left: 6px; }
+  .chars small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+  .chars .go { color: var(--ink-4); font-size: 16px; }
+  .ex { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--s3); padding-top: var(--s1); }
+  .ex .hz { font-size: 26px; line-height: 1.25; }
+  .ex p { font-size: 15px; color: var(--ink-3); }
+  .ex p + p { color: var(--ink-1); font-size: var(--t-body); margin-top: 2px; }
+  .ex .play { width: 44px; height: 44px; font-size: 20px; }
+  .inl { display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .inl a, .inl span { height: 34px; display: inline-flex; align-items: center; gap: 6px; padding: 0 var(--s3); border-radius: var(--r-pill); border: 1px solid var(--ink-5); font-size: 14px; font-weight: 600; color: var(--ink-2); }
+  dl.kv div { display: grid; grid-template-columns: 96px 1fr; gap: var(--s3); padding: 8px 0; }
+  dl.kv div + div { border-top: 1px solid var(--ink-5); }
+  dl.kv dt { font-size: var(--t-meta); color: var(--ink-3); }
+  dl.kv dd { font-weight: 600; display: flex; align-items: center; gap: var(--s2); }
+  dl.kv dd small { font-size: 13px; font-weight: 500; color: var(--ink-3); }
+  dl.kv dd small.due { color: var(--vermilion-text); font-weight: 600; }
+  .inlink { display: inline-flex; margin-top: var(--s2); min-height: 40px; align-items: center; font-size: 15px; font-weight: 600; color: var(--vermilion-text); text-decoration: underline; text-underline-offset: 3px; }
+  .report { margin-top: var(--s6); display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink-3); }
+  .report .ic { font-size: 16px; }
+
+
+  /* report sheet */
+  .cats { margin-top: var(--s4); display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .cats button { height: 40px; padding: 0 var(--s4); border-radius: var(--r-pill); border: 1px solid var(--ink-5); font-size: 15px; font-weight: 600; color: var(--ink-2); background: rgba(255,255,255,.5); }
+  .cats button[aria-pressed="true"] { background: var(--ink-1); border-color: var(--ink-1); color: var(--paper); }
+  .sheet textarea { margin-top: var(--s3); width: 100%; min-height: 72px; padding: var(--s3); border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: #fff; font: 15px var(--font-ui); resize: none; outline: 0; }
+  .sheet textarea:focus { border: 2px solid var(--ink-1); padding: calc(var(--s3) - 1px); }
+
+  .toast { position: fixed; z-index: 60; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -8px); opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 40px);
+    display: flex; align-items: center; gap: var(--s2); padding: 10px var(--s4); border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font-size: 14px; font-weight: 500; transition: opacity .18s, transform .18s; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast .ic { font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" id="back" href="t3-words.html" aria-label="Quay lại"><svg class="ic"><use href="icons.svg#i-regular-caret-right"/></svg></a>
+  <span class="t" id="title">Chi tiết từ</span>
+  <span></span>
+</div>
+<main id="main"></main>
+<div class="foot" id="foot" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+<div class="scrim" id="report" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rp-t">
+    <h2 id="rp-t">Báo lỗi</h2>
+    <p id="rp-w"></p>
+    <div class="cats" role="group" aria-label="Loại lỗi">
+      <button aria-pressed="false">Nghĩa sai</button><button aria-pressed="false">Pinyin sai</button><button aria-pressed="false">Hán Việt sai</button><button aria-pressed="false">Âm thanh lỗi</button><button aria-pressed="false">Khác</button>
+    </div>
+    <textarea id="rp-n" placeholder="Ghi chú (không bắt buộc)" aria-label="Ghi chú"></textarea>
+    <div class="row"><button class="cta" id="rp-send" disabled>Gửi</button><button class="ghost" data-close>Huỷ</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
+<script type="module">
+import { $, $$, ic, play, loadChar, STROKE } from './step.js?v=9';
+import { LESSON } from './data/h1-01.js?v=2';
+import { lexicon, inLexicon, addWord, strength, SKILLS, loadDict } from './data/lexicon.js?v=5';
+
+const hz = new URLSearchParams(location.search).get('w') || '你好';
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+let tt; const toast = (html) => { const t = $('#toast'); t.innerHTML = html; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2200); };
+if (/t3-words|t3-practice|p1-session/.test(document.referrer)) $('#back').onclick = (e) => { e.preventDefault(); history.back(); };
+
+const rows = await loadDict();
+const byHz = new Map(rows.map((r) => [r[0], r]));
+const d = byHz.get(hz);
+const mine = () => lexicon().find((w) => w.hz === hz);
+const me = mine();
+const t = me?.taught;                                  // full lesson data → W1, else thin W2
+const senses = d?.[6] ?? [], others = d?.[7] ?? [];
+// AI-written Hanzii-style entry (meanings by part of speech + example per sense), when generated
+const E = (await fetch('data/entries.json?v=2').then((r) => r.json()).catch(() => ({})))[hz];
+const py = t?.py ?? d?.[1] ?? '', hv = t?.hv ?? d?.[3] ?? '', level = d?.[5] ?? (t ? 1 : 0);
+const top3 = (e) => e.readings[0].groups.flatMap((g) => g.senses).sort((a, b) => (a.common === false) - (b.common === false)).slice(0, 3).map((s) => s.vi).join('; ');
+const vi = t?.vi ?? (E ? top3(E) : senses.slice(0, 3).join('; '));
+// từ ghép: HSK words that contain this word, easiest first
+const compounds = rows.filter((r) => r[0] !== hz && r[0].includes(hz)).sort((a, b) => (a[5] || 9) - (b[5] || 9) || a[0].length - b[0].length).slice(0, 12);
+document.title = `${hz} · Chaiyo`;
+$('#title').textContent = me ? 'Từ của tôi' : 'Chi tiết từ';
+
+// audio: lesson clip when taught; otherwise the browser's zh-CN voice (prototype stand-in for Azure TTS)
+const zh = () => speechSynthesis.getVoices().find((v) => /^zh(-|_)CN/i.test(v.lang)) || speechSynthesis.getVoices().find((v) => /^zh/i.test(v.lang));
+function say(text, btn, rate = 0.8) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = rate; const v = zh(); if (v) u.voice = v;
+  btn?.classList.add('on'); u.onend = u.onerror = () => btn?.classList.remove('on');
+  speechSynthesis.speak(u);
+}
+const canSpeak = !!t || 'speechSynthesis' in window;
+
+// per-char rows: lesson parts/chars when taught, else dictionary single-char entries
+const syl = py.split(/\s+/);
+const chars = [...hz].map((c, i) => {
+  const lc = t?.chars?.find((x) => x[0] === c);
+  if (lc) return { c, py: lc[1], hv: lc[2], vi: lc[3] };
+  const r = byHz.get(c);
+  // reading comes from this word (行 in 银行 = háng/hàng); meaning from the char's own entry
+  const own = syl.length === hz.length, hvs = hv.split(' ');
+  return { c, py: own ? syl[i] : r?.[1] ?? '', hv: hvs.length === hz.length ? hvs[i] : r?.[3] ?? '', vi: r?.[4] ?? '' };
+});
+const single = hz.length === 1;
+const TABS = [['nghia', 'Nghĩa'], !single && ['chu', 'Chữ'], compounds.length && ['ghep', 'Từ ghép'], t?.ex && ['vidu', 'Ví dụ']].filter(Boolean);
+let tab = 'nghia';
+const reading = (p, h, list) => `<div class="rd">${others.length ? `<p class="rh"><b class="py">${esc(p)}</b> · ${esc(h)}</p>` : ''}
+  <ol class="senses">${list.map((x) => `<li>${esc(x)}</li>`).join('')}</ol></div>`;
+function panel() {
+  if (tab === 'nghia' && E) return entryHtml();
+  if (tab === 'nghia') return senses.length
+    ? reading(py, hv, senses) + others.map(([p, h, l]) => reading(p, h, l)).join('')
+    : `<ol class="senses"><li>${esc(vi)}</li></ol>`;
+  if (tab === 'chu') return `<ul class="chars">${chars.map((x, i) => `<li><button data-c="${i}" aria-label="Xem nét chữ ${x.c}">
+      <span class="cell hz">${x.c}</span><span><b>${esc(x.hv) || '—'}<span>${esc(x.py)}</span></b><small>${esc(x.vi) || 'xem nét viết'}</small></span>${ic('regular-caret-right', 'ic go')}</button></li>`).join('')}</ul>`;
+  if (tab === 'ghep') return `<ul class="cmp">${compounds.map(([w, p, , h, v, lv]) => `<li><a href="w1-word.html?w=${encodeURIComponent(w)}">
+      <span class="hz">${w}</span><span><b>${esc(p)}<small>${esc(h)}</small></b><span class="v">${esc(v)}</span></span><span class="lv">${lv ? `HSK ${lv}` : ''}</span></a></li>`).join('')}</ul>`;
+  return `<div class="ex"><div><div class="hz">${t.ex[0]}</div><p class="py">${esc(t.ex[1])}</p><p>${esc(t.ex[2])}</p></div>
+      <button class="play" id="ex-play" aria-label="Nghe câu ví dụ">${ic('fill-speaker-high')}</button></div>`;
+}
+const mark = (s) => esc(s).split(hz).join(`<em>${hz}</em>`);
+let showAll = false;
+function entryHtml() {
+  let k = 0;
+  const rare = (s) => s.common === false;
+  const nRare = E.readings.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.senses.filter(rare).length, 0), 0);
+  const vis = (xs) => (showAll ? xs : xs.filter((s) => !rare(s)));
+  const src = (x) => x.tatoeba
+    ? `<a class="sxs" href="https://tatoeba.org/vi/sentences/show/${x.tatoeba}" target="_blank" rel="noopener">Tatoeba</a>`
+    : `<span class="sxs">AI viết</span>`;
+  const shown = E.readings.filter((r) => r.groups.some((g) => vis(g.senses).length)).length;
+  const body = E.readings.map((r) => {
+    const groups = r.groups.map((g) => [g, vis(g.senses)]).filter(([, ss]) => ss.length);
+    if (!groups.length) { k += r.groups.reduce((n, g) => n + g.senses.length, 0); return ''; }
+    return `<div class="rd">${shown > 1 ? `<p class="rh"><b class="py">${esc(r.pinyin)}</b> · ${esc(r.hanviet)}</p>` : ''}
+    ${groups.map(([g, ss]) => `<p class="pos">${esc(g.pos)}</p><ol class="senses">${g.senses.map((s) => {
+      const i = k++;
+      return ss.includes(s) ? `<li><b>${esc(s.vi)}</b>
+      <div class="sx"><div><p class="hz">${mark(s.ex.hz)}</p><p class="py">${esc(s.ex.py)}</p><p class="v">${esc(s.ex.vi)}</p>${src(s.ex)}</div>
+        <button class="sp" data-say="${i}" aria-label="Nghe câu ví dụ">${ic('fill-speaker-high')}</button></div></li>` : '';
+    }).join('')}</ol>`).join('')}</div>`;
+  }).join('');
+  const more = nRare ? `<button class="more" id="more">${showAll ? 'Thu gọn' : `Xem thêm ${nRare} nghĩa ít gặp`}${ic('regular-caret-down', 'ic' + (showAll ? ' up' : ''))}</button>` : '';
+  const chips = (label, xs) => xs?.length ? `<p class="kv2"><span>${label}</span>${xs.map((x) => `<a class="hz" href="w1-word.html?w=${encodeURIComponent(x)}">${x}</a>`).join('')}</p>` : '';
+  return `${body}${more}${chips('Lượng từ', E.luongtu)}${chips('Gần nghĩa', E.cannghia)}<p class="ai">Nghĩa: CC-CEDICT/CVDICT · Ví dụ: Tatoeba hoặc AI · AI biên tập, chưa được giáo viên duyệt</p>`;
+}
+const EX = E ? E.readings.flatMap((r) => r.groups.flatMap((g) => g.senses.map((s) => s.ex.hz))) : [];
+function showTab() {
+  $$('#tabs [data-t]').forEach((b) => b.setAttribute('aria-selected', b.dataset.t === tab));
+  $('#panel').innerHTML = panel();
+  $('#ex-play')?.addEventListener('click', (e) => play(t.ex[3], e.currentTarget));
+  $$('[data-c]').forEach((b) => (b.onclick = () => { scrollTo({ top: 0, behavior: 'smooth' }); animate([+b.dataset.c]); }));
+  $('#more')?.addEventListener('click', () => { showAll = !showAll; showTab(); });
+  $$('[data-say]').forEach((b) => (b.onclick = () => say(EX[+b.dataset.say], b)));
+}
+
+function render() {
+  const m = mine();
+  const tags = [
+    level ? `<span>HSK ${level}</span>` : '',
+    m?.from === 'tự thêm' ? '<span>Tự thêm</span>' : '',
+  ].join('');
+  $('#main').innerHTML = `<div class="step">
+    <div class="write" id="write" role="button" tabindex="0" aria-label="Xem lại thứ tự nét" style="--sq:${SQ}px">${[...hz].map((c) => `<div class="sq"><span class="hz">${c}</span></div>`).join('')}</div>
+    <p class="wh">Bấm để xem lại nét viết · bộ thủ màu đỏ</p>
+    <div class="head">
+      <div><div class="py">${esc(py)}${t?.say ? `<small>đọc: <em>${esc(t.say[0] + t.say[1])}</em></small>` : ''}</div>
+        <p class="hv">${esc(hv)}</p></div>
+      ${canSpeak ? `<button class="play" id="play" aria-label="Nghe">${ic('fill-speaker-high')}</button>` : ''}
+    </div>
+    <p class="mean">${esc(vi)}</p>
+    <div class="lvl">${tags}</div>
+    ${t?.img ? `<div class="pic"><img src="../assets/words/${t.img}.png" alt="" onerror="this.parentNode.remove()"></div>` : ''}
+    <div class="wtabs" id="tabs" role="tablist" aria-label="Chi tiết từ">${TABS.map(([k, l]) => `<button role="tab" data-t="${k}">${l}</button>`).join('')}</div>
+    <div id="panel" role="tabpanel"></div>
+    <section><h3>Có trong bài</h3><div class="inl">${t
+      ? `<a href="l1-hub.html">Bài ${LESSON.order} · ${esc(LESSON.title)}</a>`
+      : `<span>${level ? `HSK ${level} · chưa tới bài này` : 'Ngoài giáo trình HSK'}</span>`}</div></section>
+    ${m ? `<section><h3>Độ nhớ của tôi</h3><dl class="kv">
+      ${Object.entries(m.sk).map(([s, e]) => `<div><dt>${SKILLS[s].label}</dt><dd><span class="bars s${strength(e)}" role="img" aria-label="${SKILLS[s].label}: độ nhớ ${strength(e)}/3"><i></i><i></i><i></i></span>${e.state === 'due' ? ' <small class="due">cần ôn hôm nay</small>' : !e.tries ? ' <small>chưa luyện</small>' : ''}</dd></div>`).join('')}
+      </dl>${Object.values(m.sk).some((e) => e.state === 'due') ? '<a class="inlink" href="p1-session.html">Luyện hôm nay</a>' : ''}</section>` : ''}
+    <button class="report" id="rp">${ic('fill-flag')}Báo lỗi</button></div>`;
+
+  $('#play')?.addEventListener('click', (e) => (t ? play(t.a, e.currentTarget) : say(hz, e.currentTarget)));
+  $('#tabs').onclick = (e) => { const b = e.target.closest('[data-t]'); if (b) { tab = b.dataset.t; showTab(); } };
+  showTab();
+  strokes(first); first = false;
+  $('#rp').onclick = openReport;
+
+  // W2 only: one red primary to save it
+  const foot = $('#foot');
+  foot.hidden = !!m;
+  if (!m) {
+    foot.innerHTML = `<button class="cta" id="add">${ic('fill-add-circle')}Thêm vào từ của tôi</button><p>Từ sẽ vào ôn tập hằng ngày</p>`;
+    $('#add').onclick = () => { addWord(d); toast(`${ic('fill-check')}Đã thêm ${hz} vào Từ của tôi`); render(); };
+  }
+}
+
+// stroke order in the head squares (Hanzi Writer). Auto-plays on first render only; tap = replay all; char row = that char.
+const SQ = Math.min(96, Math.floor((Math.min(innerWidth, 430) - 40 - 8 * (hz.length - 1)) / hz.length));
+let writers = [], gen = 0, first = true;
+function strokes(auto) {
+  const box = $('#write'), sq = [...box.querySelectorAll('.sq')];
+  if (!window.HanziWriter) return;
+  writers = [...hz].map((c, i) => HanziWriter.create(sq[i], c, { width: SQ, height: SQ, padding: Math.round(SQ * .08),
+    showCharacter: true, showOutline: true, strokeColor: STROKE.rest, radicalColor: STROKE.radical, outlineColor: STROKE.outline,
+    delayBetweenStrokes: 120, strokeAnimationSpeed: 1.4, charDataLoader: loadChar,
+    onLoadCharDataSuccess: () => sq[i].querySelector('span')?.remove(), onLoadCharDataError: () => {} }));
+  const all = () => animate(writers.map((_, i) => i));
+  box.onclick = all; box.onkeydown = (e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), all());
+  if (auto) setTimeout(all, 300);
+}
+async function animate(idx) {
+  const g = ++gen, sq = [...$('#write').querySelectorAll('.sq')];
+  idx.forEach((i) => writers[i].hideCharacter());
+  for (const i of idx) {
+    if (g !== gen) return;
+    sq.forEach((s, k) => s.classList.toggle('on', k === i));
+    await writers[i].animateCharacter();
+  }
+  if (g === gen) sq.forEach((s) => s.classList.remove('on'));
+}
+
+// report sheet
+function openReport() {
+  $('#rp-w').innerHTML = `<span class="hz">${hz}</span> ${esc(py)} · ${esc(vi)}`;
+  $$('.cats button').forEach((b) => b.setAttribute('aria-pressed', 'false')); $('#rp-n').value = ''; $('#rp-send').disabled = true;
+  $('#report').hidden = false;
+}
+$$('.cats button').forEach((b) => (b.onclick = () => { $$('.cats button').forEach((x) => x.setAttribute('aria-pressed', x === b)); $('#rp-send').disabled = false; }));
+$('#rp-send').onclick = () => { $('#report').hidden = true; toast(`${ic('fill-check')}Đã gửi. Cảm ơn bạn!`); };
+
+$$('.scrim').forEach((s) => {
+  s.onclick = (e) => { if (e.target === s || e.target.closest('[data-close]')) s.hidden = true; };
+});
+addEventListener('keydown', (e) => { if (e.key === 'Escape') $$('.scrim').forEach((s) => (s.hidden = true)); });
+
+render();
+</script>
+</body>
+</html>

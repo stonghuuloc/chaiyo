@@ -1,0 +1,14 @@
+# content/words/便利.yaml
+id: 便利
+hanzi: 便利
+pinyin: biànlì
+hanviet: tiện lợi
+level: 5
+pos: [ adj ]
+senses:
+  - { vi: thuận tiện }
+parts:
+  - { hanzi: 便, pinyin: biàn, hanviet: tiện, vi: thuận tiện }
+  - { hanzi: 利, pinyin: lì, hanviet: lợi, vi: lợi ích }
+examples: [ s-h5-01-02 ]
+image: { file: words/h5-01/w08.png, prompt: "The takin steps out of a city apartment building and finds a shop, a bus stop and a metro entrance all within a few steps, looking smug. Only the takin." }

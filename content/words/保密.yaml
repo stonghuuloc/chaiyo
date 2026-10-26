@@ -1,0 +1,14 @@
+# content/words/保密.yaml
+id: 保密
+hanzi: 保密
+pinyin: bǎomì
+hanviet: bảo mật
+level: 4
+pos: [ v ]
+senses:
+  - { vi: giữ bí mật }
+parts:
+  - { hanzi: 保, pinyin: bǎo, hanviet: bảo, vi: "giữ, bảo vệ" }
+  - { hanzi: 密, pinyin: mì, hanviet: mật, vi: "kín, bí mật" }
+examples: [ s-h4-01-05 ]
+image: { file: words/h4-01/w06.png, prompt: "The red panda locks a small wooden box with a key and holds a paw over its mouth, smiling." }

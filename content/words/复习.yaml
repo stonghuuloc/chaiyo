@@ -1,0 +1,14 @@
+# content/words/复习.yaml
+id: 复习
+hanzi: 复习
+pinyin: fùxí
+hanviet: phục tập
+level: 2
+pos: [ v ]
+senses:
+  - { vi: ôn tập }
+parts:
+  - { hanzi: 复, pinyin: fù, hanviet: phục, vi: lặp lại }
+  - { hanzi: 习, pinyin: xí, hanviet: tập, vi: luyện tập }
+examples: [ s-h3-01-01 ]
+image: { file: words/h3-01/w01.png, prompt: "The red panda reads an open textbook at a school desk, with a small stack of notebooks beside it. Only the red panda." }

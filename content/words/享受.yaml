@@ -1,0 +1,14 @@
+# content/words/享受.yaml
+id: 享受
+hanzi: 享受
+pinyin: xiǎngshòu
+hanviet: hưởng thọ
+level: 5
+pos: [ v ]
+senses:
+  - { vi: tận hưởng }
+parts:
+  - { hanzi: 享, pinyin: xiǎng, hanviet: hưởng, vi: được hưởng }
+  - { hanzi: 受, pinyin: shòu, hanviet: thọ, vi: "nhận, chịu" }
+examples: [ s-h5-01-11 ]
+image: { file: words/h5-01/w12.png, prompt: "The takin sits on a sunny hillside with eyes closed and a happy smile, enjoying a gentle breeze and a warm meal. Only the takin." }

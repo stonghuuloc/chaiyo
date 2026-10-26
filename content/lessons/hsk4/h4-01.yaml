@@ -1,0 +1,140 @@
+# content/lessons/hsk4/h4-01.yaml
+id: h4-01
+level: 4
+topic: Quan hệ
+order: 1
+title: Bạn bè thân thiết
+titleHanzi: 亲密的朋友
+goal: "Kể về một người bạn thân: hiểu nhau, giữ bí mật, giải quyết hiểu lầm"
+scene:
+  file: lessons/h4-01.png
+  cast: [ panda, redpanda, fawn, takin ]
+  prompt: The red panda and the takin sit side by side on a park bench, laughing and sharing a bag of snacks, while the panda and the fawn wave to them happily from the path behind.
+sentences:
+  - { id: s-h4-01-01, hanzi: 你和小白是亲密的朋友吧？, pinyin: nǐ hé Xiǎobái shì qīnmì de péngyou ba?, spoken: ní hé Xiǎobái shì qīnmì de péngyou ba?, vi: Bạn và Tiểu Bạch là bạn thân phải không?, speaker: redpanda }
+  - { id: s-h4-01-02, hanzi: 当然！我们的关系特别好，我很了解他。, pinyin: "dāngrán! wǒmen de guānxi tèbié hǎo, wǒ hěn liǎojiě tā.", spoken: "dāngrán! wǒmen de guānxi tèbié hǎo, wó hén liáojiě tā.", vi: "Đương nhiên! Quan hệ của bọn mình rất tốt, mình rất hiểu cậu ấy.", speaker: takin }
+  - { id: s-h4-01-03, hanzi: 好朋友要互相了解。你们平时怎么相处？, pinyin: hǎo péngyou yào hùxiāng liǎojiě. nǐmen píngshí zěnme xiāngchǔ?, spoken: hǎo péngyou yào hùxiāng liáojiě. nǐmen píngshí zěnme xiāngchǔ?, vi: Bạn thân cần hiểu nhau. Bình thường hai bạn chung sống thế nào?, speaker: redpanda }
+  - { id: s-h4-01-04, hanzi: 我们什么都说，连秘密也告诉对方。, pinyin: "wǒmen shénme dōu shuō, lián mìmì yě gàosu duìfāng.", vi: "Bọn mình cái gì cũng nói, đến bí mật cũng kể cho nhau.", speaker: takin }
+  - { id: s-h4-01-05, hanzi: 那他的秘密，你要替他保密。, pinyin: "nà tā de mìmì, nǐ yào tì tā bǎomì.", vi: "Vậy thì bí mật của cậu ấy, bạn phải giữ kín giúp cậu ấy nhé.", speaker: redpanda }
+  - { id: s-h4-01-06, hanzi: 放心！我很诚实，从不说别人的秘密。, pinyin: "fàngxīn! wǒ hěn chéngshí, cóng bù shuō biérén de mìmì.", spoken: "fàngxīn! wó hěn chéngshí, cóng bù shuō biérén de mìmì.", vi: "Yên tâm! Mình rất thật thà, chưa bao giờ kể bí mật của người khác.", speaker: takin }
+  - { id: s-h4-01-07, hanzi: 可是上星期你们吵架了，我有点担心。, pinyin: "kěshì shàng xīngqī nǐmen chǎojià le, wǒ yǒudiǎn dānxīn.", spoken: "kěshì shàng xīngqī nǐmen chǎojià le, wó yóudiǎn dānxīn.", vi: "Nhưng tuần trước hai bạn cãi nhau, mình hơi lo.", speaker: redpanda }
+  - { id: s-h4-01-08, hanzi: 那是个误会！我以为他不想见我，其实他只是太累了。, pinyin: "nà shì gè wùhuì! wǒ yǐwéi tā bù xiǎng jiàn wǒ, qíshí tā zhǐshì tài lèi le.", spoken: "nà shì gè wùhuì! wó yǐwéi tā bù xiǎng jiàn wǒ, qíshí tā zhǐshì tài lèi le.", vi: "Đó chỉ là hiểu lầm! Mình tưởng cậu ấy không muốn gặp mình, thật ra cậu ấy chỉ quá mệt.", speaker: takin }
+  - { id: s-h4-01-09, hanzi: 后来你们谈了吗？, pinyin: hòulái nǐmen tán le ma?, vi: Sau đó hai bạn có nói chuyện không?, speaker: redpanda }
+  - { id: s-h4-01-10, hanzi: 谈了。我们争论了很久，最后他说对不起，我也说对不起。, pinyin: "tán le. wǒmen zhēnglùn le hěn jiǔ, zuìhòu tā shuō duìbuqǐ, wǒ yě shuō duìbuqǐ.", spoken: "tán le. wǒmen zhēnglùn le hén jiǔ, zuìhòu tā shuō duìbuqǐ, wǒ yě shuō duìbuqǐ.", vi: "Có. Bọn mình tranh luận rất lâu, cuối cùng cậu ấy xin lỗi, mình cũng xin lỗi.", speaker: takin }
+  - { id: s-h4-01-11, hanzi: 听起来，你们的感情真好。, pinyin: "tīng qǐlái, nǐmen de gǎnqíng zhēn hǎo.", vi: Nghe vậy thì tình cảm của hai bạn thật tốt., speaker: redpanda }
+  - { id: s-h4-01-12, hanzi: 对！好朋友不会轻易分开。, pinyin: duì! hǎo péngyou bú huì qīngyì fēnkāi., vi: Đúng! Bạn thân sẽ không dễ dàng rời xa nhau., speaker: takin }
+  - { id: s-h4-01-13, hanzi: 小白和小花从小就是朋友，两个人的关系非常亲密。, pinyin: "Xiǎobái hé Xiǎohuā cóng xiǎo jiù shì péngyou, liǎng gè rén de guānxi fēicháng qīnmì.", vi: "Tiểu Bạch (Gấu Trúc) và Tiểu Hoa (Nai Con) là bạn từ nhỏ, quan hệ của hai bạn rất thân." }
+  - { id: s-h4-01-14, hanzi: 小白很善良，小花很爱笑。, pinyin: "Xiǎobái hěn shànliáng, Xiǎohuā hěn ài xiào.", vi: "Tiểu Bạch rất hiền lành, Tiểu Hoa rất hay cười." }
+  - { id: s-h4-01-15, hanzi: 去年，小花去了很远的城市学习。, pinyin: "qùnián, Xiǎohuā qù le hěn yuǎn de chéngshì xuéxí.", spoken: "qùnián, Xiǎohuā qù le hén yuǎn de chéngshì xuéxí.", vi: "Năm ngoái, Tiểu Hoa đến một thành phố rất xa để học." }
+  - { id: s-h4-01-16, hanzi: 小白每天都很想念小花。, pinyin: Xiǎobái měitiān dōu hěn xiǎngniàn Xiǎohuā., vi: Tiểu Bạch ngày nào cũng rất nhớ Tiểu Hoa. }
+  - { id: s-h4-01-17, hanzi: 他常常看以前的照片，怀念他们一起玩的日子。, pinyin: "tā chángcháng kàn yǐqián de zhàopiàn, huáiniàn tāmen yìqǐ wán de rìzi.", vi: "Cậu ấy hay xem ảnh cũ, nhớ về những ngày hai bạn chơi cùng nhau." }
+  - { id: s-h4-01-18, hanzi: 他们不能每天见面，所以常常打电话。, pinyin: "tāmen bù néng měitiān jiànmiàn, suǒyǐ chángcháng dǎ diànhuà.", vi: "Hai bạn không thể gặp nhau mỗi ngày, nên hay gọi điện." }
+  - { id: s-h4-01-19, hanzi: 小花说下个月会回来，小白很期待。, pinyin: "Xiǎohuā shuō xià gè yuè huì huílái, Xiǎobái hěn qīdài.", vi: "Tiểu Hoa nói tháng sau sẽ về, Tiểu Bạch rất mong chờ." }
+  - { id: s-h4-01-20, hanzi: 哪怕不在身边，真正的朋友也还是朋友。, pinyin: "nǎpà bú zài shēnbiān, zhēnzhèng de péngyou yě háishi péngyou.", vi: "Dù không ở bên cạnh, bạn thật sự vẫn là bạn." }
+  - { id: s-h4-01-21, hanzi: 我以为她不喜欢我，其实她很想和我做朋友。, pinyin: "wǒ yǐwéi tā bù xǐhuan wǒ, qíshí tā hěn xiǎng hé wǒ zuò péngyou.", spoken: "wó yǐwéi tā bù xǐhuan wǒ, qíshí tā hěn xiǎng hé wǒ zuò péngyou.", vi: "Mình tưởng cô ấy không thích mình, thật ra cô ấy rất muốn làm bạn với mình." }
+  - { id: s-h4-01-22, hanzi: 他连我的秘密也知道。, pinyin: tā lián wǒ de mìmì yě zhīdào., spoken: tā lián wó de mìmì yě zhīdào., vi: Đến bí mật của mình cậu ấy cũng biết. }
+  - { id: s-h4-01-23, hanzi: 哪怕再忙，我也会给朋友打电话。, pinyin: "nǎpà zài máng, wǒ yě huì gěi péngyou dǎ diànhuà.", spoken: "nǎpà zài máng, wó yě huì gěi péngyou dǎ diànhuà.", vi: "Dù bận đến mấy, mình cũng sẽ gọi điện cho bạn." }
+sections:
+  warmup: {}
+  words:
+    ids: [ 关系, 亲密, 了解, 相处, 秘密, 保密, 诚实, 担心, 误会, 争论, 轻易, 想念, 怀念, 善良, 期待 ]
+  grammar:
+    ids: [ h4-g01, h4-g02, h4-g03 ]
+    drills: []
+  dialogue:
+    parts:
+      - title: Bạn thân là gì?
+        lines: [ s-h4-01-01, s-h4-01-02, s-h4-01-03, s-h4-01-04, s-h4-01-05, s-h4-01-06 ]
+      - title: Một lần hiểu lầm
+        lines: [ s-h4-01-07, s-h4-01-08, s-h4-01-09, s-h4-01-10, s-h4-01-11, s-h4-01-12 ]
+    questions: []
+  reading:
+    title: Hai người bạn
+    lines: [ s-h4-01-13, s-h4-01-14, s-h4-01-15, s-h4-01-16, s-h4-01-17, s-h4-01-18, s-h4-01-19, s-h4-01-20 ]
+  listenSpeak:
+    items: []
+  writing:
+    chars: [ 亲, 密, 念, 误 ]
+gate:
+  draw: 6
+  pool:
+    - id: q-h4-01-x01
+      type: choice
+      tests: { words: [ 亲密 ] }
+      prompt: { kind: vi, text: Nghĩa của 亲密? }
+      optionKind: vi
+      options: [ "thân mật, gần gũi", xa lạ, tức giận, mệt mỏi ]
+      answer: 0
+    - id: q-h4-01-x02
+      type: choice
+      tests: { words: [ 关系, 秘密, 误会, 争论 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “bí mật” }
+      optionKind: hanzi
+      options: [ 秘密, 误会, 关系, 争论 ]
+      answer: 0
+    - id: q-h4-01-x03
+      type: choice
+      tests: { words: [ 保密 ] }
+      prompt: { kind: vi, text: Nghĩa của 保密? }
+      optionKind: vi
+      options: [ giữ bí mật, tranh luận, nhớ nhung, mong chờ ]
+      answer: 0
+    - id: q-h4-01-x04
+      type: choice
+      tests: { words: [ 担心, 轻易, 想念, 期待 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “nhớ (người ở xa)” }
+      optionKind: hanzi
+      options: [ 想念, 期待, 担心, 轻易 ]
+      answer: 0
+    - id: q-h4-01-x05
+      type: choice
+      tests: { words: [ 怀念 ] }
+      prompt: { kind: vi, text: Nghĩa của 怀念? }
+      optionKind: vi
+      options: [ nhớ về chuyện cũ, lo lắng, hiểu rõ, thành thật ]
+      answer: 0
+    - id: q-h4-01-x06
+      type: choice
+      tests: { words: [ 了解, 相处, 诚实, 善良 ] }
+      prompt: { kind: vi, text: Chọn từ có nghĩa “thành thật” }
+      optionKind: hanzi
+      options: [ 诚实, 善良, 了解, 相处 ]
+      answer: 0
+    - id: q-h4-01-x07
+      type: choice
+      tests: { words: [ 善良 ] }
+      prompt: { kind: vi, text: Nghĩa của 善良? }
+      optionKind: vi
+      options: [ "lương thiện, tốt bụng", hiểu lầm, dễ dàng, chung sống ]
+      answer: 0
+    - id: q-h4-01-x08
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h4-01-01 }
+      optionKind: vi
+      options: [ Bạn và Tiểu Bạch là bạn thân phải không?, Bạn có hiểu lầm Tiểu Bạch không?, Bạn nhớ Tiểu Bạch phải không? ]
+      answer: 0
+    - id: q-h4-01-x09
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h4-01-08 }
+      optionKind: vi
+      options: [ "Đó chỉ là hiểu lầm! Mình tưởng cậu ấy không muốn gặp mình, thật ra cậu ấy chỉ quá mệt.", Mình rất lo cho cậu ấy., Bọn mình tranh luận rất lâu. ]
+      answer: 0
+    - id: q-h4-01-x10
+      type: choice
+      tests: {}
+      prompt: { kind: audio, ref: s-h4-01-19 }
+      optionKind: vi
+      options: [ "Tiểu Hoa nói tháng sau sẽ về, Tiểu Bạch rất mong chờ.", Tiểu Bạch ngày nào cũng rất nhớ Tiểu Hoa., "Năm ngoái, Tiểu Hoa đến một thành phố rất xa để học." ]
+      answer: 0
+    - id: q-h4-01-x11
+      type: order
+      tests: { words: [ 相处 ] }
+      tiles: [ 你们, 平时, 怎么, 相处 ]
+      answer: 你们平时怎么相处
+    - id: q-h4-01-x12
+      type: order
+      tests: { words: [ 轻易 ] }
+      tiles: [ 好朋友, 不会, 轻易, 分开 ]
+      answer: 好朋友不会轻易分开

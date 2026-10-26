@@ -1,0 +1,14 @@
+# content/words/安排.yaml
+id: 安排
+hanzi: 安排
+pinyin: ānpái
+hanviet: an bài
+level: 3
+pos: [ v ]
+senses:
+  - { vi: sắp xếp }
+parts:
+  - { hanzi: 安, pinyin: ān, hanviet: an, vi: "yên, ổn" }
+  - { hanzi: 排, pinyin: pái, hanviet: bài, vi: xếp hàng }
+examples: [ s-h3-01-05 ]
+image: { file: words/h3-01/w07.png, prompt: The red panda draws a simple weekly plan on a blackboard with colored blocks while the takin watches. Only the red panda and the takin. }

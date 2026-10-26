@@ -1,0 +1,14 @@
+# content/words/起床.yaml
+id: 起床
+hanzi: 起床
+pinyin: qǐchuáng
+hanviet: khởi sàng
+level: 1
+pos: [ v ]
+senses:
+  - { vi: thức dậy }
+parts:
+  - { hanzi: 起, pinyin: qǐ, hanviet: khởi, vi: "dậy, nổi lên" }
+  - { hanzi: 床, pinyin: chuáng, hanviet: sàng, vi: giường }
+examples: [ s-h2-01-02 ]
+image: { file: words/h2-01/w01.png, prompt: The takin sits up in a cosy bed and stretches while morning sun comes through the window. Only the takin. }

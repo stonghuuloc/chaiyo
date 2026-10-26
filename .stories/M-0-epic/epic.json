@@ -1,0 +1,12 @@
+{
+  "epic": "M-0",
+  "title": "Foundations",
+  "order": [
+    "CHY-1",
+    "CHY-2",
+    "CHY-3",
+    "CHY-4",
+    "CHY-5"
+  ],
+  "note": "Backlog milestone m-0; story.py epic is Jira-only, use board"
+}

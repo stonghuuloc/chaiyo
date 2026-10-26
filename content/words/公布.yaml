@@ -1,0 +1,14 @@
+# content/words/公布.yaml
+id: 公布
+hanzi: 公布
+pinyin: gōngbù
+hanviet: công bố
+level: 3
+pos: [ v ]
+senses:
+  - { vi: công bố }
+parts:
+  - { hanzi: 公, pinyin: gōng, hanviet: công, vi: "chung, công khai" }
+  - { hanzi: 布, pinyin: bù, hanviet: bố, vi: bố cáo }
+examples: [ s-h3-01-16 ]
+image: { file: words/h3-01/w13.png, prompt: The red panda pins a large blank result sheet on a classroom noticeboard while the takin peers over its shoulder. Only the red panda and the takin. }

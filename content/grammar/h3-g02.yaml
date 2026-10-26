@@ -1,0 +1,10 @@
+# content/grammar/h3-g02.yaml
+id: h3-g02
+level: 3
+std: [ 200 ]
+title: "Điều kiện bắt buộc: 只有……才……"
+pattern: 只有 + điều kiện + 才 + kết quả
+explain: "只有 (chỉ hữu) nêu điều kiện bắt buộc, thiếu nó thì không được. 才 đứng trước động từ của vế sau: “phải … thì mới …”. Khác 只要……就…… (HSK 2): 只要 là có điều kiện là đủ, còn 只有 là không còn cách nào khác."
+examples: [ s-h3-01-11, s-h3-01-20 ]
+pitfalls:
+  - { wrong: 只有努力，就会进步, right: 只有努力，才会进步 }

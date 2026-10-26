@@ -1,0 +1,14 @@
+# content/words/相处.yaml
+id: 相处
+hanzi: 相处
+pinyin: xiāngchǔ
+hanviet: tương xử
+level: 4
+pos: [ v ]
+senses:
+  - { vi: "chung sống, hòa hợp với nhau" }
+parts:
+  - { hanzi: 相, pinyin: xiāng, hanviet: tương, vi: lẫn nhau }
+  - { hanzi: 处, pinyin: chǔ, hanviet: xử, vi: "ở cùng, ứng xử" }
+examples: [ s-h4-01-03 ]
+image: { file: words/h4-01/w04.png, prompt: "The red panda and the takin cook soup together in one kitchen, one stirring the pot and one slicing vegetables." }

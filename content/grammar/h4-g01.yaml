@@ -1,0 +1,10 @@
+# content/grammar/h4-g01.yaml
+id: h4-g01
+level: 4
+std: []
+title: 我以为……，其实……
+pattern: 我以为 + 想法 A + ， + 其实 + 事实 B
+explain: 以为 (dĩ vi) nói điều mình từng nghĩ nhưng hóa ra sai. Vế đầu là suy nghĩ cũ, 其实 (kỳ thực) mở vế sau nói sự thật.
+examples: [ s-h4-01-08, s-h4-01-21 ]
+pitfalls:
+  - { wrong: 其实他很累，我以为他不想见我, right: 我以为他不想见我，其实他很累 }
