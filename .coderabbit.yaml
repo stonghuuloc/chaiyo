@@ -1,5 +1,44 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: en-US
+tone_instructions: Be direct. State the risk and the fix. No praise, no style nits.
 reviews:
+  profile: chill
+  high_level_summary: true
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  related_issues: false
+  related_prs: false
+  suggested_labels: false
+  suggested_reviewers: false
+  in_progress_fortune: false
+  poem: false
   path_filters:
     - '!content/**'
     - '!.stories/**'
     - '!backlog/**'
+    - '!prototype/**'
+    - '!static/**'
+  path_instructions:
+    - path: 'src/**/*.svelte'
+      instructions: Svelte 5 runes only ($state, $derived, $props). Flag $effect used where $derived fits, {@html} with untrusted input, buttons or inputs without labels, images without alt.
+    - path: 'src/**/*.{ts,js}'
+      instructions: Flag any use of unchecked casts, non-null assertions, and Supabase calls that skip RLS assumptions. UI strings must come from paraglide messages, not literals.
+    - path: 'scripts/**/*.py'
+      instructions: Stdlib only. Never print or log .env values or R2 secrets. Paths may be non-ASCII, never pass them through a shell.
+    - path: '.github/workflows/**'
+      instructions: CI must run exactly check, lint, test, build. Flag secrets, unpinned third-party actions, and any added write permission.
+    - path: 'supabase/**'
+      instructions: Every table needs row level security. Flag policies that allow anon writes or read other users' rows.
+  tools:
+    eslint: { enabled: false }
+    biome: { enabled: false }
+    oxc: { enabled: false }
+    pylint: { enabled: false }
+    flake8: { enabled: false }
+    markdownlint: { enabled: false }
+    languagetool: { enabled: false }
+knowledge_base:
+  code_guidelines:
+    filePatterns:
+      - CONTEXT.md
+      - DESIGN.md
