@@ -55,6 +55,7 @@ Files: all of Tasks 1-3 + `.stories/M-0-epic/CHY-1/slices/S2-*/` + `STATE.md`.
 - Pre-flip checks (agent runs, reports, then waits): `git ls-files | rg -c '^\.env$'` → 0; for each of `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` read from `.env` into a shell var (never printed): `git grep -c -F -e "$v" $(git rev-list --all) | wc -l` → `0`; `git log --format='%ae %ce' | sort -u` → only the noreply address.
 - Loc runs (or explicitly tells the agent to run) `gh repo edit stonghuuloc/chaiyo --visibility public --accept-visibility-change-consequences`. No agent action until Loc says "public".
 - Verify: `gh api repos/stonghuuloc/chaiyo --jq .private` → `false`.
+- Note (Loc, 2026-10-27): the gmail on GitHub-made merge commits (e.g. orphaned `b531abb`) is acceptable, already public elsewhere; no email-privacy setting needed, `gh pr merge` may carry it.
 
 ## Task 8 [AC5] Branch protection on `main`
 Payload `/tmp/protect.json` (not committed):
