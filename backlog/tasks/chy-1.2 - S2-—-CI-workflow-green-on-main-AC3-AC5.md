@@ -15,5 +15,5 @@ ordinal: 64000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-Slice S2 of CHY-1. ACs: AC3,AC4. .github/workflows runs pnpm check/lint/test/build on push + PR; green on main.
+Slice S2 of CHY-1. ACs: AC3,AC4,AC5. .github/workflows runs pnpm check/lint/test/build on push + PR; green on main.
 <!-- SECTION:DESCRIPTION:END -->
