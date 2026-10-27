@@ -19,3 +19,8 @@ bun.lockb
 *.md
 design.tokens.json
 src/lib/styles/tokens.css
+
+# Tool-owned / generated
+/backlog/
+/.stories/
+/content/
