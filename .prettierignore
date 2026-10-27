@@ -24,3 +24,4 @@ src/lib/styles/tokens.css
 /backlog/
 /.stories/
 /content/
+/project.inlang/.meta.json
