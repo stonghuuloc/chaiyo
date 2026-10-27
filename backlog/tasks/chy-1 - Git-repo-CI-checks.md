@@ -1,10 +1,10 @@
 ---
 id: CHY-1
 title: Git repo + CI checks
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-26 09:02'
+updated_date: '2026-10-27 10:54'
 labels:
   - slice-1
   - infra
