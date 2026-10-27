@@ -69,12 +69,14 @@ Feature: Git repo + CI checks
     Then CodeRabbit posts a review on that pull request
     And the repo is billed $0 for CodeRabbit
 
-  Scenario: Ignored art and audio live on R2
+  Scenario: Ignored art and audio live in the private R2 bucket
     Given `assets/**/*.png` and `prototype/audio/` are ignored by git
+    And R2 credentials for bucket `chaiyo-assets` are set in `.env`
     When I run the upload script
-    Then every ignored PNG and mp3 exists on R2 under the same relative path
-    And on a fresh clone the pull script restores them so every `../assets/` path in prototype/ loads
-    And this runs before the repo is made public
+    Then every ignored PNG outside `assets/cast-options/` and every mp3 under `prototype/audio/` exists in `chaiyo-assets` under the same relative path
+    And the bucket has no public access
+    When I run the pull script on a fresh clone with the same `.env`
+    Then every `../assets/` and `audio/` path the prototype loads resolves to a file on disk
 
   Scenario: No retired cast name in committed files
     Given the files staged for the first commit, excluding backlog/ and .stories/
@@ -90,6 +92,6 @@ Feature: Git repo + CI checks
 - [ ] #3 Scenario: CI runs every script on push and PR
 - [ ] #4 Scenario: CI is green on main
 - [ ] #5 Scenario: CodeRabbit reviews every pull request
-- [ ] #6 Scenario: Ignored art and audio live on R2
+- [ ] #6 Scenario: Ignored art and audio live in the private R2 bucket
 - [ ] #7 Scenario: No retired cast name in committed files
 <!-- AC:END -->

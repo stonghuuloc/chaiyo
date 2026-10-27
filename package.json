@@ -15,7 +15,9 @@
 		"test:unit": "vitest",
 		"test": "vitest --run --passWithNoTests",
 		"tokens": "node scripts/build-tokens.mjs",
-		"icons": "scripts/build-icons.sh"
+		"icons": "scripts/build-icons.sh",
+		"assets:push": "python3 scripts/assets_push.py",
+		"assets:pull": "python3 scripts/assets_pull.py"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",

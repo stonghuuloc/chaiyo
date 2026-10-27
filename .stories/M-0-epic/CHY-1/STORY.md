@@ -11,7 +11,7 @@ Put chaiyo under git and run the existing pnpm scripts in CI so every push and P
 
 ## Locked decisions (BA/Loc already ruled — never re-open)
 - CI runs exactly `pnpm check`, `lint`, `test`, `build` on push + PR.
-- Repo is public; generated PNG + mp3 live on R2, not git (Loc, 2026-10-26).
+- Only the repo is public; generated PNG + mp3 live in a private R2 bucket (`chaiyo-assets`), not git (Loc, 2026-10-26).
 - Personal GitHub only: stonghuuloc, remote via ssh alias stonghuuloc, noreply author email, signed with ~/.ssh/id_ed25519 — never the CoverGo work account/key (Loc, 2026-10-26).
 - Repo private until the end of S2 (after S3) (Loc, 2026-10-26).
 
@@ -23,7 +23,7 @@ Put chaiyo under git and run the existing pnpm scripts in CI so every push and P
 | AC3 | GitHub Actions runs check/lint/test/build on push and PR | high | S2 |
 | AC4 | CI green on main with a green check | high | S2 |
 | AC5 | CodeRabbit (free, public repo) reviews every PR | high | S2 |
-| AC6 | Ignored PNG + mp3 uploaded to R2; pull script restores them | high | S3 |
+| AC6 | Ignored PNG + mp3 in private R2 bucket; pull restores them | high | S3 |
 | AC7 | No retired cast name in committed files | high | S1 |
 
 ## Out of scope
