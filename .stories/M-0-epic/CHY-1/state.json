@@ -41,7 +41,7 @@
       "repo": "",
       "stage": "execute",
       "reviews": 0,
-      "note": "T1-T7 done, merged b531abb; STOP-A: awaiting Loc public flip",
+      "note": "T9: PR #3 open, ci green, no coderabbitai bot after ~10 min (App not installed?); awaiting Loc",
       "jira": "CHY-1.2"
     }
   ],
@@ -81,7 +81,9 @@
     "2026-10-27 S2 \u2192 discuss",
     "2026-10-27 S2 \u2192 spec",
     "2026-10-27 S2 \u2192 plan",
+    "2026-10-27 S2 \u2192 execute",
+    "2026-10-27 S2 \u2192 execute",
     "2026-10-27 S2 \u2192 execute"
   ],
-  "updated": "2026-10-27T14:39:39+07:00"
+  "updated": "2026-10-27T17:29:30+07:00"
 }
