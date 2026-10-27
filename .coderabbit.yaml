@@ -17,10 +17,10 @@ reviews:
     - '!.stories/**'
     - '!backlog/**'
     - '!prototype/**'
-    - '!static/**'
+    - '!static/brand/**'
   path_instructions:
     - path: 'src/**/*.svelte'
-      instructions: Svelte 5 runes only ($state, $derived, $props). Flag $effect used where $derived fits, {@html} with untrusted input, buttons or inputs without labels, images without alt.
+      instructions: Svelte 5 runes only ($state, $derived, $props). Flag $effect used where $derived fits, {@html} with untrusted input, buttons or inputs without labels, images without alt. UI strings must come from paraglide messages, not literals.
     - path: 'src/**/*.{ts,js}'
       instructions: Flag any use of unchecked casts, non-null assertions, and Supabase calls that skip RLS assumptions. UI strings must come from paraglide messages, not literals.
     - path: 'scripts/**/*.py'
