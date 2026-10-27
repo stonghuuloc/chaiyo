@@ -1,7 +1,7 @@
 {
   "story": "CHY-1",
   "title": "Git repo + CI checks",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S3",
   "slices": [
     {
@@ -39,9 +39,9 @@
         "AC5"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 0,
-      "note": "T9: PR #3 open, ci green, no coderabbitai bot after ~10 min (App not installed?); awaiting Loc",
+      "note": "verified 85d71b7: AC3-AC5 pass",
       "jira": "CHY-1.2"
     }
   ],
@@ -83,7 +83,9 @@
     "2026-10-27 S2 \u2192 plan",
     "2026-10-27 S2 \u2192 execute",
     "2026-10-27 S2 \u2192 execute",
-    "2026-10-27 S2 \u2192 execute"
+    "2026-10-27 S2 \u2192 execute",
+    "2026-10-27 S2 \u2192 execute",
+    "2026-10-27 S2 \u2192 done"
   ],
-  "updated": "2026-10-27T17:29:30+07:00"
+  "updated": "2026-10-27T17:54:03+07:00"
 }

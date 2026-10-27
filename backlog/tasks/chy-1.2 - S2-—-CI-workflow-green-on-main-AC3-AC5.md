@@ -1,10 +1,10 @@
 ---
 id: CHY-1.2
 title: 'S2 — CI workflow green on main + CodeRabbit (AC3,AC4,AC5)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
-updated_date: '2026-10-26 06:29'
+updated_date: '2026-10-27 10:54'
 labels: []
 milestone: m-0
 dependencies: []
