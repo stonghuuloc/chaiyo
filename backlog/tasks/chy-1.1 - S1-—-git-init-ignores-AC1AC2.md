@@ -1,10 +1,10 @@
 ---
 id: CHY-1.1
 title: 'S1 — git init + ignores + cast-name scrub (AC1,AC2,AC7)'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
-updated_date: '2026-10-26 07:17'
+updated_date: '2026-10-26 09:19'
 labels: []
 milestone: m-0
 dependencies: []

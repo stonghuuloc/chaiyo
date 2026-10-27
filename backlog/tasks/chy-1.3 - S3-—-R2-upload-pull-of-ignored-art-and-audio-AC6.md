@@ -1,9 +1,10 @@
 ---
 id: CHY-1.3
 title: S3 — R2 upload + pull of ignored art and audio (AC6)
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-26 07:17'
+updated_date: '2026-10-27 04:35'
 labels: []
 milestone: m-0
 dependencies: []
