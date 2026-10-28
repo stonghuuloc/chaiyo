@@ -3,75 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
 <title>Đăng nhập chaiyo</title>
-<style>
-:root { color-scheme: light dark; supported-color-schemes: light dark; }
-@media (prefers-color-scheme: dark) {
-  .bg-page { background-color: #1d1814 !important; }
-  .bg-card { background-color: #4a423a !important; border-color: #655c51 !important; }
-  .t-ink { color: #f7f3ea !important; }
-  .t-body { color: #efe9dc !important; }
-  .t-muted { color: #948a7e !important; }
-  .t-link { color: #fec33e !important; }
-  .rule { border-color: #655c51 !important; }
-  .code-box { background-color: #1d1814 !important; border-color: #655c51 !important; }
-  .code { color: #f7f3ea !important; }
-}
-</style>
+<style>:root { color-scheme: light; supported-color-schemes: light; }</style>
 </head>
-<body class="bg-page" style="margin:0;padding:0;background-color:#f7f3ea;">
+<body style="margin:0;padding:0;background-color:#f7f3ea;">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#f7f3ea;">Mã đăng nhập chaiyo của bạn: {{ .Token }}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
-<table role="presentation" class="bg-page" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;background-color:#f7f3ea;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f7f3ea" style="width:100%;background-color:#f7f3ea;">
 <tr>
-<td align="center" style="padding:32px 16px;">
-<table role="presentation" class="bg-card" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:480px;background-color:#ffffff;border:1px solid #ddd5c8;border-radius:18px;">
+<td align="center" style="padding:32px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:430px;">
 <tr>
-<td style="padding:32px 32px 8px 32px;font-family:Literata,Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:600;color:#c6301d;letter-spacing:-0.01em;">chaiyo</td>
+<td align="left" style="padding:0 0 24px 0;"><img src="https://chaiyo.vercel.app/brand/icon-192.png" width="64" height="64" alt="chaiyo" style="display:block;width:64px;height:64px;border:0;outline:none;text-decoration:none;"></td>
 </tr>
 <tr>
-<td class="t-ink" style="padding:8px 32px 0 32px;font-family:Literata,Georgia,'Times New Roman',serif;font-size:26px;line-height:32px;font-weight:600;color:#1d1814;">Đăng nhập chaiyo</td>
+<td align="left" style="padding:0;font-family:Literata,serif;font-size:23px;line-height:27.6px;font-weight:600;color:#1d1814;">Đăng nhập chaiyo</td>
 </tr>
 <tr>
-<td class="t-body" style="padding:12px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:24px;color:#4a423a;">Nhấn nút bên dưới để vào ứng dụng học tiếng Trung của bạn.</td>
+<td align="left" style="padding:12px 0 0 0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:16px;line-height:24px;font-weight:400;color:#1d1814;">Nhấn nút bên dưới để vào ứng dụng học tiếng Trung của bạn.</td>
 </tr>
 <tr>
-<td align="center" style="padding:24px 32px 0 32px;">
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-<tr>
-<td align="center" bgcolor="#c6301d" style="background-color:#c6301d;border-radius:18px;">
-<a href="{{ .ConfirmationURL }}" style="display:block;padding:16px 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:24px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:18px;">Đăng nhập</a>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td class="t-muted" align="center" style="padding:12px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:20px;color:#655c51;">Không thấy nút? <a class="t-link" href="{{ .ConfirmationURL }}" style="color:#a72614;text-decoration:underline;">Mở liên kết đăng nhập</a></td>
-</tr>
-<tr>
-<td style="padding:24px 32px 0 32px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="rule" style="border-top:1px solid #ddd5c8;font-size:0;line-height:0;height:1px;">&nbsp;</td></tr></table></td>
-</tr>
-<tr>
-<td class="t-muted" align="center" style="padding:16px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:20px;color:#655c51;">hoặc nhập mã này trong ứng dụng</td>
-</tr>
-<tr>
-<td align="center" style="padding:12px 32px 0 32px;">
+<td style="padding:24px 0 0 0;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td class="code-box" align="center" bgcolor="#f6e1db" style="background-color:#f6e1db;border:1px solid #ddd5c8;border-radius:12px;padding:18px 12px;">
-<span class="code" style="font-family:'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace;font-size:32px;line-height:40px;font-weight:700;letter-spacing:8px;color:#1d1814;">{{ .Token }}</span>
+<td align="center" height="62" bgcolor="#c6301d" style="height:62px;background-color:#c6301d;border-radius:18px;box-shadow:0 10px 24px rgba(168,38,20,.28);">
+<a href="{{ .ConfirmationURL }}" style="display:block;line-height:62px;font-family:Literata,serif;font-size:21px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:18px;">Đăng nhập</a>
 </td>
 </tr>
 </table>
 </td>
 </tr>
 <tr>
-<td class="t-muted" align="center" style="padding:16px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:20px;color:#655c51;">Link và mã dùng một lần, hết hạn sau 1 giờ.</td>
+<td align="left" style="padding:12px 0 0 0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:13.5px;line-height:18.2px;font-weight:400;color:#655c51;">Không thấy nút? <a href="{{ .ConfirmationURL }}" style="color:#a72614;text-decoration:underline;">Mở liên kết đăng nhập</a></td>
 </tr>
 <tr>
-<td class="t-muted" align="center" style="padding:20px 32px 32px 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:20px;color:#655c51;">Không phải bạn yêu cầu? Bỏ qua email này — tài khoản của bạn vẫn an toàn.</td>
+<td style="padding:24px 0 0 0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #ddd5c8;font-size:0;line-height:0;height:1px;">&nbsp;</td></tr></table></td>
+</tr>
+<tr>
+<td align="left" style="padding:20px 0 0 0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:13.5px;line-height:18.2px;font-weight:400;color:#655c51;">hoặc nhập mã này trong ứng dụng</td>
+</tr>
+<tr>
+<td style="padding:12px 0 0 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="center" bgcolor="#f6e1db" style="background-color:#f6e1db;border-radius:12px;padding:16px;font-family:Literata,serif;font-size:36px;line-height:36px;font-weight:600;letter-spacing:8px;color:#1d1814;">{{ .Token }}</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td align="left" style="padding:12px 0 0 0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:13.5px;line-height:18.2px;font-weight:400;color:#655c51;">Link và mã dùng một lần, hết hạn sau 1 giờ.</td>
+</tr>
+<tr>
+<td align="left" style="padding:24px 0 0 0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:13.5px;line-height:18.2px;font-weight:400;color:#655c51;">Không phải bạn yêu cầu? Bỏ qua email này — tài khoản của bạn vẫn an toàn.</td>
 </tr>
 </table>
 </td>
