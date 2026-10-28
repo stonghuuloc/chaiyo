@@ -12,6 +12,7 @@ Production on main and a preview per PR on Vercel, so hosted Supabase auth has a
 
 ## Locked decisions (BA/Loc already ruled — never re-open)
 - Hosted site_url = `https://chaiyo.vercel.app` (CHY-2 S2 Q4).
+- Q4-A: previews stay behind Vercel deployment protection; AC6 preview leg proven via /authorize redirect, learner sign-in scoped.
 
 ## Facts (read-only, 2026-10-28)
 | AC | Now | Evidence |
