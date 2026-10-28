@@ -1,7 +1,7 @@
 {
   "story": "CHY-2",
   "title": "Supabase project + local dev",
-  "stage": "slicing",
+  "stage": "in-slice",
   "current_slice": "S1",
   "slices": [
     {
@@ -13,9 +13,9 @@
         "AC4"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "plan",
       "reviews": 0,
-      "note": "",
+      "note": "plan rev 1 \u2014 awaiting go for execute",
       "jira": "CHY-2.1"
     },
     {
@@ -37,7 +37,10 @@
   "log": [
     "2026-10-26 init",
     "2026-10-26 +S1 local Supabase + env + README [AC1,AC2,AC4]",
-    "2026-10-26 +S2 auth providers local + hosted [AC3]"
+    "2026-10-26 +S2 auth providers local + hosted [AC3]",
+    "2026-10-27 S1 \u2192 discuss",
+    "2026-10-27 S1 \u2192 spec",
+    "2026-10-27 S1 \u2192 plan"
   ],
-  "updated": "2026-10-26T13:14:46+07:00"
+  "updated": "2026-10-27T20:58:34+07:00"
 }
