@@ -23,11 +23,14 @@ ACs: AC3 (AC3: Google + magic link enabled locally and on hosted project. Backlo
 | 1 | Q1 [AC3] | Hosted project: new or reuse Mantica's? | A — new project `chaiyo` | Loc, 2026-10-28 |
 | 1 | Q2 [AC3] | Email content: link, code, or both? | C — link + 6-digit code in one email | Loc, 2026-10-28 |
 | 1 | Q3 [AC3] | Google client owner? | A — new GCP project "chaiyo", one web client, local + hosted callbacks | Loc, 2026-10-28 |
-| 2 | Q5 [AC3] | Hosted email sender: default or custom SMTP (Resend)? | A — default sender now; Resend parked until a domain exists | Loc, 2026-10-28 |
+| 2 | Q5 [AC3] | Hosted email sender: default or custom SMTP (Resend)? | A — default sender now; Resend parked until a domain exists. Superseded by Q11-B. | Loc, 2026-10-28 |
 | 2 | Q4 [AC3] | Hosted site_url while no deployed domain | Hosted site_url = the `<name>.vercel.app` domain Loc claims in S2 (Q7-A). Vercel setup is in m-0 (CHY-63) | Loc, 2026-10-28 |
 | 2 | Q6 [AC3] | Hosted auth config: dashboard or `supabase config push`? | B — `supabase config push` from config.toml (config as code) | Loc, 2026-10-28 |
 | 3 | Q7 [AC3] | Order: S2 or CHY-63 first? | A — S2 first; Loc creates an empty Vercel project in the dashboard to claim the `<name>.vercel.app` domain, which becomes the hosted site_url; CHY-63 later lands all 6 ACs | Loc, 2026-10-28 |
 | 4 | Q8 [AC3] | Fallback if `[remotes.hosted]` is ignored by config push | C — if `[remotes.hosted]` is ignored, drop it and use one shared root block: `site_url = https://<name>.vercel.app`, redirect list = vercel.app + `http://localhost:5173` + `http://127.0.0.1:5173`. A was unworkable because push overwrites dashboard site_url. | Director pick 2026-10-28; 8A unworkable; Loc may override before Task 9 |
+| 5 | Q9 [AC3] | Vercel domain before CHY-63 | A — one manual `vercel deploy --prod` now (no GitHub link, no env vars) to get the real `*.vercel.app` domain for hosted site_url; CHY-63 does the git integration + env | Loc, 2026-10-28 |
+| 6 | Q10 [AC3] | Hosted values that drift from the local dev root block | B — pin hosted enable_confirmations=true, max_frequency=1m, TOTP MFA on; local keeps dev values | Loc, 2026-10-28 |
+| 7 | Q11 [AC3] | Hosted email templates on the free tier | B — hosted uses Gmail SMTP (stonghuuloc@gmail.com, app password in supabase/.env); free tier blocks templates on the default sender; swap to Resend when chaiyo has a domain | Loc, 2026-10-28 |
 
 ## Open — needs an answer before spec
 None. Q1–Q6 resolved above and keep their numbers; frontier empty.
