@@ -13,9 +13,9 @@
         "AC5"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 0,
-      "note": "PR #10 open, CI running \u2014 awaiting Loc review before verify",
+      "note": "AC1/2/5 \u2705 on 6329eb9 (local dev + Supabase)",
       "jira": "CHY-3.1",
       "pr": "#10"
     },
@@ -48,7 +48,8 @@
     "2026-10-29 S1 \u2192 plan",
     "2026-10-29 S1 \u2192 picture",
     "2026-10-29 S1 \u2192 execute",
-    "2026-10-29 S1 \u2192 execute"
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 done"
   ],
-  "updated": "2026-10-29T01:11:31+07:00"
+  "updated": "2026-10-29T01:24:03+07:00"
 }

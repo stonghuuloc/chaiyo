@@ -4,7 +4,7 @@ title: App shell + tab bar
 status: To Do
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:47'
+updated_date: '2026-10-28 18:24'
 labels:
   - slice-1
   - ui
@@ -75,9 +75,9 @@ Feature: App shell + tab bar
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario: Each tab root renders
-- [ ] #2 Scenario: Tab bar is hidden on pushed screens
+- [x] #1 Scenario: Each tab root renders
+- [x] #2 Scenario: Tab bar is hidden on pushed screens
 - [ ] #3 Scenario: Tab bar is frosted, fixed and safe-area aware
 - [ ] #4 Scenario: Selecting a tab crossfades line icon to fill icon
-- [ ] #5 Scenario: Unauthenticated access redirects to login
+- [x] #5 Scenario: Unauthenticated access redirects to login
 <!-- AC:END -->
