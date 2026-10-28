@@ -16,9 +16,9 @@
         "AC7"
       ],
       "repo": "",
-      "stage": "verify",
+      "stage": "done",
       "reviews": 0,
-      "note": "AC1-5 \u2705, AC7 \u26a0\ufe0f: hasData false ~11 min after Loc's real-browser visit",
+      "note": "AC1-5,7 \u2705; hasData true",
       "jira": "CHY-63.1",
       "pr": "#8"
     },
@@ -69,7 +69,8 @@
     "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 verify",
     "2026-10-28 S2 \u2192 verify",
-    "2026-10-28 S1 \u2192 verify"
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-29 S1 \u2192 done"
   ],
-  "updated": "2026-10-28T22:00:08+07:00"
+  "updated": "2026-10-29T00:32:00+07:00"
 }
