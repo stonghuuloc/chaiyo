@@ -22,7 +22,13 @@ pnpm test         # vitest
 pnpm build        # Vercel adapter output
 ```
 
-Node 22+ and pnpm. Copy `.env.example` to `.env` and fill in the Supabase project values.
+Node 22+ and pnpm. Local Supabase (Docker required):
+
+1. Install the CLI: `brew install supabase/tap/supabase`
+2. Start Docker.
+3. `supabase start`. The first run pulls the images. chaiyo uses its own ports (API 56321, Studio http://127.0.0.1:56323), so it runs beside another local Supabase project. Stop it with `supabase stop`.
+4. `cp .env.example .env`
+5. Paste the printed Project URL into `PUBLIC_SUPABASE_URL` and the Publishable key into `PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 
 ## Generated files
 
