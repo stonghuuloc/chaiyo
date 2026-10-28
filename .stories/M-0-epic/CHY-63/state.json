@@ -18,7 +18,7 @@
       "repo": "",
       "stage": "verify",
       "reviews": 0,
-      "note": "AC1,2,3,4,5 \u2705; AC7 \u26a0\ufe0f scoped (hasData false until merge + prod visit)",
+      "note": "PR #8 merged bfd6976; AC1-5 \u2705, AC7 \u26a0\ufe0f hasData false after ~12 min; real-browser visit needed",
       "jira": "CHY-63.1",
       "pr": "#8"
     },
@@ -29,9 +29,9 @@
         "AC6"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "discuss",
       "reviews": 0,
-      "note": "",
+      "note": "Q4 answered; Q5 open (preview wildcard)",
       "jira": "CHY-63.2"
     }
   ],
@@ -55,7 +55,9 @@
     "2026-10-28 S1 \u2192 plan",
     "2026-10-28 S1 \u2192 execute",
     "2026-10-28 S1 \u2192 execute",
-    "2026-10-28 S1 \u2192 verify"
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-28 S2 \u2192 discuss"
   ],
-  "updated": "2026-10-28T17:34:59+07:00"
+  "updated": "2026-10-28T17:53:42+07:00"
 }
