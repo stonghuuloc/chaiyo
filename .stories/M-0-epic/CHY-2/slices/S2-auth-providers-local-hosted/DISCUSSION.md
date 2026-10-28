@@ -31,6 +31,7 @@ ACs: AC3 (AC3: Google + magic link enabled locally and on hosted project. Backlo
 | 5 | Q9 [AC3] | Vercel domain before CHY-63 | A — one manual `vercel deploy --prod` now (no GitHub link, no env vars) to get the real `*.vercel.app` domain for hosted site_url; CHY-63 does the git integration + env | Loc, 2026-10-28 |
 | 6 | Q10 [AC3] | Hosted values that drift from the local dev root block | B — pin hosted enable_confirmations=true, max_frequency=1m, TOTP MFA on; local keeps dev values | Loc, 2026-10-28 |
 | 7 | Q11 [AC3] | Hosted email templates on the free tier | B — hosted uses Gmail SMTP (stonghuuloc@gmail.com, app password in supabase/.env); free tier blocks templates on the default sender; swap to Resend when chaiyo has a domain | Loc, 2026-10-28 |
+| 8 | Q12 [AC3] | Vercel GitHub link created by `vercel link` | A — keep it; CHY-63 verifies | Loc, 2026-10-28 |
 
 ## Open — needs an answer before spec
 None. Q1–Q6 resolved above and keep their numbers; frontier empty.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Guarded `supabase config push`: refuses when a Google credential is empty (an empty env() overwrites the live secret).
+# Guarded `supabase config push`: refuses when a pushed secret (Google client id/secret, SMTP pass) is empty; an empty env() overwrites the live value.
 # Usage: scripts/supabase-push.sh <project-ref>
 set -euo pipefail
 cd "$(dirname "$0")/.."

@@ -18,6 +18,8 @@ ordinal: 74000
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Deploy the SvelteKit app to Vercel with production on main and a preview per PR. Needed so the hosted Supabase project has a production site_url (CHY-2 S2 Q4).
 
+Note: the GitHub integration got linked during CHY-2 S2 (`vercel link`); AC1–2 need verifying, not building. Preview URLs are not in the hosted redirect allow-list yet.
+
 ```gherkin
 Feature: Vercel deploy (preview + production)
   As a developer
