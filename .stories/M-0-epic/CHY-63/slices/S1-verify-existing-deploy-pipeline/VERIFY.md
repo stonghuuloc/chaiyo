@@ -22,9 +22,9 @@ Re-run 2026-10-28 on PR #8 head `663df1c`, AC1/AC7 re-checked after the merge (`
 | production serves the new bundle | yes: `GET /_vercel/speed-insights/script.js` → 200 on `chaiyo.vercel.app`, 0 JS errors | reports data from production |
 | `speedInsights.hasData` | **false** | true |
 
-**The ⚠️ is scoped:** install, the 200 script load and error-free pages are proven on production; "reports data" is not: 3 headless visits (one forcing `visibilitychange`/`pagehide`) sent no vitals request and `hasData` stayed false for ~12 min (gap: false → true). Headless Chrome may not emit vitals; a real-browser visit is untested.
+**The ⚠️ is scoped:** install, the 200 script load and error-free pages are proven on production; "reports data" is not: 3 headless visits (one forcing `visibilitychange`/`pagehide`) sent no vitals request and `hasData` stayed false for ~12 min (gap: false → true). Loc then visited production in a real browser; `hasData` was still `false` when polled ~11 min later (API calls 3–7 of that run returned empty bodies, then HTTP 200 `false`).
 
-**Answer: no decision needed.** Open `https://chaiyo.vercel.app` once in a real browser, then re-check `hasData`. Owner: Loc.
+**Answer: re-check `hasData` later (Vercel can lag) or look at Project → Speed Insights in the dashboard; flip AC7 to ✅ when it is true.** Owner: Loc.
 
 ## Residual risk
 - AC1: none; proven on the PR #8 merge commit.

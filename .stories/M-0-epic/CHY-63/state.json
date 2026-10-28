@@ -18,7 +18,7 @@
       "repo": "",
       "stage": "verify",
       "reviews": 0,
-      "note": "PR #8 merged bfd6976; AC1-5 \u2705, AC7 \u26a0\ufe0f hasData false after ~12 min; real-browser visit needed",
+      "note": "AC1-5 \u2705, AC7 \u26a0\ufe0f: hasData false ~11 min after Loc's real-browser visit",
       "jira": "CHY-63.1",
       "pr": "#8"
     },
@@ -31,7 +31,7 @@
       "repo": "",
       "stage": "verify",
       "reviews": 0,
-      "note": "AC6 \u26a0\ufe0f scoped: allow-list proven by /verify probe; email link + UI sign-in unproven",
+      "note": "AC6 \u26a0\ufe0f scoped: allow-list + email leg proven; UI sign-in waits for CHY-26",
       "jira": "CHY-63.2",
       "pr": "#9"
     }
@@ -67,7 +67,9 @@
     "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 execute",
-    "2026-10-28 S2 \u2192 verify"
+    "2026-10-28 S2 \u2192 verify",
+    "2026-10-28 S2 \u2192 verify",
+    "2026-10-28 S1 \u2192 verify"
   ],
-  "updated": "2026-10-28T18:28:54+07:00"
+  "updated": "2026-10-28T22:00:08+07:00"
 }
