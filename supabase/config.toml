@@ -247,6 +247,10 @@ otp_expiry = 3600
 subject = "chaiyo — đăng nhập"
 content_path = "./supabase/templates/magic-link.html"
 
+[auth.email.template.confirmation]
+subject = "chaiyo — đăng nhập"
+content_path = "./supabase/templates/magic-link.html"
+
 # Uncomment to customize notification email template
 # [auth.email.notification.password_changed]
 # enabled = true
@@ -338,6 +342,33 @@ enabled = true
 client_id = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID)"
 secret = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET)"
 skip_nonce_check = false
+
+[remotes.hosted]
+project_id = "ogczuwtlyetsugahwhui"
+
+[remotes.hosted.auth]
+site_url = "https://chaiyo.vercel.app"
+additional_redirect_urls = ["https://chaiyo.vercel.app", "http://localhost:5173", "http://127.0.0.1:5173"]
+
+[remotes.hosted.auth.email]
+enable_confirmations = true
+max_frequency = "1m0s"
+
+[remotes.hosted.auth.email.smtp]
+enabled = true
+host = "smtp.gmail.com"
+port = 587
+user = "stonghuuloc@gmail.com"
+pass = "env(SUPABASE_AUTH_SMTP_PASS)"
+admin_email = "stonghuuloc@gmail.com"
+sender_name = "chaiyo"
+
+[remotes.hosted.auth.rate_limit]
+email_sent = 30
+
+[remotes.hosted.auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
 
 # Allow Solana wallet holders to sign in to your project via the Sign in with Solana (SIWS, EIP-4361) standard.
 # You can configure "web3" rate limit in the [auth.rate_limit] section and set up [auth.captcha] if self-hosting.

@@ -4,13 +4,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ref=${1:?usage: scripts/supabase-push.sh <project-ref>}
-if [ -f supabase/.env ]; then
-	set -a
-	. supabase/.env
-	set +a
-fi
-for name in SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET; do
-	if [ -z "${!name:-}" ]; then
+for name in SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET SUPABASE_AUTH_SMTP_PASS; do
+	val=${!name:-}
+	if [ -f supabase/.env ]; then
+		val=$(sed -n "s/^$name=//p" supabase/.env | tail -n 1)
+	fi
+	if [ -z "$(printf '%s' "$val" | tr -d " \"'")" ]; then
 		echo "$name is empty; refusing to push" >&2
 		exit 1
 	fi
