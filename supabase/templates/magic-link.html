@@ -3,22 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
-<meta name="supported-color-schemes" content="light">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
 <title>Đăng nhập chaiyo</title>
-<style>:root { color-scheme: light; supported-color-schemes: light; }</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@600&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<style>:root { color-scheme: light only; supported-color-schemes: light only; }</style>
 </head>
-<body style="margin:0;padding:0;background-color:#f7f3ea;">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#f7f3ea;">Mã đăng nhập chaiyo của bạn: {{ .Token }}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f7f3ea" style="width:100%;background-color:#f7f3ea;">
+<body bgcolor="#ffffff" style="margin:0;padding:0;background-color:#ffffff;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#ffffff;">Mã đăng nhập chaiyo của bạn: {{ .Token }}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%;background-color:#ffffff;">
 <tr>
 <td align="center" style="padding:32px 20px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:430px;">
 <tr>
-<td align="left" style="padding:0 0 24px 0;"><img src="https://chaiyo.vercel.app/brand/icon-192.png" width="64" height="64" alt="chaiyo" style="display:block;width:64px;height:64px;border:0;outline:none;text-decoration:none;"></td>
+<td align="left" style="padding:0 0 24px 0;"><img src="https://chaiyo.vercel.app/brand/email-logo.png" width="64" height="64" alt="chaiyo" style="display:block;width:64px;height:64px;border:0;outline:none;text-decoration:none;border-radius:18px;"></td>
 </tr>
 <tr>
-<td align="left" style="padding:0;font-family:Literata,serif;font-size:23px;line-height:27.6px;font-weight:600;color:#1d1814;">Đăng nhập chaiyo</td>
+<td align="left" style="padding:0;font-family:Literata,Georgia,'Times New Roman',serif;font-size:23px;line-height:27.6px;font-weight:600;color:#1d1814;">Đăng nhập chaiyo</td>
 </tr>
 <tr>
 <td align="left" style="padding:12px 0 0 0;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:16px;line-height:24px;font-weight:400;color:#1d1814;">Nhấn nút bên dưới để vào ứng dụng học tiếng Trung của bạn.</td>
@@ -28,7 +31,7 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td align="center" height="62" bgcolor="#c6301d" style="height:62px;background-color:#c6301d;border-radius:18px;box-shadow:0 10px 24px rgba(168,38,20,.28);">
-<a href="{{ .ConfirmationURL }}" style="display:block;line-height:62px;font-family:Literata,serif;font-size:21px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:18px;">Đăng nhập</a>
+<a href="{{ .ConfirmationURL }}" style="display:block;line-height:62px;font-family:Literata,Georgia,'Times New Roman',serif;font-size:21px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:18px;">Đăng nhập</a>
 </td>
 </tr>
 </table>
@@ -47,7 +50,7 @@
 <td style="padding:12px 0 0 0;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td align="center" bgcolor="#f6e1db" style="background-color:#f6e1db;border-radius:12px;padding:16px;font-family:Literata,serif;font-size:36px;line-height:36px;font-weight:600;letter-spacing:8px;color:#1d1814;">{{ .Token }}</td>
+<td align="center" bgcolor="#f6e1db" style="background-color:#f6e1db;border-radius:12px;padding:16px;font-family:Literata,'Times New Roman',serif;font-size:36px;line-height:36px;font-weight:600;letter-spacing:8px;color:#1d1814;">{{ .Token }}</td>
 </tr>
 </table>
 </td>
