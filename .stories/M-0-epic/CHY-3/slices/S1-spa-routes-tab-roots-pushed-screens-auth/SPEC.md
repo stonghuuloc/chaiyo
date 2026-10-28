@@ -30,8 +30,8 @@ ACs: AC1, AC2, AC5  ·  Repo: chaiyo  ·  rev 1
 - Signed-in visitor on `/` redirecting to `/today` → CHY-29 (Landing P1).
 
 ## Seam
-Two SvelteKit route groups under `src/routes/(app)/`: `(tabs)` layout renders the bar,
-`(pushed)` layout does not; the shared `(app)/+layout.ts` load runs the session guard.
+Route group `src/routes/(app)/(tabs)/` whose layout renders the bar; pushed screens sit directly
+under `(app)/`, outside `(tabs)`; the shared `(app)/+layout.ts` load runs the session guard.
 
 ## Test contract
 - [AC1] vitest: `tabFor(pathname)` returns the tab index for each of the 4 roots, and
