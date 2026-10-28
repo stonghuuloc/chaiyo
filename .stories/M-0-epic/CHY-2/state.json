@@ -28,13 +28,15 @@
       "repo": "",
       "stage": "execute",
       "reviews": 0,
-      "note": "executing tasks 1-7; Task 8 blocks on Loc",
-      "jira": "CHY-2.2"
+      "note": "hosted pushed; awaiting Loc inbox + merge",
+      "jira": "CHY-2.2",
+      "pr": "#6"
     }
   ],
   "locked": [],
   "prs": [
-    "#5"
+    "#5",
+    "#6"
   ],
   "branch": "CHY-2",
   "log": [
@@ -54,7 +56,8 @@
     "2026-10-28 S2 \u2192 plan",
     "2026-10-28 S2 \u2192 plan",
     "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 execute"
   ],
-  "updated": "2026-10-28T14:02:41+07:00"
+  "updated": "2026-10-28T15:19:42+07:00"
 }
