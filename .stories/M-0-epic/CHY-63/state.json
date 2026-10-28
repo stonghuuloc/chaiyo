@@ -1,0 +1,56 @@
+{
+  "story": "CHY-63",
+  "title": "Vercel deploy (preview + production)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "deploy pipeline, env vars, README",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5",
+        "AC7"
+      ],
+      "repo": "",
+      "stage": "execute",
+      "reviews": 0,
+      "note": "Tasks 2-4 done; PR open, awaiting CI + preview",
+      "jira": "CHY-63.1"
+    },
+    {
+      "id": "S2",
+      "name": "hosted redirects for production + previews",
+      "acs": [
+        "AC6"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-63.2"
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-63",
+  "log": [
+    "2026-10-28 init",
+    "2026-10-28 +S1 verify existing deploy pipeline [AC1,AC2,AC3]",
+    "2026-10-28 +S2 Vercel env vars + README deploy docs [AC4,AC5]",
+    "2026-10-28 +S3 hosted redirects for production + previews [AC6]",
+    "2026-10-28 S1 \u2192 discuss",
+    "2026-10-28 re-slice: S2+S3 -> 2 slices (S1=AC1-5, S2=AC6)",
+    "2026-10-28 S1 \u2192 discuss",
+    "2026-10-28 S1 \u2192 discuss",
+    "2026-10-28 AC7 (Speed Insights) added to S1",
+    "2026-10-28 S1 \u2192 discuss",
+    "2026-10-28 S1 \u2192 spec",
+    "2026-10-28 S1 \u2192 plan",
+    "2026-10-28 S1 \u2192 execute"
+  ],
+  "updated": "2026-10-28T17:10:34+07:00"
+}
