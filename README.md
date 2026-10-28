@@ -29,6 +29,8 @@ Node 22+ and pnpm. Local Supabase (Docker required):
 3. `supabase start`. The first run pulls the images. chaiyo uses its own ports (API 56321, Studio http://127.0.0.1:56323), so it runs beside another local Supabase project. Stop it with `supabase stop`.
 4. `cp .env.example .env`
 5. Paste the printed Project URL into `PUBLIC_SUPABASE_URL` and the Publishable key into `PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+6. Google sign-in (once): in Google Cloud create a Web OAuth client with redirect URIs `http://127.0.0.1:56321/auth/v1/callback` and `https://<ref>.supabase.co/auth/v1/callback`. `cp supabase/.env.example supabase/.env` and fill the client id and secret there, never in the root `.env`. Restart with `supabase stop && supabase start`.
+7. Hosted project (once): `supabase login`, `supabase link --project-ref <ref>`, then `pnpm supabase:push <ref>`. Never run `supabase config push` directly: with an empty Google secret it overwrites the live one. Hosted email goes out through Gmail SMTP (stonghuuloc@gmail.com) with an app password in `supabase/.env` as `SUPABASE_AUTH_SMTP_PASS`; the push refuses when it is empty. Local email stays in Mailpit (http://127.0.0.1:56324).
 
 ## Generated files
 

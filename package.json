@@ -17,7 +17,8 @@
 		"tokens": "node scripts/build-tokens.mjs",
 		"icons": "scripts/build-icons.sh",
 		"assets:push": "python3 scripts/assets_push.py",
-		"assets:pull": "python3 scripts/assets_pull.py"
+		"assets:pull": "python3 scripts/assets_pull.py",
+		"supabase:push": "scripts/supabase-push.sh"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
