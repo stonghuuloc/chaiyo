@@ -35,3 +35,4 @@ prototype/logos/
 assets/cast-options/
 prototype/lesson-images.html
 scripts/__pycache__/
+.annotate/

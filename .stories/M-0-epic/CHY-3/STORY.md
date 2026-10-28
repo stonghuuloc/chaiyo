@@ -13,6 +13,7 @@ Four-tab app shell that shows the tab bar only on tab roots, so learners navigat
 ## Locked decisions (BA/Loc already ruled — never re-open)
 - SPA app routes, `ssr=false`, behind auth.
 - Tabs: Hôm nay · Lộ trình · Luyện tập · Tôi.
+- All identifiers English (URLs, files, code); Vietnamese only in display text (Loc, 2026-10-29).
 
 ## AC index
 | # | AC | Pri | Slice |

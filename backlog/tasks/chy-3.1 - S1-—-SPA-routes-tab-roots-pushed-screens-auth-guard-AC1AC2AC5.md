@@ -1,9 +1,10 @@
 ---
 id: CHY-3.1
 title: 'S1 — SPA routes, tab roots, pushed screens, auth guard (AC1,AC2,AC5)'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-28 17:45'
 labels: []
 milestone: m-0
 dependencies: []
