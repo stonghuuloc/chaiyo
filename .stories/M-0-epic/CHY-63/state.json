@@ -1,7 +1,7 @@
 {
   "story": "CHY-63",
   "title": "Vercel deploy (preview + production)",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -16,9 +16,9 @@
         "AC7"
       ],
       "repo": "",
-      "stage": "verify",
+      "stage": "done",
       "reviews": 0,
-      "note": "AC1,2,3,4,5 \u2705; AC7 \u26a0\ufe0f scoped (hasData false until merge + prod visit)",
+      "note": "AC1-5,7 \u2705; hasData true",
       "jira": "CHY-63.1",
       "pr": "#8"
     },
@@ -29,15 +29,18 @@
         "AC6"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "done",
       "reviews": 0,
-      "note": "",
-      "jira": "CHY-63.2"
+      "note": "AC6 allow-list + email leg proven; UI sign-in carried to CHY-26",
+      "jira": "CHY-63.2",
+      "pr": "#9"
     }
   ],
   "locked": [],
   "prs": [
-    "#8"
+    "#8",
+    "#PR",
+    "#9"
   ],
   "branch": "CHY-63",
   "log": [
@@ -55,7 +58,20 @@
     "2026-10-28 S1 \u2192 plan",
     "2026-10-28 S1 \u2192 execute",
     "2026-10-28 S1 \u2192 execute",
-    "2026-10-28 S1 \u2192 verify"
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 spec",
+    "2026-10-28 S2 \u2192 plan",
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 verify",
+    "2026-10-28 S2 \u2192 verify",
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S2 \u2192 done"
   ],
-  "updated": "2026-10-28T17:34:59+07:00"
+  "updated": "2026-10-29T00:35:46+07:00"
 }

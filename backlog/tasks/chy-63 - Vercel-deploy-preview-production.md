@@ -1,10 +1,10 @@
 ---
 id: CHY-63
 title: Vercel deploy (preview + production)
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-28 05:59'
-updated_date: '2026-10-28 10:04'
+updated_date: '2026-10-28 17:35'
 labels:
   - infra
 milestone: m-0
@@ -63,11 +63,11 @@ Feature: Vercel deploy (preview + production)
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Pushing to main deploys to production and the production URL returns HTTP 200
-- [ ] #2 A pull request gets a preview deployment URL
-- [ ] #3 The build uses adapter-vercel (vite.config.ts:4) and finishes with no errors
-- [ ] #4 PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_PUBLISHABLE_KEY are set in Vercel production, pointing at the hosted chaiyo project, with no secrets in the repo
-- [ ] #5 README Develop/Deploy documents the Vercel deploy
-- [ ] #6 The hosted Supabase Site URL is the production domain and its redirect allow-list includes the production domain and the preview URL pattern, so Google and magic-link sign-in on the deployed app return the learner signed in
-- [ ] #7 Vercel Speed Insights is installed and reports data from production
+- [x] #1 Pushing to main deploys to production and the production URL returns HTTP 200
+- [x] #2 A pull request gets a preview deployment URL
+- [x] #3 The build uses adapter-vercel (vite.config.ts:4) and finishes with no errors
+- [x] #4 PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_PUBLISHABLE_KEY are set in Vercel production, pointing at the hosted chaiyo project, with no secrets in the repo
+- [x] #5 README Develop/Deploy documents the Vercel deploy
+- [x] #6 The hosted Supabase Site URL is the production domain and its redirect allow-list includes the production domain and the preview URL pattern, so Google and magic-link sign-in on the deployed app return the learner signed in
+- [x] #7 Vercel Speed Insights is installed and reports data from production
 <!-- AC:END -->
