@@ -4,7 +4,7 @@ title: Login (P2)
 status: To Do
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:50'
+updated_date: '2026-10-28 17:35'
 labels:
   - slice-1
   - auth
@@ -76,4 +76,11 @@ Feature: Login (P2)
 - [ ] #3 Scenario: Invalid email is rejected
 - [ ] #4 Scenario: Expired magic link shows the banner
 - [ ] #5 Scenario: Account pending deletion shows the restore sheet
+- [ ] #6 Google and magic-link sign-in on a Vercel preview URL (https://chaiyo-git-<branch>-stonghuulocs-projects.vercel.app/auth/callback) returns the learner signed in (carried from CHY-63 AC6)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Carried from CHY-63: (1) callers must send a path such as /auth/callback as redirectTo/emailRedirectTo — the hosted allow-list wildcard is https://chaiyo-*-stonghuulocs-projects.vercel.app/**, so a bare preview origin (no trailing /) falls back to site_url. (2) Parked: Resend click tracking rewrites magic links through awstrack.me; consider disabling it for auth mail (.stories/M-0-epic/CHY-63/PARKED.md). (3) Previews sit behind Vercel deployment protection (Q4-A), so learner-facing preview sign-in needs the tester to be logged in to Vercel.
+<!-- SECTION:NOTES:END -->

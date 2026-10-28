@@ -1,10 +1,10 @@
 ---
 id: CHY-63.1
 title: 'S1 — deploy pipeline, env vars, README (AC1,AC2,AC3,AC4,AC5)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-28 09:54'
-updated_date: '2026-10-28 09:58'
+updated_date: '2026-10-28 17:35'
 labels: []
 milestone: m-0
 dependencies: []

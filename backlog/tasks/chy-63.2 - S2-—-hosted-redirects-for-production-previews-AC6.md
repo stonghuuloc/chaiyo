@@ -1,10 +1,10 @@
 ---
 id: CHY-63.2
 title: S2 — hosted redirects for production + previews (AC6)
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-28 09:54'
-updated_date: '2026-10-28 09:59'
+updated_date: '2026-10-28 17:35'
 labels: []
 milestone: m-0
 dependencies: []

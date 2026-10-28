@@ -1,7 +1,7 @@
 {
   "story": "CHY-63",
   "title": "Vercel deploy (preview + production)",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -29,9 +29,9 @@
         "AC6"
       ],
       "repo": "",
-      "stage": "verify",
+      "stage": "done",
       "reviews": 0,
-      "note": "AC6 \u26a0\ufe0f scoped: allow-list + email leg proven; UI sign-in waits for CHY-26",
+      "note": "AC6 allow-list + email leg proven; UI sign-in carried to CHY-26",
       "jira": "CHY-63.2",
       "pr": "#9"
     }
@@ -70,7 +70,8 @@
     "2026-10-28 S2 \u2192 verify",
     "2026-10-28 S2 \u2192 verify",
     "2026-10-28 S1 \u2192 verify",
-    "2026-10-29 S1 \u2192 done"
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S2 \u2192 done"
   ],
-  "updated": "2026-10-29T00:32:00+07:00"
+  "updated": "2026-10-29T00:35:46+07:00"
 }
