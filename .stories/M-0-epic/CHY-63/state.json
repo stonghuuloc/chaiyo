@@ -29,15 +29,18 @@
         "AC6"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "verify",
       "reviews": 0,
-      "note": "pushed to hosted; PR pending",
-      "jira": "CHY-63.2"
+      "note": "AC6 \u26a0\ufe0f scoped: allow-list proven by /verify probe; email link + UI sign-in unproven",
+      "jira": "CHY-63.2",
+      "pr": "#9"
     }
   ],
   "locked": [],
   "prs": [
-    "#8"
+    "#8",
+    "#PR",
+    "#9"
   ],
   "branch": "CHY-63",
   "log": [
@@ -61,7 +64,10 @@
     "2026-10-28 S2 \u2192 discuss",
     "2026-10-28 S2 \u2192 spec",
     "2026-10-28 S2 \u2192 plan",
-    "2026-10-28 S2 \u2192 execute"
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 verify"
   ],
-  "updated": "2026-10-28T18:23:15+07:00"
+  "updated": "2026-10-28T18:28:54+07:00"
 }
