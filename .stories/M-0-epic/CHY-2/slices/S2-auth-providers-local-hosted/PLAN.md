@@ -42,7 +42,7 @@ Files (new): `scripts/supabase-push.sh`; edit `package.json:20`.
 File: `README.md:31` (insert after step 5; `:33` heading stays).
 - Test first (fails now): `rg -c -i 'google' README.md` → rg exit 1; `rg -c 'supabase:push' README.md` → exit 1.
 - Change: append the draft below (unexecuted). Prose is a numbered continuation, no new heading.
-- Verify: `rg -n -i 'google|supabase:push|supabase/.env' README.md` → hits between `:25` and the `## Generated files` heading; `pnpm exec prettier --check README.md` exit 0; `rg -c 'Gmail SMTP' README.md` ≥ 1.
+- Verify: `rg -n -i 'google|supabase:push|supabase/.env' README.md` → hits between `:25` and the `## Generated files` heading; `pnpm exec prettier --check README.md` exit 0; `rg -c 'Resend SMTP' README.md` ≥ 1.
 
 ## Task 6 [AC3] Local proof (placeholder Google client)
 No tracked-file edits. Mantica stays stopped, never started. Only `supabase start` / `stop`.
@@ -64,8 +64,8 @@ The agent stops here until Loc replies with the 4 values below. Nothing hosted r
 2. Supabase dashboard: create project `chaiyo` (free plan). Tell the agent the `<ref>` (the `<ref>` in the callback above comes from this step; add the hosted callback to the GCP client after).
 3. Vercel dashboard: create an empty project named `chaiyo` to claim `<name>.vercel.app`. Tell the agent the exact domain.
 4. Terminal: `supabase login`, then `supabase link --project-ref <ref>` in the repo root.
-5. Gmail: create an app password for stonghuuloc@gmail.com and put it in `supabase/.env` as `SUPABASE_AUTH_SMTP_PASS` (Q11-B).
-- Verify (agent): `rg -c '^SUPABASE_AUTH_(EXTERNAL_GOOGLE_(CLIENT_ID|SECRET)|SMTP_PASS)=.+' supabase/.env` → `3` (count only); `test -f supabase/.temp/project-ref && echo linked`; `supabase projects list 2>&1 | rg -c 'chaiyo'` → ≥ 1.
+5. Resend: create an API key and put it in `supabase/.env` as `RESEND_API_KEY` (Q13-A, sandbox sender `onboarding@resend.dev`).
+- Verify (agent): `rg -c '^SUPABASE_AUTH_(EXTERNAL_GOOGLE_(CLIENT_ID|SECRET))|RESEND_API_KEY)=.+' supabase/.env` → `3` (count only); `test -f supabase/.temp/project-ref && echo linked`; `supabase projects list 2>&1 | rg -c 'chaiyo'` → ≥ 1.
 
 ## Task 9 [AC3] Hosted config: `[remotes]` override, guarded push, read-back
 Files: `supabase/config.toml` (new `[remotes.hosted]` block after the `[auth.external.google]` block).
@@ -132,7 +132,7 @@ exec supabase config push --project-ref "$ref"
 README addition after `:31`:
 ```md
 6. Google sign-in (once): in Google Cloud create a Web OAuth client with redirect URIs `http://127.0.0.1:56321/auth/v1/callback` and `https://<ref>.supabase.co/auth/v1/callback`. `cp supabase/.env.example supabase/.env` and fill the client id and secret there, never in the root `.env`. Restart with `supabase stop && supabase start`.
-7. Hosted project (once): `supabase login`, `supabase link --project-ref <ref>`, then `pnpm supabase:push <ref>`. Never run `supabase config push` directly: with an empty Google secret it overwrites the live one. Hosted email uses Supabase's default sender, through Gmail SMTP.
+7. Hosted project (once): `supabase login`, `supabase link --project-ref <ref>`, then `pnpm supabase:push <ref>`. Never run `supabase config push` directly: with an empty Google secret it overwrites the live one. Hosted email uses Supabase's default sender, through Resend SMTP.
 ```
 ## Rollback
 Before merge: close the PR, `git push origin --delete CHY-2`; hosted: set the previous values back in the toml and push through the guard (the Task 9 diff records old → new), or revert in the dashboard. A wiped Google secret cannot be read back; Loc re-pastes it from GCP. After merge: revert PR via a new `CHY-2` PR. Local: `supabase stop` (volumes kept). Mantica untouched throughout.

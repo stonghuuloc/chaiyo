@@ -356,11 +356,11 @@ max_frequency = "1m0s"
 
 [remotes.hosted.auth.email.smtp]
 enabled = true
-host = "smtp.gmail.com"
-port = 587
-user = "stonghuuloc@gmail.com"
-pass = "env(SUPABASE_AUTH_SMTP_PASS)"
-admin_email = "stonghuuloc@gmail.com"
+host = "smtp.resend.com"
+port = 465
+user = "resend"
+pass = "env(RESEND_API_KEY)"
+admin_email = "onboarding@resend.dev"
 sender_name = "chaiyo"
 
 [remotes.hosted.auth.rate_limit]

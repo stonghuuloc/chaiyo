@@ -1,9 +1,10 @@
 ---
 id: CHY-2.2
 title: S2 — auth providers local + hosted (AC3)
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-28 09:46'
 labels: []
 milestone: m-0
 dependencies: []
