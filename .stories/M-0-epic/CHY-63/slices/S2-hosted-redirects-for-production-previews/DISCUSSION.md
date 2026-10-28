@@ -9,34 +9,24 @@ ACs: AC6
 - [AC6] Preview host shapes (PR #8 bot comment): branch alias `chaiyo-git-chy-63-stonghuulocs-projects.vercel.app`, per-deploy `chaiyo-<hash>-stonghuulocs-projects.vercel.app` (`vercel ls`: `chaiyo-mvy3rgtix-…`). Both contain only `[a-z0-9-]` between `chaiyo-` and `-stonghuulocs-projects`, so `chaiyo-*-stonghuulocs-projects.vercel.app` matches both (`*` = `git-chy-63`, `*` = `mvy3rgtix`).
 - [AC6] `src/` has only `/` (`src/routes/+page.svelte`); no callback route or `signIn*` call exists (CHY-26), so the callback path is unknown.
 
+- [AC6] Probe on hosted, 2026-10-28, before any change. `GET /auth/v1/authorize?provider=google&redirect_to=<url>` → 302 to `accounts.google.com` for `https://chaiyo.vercel.app`, `https://evil.example.com` and the branch alias alike; the Google URL echoes `redirect_to` unvalidated and `state` is a 36-char opaque id. So `/authorize` does NOT discriminate the allow-list: the Google leg is a smoke check only.
+- [AC6] `GET /auth/v1/verify?token=bogus&type=magiclink&redirect_to=<url>` (no email, no state) → 303 to: prod root → prod root; `http://localhost:5173` → itself; `https://evil.example.com` → `https://chaiyo.vercel.app` (site_url fallback); branch alias → `https://chaiyo.vercel.app` (**gap**); lookalike-team host → site_url. This probe discriminates allowed vs not.
+
 ## Answered here (no human needed)
 - Q4 [AC6] Keep Vercel deployment protection on for previews? A: yes. Previews 302 to Vercel SSO without a login. AC6's preview leg is proven by an `/authorize` redirect check while logged in as Loc; learner-facing preview sign-in is ⚠️ scoped. Loc, 2026-10-28.
 - [AC6] Path suffix: `/**`. The callback route does not exist yet (CHY-26), so an exact path would guess; `/**` accepts any path on matching hosts. Source: `src/routes` listing above.
 - [AC6] Production entry stays `https://chaiyo.vercel.app` (AC6 needs "includes the production domain"; already true, `config.toml:351`).
 
+- Q5 [AC6] Allow every `chaiyo-*-stonghuulocs-projects.vercel.app` host, accepting that another Vercel team could match? A: yes — one entry; the lookalike-team host (`chaiyo-ab12cd-evil-stonghuulocs-projects…`, illustrative) goes into `VERIFY.md` Residual risk. Loc, 2026-10-28.
+
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
 |---|---|---|---|---|
-| 1 | Q4 [AC6] | previews behind deployment protection | A — protection stays on; preview leg via /authorize, learner sign-in scoped | Loc, 2026-10-28 |
+| 1 | Q4 [AC6] | previews behind deployment protection | A — protection stays on; preview leg proven by redirect probe, learner sign-in scoped | Loc, 2026-10-28 |
+| 2 | Q5 [AC6] | preview allow-list entry | A — one wildcard `https://chaiyo-*-stonghuulocs-projects.vercel.app/**`; lookalike-team host recorded as residual risk | Loc, 2026-10-28 |
 
 ## Open — needs an answer before spec
-
-### Q5 [AC6] Owner: Loc — Do we allow every `chaiyo-*-stonghuulocs-projects.vercel.app` host, accepting that another Vercel team could match it?
-
-**Setup** — allow-list entries tested against 4 hosts. `*` stops at `.` and `/` but not at `-`. A Vercel team slug is chosen by its owner; one named `evil-stonghuulocs-projects` (illustrative) deploys a project `chaiyo` to `chaiyo-ab12cd-evil-stonghuulocs-projects.vercel.app`.
-
-| host | A — `https://chaiyo-*-stonghuulocs-projects.vercel.app/**` | C — no wildcard; add each PR alias by hand |
-|---|---|---|
-| `chaiyo-git-chy-63-stonghuulocs-projects.vercel.app` (alias) | allowed | allowed only after its entry is added |
-| `chaiyo-mvy3rgtix-stonghuulocs-projects.vercel.app` (deploy) | allowed | not allowed |
-| `chaiyo-ab12cd-evil-stonghuulocs-projects.vercel.app` (other team, illustrative) | **allowed** (`*` = `ab12cd-evil`) | not allowed |
-| entries to maintain | 1 | 1 per open PR, each pushed with `pnpm supabase:push` |
-
-**Gap: 1 foreign host matches under A, 0 under C; C costs 1 config push per PR and fails AC6's "preview URL pattern".** A foreign host receives a learner's session only if the learner signs in through a link carrying that host as `redirect_to`.
-
-➡️ A — AC6 asks for a pattern, Supabase documents wildcards for Vercel previews, the hosted project is the dev project, and narrowing to `chaiyo-git-*-…` removes no foreign match (`chaiyo-git-x-evil-stonghuulocs-projects…` still matches). Add the residual to `VERIFY.md`.
-
-**Answer: pick A or C.**
+None. Q5 answered 2026-10-28 (below); the frontier is empty.
 
 ## Locked (do not re-open)
 - Hosted site_url = `https://chaiyo.vercel.app` (CHY-2 S2 Q4).

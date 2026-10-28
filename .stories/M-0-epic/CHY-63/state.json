@@ -29,9 +29,9 @@
         "AC6"
       ],
       "repo": "",
-      "stage": "discuss",
+      "stage": "plan",
       "reviews": 0,
-      "note": "Q4 answered; Q5 open (preview wildcard)",
+      "note": "SPEC+PLAN written; awaiting go (push + 1 email are outward)",
       "jira": "CHY-63.2"
     }
   ],
@@ -57,7 +57,10 @@
     "2026-10-28 S1 \u2192 execute",
     "2026-10-28 S1 \u2192 verify",
     "2026-10-28 S1 \u2192 verify",
-    "2026-10-28 S2 \u2192 discuss"
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 spec",
+    "2026-10-28 S2 \u2192 plan"
   ],
-  "updated": "2026-10-28T17:53:42+07:00"
+  "updated": "2026-10-28T18:12:05+07:00"
 }
