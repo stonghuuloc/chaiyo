@@ -44,6 +44,7 @@ Vercel project `chaiyo` (scope `stonghuulocs-projects`), linked to the GitHub re
 - Preview URLs: `https://chaiyo-git-<branch>-stonghuulocs-projects.vercel.app` (branch alias) and `https://chaiyo-<hash>-stonghuulocs-projects.vercel.app` (one per deploy).
 - Env vars: set `PUBLIC_SUPABASE_URL` (the hosted project URL) and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` for Production and Preview with `vercel env add <NAME> --environment production,preview --no-sensitive`. Development stays unset: local values live in `.env`. Both values are public by design; keep every other secret out of Vercel and the repo.
 - Speed Insights: `injectSpeedInsights()` in `src/routes/+layout.ts`. Enable it once under Project → Speed Insights; data appears after the first production visit.
+- Hosted auth redirects: `additional_redirect_urls` in `supabase/config.toml` (`[remotes.hosted.auth]`) holds the production domain and the wildcard `https://chaiyo-*-stonghuulocs-projects.vercel.app/**` for previews. The wildcard needs a path, so a redirect to a bare preview origin falls back to the production `site_url`. Change it only through `pnpm supabase:push <ref>`.
 
 ## Generated files
 

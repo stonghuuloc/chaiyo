@@ -348,7 +348,7 @@ project_id = "ogczuwtlyetsugahwhui"
 
 [remotes.hosted.auth]
 site_url = "https://chaiyo.vercel.app"
-additional_redirect_urls = ["https://chaiyo.vercel.app", "http://localhost:5173", "http://127.0.0.1:5173"]
+additional_redirect_urls = ["https://chaiyo.vercel.app", "https://chaiyo-*-stonghuulocs-projects.vercel.app/**", "http://localhost:5173", "http://127.0.0.1:5173"]
 
 [remotes.hosted.auth.email]
 enable_confirmations = true
