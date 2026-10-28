@@ -11,7 +11,7 @@ ACs: AC6  ·  Spec rev 1  ·  Repo: chaiyo  ·  Branch: CHY-63 (new, off main `b
 ## Task 1 [AC6] Red probe before the change
 File: `supabase/config.toml:351` (unchanged yet)
 - Change: none. Run the `/verify` probe for 5 URLs: prod root, branch alias, hash URL, `https://evil.example.com`, lookalike `https://chaiyo-ab12cd-evil-stonghuulocs-projects.vercel.app`.
-- Test first (this is the failing test): alias and hash URL → `Location` = `https://chaiyo.vercel.app` (not themselves). Record it.
+- Test first (this is the failing test): alias and hash URL → `Location` = `https://chaiyo.vercel.app` (not themselves), probed with bare origins. Record it.
 - Verify: python/curl, redirects not followed, print `status` + `Location` before `#`/`?` only.
 
 ## Task 2 [AC6] Add the wildcard entry
@@ -29,12 +29,12 @@ File: `scripts/supabase-push.sh:22`
 ## Task 4 [AC6] Green probe after the push
 File: `supabase/config.toml:351`
 - Change: none. Re-run Task 1's 5-URL `/verify` probe.
-- Verify: prod root, alias, hash → `Location` = own URL; evil → `https://chaiyo.vercel.app`; lookalike → own URL (matches, recorded as the Q5-A residual).
+- Verify: with `<origin>/auth/callback`: prod root, alias, hash → `Location` = own URL (a slashless preview origin still falls back); evil → `https://chaiyo.vercel.app`; lookalike → own URL (matches, recorded as the Q5-A residual).
 
 ## Task 5 [AC6] Google and magic-link legs (OUTWARD: one real email)
 File: `supabase/config.toml:351`
 - Google smoke: `GET /authorize?provider=google&redirect_to=<url>` ×3 (prod, alias, hash) → 302 to `accounts.google.com`, `redirect_to` echoed. Not an allow-list proof.
-- Magic link: one `POST /otp?redirect_to=https://chaiyo-git-chy-63-stonghuulocs-projects.vercel.app` body `{"email":"stonghuuloc@gmail.com"}`; read the newest Resend email via the API (key loaded in-process from `supabase/.env`, never printed) and print only the link's `redirect_to`.
+- Magic link: one `POST /otp?redirect_to=https://chaiyo-git-chy-63-stonghuulocs-projects.vercel.app/auth/callback` body `{"email":"stonghuuloc@gmail.com"}`; read the newest Resend email via the API (key loaded in-process, never printed) and print only the link's `redirect_to`; if the key is send-only (401), Loc reads the link.
 - Verify: link `redirect_to` = the preview URL. If it is the site_url, mark ⚠️ and keep Task 4 as the proof.
 
 ## Task 6 [AC6] README one line
