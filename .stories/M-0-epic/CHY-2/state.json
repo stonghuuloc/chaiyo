@@ -13,10 +13,11 @@
         "AC4"
       ],
       "repo": "",
-      "stage": "plan",
+      "stage": "done",
       "reviews": 0,
-      "note": "plan rev 1 \u2014 awaiting go for execute",
-      "jira": "CHY-2.1"
+      "note": "verified AC1/AC2/AC4 on main e7d3163",
+      "jira": "CHY-2.1",
+      "pr": "#5"
     },
     {
       "id": "S2",
@@ -25,14 +26,16 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "execute",
       "reviews": 0,
-      "note": "",
+      "note": "executing tasks 1-7; Task 8 blocks on Loc",
       "jira": "CHY-2.2"
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#5"
+  ],
   "branch": "CHY-2",
   "log": [
     "2026-10-26 init",
@@ -40,7 +43,18 @@
     "2026-10-26 +S2 auth providers local + hosted [AC3]",
     "2026-10-27 S1 \u2192 discuss",
     "2026-10-27 S1 \u2192 spec",
-    "2026-10-27 S1 \u2192 plan"
+    "2026-10-27 S1 \u2192 plan",
+    "2026-10-28 S1 \u2192 verify",
+    "2026-10-28 S1 \u2192 done",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 discuss",
+    "2026-10-28 S2 \u2192 spec",
+    "2026-10-28 S2 \u2192 plan",
+    "2026-10-28 S2 \u2192 plan",
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 execute"
   ],
-  "updated": "2026-10-27T20:58:34+07:00"
+  "updated": "2026-10-28T14:02:41+07:00"
 }
