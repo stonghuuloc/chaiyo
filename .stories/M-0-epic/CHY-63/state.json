@@ -16,9 +16,9 @@
         "AC7"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "verify",
       "reviews": 0,
-      "note": "PR #8 open, ci green, preview 200 (SSO bypass); awaiting Loc's review/merge",
+      "note": "AC1,2,3,4,5 \u2705; AC7 \u26a0\ufe0f scoped (hasData false until merge + prod visit)",
       "jira": "CHY-63.1",
       "pr": "#8"
     },
@@ -54,7 +54,8 @@
     "2026-10-28 S1 \u2192 spec",
     "2026-10-28 S1 \u2192 plan",
     "2026-10-28 S1 \u2192 execute",
-    "2026-10-28 S1 \u2192 execute"
+    "2026-10-28 S1 \u2192 execute",
+    "2026-10-28 S1 \u2192 verify"
   ],
-  "updated": "2026-10-28T17:20:35+07:00"
+  "updated": "2026-10-28T17:34:59+07:00"
 }
