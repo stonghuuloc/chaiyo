@@ -1,5 +1,5 @@
 # CHY-2 S1 — summary
-ACs: AC1, AC2, AC4  ·  Commits: 7ff4016 (code), story-state commits on CHY-2  ·  PR: see PR (number in story state)
+ACs: AC1, AC2, AC4  ·  Commits: 7ff4016 (code), story-state commits on CHY-2  ·  PR: #5
 
 ## Shipped
 - [AC1] `supabase/config.toml` ports → 56320/56321/56322/56323/56324/56327/56329; `inspector_port = 8083` untouched. `rg -n '^\s*(shadow_)?port = 563(2[0-9])'` → 7 hits; only commented `smtp_port`/`pop3_port` keep 543xx.
