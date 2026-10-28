@@ -32,6 +32,19 @@ Node 22+ and pnpm. Local Supabase (Docker required):
 6. Google sign-in (once): in Google Cloud create a Web OAuth client with redirect URIs `http://127.0.0.1:56321/auth/v1/callback` and `https://<ref>.supabase.co/auth/v1/callback`. `cp supabase/.env.example supabase/.env` and fill the client id and secret there, never in the root `.env`. Restart with `supabase stop && supabase start`.
 7. Hosted project (once): `supabase login`, `supabase link --project-ref <ref>`, then `pnpm supabase:push <ref>`. Never run `supabase config push` directly: with an empty Google secret it overwrites the live one. Hosted email goes out through Resend SMTP with the API key in `supabase/.env` as `RESEND_API_KEY`, from the sandbox sender `onboarding@resend.dev`; the sandbox delivers only to the Resend account owner until a domain is verified, and the push refuses when the key is empty. Local email stays in Mailpit (http://127.0.0.1:56324).
 
+## Deploy
+
+Vercel project `chaiyo` (scope `stonghuulocs-projects`), linked to the GitHub repo. `pnpm build` uses `@sveltejs/adapter-vercel` (`vite.config.ts`).
+
+| Event | Result |
+|---|---|
+| push to `main` | Production deploy at https://chaiyo.vercel.app |
+| every pull request | Preview deploy, URL in the `vercel[bot]` PR comment |
+
+- Preview URLs: `https://chaiyo-git-<branch>-stonghuulocs-projects.vercel.app` (branch alias) and `https://chaiyo-<hash>-stonghuulocs-projects.vercel.app` (one per deploy).
+- Env vars: set `PUBLIC_SUPABASE_URL` (the hosted project URL) and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` for Production and Preview with `vercel env add <NAME> --environment production,preview --no-sensitive`. Development stays unset: local values live in `.env`. Both values are public by design; keep every other secret out of Vercel and the repo.
+- Speed Insights: `injectSpeedInsights()` in `src/routes/+layout.ts`. Enable it once under Project → Speed Insights; data appears after the first production visit.
+
 ## Generated files
 
 | Command | From | To |

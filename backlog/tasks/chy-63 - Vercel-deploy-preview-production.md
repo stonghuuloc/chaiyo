@@ -4,6 +4,7 @@ title: Vercel deploy (preview + production)
 status: To Do
 assignee: []
 created_date: '2026-10-28 05:59'
+updated_date: '2026-10-28 10:04'
 labels:
   - infra
 milestone: m-0
@@ -68,4 +69,5 @@ Feature: Vercel deploy (preview + production)
 - [ ] #4 PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_PUBLISHABLE_KEY are set in Vercel production, pointing at the hosted chaiyo project, with no secrets in the repo
 - [ ] #5 README Develop/Deploy documents the Vercel deploy
 - [ ] #6 The hosted Supabase Site URL is the production domain and its redirect allow-list includes the production domain and the preview URL pattern, so Google and magic-link sign-in on the deployed app return the learner signed in
+- [ ] #7 Vercel Speed Insights is installed and reports data from production
 <!-- AC:END -->
