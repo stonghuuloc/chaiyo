@@ -30,8 +30,9 @@ ACs: AC3 (AC3: Google + magic link enabled locally and on hosted project. Backlo
 | 4 | Q8 [AC3] | Fallback if `[remotes.hosted]` is ignored by config push | C — if `[remotes.hosted]` is ignored, drop it and use one shared root block: `site_url = https://<name>.vercel.app`, redirect list = vercel.app + `http://localhost:5173` + `http://127.0.0.1:5173`. A was unworkable because push overwrites dashboard site_url. | Director pick 2026-10-28; 8A unworkable; Loc may override before Task 9 |
 | 5 | Q9 [AC3] | Vercel domain before CHY-63 | A — one manual `vercel deploy --prod` now (no GitHub link, no env vars) to get the real `*.vercel.app` domain for hosted site_url; CHY-63 does the git integration + env | Loc, 2026-10-28 |
 | 6 | Q10 [AC3] | Hosted values that drift from the local dev root block | B — pin hosted enable_confirmations=true, max_frequency=1m, TOTP MFA on; local keeps dev values | Loc, 2026-10-28 |
-| 7 | Q11 [AC3] | Hosted email templates on the free tier | B — hosted uses Gmail SMTP (stonghuuloc@gmail.com, app password in supabase/.env); free tier blocks templates on the default sender; swap to Resend when chaiyo has a domain | Loc, 2026-10-28 |
+| 7 | Q11 [AC3] | Hosted email templates on the free tier | B — hosted uses Gmail SMTP (stonghuuloc@gmail.com, app password in supabase/.env); free tier blocks templates on the default sender; swap to Resend when chaiyo has a domain. Superseded by Q13. | Loc, 2026-10-28 |
 | 8 | Q12 [AC3] | Vercel GitHub link created by `vercel link` | A — keep it; CHY-63 verifies | Loc, 2026-10-28 |
+| 9 | Q13 [AC3] | Hosted sender | A — Resend sandbox (onboarding@resend.dev, like Mantica); only the Resend account owner receives mail until chaiyo has a verified domain | Loc, 2026-10-28 |
 
 ## Open — needs an answer before spec
 None. Q1–Q6 resolved above and keep their numbers; frontier empty.

@@ -26,9 +26,9 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "verify",
       "reviews": 0,
-      "note": "hosted pushed; awaiting Loc inbox + merge",
+      "note": "AC3 verdict written; awaiting done go",
       "jira": "CHY-2.2",
       "pr": "#6"
     }
@@ -57,7 +57,9 @@
     "2026-10-28 S2 \u2192 plan",
     "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 execute",
-    "2026-10-28 S2 \u2192 execute"
+    "2026-10-28 S2 \u2192 execute",
+    "2026-10-28 S2 \u2192 verify",
+    "2026-10-28 S2 \u2192 verify"
   ],
-  "updated": "2026-10-28T15:19:42+07:00"
+  "updated": "2026-10-28T15:48:07+07:00"
 }
