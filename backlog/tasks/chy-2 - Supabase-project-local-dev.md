@@ -1,10 +1,10 @@
 ---
 id: CHY-2
 title: Supabase project + local dev
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:46'
+updated_date: '2026-10-28 09:46'
 labels:
   - slice-1
   - infra
@@ -58,8 +58,8 @@ Feature: Supabase project + local dev
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario: Local Supabase starts
-- [ ] #2 Scenario: .env.example covers every key the app reads
-- [ ] #3 Scenario: Auth providers are configured locally and on the hosted project
-- [ ] #4 Scenario: README documents the Supabase steps
+- [x] #1 Scenario: Local Supabase starts
+- [x] #2 Scenario: .env.example covers every key the app reads
+- [x] #3 Scenario: Auth providers are configured locally and on the hosted project
+- [x] #4 Scenario: README documents the Supabase steps
 <!-- AC:END -->

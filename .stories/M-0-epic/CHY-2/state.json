@@ -1,7 +1,7 @@
 {
   "story": "CHY-2",
   "title": "Supabase project + local dev",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -26,17 +26,18 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "verify",
+      "stage": "done",
       "reviews": 0,
-      "note": "AC3 verdict written; awaiting done go",
+      "note": "AC3 verified; Resend sandbox + template merged",
       "jira": "CHY-2.2",
-      "pr": "#6"
+      "pr": "#7"
     }
   ],
   "locked": [],
   "prs": [
     "#5",
-    "#6"
+    "#6",
+    "#7"
   ],
   "branch": "CHY-2",
   "log": [
@@ -59,7 +60,8 @@
     "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 execute",
     "2026-10-28 S2 \u2192 verify",
-    "2026-10-28 S2 \u2192 verify"
+    "2026-10-28 S2 \u2192 verify",
+    "2026-10-28 S2 \u2192 done"
   ],
-  "updated": "2026-10-28T15:48:07+07:00"
+  "updated": "2026-10-28T16:45:57+07:00"
 }

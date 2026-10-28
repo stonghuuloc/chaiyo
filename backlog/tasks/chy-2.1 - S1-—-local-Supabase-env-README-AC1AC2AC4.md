@@ -1,9 +1,10 @@
 ---
 id: CHY-2.1
 title: 'S1 — local Supabase + env + README (AC1,AC2,AC4)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-28 09:46'
 labels: []
 milestone: m-0
 dependencies: []
