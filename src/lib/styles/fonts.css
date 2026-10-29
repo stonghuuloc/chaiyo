@@ -1,0 +1,67 @@
+/* Same-origin faces for AC4: no font CDN. Be Vietnam Pro comes from @fontsource (family name matches the tokens);
+   Literata is declared here because the package names it "Literata Variable", while the tokens say "Literata". */
+@import '@fontsource/be-vietnam-pro/latin-400.css';
+@import '@fontsource/be-vietnam-pro/latin-500.css';
+@import '@fontsource/be-vietnam-pro/latin-600.css';
+@import '@fontsource/be-vietnam-pro/latin-700.css';
+@import '@fontsource/be-vietnam-pro/vietnamese-400.css';
+@import '@fontsource/be-vietnam-pro/vietnamese-500.css';
+@import '@fontsource/be-vietnam-pro/vietnamese-600.css';
+@import '@fontsource/be-vietnam-pro/vietnamese-700.css';
+
+@font-face {
+	font-family: 'Literata';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 200 900;
+	src: url('../../../node_modules/@fontsource-variable/literata/files/literata-vietnamese-opsz-normal.woff2')
+		format('woff2');
+	unicode-range:
+		U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301,
+		U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+	font-family: 'Literata';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 200 900;
+	src: url('../../../node_modules/@fontsource-variable/literata/files/literata-latin-opsz-normal.woff2')
+		format('woff2');
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Onest';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 400;
+	src: url('../assets/fonts/onest-pinyin-400.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Onest';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 500;
+	src: url('../assets/fonts/onest-pinyin-500.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Onest';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 600;
+	src: url('../assets/fonts/onest-pinyin-600.woff2') format('woff2');
+}
+
+/* ukai-h1-01.woff2 is a modified copy of AR PL UKai CN (Arphic Technology): a per-lesson glyph subset (2026-10-29)
+   converted to WOFF2. Licensed under the Arphic Public License, shipped unaltered at /licenses/ARPHICPL.TXT. */
+@font-face {
+	font-family: 'AR PL UKai CN';
+	font-style: normal;
+	font-display: block;
+	src: url('../assets/fonts/ukai-h1-01.woff2') format('woff2');
+}

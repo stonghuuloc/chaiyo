@@ -1,8 +1,8 @@
 {
   "story": "CHY-4",
   "title": "Design-system primitives in Svelte",
-  "stage": "slicing",
-  "current_slice": "S1",
+  "stage": "done",
+  "current_slice": "S3",
   "slices": [
     {
       "id": "S1",
@@ -12,10 +12,11 @@
         "AC2"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "done",
       "reviews": 0,
-      "note": "",
-      "jira": "CHY-4.1"
+      "note": "closed; PR #12 pushed and verified",
+      "jira": "CHY-4.1",
+      "pr": "#12"
     },
     {
       "id": "S2",
@@ -25,10 +26,11 @@
         "AC5"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "done",
       "reviews": 0,
-      "note": "",
-      "jira": "CHY-4.2"
+      "note": "closed; PR #12 pushed, CI green",
+      "jira": "CHY-4.2",
+      "pr": "#12"
     },
     {
       "id": "S3",
@@ -37,20 +39,51 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "done",
       "reviews": 0,
-      "note": "",
-      "jira": "CHY-4.3"
+      "note": "verified 0938b54 live: 12 \u2705, 2 scoped \u26a0\ufe0f (focus ring 2px at DPR1, iOS not checked)",
+      "jira": "CHY-4.3",
+      "pr": "#12"
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#12"
+  ],
   "branch": "CHY-4",
   "log": [
     "2026-10-26 init",
     "2026-10-26 +S1 icon sprite + duotone [AC1,AC2]",
     "2026-10-26 +S2 tokens + self-hosted fonts [AC4,AC5]",
-    "2026-10-26 +S3 primitive components [AC3]"
+    "2026-10-26 +S3 primitive components [AC3]",
+    "2026-10-29 S1 \u2192 discuss",
+    "2026-10-29 S1 \u2192 spec",
+    "2026-10-29 S1 \u2192 plan",
+    "2026-10-29 S1 \u2192 picture",
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 verify",
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S2 \u2192 discuss",
+    "2026-10-29 S2 \u2192 discuss",
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S2 \u2192 discuss",
+    "2026-10-29 S2 \u2192 spec",
+    "2026-10-29 S2 \u2192 plan",
+    "2026-10-29 S2 \u2192 picture",
+    "2026-10-29 S2 \u2192 execute",
+    "2026-10-29 S2 \u2192 verify",
+    "2026-10-29 S2 \u2192 done",
+    "2026-10-29 S3 \u2192 discuss",
+    "2026-10-29 S3 \u2192 discuss",
+    "2026-10-29 S3 \u2192 spec",
+    "2026-10-29 S3 \u2192 plan",
+    "2026-10-29 S3 \u2192 picture",
+    "2026-10-29 S3 \u2192 execute",
+    "2026-10-29 S3 \u2192 execute",
+    "2026-10-29 S3 \u2192 execute",
+    "2026-10-29 S3 \u2192 verify",
+    "2026-10-29 S3 \u2192 done"
   ],
-  "updated": "2026-10-26T13:14:49+07:00"
+  "updated": "2026-10-29T15:10:57+07:00"
 }

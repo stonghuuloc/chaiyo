@@ -6,6 +6,7 @@ Usage: python3 scripts/build-lesson-media.py h2-01 [h3-01 …] [--no-art]
   art    assets/lessons/<id>.png (cover) + assets/words/<id>/w01.png …, via gen-result-art.sh --prompt; skips existing
 Needs the /tmp/etts venv (edge-tts + fonttools)."""
 import json, os, re, subprocess, sys
+from datetime import date
 from concurrent.futures import ThreadPoolExecutor
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +35,19 @@ def art(out, scene):
 
 
 def build(lid, do_art):
+    """Generate media for prototype/data/<lid>.js, optionally including art.
+
+    Keep existing nonempty audio files and, when do_art is truthy, existing art
+    files. Always regenerate the lesson's Kaishu WOFF2 subset and stamp it with
+    today's local date. Write audio and fonts under prototype/ and art under
+    assets/. Print progress and return None.
+
+    Nonzero TTS and art exit codes become printed results; processing continues.
+    Lesson-loading, font-subsetting, and notice-stamping command failures raise
+    subprocess.CalledProcessError. Process-launch and file-access errors, JSON
+    decoding errors, missing lesson fields, and unknown speaker values also
+    propagate; a sentence without a speaker uses 'redpanda'.
+    """
     L = load(lid); jobs = []
     for i, w in enumerate(L['words'], 1):
         jobs.append((w['hz'], WORD_VOICE, f'{P}/audio/{lid}/w{i:02d}.mp3'))
@@ -47,6 +61,8 @@ def build(lid, do_art):
     chars = ''.join(sorted(set(re.findall(r'[\u3400-\u9fff]', json.dumps(L, ensure_ascii=False)))))
     subprocess.run([f'{VENV}/pyftsubset', f'{ROOT}/assets/ukai.ttc', '--font-number=0', f'--text={chars}', '--flavor=woff2',
                     f'--output-file={P}/fonts/ukai-{lid}.woff2'], check=True)
+    subprocess.run([f'{VENV}/python', os.path.join(ROOT, 'scripts/stamp-arphic-notice.py'),
+                    date.today().isoformat(), f'{P}/fonts/ukai-{lid}.woff2'], check=True)
     print(f'{lid} font: {len(chars)} chars')
 
     if do_art:

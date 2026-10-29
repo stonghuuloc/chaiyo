@@ -51,7 +51,8 @@ Vercel project `chaiyo` (scope `stonghuulocs-projects`), linked to the GitHub re
 | Command | From | To |
 |---|---|---|
 | `pnpm tokens` | `design.tokens.json` | `src/lib/styles/tokens.css`, a Tailwind `@theme` (never edit by hand) |
-| `pnpm icons` | `assets/brand/source.png` | `static/brand/*` (logo, PWA icons, favicon) |
+| `pnpm icons` | `@iconify-json/solar` + the id list in `scripts/build-icons.mjs` | `src/lib/assets/icons.svg` (the Solar sprite; never edit by hand) |
+| `pnpm brand` | `assets/brand/source.png` | `static/brand/*` (logo, PWA icons, favicon) |
 | `pnpm check` / `pnpm dev` | `messages/*.json` | `src/lib/paraglide/` (git-ignored) |
 
 ## Layout
@@ -66,7 +67,7 @@ src/
 static/              manifest.webmanifest, brand/ icons
 messages/            vi.json, en.json
 supabase/            config.toml; migrations and Edge Functions go here
-scripts/             build-tokens.mjs, build-icons.sh
+scripts/             build-tokens.mjs, build-icons.mjs, build-brand.sh
 ```
 
 Styling: Tailwind utilities named after the tokens — `bg-lantern-red`, `bg-sunflower`, `text-ink`, `font-display text-display`, `p-s4`, `rounded-action`. Add a colour or size to `design.tokens.json`, then `pnpm tokens`; never hard-code hex in markup.

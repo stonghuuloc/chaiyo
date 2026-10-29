@@ -78,6 +78,149 @@
     },
     "border": {
       "$value": "{color.ruled-line}"
+    },
+    "frost-tint": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98039,
+          0.96471,
+          0.93333
+        ],
+        "alpha": 0.72
+      },
+      "$description": "rgba(250,246,238,.72): milky fill behind blur for the tab bar and chips"
+    },
+    "frost-rim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.9
+      },
+      "$description": "1px inset white top highlight"
+    },
+    "frost-edge": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.15686,
+          0.09804,
+          0.05882
+        ],
+        "alpha": 0.1
+      },
+      "$description": "rgba(40,25,15,.10): .5px tab-bar border"
+    },
+    "frost-pill": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.62
+      },
+      "$description": "Selection pill at rest; white top rim, faint shadow"
+    },
+    "frost-inner": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.15686,
+          0.07843,
+          0.03922
+        ],
+        "alpha": 0.08
+      },
+      "$description": "rgba(40,20,10,.08): 1px inset shade along the bottom edge of the tab-bar pill"
+    },
+    "frost-sheen-top": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.45
+      },
+      "$description": "White at 45%: top of the pill's glass sheen gradient"
+    },
+    "frost-sheen-clear": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0
+      },
+      "$description": "White at 0%: where the sheen gradient fades out (not transparent: black at 0% would shift the midtones)"
+    },
+    "frost-sheen-glow": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.25
+      },
+      "$description": "White at 25%: soft glow rising from the pill's bottom edge"
+    },
+    "frost-divider": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.15686,
+          0.09804,
+          0.05882
+        ],
+        "alpha": 0.18
+      },
+      "$description": "rgba(40,25,15,.18): 1px divider between facts in a Chip"
+    },
+    "lift-rim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.18
+      },
+      "$description": "White 18% inset highlight on the primary button"
+    },
+    "scrim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.11373,
+          0.09412,
+          0.07843
+        ],
+        "alpha": 0.5
+      },
+      "$description": "Ink 50%: scrim behind Sheet and Dialog"
     }
   },
   "font": {
@@ -120,7 +263,7 @@
       "$description": "Learner toggle only"
     }
   },
-  "type": {
+  "text": {
     "display": {
       "$type": "typography",
       "$value": {
@@ -208,52 +351,41 @@
         "fontWeight": 600,
         "lineHeight": 1
       }
+    },
+    "chip": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": {
+          "value": 15,
+          "unit": "px"
+        },
+        "fontWeight": 600,
+        "lineHeight": 1
+      },
+      "$description": "Chip facts"
+    },
+    "toast": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.sans}",
+        "fontSize": {
+          "value": 14,
+          "unit": "px"
+        },
+        "fontWeight": 500,
+        "lineHeight": 1.5
+      },
+      "$description": "Toast message and action"
     }
   },
-  "space": {
+  "spacing": {
     "$type": "dimension",
-    "s1": {
-      "$value": {
-        "value": 4,
-        "unit": "px"
-      }
+    "$value": {
+      "value": 4,
+      "unit": "px"
     },
-    "s2": {
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      }
-    },
-    "s3": {
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
-    "s4": {
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      }
-    },
-    "s5": {
-      "$value": {
-        "value": 20,
-        "unit": "px"
-      }
-    },
-    "s6": {
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "s8": {
-      "$value": {
-        "value": 32,
-        "unit": "px"
-      }
-    }
+    "$description": "Base unit: p-4 = 16px. DESIGN.md steps 4, 8, 12, 16, 20, 24, 32 = p-1…p-8"
   },
   "radius": {
     "$type": "dimension",
@@ -292,62 +424,116 @@
         "unit": "ms"
       },
       "$description": "--motion-fade-reduced: the same fades under prefers-reduced-motion (prototype .15s)"
+    },
+    "press": {
+      "$type": "duration",
+      "$value": {
+        "value": 120,
+        "unit": "ms"
+      },
+      "$description": "--motion-press: Button press scale and colour (prototype .12s)"
+    },
+    "scrim": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      },
+      "$description": "--motion-scrim: scrim fade for Sheet and Dialog (prototype .15s)"
+    },
+    "sheet": {
+      "$type": "duration",
+      "$value": {
+        "value": 280,
+        "unit": "ms"
+      },
+      "$description": "--motion-sheet: bottom sheet slide (prototype .28s)"
+    },
+    "dialog": {
+      "$type": "duration",
+      "$value": {
+        "value": 280,
+        "unit": "ms"
+      },
+      "$description": "--motion-dialog: dialog pop, no overshoot (DESIGN.md: no bouncy UI)"
+    },
+    "toast": {
+      "$type": "duration",
+      "$value": {
+        "value": 180,
+        "unit": "ms"
+      },
+      "$description": "--motion-toast: toast rise and fade (prototype .18s)"
     }
   },
-  "frost": {
-    "tint": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.98039,
-          0.96471,
-          0.93333
-        ],
-        "alpha": 0.72
-      },
-      "$description": "rgba(250,246,238,.72): milky fill behind blur for the tab bar and chips"
+  "shadow": {
+    "lift": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.65882,
+              0.14902,
+              0.07843
+            ],
+            "alpha": 0.28
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 10,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 24,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Primary button lift: Press-red shadow (the only non-frost depth, DESIGN.md)"
     },
-    "blur": {
-      "$type": "dimension",
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      },
-      "$description": "backdrop-filter blur radius"
+    "overlay": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11373,
+              0.09412,
+              0.07843
+            ],
+            "alpha": 0.3
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 20,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 60,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Dialog float shadow"
     },
-    "saturate": {
-      "$type": "number",
-      "$value": 1.75,
-      "$description": "backdrop-filter saturate(175%)"
-    },
-    "rim": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          1,
-          1,
-          1
-        ],
-        "alpha": 0.9
-      },
-      "$description": "1px inset white top highlight"
-    },
-    "edge": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.15686,
-          0.09804,
-          0.05882
-        ],
-        "alpha": 0.1
-      },
-      "$description": "rgba(40,25,15,.10): .5px tab-bar border"
-    },
-    "shadow": {
+    "frost": {
       "$type": "shadow",
       "$value": [
         {
@@ -406,19 +592,95 @@
         }
       ],
       "$description": "Frost float: soft brown ambient shadow under tab bar and chips"
+    }
+  },
+  "inset-shadow": {
+    "lift": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.lift-rim}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          },
+          "inset": true
+        }
+      ],
+      "$description": "1px white top highlight on the primary button"
     },
-    "pill": {
-      "$type": "color",
+    "frost": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.frost-rim}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          },
+          "inset": true
+        }
+      ],
+      "$description": "1px white top highlight on frosted surfaces"
+    }
+  },
+  "blur": {
+    "frost": {
+      "$type": "dimension",
       "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          1,
-          1,
-          1
-        ],
-        "alpha": 0.62
+        "value": 24,
+        "unit": "px"
       },
-      "$description": "Selection pill at rest; white top rim, faint shadow"
+      "$description": "backdrop-filter blur radius"
+    }
+  },
+  "container": {
+    "column": {
+      "$type": "dimension",
+      "$value": {
+        "value": 430,
+        "unit": "px"
+      },
+      "$description": "Single phone column and Sheet width (max-w-column)"
+    },
+    "dialog": {
+      "$type": "dimension",
+      "$value": {
+        "value": 340,
+        "unit": "px"
+      },
+      "$description": "Dialog max width, locked (max-w-dialog)"
+    }
+  },
+  "frost": {
+    "saturate": {
+      "$type": "number",
+      "$value": 1.75,
+      "$description": "backdrop-filter saturate(175%)"
     }
   },
   "icon": {

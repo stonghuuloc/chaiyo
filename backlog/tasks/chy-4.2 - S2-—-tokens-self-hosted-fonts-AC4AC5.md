@@ -1,9 +1,10 @@
 ---
 id: CHY-4.2
 title: 'S2 — tokens + self-hosted fonts (AC4,AC5)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-29 06:28'
 labels: []
 milestone: m-0
 dependencies: []

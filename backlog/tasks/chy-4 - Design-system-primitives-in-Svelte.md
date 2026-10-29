@@ -4,7 +4,7 @@ title: Design-system primitives in Svelte
 status: To Do
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:47'
+updated_date: '2026-10-29 06:28'
 labels:
   - slice-1
   - ui
@@ -68,9 +68,9 @@ Feature: Design-system primitives in Svelte
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario: Icon sprite is generated, never hand-edited
-- [ ] #2 Scenario: Duotone colours are tunable
+- [x] #1 Scenario: Icon sprite is generated, never hand-edited
+- [x] #2 Scenario: Duotone colours are tunable
 - [ ] #3 Scenario: Every primitive component exists with its variants
-- [ ] #4 Scenario: Fonts are self-hosted
-- [ ] #5 Scenario: Colours come from design tokens only
+- [x] #4 Scenario: Fonts are self-hosted
+- [x] #5 Scenario: Colours come from design tokens only
 <!-- AC:END -->

@@ -18,7 +18,7 @@ describe('tabFor', () => {
 });
 
 describe('TABS icons', () => {
-	const sprite = readFileSync(new URL('../assets/tab-icons.svg', import.meta.url), 'utf8');
+	const sprite = readFileSync(new URL('../assets/icons.svg', import.meta.url), 'utf8');
 
 	it.each(TABS.map((t) => t.icon))('has the line and fill symbols for %s', (icon) => {
 		expect(sprite).toContain(`id="i-regular-${icon}"`);

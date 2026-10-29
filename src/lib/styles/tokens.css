@@ -1,5 +1,12 @@
 /* Generated from design.tokens.json by scripts/build-tokens.mjs — do not edit. */
 @theme {
+	--color-*: initial;
+	--text-*: initial;
+	--radius-*: initial;
+	--shadow-*: initial;
+	--inset-shadow-*: initial;
+	--blur-*: initial;
+	--container-*: initial;
 	--color-lantern-red: #c6301d;
 	--color-lantern-red-press: #a72614;
 	--color-lantern-red-text: #a72614;
@@ -21,6 +28,17 @@
 	--color-muted: var(--color-pencil);
 	--color-background: var(--color-notebook-paper);
 	--color-border: var(--color-ruled-line);
+	--color-frost-tint: rgb(250 246 238 / 0.72);
+	--color-frost-rim: rgb(255 255 255 / 0.9);
+	--color-frost-edge: rgb(40 25 15 / 0.1);
+	--color-frost-pill: rgb(255 255 255 / 0.62);
+	--color-frost-inner: rgb(40 20 10 / 0.08);
+	--color-frost-sheen-top: rgb(255 255 255 / 0.45);
+	--color-frost-sheen-clear: rgb(255 255 255 / 0);
+	--color-frost-sheen-glow: rgb(255 255 255 / 0.25);
+	--color-frost-divider: rgb(40 25 15 / 0.18);
+	--color-lift-rim: rgb(255 255 255 / 0.18);
+	--color-scrim: rgb(29 24 20 / 0.5);
 	--font-serif: Literata, serif;
 	--font-sans: "Be Vietnam Pro", system-ui, sans-serif;
 	--font-pinyin: Onest, system-ui, sans-serif;
@@ -55,27 +73,36 @@
 	--text-tab--line-height: 1;
 	--text-tab--font-weight: 600;
 	--font-tab: var(--font-sans);
-	--spacing-s1: 4px;
-	--spacing-s2: 8px;
-	--spacing-s3: 12px;
-	--spacing-s4: 16px;
-	--spacing-s5: 20px;
-	--spacing-s6: 24px;
-	--spacing-s8: 32px;
+	--text-chip: 15px;
+	--text-chip--line-height: 1;
+	--text-chip--font-weight: 600;
+	--font-chip: var(--font-sans);
+	--text-toast: 14px;
+	--text-toast--line-height: 1.5;
+	--text-toast--font-weight: 500;
+	--font-toast: var(--font-sans);
+	--spacing: 4px;
 	--radius-cell: 12px;
 	--radius-action: 18px;
 	--radius-pill: 999px;
+	--shadow-lift: 0px 10px 24px 0px rgb(168 38 20 / 0.28);
+	--shadow-overlay: 0px 20px 60px 0px rgb(29 24 20 / 0.3);
+	--shadow-frost: 0px 10px 30px 0px rgb(45 25 10 / 0.16), 0px 1px 3px 0px rgb(45 25 10 / 0.08);
+	--inset-shadow-lift: inset 0px 1px 0px 0px var(--color-lift-rim);
+	--inset-shadow-frost: inset 0px 1px 0px 0px var(--color-frost-rim);
+	--blur-frost: 24px;
+	--container-column: 430px;
+	--container-dialog: 340px;
 }
 :root {
 	--motion-fade: 260ms;
 	--motion-fade-reduced: 150ms;
-	--frost-tint: rgb(250 246 238 / 0.72);
-	--frost-blur: 24px;
+	--motion-press: 120ms;
+	--motion-scrim: 150ms;
+	--motion-sheet: 280ms;
+	--motion-dialog: 280ms;
+	--motion-toast: 180ms;
 	--frost-saturate: 1.75;
-	--frost-rim: rgb(255 255 255 / 0.9);
-	--frost-edge: rgb(40 25 15 / 0.1);
-	--frost-shadow: 0px 10px 30px 0px rgb(45 25 10 / 0.16), 0px 1px 3px 0px rgb(45 25 10 / 0.08);
-	--frost-pill: rgb(255 255 255 / 0.62);
 	--icon-duo: 0.5;
 	--icon-duo-c: #f2cfc6;
 }

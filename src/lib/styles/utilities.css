@@ -1,0 +1,18 @@
+/* 1×18 rule between adjacent children (Chip facts) */
+@utility divide-frost {
+	& > * + * {
+		position: relative;
+		padding-left: --spacing(3);
+	}
+
+	& > * + *::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 50%;
+		width: 1px;
+		height: 18px;
+		transform: translateY(-50%);
+		background: var(--color-frost-divider);
+	}
+}
