@@ -8,6 +8,11 @@
 	import { TABS, tabFor } from './tabs';
 
 	const active = $derived(tabFor(page.url.pathname));
+	// the slide-out keeps the last selection, so the icon does not fade back to line mid-slide
+	let shown = $state(tabFor(page.url.pathname) ?? 0);
+	$effect.pre(() => {
+		if (active !== null) shown = active;
+	});
 </script>
 
 {#if active !== null}
@@ -20,7 +25,7 @@
 		{@html sprite}
 		<div class="pill">
 			{#each TABS as tab, i (tab.path)}
-				<a class="tab" href={resolve(tab.route)} aria-current={i === active ? 'page' : undefined}>
+				<a class="tab" href={resolve(tab.route)} aria-current={i === shown ? 'page' : undefined}>
 					<span class="icw" aria-hidden="true">
 						<svg class="ic l"><use href="#i-regular-{tab.icon}" /></svg>
 						<svg class="ic f n-{tab.icon}"><use href="#i-fill-{tab.icon}" /></svg>
