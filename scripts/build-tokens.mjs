@@ -19,6 +19,11 @@ const dim = (v) => (typeof v === 'object' ? `${v.value}${v.unit}` : String(v));
 const family = (v) =>
 	Array.isArray(v) ? v.map((f) => (/\s/.test(f) ? `"${f}"` : f)).join(', ') : v;
 
+/**
+ * Format a DTCG token value for CSS. References such as `{color.ink}` become
+ * CSS variable references without resolving the target. Dimension and duration
+ * objects retain their supplied units; unhandled types use string conversion.
+ */
 function value(type, v) {
 	if (isRef(v)) return `var(${varName(v.slice(1, -1).split('.'))})`;
 	switch (type) {
