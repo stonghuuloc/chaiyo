@@ -12,6 +12,10 @@ reviews:
   suggested_reviewers: false
   in_progress_fortune: false
   poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    base_branches: ['.*']
   path_filters:
     - '!content/**'
     - '!.stories/**'
