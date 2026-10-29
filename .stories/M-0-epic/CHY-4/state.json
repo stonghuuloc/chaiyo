@@ -26,10 +26,11 @@
         "AC5"
       ],
       "repo": "",
-      "stage": "discuss",
+      "stage": "verify",
       "reviews": 0,
-      "note": "round 1",
-      "jira": "CHY-4.2"
+      "note": "verified; awaiting Loc's review before done",
+      "jira": "CHY-4.2",
+      "pr": "#12"
     },
     {
       "id": "S3",
@@ -65,7 +66,12 @@
     "2026-10-29 S2 \u2192 discuss",
     "2026-10-29 S2 \u2192 discuss",
     "2026-10-29 S1 \u2192 done",
-    "2026-10-29 S2 \u2192 discuss"
+    "2026-10-29 S2 \u2192 discuss",
+    "2026-10-29 S2 \u2192 spec",
+    "2026-10-29 S2 \u2192 plan",
+    "2026-10-29 S2 \u2192 picture",
+    "2026-10-29 S2 \u2192 execute",
+    "2026-10-29 S2 \u2192 verify"
   ],
-  "updated": "2026-10-29T12:59:52+07:00"
+  "updated": "2026-10-29T13:09:22+07:00"
 }
