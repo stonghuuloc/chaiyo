@@ -4,7 +4,7 @@ title: App shell + tab bar
 status: To Do
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-28 18:24'
+updated_date: '2026-10-28 19:35'
 labels:
   - slice-1
   - ui
@@ -70,6 +70,13 @@ Feature: App shell + tab bar
     Given I am not signed in
     When I open an app route such as /today
     Then I land on the login screen
+
+  Scenario: Offline with an expired token keeps me in the app
+    Given I signed in earlier and my access token has expired
+    And Supabase cannot be reached
+    When I open an app route such as /today
+    Then the /today screen shows
+    And I am not sent to the login screen
 ```
 <!-- SECTION:DESCRIPTION:END -->
 
@@ -80,4 +87,5 @@ Feature: App shell + tab bar
 - [ ] #3 Scenario: Tab bar is frosted, fixed and safe-area aware
 - [ ] #4 Scenario: Selecting a tab crossfades line icon to fill icon
 - [x] #5 Scenario: Unauthenticated access redirects to login
+- [x] #6 Scenario: Offline with an expired token keeps me in the app
 <!-- AC:END -->

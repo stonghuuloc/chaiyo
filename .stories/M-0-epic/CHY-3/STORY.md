@@ -23,6 +23,7 @@ Four-tab app shell that shows the tab bar only on tab roots, so learners navigat
 | AC3 | Bar frosted, fixed, safe-area padded | high | S2 |
 | AC4 | Tab select crossfades line→fill icon like prototype | high | S2 |
 | AC5 | Unauthenticated app route redirects to login | high | S1 |
+| AC6 | Offline + expired token stays in app, no login redirect | high | S1 |
 
 ## Out of scope
 - Tab root content (later milestones).

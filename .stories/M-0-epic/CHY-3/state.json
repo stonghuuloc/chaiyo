@@ -10,12 +10,13 @@
       "acs": [
         "AC1",
         "AC2",
-        "AC5"
+        "AC5",
+        "AC6"
       ],
       "repo": "",
       "stage": "done",
       "reviews": 0,
-      "note": "AC1/2/5 \u2705 on 6329eb9 (local dev + Supabase)",
+      "note": "AC6 added (PR #10 review): offline expired token stays in app \u2705",
       "jira": "CHY-3.1",
       "pr": "#10"
     },
@@ -49,7 +50,8 @@
     "2026-10-29 S1 \u2192 picture",
     "2026-10-29 S1 \u2192 execute",
     "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 done",
     "2026-10-29 S1 \u2192 done"
   ],
-  "updated": "2026-10-29T01:24:03+07:00"
+  "updated": "2026-10-29T02:35:19+07:00"
 }
