@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 const src = fileURLToPath(new URL('../../', import.meta.url));
-const COLOUR_LITERAL = /#[0-9a-fA-F]{3,8}\b|\b(?:rgb|rgba|hsl|hsla)\(/;
+const COLOUR_LITERAL =
+	/(?<!href=["']|url\()#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/;
 const GENERATED = join('lib', 'styles', 'tokens.css');
 
 function walk(dir: string): string[] {
@@ -35,7 +36,11 @@ describe('colour literals in component files', () => {
 		'color: #fff',
 		'rgb(40 20 10 / 0.08)',
 		'rgba(0,0,0,.5)',
-		'hsl(0 0% 0%)'
+		'hsl(0 0% 0%)',
+		'oklch(60% 0.2 30)',
+		'hwb(0 0% 0%)',
+		'color(display-p3 1 0 0)',
+		'fill="#fff"'
 	])('Given_ColourLiteralSample_Then_RegexRejectsIt: %s', (sample) => {
 		// Arrange
 		// Act
@@ -46,7 +51,8 @@ describe('colour literals in component files', () => {
 
 	it('Given_TokenReference_Then_RegexAllowsIt', () => {
 		// Arrange
-		const sample = 'box-shadow: inset 0 1px 0 var(--frost-rim); href="#i-regular-house"';
+		const sample =
+			'box-shadow: inset 0 1px 0 var(--frost-rim); href="#i-regular-house" href="#add" mask: url(#fade)';
 		// Act
 		const hit = COLOUR_LITERAL.test(sample);
 		// Assert

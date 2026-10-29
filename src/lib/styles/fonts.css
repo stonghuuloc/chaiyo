@@ -57,6 +57,8 @@
 	src: url('../assets/fonts/onest-pinyin-600.woff2') format('woff2');
 }
 
+/* ukai-h1-01.woff2 is a modified copy of AR PL UKai CN (Arphic Technology): a per-lesson glyph subset (2026-10-29)
+   converted to WOFF2. Licensed under the Arphic Public License, shipped unaltered at /licenses/ARPHICPL.TXT. */
 @font-face {
 	font-family: 'AR PL UKai CN';
 	font-style: normal;
