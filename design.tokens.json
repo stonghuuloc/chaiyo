@@ -292,6 +292,46 @@
         "unit": "ms"
       },
       "$description": "--motion-fade-reduced: the same fades under prefers-reduced-motion (prototype .15s)"
+    },
+    "press": {
+      "$type": "duration",
+      "$value": {
+        "value": 120,
+        "unit": "ms"
+      },
+      "$description": "--motion-press: Button press scale and colour (prototype .12s)"
+    },
+    "scrim": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      },
+      "$description": "--motion-scrim: scrim fade for Sheet and Dialog (prototype .15s)"
+    },
+    "sheet": {
+      "$type": "duration",
+      "$value": {
+        "value": 280,
+        "unit": "ms"
+      },
+      "$description": "--motion-sheet: bottom sheet slide (prototype .28s)"
+    },
+    "dialog": {
+      "$type": "duration",
+      "$value": {
+        "value": 280,
+        "unit": "ms"
+      },
+      "$description": "--motion-dialog: dialog pop, no overshoot (DESIGN.md: no bouncy UI)"
+    },
+    "toast": {
+      "$type": "duration",
+      "$value": {
+        "value": 180,
+        "unit": "ms"
+      },
+      "$description": "--motion-toast: toast rise and fade (prototype .18s)"
     }
   },
   "frost": {
@@ -471,6 +511,19 @@
         "alpha": 0.25
       },
       "$description": "White at 25%: soft glow rising from the pill's bottom edge"
+    },
+    "divider": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.15686,
+          0.09804,
+          0.05882
+        ],
+        "alpha": 0.18
+      },
+      "$description": "rgba(40,25,15,.18): 1px divider between facts in a Chip"
     }
   },
   "icon": {
@@ -579,6 +632,121 @@
         "busy multi-colour dashboards",
         "card shadows on scrolling content"
       ]
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "column": {
+      "$type": "dimension",
+      "$value": {
+        "value": 430,
+        "unit": "px"
+      },
+      "$description": "--size-column: the single phone column and Sheet width"
+    },
+    "dialog-max": {
+      "$type": "dimension",
+      "$value": {
+        "value": 340,
+        "unit": "px"
+      },
+      "$description": "--size-dialog-max: Dialog max width (locked)"
+    }
+  },
+  "lift": {
+    "shadow": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.65882,
+              0.14902,
+              0.07843
+            ],
+            "alpha": 0.28
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 10,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 24,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Primary button lift: Press-red shadow (the only non-frost depth, DESIGN.md)"
+    },
+    "rim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.18
+      },
+      "$description": "White 18% inset highlight on the primary button"
+    }
+  },
+  "overlay": {
+    "scrim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.11373,
+          0.09412,
+          0.07843
+        ],
+        "alpha": 0.5
+      },
+      "$description": "Ink 50%: scrim behind Sheet and Dialog"
+    },
+    "shadow": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11373,
+              0.09412,
+              0.07843
+            ],
+            "alpha": 0.3
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 20,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 60,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$description": "Dialog float shadow"
     }
   }
 }

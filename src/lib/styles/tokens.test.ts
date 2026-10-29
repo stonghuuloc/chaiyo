@@ -57,3 +57,30 @@ describe('generated tokens.css', () => {
 		});
 	});
 });
+
+describe('primitive tokens', () => {
+	const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');
+	const has = (line: string) => css.includes(`\t${line};`);
+
+	it('Given_PrimitiveTokens_Then_PresentInTokensCss', () => {
+		// Arrange
+		const expected = [
+			'--size-column: 430px',
+			'--size-dialog-max: 340px',
+			'--lift-shadow: 0px 10px 24px 0px rgb(168 38 20 / 0.28)',
+			'--lift-rim: rgb(255 255 255 / 0.18)',
+			'--overlay-scrim: rgb(29 24 20 / 0.5)',
+			'--overlay-shadow: 0px 20px 60px 0px rgb(29 24 20 / 0.3)',
+			'--frost-divider: rgb(40 25 15 / 0.18)',
+			'--motion-press: 120ms',
+			'--motion-scrim: 150ms',
+			'--motion-sheet: 280ms',
+			'--motion-dialog: 280ms',
+			'--motion-toast: 180ms'
+		];
+		// Act
+		const missing = expected.filter((l) => !has(l));
+		// Assert
+		expect(missing).toEqual([]);
+	});
+});
