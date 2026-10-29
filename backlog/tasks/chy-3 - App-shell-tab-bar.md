@@ -1,10 +1,10 @@
 ---
 id: CHY-3
 title: App shell + tab bar
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-28 19:35'
+updated_date: '2026-10-29 05:37'
 labels:
   - slice-1
   - ui
@@ -84,8 +84,8 @@ Feature: App shell + tab bar
 <!-- AC:BEGIN -->
 - [x] #1 Scenario: Each tab root renders
 - [x] #2 Scenario: Tab bar is hidden on pushed screens
-- [ ] #3 Scenario: Tab bar is frosted, fixed and safe-area aware
-- [ ] #4 Scenario: Selecting a tab crossfades line icon to fill icon
+- [x] #3 Scenario: Tab bar is frosted, fixed and safe-area aware
+- [x] #4 Scenario: Selecting a tab crossfades line icon to fill icon
 - [x] #5 Scenario: Unauthenticated access redirects to login
 - [x] #6 Scenario: Offline with an expired token keeps me in the app
 <!-- AC:END -->

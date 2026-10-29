@@ -1,7 +1,7 @@
 {
   "story": "CHY-3",
   "title": "App shell + tab bar",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -28,7 +28,7 @@
         "AC4"
       ],
       "repo": "",
-      "stage": "verify",
+      "stage": "done",
       "reviews": 0,
       "note": "PR #11 open; awaiting Loc's go for verify (AC4 real-phone check)",
       "jira": "CHY-3.2",
@@ -63,7 +63,8 @@
     "2026-10-29 S2 \u2192 execute",
     "2026-10-29 S2 \u2192 execute",
     "2026-10-29 S2 \u2192 execute",
-    "2026-10-29 S2 \u2192 verify"
+    "2026-10-29 S2 \u2192 verify",
+    "2026-10-29 S2 \u2192 done"
   ],
-  "updated": "2026-10-29T11:26:34+07:00"
+  "updated": "2026-10-29T12:37:11+07:00"
 }
