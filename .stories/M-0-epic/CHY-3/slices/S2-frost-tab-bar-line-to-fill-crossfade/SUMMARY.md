@@ -1,5 +1,5 @@
 # CHY-3 S2 — summary
-ACs: AC3, AC4  ·  Commits: see PR  ·  PR: pending
+ACs: AC3, AC4  ·  Commits: 912b65f, fef089a  ·  PR: #11
 
 ## Shipped
 - [AC3] `src/lib/shell/TabBar.svelte` — fixed full-width `<nav class="bar">`, `padding-bottom: calc(14px + env(safe-area-inset-bottom))`, 66px frost pill (`blur(24px) saturate(1.75)`). Rendered check below.
