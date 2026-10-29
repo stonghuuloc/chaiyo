@@ -32,9 +32,9 @@
 
 {#if href && !disabled}
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- callers pass resolve()d paths -->
-	<a class="btn {variant}" {href} {onclick}>{@render content()}</a>
+	<a class="btn btn-{variant}" {href} {onclick}>{@render content()}</a>
 {:else}
-	<button class="btn {variant}" {type} {disabled} {onclick}>{@render content()}</button>
+	<button class="btn btn-{variant}" {type} {disabled} {onclick}>{@render content()}</button>
 {/if}
 
 <style>
@@ -59,7 +59,7 @@
 			opacity var(--motion-press);
 	}
 
-	.primary {
+	.btn-primary {
 		background: var(--color-lantern-red);
 		color: var(--color-white);
 		box-shadow:
@@ -67,20 +67,20 @@
 			inset 0 1px 0 var(--lift-rim);
 	}
 
-	.primary:active:not(:disabled) {
+	.btn-primary:active:not(:disabled) {
 		background: var(--color-lantern-red-press);
 	}
 
-	.ink {
+	.btn-ink {
 		background: var(--color-ink);
 		color: var(--color-notebook-paper);
 	}
 
-	.ink:active:not(:disabled) {
+	.btn-ink:active:not(:disabled) {
 		background: var(--color-graphite);
 	}
 
-	.outline {
+	.btn-outline {
 		height: 56px;
 		border: 1px solid var(--color-ruled-line);
 		background: color-mix(in srgb, var(--color-white) 50%, transparent);
@@ -88,11 +88,12 @@
 		font-size: var(--text-title);
 	}
 
-	.outline:active:not(:disabled) {
+	.btn-outline:active:not(:disabled) {
 		background: var(--color-shaded-paper);
 	}
 
-	.btn:active:not(:disabled) {
+	.btn-primary:active:not(:disabled),
+	.btn-ink:active:not(:disabled) {
 		transform: scale(0.985);
 	}
 
@@ -103,7 +104,7 @@
 		cursor: default;
 	}
 
-	.outline:disabled {
+	.btn-outline:disabled {
 		color: var(--color-faint-pencil);
 	}
 
@@ -131,7 +132,8 @@
 			transition-duration: var(--motion-fade-reduced);
 		}
 
-		.btn:active:not(:disabled) {
+		.btn-primary:active:not(:disabled),
+		.btn-ink:active:not(:disabled) {
 			transform: none;
 		}
 	}

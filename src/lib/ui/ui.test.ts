@@ -25,7 +25,7 @@ describe('Button', () => {
 			const out = html(Button, props);
 			// Assert
 			expect(out).toContain('<button');
-			expect(out).toContain(`btn ${variant}`);
+			expect(out).toContain(`btn btn-${variant}`);
 			expect(out).toContain('Go');
 		}
 	);
@@ -35,7 +35,7 @@ describe('Button', () => {
 		// Act
 		const out = html(Button, { children: text('Go') });
 		// Assert
-		expect(out).toContain('btn primary');
+		expect(out).toContain('btn btn-primary');
 	});
 
 	it('Given_Href_When_Render_Then_Anchor', () => {
@@ -74,11 +74,13 @@ describe('Button', () => {
 			/height:\s*56px/.test(s),
 			s.includes('var(--radius-action)'),
 			s.includes('scale(0.985)'),
+			!/\.btn:active[^{]*\{[^}]*scale/.test(s),
+			!/class="btn \{variant\}"/.test(s),
 			s.includes('var(--motion-press)'),
 			s.includes('prefers-reduced-motion')
 		];
 		// Assert
-		expect(checks).toEqual([true, true, true, true, true, true]);
+		expect(checks).toEqual([true, true, true, true, true, true, true, true]);
 	});
 });
 
