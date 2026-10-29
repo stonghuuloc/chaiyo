@@ -9,7 +9,7 @@ Device checks: **iOS Simulator iPhone 17 (iOS 26.5), Mobile Safari**, driven thr
 | AC3 | bottom padding includes `env(safe-area-inset-bottom)` | ✅ | nav `padding-bottom` 48px = 14 + 34; pill bottom edge 48px above screen bottom; pill 66px tall, 362px wide |
 | AC3 | last content clears the bar (spec) | ✅ | tab-root wrapper emits `padding-bottom: calc(66px + 14px + env(safe-area-inset-bottom, 0px))` in the built CSS |
 | AC3 | bar clears the bottom (home indicator / Safari toolbar) | ✅ | iOS Simulator Safari: layout viewport ends at the toolbar top (`innerHeight` 714pt, `env(safe-area-inset-bottom)` 0px, probe `screens/sim/06-safe-area-probe.png`); pill bottom 761pt vs toolbar top ~775pt = **14pt** gap; home indicator sits under the toolbar, never touched (`04-today-stripes.png`) |
-| AC3 | `env(safe-area-inset-bottom)` > 0 on WebKit | ⚠️ | **The ⚠️ is scoped:** the 34px inset path is proven in Chromium (nav padding 48px); Safari-in-browser reports inset 0 so it was not exercised, and a standalone PWA (where the inset is real) was not run. Simulator is not hardware |
+| AC3 | `env(safe-area-inset-bottom)` > 0 on WebKit | ✅ | iOS Simulator iPhone 17 Safari, landscape (portrait toolbar never collapsed, so route (a) failed: inset 0): `env(safe-area-inset-bottom)` **20px**, nav `padding-bottom` **34px** = 14 + 20, `innerHeight` 292, pill bottom 258 → **34px** gap to the viewport bottom; ≈34pt to the screen edge in `screens/sim/08-inset-b-landscape-upright.png` (`08-inset-a1-scrolled.png`: portrait scrolled, inset 0). Standalone PWA (34pt) not run. Simulator is not hardware |
 | AC4 | old tab fill → line, new tab line → fill | ✅ | tap Lộ trình → Hôm nay: at 83ms Hôm nay fill 0.42 / line 0.58, Lộ trình fill 0.58 / line 0.42; at 333ms Hôm nay 1 / 0, Lộ trình 0 / 1 |
 | AC4 | motion duration like prototype | ✅ | `transition-duration` 0.26s on both layers (`prototype/roots.css:76`); reduced motion 0.15s (`:90`) |
 | AC4 | no icon scale or move | ✅ | `transform: none` on line and fill layers; pill top moved 0px during tab → tab |
@@ -25,14 +25,6 @@ Device checks: **iOS Simulator iPhone 17 (iOS 26.5), Mobile Safari**, driven thr
 Unit: `pnpm test` → `Test Files  5 passed (5)` · `Tests  23 passed (23)` on `7bdbdaf`. Local gates on that tree: check 0 errors, lint clean, build done.
 CI on PR #11: `ci` ✅ (both runs), Vercel ✅ "Deployment has completed", Vercel Preview Comments ✅, CodeRabbit in progress.
 Preview: https://chaiyo-git-chy-3-stonghuulocs-projects.vercel.app — 302 to Vercel SSO, and the app has no sign-in UI yet (CHY-26), so a phone cannot get past the guard there.
-
-### Δ AC3 — the inset > 0 path on WebKit is not exercised
-| | Proven | Not proven |
-|---|---|---|
-| Chromium, emulated 34px inset | nav `padding-bottom` 48px = 14 + 34 | — |
-| iOS Simulator Safari (browser chrome) | inset 0, pill 14pt above the toolbar | inset 34px with a real home indicator |
-
-**No numeric gap** — nothing contradicts the AC; the exposure is that no run had a non-zero `env()` on WebKit (standalone PWA or hardware).
 
 ## Residual risk
 - Simulator is not hardware: GPU compositing and frame pacing can differ on a device.
