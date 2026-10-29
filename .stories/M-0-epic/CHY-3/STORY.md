@@ -14,6 +14,7 @@ Four-tab app shell that shows the tab bar only on tab roots, so learners navigat
 - SPA app routes, `ssr=false`, behind auth.
 - Tabs: Hôm nay · Lộ trình · Luyện tập · Tôi.
 - All identifiers English (URLs, files, code); Vietnamese only in display text (Loc, 2026-10-29).
+- S2 (AC3, AC4): every visual state change animates; nothing snaps. Reduced motion shortens or cuts. No milky selection pill (Loc, 2026-10-29).
 
 ## AC index
 | # | AC | Pri | Slice |
