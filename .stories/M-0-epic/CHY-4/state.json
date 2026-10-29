@@ -1,7 +1,7 @@
 {
   "story": "CHY-4",
   "title": "Design-system primitives in Svelte",
-  "stage": "slicing",
+  "stage": "in-slice",
   "current_slice": "S1",
   "slices": [
     {
@@ -12,10 +12,11 @@
         "AC2"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "execute",
       "reviews": 0,
-      "note": "",
-      "jira": "CHY-4.1"
+      "note": "PR #12 open, stacked on CHY-3 (#11 open) \u2014 awaiting Loc's review before verify",
+      "jira": "CHY-4.1",
+      "pr": "#12"
     },
     {
       "id": "S2",
@@ -44,13 +45,21 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#12"
+  ],
   "branch": "CHY-4",
   "log": [
     "2026-10-26 init",
     "2026-10-26 +S1 icon sprite + duotone [AC1,AC2]",
     "2026-10-26 +S2 tokens + self-hosted fonts [AC4,AC5]",
-    "2026-10-26 +S3 primitive components [AC3]"
+    "2026-10-26 +S3 primitive components [AC3]",
+    "2026-10-29 S1 \u2192 discuss",
+    "2026-10-29 S1 \u2192 spec",
+    "2026-10-29 S1 \u2192 plan",
+    "2026-10-29 S1 \u2192 picture",
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 execute"
   ],
-  "updated": "2026-10-26T13:14:49+07:00"
+  "updated": "2026-10-29T12:50:15+07:00"
 }
