@@ -26,6 +26,8 @@ function value(type, v) {
 			return color(v);
 		case 'dimension':
 			return dim(v);
+		case 'duration':
+			return `${v.value}${v.unit}`;
 		case 'fontFamily':
 			return family(v);
 		case 'shadow':

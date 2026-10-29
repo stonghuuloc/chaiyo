@@ -67,6 +67,8 @@
 	--radius-pill: 999px;
 }
 :root {
+	--motion-fade: 260ms;
+	--motion-fade-reduced: 150ms;
 	--frost-tint: rgb(250 246 238 / 0.72);
 	--frost-blur: 24px;
 	--frost-saturate: 1.75;

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import TabBar from '#lib/shell/TabBar.svelte';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
 </script>
 
-{@render children()}
-<TabBar />
+<div class="pb-[calc(66px+14px+env(safe-area-inset-bottom,0px))]">
+	{@render children()}
+</div>

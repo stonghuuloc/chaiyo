@@ -276,6 +276,24 @@
       }
     }
   },
+  "motion": {
+    "fade": {
+      "$type": "duration",
+      "$value": {
+        "value": 260,
+        "unit": "ms"
+      },
+      "$description": "--motion-fade: opacity/colour fades on the tab bar (prototype roots.css transition .26s ease)"
+    },
+    "fade-reduced": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      },
+      "$description": "--motion-fade-reduced: the same fades under prefers-reduced-motion (prototype .15s)"
+    }
+  },
   "frost": {
     "tint": {
       "$type": "color",
