@@ -230,6 +230,17 @@ describe('Toast', () => {
 		expect(out).toMatch(/<button[^>]*>Hoàn tác/);
 	});
 
+	it('Given_ToastSource_Then_TimerRestartsOnNewMessage', () => {
+		// Arrange
+		const effect = source('Toast.svelte').match(/\$effect\(\(\) => \{[\s\S]*?\n\t\}\);/)?.[0] ?? '';
+		// Act
+		const tracked = ['open', 'message', 'actionLabel', 'duration'].map((p) =>
+			new RegExp(`\\b${p}\\b`).test(effect)
+		);
+		// Assert
+		expect(tracked).toEqual([true, true, true, true]);
+	});
+
 	it('Given_OpenWithoutAction_When_Render_Then_NoButton', () => {
 		// Arrange
 		// Act

@@ -15,6 +15,8 @@
 
 	$effect(() => {
 		if (!open) return;
+		// new message → full duration again
+		void [message, actionLabel];
 		const timer = setTimeout(() => onclose?.(), duration);
 		return () => clearTimeout(timer);
 	});
