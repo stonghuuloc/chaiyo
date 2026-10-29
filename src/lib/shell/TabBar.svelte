@@ -2,7 +2,6 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { prefersReducedMotion } from 'svelte/motion';
-	import sprite from '#lib/assets/tab-icons.svg?raw';
 	import { m } from '#lib/paraglide/messages.js';
 	import { barSlide } from './motion';
 	import { TABS, tabFor } from './tabs';
@@ -21,8 +20,6 @@
 		aria-label={m.tabs_label()}
 		transition:barSlide={{ reduced: prefersReducedMotion.current }}
 	>
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -- static sprite built from prototype/icons.svg -->
-		{@html sprite}
 		<div class="pill">
 			{#each TABS as tab, i (tab.path)}
 				<a class="tab" href={resolve(tab.route)} aria-current={i === shown ? 'page' : undefined}>

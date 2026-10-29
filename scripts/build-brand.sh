@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # One source PNG (rounded tile on transparent) → every logo/PWA icon size.
-# Usage: scripts/build-icons.sh [source.png]   (default assets/brand/source.png; output static/brand)
+# Usage: scripts/build-brand.sh [source.png]   (default assets/brand/source.png; output static/brand)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 SRC=${1:-assets/brand/source.png}
