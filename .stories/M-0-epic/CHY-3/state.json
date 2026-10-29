@@ -28,7 +28,7 @@
         "AC4"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "verify",
       "reviews": 0,
       "note": "PR #11 open; awaiting Loc's go for verify (AC4 real-phone check)",
       "jira": "CHY-3.2",
@@ -62,7 +62,8 @@
     "2026-10-29 S2 \u2192 picture",
     "2026-10-29 S2 \u2192 execute",
     "2026-10-29 S2 \u2192 execute",
-    "2026-10-29 S2 \u2192 execute"
+    "2026-10-29 S2 \u2192 execute",
+    "2026-10-29 S2 \u2192 verify"
   ],
-  "updated": "2026-10-29T11:21:33+07:00"
+  "updated": "2026-10-29T11:26:34+07:00"
 }
