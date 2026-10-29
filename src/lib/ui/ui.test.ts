@@ -146,6 +146,16 @@ describe('Dialog', () => {
 		expect(uses).toBe(true);
 		expect(s).toContain('var(--overlay-shadow)');
 	});
+
+	it('Given_DialogSource_Then_TitleSizeComesFromActionToken', () => {
+		// Arrange
+		const s = source('Dialog.svelte');
+		// Act
+		const size = s.match(/h2\s*\{[^}]*font-size:\s*([^;]+);/)?.[1];
+		// Assert
+		expect(tokens).toContain('--text-action: 21px;');
+		expect(size).toBe('var(--text-action)');
+	});
 });
 
 describe('Chip', () => {

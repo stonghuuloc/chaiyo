@@ -54,7 +54,7 @@
 
 	h2 {
 		font-family: var(--font-headline);
-		font-size: var(--text-headline);
+		font-size: var(--text-action);
 		font-weight: var(--text-headline--font-weight);
 		line-height: var(--text-headline--line-height);
 	}
