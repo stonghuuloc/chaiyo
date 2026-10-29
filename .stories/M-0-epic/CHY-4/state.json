@@ -12,9 +12,9 @@
         "AC2"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "verify",
       "reviews": 0,
-      "note": "PR #12 open, stacked on CHY-3 (#11 open) \u2014 awaiting Loc's review before verify",
+      "note": "verified; awaiting Loc's review before done",
       "jira": "CHY-4.1",
       "pr": "#12"
     },
@@ -59,7 +59,8 @@
     "2026-10-29 S1 \u2192 plan",
     "2026-10-29 S1 \u2192 picture",
     "2026-10-29 S1 \u2192 execute",
-    "2026-10-29 S1 \u2192 execute"
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 verify"
   ],
-  "updated": "2026-10-29T12:50:15+07:00"
+  "updated": "2026-10-29T12:55:44+07:00"
 }
