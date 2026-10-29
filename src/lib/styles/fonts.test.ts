@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -76,15 +76,6 @@ describe('self-hosted fonts', () => {
 		expect(kaishu.map((f) => f.display)).toEqual(['block']);
 		expect(latin.length).toBeGreaterThanOrEqual(5);
 		expect(wrong).toEqual([]);
-	});
-
-	it('Given_BaiOneKaishuSubset_Then_Is6388Bytes', () => {
-		// Arrange
-		const file = new URL('../assets/fonts/ukai-h1-01.woff2', import.meta.url);
-		// Act
-		const size = statSync(file).size;
-		// Assert
-		expect(size).toBe(6388);
 	});
 
 	it('Given_Onest_Then_ThreeWeightsDeclared', () => {

@@ -6,6 +6,7 @@ Usage: python3 scripts/build-lesson-media.py h2-01 [h3-01 …] [--no-art]
   art    assets/lessons/<id>.png (cover) + assets/words/<id>/w01.png …, via gen-result-art.sh --prompt; skips existing
 Needs the /tmp/etts venv (edge-tts + fonttools)."""
 import json, os, re, subprocess, sys
+from datetime import date
 from concurrent.futures import ThreadPoolExecutor
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,6 +48,8 @@ def build(lid, do_art):
     chars = ''.join(sorted(set(re.findall(r'[\u3400-\u9fff]', json.dumps(L, ensure_ascii=False)))))
     subprocess.run([f'{VENV}/pyftsubset', f'{ROOT}/assets/ukai.ttc', '--font-number=0', f'--text={chars}', '--flavor=woff2',
                     f'--output-file={P}/fonts/ukai-{lid}.woff2'], check=True)
+    subprocess.run(['uvx', '--from', 'fonttools', '--with', 'brotli', 'python', os.path.join(ROOT, 'scripts/stamp-arphic-notice.py'),
+                    date.today().isoformat(), f'{P}/fonts/ukai-{lid}.woff2'], check=True)
     print(f'{lid} font: {len(chars)} chars')
 
     if do_art:
