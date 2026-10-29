@@ -61,7 +61,7 @@
 		border: 0.5px solid var(--frost-edge);
 		box-shadow:
 			inset 0 1px 0 var(--frost-rim),
-			inset 0 -1px 1px rgb(40 20 10 / 0.08),
+			inset 0 -1px 1px var(--frost-inner),
 			var(--frost-shadow);
 	}
 
@@ -73,8 +73,8 @@
 		border-radius: inherit;
 		pointer-events: none;
 		background:
-			linear-gradient(180deg, rgb(255 255 255 / 0.45), rgb(255 255 255 / 0) 42%),
-			radial-gradient(120% 90% at 50% 120%, rgb(255 255 255 / 0.25), transparent 60%);
+			linear-gradient(180deg, var(--frost-sheen-top), var(--frost-sheen-clear) 42%),
+			radial-gradient(120% 90% at 50% 120%, var(--frost-sheen-glow), transparent 60%);
 	}
 
 	.tab {

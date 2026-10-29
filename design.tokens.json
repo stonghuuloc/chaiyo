@@ -419,6 +419,58 @@
         "alpha": 0.62
       },
       "$description": "Selection pill at rest; white top rim, faint shadow"
+    },
+    "inner": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.15686,
+          0.07843,
+          0.03922
+        ],
+        "alpha": 0.08
+      },
+      "$description": "rgba(40,20,10,.08): 1px inset shade along the bottom edge of the tab-bar pill"
+    },
+    "sheen-top": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.45
+      },
+      "$description": "White at 45%: top of the pill's glass sheen gradient"
+    },
+    "sheen-clear": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0
+      },
+      "$description": "White at 0%: where the sheen gradient fades out (not transparent: black at 0% would shift the midtones)"
+    },
+    "sheen-glow": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 0.25
+      },
+      "$description": "White at 25%: soft glow rising from the pill's bottom edge"
     }
   },
   "icon": {
