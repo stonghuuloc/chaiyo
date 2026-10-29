@@ -10,6 +10,10 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      # Kit validates these at check/test/build; CI never talks to Supabase.
+      PUBLIC_SUPABASE_URL: http://127.0.0.1:56321
+      PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6

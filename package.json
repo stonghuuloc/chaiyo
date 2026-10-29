@@ -49,6 +49,7 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.118.0",
 		"@vercel/speed-insights": "^2.0.0"
 	}
 }

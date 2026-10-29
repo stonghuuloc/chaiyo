@@ -1,7 +1,7 @@
 {
   "story": "CHY-3",
   "title": "App shell + tab bar",
-  "stage": "slicing",
+  "stage": "in-slice",
   "current_slice": "S1",
   "slices": [
     {
@@ -10,13 +10,15 @@
       "acs": [
         "AC1",
         "AC2",
-        "AC5"
+        "AC5",
+        "AC6"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "done",
       "reviews": 0,
-      "note": "",
-      "jira": "CHY-3.1"
+      "note": "AC6 added (PR #10 review): offline expired token stays in app \u2705",
+      "jira": "CHY-3.1",
+      "pr": "#10"
     },
     {
       "id": "S2",
@@ -33,12 +35,23 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#10"
+  ],
   "branch": "CHY-3",
   "log": [
     "2026-10-26 init",
     "2026-10-26 +S1 SPA routes, tab roots, pushed screens, auth guard [AC1,AC2,AC5]",
-    "2026-10-26 +S2 frost tab bar + line-to-fill crossfade [AC3,AC4]"
+    "2026-10-26 +S2 frost tab bar + line-to-fill crossfade [AC3,AC4]",
+    "2026-10-29 S1 \u2192 discuss",
+    "2026-10-29 S1 \u2192 discuss",
+    "2026-10-29 S1 \u2192 spec",
+    "2026-10-29 S1 \u2192 plan",
+    "2026-10-29 S1 \u2192 picture",
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 execute",
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S1 \u2192 done"
   ],
-  "updated": "2026-10-26T13:14:48+07:00"
+  "updated": "2026-10-29T02:35:19+07:00"
 }

@@ -1,5 +1,16 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"landing_title": "Học tiếng Trung, từng bài một",
-	"landing_lede": "HSK1 đến HSK5 cho người Việt: âm Hán Việt, nét chữ, luyện nói, ôn tập đúng lúc."
+	"landing_lede": "HSK1 đến HSK5 cho người Việt: âm Hán Việt, nét chữ, luyện nói, ôn tập đúng lúc.",
+	"tabs_label": "Thanh điều hướng",
+	"tab_today": "Hôm nay",
+	"tab_roadmap": "Lộ trình",
+	"tab_practice": "Luyện tập",
+	"tab_me": "Tôi",
+	"screen_lesson_section": "Phần học",
+	"screen_gate": "Kiểm tra",
+	"screen_practice_session": "Luyện tập tổng hợp",
+	"screen_word": "Từ",
+	"screen_settings": "Cài đặt",
+	"login_title": "Đăng nhập"
 }
