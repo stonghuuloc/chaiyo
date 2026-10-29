@@ -59,6 +59,21 @@ describe('modal', () => {
 		expect(closeSheet).toHaveBeenCalledTimes(1);
 	});
 
+	it('Given_DialogOverSheet_When_SheetDestroyedFirst_Then_SheetOpenerNotFocused', () => {
+		// Arrange
+		stubDom();
+		const sheetOpener = { focus: vi.fn() };
+		vi.stubGlobal('document', { activeElement: sheetOpener });
+		const sheet = modal(fakeNode(), vi.fn());
+		vi.stubGlobal('document', { activeElement: null });
+		const dialog = modal(fakeNode(), vi.fn());
+		// Act
+		sheet.destroy();
+		dialog.destroy();
+		// Assert
+		expect(sheetOpener.focus).not.toHaveBeenCalled();
+	});
+
 	it('Given_FocusOnLastItem_When_Tab_Then_WrapsToFirst', () => {
 		// Arrange
 		const press = stubDom();

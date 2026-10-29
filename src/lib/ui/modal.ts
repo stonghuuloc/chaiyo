@@ -34,8 +34,9 @@ export function modal(node: HTMLElement, onclose: () => void) {
 		},
 		destroy() {
 			window.removeEventListener('keydown', onKey);
+			const wasTop = stack.at(-1) === node;
 			stack.splice(stack.indexOf(node), 1);
-			opener?.focus?.();
+			if (wasTop) opener?.focus?.();
 		}
 	};
 }
