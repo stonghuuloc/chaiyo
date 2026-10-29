@@ -30,15 +30,17 @@
       "repo": "",
       "stage": "execute",
       "reviews": 0,
-      "note": "code pushed; awaiting Loc's go for verify (AC4 real-phone check)",
-      "jira": "CHY-3.2"
+      "note": "PR #11 open; awaiting Loc's go for verify (AC4 real-phone check)",
+      "jira": "CHY-3.2",
+      "pr": "#11"
     }
   ],
   "locked": [
     "Every visual state change in CHY-3 S2 animates; nothing snaps (Loc, 2026-10-29)"
   ],
   "prs": [
-    "#10"
+    "#10",
+    "#11"
   ],
   "branch": "CHY-3",
   "log": [
@@ -59,7 +61,8 @@
     "2026-10-29 S2 \u2192 plan",
     "2026-10-29 S2 \u2192 picture",
     "2026-10-29 S2 \u2192 execute",
+    "2026-10-29 S2 \u2192 execute",
     "2026-10-29 S2 \u2192 execute"
   ],
-  "updated": "2026-10-29T11:20:53+07:00"
+  "updated": "2026-10-29T11:21:33+07:00"
 }
