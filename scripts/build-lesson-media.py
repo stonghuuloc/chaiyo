@@ -35,6 +35,18 @@ def art(out, scene):
 
 
 def build(lid, do_art):
+    """Generate media for prototype/data/<lid>.js, optionally including art.
+
+    Keep existing nonempty audio files and, when do_art is truthy, existing art
+    files. Always regenerate the lesson's Kaishu WOFF2 subset and stamp it with
+    today's local date. Write audio and fonts under prototype/ and art under
+    assets/. Print progress and return None.
+
+    Nonzero TTS and art exit codes become printed results; processing continues.
+    Lesson-loading, font-subsetting, and notice-stamping command failures raise
+    subprocess.CalledProcessError. Process-launch and file-access errors, JSON
+    decoding errors, and missing lesson-field or speaker keys also propagate.
+    """
     L = load(lid); jobs = []
     for i, w in enumerate(L['words'], 1):
         jobs.append((w['hz'], WORD_VOICE, f'{P}/audio/{lid}/w{i:02d}.mp3'))

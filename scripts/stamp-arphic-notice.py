@@ -11,6 +11,12 @@ NOTICE = ('Modified by chaiyo on {date}: subset to the glyphs one screen uses (f
 
 
 def stamp(path, date):
+    """Overwrite the font at path with the modification notice in name ID 10.
+
+    The notice is set for Windows en-US and Macintosh English. The date is
+    inserted verbatim; callers supply YYYY-MM-DD. Returns None. Font loading,
+    name-table access, and saving errors propagate to the caller.
+    """
     font = TTFont(path)
     name = font['name']
     text = NOTICE.format(date=date)

@@ -72,7 +72,11 @@ export const ATTRIBUTION =
 
 const SECOND_LAYER = 'style="opacity:var(--duo,.5);color:var(--duo-c,currentColor)"';
 
-/** @returns {string} the whole sprite, a pure function of ICONS and the Solar data */
+/**
+ * Build the sprite with symbols sorted by id and secondary layers styled by --duo / --duo-c.
+ * @returns {string} the whole sprite, a pure function of ICONS and the Solar data
+ * @throws {Error} if an ICONS entry names a missing Solar icon
+ */
 export function buildSprite() {
 	const icons = /** @type {Record<string, { body: string }>} */ (solar.icons);
 	const symbols = ICONS.toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)).map(([id, name]) => {
