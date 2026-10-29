@@ -4,8 +4,8 @@
 	import { modal } from './modal';
 	import { scrimFade, sheetSlide } from './motion';
 
-	type Props = { open: boolean; title: string; onclose?: () => void; children: Snippet };
-	let { open, title, onclose = () => {}, children }: Props = $props();
+	type Props = { open: boolean; title: string; onclose: () => void; children: Snippet };
+	let { open, title, onclose, children }: Props = $props();
 	const uid = $props.id();
 	const reduced = $derived(prefersReducedMotion.current);
 </script>
@@ -19,7 +19,7 @@
 	>
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
-			class="w-full max-w-column rounded-t-action border-t border-ruled-line bg-background px-5 pt-6 pb-[calc(env(safe-area-inset-bottom,0px)+--spacing(5))] text-text outline-none"
+			class="max-h-[calc(100dvh-40px)] w-full max-w-column overflow-y-auto overscroll-contain rounded-t-action border-t border-ruled-line bg-background px-5 pt-6 pb-[calc(env(safe-area-inset-bottom,0px)+--spacing(5))] text-text outline-none"
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="{uid}-title"

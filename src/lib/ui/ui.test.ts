@@ -17,6 +17,7 @@ const tokens = readFileSync(new URL('../styles/tokens.css', import.meta.url), 'u
 const utilities = readFileSync(new URL('../styles/utilities.css', import.meta.url), 'utf8');
 const classOf = (out: string, tag: string) =>
 	out.match(new RegExp(`<${tag}[^>]*class="([^"]*)"`))?.[1] ?? '';
+const noop = () => {};
 const variantClass = { primary: 'bg-lantern-red', ink: 'bg-ink', outline: 'border-ruled-line' };
 
 describe('Button', () => {
@@ -102,7 +103,7 @@ describe('Sheet', () => {
 	it('Given_Closed_When_Render_Then_Empty', () => {
 		// Arrange
 		// Act
-		const out = html(Sheet, { open: false, title: 'T', children: text('x') });
+		const out = html(Sheet, { open: false, title: 'T', onclose: noop, children: text('x') });
 		// Assert
 		expect(out).not.toContain('role="dialog"');
 	});
@@ -110,7 +111,7 @@ describe('Sheet', () => {
 	it('Given_Open_When_Render_Then_ModalDialogWithTitle', () => {
 		// Arrange
 		// Act
-		const out = html(Sheet, { open: true, title: 'Hello', children: text('Body') });
+		const out = html(Sheet, { open: true, title: 'Hello', onclose: noop, children: text('Body') });
 		// Assert
 		expect(out).toContain('role="dialog"');
 		expect(out).toContain('aria-modal="true"');
@@ -121,12 +122,13 @@ describe('Sheet', () => {
 	it('Given_Open_When_Render_Then_ColumnWidthActionRadiusAndScrim', () => {
 		// Arrange
 		// Act
-		const out = html(Sheet, { open: true, title: 'T', children: text('x') });
+		const out = html(Sheet, { open: true, title: 'T', onclose: noop, children: text('x') });
 		// Assert
 		expect(classOf(out, 'div')).toContain('bg-scrim');
 		expect(out).toContain('max-w-column');
 		expect(out).toContain('rounded-t-action');
 		expect(out).toContain('env(safe-area-inset-bottom');
+		expect(out).toContain('overflow-y-auto');
 	});
 });
 
@@ -134,7 +136,7 @@ describe('Dialog', () => {
 	it('Given_Closed_When_Render_Then_Empty', () => {
 		// Arrange
 		// Act
-		const out = html(Dialog, { open: false, title: 'T', children: text('x') });
+		const out = html(Dialog, { open: false, title: 'T', onclose: noop, children: text('x') });
 		// Assert
 		expect(out).not.toContain('role="dialog"');
 	});
@@ -142,7 +144,7 @@ describe('Dialog', () => {
 	it('Given_Open_When_Render_Then_ModalDialogWithTitle', () => {
 		// Arrange
 		// Act
-		const out = html(Dialog, { open: true, title: 'Hello', children: text('Body') });
+		const out = html(Dialog, { open: true, title: 'Hello', onclose: noop, children: text('Body') });
 		// Assert
 		expect(out).toContain('role="dialog"');
 		expect(out).toContain('aria-modal="true"');
@@ -152,18 +154,19 @@ describe('Dialog', () => {
 	it('Given_Open_When_Render_Then_MaxWidth340FromToken', () => {
 		// Arrange
 		// Act
-		const out = html(Dialog, { open: true, title: 'T', children: text('x') });
+		const out = html(Dialog, { open: true, title: 'T', onclose: noop, children: text('x') });
 		// Assert
 		expect(tokens).toContain('--container-dialog: 340px;');
 		expect(out).toContain('max-w-dialog');
 		expect(out).toContain('w-[calc(100%-40px)]');
 		expect(out).toContain('shadow-overlay');
+		expect(out).toContain('overflow-y-auto');
 	});
 
 	it('Given_Open_When_Render_Then_TitleSizeComesFromActionToken', () => {
 		// Arrange
 		// Act
-		const out = html(Dialog, { open: true, title: 'T', children: text('x') });
+		const out = html(Dialog, { open: true, title: 'T', onclose: noop, children: text('x') });
 		// Assert
 		expect(tokens).toContain('--text-action: 21px;');
 		expect(classOf(out, 'h2')).toContain('text-action');

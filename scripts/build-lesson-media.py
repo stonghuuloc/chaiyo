@@ -45,7 +45,8 @@ def build(lid, do_art):
     Nonzero TTS and art exit codes become printed results; processing continues.
     Lesson-loading, font-subsetting, and notice-stamping command failures raise
     subprocess.CalledProcessError. Process-launch and file-access errors, JSON
-    decoding errors, and missing lesson-field or speaker keys also propagate.
+    decoding errors, missing lesson fields, and unknown speaker values also
+    propagate; a sentence without a speaker uses 'redpanda'.
     """
     L = load(lid); jobs = []
     for i, w in enumerate(L['words'], 1):
