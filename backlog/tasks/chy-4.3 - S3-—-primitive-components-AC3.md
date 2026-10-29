@@ -1,9 +1,10 @@
 ---
 id: CHY-4.3
 title: S3 — primitive components (AC3)
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-29 06:28'
 labels: []
 milestone: m-0
 dependencies: []
