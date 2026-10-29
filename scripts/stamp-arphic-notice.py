@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write the Arphic Public License §2a modification notice into AR PL UKai subsets (name ID 10).
 Usage: python3 scripts/stamp-arphic-notice.py <YYYY-MM-DD> <font.woff2> [...]
-Needs fonttools + brotli (e.g. `uvx --from fonttools --with brotli python scripts/stamp-arphic-notice.py …`)."""
+Needs fonttools + brotli: run with /tmp/etts/bin/python, as build-lesson-media.py does."""
 import sys
 from fontTools.ttLib import TTFont
 

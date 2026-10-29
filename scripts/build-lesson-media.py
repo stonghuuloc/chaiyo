@@ -60,7 +60,7 @@ def build(lid, do_art):
     chars = ''.join(sorted(set(re.findall(r'[\u3400-\u9fff]', json.dumps(L, ensure_ascii=False)))))
     subprocess.run([f'{VENV}/pyftsubset', f'{ROOT}/assets/ukai.ttc', '--font-number=0', f'--text={chars}', '--flavor=woff2',
                     f'--output-file={P}/fonts/ukai-{lid}.woff2'], check=True)
-    subprocess.run(['uvx', '--from', 'fonttools', '--with', 'brotli', 'python', os.path.join(ROOT, 'scripts/stamp-arphic-notice.py'),
+    subprocess.run([f'{VENV}/python', os.path.join(ROOT, 'scripts/stamp-arphic-notice.py'),
                     date.today().isoformat(), f'{P}/fonts/ukai-{lid}.woff2'], check=True)
     print(f'{lid} font: {len(chars)} chars')
 

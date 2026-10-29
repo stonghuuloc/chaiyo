@@ -24,7 +24,7 @@ reviews:
     - path: 'src/**/*.{ts,js}'
       instructions: Flag any use of unchecked casts, non-null assertions, and Supabase calls that skip RLS assumptions. UI strings must come from paraglide messages, not literals.
     - path: 'scripts/**/*.py'
-      instructions: Stdlib only. Never print or log .env values or R2 secrets. Paths may be non-ASCII, never pass them through a shell.
+      instructions: Stdlib only, except font scripts (build-lesson-media.py, stamp-arphic-notice.py) that run in the /tmp/etts venv for fonttools + brotli. Never print or log .env values or R2 secrets. Paths may be non-ASCII, never pass them through a shell.
     - path: '.github/workflows/**'
       instructions: CI must run exactly check, lint, test, build. Flag secrets, unpinned third-party actions, and any added write permission.
     - path: 'supabase/**'

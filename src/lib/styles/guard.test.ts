@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 const src = fileURLToPath(new URL('../../', import.meta.url));
 const COLOUR_LITERAL =
-	/(?<!href=["']|url\()#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/;
+	/(?<!href=["']|url\()#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/i;
 const GENERATED = join('lib', 'styles', 'tokens.css');
 
 function walk(dir: string): string[] {
@@ -40,6 +40,8 @@ describe('colour literals in component files', () => {
 		'oklch(60% 0.2 30)',
 		'hwb(0 0% 0%)',
 		'color(display-p3 1 0 0)',
+		'RGB(0 0 0)',
+		'OKLCH(60% 0.2 30)',
 		'fill="#fff"'
 	])('Given_ColourLiteralSample_Then_RegexRejectsIt: %s', (sample) => {
 		// Arrange
