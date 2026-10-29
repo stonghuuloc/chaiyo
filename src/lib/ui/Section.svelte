@@ -4,17 +4,6 @@
 	let { children }: { children: Snippet } = $props();
 </script>
 
-<section class="section">{@render children()}</section>
-
-<style>
-	.section {
-		margin-top: var(--spacing-s5);
-		padding-top: var(--spacing-s6);
-		border-top: 1px solid var(--color-ruled-line);
-	}
-
-	.section:first-child {
-		margin-top: 0;
-		border-top: 0;
-	}
-</style>
+<section class="mt-5 border-t border-ruled-line pt-6 first:mt-0 first:border-t-0">
+	{@render children()}
+</section>

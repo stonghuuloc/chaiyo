@@ -55,14 +55,14 @@
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		border-radius: var(--radius-pill);
-		background: var(--frost-tint);
-		-webkit-backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-saturate));
-		backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-saturate));
-		border: 0.5px solid var(--frost-edge);
+		background: var(--color-frost-tint);
+		-webkit-backdrop-filter: blur(var(--blur-frost)) saturate(var(--frost-saturate));
+		backdrop-filter: blur(var(--blur-frost)) saturate(var(--frost-saturate));
+		border: 0.5px solid var(--color-frost-edge);
 		box-shadow:
-			inset 0 1px 0 var(--frost-rim),
-			inset 0 -1px 1px var(--frost-inner),
-			var(--frost-shadow);
+			inset 0 1px 0 var(--color-frost-rim),
+			inset 0 -1px 1px var(--color-frost-inner),
+			var(--shadow-frost);
 	}
 
 	.pill::before {
@@ -73,8 +73,8 @@
 		border-radius: inherit;
 		pointer-events: none;
 		background:
-			linear-gradient(180deg, var(--frost-sheen-top), var(--frost-sheen-clear) 42%),
-			radial-gradient(120% 90% at 50% 120%, var(--frost-sheen-glow), transparent 60%);
+			linear-gradient(180deg, var(--color-frost-sheen-top), var(--color-frost-sheen-clear) 42%),
+			radial-gradient(120% 90% at 50% 120%, var(--color-frost-sheen-glow), transparent 60%);
 	}
 
 	.tab {

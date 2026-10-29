@@ -14,6 +14,10 @@ const html = <P extends Record<string, unknown>>(c: Component<P>, props: P) =>
 	render(c, { props }).body;
 const source = (f: string) => readFileSync(new URL(`./${f}`, import.meta.url), 'utf8');
 const tokens = readFileSync(new URL('../styles/tokens.css', import.meta.url), 'utf8');
+const utilities = readFileSync(new URL('../styles/utilities.css', import.meta.url), 'utf8');
+const classOf = (out: string, tag: string) =>
+	out.match(new RegExp(`<${tag}[^>]*class="([^"]*)"`))?.[1] ?? '';
+const variantClass = { primary: 'bg-lantern-red', ink: 'bg-ink', outline: 'border-ruled-line' };
 
 describe('Button', () => {
 	it.each(['primary', 'ink', 'outline'] as const)(
@@ -25,7 +29,7 @@ describe('Button', () => {
 			const out = html(Button, props);
 			// Assert
 			expect(out).toContain('<button');
-			expect(out).toContain(`btn btn-${variant}`);
+			expect(out).toContain(variantClass[variant]);
 			expect(out).toContain('Go');
 		}
 	);
@@ -35,7 +39,19 @@ describe('Button', () => {
 		// Act
 		const out = html(Button, { children: text('Go') });
 		// Assert
-		expect(out).toContain('btn btn-primary');
+		expect(out).toContain(variantClass.primary);
+	});
+
+	it('Given_Disabled_When_Render_Then_BothShadowLayersCleared', () => {
+		// Arrange
+		// Act
+		const cls = classOf(html(Button, { disabled: true, children: text('Go') }), 'button').split(
+			' '
+		);
+		// Assert
+		expect(cls).toEqual(
+			expect.arrayContaining(['disabled:shadow-none', 'disabled:inset-shadow-none'])
+		);
 	});
 
 	it('Given_Href_When_Render_Then_Anchor', () => {
@@ -65,23 +81,21 @@ describe('Button', () => {
 		expect(out).toContain('href="#i-regular-caret-right"');
 	});
 
-	it('Given_ButtonSource_Then_GeometryComesFromDesign', () => {
-		// Arrange
-		const s = source('Button.svelte');
-		// Act
-		const checks = [
-			/height:\s*62px/.test(s),
-			/height:\s*56px/.test(s),
-			s.includes('var(--radius-action)'),
-			s.includes('scale(0.985)'),
-			!/\.btn:active[^{]*\{[^}]*scale/.test(s),
-			!/class="btn \{variant\}"/.test(s),
-			s.includes('var(--motion-press)'),
-			s.includes('prefers-reduced-motion')
-		];
-		// Assert
-		expect(checks).toEqual([true, true, true, true, true, true, true, true]);
-	});
+	it.each(['primary', 'ink', 'outline'] as const)(
+		'Given_Variant_When_Render_Then_GeometryAndPressFromDesign: %s',
+		(variant) => {
+			// Arrange
+			// Act
+			const cls = classOf(html(Button, { variant, children: text('Go') }), 'button');
+			// Assert
+			expect(cls).toContain(variant === 'outline' ? 'h-[56px]' : 'h-[62px]');
+			expect(cls).toContain('rounded-action');
+			expect(cls).toContain('duration-(--motion-press)');
+			expect(cls).toContain('motion-reduce:duration-(--motion-fade-reduced)');
+			expect(cls.includes('scale-[.985]')).toBe(variant !== 'outline');
+			expect(cls).not.toMatch(/(^| )outline( |$)/);
+		}
+	);
 });
 
 describe('Sheet', () => {
@@ -104,18 +118,15 @@ describe('Sheet', () => {
 		expect(out).toContain('Body');
 	});
 
-	it('Given_SheetSource_Then_UsesColumnAndActionRadius', () => {
+	it('Given_Open_When_Render_Then_ColumnWidthActionRadiusAndScrim', () => {
 		// Arrange
-		const s = source('Sheet.svelte');
 		// Act
-		const checks = [
-			s.includes('var(--size-column)'),
-			s.includes('var(--radius-action)'),
-			s.includes('env(safe-area-inset-bottom'),
-			s.includes('var(--overlay-scrim)')
-		];
+		const out = html(Sheet, { open: true, title: 'T', children: text('x') });
 		// Assert
-		expect(checks).toEqual([true, true, true, true]);
+		expect(classOf(out, 'div')).toContain('bg-scrim');
+		expect(out).toContain('max-w-column');
+		expect(out).toContain('rounded-t-action');
+		expect(out).toContain('env(safe-area-inset-bottom');
 	});
 });
 
@@ -138,25 +149,24 @@ describe('Dialog', () => {
 		expect(out).toContain('Hello');
 	});
 
-	it('Given_DialogSource_Then_MaxWidth340FromToken', () => {
+	it('Given_Open_When_Render_Then_MaxWidth340FromToken', () => {
 		// Arrange
-		const s = source('Dialog.svelte');
 		// Act
-		const uses = s.includes('min(var(--size-dialog-max)');
+		const out = html(Dialog, { open: true, title: 'T', children: text('x') });
 		// Assert
-		expect(tokens).toContain('--size-dialog-max: 340px;');
-		expect(uses).toBe(true);
-		expect(s).toContain('var(--overlay-shadow)');
+		expect(tokens).toContain('--container-dialog: 340px;');
+		expect(out).toContain('max-w-dialog');
+		expect(out).toContain('w-[calc(100%-40px)]');
+		expect(out).toContain('shadow-overlay');
 	});
 
-	it('Given_DialogSource_Then_TitleSizeComesFromActionToken', () => {
+	it('Given_Open_When_Render_Then_TitleSizeComesFromActionToken', () => {
 		// Arrange
-		const s = source('Dialog.svelte');
 		// Act
-		const size = s.match(/h2\s*\{[^}]*font-size:\s*([^;]+);/)?.[1];
+		const out = html(Dialog, { open: true, title: 'T', children: text('x') });
 		// Assert
 		expect(tokens).toContain('--text-action: 21px;');
-		expect(size).toBe('var(--text-action)');
+		expect(classOf(out, 'h2')).toContain('text-action');
 	});
 });
 
@@ -166,24 +176,28 @@ describe('Chip', () => {
 		// Act
 		const out = html(Chip, { children: text('12 ngày') });
 		// Assert
-		expect(out).toContain('class="chip');
+		expect(classOf(out, 'div')).toContain('bg-frost-tint');
 		expect(out).toContain('12 ngày');
 	});
 
-	it('Given_ChipSource_Then_FrostTokensAndDivider', () => {
+	it('Given_Facts_When_Render_Then_FrostPillWithDivider', () => {
 		// Arrange
-		const s = source('Chip.svelte');
 		// Act
-		const checks = [
-			'--frost-tint',
-			'--frost-blur',
-			'--frost-rim',
-			'--frost-shadow',
-			'--frost-divider'
-		].map((t) => s.includes(`var(${t}`));
+		const cls = classOf(html(Chip, { children: text('12 ngày') }), 'div').split(' ');
 		// Assert
-		expect(checks).toEqual([true, true, true, true, true]);
-		expect(s).toMatch(/height:\s*40px/);
+		expect(cls).toEqual(
+			expect.arrayContaining([
+				'h-10',
+				'text-chip',
+				'bg-frost-tint',
+				'border-frost-edge',
+				'shadow-frost',
+				'inset-shadow-frost',
+				'backdrop-blur-frost',
+				'divide-frost'
+			])
+		);
+		expect(utilities).toContain('var(--color-frost-divider)');
 	});
 });
 
@@ -197,17 +211,21 @@ describe('Section', () => {
 		expect(out).toContain('Content');
 	});
 
-	it('Given_SectionSource_Then_DividerAndPaddingFromDesign', () => {
+	it('Given_Content_When_Render_Then_DividerAndPaddingFromDesign', () => {
 		// Arrange
-		const s = source('Section.svelte');
 		// Act
-		const checks = [
-			s.includes('border-top: 1px solid var(--color-ruled-line)'),
-			s.includes('padding-top: var(--spacing-s6)'),
-			s.includes('margin-top: var(--spacing-s5)')
-		];
+		const cls = classOf(html(Section, { children: text('x') }), 'section');
 		// Assert
-		expect(checks).toEqual([true, true, true]);
+		expect(cls.split(' ')).toEqual(
+			expect.arrayContaining([
+				'border-t',
+				'border-ruled-line',
+				'pt-6',
+				'mt-5',
+				'first:mt-0',
+				'first:border-t-0'
+			])
+		);
 	});
 });
 

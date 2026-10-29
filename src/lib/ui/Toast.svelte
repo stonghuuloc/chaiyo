@@ -28,48 +28,24 @@
 </script>
 
 {#if open}
-	<div class="dock">
-		<div class="toast" role="status" transition:toastRise={{ reduced }}>
+	<div
+		class="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+--spacing(5))] z-60 flex justify-center"
+	>
+		<div
+			class="pointer-events-auto flex max-w-[calc(100%-40px)] items-center gap-3 rounded-pill bg-ink py-1 pr-1.5 pl-4 font-sans text-toast text-notebook-paper"
+			role="status"
+			transition:toastRise={{ reduced }}
+		>
 			<span>{message}</span>
-			{#if actionLabel}<button type="button" onclick={act}>{actionLabel}</button>{/if}
+			{#if actionLabel}
+				<button
+					type="button"
+					class="min-h-11 rounded-pill px-3 text-toast font-bold text-white underline underline-offset-3"
+					onclick={act}
+				>
+					{actionLabel}
+				</button>
+			{/if}
 		</div>
 	</div>
 {/if}
-
-<style>
-	.dock {
-		position: fixed;
-		inset-inline: 0;
-		bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
-		z-index: 60;
-		display: flex;
-		justify-content: center;
-		pointer-events: none;
-	}
-
-	.toast {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-s3);
-		max-width: calc(100% - 40px);
-		padding: 4px 6px 4px var(--spacing-s4);
-		border-radius: var(--radius-pill);
-		background: var(--color-ink);
-		color: var(--color-notebook-paper);
-		font-family: var(--font-sans);
-		font-size: 14px;
-		font-weight: 500;
-		pointer-events: auto;
-	}
-
-	button {
-		min-height: 44px;
-		padding: 0 var(--spacing-s3);
-		border-radius: var(--radius-pill);
-		color: var(--color-white);
-		font-size: 14px;
-		font-weight: 700;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-	}
-</style>

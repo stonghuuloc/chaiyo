@@ -2,7 +2,7 @@
 ACs: AC3  ·  Commits: ca27cb3, 2beeb97, dc152a0, d36e412  ·  PR: #12  ·  Mode: team (impl + tester)
 
 ## Shipped
-- [AC3] `Button.svelte`: `primary` / `ink` / `outline`, `<a>` with `href`, `disabled`, Solar icon + caret. Classes `btn-primary|ink|outline` (Tailwind's global `.outline` clashed). Press scale only on primary/ink. Tests `ui.test.ts › Button` ✓
+- [AC3] `Button.svelte`: `primary` / `ink` / `outline`, `<a>` with `href`, `disabled`, Solar icon + caret. Variants are Tailwind class maps (no `btn-*` names). Press scale only on primary/ink. Tests `ui.test.ts › Button` ✓
 - [AC3] `Sheet.svelte`, `Dialog.svelte`: scrim, `role="dialog" aria-modal`, Esc + scrim tap close, focus in and back to the opener (`modal.ts`). Dialog `min(340px, 100% − 40px)`, title `var(--text-action)` (21px, prototype `streak.js:38`). Tests ✓
 - [AC3] `Chip.svelte` (40px frost pill, 1×18px divider), `Section.svelte` (ruled line, none on first). Tests ✓
 - [AC3] `Toast.svelte`: `role="status"`, action, 4,500ms auto-close; a new message restarts the timer (review round 3). Tests ✓
@@ -10,6 +10,7 @@ ACs: AC3  ·  Commits: ca27cb3, 2beeb97, dc152a0, d36e412  ·  PR: #12  ·  Mode
 - [LOCK] `motion.ts`: durations read from `--motion-*`; reduced motion = 150ms fade, no transform. `motion.test.ts` ✓. Colour guard green.
 
 ## Deviated from plan
+- Post-verify refactor (Loc): primitives use Tailwind utilities, no `<style>` blocks; `design.tokens.json` keys are Tailwind v4 namespaces (`--spacing: 4px`, `--color-frost-*`, `--shadow-*`, `--inset-shadow-*`, `--blur-frost`, `--container-column/dialog`, `--text-chip/toast`) with Tailwind defaults reset. Live parity vs VERIFY.md: all rows match after `disabled:inset-shadow-none`.
 - `modal.ts` (not in PLAN): shared Esc + focus-in/restore action for Sheet and Dialog (Q6), used by 2 components.
 - Dialog title uses `--text-action` (21px), not `--text-headline` (23px): prototype dialog title is 21px. Kept headline weight/line-height.
 - Toast timer test asserts the effect's tracked props from source: vitest has no DOM environment, so no mounted test.

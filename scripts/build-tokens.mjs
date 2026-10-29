@@ -1,7 +1,7 @@
 // design.tokens.json (DTCG) → src/lib/styles/tokens.css as a Tailwind v4 @theme. Run: pnpm tokens
-// Theme namespaces become utilities: color → bg-*/text-*, font → font-*, space → p-*/gap-*, radius → rounded-*,
-// type → text-display etc. (size + line-height + weight + tracking). Groups Tailwind has no namespace for
-// (frost, icon) stay plain :root variables.
+// Top-level groups are Tailwind v4 theme namespaces (color, spacing, text, shadow, container…) and become
+// utilities; Tailwind's defaults for them are reset so only these tokens compile. Groups Tailwind has no
+// namespace for (motion, frost, icon) stay plain :root variables.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +9,7 @@ const isRef = (v) => typeof v === 'string' && /^\{[^}]+\}$/.test(v);
 const varName = (path) => `--${path.join('-')}`;
 
 function color(v) {
+	if (isRef(v)) return `var(${varName(v.slice(1, -1).split('.'))})`;
 	if (typeof v === 'string') return v;
 	const [r, g, b] = v.components.map((c) => Math.round(c * 255));
 	return v.alpha === undefined || v.alpha === 1
@@ -40,7 +41,7 @@ function value(type, v) {
 				.flat()
 				.map(
 					(s) =>
-						`${dim(s.offsetX)} ${dim(s.offsetY)} ${dim(s.blur)} ${dim(s.spread)} ${color(s.color)}`
+						`${s.inset ? 'inset ' : ''}${dim(s.offsetX)} ${dim(s.offsetY)} ${dim(s.blur)} ${dim(s.spread)} ${color(s.color)}`
 				)
 				.join(', ');
 		default:
@@ -48,8 +49,19 @@ function value(type, v) {
 	}
 }
 
-// Token group → Tailwind namespace. Groups not listed here go to :root.
-const THEME = { color: 'color', font: 'font', space: 'spacing', radius: 'radius', type: 'text' };
+const THEME = new Set([
+	'color',
+	'font',
+	'text',
+	'spacing',
+	'radius',
+	'shadow',
+	'inset-shadow',
+	'blur',
+	'container'
+]);
+// font stays: resetting it would also drop Tailwind's mono stack; spacing is the base unit itself
+const RESET = ['color', 'text', 'radius', 'shadow', 'inset-shadow', 'blur', 'container'];
 
 export function toCss(tokens) {
 	const theme = [];
@@ -57,9 +69,8 @@ export function toCss(tokens) {
 	const walk = (node, path, inherited) => {
 		const type = node.$type ?? inherited;
 		if ('$value' in node) {
-			const ns = THEME[path[0]];
-			const name = [ns ?? path[0], ...path.slice(1)];
-			const out = ns ? theme : root;
+			const name = path;
+			const out = THEME.has(path[0]) ? theme : root;
 			if (type === 'typography') {
 				const t = node.$value;
 				const base = varName(name);
@@ -79,7 +90,7 @@ export function toCss(tokens) {
 	walk(tokens, [], undefined);
 	return [
 		'/* Generated from design.tokens.json by scripts/build-tokens.mjs — do not edit. */',
-		`@theme {\n${theme.join('\n')}\n}`,
+		`@theme {\n${[...RESET.map((ns) => `\t--${ns}-*: initial;`), ...theme].join('\n')}\n}`,
 		`:root {\n${root.join('\n')}\n}`,
 		''
 	].join('\n');

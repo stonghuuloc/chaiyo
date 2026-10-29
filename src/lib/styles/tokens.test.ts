@@ -43,17 +43,17 @@ describe('generated tokens.css', () => {
 		// Arrange
 		// Act
 		const vars = Object.fromEntries(
-			[...committed.matchAll(/^\t(--frost-(?:inner|sheen-[a-z]+)): (.+);$/gm)].map((m) => [
+			[...committed.matchAll(/^\t(--color-frost-(?:inner|sheen-[a-z]+)): (.+);$/gm)].map((m) => [
 				m[1],
 				m[2]
 			])
 		);
 		// Assert
 		expect(vars).toEqual({
-			'--frost-inner': 'rgb(40 20 10 / 0.08)',
-			'--frost-sheen-top': 'rgb(255 255 255 / 0.45)',
-			'--frost-sheen-clear': 'rgb(255 255 255 / 0)',
-			'--frost-sheen-glow': 'rgb(255 255 255 / 0.25)'
+			'--color-frost-inner': 'rgb(40 20 10 / 0.08)',
+			'--color-frost-sheen-top': 'rgb(255 255 255 / 0.45)',
+			'--color-frost-sheen-clear': 'rgb(255 255 255 / 0)',
+			'--color-frost-sheen-glow': 'rgb(255 255 255 / 0.25)'
 		});
 	});
 });
@@ -65,13 +65,16 @@ describe('primitive tokens', () => {
 	it('Given_PrimitiveTokens_Then_PresentInTokensCss', () => {
 		// Arrange
 		const expected = [
-			'--size-column: 430px',
-			'--size-dialog-max: 340px',
-			'--lift-shadow: 0px 10px 24px 0px rgb(168 38 20 / 0.28)',
-			'--lift-rim: rgb(255 255 255 / 0.18)',
-			'--overlay-scrim: rgb(29 24 20 / 0.5)',
-			'--overlay-shadow: 0px 20px 60px 0px rgb(29 24 20 / 0.3)',
-			'--frost-divider: rgb(40 25 15 / 0.18)',
+			'--container-column: 430px',
+			'--container-dialog: 340px',
+			'--shadow-lift: 0px 10px 24px 0px rgb(168 38 20 / 0.28)',
+			'--color-lift-rim: rgb(255 255 255 / 0.18)',
+			'--color-scrim: rgb(29 24 20 / 0.5)',
+			'--shadow-overlay: 0px 20px 60px 0px rgb(29 24 20 / 0.3)',
+			'--color-frost-divider: rgb(40 25 15 / 0.18)',
+			'--spacing: 4px',
+			'--inset-shadow-lift: inset 0px 1px 0px 0px var(--color-lift-rim)',
+			'--color-*: initial',
 			'--motion-press: 120ms',
 			'--motion-scrim: 150ms',
 			'--motion-sheet: 280ms',
