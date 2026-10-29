@@ -1,9 +1,10 @@
 ---
 id: CHY-3.2
 title: 'S2 — frost tab bar + line-to-fill crossfade (AC3,AC4)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-29 05:37'
 labels: []
 milestone: m-0
 dependencies: []

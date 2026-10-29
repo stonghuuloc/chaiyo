@@ -16,6 +16,7 @@
 		"test": "vitest --run --passWithNoTests",
 		"tokens": "node scripts/build-tokens.mjs",
 		"icons": "scripts/build-icons.sh",
+		"tab-icons": "node scripts/build-tab-icons.mjs",
 		"assets:push": "python3 scripts/assets_push.py",
 		"assets:pull": "python3 scripts/assets_pull.py",
 		"supabase:push": "scripts/supabase-push.sh"
