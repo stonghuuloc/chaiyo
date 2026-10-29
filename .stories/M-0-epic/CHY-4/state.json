@@ -2,7 +2,7 @@
   "story": "CHY-4",
   "title": "Design-system primitives in Svelte",
   "stage": "in-slice",
-  "current_slice": "S1",
+  "current_slice": "S2",
   "slices": [
     {
       "id": "S1",
@@ -12,9 +12,9 @@
         "AC2"
       ],
       "repo": "",
-      "stage": "verify",
+      "stage": "done",
       "reviews": 0,
-      "note": "verified; awaiting Loc's review before done",
+      "note": "closed; PR #12 pushed and verified",
       "jira": "CHY-4.1",
       "pr": "#12"
     },
@@ -26,9 +26,9 @@
         "AC5"
       ],
       "repo": "",
-      "stage": "todo",
+      "stage": "discuss",
       "reviews": 0,
-      "note": "",
+      "note": "round 1",
       "jira": "CHY-4.2"
     },
     {
@@ -60,7 +60,12 @@
     "2026-10-29 S1 \u2192 picture",
     "2026-10-29 S1 \u2192 execute",
     "2026-10-29 S1 \u2192 execute",
-    "2026-10-29 S1 \u2192 verify"
+    "2026-10-29 S1 \u2192 verify",
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S2 \u2192 discuss",
+    "2026-10-29 S2 \u2192 discuss",
+    "2026-10-29 S1 \u2192 done",
+    "2026-10-29 S2 \u2192 discuss"
   ],
-  "updated": "2026-10-29T12:55:44+07:00"
+  "updated": "2026-10-29T12:59:52+07:00"
 }

@@ -1,10 +1,10 @@
 ---
 id: CHY-4.1
 title: 'S1 — icon sprite + duotone (AC1,AC2)'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-10-26 06:14'
-updated_date: '2026-10-29 05:38'
+updated_date: '2026-10-29 05:57'
 labels: []
 milestone: m-0
 dependencies: []
