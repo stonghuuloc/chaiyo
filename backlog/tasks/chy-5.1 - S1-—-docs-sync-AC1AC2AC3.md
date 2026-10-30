@@ -1,9 +1,10 @@
 ---
 id: CHY-5.1
-title: 'S1 — docs sync (AC1,AC2,AC3)'
+title: 'S2 — docs sync [AC1,AC2,AC3]'
 status: To Do
 assignee: []
 created_date: '2026-10-26 06:14'
+updated_date: '2026-10-30 04:39'
 labels: []
 milestone: m-0
 dependencies: []

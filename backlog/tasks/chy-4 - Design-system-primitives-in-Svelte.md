@@ -1,10 +1,10 @@
 ---
 id: CHY-4
 title: Design-system primitives in Svelte
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-29 06:28'
+updated_date: '2026-10-29 10:08'
 labels:
   - slice-1
   - ui
