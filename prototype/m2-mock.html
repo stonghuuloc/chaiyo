@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Thi thử HSK 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .top .count { min-width: 44px; }
+  .count.low { color: var(--vermilion-text); font-weight: 600; }
+  .big { margin-top: var(--s5); padding: var(--s5) 0; border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); text-align: center; }
+  .big .hz { font-size: 34px; line-height: 1.3; }
+  .big p { margin-top: var(--s2); font-size: 22px; font-family: var(--font-hanzi); }
+  .listen { margin-top: var(--s5); display: flex; align-items: center; gap: var(--s4); padding: var(--s4); border-radius: var(--r-cell); background: var(--paper-2); }
+  .listen .play { position: static; width: 56px; height: 56px; flex: none; }
+  .listen .play:disabled { opacity: .35; }
+  .listen small { color: var(--ink-3); font-size: var(--t-meta); }
+  .opts.pic { grid-template-columns: repeat(3, 1fr); }
+  .opts.pic .opt { min-height: 0; padding: 6px; display: block; }
+  .opts.pic .opt img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; background: var(--paper-2); }
+  .opts.pic .L { position: absolute; left: 10px; top: 10px; width: 24px; height: 24px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 700 13px var(--font-ui); }
+  .opts.text .L { font-weight: 700; margin-right: var(--s3); color: var(--ink-3); }
+  .opts.text .opt { display: flex; align-items: center; }
+  .intro { margin-top: var(--s8); }
+  .intro h2 { font: 600 28px/1.2 var(--font-display); }
+  .intro p { margin-top: var(--s2); color: var(--ink-2); }
+  .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(29,24,20,.5); display: flex; align-items: flex-end; justify-content: center; }
+  .scrim[hidden] { display: none; }
+  .sheet { width: min(430px, 100%); background: var(--paper); border-top: 1px solid var(--ink-5); border-radius: var(--r-cta) var(--r-cta) 0 0; padding: var(--s6) var(--s5) calc(env(safe-area-inset-bottom, 0px) + var(--s5)); }
+  .sheet h2 { font: 600 var(--t-h2)/1.2 var(--font-display); }
+  .sheet p { margin-top: var(--s2); color: var(--ink-2); }
+  .sheet .row { margin-top: var(--s5); display: grid; gap: var(--s2); }
+  .sheet .cta { height: 56px; }
+  .ghost { height: 56px; border-radius: var(--r-cta); border: 1px solid var(--ink-5); font: 600 18px var(--font-display); color: var(--ink-2); }
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="x" id="exit" aria-label="Thoát bài thi"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></button>
+  <div class="seg" id="seg" aria-hidden="true"></div>
+  <span class="count" id="count"></span>
+</div>
+<main id="main"></main>
+<div class="foot"><button class="cta" id="cta"></button><p id="hint"></p></div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h2 id="sh-t">Bỏ bài thi?</h2>
+    <p>Bài làm sẽ không được lưu.</p>
+    <div class="row"><button class="cta" id="keep">Làm tiếp</button><button class="ghost" id="leave">Bỏ bài thi</button></div>
+  </div>
+</div>
+
+<script type="module">
+import { $, $$, bar, cta, hint, choice, ic } from './step.js?v=9';
+import { MOCK } from './data/mock-h1.js?v=1';
+
+const P = new URLSearchParams(location.search);
+const exam = P.get('mode') !== 'practice';
+const override = +P.get('t') || 0;   // prototype-only: seconds per section, for the browser check
+const PER = 5, PARTS = 4, SEC = PER * PARTS, TOTAL = SEC * MOCK.sections.length;
+const PIC = new Set(['pic3', 'pic6', 'rpic6']);
+const LETTER = 'ABCDEF';
+const picks = Array(TOTAL).fill(null);
+const plays = Array(TOTAL).fill(0);
+let n = 0, timer = null, left = 0;
+
+// stand-in voice: the browser's zh-CN speech (as w1-word.html)
+const zh = () => speechSynthesis.getVoices().find((v) => /^zh(-|_)CN/i.test(v.lang)) || speechSynthesis.getVoices().find((v) => /^zh/i.test(v.lang));
+function say(text, btn) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = 0.8; const v = zh(); if (v) u.voice = v;
+  btn?.classList.add('on'); u.onend = u.onerror = () => btn?.classList.remove('on');
+  speechSynthesis.speak(u);
+}
+
+const at = (i) => {
+  const si = Math.floor(i / SEC), pi = Math.floor((i % SEC) / PER);
+  const sec = MOCK.sections[si], part = sec.parts[pi];
+  return { sec, si, part, pi, item: part.items[i % PER] };
+};
+const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+const img = (k) => `../assets/words/mock-h1/${k}.png`;
+const label = (opts, o) => LETTER[opts.indexOf(o)];
+
+function tick() {
+  $('#count').textContent = fmt(left);
+  $('#count').classList.toggle('low', left <= 60);
+}
+function startTimer(sec) {
+  clearInterval(timer);
+  if (!exam) return;
+  left = override || sec.minutes * 60; tick();
+  timer = setInterval(() => { left--; tick(); if (left <= 0) { clearInterval(timer); endSection(); } }, 1000);
+}
+
+function intro(si) {
+  const sec = MOCK.sections[si];
+  clearInterval(timer);
+  bar(si * SEC, TOTAL, exam ? fmt(override || sec.minutes * 60) : `${si * SEC}/${TOTAL}`);
+  $('#count').classList.remove('low');
+  $('#main').innerHTML = `<div class="intro"><h2>Phần ${sec.title.toLowerCase()}</h2>
+    <p>${SEC} câu${exam ? ` · ${sec.minutes} phút${sec.plays ? ` · mỗi câu nghe tối đa ${sec.plays} lần` : ''}` : ' · không giới hạn thời gian, xem đáp án sau mỗi câu'}</p>
+    <p>${exam ? 'Thời gian chạy ngay khi bạn bấm bắt đầu.' : ''}</p></div>`;
+  cta(`Bắt đầu phần ${sec.title.toLowerCase()}`, { hint: '', onClick: () => { startTimer(sec); show(); } });
+  scrollTo(0, 0);
+}
+
+function endSection() {
+  const si = Math.floor(n / SEC);   // unanswered rest of the section stays null (wrong)
+  n = (si + 1) * SEC;
+  speechSynthesis?.cancel();
+  if (n >= TOTAL) finish(); else intro(si + 1);
+}
+
+function show() {
+  const { sec, si, part, pi, item } = at(n);
+  const pic = PIC.has(part.type), opts = part.opts || item.opts;
+  const listening = !!item.say;
+  const prompt = listening
+    ? `<div class="listen"><button class="play" id="mplay" aria-label="Nghe">${ic('fill-speaker-high')}</button><small id="pl"></small></div>`
+    : `<div class="big"><div class="hz">${item.text}</div>${item.q ? `<p>★ ${item.q}</p>` : ''}</div>`;
+  bar(n, TOTAL, exam ? fmt(left) : `${n + 1}/${TOTAL}`);
+  const last = n % SEC === SEC - 1;
+  choice({
+    ask: `${sec.title} · phần ${pi + 1} · câu ${n + 1}/${TOTAL}`, title: part.ask,
+    kind: pic ? 'pic' : 'text', opts, ans: item.ans, promptHtml: prompt, last, feedback: !exam,
+    optHtml: (o) => (pic ? `<img src="${img(o)}" alt="Tranh ${label(opts, o)}" loading="eager"><span class="L">${label(opts, o)}</span>` : `<span class="L">${label(opts, o)}</span><span>${o}</span>`),
+    optLabel: (o) => (pic ? `Tranh ${label(opts, o)}` : `${label(opts, o)}. ${o}`),
+    explain: (a) => `${pic ? `tranh ${label(opts, a)}` : `${label(opts, a)}. ${a}`}. ${item.why}`,
+  }, (ok, pick) => {
+    picks[n] = pick;
+    speechSynthesis?.cancel();
+    if (last) { if (n + 1 >= TOTAL) { clearInterval(timer); finish(); } else { clearInterval(timer); n++; intro(si + 1); } } else { n++; show(); }
+  });
+  if (listening) {
+    const btn = $('#mplay'), pl = $('#pl'), cap = exam ? sec.plays : Infinity;
+    const upd = () => { const r = cap - plays[n]; pl.textContent = exam ? `Còn ${r} lượt nghe` : 'Nghe lại bao nhiêu lần cũng được'; btn.disabled = r <= 0; };
+    upd();
+    btn.onclick = () => { if (plays[n] >= cap) return; plays[n]++; say(item.q ? `${item.say} ${item.q}` : item.say, btn); upd(); };
+  }
+  scrollTo(0, 0);
+}
+
+function finish() {
+  clearInterval(timer);
+  const scores = MOCK.sections.map((_, si) => {
+    let c = 0;
+    for (let i = si * SEC; i < (si + 1) * SEC; i++) if (picks[i] === at(i).item.ans) c++;
+    return Math.round(c * 100 / SEC);
+  });
+  const total = scores[0] + scores[1];
+  try {
+    sessionStorage.setItem('mock-h1-last', JSON.stringify({ mode: exam ? 'exam' : 'practice', picks, scores }));
+    if (exam) localStorage.setItem('mock-h1-best', Math.max(total, +localStorage.getItem('mock-h1-best') || 0));
+  } catch {}
+  location.href = 'm3-result.html';
+}
+
+const scrim = $('#scrim');
+const close = () => { scrim.hidden = true; $('#exit').focus(); };
+$('#exit').onclick = () => { if (!exam) { speechSynthesis?.cancel(); location.href = 't3-practice.html'; return; } scrim.hidden = false; $('#keep').focus(); };
+$('#keep').onclick = close;
+$('#leave').onclick = () => { speechSynthesis?.cancel(); location.href = 't3-practice.html'; };
+scrim.onclick = (e) => { if (e.target === scrim) close(); };
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && !scrim.hidden) close(); });
+
+intro(0);
+</script>
+</body>
+</html>
