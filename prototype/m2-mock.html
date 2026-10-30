@@ -70,14 +70,12 @@ const picks = Array(TOTAL).fill(null);
 const plays = Array(TOTAL).fill(0);
 let n = 0, timer = null, left = 0;
 
-// stand-in voice: the browser's zh-CN speech (as w1-word.html)
-const zh = () => speechSynthesis.getVoices().find((v) => /^zh(-|_)CN/i.test(v.lang)) || speechSynthesis.getVoices().find((v) => /^zh/i.test(v.lang));
-function say(text, btn) {
-  if (!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = 0.8; const v = zh(); if (v) u.voice = v;
-  btn?.classList.add('on'); u.onend = u.onerror = () => btn?.classList.remove('on');
-  speechSynthesis.speak(u);
+// listening clips: scripts/build-mock-audio.py (lesson word voice)
+const clip = new Audio();
+function say(i, btn) {
+  clip.pause(); clip.src = `audio/mock-h1/q${String(i + 1).padStart(2, '0')}.mp3`;
+  btn?.classList.add('on'); clip.onended = clip.onerror = () => btn?.classList.remove('on');
+  clip.play().catch(() => btn?.classList.remove('on'));
 }
 
 const at = (i) => {
@@ -115,7 +113,7 @@ function intro(si) {
 function endSection() {
   const si = Math.floor(n / SEC);   // unanswered rest of the section stays null (wrong)
   n = (si + 1) * SEC;
-  speechSynthesis?.cancel();
+  clip.pause();
   if (n >= TOTAL) finish(); else intro(si + 1);
 }
 
@@ -136,14 +134,14 @@ function show() {
     explain: (a) => `${pic ? `tranh ${label(opts, a)}` : `${label(opts, a)}. ${a}`}. ${item.why}`,
   }, (ok, pick) => {
     picks[n] = pick;
-    speechSynthesis?.cancel();
+    clip.pause();
     if (last) { if (n + 1 >= TOTAL) { clearInterval(timer); finish(); } else { clearInterval(timer); n++; intro(si + 1); } } else { n++; show(); }
   });
   if (listening) {
     const btn = $('#mplay'), pl = $('#pl'), cap = exam ? sec.plays : Infinity;
     const upd = () => { const r = cap - plays[n]; pl.textContent = exam ? `Còn ${r} lượt nghe` : 'Nghe lại bao nhiêu lần cũng được'; btn.disabled = r <= 0; };
     upd();
-    btn.onclick = () => { if (plays[n] >= cap) return; plays[n]++; say(item.q ? `${item.say} ${item.q}` : item.say, btn); upd(); };
+    btn.onclick = () => { if (plays[n] >= cap) return; plays[n]++; say(n, btn); upd(); };
   }
   scrollTo(0, 0);
 }
@@ -165,9 +163,9 @@ function finish() {
 
 const scrim = $('#scrim');
 const close = () => { scrim.hidden = true; $('#exit').focus(); };
-$('#exit').onclick = () => { if (!exam) { speechSynthesis?.cancel(); location.href = 't3-practice.html'; return; } scrim.hidden = false; $('#keep').focus(); };
+$('#exit').onclick = () => { if (!exam) { clip.pause(); location.href = 't3-practice.html'; return; } scrim.hidden = false; $('#keep').focus(); };
 $('#keep').onclick = close;
-$('#leave').onclick = () => { speechSynthesis?.cancel(); location.href = 't3-practice.html'; };
+$('#leave').onclick = () => { clip.pause(); location.href = 't3-practice.html'; };
 scrim.onclick = (e) => { if (e.target === scrim) close(); };
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && !scrim.hidden) close(); });
 

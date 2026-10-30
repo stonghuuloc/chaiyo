@@ -8,7 +8,7 @@ export const MOCK = {
     { key: 'nghe', title: 'Nghe', minutes: 12, plays: 2, parts: [
       { type: 'pic3', ask: 'Nghe rồi chọn tranh đúng', items: [
         { say: '飞机', opts: ['huoche', 'feiji', 'xuexiao'], ans: 'feiji', why: '飞机 (phi cơ) là máy bay.' },
-        { say: '喝水', opts: ['shuijiao', 'shu', 'beizi'], ans: 'beizi', why: '喝水 là uống nước, tranh có cốc nước.' },
+        { say: '杯子', opts: ['shuijiao', 'shu', 'beizi'], ans: 'beizi', why: '杯子 (bôi tử) là cái cốc.' },
         { say: '医生', opts: ['yisheng', 'yiyuan', 'dianshi'], ans: 'yisheng', why: '医生 (y sinh) là bác sĩ, người; 医院 là nơi.' },
         { say: '打电话', opts: ['jidan', 'chifan', 'dadianhua'], ans: 'dadianhua', why: '打电话 là gọi điện thoại.' },
         { say: '下雨', opts: ['shouji', 'xiayu', 'zhuozi'], ans: 'xiayu', why: '下雨 là trời mưa.' },
