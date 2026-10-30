@@ -32,6 +32,9 @@ for (const sec of MOCK.sections ?? []) {
     const where = `${sec.key}.p${pi + 1}(${p.type})`;
     if (p.items?.length !== 5) bad(`${where}: ${p.items?.length} items`);
     if (SHARED.has(p.type) && p.opts?.length !== 6) bad(`${where}: shared opts ${p.opts?.length}`);
+    const pos = {};
+    p.items.forEach((it) => { const o = SHARED.has(p.type) ? p.opts : it.opts; const l = 'ABCDEF'[o?.indexOf(it.ans)]; pos[l] = (pos[l] || 0) + 1; });
+    for (const [l, c] of Object.entries(pos)) if (c > 2) bad(`${where}: answer ${l} used ${c} times`);
     p.items.forEach((it, ii) => {
       total++;
       const w = `${where}.i${ii + 1}`;

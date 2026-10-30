@@ -7,18 +7,18 @@ export const MOCK = {
   sections: [
     { key: 'nghe', title: 'Nghe', minutes: 12, plays: 2, parts: [
       { type: 'pic3', ask: 'Nghe rồi chọn tranh đúng', items: [
-        { say: '飞机', opts: ['feiji', 'huoche', 'xuexiao'], ans: 'feiji', why: '飞机 (phi cơ) là máy bay.' },
-        { say: '喝水', opts: ['beizi', 'shu', 'shuijiao'], ans: 'beizi', why: '喝水 là uống nước, tranh có cốc nước.' },
+        { say: '飞机', opts: ['huoche', 'feiji', 'xuexiao'], ans: 'feiji', why: '飞机 (phi cơ) là máy bay.' },
+        { say: '喝水', opts: ['shuijiao', 'shu', 'beizi'], ans: 'beizi', why: '喝水 là uống nước, tranh có cốc nước.' },
         { say: '医生', opts: ['yisheng', 'yiyuan', 'dianshi'], ans: 'yisheng', why: '医生 (y sinh) là bác sĩ, người; 医院 là nơi.' },
-        { say: '打电话', opts: ['dadianhua', 'chifan', 'jidan'], ans: 'dadianhua', why: '打电话 là gọi điện thoại.' },
+        { say: '打电话', opts: ['jidan', 'chifan', 'dadianhua'], ans: 'dadianhua', why: '打电话 là gọi điện thoại.' },
         { say: '下雨', opts: ['shouji', 'xiayu', 'zhuozi'], ans: 'xiayu', why: '下雨 là trời mưa.' },
       ] },
       { type: 'ans3', ask: 'Nghe câu hỏi rồi chọn câu trả lời', items: [
-        { say: '你叫什么名字？', opts: ['我叫大山。', '我八岁。', '我在家。'], ans: '我叫大山。', why: '叫什么名字 hỏi tên, trả lời bằng 我叫…' },
+        { say: '你叫什么名字？', opts: ['我在家。', '我八岁。', '我叫大山。'], ans: '我叫大山。', why: '叫什么名字 hỏi tên, trả lời bằng 我叫…' },
         { say: '你今年几岁？', opts: ['我八岁。', '我在北京。', '我喝茶。'], ans: '我八岁。', why: '几岁 hỏi tuổi, trả lời bằng số + 岁.' },
-        { say: '你想喝什么？', opts: ['我想喝水。', '我在学校。', '我是学生。'], ans: '我想喝水。', why: '喝什么 hỏi uống gì, trả lời 我想喝…' },
+        { say: '你想喝什么？', opts: ['我在学校。', '我想喝水。', '我是学生。'], ans: '我想喝水。', why: '喝什么 hỏi uống gì, trả lời 我想喝…' },
         { say: '你在哪儿？', opts: ['我在家。', '我很好。', '我有三个。'], ans: '我在家。', why: '在哪儿 hỏi ở đâu, trả lời 我在…' },
-        { say: '现在几点？', opts: ['现在八点。', '我不去。', '他是我哥哥。'], ans: '现在八点。', why: '几点 hỏi giờ, trả lời số + 点.' },
+        { say: '现在几点？', opts: ['他是我哥哥。', '我不去。', '现在八点。'], ans: '现在八点。', why: '几点 hỏi giờ, trả lời số + 点.' },
       ] },
       { type: 'pic6', ask: 'Nghe đoạn hội thoại rồi chọn tranh đúng', opts: ['yiyuan', 'xuexiao', 'chifan', 'shuijiao', 'dianshi', 'daqiu'], items: [
         { say: '你在做什么？我在吃饭。', ans: 'chifan', why: '“我在吃饭” là đang ăn cơm.' },
@@ -29,10 +29,10 @@ export const MOCK = {
       ] },
       { type: 'qa3', ask: 'Nghe câu rồi chọn đáp án cho câu hỏi', items: [
         { say: '我今天去医院看病。', q: '他去哪儿？', opts: ['学校', '医院', '商店'], ans: '医院', why: '“去医院看病”: đi bệnh viện khám bệnh.' },
-        { say: '我爸爸是医生，我妈妈是老师。', q: '妈妈做什么工作？', opts: ['医生', '老师', '学生'], ans: '老师', why: '妈妈是老师; 医生 là bố.' },
-        { say: '今天星期三，明天星期四。', q: '今天星期几？', opts: ['星期二', '星期三', '星期四'], ans: '星期三', why: '“今天星期三” nên hôm nay là thứ Tư.' },
+        { say: '我爸爸是医生，我妈妈是老师。', q: '妈妈做什么工作？', opts: ['老师', '医生', '学生'], ans: '老师', why: '妈妈是老师; 医生 là bố.' },
+        { say: '今天星期三，明天星期四。', q: '今天星期几？', opts: ['星期二', '星期四', '星期三'], ans: '星期三', why: '“今天星期三” nên hôm nay là thứ Tư.' },
         { say: '我有三个杯子，两个是白的。', q: '他有几个杯子？', opts: ['两个', '三个', '五个'], ans: '三个', why: '有三个杯子; 两个 chỉ là số cốc màu trắng.' },
-        { say: '我坐火车去北京，坐飞机回家。', q: '他怎么回家？', opts: ['坐飞机', '坐火车', '开车'], ans: '坐飞机', why: '去 bằng tàu, 回家 bằng máy bay.' },
+        { say: '我坐火车去北京，坐飞机回家。', q: '他怎么回家？', opts: ['开车', '坐火车', '坐飞机'], ans: '坐飞机', why: '去 bằng tàu, 回家 bằng máy bay.' },
       ] },
     ] },
     { key: 'doc', title: 'Đọc', minutes: 20, parts: [
@@ -58,11 +58,11 @@ export const MOCK = {
         { text: '我爸爸（ ）妈妈都在家。', ans: '和', why: '和 nối hai danh từ: 爸爸和妈妈.' },
       ] },
       { type: 'star3', ask: 'Đọc câu rồi chọn đáp án cho câu hỏi ★', items: [
-        { text: '今天星期五，明天不上班。', q: '明天他上班吗？', opts: ['上班', '不上班', '去学校'], ans: '不上班', why: '“明天不上班”: mai không đi làm.' },
-        { text: '我的手机不见了，我在找。', q: '他在做什么？', opts: ['看书', '找手机', '打电话'], ans: '找手机', why: '手机不见了 nên đang 找 (tìm).' },
+        { text: '今天星期五，明天不上班。', q: '明天他上班吗？', opts: ['不上班', '上班', '去学校'], ans: '不上班', why: '“明天不上班”: mai không đi làm.' },
+        { text: '我的手机不见了，我在找。', q: '他在做什么？', opts: ['看书', '打电话', '找手机'], ans: '找手机', why: '手机不见了 nên đang 找 (tìm).' },
         { text: '我家有四个人：爸爸、妈妈、哥哥和我。', q: '他家有几个人？', opts: ['三个人', '四个人', '五个人'], ans: '四个人', why: '爸爸、妈妈、哥哥 và 我 = 4 người.' },
-        { text: '现在九点，我们九点半上课。', q: '几点上课？', opts: ['九点', '九点半', '十点'], ans: '九点半', why: '九点半 là 9 giờ rưỡi; 九点 là giờ hiện tại.' },
-        { text: '我不想吃米饭，我想吃面条儿。', q: '他想吃什么？', opts: ['米饭', '面条儿', '鸡蛋'], ans: '面条儿', why: '不想吃米饭, 想吃面条儿.' },
+        { text: '现在九点，我们九点半上课。', q: '几点上课？', opts: ['九点', '十点', '九点半'], ans: '九点半', why: '九点半 là 9 giờ rưỡi; 九点 là giờ hiện tại.' },
+        { text: '我不想吃米饭，我想吃面条儿。', q: '他想吃什么？', opts: ['面条儿', '米饭', '鸡蛋'], ans: '面条儿', why: '不想吃米饭, 想吃面条儿.' },
       ] },
     ] },
   ],
