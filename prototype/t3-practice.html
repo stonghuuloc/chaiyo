@@ -120,7 +120,7 @@ function mocks() {
   const open = mockLv < LEVEL;
   const rows = [['viet', 'fill-diploma', `Thi thử ${L.title}`, 'nghe · đọc' + (mockLv >= 3 ? ' · viết' : '')]]
     .concat(mockLv >= SPEAKING_FROM ? [['noi', 'fill-microphone', `Thi thử ${L.title} · Nói`, 'nhắc lại · tả tranh · trả lời']] : []);
-  $('#mocks').innerHTML = rows.map(([k, i, t, sub]) => `<a class="mine mock" href="p2-skill.html?k=thi&m=${k}&lv=${mockLv}"><span class="mi">${ic(i)}</span><span><b>${t}</b><small>${sub} · ${why}</small></span>${ic(open ? 'regular-caret-right' : 'fill-lock-simple', 'ic go')}</a>`).join('');
+  $('#mocks').innerHTML = rows.map(([k, i, t, sub]) => `<a class="mine mock" href="p2-skill.html?k=thi&m=${k}&lv=${mockLv}"><span class="mi">${ic(i)}</span><span><b>${t}</b><small>${sub} · ${why}${mockLv === LEVEL && k === 'viet' ? ' · làm thử bản demo' : ''}</small></span>${ic(open ? 'regular-caret-right' : 'fill-lock-simple', 'ic go')}</a>`).join('');
 }
 render();
 addEventListener('pageshow', (e) => e.persisted && render());
