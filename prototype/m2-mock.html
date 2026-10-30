@@ -130,7 +130,7 @@ function show() {
   const last = n % SEC === SEC - 1;
   choice({
     ask: `${sec.title} · phần ${pi + 1} · câu ${n + 1}/${TOTAL}`, title: part.ask,
-    kind: pic ? 'pic' : 'text', opts, ans: item.ans, promptHtml: prompt, last, feedback: !exam,
+    kind: pic ? 'pic' : 'text', opts, ans: item.ans, promptHtml: prompt, last, feedback: !exam, missHint: '',
     optHtml: (o) => (pic ? `<img src="${img(o)}" alt="Tranh ${label(opts, o)}" loading="eager"><span class="L">${label(opts, o)}</span>` : `<span class="L">${label(opts, o)}</span><span>${o}</span>`),
     optLabel: (o) => (pic ? `Tranh ${label(opts, o)}` : `${label(opts, o)}. ${o}`),
     explain: (a) => `${pic ? `tranh ${label(opts, a)}` : `${label(opts, a)}. ${a}`}. ${item.why}`,
