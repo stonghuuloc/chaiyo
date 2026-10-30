@@ -13,8 +13,9 @@
       "repo": "",
       "stage": "execute",
       "reviews": 2,
-      "note": "Loc go 2026-10-30, team mode: impl-S1 + test-S1",
-      "jira": "CHY-5.2"
+      "note": "pushed 87d7b0f, PR #15; waiting Loc go for verify",
+      "jira": "CHY-5.2",
+      "pr": "#15"
     },
     {
       "id": "S2",
@@ -32,7 +33,9 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#15"
+  ],
   "branch": "CHY-5",
   "log": [
     "2026-10-26 init",
@@ -49,5 +52,5 @@
     "2026-10-30 S1 \u2192 picture",
     "2026-10-30 S1 \u2192 execute"
   ],
-  "updated": "2026-10-30T13:53:07+07:00"
+  "updated": "2026-10-30T15:08:31+07:00"
 }
