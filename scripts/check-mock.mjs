@@ -1,8 +1,8 @@
 // Node check for prototype/data/mock-h1.js: shape, answers, level-1 vocabulary, picture files.
 import { readFileSync, existsSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const root = new URL('..', import.meta.url).pathname;
+const root = fileURLToPath(new URL('..', import.meta.url));
 const { MOCK } = await import(pathToFileURL(`${root}prototype/data/mock-h1.js`));
 const dict = JSON.parse(readFileSync(`${root}prototype/data/dict.json`, 'utf8'));
 const lv1 = new Set(dict.filter((r) => r[5] === 1).map((r) => r[0]));
@@ -11,6 +11,7 @@ const bad = (m) => errs.push(m);
 
 const PIC = new Set(['pic3', 'pic6', 'rpic6']);
 const SHARED = new Set(['pic6', 'rpic6', 'reply6', 'gap6']);
+const ASKS = new Set(['qa3', 'star3']);
 const HANZI = /[一-鿿]/;
 
 function unknown(s) {
@@ -55,6 +56,7 @@ for (const sec of MOCK.sections ?? []) {
 			if (!opts?.includes(it.ans)) bad(`${w}: ans "${it.ans}" not in opts`);
 			if (!it.why) bad(`${w}: no why`);
 			if (!(it.say || it.text)) bad(`${w}: no say/text`);
+			if (ASKS.has(p.type) && !it.q) bad(`${w}: no q`);
 			const texts = [it.say, it.text, it.q, ...(PIC.has(p.type) ? [] : (opts ?? []))].filter(
 				Boolean
 			);
