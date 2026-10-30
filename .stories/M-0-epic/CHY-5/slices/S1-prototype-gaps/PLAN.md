@@ -30,8 +30,8 @@ File: `prototype/data/mock-h1.js` (new)
 
 ## Task 2 [AC4] Pictures in the Cast style
 Files: `assets/words/mock-h1/<key>.png` (new, ~20, git-ignored)
-- One call per picture, run 4 in parallel: `python3 scripts/gen-image.py assets/words/mock-h1/<key>.png "<object/scene>, one clear subject, Chaiyo Cast storybook style, warm paper background, no text" assets/ref/cast-v2.png` (ref passed explicitly — the default is the old lineup; animals/people scenes may show a Cast member).
-- Review each against `assets/words/h2-01/w01.png` style; regenerate misses (max 2 tries each, then report).
+- One call per picture, 8 in parallel: `sh scripts/gen-result-art.sh --prompt assets/words/mock-h1/<key>.png "<scene>"` — the script appends the locked STYLE and the `cast-v2.png` ref (NOTES.md:45-67 "Art — locked": the Cast acts out the word in a rich storybook scene, canon roles, no humans). Scenes are kept in `prototype/data/mock-h1-art.txt`. (Rev 2, 2026-10-30: rev 1 used a plain-object prompt that broke the art rules.)
+- Review each against NOTES.md:45-67 (Cast only, acts the word, rich background, canon role, no text, matches the lineup); regenerate misses (max 2 tries each, then report).
 - Push: `python3 scripts/assets_push.py` (no `--delete`).
 - Verify: `node scripts/check-mock.mjs` picture assertion passes; `python3 scripts/assets_push.py` prints the new keys uploaded.
 
