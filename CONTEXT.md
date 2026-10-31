@@ -26,14 +26,14 @@ The single public page. It introduces the app and leads to sign-up / log-in. It 
 
 ## Progress
 
-Everything a [[Learner]] has achieved and owns: which lessons are passed, unlocked or locked, gate scores, SRS card state, and which words sit in their Lexicon. Private to that Learner — no other Learner can see it.
+Everything a [[Learner]] has achieved and owns: which lessons are passed, unlocked or locked, gate scores, review state per skill, and which words sit in their Lexicon. Private to that Learner — no other Learner can see it.
 
 - **Not**: a processing pipeline (grading jobs, scoring queues) — those are mechanisms, not something a Learner owns.
 - **Related**: [[Learner]], [[Attempt]]
 
 ## Attempt
 
-One answer by a [[Learner]] to one question, anywhere in the app (gate test, mock test, SRS review, exercise): what was asked, what they answered, whether it was correct, how long it took, when. Attempts are only ever added, never changed or removed. [[Progress]], [[Learner Stats]] and [[Usage Analytics]] are all derived from Attempts.
+One answer by a [[Learner]] to one question, anywhere in the app (gate test, mock test, [[Practice]], exercise): what was asked, what they answered, whether it was correct, how long it took, when. Attempts are only ever added, never changed or removed. [[Progress]], [[Learner Stats]] and [[Usage Analytics]] are all derived from Attempts.
 
 - **Not**: a test session — a gate test is many Attempts.
 - **Related**: [[Progress]], [[Learner Stats]], [[Usage Analytics]]
@@ -62,7 +62,7 @@ A full practice exam for one HSK level, matching the official HSK 3.0 format (se
 
 ## Streak
 
-The number of consecutive days on which a [[Learner]] did real study. A day counts when, before midnight in the Learner's own timezone, they cleared every SRS review due that day or finished at least one lesson section (warm-up, new words, grammar, dialogue, listening/speaking, writing, or gate test).
+The number of consecutive days on which a [[Learner]] did real study. A day counts when, before midnight in the Learner's own timezone, they cleared every skill's due [[Practice]] that day or finished at least one lesson section (warm-up, new words, grammar, dialogue, listening/speaking, writing, or gate test).
 
 - **Not**: days the app was opened; not a count of [[Attempt]]s.
 - **Related**: [[Streak Freeze]], [[Learner Stats]], [[Progress]]
@@ -111,7 +111,7 @@ The Sino-Vietnamese reading of a Chinese character (学 → học, 爱 → ái).
 
 ## Dictionary
 
-Every Chinese word the app can look up (about 122k), each with a thin entry: hanzi, pinyin, [[Hán Việt]], Vietnamese meaning, and which lesson teaches it, if any. Shared by all Learners.
+Every Chinese word the app can look up (about 122k), each with a thin entry: hanzi, pinyin, [[Hán Việt]], Vietnamese meaning, and which lesson teaches it, if any. Shared by all Learners. It is looked up by tapping a hanzi (Tra nhanh, screen X1); there is no search screen. Words saved from it become "tự thêm" in the [[Lexicon]].
 
 - **Not**: the [[Lexicon]] — the Dictionary covers all words; the Lexicon covers only the words a Learner has met.
 - **Related**: [[Word Page]], [[Lexicon]]
@@ -125,10 +125,17 @@ The rich page for a word the lessons teach: radicals, stroke order, example sent
 
 ## Lexicon
 
-The set of words a [[Learner]] has met in lessons or saved from the [[Dictionary]], each with the Learner's own review state. A word taught in a lesson opens its [[Word Page]]; a word only saved from the Dictionary ("tự thêm") shows its Dictionary entry until a lesson teaches it, then gains the Word Page and keeps its review history. Part of the Learner's [[Progress]].
+The set of words a [[Learner]] has met in lessons or saved from the [[Dictionary]], each with the Learner's own review state **per skill** (Thẻ từ, Nghe, Viết chữ). A word taught in a lesson opens its [[Word Page]]; a word only saved from the Dictionary ("tự thêm") shows its Dictionary entry until a lesson teaches it, then gains the Word Page and keeps its review history. Part of the Learner's [[Progress]].
 
 - **Not**: the [[Dictionary]]; not content of its own — the Lexicon is a Learner's view over shared entries.
-- **Related**: [[Word Page]], [[Dictionary]], [[Progress]]
+- **Related**: [[Word Page]], [[Dictionary]], [[Progress]], [[Practice]]
+
+## Practice
+
+Luyện tập: a [[Learner]] clears due cards from the [[Lexicon]], one skill per card (Thẻ từ, Nghe, Viết chữ). The daily session mixes every skill's due cards; a Learner may also practise one skill alone. Each answer is an [[Attempt]] and updates only that skill's review state.
+
+- **Not**: a lesson section, not a [[Mock Test]].
+- **Related**: [[Lexicon]], [[Attempt]], [[Streak]]
 
 ## Speaking Answer
 
@@ -139,7 +146,7 @@ A spoken [[Attempt]]: the [[Learner]] records themselves answering a speaking ta
 
 ## Placement Test
 
-An optional test a new [[Learner]] takes to skip ahead. It runs in blocks of 10 questions, one block per level, starting at HSK1. A block passes at 80% or more; the test moves up a level after each passed block and stops at the first failed block. The Learner may also stop after any passed block. Every question offers "Không biết", which counts as wrong, so guessing is never needed. Every lesson below the reached level unlocks. Those lessons' words enter the [[Lexicon]] as not yet reviewed and are fed into reviews as new cards, about 20 per day, so a placed Learner is not buried under hundreds of due cards. A weak result later never sends the Learner back down.
+An optional test a new [[Learner]] takes to skip ahead. It runs in blocks of 10 questions, one block per level, starting at HSK1. A block passes at 80% or more; the test moves up a level after each passed block and stops at the first failed block. The Learner may also stop after any passed block. Every question offers "Không biết", which counts as wrong, so guessing is never needed. Every lesson below the reached level unlocks. Those lessons' words enter the [[Lexicon]] as not yet reviewed and are fed into [[Practice]] as new cards, about 20 per day, so a placed Learner is not buried under hundreds of due cards. A weak result later never sends the Learner back down.
 
 - **Not**: a [[Mock Test]] — a Placement Test is short and spans levels; a Mock Test is a full exam for one level.
 - **Related**: [[Progress]], [[Lexicon]], [[Mock Test]]
@@ -155,12 +162,12 @@ The test at the end of a lesson that decides whether the next lesson unlocks. Pa
 
 Bài 0 · Nhập môn: the lesson before HSK1 Bài 1 that teaches reading and hearing pinyin, with no hanzi words. Five sections: the four tones and the neutral tone, finals, initials (in the standard textbook order: b p m f · d t n l · g k h · j q x · zh ch sh r · z c s), spelling rules, and tone changes (3-3, 不, 一). Sounds are taught by their standard features (tone contour, place and manner of articulation, mouth shape), never by comparison to Vietnamese sounds. It ends in a [[Gate Test]] of tone and pinyin questions that unlocks Bài 1. A [[Learner]] who already reads pinyin may take that Gate Test straight away, without doing the sections. Passing the HSK1 block of the [[Placement Test]] also passes it.
 
-- **Not**: a lesson with words — nothing enters the [[Lexicon]], and it creates no review cards. Not the [[Pinyin Table]], which is reference, not a lesson.
+- **Not**: a lesson with words — nothing enters the [[Lexicon]], and it creates no [[Practice]] cards. Not the [[Pinyin Table]], which is reference, not a lesson.
 - **Related**: [[Gate Test]], [[Pinyin Table]], [[Roadmap]]
 
 ## Pinyin Table
 
-The grid of every Mandarin syllable (initial × final), where tapping a cell plays it in all four tones. Reference only, always open in the Từ điển tab; the [[Pinyin Primer]] links to it.
+The grid of every Mandarin syllable (initial × final), where tapping a cell plays it in all four tones. Reference only, opened from the [[Pinyin Primer]] hub.
 
 - **Not**: a lesson or test — nothing is graded there.
 - **Related**: [[Pinyin Primer]], [[Dictionary]]
