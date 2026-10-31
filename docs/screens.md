@@ -112,7 +112,7 @@ Columns: **Job** (why the screen exists) · **Primary action** (exactly one) · 
 |---|---|---|---|---|
 | T1 | Tell the Learner the one thing to do now | Next CTA (see flow) | Due count, current lesson + section, Streak/Freeze, week strip, Roadmap slice, 3 Friends | **Done (prototype).** Scene per state: reviews due · lesson next · day done · Streak at risk · Freeze used. Offline: reviews CTA works, lesson CTA shows "cần mạng" if section not cached |
 | T2 | Show the whole path HSK1→5 and where you are | Open current lesson | Levels → topics → lessons with passed / current / locked, best gate score; Mock Tests per level | Locked lesson tap → "Qua Bài N-1 để mở" · Placement-unlocked lessons marked as such · ~350 lessons: virtualised list, jump to current |
-| T3 | Pick what to practise today | "Luyện hôm nay" → K1 | Due count per skill, skill rows (Thẻ từ, Nghe, Viết chữ → K1; Nói, Viết đoạn → K2), Thi thử by level → K2, word count → T3a | Nothing due → "Xong hôm nay" · skill not open yet (Viết đoạn from HSK 3) · Offline: K1 works |
+| T3 | Pick what to practise today | "Luyện hôm nay" → K1 | Due count per skill, skill rows (Thẻ từ, Nghe, Viết chữ → K1; Nói, Viết đoạn → K2), Thi thử by level (M1 block) → K2 intro, word count → T3a | Nothing due → "Xong hôm nay" · skill not open yet (Viết đoạn from HSK 3) · Offline: K1 works |
 | T3a | See your own words | none (tap → W1/W2) | Lexicon: words taught and saved ("tự thêm"), filter by level/lesson/"tự thêm", review state per skill | Empty → "Học Bài 1 để có từ đầu tiên" |
 | T4 | Own stats + door to everything personal | none (menu) | Learner Stats: Streak, words known, accuracy per tone, weakest grammar points; links U1–U4, A1–A2 for Admin | Not enough Attempts for tone stats → hide that block |
 
