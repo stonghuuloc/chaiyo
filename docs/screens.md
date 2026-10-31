@@ -79,6 +79,7 @@ L0 Primer hub ─▶ 5 × L0a sections ─▶ L8 Gate Test (Primer pool) ─▶ 
              └─ W3 Pinyin Table
 
 L1 Lesson hub ─▶ L2 … L7 (any order after L2, each resumable) ─▶ back to L1
+              ├─ T3a Từ của tôi (link beside the word list)
               └─ all 6 sections done ─▶ L8 Gate Test ─▶ L9 Result
                                                       ├─ ≥80%: next lesson unlocks ─▶ L1 (next) / T1
                                                       └─ <80%: retry (fresh questions) or back to L1
@@ -89,7 +90,7 @@ Any hanzi in any text ─tap─▶ X1 Lookup ─┬─ taught word ─▶ W1 Wor
 
 T2 Lộ trình ─▶ L1 (passed or current lesson; locked lessons show why) · ─▶ M1 Mock list per level
 T3 Luyện tập ─▶ K1 (mix or one skill) · K2 Nói / Viết đoạn · M1 Thi thử ─▶ K2 intro ─▶ M2 ─▶ M3 · T3a Từ của tôi ─▶ W1 / W2
-T4 Tôi ─▶ U1 Badges · U2 Friends ─▶ U3 Profile · U4 Settings · A1/A2 (Admin)
+T4 Tôi ─▶ U1 Badges · U2 Friends ─▶ U3 Profile · U4 Settings · T3a Từ của tôi · A1/A2 (Admin)
 ```
 
 ## Per-screen briefs

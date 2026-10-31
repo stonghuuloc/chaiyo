@@ -33,7 +33,7 @@ Everything a [[Learner]] has achieved and owns: which lessons are passed, unlock
 
 ## Attempt
 
-One answer by a [[Learner]] to one question, anywhere in the app (gate test, mock test, [[Practice]], exercise): what was asked, what they answered, whether it was correct, how long it took, when. Attempts are only ever added, never changed or removed. [[Progress]], [[Learner Stats]] and [[Usage Analytics]] are all derived from Attempts.
+One answer by a [[Learner]] to one question, anywhere in the app (gate test, mock test, [[Practice]], exercise): what was asked, which skill it practised (for [[Practice]]: Thẻ từ, Nghe or Viết chữ), what they answered, whether it was correct, how long it took, when. Attempts are only ever added, never changed or removed. [[Progress]], [[Learner Stats]] and [[Usage Analytics]] are all derived from Attempts.
 
 - **Not**: a test session — a gate test is many Attempts.
 - **Related**: [[Progress]], [[Learner Stats]], [[Usage Analytics]]
