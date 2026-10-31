@@ -1,7 +1,7 @@
 {
   "story": "CHY-5",
   "title": "Sync docs with the final prototype",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S2",
   "slices": [
     {
@@ -26,10 +26,11 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 2,
-      "note": "team mode: impl-S2 + test-S2",
-      "jira": "CHY-5.1"
+      "note": "verified 31dd149, VERIFY.md",
+      "jira": "CHY-5.1",
+      "pr": "#15"
     }
   ],
   "locked": [],
@@ -57,7 +58,10 @@
     "2026-10-31 S2 \u2192 spec",
     "2026-10-31 S2 \u2192 plan",
     "2026-10-31 S2 \u2192 picture",
-    "2026-10-31 S2 \u2192 execute"
+    "2026-10-31 S2 \u2192 execute",
+    "2026-10-31 S2 \u2192 done",
+    "2026-10-31 S2 \u2192 verify",
+    "2026-10-31 S2 \u2192 done"
   ],
-  "updated": "2026-10-31T18:38:47+07:00"
+  "updated": "2026-10-31T19:24:37+07:00"
 }
