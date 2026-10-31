@@ -4,7 +4,8 @@ ACs: AC1, AC2, AC3
 ## Current behaviour (verified, with anchors)
 - [AC1] `docs/screens.md:8` tab bar = Hôm nay · Lộ trình · Từ điển · Tôi; prototype tab bar = Hôm nay · Lộ trình · Luyện tập · Tôi (`prototype/t3-practice.html` text). **AC1 fails → TASK.**
 - [AC1] Inventory `docs/screens.md:12-51` lists 36 rows. Prototype screens reached from `home-glass.html`: 32 files. Rows with no file: P1, M1, M2, M3, W2, X1, X2, R1, R2, T3 (Từ điển). Files with no row: `t3-practice`, `p1-session`, `p2-skill`, `t3-words`, `l0-gate`.
-- [AC1] Mock Test is in the prototype, not as M1–M3: `t3-practice.html` "Thi thử" block → `p2-skill.html?k=thi&m=…&lv=…`. No mock result file.
+- [AC1] After S1 (PR #15, verified c3c6395): P1 = `p1-landing.html`, X1 = `x1-lookup.html`, M2 = `m2-mock.html`, M3 = `m3-result.html` exist. W2 and X2 already lived in `w1-word.html` (`:161`, `:133-141`), M1 in the `t3-practice.html` Thi thử block. Rows still with no file: R1, R2, T3 (Từ điển) — all three leave the doc (AC3). Prototype now has 47 `.html` files.
+- [AC1] Before S1, Mock Test was in the prototype only as: `t3-practice.html` "Thi thử" block → `p2-skill.html?k=thi&m=…&lv=…`. No mock result file.
 - [AC1] Non-screen files in `prototype/`: index pages `bai0`, `bai1`, `onboard`; `home.html` (orphan, superseded by `home-glass.html`, which every screen links to); `lesson.html` + `lessons.html` (link only to each other); design boards `palettes`, `logo-ideas`, `lesson-images`, `wireframes-core-loop`, `talk-sample`; `reset.html` (demo reset).
 - [AC2] Memory is per skill: `p1-session.html` keys a card as `${skill}:${hz}`; skills `the` (flashcard), `nghe`, `viet` (`t3-practice.html` links `p1-session.html?skill=…`). `p2-skill.html` = Nói, Viết đoạn, Thi thử.
 - [AC2] `CONTEXT.md:112-131` Dictionary/Lexicon: no search wording, but Lexicon says "each with the Learner's own review state" (one state per word, not per skill). `CONTEXT.md:163` Pinyin Table "always open in the Từ điển tab". **AC2/AC3 fail → TASK.**
@@ -18,6 +19,7 @@ ACs: AC1, AC2, AC3
 | Source of truth? | the prototype | STORY.md Locked |
 | Other docs (NOTES, DESIGN, PRODUCT)? | untouched | STORY.md Out of scope |
 | Pinyin Table entry point? | L0 hub only | `w3-pinyin.html` links only `l0-hub.html` |
+| Screen that lives inside another file (M1, W2, X2)? | its row keeps its code; File column names the host file + part (`w1-word.html` sheet, `t3-practice.html` Thi thử) | Q3 → A added the File column; AC1 says "matches the screens", not one file per row |
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
