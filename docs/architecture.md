@@ -1,6 +1,6 @@
 # Chaiyo — module design
 
-How the code is cut into modules on the locked stack (`docs/adr/0001-sveltekit-over-nuxt.md`, diagram `docs/diagrams/stack.html`). Terms: `CONTEXT.md`. Content shapes: `docs/content-schema.md`. Vocabulary (module, interface, depth, seam, adapter) as in the `codebase-design` skill.
+How the code is cut into modules on the locked stack (`docs/adr/0001-sveltekit-over-nuxt.md`, `docs/adr/0002-lesson-content-as-static-bundles.md`, diagram `docs/diagrams/stack.html`). Terms: `CONTEXT.md`. Content shapes: `docs/content-schema.md`. Vocabulary (module, interface, depth, seam, adapter) as in the `codebase-design` skill.
 
 Goal: few **deep** modules with small interfaces. Screens stay thin and call them; every hard rule of the domain (sandhi, FSRS, unlocks, Streak, Freeze, Badges) lives in exactly one place.
 
@@ -43,9 +43,9 @@ Screens (`routes/`) and the lesson runner (successor of `prototype/step.js`) onl
 4. **No repository-per-table layer.** Supabase calls live inside Ledger and Catalog only. A thin wrapper per table fails the deletion test: deleting it moves complexity, it does not remove any.
 5. **Seams only where two adapters exist today.** Sink, Source, Store, Scorer, Channel qualify. TTS stays a direct call until the VoiceStudio spike decides whether Azure TTS is needed.
 
-## Open question (changes Catalog's Source adapter)
+## Content delivery
 
-Should lesson content reach the phone as a **static JSON bundle per lesson on the CDN** (versioned by `contentSha`, cached by the service worker, zero DB reads) or as **Postgres rows** read through Supabase? The design recommends the bundle for lessons and Word Pages, and Postgres only for Dictionary search and Attempt foreign keys. Either answer fits the same Catalog interface.
+Decided in `docs/adr/0002-lesson-content-as-static-bundles.md`: one static JSON bundle per lesson, served by Vercel and cached by the service worker; Postgres keeps the Dictionary, Attempt foreign keys and an Admin mirror. The Catalog interface is the same either way.
 
 ## Test surface
 

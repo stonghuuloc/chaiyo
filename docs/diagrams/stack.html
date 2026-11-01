@@ -36,7 +36,7 @@
     <div class="diagram-container">
       <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="stack-title stack-desc">
         <title id="stack-title">Mandarin app stack</title>
-        <desc id="stack-desc">The learner's PWA, served by Vercel, keeps its data and login in Supabase, sends speaking answers to Azure for scoring, plays audio that VoiceStudio pre-generates offline from the lesson files into Cloudflare R2, and gets reminders from a scheduled Supabase Edge Function; how content is bundled is still open.</desc>
+        <desc id="stack-desc">The learner's PWA, served by Vercel, keeps its data and login in Supabase, sends speaking answers to Azure for scoring, plays audio that VoiceStudio pre-generates offline from the lesson files into Cloudflare R2, and gets reminders from a scheduled Supabase Edge Function; lesson content ships as a static JSON bundle per lesson from Vercel.</desc>
         <defs>
           <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4a423a"/></marker>
           <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c6301d"/></marker>
@@ -51,15 +51,15 @@
         <text x="776" y="141" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">SUPABASE</text>
 
         <!-- arrows (before nodes) -->
-        <!-- content -> vercel : open question -->
-        <line x1="130" y1="96" x2="130" y2="330" stroke="#4a423a" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+        <!-- content -> vercel : json bundle (ADR 0002) -->
+        <line x1="130" y1="96" x2="130" y2="330" stroke="#4a423a" stroke-width="1.2" marker-end="url(#arrow)"/>
 
         <!-- content -> voicestudio (build time) -->
         <line x1="220" y1="68" x2="998" y2="68" stroke="#4a423a" stroke-width="1.2" marker-end="url(#arrow)"/>
         <rect x="560" y="48" width="64" height="12" rx="2" fill="#f7f3ea"/>
         <text x="592" y="57" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">SENTENCES</text>
         <rect x="138" y="262" width="76" height="12" rx="2" fill="#f7f3ea"/>
-        <text x="176" y="271" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">BUNDLE · TBD</text>
+        <text x="176" y="271" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">JSON BUNDLE</text>
 
         <!-- vercel -> pwa -->
         <line x1="220" y1="360" x2="298" y2="360" stroke="#4a423a" stroke-width="1.2" marker-end="url(#arrow)"/>
@@ -189,10 +189,8 @@
         <text x="628" y="694" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">main data path</text>
         <line x1="740" y1="691" x2="772" y2="691" stroke="#3f73b0" stroke-width="1.2"/>
         <text x="780" y="694" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">external API call</text>
-        <line x1="900" y1="691" x2="932" y2="691" stroke="#4a423a" stroke-width="1" stroke-dasharray="5,4"/>
-        <text x="940" y="694" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">open question (TBD)</text>
-        <rect x="1084" y="686" width="16" height="10" rx="2" fill="rgba(29,24,20,0.02)" stroke="rgba(29,24,20,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
-        <text x="1108" y="694" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">offline build</text>
+        <rect x="900" y="686" width="16" height="10" rx="2" fill="rgba(29,24,20,0.02)" stroke="rgba(29,24,20,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="924" y="694" fill="#4a423a" font-size="9" font-family="'Geist Mono', ui-monospace, monospace">offline build</text>
       </svg>
     </div>
   </div>
