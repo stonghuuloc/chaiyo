@@ -45,7 +45,7 @@ Screens (`routes/`) and the lesson runner (successor of `prototype/step.js`) onl
 
 ## Content delivery
 
-Decided in `docs/adr/0002-lesson-content-as-static-bundles.md`: one static JSON bundle per lesson, served by Vercel and cached by the service worker; Postgres keeps the Dictionary, Attempt foreign keys and an Admin mirror. The Catalog interface is the same either way.
+Decided in `docs/adr/0002-lesson-content-as-static-bundles.md`: one static JSON bundle per lesson, served by Vercel and cached by the service worker; Postgres keeps the Dictionary, the `questions` and `content_versions` rows Attempts reference, and an Admin mirror. The Catalog interface is the same either way.
 
 ## Test surface
 
