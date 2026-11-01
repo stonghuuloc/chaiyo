@@ -1,10 +1,10 @@
 ---
 id: CHY-6
 title: 'ADR: content delivery + schema open decisions'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:47'
+updated_date: '2026-11-01 11:31'
 labels:
   - slice-1
   - decision
