@@ -56,6 +56,14 @@ Feature: Mock Test runner + HSK1 mock
     Then there is no timer and listening can be replayed
     And after each answer the correct answer is shown
 
+  Scenario: No hanzi lookup in Exam mode
+    Given I am in the HSK 1 mock in Exam mode
+    When I tap a hanzi in a question or an answer option
+    Then no lookup sheet opens
+    Given I am in Practice mode or in "Xem lại đáp án"
+    When I tap a hanzi
+    Then the Tra nhanh sheet (X1) opens
+
   Scenario: Leaving an Exam midway
     Given I am halfway through an Exam
     When I tap to leave
@@ -89,4 +97,5 @@ Feature: Mock Test runner + HSK1 mock
 - [ ] #6 Scenario: M3 result and review
 - [ ] #7 Scenario: Passing an Exam earns a badge, Practice does not
 - [ ] #8 Scenario: One HSK1 mock playable in Exam and Practice modes
+- [ ] #9 Scenario: No hanzi lookup in Exam mode
 <!-- AC:END -->

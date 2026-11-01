@@ -57,7 +57,7 @@ What the app owner sees across all Learners: where they drop off, which lessons 
 A full practice exam for one HSK level, matching the official HSK 3.0 format (sections, question types, counts, timing). Most Mock Tests are generated from the app's own words and grammar for that level; the official CTI sample paper appears as one extra Mock Test marked "Official".
 
 - **Not**: a gate test — a gate test checks one lesson; a Mock Test covers a whole HSK level. Not an HSK 2.0 paper.
-- **Modes**: **Exam** (default) — official section timing, auto-submit at time-up, listening audio plays only as often as the official format allows, answers revealed at the end; only Exam results earn [[Badge]]s. **Practice** — untimed, free replay, answer shown after each question.
+- **Modes**: **Exam** (default) — official section timing, auto-submit at time-up, listening audio plays only as often as the official format allows, no hanzi lookup, answers revealed at the end; only Exam results earn [[Badge]]s. **Practice** — untimed, free replay, hanzi lookup on, answer shown after each question.
 - **Related**: [[Attempt]], [[Badge]]
 
 ## Streak
