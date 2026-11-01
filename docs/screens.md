@@ -43,7 +43,7 @@ Decisions this file rests on:
 | W1 | Word Page | Detail | T3a, X1, A1 | `w1-word.html` | ✅ |
 | W2 | Dictionary entry (thin, not taught yet) | Detail | T3a (saved untaught word) | `w1-word.html` (thin entry) | |
 | W3 | Bảng pinyin (Pinyin Table) | Detail | L0 | `w3-pinyin.html` | |
-| X1 | Tra nhanh (lookup popup over text) | Sheet | Tap any hanzi | `x1-lookup.html` | ✅ |
+| X1 | Tra nhanh (lookup popup over text) | Sheet | Tap any hanzi (not in an Exam-mode Mock Test) | `x1-lookup.html` | ✅ |
 | X2 | Báo lỗi (Error Report) | Sheet | W1, W2, any lesson step | `w1-word.html` (sheet) | |
 | U1 | Huy hiệu (Badges) | List | T4 | `u1-badges.html` | |
 | U2 | Bạn bè (Friends + leaderboard) | List | T1 friends strip, T4 | `u2-friends.html` | |
@@ -84,9 +84,9 @@ L1 Lesson hub ─▶ L2 … L7 (any order after L2, each resumable) ─▶ back 
                                                       ├─ ≥80%: next lesson unlocks ─▶ L1 (next) / T1
                                                       └─ <80%: retry (fresh questions) or back to L1
 
-Any hanzi in any text ─tap─▶ X1 Lookup ─┬─ taught word ─▶ W1 Word Page
-                                         ├─ untaught ────▶ "Thêm vào từ của tôi" in place (Lexicon "tự thêm", opens as W2 from T3a)
-                                         └─ "Báo lỗi" ────▶ X2 Error Report (from W1 / W2)
+Any hanzi in any text (not in an Exam-mode Mock Test) ─tap─▶ X1 Lookup ─┬─ taught word ─▶ W1 Word Page
+                                                                         ├─ untaught ────▶ "Thêm vào từ của tôi" in place (Lexicon "tự thêm", opens as W2 from T3a)
+                                                                         └─ "Báo lỗi" ────▶ X2 Error Report (from W1 / W2)
 
 T2 Lộ trình ─▶ L1 (passed or current lesson; locked lessons show why) · ─▶ M1 Mock list per level
 T3 Luyện tập ─▶ K1 (mix or one skill) · K2 Nói / Viết đoạn · M1 Thi thử ─▶ K2 intro ─▶ M2 ─▶ M3 · T3a Từ của tôi ─▶ W1 / W2
@@ -140,7 +140,7 @@ Columns: **Job** (why the screen exists) · **Primary action** (exactly one) · 
 | K1 | Clear due cards with honest recall, per skill | Answer → next | Due cards of every skill (or one, `?skill=`): Thẻ từ (hanzi→meaning), Nghe (audio→hanzi), Viết chữ (trace); answer grades that skill's FSRS state | **Works fully offline**, syncs Attempts later · session cap with "Ôn tiếp?" · missed card returns once ("gặp lại") · done step: score per skill, words met, next due → "Về Hôm nay" |
 | K2 | Practise one skill outside the mix | "Bắt đầu" | Nói (read aloud, tone scoring), Viết đoạn (HSK 3+), Thi thử intro: level, lock reason, Exam/Practice choice, best Exam score · **Luyện theo dạng**: one HSK 3.0 part type (e.g. Nghe phần 3), 10 questions from taught words | Skill not built yet → "sắp có" · Thi thử level locked → reason shown, demo paper for HSK 1 · Part drill: Practice-mode feedback, no Badge, taught words can't fill the part → "Học thêm vài bài để mở" · Nói: mic + headphone check before the first question (level meter, test sound; permission denied → how to allow; silent → "Thử lại") |
 | M1 | Pick a Mock Test for a level | Start | Thi thử block in T3: generated tests + one "Official" (CTI sample), best Exam score each | Level not reached → visible but marked "Chưa tới cấp này" [open: allow anyway?] |
-| M2 | Run an HSK 3.0-format exam | Answer / "Nộp" | Sections, timer (Exam), listening audio with play limits (Exam), Speaking Answers for HSKK parts; HSK 1 = HSK 3.0 Level 1 paper, 40 questions (listening 4 × 5, reading 4 × 5) · question map: parts × numbered bubbles (answered / blank / current), "Câu trước" / "Câu tiếp theo" | Exam: auto-submit at time-up, answers at end, no hanzi lookup, map limited to the current section, play limits survive navigation · Practice: no timer, answer after each question, lookup on · Submit with blanks → "Còn N câu chưa làm": "Làm tiếp" (first blank) / "Nộp luôn"; time-up never asks · Leave midway → confirm, Exam attempt discarded · Speaking parts: mic check first |
+| M2 | Run an HSK 3.0-format exam | Answer / "Nộp" | Sections, timer (Exam), listening audio with play limits (Exam), Speaking Answers for HSKK parts; HSK 1 = HSK 3.0 Level 1 paper, 40 questions (listening 4 × 5, reading 4 × 5) · question map: parts × numbered bubbles (answered / blank / current), "Câu trước" / "Câu tiếp theo" | Exam: auto-submit at time-up, answers at end, no hanzi lookup, map limited to the current section, play limits survive navigation · Practice: no timer, answer shown after each answered question, lookup on · Both modes: skipped questions stay blank; submit with blanks → "Còn N câu chưa làm": "Làm tiếp" (first blank) / "Nộp luôn"; Exam time-up never asks · Leave midway → confirm, Exam attempt discarded · Speaking parts: mic check first |
 | M3 | Score per section, review answers | "Xem lại đáp án" | Section scores vs HSK pass mark, per-question review (lookup on), weakest part → "Luyện dạng này" (K2 part drill), "Làm lại câu sai" (wrong + blank questions in Practice mode) | Exam pass → Badge · All parts perfect → no weak-part block · Nothing wrong → no "Làm lại câu sai" · Redo never changes the best Exam score |
 | W1 | Everything about one taught word | Play audio | Hanzi, pinyin, Hán Việt, meaning, radicals, stroke order (animated), examples with audio, picture, lessons it appears in, my review state | Not in my Lexicon yet → still viewable (same for every Learner) · "Báo lỗi" |
 | W2 | Thin entry for an untaught word | "Thêm vào từ của tôi" | Hanzi, pinyin, Hán Việt, meaning, "Dạy ở Bài N" if any | Saved → shows "tự thêm"; becomes W1 once its lesson is reached |
