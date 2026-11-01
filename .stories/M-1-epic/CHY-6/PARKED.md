@@ -8,3 +8,4 @@ Findings with no AC behind them. NOT planned, NOT built. Raise with BA if they m
 - [2026-11-01] architecture.md:3 lists ADR 0002 under 'locked stack' though it is a delivery decision — wording nit, no AC
 - [2026-11-01] stack.html eyebrow still reads 'ARCHITECTURE · ADR 0001' (now 2 ADRs) — outside SPEC, no AC
 - [2026-11-01] Catalog interface (architecture.md:29) says every result carries contentSha; Dictionary rows define none — decide current import sha vs optional (CodeRabbit PR #17)
+- [2026-11-01] SW cache.put not awaited (src/service-worker/index.ts:36) — real bug, no CHY-6 AC → backlog CHY-69
