@@ -1,5 +1,5 @@
 # CHY-6 S1 — summary
-ACs: AC1, AC4  ·  Commits: 4ac220e (backlog chore), d7fad99 (docs)  ·  PR: pending  ·  Team mode: impl-S1 + test-S1
+ACs: AC1, AC4  ·  Commits: 4ac220e (backlog chore), d7fad99 (docs)  ·  PR: #17  ·  Team mode: impl-S1 + test-S1
 
 ## Shipped
 - [AC1] `docs/adr/0002-lesson-content-as-static-bundles.md` (new): one choice (static JSON bundle per lesson, Vercel, `contentSha` URL, service worker), 4 numbered reasons, "Postgres is still used for" Dictionary search/lookup (X1), `question_id`/`content_sha`, Admin mirror; 4 consequences.
