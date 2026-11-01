@@ -1,0 +1,53 @@
+{
+  "story": "CHY-6",
+  "title": "ADR: content delivery + schema open decisions",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "delivery ADR",
+      "acs": [
+        "AC1",
+        "AC4"
+      ],
+      "repo": "",
+      "stage": "execute",
+      "reviews": 1,
+      "note": "team mode: impl-S1 + test-S1 on branch CHY-6",
+      "jira": "CHY-6.1"
+    },
+    {
+      "id": "S2",
+      "name": "schema open decisions",
+      "acs": [
+        "AC2",
+        "AC3"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": "CHY-6.2"
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-6",
+  "log": [
+    "2026-11-01 init",
+    "2026-11-01 +S1 delivery ADR [AC1,AC4]",
+    "2026-11-01 +S2 schema open decisions [AC2,AC3]",
+    "2026-11-01 S1 \u2192 discuss",
+    "2026-11-01 S1 \u2192 discuss",
+    "2026-11-01 S1 \u2192 discuss",
+    "2026-11-01 S1 \u2192 discuss",
+    "2026-11-01 S1 \u2192 discuss",
+    "2026-11-01 S1 \u2192 discuss",
+    "2026-11-01 S1 \u2192 spec",
+    "2026-11-01 S1 \u2192 plan",
+    "2026-11-01 S1 \u2192 picture",
+    "2026-11-01 S1 \u2192 execute"
+  ],
+  "updated": "2026-11-01T18:51:13+07:00"
+}
