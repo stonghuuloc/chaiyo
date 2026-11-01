@@ -27,7 +27,7 @@ Vietnamese-first, with Hán Việt as the bridge to every character — EN-first
 - Phone-first, installable PWA; also usable on desktop. Mobile data, sometimes offline (SRS reviews must work offline).
 - Login required everywhere; the only public page is the Landing Page.
 - A lesson runs: warm-up review → 8–15 new words → grammar → dialogue → listening/speaking → writing → Gate Test.
-- Every hanzi in any text is tappable for lookup (Lexicon first, else Dictionary).
+- Every hanzi in any text is tappable for lookup (Lexicon first, else Dictionary), except inside a Mock Test in Exam mode.
 - Speaking answers are recorded in the browser and scored; audio is not kept.
 - Daily Reminders by push, email or Telegram; Streaks with Streak Freezes; Badges; Public Profiles other Learners can see.
 - Domain vocabulary: `CONTEXT.md`.
