@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Tra nhanh · Bài 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="onboard.css">
+<style>
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .t { text-align: center; }
+  main { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
+  h3 { margin-top: var(--s6); font-size: var(--t-meta); font-weight: 600; color: var(--ink-3); }
+  .ln { margin-top: var(--s3); padding-bottom: var(--s3); border-bottom: 1px solid var(--ink-5); }
+  .ln .hzs { font: 400 32px/1.35 var(--font-hanzi); }
+  .ln small { display: block; margin-top: 2px; font-size: var(--t-meta); color: var(--ink-3); }
+  .h { cursor: pointer; border-radius: 6px; }
+  .h.hit { position: relative; z-index: 52; background: var(--vermilion-wash); }
+  .h.hit.me { box-shadow: 0 2px 0 var(--vermilion); }
+  .scrim { background: rgba(29,24,20,.35); align-items: flex-start; }
+  .sheet.x1 { position: fixed; left: 50%; transform: translateX(-50%); z-index: 51; overflow: auto; border-radius: var(--r-cell); border: 1px solid var(--ink-5); padding: var(--s4) var(--s5); }
+  .x1 .head { display: flex; align-items: center; gap: var(--s3); }
+  .x1 .big { font: 400 44px/1.15 var(--font-hanzi); }
+  .x1 .py { font-size: 18px; font-weight: 600; }
+  .x1 .play { width: 44px; height: 44px; font-size: 20px; margin-left: auto; flex: none; }
+  .x1 .hv { margin-top: var(--s2); font-size: 14.5px; color: var(--ink-3); }
+  .x1 .vi { margin-top: 2px; }
+  .chips { margin-top: var(--s3); display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .chip { min-height: 36px; padding: 0 var(--s3); border-radius: 18px; border: 1px solid var(--ink-5); background: #fff; font: 400 20px var(--font-hanzi); }
+  .chip[aria-pressed="true"] { border: 2px solid var(--ink-1); }
+  .act { margin-top: var(--s3); }
+  .act .cta, .act a.cta { height: 48px; font-size: 16px; }
+  .saved { margin-top: var(--s3); font-size: 14.5px; color: var(--ink-2); display: flex; align-items: center; gap: var(--s2); }
+  .toast { position: fixed; z-index: 60; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -8px); opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 40px);
+    display: flex; align-items: center; gap: var(--s2); padding: 10px var(--s4); border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font-size: 14px; font-weight: 500; transition: opacity .18s, transform .18s; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast .ic { font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="l1-hub.html" aria-label="Về bài học"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <span class="t">Tra nhanh · Bài 1</span>
+  <span></span>
+</div>
+<main id="main"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet x1" id="sheet" role="dialog" aria-modal="true" aria-label="Tra từ" hidden></div>
+
+<script type="module">
+import { $, $$, ic } from './step.js?v=9';
+import { WORDS, SENTENCES, DIALOGUE, GRAMMAR, word } from './data/h1-01.js?v=2';
+import { inLexicon, addWord, loadDict } from './data/lexicon.js';
+
+const HZ = /[一-鿿]/;
+const rows = new Map((await loadDict()).map((r) => [r[0], r]));
+
+// sample text: Bài 1 dialogue, one grammar example, one word card, then two lines with words Bài 1 does not teach
+const S = (id) => SENTENCES[id];
+const blocks = [
+  ...DIALOGUE.map((d) => [d.title, d.lines.map((id) => [S(id).hz, S(id).vi])]),
+  ['Ví dụ ngữ pháp', [[S(GRAMMAR.examples[0]).hz, S(GRAMMAR.examples[0]).vi]]],
+  ['Thẻ từ', [[WORDS[0].hz, WORDS[0].vi]]],
+  ['Đọc thêm', [['爸爸坐飞机去北京。', 'Bố đi máy bay đến Bắc Kinh.'], ['我喝奶茶。', 'Tôi uống trà sữa.']]],
+];
+$('#main').innerHTML = blocks.map(([t, ls]) => `<h3>${t}</h3>${ls.map(([hz, vi]) => `<div class="ln"><p class="hzs">${[...hz].map((c, i) => (HZ.test(c)
+  ? `<span class="h" data-i="${i}" tabindex="0" role="button">${c}</span>` : c)).join('')}</p><small>${vi}</small></div>`).join('')}`).join('');
+
+// longest dictionary window (4→1) containing index i inside its hanzi run; ties → leftmost
+function match(chars, i) {
+  let a = i, b = i + 1;
+  while (a > 0 && HZ.test(chars[a - 1])) a--;
+  while (b < chars.length && HZ.test(chars[b])) b++;
+  for (let n = Math.min(4, b - a); n > 0; n--)
+    for (let s = Math.max(a, i - n + 1); s <= Math.min(i, b - n); s++) {
+      const w = chars.slice(s, s + n).join('');
+      if (rows.has(w)) return { s, n, w };
+    }
+  return null;
+}
+const subs = (w) => { const out = []; for (let n = w.length - 1; n > 0; n--) for (let s = 0; s + n <= w.length; s++) { const x = w.slice(s, s + n); if (rows.has(x) && !out.includes(x)) out.push(x); } return out; };
+
+const zh = () => speechSynthesis.getVoices().find((v) => /^zh(-|_)CN/i.test(v.lang)) || speechSynthesis.getVoices().find((v) => /^zh/i.test(v.lang));
+function say(text, btn) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = 0.8; const v = zh(); if (v) u.voice = v;
+  btn?.classList.add('on'); u.onend = u.onerror = () => btn?.classList.remove('on');
+  speechSynthesis.speak(u);
+}
+let tt; const toast = (html) => { const t = $('#toast'); t.innerHTML = html; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2200); };
+
+const sheet = $('#sheet'), scrim = $('#scrim');
+let tapped = null, cur = null, chips = [];
+
+function fill(hz) {
+  const r = rows.get(hz);
+  const act = word(hz) ? `<a class="cta" href="w1-word.html?w=${encodeURIComponent(hz)}">Xem chi tiết</a>`
+    : inLexicon(hz) ? `<p class="saved">${ic('fill-check')}Đã có trong Từ của tôi</p>`
+    : `<button class="cta" id="add">Thêm vào từ của tôi</button>`;
+  sheet.innerHTML = `<div class="head"><span class="big">${hz}</span><div><div class="py">${r[1]}</div></div><button class="play" id="sp" aria-label="Nghe">${ic('fill-speaker-high')}</button></div>
+    <p class="hv">Hán Việt: ${r[3]}</p><p class="vi">${r[4]}</p>
+    ${chips.length > 1 ? `<div class="chips" role="group" aria-label="Từ liên quan">${chips.map((c) => `<button class="chip" data-c="${c}" aria-pressed="${c === hz}">${c}</button>`).join('')}</div>` : ''}
+    <div class="act">${act}</div>`;
+  $('#sp').onclick = (e) => say(hz, e.currentTarget);
+  $$('.chip', sheet).forEach((b) => (b.onclick = () => fill(b.dataset.c)));
+  const add = $('#add');
+  if (add) add.onclick = () => { addWord(r); toast(`${ic('fill-check')}Đã thêm ${hz} vào Từ của tôi`); fill(hz); };
+}
+
+function open(span) {
+  const ln = span.closest('.ln'), chars = [...$('.hzs', ln).textContent], i = +span.dataset.i;
+  const m = match(chars, i);
+  if (!m) return;
+  tapped = span; cur = m.w;
+  $$('.h.hit').forEach((x) => x.classList.remove('hit', 'me'));
+  const spans = $$('.h', ln);
+  spans.filter((x) => +x.dataset.i >= m.s && +x.dataset.i < m.s + m.n).forEach((x) => x.classList.add('hit'));
+  span.classList.add('me');
+  chips = subs(m.w).length ? [m.w, ...subs(m.w)] : [m.w];
+  fill(m.w);
+  scrim.hidden = false; sheet.hidden = false;
+  document.body.style.overflow = 'hidden';
+  const rc = ln.getBoundingClientRect(), W = innerHeight;
+  sheet.style.width = `min(398px, calc(100% - 32px))`;
+  if (rc.bottom < W / 2) { sheet.style.top = `${rc.bottom + 8}px`; sheet.style.bottom = 'auto'; sheet.style.maxHeight = `${W - rc.bottom - 24}px`; }
+  else { sheet.style.top = `${8}px`; sheet.style.bottom = 'auto'; sheet.style.maxHeight = `${Math.max(120, rc.top - 16)}px`; }
+}
+function close() {
+  if (sheet.hidden) return;
+  speechSynthesis?.cancel();
+  scrim.hidden = true; sheet.hidden = true; document.body.style.overflow = '';
+  $$('.h.hit').forEach((x) => x.classList.remove('hit', 'me'));
+  tapped?.focus(); tapped = null;
+}
+$('#main').addEventListener('click', (e) => { const s = e.target.closest('.h'); if (s) open(s); });
+$('#main').addEventListener('keydown', (e) => { const s = e.target.closest?.('.h'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(s); } });
+scrim.onclick = close;
+addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+</script>
+</body>
+</html>

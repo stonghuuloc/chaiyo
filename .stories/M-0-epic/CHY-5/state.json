@@ -1,11 +1,24 @@
 {
   "story": "CHY-5",
   "title": "Sync docs with the final prototype",
-  "stage": "slicing",
-  "current_slice": "S1",
+  "stage": "done",
+  "current_slice": "S2",
   "slices": [
     {
       "id": "S1",
+      "name": "prototype gaps",
+      "acs": [
+        "AC4"
+      ],
+      "repo": "",
+      "stage": "done",
+      "reviews": 2,
+      "note": "verified c3c6395, VERIFY.md",
+      "jira": "CHY-5.2",
+      "pr": "#15"
+    },
+    {
+      "id": "S2",
       "name": "docs sync",
       "acs": [
         "AC1",
@@ -13,18 +26,42 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "todo",
-      "reviews": 0,
-      "note": "",
-      "jira": "CHY-5.1"
+      "stage": "done",
+      "reviews": 2,
+      "note": "verified 31dd149, VERIFY.md",
+      "jira": "CHY-5.1",
+      "pr": "#15"
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#15"
+  ],
   "branch": "CHY-5",
   "log": [
     "2026-10-26 init",
-    "2026-10-26 +S1 docs sync [AC1,AC2,AC3]"
+    "2026-10-26 +S1 docs sync [AC1,AC2,AC3]",
+    "2026-10-29 S1 \u2192 discuss",
+    "2026-10-30 Loc: +AC4 prototype the 5 unprototyped screens; docs sync \u2192 S2, +S1 prototype gaps [AC4]",
+    "2026-10-30 S1 \u2192 discuss",
+    "2026-10-30 S1 \u2192 discuss",
+    "2026-10-30 S1 \u2192 discuss",
+    "2026-10-30 S1 \u2192 plan",
+    "2026-10-30 S1 \u2192 picture",
+    "2026-10-30 S1 \u2192 plan",
+    "2026-10-30 S1 \u2192 picture",
+    "2026-10-30 S1 \u2192 picture",
+    "2026-10-30 S1 \u2192 execute",
+    "2026-10-30 S1 \u2192 verify",
+    "2026-10-30 S1 \u2192 done",
+    "2026-10-31 S2 \u2192 discuss",
+    "2026-10-31 S2 \u2192 spec",
+    "2026-10-31 S2 \u2192 plan",
+    "2026-10-31 S2 \u2192 picture",
+    "2026-10-31 S2 \u2192 execute",
+    "2026-10-31 S2 \u2192 done",
+    "2026-10-31 S2 \u2192 verify",
+    "2026-10-31 S2 \u2192 done"
   ],
-  "updated": "2026-10-26T13:14:50+07:00"
+  "updated": "2026-10-31T19:24:37+07:00"
 }

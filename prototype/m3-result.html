@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../static/brand/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="../static/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="../static/brand/apple-touch-icon.png?v=2">
+<title>Kết quả thi thử</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="lesson.css">
+<style>
+  .top { grid-template-columns: 44px 1fr 44px; }
+  .top .t { text-align: center; }
+  .score { margin-top: var(--s5); display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; }
+  .score b { font: 700 56px/1 var(--font-display); letter-spacing: -.01em; }
+  .score span { color: var(--ink-2); }
+  .msg { margin-top: var(--s3); display: flex; align-items: center; gap: var(--s2); font-weight: 600; color: var(--vermilion-text); }
+  .msg .ic { font-size: 18px; }
+  .calm { margin-top: var(--s3); font: 600 var(--t-h2)/1.25 var(--font-display); }
+  .meta { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .bars { margin-top: var(--s5); display: grid; gap: var(--s4); }
+  .bar b { display: flex; justify-content: space-between; font-weight: 600; }
+  .bar b span { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .meter { position: relative; margin-top: 6px; height: 8px; border-radius: 4px; background: var(--ink-5); }
+  .meter i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ink-3); }
+  .meter.pass i { background: var(--vermilion); }
+  .meter u { position: absolute; top: -4px; bottom: -4px; left: 60%; width: 2px; background: var(--ink-1); }
+  .tog { margin-top: var(--s5); width: 100%; height: 52px; border-radius: var(--r-cta); border: 1px solid var(--ink-5); font: 600 17px var(--font-display); color: var(--ink-1); }
+  .rev { margin-top: var(--s3); list-style: none; }
+  .rev[hidden] { display: none; }
+  .rev li { padding: var(--s3) 0 var(--s3) 40px; position: relative; border-top: 1px solid var(--ink-5); }
+  .rev .n { position: absolute; left: 0; top: var(--s3); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 12.5px; font-weight: 700; background: var(--paper-2); color: var(--ink-2); }
+  .rev .bad .n { background: var(--vermilion); color: #fff; }
+  .rev .q { font-size: 18px; line-height: 1.4; }
+  .rev .q small { display: block; font-size: var(--t-meta); color: var(--ink-3); }
+  .rev .y { margin-top: 2px; font-size: 14.5px; color: var(--ink-3); overflow-wrap: anywhere; }
+  .rev .bad .y { color: var(--vermilion-text); font-weight: 600; }
+  .rev .a { margin-top: 2px; font-size: 14.5px; font-weight: 600; overflow-wrap: anywhere; }
+  .rev .w { margin-top: 2px; font-size: 13.5px; color: var(--ink-3); }
+  .link { display: block; margin-top: var(--s3); text-align: center; font-weight: 600; font-size: 15px; color: var(--vermilion-text); padding: var(--s2) 0; }
+  main { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 170px); }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="x" href="t3-practice.html" aria-label="Về Luyện tập"><svg class="ic"><use href="icons.svg#i-regular-x"/></svg></a>
+  <span class="t">Kết quả thi thử HSK 1</span>
+  <span></span>
+</div>
+<main id="main"></main>
+<div class="foot"><a class="cta" id="cta" href="p2-skill.html?k=thi&m=viet&lv=1">Làm lại</a><a class="link" href="t3-practice.html">Về Luyện tập</a></div>
+
+<script type="module">
+import { $, $$, ic, celebrate } from './step.js?v=9';
+import { MOCK } from './data/mock-h1.js?v=1';
+import { loadDict } from './data/lexicon.js';
+
+const PASS = 120, OF = 200, PER = 5, SEC = 20;
+const PIC = new Set(['pic3', 'pic6', 'rpic6']);
+const LETTER = 'ABCDEF';
+let last = null;
+try { last = JSON.parse(sessionStorage.getItem('mock-h1-last')); } catch {}
+const main = $('#main');
+
+if (!last || !Array.isArray(last.picks)) {
+  main.innerHTML = `<div class="step"><h2 style="margin-top:var(--s8);font:600 28px/1.2 var(--font-display)">Chưa có bài làm</h2><p class="meta">Làm một bài thi thử để xem điểm ở đây.</p></div>`;
+  $('#cta').textContent = 'Về Luyện tập'; $('#cta').href = 't3-practice.html'; $('.foot .link').remove();
+} else {
+  const dict = await loadDict().catch(() => []);
+  const py = new Map(dict.filter((r) => r[5] === 1).map((r) => [r[0], r[1]]));
+  // pinyin of a hanzi line: longest level-1 match, punctuation dropped
+  const pinyin = (s) => {
+    const out = [];
+    for (let i = 0; i < s.length;) {
+      if (!/[一-鿿]/.test(s[i])) { i++; continue; }
+      let n = 4; while (n > 0 && !py.has(s.slice(i, i + n))) n--;
+      if (!n) { i++; continue; }
+      out.push(py.get(s.slice(i, i + n))); i += n;
+    }
+    return out.join(' ');
+  };
+  const total = last.scores[0] + last.scores[1], pass = total >= PASS, exam = last.mode === 'exam';
+  const rows = [];
+  MOCK.sections.forEach((sec, si) => sec.parts.forEach((part, pi) => part.items.forEach((it, ii) => {
+    const n = si * SEC + pi * PER + ii, pick = last.picks[n], opts = part.opts || it.opts, pic = PIC.has(part.type);
+    const show = (o) => (o == null ? 'Chưa trả lời' : pic ? `Tranh ${LETTER[opts.indexOf(o)]}` : `${LETTER[opts.indexOf(o)]}. ${o}`);
+    const ok = pick === it.ans, line = it.say || it.text, q = it.q;
+    rows.push(`<li class="${ok ? '' : 'bad'}"><span class="n" aria-label="${ok ? 'Đúng' : 'Sai'}">${ok ? ic('bold-check') : ic('regular-x')}</span>
+      <p class="q"><span class="hz">${line}${q ? ` ${q}` : ''}</span><small>${pinyin(line + (q || ''))}</small></p>
+      <p class="y">Bạn chọn: ${show(pick)}</p>${ok ? '' : `<p class="a">Đáp án: ${show(it.ans)}</p>`}<p class="w">${it.why}</p></li>`);
+  })));
+  const bars = MOCK.sections.map((sec, si) => `<div class="bar"><b>${sec.title}<span>${last.scores[si]}/100</span></b>
+    <div class="meter ${last.scores[si] >= 60 ? 'pass' : ''}" role="img" aria-label="${sec.title} ${last.scores[si]}/100"><i style="width:${last.scores[si]}%"></i><u></u></div></div>`).join('');
+  document.title = `Kết quả · ${total}/${OF}`;
+  main.innerHTML = `<div class="step">
+    <div class="score"><b id="total">${total}</b><span>/${OF} điểm · ${exam ? 'Thi thật' : 'Luyện'}</span></div>
+    ${pass ? `<p class="msg">${ic('bold-check')}Đỗ · mốc ${PASS}/${OF}</p>` : `<p class="calm">Chưa đỗ. Mốc là ${PASS}/${OF}, bạn gần được rồi.</p>`}
+    <div class="bars">${bars}</div>
+    <button class="tog" id="tog" aria-expanded="false">Xem lại đáp án (${rows.length} câu)</button>
+    <ol class="rev" id="rev" hidden>${rows.join('')}</ol></div>`;
+  $('#tog').onclick = () => { const r = $('#rev'); r.hidden = !r.hidden; $('#tog').setAttribute('aria-expanded', !r.hidden); };
+  if (exam && pass) setTimeout(() => celebrate({ pop: '.score b' }), 250);
+}
+</script>
+</body>
+</html>

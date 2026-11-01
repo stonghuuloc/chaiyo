@@ -4,7 +4,7 @@ title: Sync docs with the final prototype
 status: To Do
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:47'
+updated_date: '2026-10-30 04:39'
 labels:
   - docs
 milestone: m-0
@@ -56,4 +56,5 @@ Feature: Sync docs with the final prototype
 - [ ] #1 Scenario: screens.md matches the prototype tab set and screens
 - [ ] #2 Scenario: CONTEXT.md terms follow the per-skill practice model
 - [ ] #3 Scenario: Removed screens are gone from both docs
+- [ ] #4 Scenario: P1 Landing, X1 Tra nhanh, M2 Mock Test runner and M3 mock result each have a prototype file in prototype/
 <!-- AC:END -->

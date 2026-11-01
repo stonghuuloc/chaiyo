@@ -21,6 +21,12 @@
   .sample .k { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
   .sample .hz { margin-top: var(--s2); font-size: 30px; line-height: 1.3; }
   .sample p { margin-top: 2px; font-size: 14.5px; color: var(--ink-2); }
+  .modes { margin-top: var(--s4); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+  .mode { text-align: left; padding: var(--s3); border-radius: 14px; border: 2px solid var(--ink-5); background: #fff; font: inherit; color: var(--ink-1); cursor: pointer; }
+  .mode b { display: block; font-size: 15px; }
+  .mode small { display: block; margin-top: 2px; font-size: 12.5px; color: var(--ink-3); line-height: 1.35; }
+  .mode[aria-pressed="true"] { border-color: var(--ink-1); }
+  .best { margin-top: var(--s3); font-size: 14px; color: var(--ink-2); }
   .note { margin-top: var(--s4); padding: var(--s3) var(--s4); border-radius: 14px; border: 1px dashed var(--ink-4); font-size: 14px; color: var(--ink-3); }
 </style>
 </head>
@@ -58,8 +64,9 @@ const K = {
         : `Một đề đủ phần nghe, đọc${lv >= 3 ? ', viết' : ''}, có giờ chạy, chấm điểm theo thang HSK.${lv < 6 ? ` Đỗ là mở khoá HSK ${lv + 1}.` : ''}`,
       how: ['Làm hết đề, không xem gợi ý', 'Nộp bài, xem điểm từng phần', 'Câu sai được gom lại để luyện tiếp'],
       sample: ['Ví dụ câu đọc', '我在学校学习汉语。', 'Đúng hay sai: “Tôi học tiếng Trung ở trường.”'],
+      demo: lv === 1 && !noi,
       note: lv < LEVEL ? 'Bạn đã đỗ cấp này, làm lại để giữ phong độ. Chưa có đề trong bản demo.'
-        : lv === LEVEL ? `Mở khi bạn qua bài cuối của HSK ${lv}. Chưa có đề trong bản demo.` : `Mở khi bạn đỗ thi thử HSK ${lv - 1}.`,
+        : lv === LEVEL ? `Mở khi bạn qua bài cuối của HSK ${lv}.${lv === 1 && !noi ? '' : ' Chưa có đề trong bản demo.'}` : `Mở khi bạn đỗ thi thử HSK ${lv - 1}.`,
     };
   })(),
 };
@@ -71,7 +78,22 @@ $('#main').innerHTML = `<div class="step"><div class="ico">${ic(k.icon)}</div><h
   <ol class="how">${k.how.map((x) => `<li>${x}</li>`).join('')}</ol>
   <div class="sample"><p class="k">${k.sample[0]}</p><p class="hz">${k.sample[1]}</p><p>${k.sample[2]}</p></div>
   <p class="note">${k.note}</p></div>`;
-cta('Về Luyện tập', { onClick: () => (location.href = 't3-practice.html') });
+if (k.demo) {
+  let best = null;
+  try { best = localStorage.getItem('mock-h1-best'); } catch {}
+  let mode = 'exam';
+  $('.note').insertAdjacentHTML('beforebegin', `<div class="modes" role="group" aria-label="Chế độ làm bài">
+    <button class="mode" data-m="exam" aria-pressed="true"><b>Thi thật</b><small>Có giờ, nghe 2 lần, xem đáp án cuối bài</small></button>
+    <button class="mode" data-m="practice" aria-pressed="false"><b>Luyện</b><small>Không giờ, xem đáp án từng câu</small></button></div>
+    ${best !== null ? `<p class="best">Điểm thi thật cao nhất: <b>${best}/200</b></p>` : ''}`);
+  document.querySelectorAll('.mode').forEach((b) => (b.onclick = () => {
+    mode = b.dataset.m;
+    document.querySelectorAll('.mode').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    $('#cta').dataset.href = `m2-mock.html?mode=${mode}`;
+  }));
+  $('#cta').dataset.href = 'm2-mock.html?mode=exam';
+  cta('Bắt đầu', { onClick: () => (location.href = $('#cta').dataset.href) });
+} else cta('Về Luyện tập', { onClick: () => (location.href = 't3-practice.html') });
 </script>
 </body>
 </html>
