@@ -1,0 +1,6 @@
+{
+  "epic": "M-1",
+  "title": "Content pipeline (P0)",
+  "order": ["CHY-6", "CHY-7", "CHY-8", "CHY-9", "CHY-10", "CHY-11", "CHY-12", "CHY-13"],
+  "note": "Backlog milestone m-1; story.py epic is Jira-only, use board"
+}
