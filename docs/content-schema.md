@@ -4,7 +4,7 @@ How lesson content is written, checked and loaded. Screens that read it: `docs/s
 
 ## Rules this schema enforces
 
-1. **Content lives in git as YAML, never edited in the app** (Admin is not a content editor). An importer validates it and loads Postgres; Learners read it, never write it.
+1. **Content lives in git as YAML, never edited in the app** (Admin is not a content editor). An importer validates it and writes Postgres rows plus one JSON bundle per lesson (ADR 0002); Learners read the bundle, never write it.
 2. **Sentences are the atom.** Every Chinese line (example, dialogue line, question stem, listening clip) is one `Sentence` with one id. Audio, tap-lookup segmentation and Error Report context all hang off that id.
 3. **Words and characters are shared, lessons only reference them.** A Word Page is built from `Word` + its `Char`s + every lesson that references it. Nothing about a word is written inside a lesson file.
 4. **Authors write citation pinyin; the importer derives spoken pinyin.** Tone sandhi (3-3, 一, 不) is computed; an author override exists for exceptions.
