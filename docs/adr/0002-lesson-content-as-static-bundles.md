@@ -10,7 +10,7 @@ Catalog needs one Source for lesson content. Two options: a static JSON bundle p
 
 Lesson content reaches the phone as **one static JSON bundle per lesson**, built by the importer in CI and served by Vercel with the app (same origin). The URL carries the import's `contentSha`; the service worker caches it. Postgres rows were not chosen for lesson delivery.
 
-A lesson bundle holds the lesson, its sentences, questions and grammar points, the Word Page data of every word it teaches, and thin Dictionary entries (hanzi, pinyin, Hán Việt, meaning) for every word in its sentences' `seg`, every hanzi answer option (`optionKind: 'hanzi'`), and each char of those words.
+A lesson bundle holds the lesson, its sentences, questions and grammar points, the Word Page data of every word it teaches, and thin Dictionary entries (hanzi, pinyin, Hán Việt, meaning) for every hanzi word in any string the bundle renders — each sentence's `seg`, plus question options, `order` tiles, `fill` options and `trueFalse` statements segmented the same way — and each char of those words.
 
 Reasons:
 1. 0 database reads per lesson open, against reads over 7 content tables (lessons, sentences, words, word_chars, chars, grammar_points, questions).
@@ -27,5 +27,5 @@ Postgres is still used for:
 
 - A content fix ships as commit → CI import → Vercel deploy; there is no content-only release.
 - The importer has two real sinks: the bundle and Postgres.
-- Offline, tap-to-lookup works for every hanzi in an opened lesson's sentences and answer options; outside them it needs the network.
+- Offline, tap-to-lookup works for every hanzi an opened lesson renders; outside the lesson it needs the network.
 - A Word Page for a word from a lesson the Learner has not opened needs the network.
