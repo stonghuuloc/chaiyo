@@ -1,10 +1,10 @@
 ---
 id: CHY-5
 title: Sync docs with the final prototype
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-30 04:39'
+updated_date: '2026-11-01 11:28'
 labels:
   - docs
 milestone: m-0
