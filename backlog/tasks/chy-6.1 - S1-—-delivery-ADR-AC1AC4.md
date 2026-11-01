@@ -1,10 +1,10 @@
 ---
 id: CHY-6.1
 title: 'S1 — delivery ADR (AC1,AC4)'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-01 11:30'
-updated_date: '2026-11-01 11:31'
+updated_date: '2026-11-01 11:56'
 labels: []
 milestone: m-1
 dependencies: []
