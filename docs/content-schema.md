@@ -104,7 +104,7 @@ interface GrammarPoint {
   pattern: string;                  // 'A + 好'
   explain: string;                  // Vietnamese markdown, short; long parts behind "Xem thêm"
   examples: SentenceId[];
-  pitfalls?: { wrong: string; right: string; why: string }[];
+  pitfalls?: { wrong: string; right: string; why?: string }[];
 }
 
 type LessonId = string;             // 'h1-01'
@@ -341,12 +341,12 @@ Content tables: `select` for authenticated Learners, no writes (RLS). Attempts r
 | 5 | 80% known chars | a sentence uses a char outside known-so-far (all earlier lessons' words + this lesson's) and not in `unknown` |
 | 6 | Real glyphs | any code point in U+2E80–U+2FDF |
 | 7 | Mnemonic reuse | `mnemonic` differs from vault `meo.py` output for that char |
-| 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool |
+| 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool; a single-char word inside another word of the same `sections.words` that is neither a token of a lesson grammar point's `pattern` nor in the `tests.words` of a drill, dialogue or listenSpeak question (decision 1) |
 | 9 | Audio | sentence `speaker` is not a speaking Cast member (redpanda, takin); dialogue speakers not alternating voices |
 
 ## Open decisions
 
-1. Do words listed in `sections.words` include single chars that also appear inside a compound (你 and 你好), or only the compound?
-2. ~~Grammar point ids~~ **Decided 2026-10-26:** ids stay our own `h<L>-gNN`; each point carries `std` = the GF 0025-2021 item numbers it teaches. Lint: no item above the lesson level, at least one item at exactly that level.
+1. ~~Single chars inside compounds~~ **Decided 2026-11-02:** a single char that also appears inside a compound is listed in `sections.words` next to the compound (你 and 你好) only when the lesson teaches it on its own: it is a whole token of one of the lesson's grammar `pattern`s (split on spaces, `/`, `+`), or a drill, dialogue or listenSpeak question names it in `tests.words` (the gate pool does not count). Bài 1: 你 and 好 sit inside 你好 / 你们 and are both tokens of h1-g01's `你 / 您 / 你们 + 好` (好 is also tested by listenSpeak `q-h1-01-l01`), so it keeps 10 ids. Lint 8 checks it.
+2. ~~Grammar point ids~~ **Decided 2026-10-26:** ids stay our own `h<L>-gNN`; each point carries `std` = the GF 0025-2021 item numbers it teaches. Lint: no item above the lesson level; when `std` is non-empty, at least one item at exactly that level (`std: []` = vocabulary pattern, exempt).
 3. Cast voice per member (and gender) waits on the VoiceStudio spike.
 4. Mock Test sections need a `MockSection` type (timing, play limits, HSKK parts); deferred to P2.
