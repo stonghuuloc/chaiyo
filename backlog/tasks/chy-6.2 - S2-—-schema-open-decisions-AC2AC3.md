@@ -1,7 +1,7 @@
 ---
 id: CHY-6.2
 title: 'S2 — schema open decisions (AC2,AC3)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-11-01 11:31'
 updated_date: '2026-11-01 11:31'
