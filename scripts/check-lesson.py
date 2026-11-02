@@ -87,7 +87,7 @@ def check(lid):
         ex = x.get('examples', [])
         if len(ex) < 2 or any(e not in S for e in ex): err.append(f"★7 grammar {x.get('id')}: examples {ex}")
     # ★8 syllabus: every point names its GF 0025-2021 items (std: [] = vocabulary pattern, no item);
-    # none above the lesson level, and at least one new point at exactly this level
+    # none above the lesson level; with any non-empty std, at least one new point at exactly this level
     levels = set()
     for x in g:
         if not isinstance(x.get('std'), list): err.append(f"★8 grammar {x.get('id')}: missing std"); continue
@@ -95,7 +95,7 @@ def check(lid):
             if n not in SYLLABUS: err.append(f"★8 grammar {x['id']}: std {n} not in syllabus"); continue
             sl = SYLLABUS[n][0]; levels.add(sl)
             if sl > lv: err.append(f"★8 grammar {x['id']}: syllabus #{n} is HSK {sl if sl < 7 else '7-9'} > {lv} ({SYLLABUS[n][1][:30]})")
-    if g and lv not in levels: err.append(f"★8 no grammar point at syllabus HSK {lv}")
+    if any(x.get('std') for x in g) and lv not in levels: err.append(f"★8 no grammar point at syllabus HSK {lv}")
     wr = L.get('writing', []); wchars = {c for w in words for c in w['hz']}
     if not 3 <= len(wr) <= 5 or any(c not in wchars for c in wr): err.append(f"★7 writing {wr}")
     if len(gate) < 8: err.append(f"★7 gate has {len(gate)} questions")

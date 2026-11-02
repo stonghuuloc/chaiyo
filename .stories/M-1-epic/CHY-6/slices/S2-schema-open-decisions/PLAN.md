@@ -59,7 +59,7 @@ File: `docs/content-schema.md:107`
 | 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool; a word whose `hanzi` is one char and sits inside another word's `hanzi` in the same `sections.words` and is neither a token of a lesson grammar point's `pattern` nor in the `tests.words` of a drill, dialogue or listenSpeak question (decision 1) |
 
 1. ~~Single chars inside compounds~~ **Decided 2026-11-02:** a single char that also appears inside a compound is listed in `sections.words` next to the compound (你 and 你好) only when the lesson teaches it on its own: it is a whole token of one of the lesson's grammar `pattern`s (split on whitespace, `/`, `+`, brackets and full-width punctuation), or a drill, dialogue or listenSpeak question names it in `tests.words` (the gate pool does not count). Bài 1: 你 and 好 sit inside 你好 / 你们 and are both tokens of h1-g01's `你 / 您 / 你们 + 好` (好 is also tested by listenSpeak `q-h1-01-l01`), so it keeps 10 ids. Lint 8 checks it.
-2. ~~Grammar point ids~~ **Decided 2026-10-26:** ids stay our own `h<L>-gNN`; each point carries `std` = the GF 0025-2021 item numbers it teaches. Lint: no item above the lesson level; when `std` is non-empty, at least one item at exactly that level (`std: []` = vocabulary pattern, exempt).
+2. ~~Grammar point ids~~ **Decided 2026-10-26:** ids stay our own `h<L>-gNN`; each point carries `std` = the GF 0025-2021 item numbers it teaches. Lint: no item above the lesson level; when any point in the lesson has a non-empty `std`, at least one item at exactly the lesson level (`std: []` = vocabulary pattern, exempt).
 ```
 ```ts
   pitfalls?: { wrong: string; right: string; why?: string }[];
