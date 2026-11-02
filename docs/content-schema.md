@@ -341,7 +341,7 @@ Content tables: `select` for authenticated Learners, no writes (RLS). Attempts r
 | 5 | 80% known chars | a sentence uses a char outside known-so-far (all earlier lessons' words + this lesson's) and not in `unknown` |
 | 6 | Real glyphs | any code point in U+2E80–U+2FDF |
 | 7 | Mnemonic reuse | `mnemonic` differs from vault `meo.py` output for that char |
-| 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool; a word whose `hanzi` is one char and sits inside another word's `hanzi` in the same `sections.words` that is neither a token of a lesson grammar point's `pattern` nor in the `tests.words` of a drill, dialogue or listenSpeak question (decision 1) |
+| 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool; a word whose `hanzi` is one char and sits inside another word's `hanzi` in the same `sections.words` and is neither a token of a lesson grammar point's `pattern` nor in the `tests.words` of a drill, dialogue or listenSpeak question (decision 1) |
 | 9 | Audio | sentence `speaker` is not a speaking Cast member (redpanda, takin); dialogue speakers not alternating voices |
 
 ## Open decisions

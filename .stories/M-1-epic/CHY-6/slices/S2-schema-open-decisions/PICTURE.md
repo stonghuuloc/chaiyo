@@ -73,7 +73,7 @@ Closes the two schema questions so the content schema (CHY-7+) can be built: whe
 | # | Task | AC | Anchor | Test |
 |---|---|---|---|---|
 | 1 | Mark decision 1 decided, with the taught-alone rule and Bài 1 numbers | AC2 | `docs/content-schema.md:349` | `grep "^1\. ~~"` → 1 hit with `Decided 2026-11-02` |
-| 2 | Add the single-char clause to lint 8 (gate pool excluded) + walk Bài 1 | AC2 | `docs/content-schema.md:344` | row 8 has `single-char`; 9 lint rows; walk 2/2 pass |
+| 2 | Add the one-char clause to lint 8 (gate pool excluded) + walk Bài 1 | AC2 | `docs/content-schema.md:344` | row 8 has `one char`; 9 lint rows; walk 2/2 pass |
 | 3 | Decision 2 lint: `std: []` exempt, rule only when non-empty | AC3 | `docs/content-schema.md:350` | line has `non-empty` + `exempt`; no hunk at `:102` |
 | 4 | `why: string` → `why?: string` | AC3 | `docs/content-schema.md:107` | `why?: string` ×1, `why: string` ×0 |
 | 5 | Gate: 1 file changed, `content/` untouched, `pnpm lint` raw, SUMMARY, commit | CHORE | — | `git diff --quiet -- content/ docs/diagrams/` · exit 0 |
