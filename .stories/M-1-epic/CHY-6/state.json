@@ -1,7 +1,7 @@
 {
   "story": "CHY-6",
   "title": "ADR: content delivery + schema open decisions",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -26,15 +26,17 @@
         "AC3"
       ],
       "repo": "",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 2,
-      "note": "executed; PR pending push",
-      "jira": "CHY-6.2"
+      "note": "verified 3e3997d, VERIFY.md",
+      "jira": "CHY-6.2",
+      "pr": "#18"
     }
   ],
   "locked": [],
   "prs": [
-    "#17"
+    "#17",
+    "#18"
   ],
   "branch": "CHY-6",
   "log": [
@@ -61,7 +63,8 @@
     "2026-11-02 S2 \u2192 spec",
     "2026-11-02 S2 \u2192 plan",
     "2026-11-02 S2 \u2192 picture",
-    "2026-11-02 S2 \u2192 execute"
+    "2026-11-02 S2 \u2192 execute",
+    "2026-11-02 S2 \u2192 done"
   ],
-  "updated": "2026-11-02T17:13:15+07:00"
+  "updated": "2026-11-02T18:08:12+07:00"
 }

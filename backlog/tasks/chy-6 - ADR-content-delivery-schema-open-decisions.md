@@ -1,10 +1,10 @@
 ---
 id: CHY-6
 title: 'ADR: content delivery + schema open decisions'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-11-01 11:31'
+updated_date: '2026-11-02 18:10'
 labels:
   - slice-1
   - decision
@@ -53,8 +53,8 @@ Feature: ADR: content delivery + schema open decisions
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario: ADR records the delivery choice
-- [ ] #2 Scenario: Open decision 1 is answered
-- [ ] #3 Scenario: Open decision 2 is answered
-- [ ] #4 Scenario: architecture.md no longer lists the question as open
+- [x] #1 Scenario: ADR records the delivery choice
+- [x] #2 Scenario: Open decision 1 is answered
+- [x] #3 Scenario: Open decision 2 is answered
+- [x] #4 Scenario: architecture.md no longer lists the question as open
 <!-- AC:END -->
