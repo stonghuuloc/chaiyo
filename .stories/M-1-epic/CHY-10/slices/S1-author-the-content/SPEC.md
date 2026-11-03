@@ -11,7 +11,7 @@ ACs: AC1  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 - [AC1] Every one of the 10 `sections.words.ids` appears in some question's `tests.words` in the gate pool; 你 and 好 also appear in `tests.words` of a drill/dialogue/listenSpeak question or are tokens of h1-g01's pattern (decision 1; 你 好 are pattern tokens).
 - [AC1] `s-h1-01-18` is `pinyin: bù kèqi, spoken: bú kèqi` (citation + override, as `s-h1-01-06`); the 9 other `pinyin` values stay citation. The dialogue keeps the prototype speakers (10.Q1 A): R·T·T·R and R·T·T.
 - [AC1] `topic` stays `Chào hỏi`; `content/levels/hsk1.yaml` and `content/words/*` are not edited (C4).
-- [AC1] `content.test.ts` parses `chars/` as `Char` (84 + 15 = 99 files, 0 errors).
+- [AC1] `content.test.ts` parses `chars/` as `Char` (adds the folder to the parsed set only; the count is glob-derived by CHY-11, Shared files in CONTRACTS.md).
 
 ## Not this slice
 - AC2 (importer diff vs prototype) and AC3 (sections render) → S2.
@@ -24,7 +24,7 @@ ACs: AC1  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 
 ## Test contract
 - [AC1] `pnpm lint:content` → 0 errors, exit 0. Gate: `lint:content` is not a script on main yet, so execute runs it after CHY-9 merges and the branch rebases onto it; until then `content.test.ts` is the check. Negative control: move `content/chars/好.yaml` away, expect an error naming 好 (check 1 or the importer's C2 error), then restore it.
-- [AC1] `pnpm test -- content` → 99 files parse, 0 errors; new `chars/*.yaml` rows appear in the vitest list.
+- [AC1] `pnpm test -- content` → all files parse, 0 errors; the 15 `chars/*.yaml` rows appear in the vitest list.
 - [AC1] `python3 ~/Documents/second-brain/mandarin/meo.py 你 好 …` text equals each file's `mnemonic` after the label mapping (lint 7 does this once CHY-9 lands).
 
 ## Open assumptions
