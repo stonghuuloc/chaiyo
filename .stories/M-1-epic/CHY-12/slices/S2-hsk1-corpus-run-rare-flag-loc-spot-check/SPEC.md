@@ -9,7 +9,7 @@ ACs: AC4, AC5  ·  Repo: stonghuuloc/chaiyo  ·  rev 1  ·  needs S1 merged (the
 - [AC5] `--sample 20 --seed N` selects 20 staged Word ids with `random.Random(N)` over the sorted ids, and writes `.cache/words/out/review-N.md` showing each entry as Loc would judge it: hanzi, pinyin, Hán Việt, senses grouped by POS with ★ on rare ones, each example with its label and the CC-CEDICT source senses beside it. The header carries run totals and the staged-set sha. The same seed gives the same 20.
 - [AC5] `--promote --approved N` fails with exit 2 and a message when `review-N.md` is missing or its sha differs from the current staged set (an entry changed after Loc saw the sample). It writes nothing to `content/` in that case. Without `--approved` the flag is refused.
 - [AC5] Loc's verdict is recorded in `SPOTCHECK.md` in this slice's folder (seed, the 20 ids, verdict, date) before the promote commit. One rejected entry → regenerate the affected words, new seed, new sample; promote only after 20 of 20 pass.
-- [AC4] The four hand files with unmarked `parts[].pinyin` (对不起, 没关系, 不客气, 关系) get the tone mark added (`bù`, `xì`, `qì`, `xì`) so C1 check 3 passes; no other field of them changes.
+- [AC4] The four hand files with unmarked `parts[].pinyin` (对不起, 没关系, 不客气, 关系) get the tone mark added (`bù`, `xì`, `qì`, `xì`) so C1 check 3 passes; this hand fix changes no other field (the promote step still rewrites pinyin, level, pos and senses of the three in-list files as S1 says).
 - [LOCK] The generated YAML passes the C1 checks that apply (0, 3, 6, 8): `pnpm lint:content` exits 0 when CHY-9's command is on main.
 
 ## Not this slice
