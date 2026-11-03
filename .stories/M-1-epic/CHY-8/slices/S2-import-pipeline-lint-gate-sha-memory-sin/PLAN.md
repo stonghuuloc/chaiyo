@@ -41,8 +41,8 @@ const canonical = (v: unknown): string => JSON.stringify(v, (_k, x) => x && type
 export async function importContent(dir: string, sink: Sink, opts?: { refs?: LintRefs; only?: string[] }) {
   const { set, errors } = lintDir(dir, opts);
   if (errors.length) return { errors: sortErrors(errors) }; // by file, path, check
-  const dict = loadDict(dir); // no file → `{ value: new Map() }`; else else parseDictionary('dictionary.json', JSON.parse(text)); !ok → return { errors } as LintError check 10 'Derive', file dictionary.json; a JSON.parse throw → one check-10 error
-  if ('errors' in dict) return { errors: dict.errors };
+  const dict = loadDict(dir); // no file → `{ ok: true, value: new Map() }`; else parseDictionary('dictionary.json', JSON.parse(text)); !ok → return { errors } as LintError check 10 'Derive', file dictionary.json; a JSON.parse throw → one check-10 error
+  if (!dict.ok) return { errors: dict.errors };
   const built = assemble(set, dict.value);
   if ('errors' in built) return { errors: built.errors };
   const sha = createHash('sha256').update(canonical(built.content)).digest('hex');
