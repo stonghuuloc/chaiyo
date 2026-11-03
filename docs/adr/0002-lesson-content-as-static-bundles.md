@@ -19,7 +19,7 @@ Reasons:
 4. Bài 1 is about 2.0 KB gzip, so re-downloading all 40 HSK1 lessons after an import is cheap.
 
 Postgres is still used for:
-- the Dictionary (about 122k entries, ≈ 6.6 MB gzip — too big to bundle), for Dictionary search/lookup (X1) outside lesson text;
+- the Dictionary (about 122k entries, ≈ 6.6 MB gzip — too big to bundle), for Dictionary lookup (X1) outside lesson text;
 - `questions` and `content_versions` rows, which Attempts reference by `question_id` and `content_sha`;
 - a full mirror of the content tables in `docs/content-schema.md`, so Admin screens read sentence text and per-lesson fail rates with SQL.
 
