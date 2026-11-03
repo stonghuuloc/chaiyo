@@ -55,6 +55,7 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"dependencies": {
+		"@sentry/sveltekit": "^11.10.0",
 		"@supabase/supabase-js": "^2.118.0",
 		"@vercel/speed-insights": "^2.0.0",
 		"zod": "^4.6.7"
