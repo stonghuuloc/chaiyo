@@ -3,6 +3,7 @@
 import { self } from '$app/service-worker';
 import { immutable, assets, prerendered } from '$app/manifest';
 import { version } from '$app/env';
+import { networkFirst } from './network';
 
 const CACHE = `shell-${version}`;
 const SHELL = [...immutable, ...assets, ...prerendered].map(
@@ -32,15 +33,7 @@ self.addEventListener('fetch', (event) => {
 				const hit = await cache.match(url.pathname);
 				if (hit) return hit;
 			}
-			try {
-				const res = await fetch(event.request);
-				if (res.ok) cache.put(event.request, res.clone());
-				return res;
-			} catch (err) {
-				const hit = await cache.match(event.request);
-				if (hit) return hit;
-				throw err;
-			}
+			return networkFirst(event.request, cache, fetch);
 		})()
 	);
 });
