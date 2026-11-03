@@ -54,6 +54,7 @@
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.118.0",
-		"@vercel/speed-insights": "^2.0.0"
+		"@vercel/speed-insights": "^2.0.0",
+		"zod": "^4.6.7"
 	}
 }
