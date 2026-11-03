@@ -7,7 +7,7 @@ level: 1
 pos: [ phrase ]
 senses:
   - { vi: "bạn, anh, chị" }
-parts:
+components:
   - { hanzi: 亻, name: nhân đứng, vi: người }
   - { hanzi: 尔, name: nhĩ, vi: phần đọc }
 examples: [ s-h1-01-10 ]

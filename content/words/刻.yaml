@@ -7,7 +7,7 @@ level: 2
 pos: [ mw ]
 senses:
   - { vi: mười lăm phút (một phần tư giờ) }
-parts:
+components:
   - { hanzi: 亥, name: hợi, vi: phần đọc }
   - { hanzi: 刂, name: đao, vi: con dao }
 examples: [ s-h2-01-02 ]

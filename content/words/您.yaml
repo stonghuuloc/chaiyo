@@ -7,7 +7,7 @@ level: 1
 pos: [ phrase ]
 senses:
   - { vi: "ông, bà, thầy cô (lịch sự)" }
-parts:
+components:
   - { hanzi: 你, name: nhĩ, vi: bạn }
   - { hanzi: 心, name: tâm, vi: tấm lòng }
 examples: [ s-h1-01-12 ]

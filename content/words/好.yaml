@@ -7,7 +7,7 @@ level: 1
 pos: [ phrase ]
 senses:
   - { vi: "tốt, khỏe, hay" }
-parts:
+components:
   - { hanzi: 女, name: nữ, vi: người mẹ }
   - { hanzi: 子, name: tử, vi: đứa con }
 examples: [ s-h1-01-11 ]
