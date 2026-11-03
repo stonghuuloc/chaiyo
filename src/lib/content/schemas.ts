@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const Level = z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]);
+const Level = z.literal([1, 2, 3, 4, 5]);
 const Id = z.string();
 const Pos = z.enum([
 	'n',
@@ -122,7 +122,7 @@ export const Question = z.discriminatedUnion('type', [
 		type: z.literal('tone'),
 		prompt: Prompt,
 		syllable: z.number(),
-		answer: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
+		answer: z.literal([1, 2, 3, 4, 5])
 	}),
 	z.strictObject({
 		...QuestionBase,
