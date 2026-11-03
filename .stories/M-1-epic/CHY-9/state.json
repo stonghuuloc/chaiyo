@@ -1,0 +1,49 @@
+{
+  "story": "CHY-9",
+  "title": "Linter: 9 contract checks",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "9 checks + clean + primer",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "design run done: spec+plan+advisor r2+picture; awaiting Loc",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "lint CLI",
+      "acs": [
+        "AC4"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-9",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 9 checks + clean + primer [AC1,AC2,AC3]",
+    "2026-11-03 +S2 lint CLI [AC4]",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 spec",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture"
+  ],
+  "updated": "2026-11-03T15:57:21+07:00"
+}

@@ -1,0 +1,39 @@
+# CHY-9 S1 — spec
+ACs: AC1, AC2, AC3  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
+
+## Behaviour
+- [AC1] `lint(set, refs)` returns `LintError[]` ({ file, path, check 0–9, name, message }), sorted by file, path, check; never throws; `[]` = clean. Contract C1 in `handoffs/M-1/CONTRACTS.md`. Errors are English, one per offending field.
+- [AC1] **Check 1 Hán Việt**: a `Char.readings[i].hanviet` that is empty or `—` → 1 error at `readings[i].hanviet`. (The doc's "MIXED Nôm" clause cannot be read from YAML: not linted.)
+- [AC1] **Check 2 Polyphones**: when `refs.polyphones` lists readings for a char, a Char file whose `readings` lacks any of them → 1 error at `readings` naming the missing ones. 行 [xíng] fails; [xíng, háng] passes. Table = `data/sources/polyphones.yaml` (Q2 A), 19 seed chars.
+- [AC1] **Check 3 Tone marks**: a pinyin string with a digit, or with no tone mark that is not exactly one entry of the closed neutral list (de le ma me men ne ba zi zhe guo a ya na, chu lai, qi lai), → 1 error at its field. Scanned: Word `pinyin` `spoken` `parts[].pinyin` `collocations[].pinyin`; Sentence `pinyin` `spoken` `unknown[].pinyin` (lesson-inline and `content/sentences`); Char `readings[].pinyin`. `typePinyin` answers and syllable prompts are not scanned.
+- [AC1] **Check 4 Sandhi**: a Sentence whose `hanzi` has 一 or 不 and that carries `spoken`, where `spoken` ≠ `deriveSpoken(pinyin, hanzi)` (CHY-8, 3-3 included) → 1 error at `spoken` showing both. No `spoken` → nothing to compare.
+- [AC1] **Check 5 80% known chars**: in lesson L, a CJK ideograph (U+3400–9FFF) in a lesson sentence `hanzi` outside known(L) ∪ chars of that sentence's `unknown[].hanzi` → 1 error at `sentences[i].hanzi` naming the char(s). known(L) = chars of `Word.hanzi` for `sections.words.ids` of every lesson with lower (level, order) plus L. Punctuation is ignored. `content/sentences` files are not checked.
+- [AC1] **Check 6 Real glyphs**: any string in any non-primer file (lesson, word, char, grammar, sentence file) containing a code point U+2E80–U+2FDF → 1 error at that field; the message shows the code point.
+- [AC1] **Check 7 Mnemonic reuse**: when `refs.mnemonics` has the char, each of `mnemonic.hinh/am/doiThat/tuongPhan` that differs from the vault's HÌNH/ÂM/ĐỜI THẬT/TƯƠNG PHẢN (trimmed equality) → 1 error at `mnemonic.<field>`. Char absent from the vault or no `mnemonic` → nothing. `refs.mnemonics` is undefined when the vault is not found: check 7 is skipped and `lintDir` returns one notice.
+- [AC1] **Check 8 References**, one error per item, each at the referring field: (a) unknown word id (`sections.words.ids`, question `tests.words`, `prompt` hanzi/audio/image `ref` that is neither word nor sentence id), sentence id (`dialogue.parts[].lines`, `reading.lines`, `warmup.extra`, grammar `examples`, Word `examples`, `fill.sentence`, `readAloud.sentence`, `order.answer`), grammar id (`sections.grammar.ids`, `tests.grammar`), Cast id (`scene.cast`, `image.cast`; set = panda, redpanda, fawn, takin); sentence ids resolve against lesson sentences ∪ `content/sentences`, and a duplicate sentence id is an error; (b) `sections.words.ids` count outside 8–15 (lesson only); (c) `gate.pool.length` < 2 × `gate.draw`; (d) a lesson word id absent from every `gate.pool[].tests.words`; (e) decision-1 clause as written in `docs/content-schema.md:356`; (f) grammar `std`: item not in `data/sources/hsk30-grammar.csv`, item level > lesson level (error at the grammar file, `std[i]`), or a lesson with some non-empty `std` and none at exactly its level (Q3 A; `std: []` exempt).
+- [AC1] **Check 9 Audio**: a sentence `speaker` outside {redpanda, takin}; a dialogue line without a speaker; a dialogue part with fewer than 2 distinct speakers → 1 error per case (at the line, or at `sections.dialogue.parts[p]`). Back-to-back lines from one voice are allowed (Bài 1 has R·T·T·R and R·T·T). Redpanda/takin replace the AC's hachiware/momonga, and "alternate" is relaxed to "≥2 distinct voices" (Captain, 2026-11-03; see DISCUSSION).
+- [AC1] Each of the 9 checks has a fixture that breaks only it: exactly 1 error, `check` = n, `name` = the check's name, 0 errors from every other check.
+- [AC2] The Bài 1 fixture (clean tree on disk: lesson h1-01 with 10 words, 19 sentences, grammar h1-g01, words, chars 你 好 们, 20-question gate pool) → `lintDir` returns 0 errors.
+- [AC3] A `kind: 'primer'` lesson with no words or chars, added to the clean tree: 0 errors. Checks 1–7 and the word-count part of 8 never run on it, so a primer with 0 words yields no "outside 8–15" error.
+- [AC3] The other parts of check 8 still apply to a primer: a `syllables`/`pairs` entry (string, or `say` of an object entry, C6) whose tone-stripped pieces (ü kept, split on spaces) are not rows of `syllables.yaml`, a section with 0 drills, a gate pool < 2 × `draw`, or a pool question lacking `section` or missing a section among the 5 → 1 error at the field.
+- [AC1] `lintDir(dir, refs?)` = `loadContentDir` + `lint` + refs (default: `loadRefs`; tests inject). A file that fails `parseContent` yields check-0 errors and is left out of the set, so no check runs on an invalid shape. Missing optional folders (`sentences`, `chars`) mean empty lists.
+
+## Not this slice
+- AC4 CLI output and the AC2 clause "exits 0" (exit codes belong to the CLI) → S2. Making real `content/` lint-clean → CHY-10/11/12. `deriveSpoken` itself → CHY-8. The `Sentences` schema and Question `section` field → CHY-12 / CHY-11 (schema changes assigned by the Captain).
+- The old `scripts/check-lesson.py`; checking Char/Word coverage of `writing.chars`; "MIXED Nôm" hanviet.
+
+## Seam
+`src/lib/content/lint/`: `types.ts`, `load.ts`, `index.ts`, one `checks/<n>-<name>.ts` per check. Data: `data/sources/polyphones.yaml`.
+
+## Test contract
+- [AC1] vitest, table-driven over 9 cases (+ every sub-case of check 8 and 9): load `fixtures/clean` once, `structuredClone` + mutate one field, `lint(set, refs)` → exactly 1 error with the expected `check`, `name`, `path`.
+- [AC1] vitest: `loadContentDir` on a dir with one invalid YAML → a check-0 error carrying the file and path; valid files still load.
+- [AC2] vitest: `lintDir(fixtures/clean, fixtureRefs)` (refs injected, so the vault on the machine never matters) → `errors` equals `[]`.
+- [AC3] vitest: clean set + primer fixture → 0 errors; the same primer with a missing syllable, a drill-less section, a short pool → 1 error each, all check 8; a primer carrying a Kangxi glyph → 0 errors.
+- [CHORE] `pnpm check` and `pnpm lint` clean.
+
+## Open assumptions
+- [AC1] Check 9 uses redpanda/takin (CONTEXT.md:177) although the AC text says hachiware/momonga. If Loc wants hachiware/momonga, one constant and the fixture speaker change.
+- [AC1] `deriveSpoken` from CHY-8 (`src/lib/content/derive/spoken.ts`) is on main before check 4 is built. If not, S1 stacks on CHY-8's branch; cost: execute order only.
+- [AC2] The clean fixture's word `parts` are toned (real `content/words/{对不起,没关系,不客气}.yaml` carry `bu`, `xi`, `qi`: reported to CHY-12, not edited here).
+- [AC1] Check 3's neutral-syllable list is closed and small (15 whole-string entries, three added at CHY-12's request). A real neutral-only reading outside it (e.g. 子 zi is in; 头 tou is not) fails once and is added; cost: one list entry.
