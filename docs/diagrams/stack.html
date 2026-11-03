@@ -36,7 +36,7 @@
     <div class="diagram-container">
       <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="stack-title stack-desc">
         <title id="stack-title">Mandarin app stack</title>
-        <desc id="stack-desc">The learner's PWA, served by Vercel, keeps its data and login in Supabase, sends speaking answers to Azure for scoring, plays audio that VoiceStudio pre-generates offline from the lesson files into Cloudflare R2, and gets reminders from a scheduled Supabase Edge Function; lesson content ships as a static JSON bundle per lesson from Vercel.</desc>
+        <desc id="stack-desc">The learner's PWA, served by Vercel, keeps its data and login in Supabase, sends speaking answers to Azure for scoring, plays audio that VoiceStudio pre-generates offline from the lesson files into Cloudflare R2, and gets reminders from a scheduled Supabase Edge Function; lesson content ships as a static JSON bundle per lesson from Vercel; the importer also mirrors the content into Postgres.</desc>
         <defs>
           <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4a423a"/></marker>
           <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c6301d"/></marker>
@@ -55,7 +55,7 @@
         <line x1="130" y1="96" x2="130" y2="330" stroke="#4a423a" stroke-width="1.2" marker-end="url(#arrow)"/>
 
         <!-- content -> postgres : importer mirror (ADR 0002) -->
-        <path d="M190,96 V176 H658" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M190,96 V168 Q190,176 198,176 H658" fill="none" stroke="#4a423a" stroke-width="1.2" marker-end="url(#arrow)"/>
         <rect x="380" y="170" width="56" height="12" rx="2" fill="#f7f3ea"/>
         <text x="408" y="179" fill="#655c51" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">IMPORT</text>
 
