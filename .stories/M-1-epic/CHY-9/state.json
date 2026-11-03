@@ -25,9 +25,9 @@
         "AC4"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "plan",
-      "reviews": 0,
-      "note": "spec+plan written, advisor next",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "design run done: advisor r2 READY; awaiting Loc",
       "jira": ""
     }
   ],
@@ -44,7 +44,9 @@
     "2026-11-03 S1 \u2192 plan",
     "2026-11-03 S1 \u2192 plan",
     "2026-11-03 S1 \u2192 picture",
-    "2026-11-03 S2 \u2192 plan"
+    "2026-11-03 S2 \u2192 plan",
+    "2026-11-03 S2 \u2192 plan",
+    "2026-11-03 S2 \u2192 picture"
   ],
-  "updated": "2026-11-03T15:58:22+07:00"
+  "updated": "2026-11-03T16:03:13+07:00"
 }
