@@ -1,0 +1,32 @@
+{
+  "story": "CHY-11",
+  "title": "Author B\u00e0i 0 Primer + syllables as YAML",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "Primer + syllables YAML",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "discuss",
+      "reviews": 0,
+      "note": "discuss",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-11",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 Primer + syllables YAML [AC1,AC2,AC3,AC4]",
+    "2026-11-03 S1 \u2192 discuss"
+  ],
+  "updated": "2026-11-03T15:19:43+07:00"
+}
