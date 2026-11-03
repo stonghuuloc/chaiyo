@@ -28,9 +28,9 @@ File: `scripts/gen-entries.py:144-154` (summary print at the end of `main`)
 - Test first: `test_summary_counts_rare` (3 fake words, 1 rare sense → K = 1, W = 1).
 - Verify: `uv run pytest scripts/tests -k summary`
 
-## Task 4 [AC4] Raise content.test.ts to the new total; add sentences folder
-File: `src/lib/content/content.test.ts:8-12, 28-30`
-- Change: add `['sentences', 'Sentences']` to `folders`; replace `84` (and the test title) with the file count measured after promote (`find content/{words,grammar,lessons,sentences} -name '*.yaml' | wc -l`). No assertion removed or loosened.
+## Task 4 [AC4] Add the sentences folder to content.test.ts
+File: `src/lib/content/content.test.ts:8-12` (CHY-11 has already made the count glob-derived; rebase first)
+- Change: add `['sentences', 'Sentences']` to `folders`. No count is edited and no assertion removed.
 - Test: this file is the test; it is red until Task 6 promotes (expected).
 - Verify: `pnpm vitest --run src/lib/content/content.test.ts`
 
@@ -42,10 +42,10 @@ File: new `src/lib/content/hsk1-words.test.ts` (style `content.test.ts:1-6`)
 
 ## Task 6 [AC4][AC5] Run, spot-check gate, promote, commit
 Files: `.stories/M-1-epic/CHY-12/slices/S2-*/SPOTCHECK.md` (new), `content/words/*.yaml` (create ~560, edit 10 hand files), `content/sentences/hsk1.yaml` (create)
+0. Hand data fix, BEFORE the run so S1's merge copies the corrected parts: `content/words/对不起.yaml:12` `bu`→`bù`, `没关系.yaml:13` `xi`→`xì`, `不客气.yaml:14` `qi`→`qì`, `关系.yaml` `系` part `xi`→`xì` (C1 check 3, reported by CHAA-21); check with `grep -n "pinyin: \(bu\|xi\|qi\)," content/words/*.yaml` → no hit.
 1. `uv run scripts/gen-entries.py` (all 505); read the summary; re-run rejected words by name, at most 2 more times each; a word still rejected → STOP, report word + sense ids to the Captain.
 2. `uv run scripts/gen-entries.py --sample 20 --seed 1`; serve `review-1.md` to Loc (annotate-doc) and wait for his verdict. Any reject → fix the cause, regenerate affected words, `--seed 2`, repeat. Record seed, 20 ids, verdict, date in `SPOTCHECK.md`.
 3. `uv run scripts/gen-entries.py --promote --approved <seed>`; `git status` shows only `content/words` + `content/sentences`; the 10 hand files (the 9 Bài 1 words and 起床) keep `image`, `parts`/`components`, `spoken`, authored `hanviet`, hand `senses` and hand `examples` (git diff check; 起床 has `examples: [s-h2-01-02]`).
-3b. Hand data fix: `content/words/对不起.yaml:12` `bu`→`bù`, `没关系.yaml:13` `xi`→`xì`, `不客气.yaml:14` `qi`→`qì`, `关系.yaml` `系` part `xi`→`xì` (C1 check 3, reported by CHAA-21); check with `grep -n "pinyin: \(bu\|xi\|qi\)," content/words/*.yaml` → no hit.
 4. Tasks 4–5 turn green; `pnpm lint:content` exits 0 when on main; `pnpm check && pnpm lint && pnpm test`; commit `SPOTCHECK.md` first, then the content commit (signed, personal identity).
 - Verify: `pnpm vitest --run src/lib/content` and `uv run pytest scripts/tests` → all pass.
 
@@ -55,15 +55,15 @@ Files: `.stories/M-1-epic/CHY-12/slices/S2-*/SPOTCHECK.md` (new), `content/words
 | edit | `scripts/gen-entries.py` | T1–T3 (CHY-12 owns) |
 | create | `scripts/tests/test_gen_entries.py` cases for sample, promote, summary | T1–T3 (same file as S1) |
 | create | `src/lib/content/hsk1-words.test.ts` | T5 |
-| edit | `src/lib/content/content.test.ts` | T4 (CHY-7 test; count + folder only) |
+| edit | `src/lib/content/content.test.ts` | T4 (folder entry only; count is CHY-11's) |
 | create | `content/words/*.yaml` (≈ 560), `content/sentences/hsk1.yaml` | T6, C4 owner |
-| edit | `content/words/关系.yaml` (one part's pinyin; outside the list) | T6 step 3b |
+| edit | `content/words/关系.yaml` (one part's pinyin; outside the list) | T6 step 0 |
 | edit | 10 existing `content/words/{你,好,您,你们,对不起,没关系,谢谢,不客气,再见,起床}.yaml` | T6, hand fields preserved |
 | create | `.stories/M-1-epic/CHY-12/slices/S2-*/SPOTCHECK.md` | AC5 record |
-Not touched: `schemas.ts`, `docs/content-schema.md` (CHY-11), `content/lessons/**`, `content/chars/**` (CHY-10), and hand files of words outside the list.
+Not touched: `schemas.ts`, `docs/content-schema.md` (CHY-11), `content/lessons/**`, `content/chars/**` (CHY-10), and hand files of words outside the list (except the one 关系.yaml part pinyin).
 
 ## Mutation paths covered
-- Writers: `promote` only (create new files; overwrite the 10 existing in-list files (the 9 Bài 1 words and 起床), merging hand fields as S1 Task 4 does; re-promote after a regenerate overwrites its own earlier output, because generated senses and `s-w-` examples are replaced, never duplicated). A stale or missing review blocks every write.
+- Writers: `promote` only (create new files; overwrite the 10 existing in-list files (the 9 Bài 1 words and 起床), merging hand fields as S1 Task 4 does; re-promote after a regenerate overwrites its own earlier output, because generated senses and `s-w-` examples are replaced, never duplicated). The only other writer is the step-0 hand fix of 4 pinyin values, done before the run so a re-promote cannot undo it. A stale or missing review blocks every write.
 
 ## Draft code (UNEXECUTED — expect it to be wrong; adapt to what's on disk)
 ```python

@@ -37,5 +37,5 @@ ACs: AC1, AC2, AC3  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 - [AC3] vitest `src/lib/content/words-pipeline.test.ts`: the committed fixtures `scripts/tests/fixtures/out/words/*.yaml` and `sentences/hsk1.yaml` parse with `Word` / `Sentences` (needs CHY-11's schema commit).
 
 ## Open assumptions
-- [AC3] C1 check 3 (agreed with CHAA-21): flag any digit; flag a string with no tone-marked vowel unless it is one syllable in the neutral list de le ma me men ne ba zi zhe guo a ya. CHAA-21 accepted na, chu lai, qi lai (哪, 出来, 起来) as whole-string exceptions (2026-11-03), so the list is 15 strings.
+- [AC3] C1 check 3 (agreed with CHAA-21): flag any digit; flag a string with no tone-marked vowel unless the whole string equals one of the neutral strings de le ma me men ne ba zi zhe guo a ya (and na, chu lai, qi lai below). CHAA-21 accepted na, chu lai, qi lai (哪, 出来, 起来) as whole-string exceptions (2026-11-03), so the list is 15 strings.
 - [AC1] Assumed `OPENCODE_API_KEY` is the key name for the opencode go endpoint the pilot used (12 Answered here #3); if Loc's key lives under another name only the env lookup changes.
