@@ -25,6 +25,10 @@ const files = folders.flatMap(([folder, type]) =>
 );
 
 describe('real content', () => {
+	it('finds all 84 content files', () => {
+		expect(files).toHaveLength(84);
+	});
+
 	it.each(files)('%s parses with 0 errors', (file, type, path) => {
 		const result = parseContent(type, file, readFileSync(path, 'utf8'));
 		const errors = result.ok

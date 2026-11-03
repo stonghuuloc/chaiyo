@@ -18,9 +18,11 @@ export function parseContent(type: ContentType, file: string, text: string): Par
 	try {
 		data = YAML.parse(text);
 	} catch (e) {
-		if (!(e instanceof YAMLParseError)) throw e;
-		const { line, col } = e.linePos?.[0] ?? {};
-		return { ok: false, errors: [{ file, path: '', line, col, message: e.message }] };
+		const { line, col } = e instanceof YAMLParseError ? (e.linePos?.[0] ?? {}) : {};
+		return {
+			ok: false,
+			errors: [{ file, path: '', line, col, message: e instanceof Error ? e.message : String(e) }]
+		};
 	}
 	const result = schemas[type].safeParse(data);
 	if (result.success) return { ok: true, value: result.data };

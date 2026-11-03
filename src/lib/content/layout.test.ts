@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import YAML from 'yaml';
+import { parseContent } from './parse';
 
 const content = (p: string) => resolve(process.cwd(), 'content', p);
 
@@ -20,8 +20,14 @@ describe('content layout', () => {
 		expect(paths.filter((p) => !existsSync(content(p)))).toEqual([]);
 	});
 
-	it('syllables.yaml has 400-420 rows', () => {
-		const rows = YAML.parse(readFileSync(content('syllables.yaml'), 'utf8')) as unknown[];
+	it('syllables.yaml parses as Syllables with 400-420 rows', () => {
+		const result = parseContent(
+			'Syllables',
+			'syllables.yaml',
+			readFileSync(content('syllables.yaml'), 'utf8')
+		);
+		expect(result.ok).toBe(true);
+		const rows = (result.ok ? result.value : []) as unknown[];
 		expect(rows.length).toBeGreaterThanOrEqual(400);
 		expect(rows.length).toBeLessThanOrEqual(420);
 	});
