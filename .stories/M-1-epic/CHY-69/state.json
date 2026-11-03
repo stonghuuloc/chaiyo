@@ -1,0 +1,32 @@
+{
+  "story": "CHY-69",
+  "title": "Service worker: await bundle cache write before responding",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "await cache write",
+      "acs": [
+        "AC1"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "execute",
+      "reviews": 0,
+      "note": "solo: CHAA-18",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-69",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 await cache write [AC1]",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S1 \u2192 execute"
+  ],
+  "updated": "2026-11-03T13:50:20+07:00"
+}
