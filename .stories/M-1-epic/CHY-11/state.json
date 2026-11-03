@@ -14,9 +14,9 @@
         "AC4"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "discuss",
-      "reviews": 0,
-      "note": "discuss",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "design run complete: spec, plan, advisor READY (2 rounds), picture; awaiting Loc go for execute",
       "jira": ""
     }
   ],
@@ -26,7 +26,11 @@
   "log": [
     "2026-11-03 init",
     "2026-11-03 +S1 Primer + syllables YAML [AC1,AC2,AC3,AC4]",
-    "2026-11-03 S1 \u2192 discuss"
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S1 \u2192 picture"
   ],
-  "updated": "2026-11-03T15:19:43+07:00"
+  "updated": "2026-11-03T15:54:42+07:00"
 }
