@@ -13,9 +13,9 @@
         "AC3"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "discuss",
-      "reviews": 0,
-      "note": "round 1 sent: 3 Qs; 10 self-decisions",
+      "stage": "picture",
+      "reviews": 3,
+      "note": "design run done: spec+plan+advisor(2 rounds)+picture",
       "jira": ""
     },
     {
@@ -26,9 +26,9 @@
         "AC5"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "todo",
+      "stage": "picture",
       "reviews": 0,
-      "note": "",
+      "note": "design run done: spec+plan+advisor(2 rounds)+picture",
       "jira": ""
     }
   ],
@@ -39,7 +39,14 @@
     "2026-11-03 init",
     "2026-11-03 +S1 script: committed env, sense check, example source [AC1,AC2,AC3]",
     "2026-11-03 +S2 HSK1 corpus run, rare flag, Loc spot-check [AC4,AC5]",
-    "2026-11-03 S1 \u2192 discuss"
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 spec",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S2 \u2192 picture"
   ],
-  "updated": "2026-11-03T15:22:33+07:00"
+  "updated": "2026-11-03T15:42:59+07:00"
 }
