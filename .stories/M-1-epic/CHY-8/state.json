@@ -1,0 +1,82 @@
+{
+  "story": "CHY-8",
+  "title": "Importer: derive + sinks",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "derive: sandhi, spoken, backlinks, gate",
+      "acs": [
+        "AC4",
+        "AC5",
+        "AC6",
+        "AC8"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "S1 design complete (advisor 2 rounds, picture served?)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "import pipeline: lint gate, sha, memory sink",
+      "acs": [
+        "AC1",
+        "AC2"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "advisor r2: 2 mechanical fixes applied post-cap",
+      "jira": ""
+    },
+    {
+      "id": "S3",
+      "name": "sinks: bundle, postgres, audio manifest",
+      "acs": [
+        "AC3",
+        "AC7"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 2,
+      "note": "spec+plan written, advisor next",
+      "jira": ""
+    },
+    {
+      "id": "S4",
+      "name": "seg + thin Dictionary entries",
+      "acs": [
+        "AC9"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "design complete, advisor READY r2",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-8",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 derive: sandhi, spoken, backlinks, gate [AC4,AC5,AC6]",
+    "2026-11-03 +S2 import pipeline: lint gate, sha, memory sink [AC1,AC2]",
+    "2026-11-03 +S3 sinks: bundle, postgres, audio manifest [AC3,AC7]",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 +S4 seg + thin Dictionary entries [AC9]",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S4 \u2192 plan",
+    "2026-11-03 S4 \u2192 picture",
+    "2026-11-03 S2 \u2192 plan",
+    "2026-11-03 S2 \u2192 picture",
+    "2026-11-03 S3 \u2192 plan"
+  ],
+  "updated": "2026-11-03T16:08:31+07:00"
+}
