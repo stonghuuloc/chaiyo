@@ -5,13 +5,13 @@ ACs: AC1  ·  Spec rev 1  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-10
 - create: `scripts/chars-from-vault.mjs` (one-off generator, precedent `scripts/lessons-to-yaml.mjs:1`)
 - create: `content/chars/{你,好,您,们,对,不,起,没,关,系,谢,客,气,再,见}.yaml` (15)
 - edit: `content/lessons/hsk1/h1-01.yaml` (lines 31, 39, 46, 48, 53)
-- edit: `src/lib/content/content.test.ts` (lines 8-11, 28-29)
+- edit: `src/lib/content/content.test.ts` (folders list only)
 Out of lane, not edited: `content/words/*` (C4, CHY-12), `content/levels/hsk1.yaml`, `schemas.ts` (C6, CHY-11).
 
 ## Anchors (verified 2026-11-03)
 - `content/lessons/hsk1/h1-01.yaml:31` — `s-h1-01-18 … pinyin: bú kèqi`; line 19 (`s-h1-01-06`) already has `pinyin: bù kèqi, spoken: bú kèqi`.
 - `h1-01.yaml:39` `drills: []` · `:46` `questions: []` · `:48` `items: []` · `:52-53` `draw: 10`, `pool: []`.
-- `src/lib/content/content.test.ts:8-11` `folders` has words, grammar, lessons; `:28-29` `toHaveLength(84)`.
+- `src/lib/content/content.test.ts:8-11` `folders` has words, grammar, lessons; the count at `:28-29` is rewritten as glob-derived by CHY-11 and not touched here.
 - `src/lib/content/schemas.ts` Char (strict): hanzi, readings[{pinyin, hanviet, rare?}], radical, ids, strokes, mnemonic?{hinh, am, doiThat, tuongPhan, kind}. Question union at `schemas.ts:115` (choice, tone, typePinyin, order, fill, trueFalse, readAloud, freeAnswer).
 - Vault: `~/Documents/second-brain/mandarin/meo.py` (anchors), `_readings.tsv`, `_hanviet.tsv`, `_ids.txt`, `chars/<c>.md` (strokes).
 - Contracts read 2026-11-03: C1 (`pnpm lint:content`, check 8 cast ids, check 9), C2 (Hán Việt from Char readings), C4 (CHAA-24: words regenerated, `examples` kept).
@@ -27,9 +27,9 @@ File: `scripts/chars-from-vault.mjs` (new), output `content/chars/<hanzi>.yaml`
 - Draft code (UNEXECUTED): `const run = (c) => execFileSync('python3', [vault + '/meo.py', c], { encoding: 'utf8' })`; split lines on the four labels `HÌNH|ÂM|ĐỜI THẬT|TƯƠNG PHẢN`.
 
 ## Task 2 [AC1] Parse chars/ in the real-content test
-File: `src/lib/content/content.test.ts:8-11,28-29`
-- Change: add `['chars', 'Char']` to `folders`; `toHaveLength(99)` and the title "finds all 99 content files".
-- Test first: run before Task 1, expect 84 ≠ 99 fails once the line is changed.
+File: `src/lib/content/content.test.ts:8-11`
+- Change: add `['chars', 'Char']` to `folders` only; no count edit (CONTRACTS.md Shared files). Skip if CHY-11's glob already covers `chars/`.
+- Test first: add the folder before Task 1, expect no files found for it, then 15 parsed rows after Task 1.
 - Verify: `pnpm test -- src/lib/content/content.test.ts`.
 
 ## Task 3 [AC1] Author drills, dialogue and listenSpeak questions
@@ -88,7 +88,6 @@ File: `h1-01.yaml:31`
 
 ## Parked
 - `content/cast.yaml` has no reader (C1) and no schema (C6); revisit if CHY-9 adds a Cast input.
-- The count 99 in `content.test.ts` moves whenever another lane adds files under words/, lessons/ or chars/.
 
 ## Mutation paths covered
 - Content is read by lint (C1) and the importer (C2) from the same files; no write path. CHY-12 regenerates `content/words/*` and keeps `examples`, `image`, `parts`, `components`, `spoken`, `hanviet` (C4), so none of the ids this lesson points at change.
