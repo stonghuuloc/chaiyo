@@ -76,20 +76,30 @@ interface Word {
   hanzi: string;
   pinyin: string;                   // citation, tone marks: 'nǐ hǎo'
   spoken?: string;                  // override only; default derived by sandhi
+  hanviet?: string;                 // authored override; default derived from Char.readings
   level: Level;
   pos: ('n' | 'v' | 'adj' | 'adv' | 'pron' | 'num' | 'mw' | 'prep' | 'conj' | 'part' | 'interj' | 'phrase')[];
   senses: { vi: string; note?: string }[];   // one per meaning group, most used first
   collocations?: { hanzi: string; pinyin: string; vi: string }[]; // 搭配, shown first on Word Page
   examples: SentenceId[];           // 1–3, Word Page
-  image?: { file: string; cast: CastId[]; prompt: string };
+  image?: { file: string; cast?: CastId[]; prompt?: string };
+  parts?: { hanzi: string; pinyin: string; hanviet: string; vi: string }[]; // per-character breakdown of a compound
+  components?: { hanzi: string; name: string; vi: string }[];                // radical components of a single-character word
   taughtIn?: LessonId;              // set by importer from lessons; never authored here
 }
+
+interface Syllable {
+  syllable: string;                 // toneless: 'ma', 'zhi'
+  initial: string;                  // '' for the zero initial
+  final: string;
+}                                   // syllables.yaml is Syllable[]
 
 type SentenceId = string;           // 's-h1-01-07'
 interface Sentence {
   id: SentenceId;
   hanzi: string;
   pinyin: string;                   // citation; spoken derived
+  spoken?: string;                  // override only; default derived by sandhi
   vi: string;
   speaker?: CastId;                 // dialogue only; picks the voice
   seg?: string[];                   // word boundaries for tap lookup; derived, override allowed
@@ -115,6 +125,7 @@ interface Lesson {
   order: number;
   title: string;                    // Vietnamese, e.g. 'Xin chào'
   titleHanzi: string;               // '你好'
+  goal: string;                     // Vietnamese, one line
   scene: { file: string; cast: CastId[]; prompt: string };
   sentences: Sentence[];            // every inline sentence used in this lesson
   sections: {
@@ -124,6 +135,7 @@ interface Lesson {
     dialogue: { parts: { title?: string; lines: SentenceId[] }[]; questions: Question[] };
     listenSpeak: { items: Question[] };                  // listening + Speaking Answers
     writing: { chars: string[] };                        // Hanzi Writer targets
+    reading?: { title: string; lines: SentenceId[] };    // HSK3+ passages
   };
   gate: { pool: Question[]; draw: number };              // pool ≥ 2 × draw so retries differ
 }
