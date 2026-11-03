@@ -1,7 +1,7 @@
 {
   "story": "CHY-7",
   "title": "Content YAML layout + Zod schemas",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -14,9 +14,9 @@
         "AC4"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 0,
-      "note": "team: impl CHAA-13, tester CHAA-14",
+      "note": "verified a14e1dd, PR #21",
       "jira": ""
     }
   ],
@@ -33,7 +33,8 @@
     "2026-11-03 S1 \u2192 plan",
     "2026-11-03 S1 \u2192 plan",
     "2026-11-03 S1 \u2192 picture",
-    "2026-11-03 S1 \u2192 execute"
+    "2026-11-03 S1 \u2192 execute",
+    "2026-11-03 S1 \u2192 done"
   ],
-  "updated": "2026-11-03T11:19:56+07:00"
+  "updated": "2026-11-03T11:34:21+07:00"
 }

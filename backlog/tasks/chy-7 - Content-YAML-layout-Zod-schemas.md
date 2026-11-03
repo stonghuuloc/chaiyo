@@ -1,10 +1,10 @@
 ---
 id: CHY-7
 title: Content YAML layout + Zod schemas
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-10-23 06:43'
-updated_date: '2026-10-23 06:47'
+updated_date: '2026-11-03 12:00'
 labels:
   - slice-1
   - content
@@ -73,8 +73,8 @@ Feature: Content YAML layout + Zod schemas
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario: content/ folder layout matches the schema doc
-- [ ] #2 Scenario: Each type has a Zod schema accepting valid YAML
-- [ ] #3 Scenario: Invalid YAML returns a typed error with file and path
-- [ ] #4 Scenario: Unit tests cover both fixtures per type
+- [x] #1 Scenario: content/ folder layout matches the schema doc
+- [x] #2 Scenario: Each type has a Zod schema accepting valid YAML
+- [x] #3 Scenario: Invalid YAML returns a typed error with file and path
+- [x] #4 Scenario: Unit tests cover both fixtures per type
 <!-- AC:END -->
