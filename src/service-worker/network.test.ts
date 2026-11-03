@@ -15,6 +15,7 @@ describe('networkFirst', () => {
 		};
 		const res = await networkFirst(request, cache, async () => new Response('ok'));
 		expect(written).toBe(true);
+		expect(cache.put).toHaveBeenCalledWith(request, expect.any(Response));
 		expect(await res.text()).toBe('ok');
 	});
 
@@ -27,8 +28,8 @@ describe('networkFirst', () => {
 
 	it('does not cache a non-ok response', async () => {
 		const cache = { put: vi.fn(), match: vi.fn() };
-		const res = await networkFirst(request, cache, async () => new Response('no', { status: 500 }));
-		expect(res.status).toBe(500);
+		const res = await networkFirst(request, cache, async () => new Response('no', { status: 404 }));
+		expect(res.status).toBe(404);
 		expect(cache.put).not.toHaveBeenCalled();
 	});
 
