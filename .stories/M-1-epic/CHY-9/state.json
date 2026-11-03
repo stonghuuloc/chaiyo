@@ -2,7 +2,7 @@
   "story": "CHY-9",
   "title": "Linter: 9 contract checks",
   "stage": "in-slice",
-  "current_slice": "S1",
+  "current_slice": "S2",
   "slices": [
     {
       "id": "S1",
@@ -25,9 +25,9 @@
         "AC4"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "todo",
+      "stage": "plan",
       "reviews": 0,
-      "note": "",
+      "note": "spec+plan written, advisor next",
       "jira": ""
     }
   ],
@@ -43,7 +43,8 @@
     "2026-11-03 S1 \u2192 spec",
     "2026-11-03 S1 \u2192 plan",
     "2026-11-03 S1 \u2192 plan",
-    "2026-11-03 S1 \u2192 picture"
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S2 \u2192 plan"
   ],
-  "updated": "2026-11-03T15:57:21+07:00"
+  "updated": "2026-11-03T15:58:22+07:00"
 }

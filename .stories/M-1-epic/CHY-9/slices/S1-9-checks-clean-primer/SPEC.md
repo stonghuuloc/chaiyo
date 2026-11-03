@@ -16,7 +16,7 @@ ACs: AC1, AC2, AC3  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 - [AC2] The Bài 1 fixture (clean tree on disk: lesson h1-01 with 10 words, 19 sentences, grammar h1-g01, words, chars 你 好 们, 20-question gate pool) → `lintDir` returns 0 errors.
 - [AC3] A `kind: 'primer'` lesson with no words or chars, added to the clean tree: 0 errors. Checks 1–7 and the word-count part of 8 never run on it, so a primer with 0 words yields no "outside 8–15" error.
 - [AC3] The other parts of check 8 still apply to a primer: a `syllables`/`pairs` entry (string, or `say` of an object entry, C6) whose tone-stripped pieces (ü kept, split on spaces) are not rows of `syllables.yaml`, a section with 0 drills, a gate pool < 2 × `draw`, or a pool question lacking `section` or missing a section among the 5 → 1 error at the field.
-- [AC1] `lintDir(dir, refs?)` = `loadContentDir` + `lint` + refs (default: `loadRefs`; tests inject). A file that fails `parseContent` yields check-0 errors and is left out of the set, so no check runs on an invalid shape. Missing optional folders (`sentences`, `chars`) mean empty lists.
+- [AC1] `lintDir(dir, { refs?, only? })` = `loadContentDir` + `lint` + refs (default: `loadRefs`; tests inject). `only` is a list of subpaths of `dir` (prefix match on the relative file path, e.g. `lessons/hsk1`, `words`, `syllables.yaml`): files outside it are neither loaded nor linted; absent = everything (Captain, 8.Q5 B: the production build passes the hsk1 lesson folder plus the shared roots). A file that fails `parseContent` yields check-0 errors and is left out of the set, so no check runs on an invalid shape. Missing optional folders (`sentences`, `chars`) mean empty lists.
 
 ## Not this slice
 - AC4 CLI output and the AC2 clause "exits 0" (exit codes belong to the CLI) → S2. Making real `content/` lint-clean → CHY-10/11/12. `deriveSpoken` itself → CHY-8. The `Sentences` schema and Question `section` field → CHY-12 / CHY-11 (schema changes assigned by the Captain).
@@ -28,7 +28,8 @@ ACs: AC1, AC2, AC3  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 ## Test contract
 - [AC1] vitest, table-driven over 9 cases (+ every sub-case of check 8 and 9): load `fixtures/clean` once, `structuredClone` + mutate one field, `lint(set, refs)` → exactly 1 error with the expected `check`, `name`, `path`.
 - [AC1] vitest: `loadContentDir` on a dir with one invalid YAML → a check-0 error carrying the file and path; valid files still load.
-- [AC2] vitest: `lintDir(fixtures/clean, fixtureRefs)` (refs injected, so the vault on the machine never matters) → `errors` equals `[]`.
+- [AC1] vitest: `lintDir(fixtures/clean, { refs, only: ['lessons/hsk1', 'words', 'chars', 'grammar', 'syllables.yaml'] })` ignores a broken file placed under `lessons/hsk2` (0 errors) while the same call without `only` reports it.
+- [AC2] vitest: `lintDir(fixtures/clean, { refs: fixtureRefs })` (refs injected, so the vault on the machine never matters) → `errors` equals `[]`.
 - [AC3] vitest: clean set + primer fixture → 0 errors; the same primer with a missing syllable, a drill-less section, a short pool → 1 error each, all check 8; a primer carrying a Kangxi glyph → 0 errors.
 - [CHORE] `pnpm check` and `pnpm lint` clean.
 
