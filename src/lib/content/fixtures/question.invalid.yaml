@@ -1,0 +1,7 @@
+id: q-h1-01-g01
+type: choice
+tests: { grammar: [h1-g01] }
+prompt: { kind: vi, text: Chào thầy cô (lịch sự) }
+optionKind: hanzi
+options: [你好, 您好, 你们好]
+answer: hai

@@ -1,0 +1,7 @@
+id: h1-g01
+level: 1
+std: '1'
+title: Chào hỏi
+pattern: A + 好
+explain: Thêm 好 sau đại từ để chào.
+examples: [s-h1-01-01]

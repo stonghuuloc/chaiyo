@@ -1,0 +1,138 @@
+kind: primer
+id: h0-00
+level: 1
+order: 0
+title: Nhập môn
+titleHanzi: 拼音
+scene:
+  file: scenes/h0-00.webp
+  cast: [panda]
+  prompt: The panda holding a pinyin chart
+sections:
+  tones:
+    {
+      cards:
+        [
+          {
+            title: 'Thanh 1: cao và đều',
+            explain: Giữ giọng cao đều.,
+            syllables: [mā, má, mǎ, mà, ma],
+            pairs: [[zhī, jī]]
+          }
+        ],
+      drills:
+        [
+          {
+            id: q-h0-00-t01,
+            type: tone,
+            tests: { tone: true },
+            prompt: { kind: syllable, text: mā },
+            syllable: 0,
+            answer: 1
+          }
+        ]
+    }
+  finals:
+    {
+      cards:
+        [
+          {
+            title: 'Thanh 1: cao và đều',
+            explain: Giữ giọng cao đều.,
+            syllables: [mā, má, mǎ, mà, ma],
+            pairs: [[zhī, jī]]
+          }
+        ],
+      drills:
+        [
+          {
+            id: q-h0-00-t01,
+            type: tone,
+            tests: { tone: true },
+            prompt: { kind: syllable, text: mā },
+            syllable: 0,
+            answer: 1
+          }
+        ]
+    }
+  initials:
+    {
+      cards:
+        [
+          {
+            title: 'Thanh 1: cao và đều',
+            explain: Giữ giọng cao đều.,
+            syllables: [mā, má, mǎ, mà, ma],
+            pairs: [[zhī, jī]]
+          }
+        ],
+      drills:
+        [
+          {
+            id: q-h0-00-t01,
+            type: tone,
+            tests: { tone: true },
+            prompt: { kind: syllable, text: mā },
+            syllable: 0,
+            answer: 1
+          }
+        ]
+    }
+  spelling:
+    {
+      cards:
+        [
+          {
+            title: 'Thanh 1: cao và đều',
+            explain: Giữ giọng cao đều.,
+            syllables: [mā, má, mǎ, mà, ma],
+            pairs: [[zhī, jī]]
+          }
+        ],
+      drills:
+        [
+          {
+            id: q-h0-00-t01,
+            type: tone,
+            tests: { tone: true },
+            prompt: { kind: syllable, text: mā },
+            syllable: 0,
+            answer: 1
+          }
+        ]
+    }
+  sandhi:
+    {
+      cards:
+        [
+          {
+            title: 'Thanh 1: cao và đều',
+            explain: Giữ giọng cao đều.,
+            syllables: [mā, má, mǎ, mà, ma],
+            pairs: [[zhī, jī]]
+          }
+        ],
+      drills:
+        [
+          {
+            id: q-h0-00-t01,
+            type: tone,
+            tests: { tone: true },
+            prompt: { kind: syllable, text: mā },
+            syllable: 0,
+            answer: 1
+          }
+        ]
+    }
+gate:
+  draw: 1
+  testOut: true
+  pool:
+    - {
+        id: q-h0-00-x01,
+        type: tone,
+        tests: { tone: true },
+        prompt: { kind: syllable, text: má },
+        syllable: 0,
+        answer: 2
+      }

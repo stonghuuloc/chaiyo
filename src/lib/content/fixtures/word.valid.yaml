@@ -1,0 +1,8 @@
+id: 你好
+hanzi: 你好
+pinyin: nǐ hǎo
+level: 1
+pos: [phrase]
+senses: [{ vi: xin chào }]
+examples: [s-h1-01-01]
+image: { file: words/你好.webp, cast: [panda, fawn], prompt: The baby panda waving hello }

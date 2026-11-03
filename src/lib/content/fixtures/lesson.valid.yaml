@@ -1,0 +1,56 @@
+id: h1-01
+level: 1
+topic: Chào hỏi
+order: 1
+title: Xin chào
+titleHanzi: 你好
+goal: Chào hỏi và tạm biệt
+scene:
+  file: scenes/h1-01.webp
+  cast: [panda, fawn]
+  prompt: The panda waving hello to the fawn
+sentences:
+  - {
+      id: s-h1-01-01,
+      hanzi: 你好！,
+      pinyin: nǐ hǎo,
+      spoken: ní hǎo,
+      vi: Chào bạn!,
+      speaker: redpanda
+    }
+  - { id: s-h1-01-02, hanzi: 再见！, pinyin: zàijiàn, vi: Tạm biệt!, speaker: takin }
+sections:
+  warmup: {}
+  words:
+    ids: [你, 好, 你好, 再见]
+  grammar:
+    ids: [h1-g01]
+    drills:
+      - id: q-h1-01-g01
+        type: choice
+        tests: { grammar: [h1-g01] }
+        prompt: { kind: vi, text: Chào thầy cô (lịch sự) }
+        optionKind: hanzi
+        options: [你好, 您好, 你们好]
+        answer: 1
+  dialogue:
+    parts:
+      - title: Gặp nhau
+        lines: [s-h1-01-01, s-h1-01-02]
+    questions: []
+  listenSpeak:
+    items:
+      - id: q-h1-01-s01
+        type: readAloud
+        tests: { words: [你好], tone: true }
+        sentence: s-h1-01-01
+  writing:
+    chars: [你, 好]
+gate:
+  draw: 1
+  pool:
+    - id: q-h1-01-x01
+      type: typePinyin
+      tests: { words: [再见] }
+      prompt: { kind: hanzi, ref: 再见 }
+      answer: zàijiàn
