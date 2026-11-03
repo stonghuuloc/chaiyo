@@ -1,0 +1,47 @@
+{
+  "story": "CHY-10",
+  "title": "Author B\u00e0i 1 (h1-01) as YAML",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "author the content",
+      "acs": [
+        "AC1"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "design run done; READY after advisor round 2",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "prototype parity",
+      "acs": [
+        "AC2",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "design run done",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-10",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 author the content [AC1]",
+    "2026-11-03 +S2 prototype parity [AC2,AC3]",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S2 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture",
+    "2026-11-03 S2 \u2192 picture"
+  ],
+  "updated": "2026-11-03T15:42:37+07:00"
+}
