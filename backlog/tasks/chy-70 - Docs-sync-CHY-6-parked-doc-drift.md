@@ -21,7 +21,7 @@ Fix doc drift parked during CHY-6 (ADR 0002 + schema decisions): std optionality
 - [ ] #1 content-classes.html GrammarPoint std matches content-schema.md (number[], required)
 - [ ] #2 stack.html shows a content -> Postgres import arrow and the eyebrow names both ADRs
 - [ ] #3 architecture.md says Vercel same origin and keeps ADR 0002 out of "locked stack"
-- [ ] #4 The five fixed lines are removed from PARKED.md
+- [ ] #4 The seven fixed lines (items #1-#3 plus the two Catalog decisions) are removed from PARKED.md
 - [ ] #5 Catalog: contentSha is optional (bundle results carry it, Dictionary rows none)
 - [ ] #6 Catalog: search(query) replaced by entry(hanzi), exact-hanzi lookup, no free-text search
 <!-- AC:END -->
