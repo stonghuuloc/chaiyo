@@ -58,4 +58,21 @@ describe('parseContent', () => {
 			expect.objectContaining({ path: 'sentences[0].foo', message: 'unknown key' })
 		);
 	});
+
+	it.each([3, -1, 1.5])('choice answer %s outside options → path answer', (answer) => {
+		const text = `id: q\ntype: choice\ntests: {}\nprompt: { kind: vi, text: x }\noptionKind: hanzi\noptions: [a, b, c]\nanswer: ${answer}\n`;
+		const result = parseContent('Question', 'q.yaml', text);
+		expect(result.ok).toBe(false);
+		if (result.ok) return;
+		expect(result.errors[0]).toMatchObject({ file: 'q.yaml', path: 'answer' });
+	});
+
+	it('fill answer outside options → path answer', () => {
+		const text =
+			'id: q\ntype: fill\ntests: {}\nsentence: s1\nblank: 0\noptions: [a, b]\nanswer: 2\n';
+		const result = parseContent('Question', 'q.yaml', text);
+		expect(result.ok).toBe(false);
+		if (result.ok) return;
+		expect(result.errors[0]).toMatchObject({ path: 'answer' });
+	});
 });

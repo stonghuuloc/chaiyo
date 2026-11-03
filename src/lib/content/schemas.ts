@@ -108,15 +108,21 @@ const QuestionBase = {
 	})
 };
 
+const answerIndex = { error: 'answer must be an index into options' };
+const answerInOptions = ({ answer, options }: { answer: number; options: string[] }) =>
+	answer < options.length;
+
 export const Question = z.discriminatedUnion('type', [
-	z.strictObject({
-		...QuestionBase,
-		type: z.literal('choice'),
-		prompt: Prompt,
-		options: z.array(z.string()),
-		answer: z.number(),
-		optionKind: z.enum(['hanzi', 'pinyin', 'vi', 'hanviet', 'image'])
-	}),
+	z
+		.strictObject({
+			...QuestionBase,
+			type: z.literal('choice'),
+			prompt: Prompt,
+			options: z.array(z.string()),
+			answer: z.number().int().min(0),
+			optionKind: z.enum(['hanzi', 'pinyin', 'vi', 'hanviet', 'image'])
+		})
+		.refine(answerInOptions, { ...answerIndex, path: ['answer'] }),
 	z.strictObject({
 		...QuestionBase,
 		type: z.literal('tone'),
@@ -136,14 +142,16 @@ export const Question = z.discriminatedUnion('type', [
 		tiles: z.array(z.string()),
 		answer: Id
 	}),
-	z.strictObject({
-		...QuestionBase,
-		type: z.literal('fill'),
-		sentence: Id,
-		blank: z.number(),
-		options: z.array(z.string()),
-		answer: z.number()
-	}),
+	z
+		.strictObject({
+			...QuestionBase,
+			type: z.literal('fill'),
+			sentence: Id,
+			blank: z.number(),
+			options: z.array(z.string()),
+			answer: z.number().int().min(0)
+		})
+		.refine(answerInOptions, { ...answerIndex, path: ['answer'] }),
 	z.strictObject({
 		...QuestionBase,
 		type: z.literal('trueFalse'),
