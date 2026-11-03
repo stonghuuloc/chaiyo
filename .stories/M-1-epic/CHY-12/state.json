@@ -1,0 +1,45 @@
+{
+  "story": "CHY-12",
+  "title": "Word entries pipeline for HSK1",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "script: committed env, sense check, example source",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "discuss",
+      "reviews": 0,
+      "note": "round 1 sent: 3 Qs; 10 self-decisions",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "HSK1 corpus run, rare flag, Loc spot-check",
+      "acs": [
+        "AC4",
+        "AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-12",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 script: committed env, sense check, example source [AC1,AC2,AC3]",
+    "2026-11-03 +S2 HSK1 corpus run, rare flag, Loc spot-check [AC4,AC5]",
+    "2026-11-03 S1 \u2192 discuss"
+  ],
+  "updated": "2026-11-03T15:22:33+07:00"
+}
