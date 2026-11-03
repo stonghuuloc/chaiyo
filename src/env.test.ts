@@ -4,6 +4,7 @@ import { variables } from './env.js';
 describe('optional Sentry variables', () => {
 	it.each([
 		'PUBLIC_SENTRY_DSN',
+		'VERCEL_ENV',
 		'SENTRY_AUTH_TOKEN',
 		'SENTRY_ORG',
 		'SENTRY_PROJECT',

@@ -42,10 +42,3 @@ jobs:
           path: coverage/
           if-no-files-found: ignore
       - run: pnpm build
-        env:
-          # Empty on forks or until the secrets exist: Sentry stays off and no source maps upload.
-          PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_URL: ${{ secrets.SENTRY_URL }}
