@@ -1,13 +1,12 @@
 import tailwindcss from '@tailwindcss/vite';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
-import { loadEnv } from 'vite';
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-vercel';
 import { sentrySvelteKit } from '@sentry/sveltekit/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 
-export default defineConfig(({ mode }) => {
-	const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env };
+export default defineConfig(() => {
+	const env = process.env;
 
 	return {
 		plugins: [

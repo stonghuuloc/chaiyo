@@ -18,7 +18,10 @@ describe('sentryOptions', () => {
 	it('stays conservative by default', async () => {
 		const options = await load({});
 		expect(options.sendDefaultPii).toBe(false);
-		expect(options.tracesSampleRate).toBeLessThanOrEqual(0.1);
+		expect(options.tracesSampleRate).toBe(0);
+		expect(
+			(await load({ PUBLIC_SENTRY_DSN: 'https://key@example.ingest.sentry.io/1' })).tracesSampleRate
+		).toBeLessThanOrEqual(0.1);
 	});
 
 	it('uses a falsy non-nullish dsn when unset so the server env fallback stays off', async () => {

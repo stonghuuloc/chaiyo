@@ -9,10 +9,5 @@ export const variables = defineEnvVars({
 	// Sentry is a no-op while the DSN is unset. The DSN is public by design.
 	PUBLIC_SENTRY_DSN: { public: true, static: true, schema: optional },
 	// Deployment name (production, preview, development) set by Vercel at build; local builds fall back to development.
-	VERCEL_ENV: { public: true, static: true, schema: optional },
-	// Build-time only, read by vite.config.ts for source-map upload; never bundled.
-	SENTRY_AUTH_TOKEN: { static: true, schema: optional },
-	SENTRY_ORG: { static: true, schema: optional },
-	SENTRY_PROJECT: { static: true, schema: optional },
-	SENTRY_URL: { static: true, schema: optional }
+	VERCEL_ENV: { public: true, static: true, schema: optional }
 });
