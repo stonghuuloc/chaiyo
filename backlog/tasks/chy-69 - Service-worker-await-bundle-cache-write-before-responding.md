@@ -1,7 +1,7 @@
 ---
 id: CHY-69
 title: 'Service worker: await bundle cache write before responding'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-11-01 12:21'
 labels:
@@ -18,5 +18,5 @@ src/service-worker/index.ts:36 calls cache.put(event.request, res.clone()) witho
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A bundle fetched online is in the cache once the response resolves
+- [x] #1 A bundle fetched online is in the cache once the response resolves
 <!-- AC:END -->
