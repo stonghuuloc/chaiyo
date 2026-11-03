@@ -151,11 +151,11 @@ type Question = {
   id: string;                       // 'q-h1-01-g03'
   tests: { words?: string[]; grammar?: string[]; tone?: boolean }; // feeds Learner Stats
 } & (
-  | { type: 'choice'; prompt: Prompt; options: string[]; answer: number; optionKind: 'hanzi' | 'pinyin' | 'vi' | 'hanviet' | 'image' }
+  | { type: 'choice'; prompt: Prompt; options: string[]; answer: number /* 0-based index into options */; optionKind: 'hanzi' | 'pinyin' | 'vi' | 'hanviet' | 'image' }
   | { type: 'tone'; prompt: Prompt; syllable: number; answer: 1 | 2 | 3 | 4 | 5 }
   | { type: 'typePinyin'; prompt: Prompt; answer: string }        // tone marks or digits accepted
   | { type: 'order'; tiles: string[]; answer: SentenceId }         // build the sentence
-  | { type: 'fill'; sentence: SentenceId; blank: number; options: string[]; answer: number }
+  | { type: 'fill'; sentence: SentenceId; blank: number; options: string[]; answer: number /* 0-based index into options */ }
   | { type: 'trueFalse'; prompt: Prompt; statement: string; answer: boolean }
   | { type: 'readAloud'; sentence: SentenceId }                    // scored per syllable
   | { type: 'freeAnswer'; prompt: Prompt; rubric: string[]; minChars?: number }
