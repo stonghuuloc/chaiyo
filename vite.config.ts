@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
 	return {
 		plugins: [
 			sentrySvelteKit({
+				autoInstrument: false,
 				autoUploadSourceMaps: Boolean(env.SENTRY_AUTH_TOKEN),
 				authToken: env.SENTRY_AUTH_TOKEN,
 				sentryUrl: env.SENTRY_URL,
@@ -42,6 +43,7 @@ export default defineConfig(({ mode }) => {
 				exclude: [
 					'src/lib/paraglide/**',
 					'src/service-worker/**',
+					'src/hooks.client.ts',
 					'src/**/*.{test,spec}.{js,ts}',
 					'src/**/*.d.ts',
 					'src/**/fixtures/**'
