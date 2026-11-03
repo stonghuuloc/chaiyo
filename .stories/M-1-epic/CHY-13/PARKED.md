@@ -1,0 +1,5 @@
+# CHY-13 — parked / out of scope
+
+Findings with no AC behind them. NOT planned, NOT built. Raise with BA if they matter.
+
+- [2026-11-03] build writes lessons one by one: a subset/stamp crash on lesson N leaves lessons 1..N-1 written; temp-dir-then-move would fix it, no AC demands it

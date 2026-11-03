@@ -1,0 +1,34 @@
+{
+  "story": "CHY-13",
+  "title": "Kaishu font subset per lesson bundle",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "Kaishu subset post-step",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "frame: awaiting split approval",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-13",
+  "log": [
+    "2026-11-03 init",
+    "2026-11-03 +S1 Kaishu subset post-step [AC1,AC2,AC3]",
+    "2026-11-03 S1 \u2192 discuss",
+    "2026-11-03 S1 \u2192 spec",
+    "2026-11-03 S1 \u2192 plan",
+    "2026-11-03 S1 \u2192 picture"
+  ],
+  "updated": "2026-11-03T15:40:31+07:00"
+}
