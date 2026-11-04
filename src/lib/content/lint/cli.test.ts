@@ -28,6 +28,13 @@ describe('lint:content CLI', () => {
 		expect(out).not.toMatch(/ \n$/);
 	});
 
+	it('keeps a newline-bearing content key on one stdout line', { timeout: 20_000 }, () => {
+		const { status, out } = run('src/lib/content/lint/fixtures/cli-newline-key');
+		expect(status).toBe(1);
+		expect(out.trimEnd().split('\n')).toHaveLength(1);
+		expect(out).toMatch(/^chars\/你\.yaml {2}bad\\nkey {2}/);
+	});
+
 	it('exits 0 with empty stdout on a clean tree', { timeout: 20_000 }, () => {
 		const { status, out, err } = run('src/lib/content/lint/fixtures/clean');
 		expect(status).toBe(0);

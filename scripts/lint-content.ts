@@ -6,10 +6,16 @@ if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) {
 	console.error(`lint-content: not a directory: ${dir}`);
 	process.exit(1);
 }
+const oneLine = (s: string) => s.trimEnd().replace(/\r?\n/g, '\\n');
 const { errors, notices } = lintDir(dir);
 for (const e of errors)
 	console.log(
-		`${e.file}  ${e.path || '-'}  #${e.check} ${e.name}  ${e.message.trimEnd().replace(/\r?\n/g, '\\n')}`
+		[
+			oneLine(e.file),
+			oneLine(e.path) || '-',
+			`#${e.check} ${oneLine(e.name)}`,
+			oneLine(e.message)
+		].join('  ')
 	);
 for (const n of notices) console.error(n);
 console.error(
