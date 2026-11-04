@@ -28,12 +28,13 @@ describe('loadRefs', () => {
 	it('reports a vault that is present but fails to load', () => {
 		const dir = mkdtempSync(join(tmpdir(), 'vault-'));
 		try {
-			writeFileSync(join(dir, 'meo.py'), 'raise SystemExit(3)\n');
+			writeFileSync(join(dir, 'meo.py'), 'raise RuntimeError("vault broke")\n');
 			vi.stubEnv('CHAIYO_VAULT', dir);
 			const { refs, notices } = loadRefs();
 			expect(refs.mnemonics).toBeUndefined();
 			expect(notices).toHaveLength(1);
 			expect(notices[0]).toContain('vault failed to load');
+			expect(notices[0]).toContain('RuntimeError: vault broke');
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}

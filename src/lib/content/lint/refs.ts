@@ -40,6 +40,8 @@ print(json.dumps({c: r[3] for c, r in meo.index().items()}, ensure_ascii=False))
 `;
 const NEO = { HÌNH: 'hinh', ÂM: 'am', 'ĐỜI THẬT': 'doiThat', 'TƯƠNG PHẢN': 'tuongPhan' } as const;
 
+const lastLine = (text?: string) => text?.trim().split('\n').pop();
+
 export function loadVaultMnemonics(dir: string): Map<string, Mnemonic> | undefined {
 	if (!existsSync(join(dir, 'meo.py'))) return undefined;
 	const raw = JSON.parse(
@@ -75,7 +77,7 @@ export function loadRefs(root = process.cwd()): { refs: LintRefs; notices: strin
 	try {
 		mnemonics = loadVaultMnemonics(vault);
 	} catch (e) {
-		notice = `check 7 skipped: vault failed to load (${e instanceof Error ? e.message.split('\n')[0] : String(e)})`;
+		notice = `check 7 skipped: vault failed to load (${lastLine((e as { stderr?: string }).stderr) ?? (e instanceof Error ? e.message : String(e))})`;
 	}
 	return {
 		refs: { polyphones, syllabus, mnemonics },
