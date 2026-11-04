@@ -1,0 +1,931 @@
+kind: primer
+id: h0-00
+level: 1
+order: 0
+title: Nhập môn
+titleHanzi: 拼音
+scene:
+  file: assets/home/lesson-next.png
+  cast:
+    - panda
+  prompt: reuse
+sections:
+  tones:
+    cards:
+      - title: "Thanh 1: cao đều (55)"
+        explain: Thang cao độ chia 5 mức, 5 là cao nhất. Thanh 1 giữ giọng ở mức 5 từ đầu đến cuối, không lên không xuống.
+        syllables:
+          - say: mā
+            hanzi: 妈
+      - title: "Thanh 2: lên (35)"
+        explain: Giọng bắt đầu ở mức 3 rồi đi lên mức 5, một đường lên liền mạch.
+        syllables:
+          - say: má
+            hanzi: 麻
+      - title: "Thanh 3: xuống rồi lên (214)"
+        explain: "Giọng hạ từ mức 2 xuống mức 1 rồi nâng lên mức 4. Khi nói nhanh, thường chỉ đọc nửa đầu: xuống thấp rồi dừng."
+        syllables:
+          - say: mǎ
+            hanzi: 马
+      - title: "Thanh 4: rơi từ cao (51)"
+        explain: Giọng bắt đầu ở mức 5 rồi rơi thẳng xuống mức 1, ngắn và dứt khoát.
+        syllables:
+          - say: mà
+            hanzi: 骂
+      - title: Thanh nhẹ
+        explain: "Một số chữ đọc nhẹ và ngắn, không nhấn, không có dấu trong pinyin: ma, de, le. Chỉ cần nhớ: gặp chữ không dấu thì đừng nhấn."
+        syllables: []
+      - title: So sánh bốn thanh
+        explain: Cùng một âm ma, mỗi thanh là một chữ khác nhau. Nghe lần lượt từ trái sang phải.
+        syllables:
+          - say: mā
+            hanzi: 妈
+          - say: má
+            hanzi: 麻
+          - say: mǎ
+            hanzi: 马
+          - say: mà
+            hanzi: 骂
+    drills:
+      - id: q-h0-00-tones-01
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: má
+        optionKind: pinyin
+        options:
+          - mā
+          - má
+          - mǎ
+          - mà
+        answer: 1
+        why: thanh 2 đi lên
+      - id: q-h0-00-tones-02
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: mà
+        optionKind: pinyin
+        options:
+          - mā
+          - má
+          - mǎ
+          - mà
+        answer: 3
+        why: thanh 4 rơi mạnh
+      - id: q-h0-00-tones-03
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: mǎ
+        optionKind: pinyin
+        options:
+          - mā
+          - má
+          - mǎ
+          - mà
+        answer: 2
+        why: thanh 3 xuống thấp rồi lên
+      - id: q-h0-00-tones-04
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: mā
+        optionKind: pinyin
+        options:
+          - mā
+          - má
+          - mǎ
+          - mà
+        answer: 0
+        why: thanh 1 cao và đều
+  finals:
+    cards:
+      - title: a, o, e
+        explain: Ba nguyên âm đơn. a miệng mở rộng, lưỡi thấp; o môi tròn; e miệng mở vừa, lưỡi sau, môi không tròn.
+        syllables:
+          - say: ā
+            label: a
+          - say: ō
+            label: o
+          - say: ē
+            label: e
+      - title: i, u, ü
+        explain: i lưỡi trước, môi dẹt; u lưỡi sau, môi tròn; ü lưỡi trước như i nhưng môi tròn. Hãy nghe riêng ü so với i và u.
+        syllables:
+          - say: yī
+            label: i
+          - say: wū
+            label: u
+          - say: yū
+            label: ü
+      - title: ai, ei, ao, ou
+        explain: "Vần ghép: trượt từ âm đầu sang âm sau trong một hơi, không tách ra."
+        syllables:
+          - say: āi
+            label: ai
+          - say: éi
+            label: ei
+          - say: āo
+            label: ao
+          - say: ōu
+            label: ou
+      - title: "Vần mũi: -n và -ng"
+        explain: -n kết thúc bằng đầu lưỡi chạm lợi trên; -ng bằng cuống lưỡi chạm vòm mềm. Có thêm ong.
+        syllables:
+          - say: ān
+            label: an
+          - say: ēn
+            label: en
+          - say: āng
+            label: ang
+          - say: dēng
+            label: eng
+          - say: dōng
+            label: ong
+      - title: Vần ghép với i-
+        explain: "Bắt đầu bằng i rồi trượt sang vần sau: ia, ie, iao, iu. Khi không có phụ âm đầu, i viết thành y (xem phần Quy tắc viết)."
+        syllables:
+          - say: yā
+            label: ia
+          - say: yē
+            label: ie
+          - say: yāo
+            label: iao
+          - say: yōu
+            label: iu
+      - title: Vần ghép với u-
+        explain: "Bắt đầu bằng u rồi trượt sang vần sau: ui (thực chất là uei), un (thực chất là uen)."
+        syllables:
+          - say: wēi
+            label: ui
+          - say: wēn
+            label: un
+    drills:
+      - id: q-h0-00-finals-01
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: ān
+        optionKind: pinyin
+        options:
+          - an
+          - ang
+        answer: 0
+        why: "-n: lưỡi chạm lợi"
+      - id: q-h0-00-finals-02
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: āng
+        optionKind: pinyin
+        options:
+          - an
+          - ang
+        answer: 1
+        why: "-ng: cuối lưỡi chạm vòm mềm"
+      - id: q-h0-00-finals-03
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: éi
+        optionKind: pinyin
+        options:
+          - ei
+          - ai
+        answer: 0
+        why: ei trượt từ e sang i
+      - id: q-h0-00-finals-04
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: āo
+        optionKind: pinyin
+        options:
+          - ao
+          - ou
+        answer: 0
+        why: ao trượt từ a sang o
+  initials:
+    cards:
+      - title: b p m f · âm môi
+        explain: b, p, m dùng hai môi; f dùng răng trên chạm môi dưới. p bật hơi mạnh, b không bật hơi.
+        syllables:
+          - say: bō
+            label: b
+          - say: pō
+            label: p
+          - say: mō
+            label: m
+          - say: fó
+            label: f
+        pairs:
+          - - say: bō
+              label: b
+            - say: pō
+              label: p
+      - title: d t n l · âm đầu lưỡi
+        explain: Đầu lưỡi chạm lợi trên. t bật hơi mạnh, d không bật hơi; n thoát hơi qua mũi, l qua hai bên lưỡi.
+        syllables:
+          - say: dé
+            label: d
+          - say: tè
+            label: t
+          - say: nè
+            label: n
+          - say: lē
+            label: l
+        pairs:
+          - - say: dé
+              label: d
+            - say: tè
+              label: t
+      - title: g k h · âm cuống lưỡi
+        explain: Cuống lưỡi nâng lên chạm hoặc gần vòm mềm. k bật hơi mạnh, g không bật hơi; h là âm xát.
+        syllables:
+          - say: gē
+            label: g
+          - say: kē
+            label: k
+          - say: hē
+            label: h
+        pairs:
+          - - say: gē
+              label: g
+            - say: kē
+              label: k
+      - title: j q x · âm mặt lưỡi
+        explain: Mặt lưỡi áp ngạc cứng, môi dẹt. q là j bật hơi; x là âm xát. Ba âm này chỉ ghép với i và ü.
+        syllables:
+          - say: jī
+            label: j
+          - say: qī
+            label: q
+          - say: xī
+            label: x
+        pairs:
+          - - say: jī
+              label: j
+            - say: qī
+              label: q
+      - title: zh ch sh r · âm uốn lưỡi
+        explain: Đầu lưỡi cong lên chạm hoặc gần ngạc cứng. ch bật hơi, zh không bật hơi; sh là âm xát, r là âm xát hữu thanh.
+        syllables:
+          - say: zhī
+            label: zh
+          - say: chī
+            label: ch
+          - say: shī
+            label: sh
+          - say: rì
+            label: r
+        pairs:
+          - - say: zhī
+              label: zh
+            - say: chī
+              label: ch
+      - title: z c s · âm đầu lưỡi trước
+        explain: Đầu lưỡi phẳng, chạm hoặc gần mặt sau răng cửa trên. c bật hơi, z không bật hơi; s là âm xát.
+        syllables:
+          - say: zī
+            label: z
+          - say: cī
+            label: c
+          - say: sī
+            label: s
+        pairs:
+          - - say: zī
+              label: z
+            - say: cī
+              label: c
+      - title: Đối chiếu theo vị trí lưỡi
+        explain: "Ba nhóm j q x, zh ch sh, z c s có cùng cách phát âm nhưng khác vị trí lưỡi: mặt lưỡi, đầu lưỡi cong, đầu lưỡi phẳng."
+        syllables: []
+        pairs:
+          - - say: jī
+              label: j
+            - say: zhī
+              label: zh
+          - - say: qī
+              label: q
+            - say: chī
+              label: ch
+          - - say: xī
+              label: x
+            - say: shī
+              label: sh
+          - - say: sī
+              label: s
+            - say: shī
+              label: sh
+    drills:
+      - id: q-h0-00-initials-01
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: pō
+        optionKind: pinyin
+        options:
+          - b
+          - p
+        answer: 1
+        why: p bật hơi, b không bật hơi
+      - id: q-h0-00-initials-02
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: zhī
+        optionKind: pinyin
+        options:
+          - zh
+          - j
+        answer: 0
+        why: zh uốn lưỡi, j dùng mặt lưỡi
+      - id: q-h0-00-initials-03
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: qī
+        optionKind: pinyin
+        options:
+          - ch
+          - q
+        answer: 1
+        why: q dùng mặt lưỡi, ch uốn lưỡi
+      - id: q-h0-00-initials-04
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: shī
+        optionKind: pinyin
+        options:
+          - s
+          - sh
+        answer: 1
+        why: sh uốn lưỡi, s đầu lưỡi phẳng
+  spelling:
+    cards:
+      - title: i, u, ü đứng đầu → y, w, yu
+        explain: Khi vần bắt đầu bằng i, u, ü mà không có phụ âm đầu, viết thành yi, wu, yu.
+        syllables:
+          - yī
+          - wǔ
+          - yú
+      - title: ü mất hai chấm sau j, q, x, y
+        explain: "Sau j, q, x, y chỉ có thể là ü nên viết u: qù, jú, yú. Sau n, l vẫn giữ hai chấm: nǚ, lǚ."
+        syllables:
+          - qù
+          - jú
+          - nǚ
+          - lǚ
+      - title: iou → iu, uei → ui, uen → un
+        explain: "Sau phụ âm, ba vần này viết gọn: liù, duì, chūn, không viết liou, duei, chuen."
+        syllables:
+          - liù
+          - duì
+          - chūn
+      - title: Dấu thanh đặt ở đâu
+        explain: "Ưu tiên a, rồi o hoặc e. Trong iu và ui, dấu đặt ở chữ thứ hai: liù, duì."
+        syllables:
+          - hǎo
+          - ōu
+          - yě
+          - liù
+          - duì
+    drills:
+      - id: q-h0-00-spelling-01
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: qù
+        optionKind: pinyin
+        options:
+          - qù
+          - qǜ
+          - qiù
+        answer: 0
+        why: sau q, ü viết u, không có hai chấm
+        ask: Nghe 去 (đi). Pinyin đúng là…
+      - id: q-h0-00-spelling-02
+        type: choice
+        tests: {}
+        prompt:
+          kind: vi
+          text: "女 (con gái): sau n, ü viết thế nào?"
+        optionKind: pinyin
+        options:
+          - nǔ
+          - nǚ
+        answer: 1
+        why: sau n, l thì ü giữ hai chấm
+      - id: q-h0-00-spelling-03
+        type: choice
+        tests: {}
+        prompt:
+          kind: syllable
+          text: liù
+        optionKind: pinyin
+        options:
+          - liù
+          - lioù
+          - liou
+        answer: 0
+        why: iou viết gọn thành iu, dấu ở chữ thứ hai
+        ask: Nghe 六 (sáu). Pinyin đúng là…
+      - id: q-h0-00-spelling-04
+        type: choice
+        tests: {}
+        prompt:
+          kind: vi
+          text: Âm “u” đứng một mình, không có phụ âm đầu, viết là…
+        optionKind: pinyin
+        options:
+          - wu
+          - u
+          - vu
+        answer: 0
+        why: u đứng đầu viết thành w
+  sandhi:
+    cards:
+      - title: Thanh 3 + thanh 3
+        explain: Hai thanh 3 liền nhau thì chữ đầu đọc thành thanh 2. Nhưng pinyin vẫn viết nǐ hǎo, không viết ní hǎo.
+        syllables:
+          - say: nǐ hǎo
+            hanzi: 你好
+          - say: hěn hǎo
+            hanzi: 很好
+          - say: shuǐ guǒ
+            hanzi: 水果
+      - title: Nửa thanh 3
+        explain: Thanh 3 đứng trước thanh 1, 2, 4 hoặc thanh nhẹ thì chỉ xuống thấp, không lên lại.
+        syllables:
+          - say: lǎo shī
+            hanzi: 老师
+          - say: hǎo chī
+            hanzi: 好吃
+          - say: nǐ men
+            hanzi: 你们
+      - title: "不: bù hay bú"
+        explain: Trước thanh 4, 不 đổi thành bú và pinyin viết luôn bú. Trước thanh 1, 2, 3 vẫn đọc bù.
+        syllables:
+          - say: bú shì
+            hanzi: 不是
+          - say: bú qù
+            hanzi: 不去
+          - say: bù chī
+            hanzi: 不吃
+          - say: bù lái
+            hanzi: 不来
+          - say: bù hǎo
+            hanzi: 不好
+      - title: "一: yí hay yì"
+        explain: Trước thanh 4, 一 đọc yí. Trước thanh 1, 2, 3, 一 đọc yì. Pinyin viết đúng như đọc.
+        syllables:
+          - say: yí gè
+            hanzi: 一个
+          - say: yí xià
+            hanzi: 一下
+          - say: yí dìng
+            hanzi: 一定
+          - say: yì tiān
+            hanzi: 一天
+          - say: yì nián
+            hanzi: 一年
+          - say: yì qǐ
+            hanzi: 一起
+      - title: "一 đứng một mình: yī"
+        explain: Đọc số hoặc đứng ở cuối từ thì 一 giữ nguyên yī.
+        syllables:
+          - say: shí yī
+            hanzi: 十一
+      - title: Thanh nhẹ trong từ
+        explain: "Âm sau của từ lặp và chữ 不 ở giữa đọc nhẹ và ngắn: māma, duìbuqǐ."
+        syllables:
+          - say: mā ma
+            hanzi: 妈妈
+          - say: duì bu qǐ
+            hanzi: 对不起
+    drills:
+      - id: q-h0-00-sandhi-01
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: nǐ hǎo
+          spoken: ní hǎo
+        optionKind: pinyin
+        options:
+          - ní
+          - nǐ
+        answer: 0
+        why: "thanh 3 + 3: chữ đầu đọc thành thanh 2, nhưng vẫn viết nǐ"
+        ask: Chữ đầu của 你好 (viết nǐ hǎo) thực tế đọc là…
+      - id: q-h0-00-sandhi-02
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: bú shì
+        optionKind: pinyin
+        options:
+          - bù
+          - bú
+        answer: 1
+        why: trước thanh 4, 不 thành bú
+        ask: Chữ 不 trong 不是 đọc là…
+      - id: q-h0-00-sandhi-03
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: yì tiān
+        optionKind: pinyin
+        options:
+          - yī
+          - yí
+          - yì
+        answer: 2
+        why: trước thanh 1, 2, 3, 一 đọc yì
+        ask: Chữ 一 trong 一天 đọc là…
+      - id: q-h0-00-sandhi-04
+        type: choice
+        tests:
+          tone: true
+        prompt:
+          kind: syllable
+          text: yí gè
+        optionKind: pinyin
+        options:
+          - yī
+          - yí
+          - yì
+        answer: 1
+        why: trước thanh 4, 一 đọc yí
+        ask: Chữ 一 trong 一个 đọc là…
+gate:
+  draw: 10
+  testOut: true
+  pool:
+    - id: q-h0-00-g-tones-01
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: mā
+      optionKind: pinyin
+      options:
+        - mā
+        - má
+        - mǎ
+        - mà
+      answer: 0
+      why: thanh 1 cao và đều
+      section: tones
+    - id: q-h0-00-g-tones-02
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: má
+      optionKind: pinyin
+      options:
+        - mā
+        - má
+        - mǎ
+        - mà
+      answer: 1
+      why: thanh 2 đi lên
+      section: tones
+    - id: q-h0-00-g-tones-03
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: mǎ
+      optionKind: pinyin
+      options:
+        - mā
+        - má
+        - mǎ
+        - mà
+      answer: 2
+      why: thanh 3 xuống thấp rồi lên
+      section: tones
+    - id: q-h0-00-g-tones-04
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: mà
+      optionKind: pinyin
+      options:
+        - mā
+        - má
+        - mǎ
+        - mà
+      answer: 3
+      why: thanh 4 rơi mạnh
+      section: tones
+    - id: q-h0-00-g-finals-01
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: ān
+      optionKind: pinyin
+      options:
+        - an
+        - ang
+      answer: 0
+      why: "-n: lưỡi chạm lợi"
+      section: finals
+    - id: q-h0-00-g-finals-02
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: āng
+      optionKind: pinyin
+      options:
+        - an
+        - ang
+      answer: 1
+      why: "-ng: cuối lưỡi chạm vòm mềm"
+      section: finals
+    - id: q-h0-00-g-finals-03
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: éi
+      optionKind: pinyin
+      options:
+        - ei
+        - ai
+      answer: 0
+      why: ei trượt từ e sang i
+      section: finals
+    - id: q-h0-00-g-finals-04
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: āi
+      optionKind: pinyin
+      options:
+        - ai
+        - ei
+      answer: 0
+      why: ai trượt từ a sang i
+      section: finals
+    - id: q-h0-00-g-finals-05
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: ōu
+      optionKind: pinyin
+      options:
+        - ou
+        - ao
+      answer: 0
+      why: ou trượt từ o sang u
+      section: finals
+    - id: q-h0-00-g-initials-01
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: bō
+      optionKind: pinyin
+      options:
+        - b
+        - p
+      answer: 0
+      why: b không bật hơi
+      section: initials
+    - id: q-h0-00-g-initials-02
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: pō
+      optionKind: pinyin
+      options:
+        - b
+        - p
+      answer: 1
+      why: p bật hơi
+      section: initials
+    - id: q-h0-00-g-initials-03
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: chī
+      optionKind: pinyin
+      options:
+        - ch
+        - q
+      answer: 0
+      why: ch uốn lưỡi, q dùng mặt lưỡi
+      section: initials
+    - id: q-h0-00-g-initials-04
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: jī
+      optionKind: pinyin
+      options:
+        - zh
+        - j
+      answer: 1
+      why: j dùng mặt lưỡi, zh uốn lưỡi
+      section: initials
+    - id: q-h0-00-g-initials-05
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: sī
+      optionKind: pinyin
+      options:
+        - s
+        - sh
+      answer: 0
+      why: s đầu lưỡi phẳng, sh uốn lưỡi
+      section: initials
+    - id: q-h0-00-g-spelling-01
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: qù
+      optionKind: pinyin
+      options:
+        - qù
+        - qǜ
+        - qiù
+      answer: 0
+      why: sau q, ü viết u
+      ask: Nghe 去 (đi). Pinyin đúng là…
+      section: spelling
+    - id: q-h0-00-g-spelling-02
+      type: choice
+      tests: {}
+      prompt:
+        kind: vi
+        text: "女 (con gái): sau n, ü viết thế nào?"
+      optionKind: pinyin
+      options:
+        - nǔ
+        - nǚ
+      answer: 1
+      why: sau n, l thì ü giữ hai chấm
+      section: spelling
+    - id: q-h0-00-g-spelling-03
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: liù
+      optionKind: pinyin
+      options:
+        - liù
+        - lioù
+        - liou
+      answer: 0
+      why: iou viết gọn thành iu
+      ask: Nghe 六 (sáu). Pinyin đúng là…
+      section: spelling
+    - id: q-h0-00-g-spelling-04
+      type: choice
+      tests: {}
+      prompt:
+        kind: syllable
+        text: duì
+      optionKind: pinyin
+      options:
+        - duì
+        - dùi
+      answer: 0
+      why: trong iu và ui, dấu ở chữ thứ hai
+      ask: Dấu thanh 4 trên vần “ui” của 对 đặt ở…
+      section: spelling
+    - id: q-h0-00-g-spelling-05
+      type: choice
+      tests: {}
+      prompt:
+        kind: vi
+        text: Âm “i” đứng một mình, không có phụ âm đầu, viết là…
+      optionKind: pinyin
+      options:
+        - yi
+        - i
+        - ji
+      answer: 0
+      why: i đứng đầu viết thành y
+      section: spelling
+    - id: q-h0-00-g-sandhi-01
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: nǐ hǎo
+        spoken: ní hǎo
+      optionKind: pinyin
+      options:
+        - ní
+        - nǐ
+      answer: 0
+      why: "thanh 3 + 3: chữ đầu đọc thành thanh 2"
+      ask: Chữ đầu của 你好 (viết nǐ hǎo) thực tế đọc là…
+      section: sandhi
+    - id: q-h0-00-g-sandhi-02
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: bú qù
+      optionKind: pinyin
+      options:
+        - bù
+        - bú
+      answer: 1
+      why: trước thanh 4, 不 thành bú
+      ask: Chữ 不 trong 不去 đọc là…
+      section: sandhi
+    - id: q-h0-00-g-sandhi-03
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: bù lái
+      optionKind: pinyin
+      options:
+        - bù
+        - bú
+      answer: 0
+      why: trước thanh 2, 不 giữ bù
+      ask: Chữ 不 trong 不来 đọc là…
+      section: sandhi
+    - id: q-h0-00-g-sandhi-04
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: yì qǐ
+      optionKind: pinyin
+      options:
+        - yī
+        - yí
+        - yì
+      answer: 2
+      why: trước thanh 1, 2, 3, 一 đọc yì
+      ask: Chữ 一 trong 一起 đọc là…
+      section: sandhi
+    - id: q-h0-00-g-sandhi-05
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: yí xià
+      optionKind: pinyin
+      options:
+        - yī
+        - yí
+        - yì
+      answer: 1
+      why: trước thanh 4, 一 đọc yí
+      ask: Chữ 一 trong 一下 đọc là…
+      section: sandhi
