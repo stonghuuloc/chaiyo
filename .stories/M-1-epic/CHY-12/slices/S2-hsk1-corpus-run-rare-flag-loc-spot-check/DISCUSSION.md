@@ -21,6 +21,8 @@ ACs: AC4, AC5 (story-wide decisions 1–14 and Q1–Q3 are in S1's DISCUSSION.md
 | 8 | `pnpm lint:content` (CHY-9, C1) must exit 0 on the promoted tree when that command is on main; otherwise the vitest parse is the gate | 85 | C1 checks 0, 3, 6, 8 |
 | 10 | Four hand files carry unmarked `parts[].pinyin` that C1 check 3 flags (reported by CHAA-21): 对不起 不 `bu`, 没关系 系 `xi`, 不客气 气 `qi`, 关系 系 `xi`. S2 fixes the four values by hand to `bù`, `xì`, `qì`, `xì` (data fix, same commit as the content) | 85 | C4 keeps `parts`, so the pipeline would keep the error and `lint:content` would fail; 关系 is outside the HSK1 list but CHY-9 flags it too |
 | 9 | Tatoeba attribution lives in `Sentence.source`; the credits page text is CHY-62 | 90 | CHY-62 owns licences |
+| 11 | The model's reading is matched to the source reading ignoring spacing, tone marks on toneless source vowels and a dropped erhua r (single-reading words also tolerate tone sandhi): the first full run rejected 14 of 15 words only for this formatting (bàba vs bà ba) | 90 | A reading that is the same syllables is not an invented reading |
+| 12 | The word with the plain-hanzi id takes its reading from a table of 11 corrections (看 kàn, 行 xíng, 和 hé, 雨 yǔ, 差 chà, 累 lèi, 吧 ba, 着 zhe, 地方 dì fang, 页 yè, 起来 qǐ lai), else dict.json's reading, else the first source reading (个 gè, 女 nǚ): dict.json's first reading is a rare one for these and the run had staged 雨 as yù | 80 | Found by comparing staged ids with the source; the old rule made 看.yaml the "to guard" reading |
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
