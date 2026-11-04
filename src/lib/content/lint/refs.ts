@@ -42,24 +42,20 @@ const NEO = { HÌNH: 'hinh', ÂM: 'am', 'ĐỜI THẬT': 'doiThat', 'TƯƠNG PH�
 
 export function loadVaultMnemonics(dir: string): Map<string, Mnemonic> | undefined {
 	if (!existsSync(join(dir, 'meo.py'))) return undefined;
-	try {
-		const raw = JSON.parse(
-			execFileSync('python3', ['-c', VAULT_SCRIPT, dir], { encoding: 'utf8', timeout: 30_000 })
-		) as Record<string, Record<string, string>>;
-		const map = new Map<string, Mnemonic>();
-		for (const [char, neo] of Object.entries(raw)) {
-			if (Object.keys(NEO).some((k) => !neo[k])) continue;
-			map.set(char, {
-				hinh: neo['HÌNH'],
-				am: neo['ÂM'],
-				doiThat: neo['ĐỜI THẬT'],
-				tuongPhan: neo['TƯƠNG PHẢN']
-			});
-		}
-		return map;
-	} catch {
-		return undefined;
+	const raw = JSON.parse(
+		execFileSync('python3', ['-c', VAULT_SCRIPT, dir], { encoding: 'utf8', timeout: 30_000 })
+	) as Record<string, Record<string, string>>;
+	const map = new Map<string, Mnemonic>();
+	for (const [char, neo] of Object.entries(raw)) {
+		if (Object.keys(NEO).some((k) => !neo[k])) continue;
+		map.set(char, {
+			hinh: neo['HÌNH'],
+			am: neo['ÂM'],
+			doiThat: neo['ĐỜI THẬT'],
+			tuongPhan: neo['TƯƠNG PHẢN']
+		});
 	}
+	return map;
 }
 
 export function loadRefs(root = process.cwd()): { refs: LintRefs; notices: string[] } {
@@ -74,9 +70,15 @@ export function loadRefs(root = process.cwd()): { refs: LintRefs; notices: strin
 	const level = header.indexOf('Level');
 	for (const r of rows) if (r[no]) syllabus.set(Number(r[no]), parseInt(r[level], 10));
 	const vault = process.env.CHAIYO_VAULT ?? join(homedir(), 'Documents/second-brain/mandarin');
-	const mnemonics = loadVaultMnemonics(vault);
+	let mnemonics: Map<string, Mnemonic> | undefined;
+	let notice = 'check 7 skipped: vault not found';
+	try {
+		mnemonics = loadVaultMnemonics(vault);
+	} catch (e) {
+		notice = `check 7 skipped: vault failed to load (${e instanceof Error ? e.message.split('\n')[0] : String(e)})`;
+	}
 	return {
 		refs: { polyphones, syllabus, mnemonics },
-		notices: mnemonics ? [] : ['check 7 skipped: vault not found']
+		notices: mnemonics ? [] : [notice]
 	};
 }

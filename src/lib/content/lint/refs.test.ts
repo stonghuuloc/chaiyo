@@ -25,6 +25,20 @@ describe('loadRefs', () => {
 		expect(notices).toEqual(['check 7 skipped: vault not found']);
 	});
 
+	it('reports a vault that is present but fails to load', () => {
+		const dir = mkdtempSync(join(tmpdir(), 'vault-'));
+		try {
+			writeFileSync(join(dir, 'meo.py'), 'raise SystemExit(3)\n');
+			vi.stubEnv('CHAIYO_VAULT', dir);
+			const { refs, notices } = loadRefs();
+			expect(refs.mnemonics).toBeUndefined();
+			expect(notices).toHaveLength(1);
+			expect(notices[0]).toContain('vault failed to load');
+		} finally {
+			rmSync(dir, { recursive: true, force: true });
+		}
+	});
+
 	it('reads the four anchors from a vault with meo.py', () => {
 		const dir = mkdtempSync(join(tmpdir(), 'vault-'));
 		try {

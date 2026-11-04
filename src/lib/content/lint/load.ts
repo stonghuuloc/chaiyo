@@ -5,13 +5,22 @@ import { parseContent } from '../parse';
 import type { ContentType } from '../schemas';
 import { CHECK_NAMES, type ContentSet, type LintError } from './types';
 
+const statOrNull = (path: string) => {
+	try {
+		return statSync(path);
+	} catch (e) {
+		if (
+			(e as NodeJS.ErrnoException).code === 'ENOENT' ||
+			(e as NodeJS.ErrnoException).code === 'ENOTDIR'
+		)
+			return null;
+		throw e;
+	}
+};
+
 const yamlFiles = (dir: string, sub: string, recursive: boolean): string[] => {
 	const abs = join(dir, sub);
-	try {
-		if (!statSync(abs).isDirectory()) return [];
-	} catch {
-		return [];
-	}
+	if (!statOrNull(abs)?.isDirectory()) return [];
 	return readdirSync(abs, { withFileTypes: true })
 		.sort((a, b) => (a.name < b.name ? -1 : 1))
 		.flatMap((e) => {
@@ -57,7 +66,7 @@ export function loadContentDir(
 			f,
 			'Sentences'
 		]),
-		...(selected('syllables.yaml', opts.only) && statSafe(join(dir, 'syllables.yaml'))
+		...(selected('syllables.yaml', opts.only) && statOrNull(join(dir, 'syllables.yaml'))?.isFile()
 			? [['syllables.yaml', 'Syllables'] as [string, ContentType]]
 			: [])
 	];
@@ -79,12 +88,4 @@ export function loadContentDir(
 		else set.lessons.push({ file, value });
 	}
 	return { set, errors };
-}
-
-function statSafe(path: string) {
-	try {
-		return statSync(path).isFile();
-	} catch {
-		return false;
-	}
 }
