@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import YAML from 'yaml';
+import { splitSyllables } from './derive/pinyin';
 import { parseContent } from './parse';
 
 const root = process.cwd();
@@ -76,5 +77,26 @@ describe('HSK 3.0 level 1 words', () => {
 		);
 		const orphans = [...sentenceIds].filter((id) => id.startsWith('s-w-') && !used.has(id));
 		expect(orphans).toEqual([]);
+	});
+
+	it('writes citation pinyin: no 一 or 不 carries its sandhi tone (spoken is derived)', () => {
+		const sentences = YAML.parse(readFileSync(sentencesPath, 'utf8')) as {
+			id: string;
+			hanzi: string;
+			pinyin: string;
+		}[];
+		const marked: string[] = [];
+		for (const s of sentences) {
+			const chars = [...s.hanzi].filter((c) => /[\u3400-\u9fff]/.test(c));
+			const { clauses, aligned } = splitSyllables(s.pinyin, chars.length);
+			if (!aligned) continue;
+			for (const syl of clauses.flat()) {
+				const lower = syl.syl.toLowerCase();
+				const hanzi = chars[syl.charIndex];
+				if ((hanzi === '一' && /^y[íì]$/.test(lower)) || (hanzi === '不' && lower === 'bú'))
+					marked.push(s.id);
+			}
+		}
+		expect(marked).toEqual([]);
 	});
 });

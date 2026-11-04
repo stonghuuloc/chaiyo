@@ -24,7 +24,7 @@ def run(gen, llm, hz='打', rows=None):
 def test_tatoeba_example_sentence_source_and_verbatim_text(word):
     run(word, scripted(answer(ex0=tatoeba_ex())))
     s = {x['id']: x for x in staged(word, 'sentences', 'hsk1.yaml')}['s-w-5670795']
-    assert s == {'id': 's-w-5670795', 'hanzi': '他打球。', 'pinyin': 'Tā dǎ qiú.', 'vi': 'Anh ấy chơi bóng.', 'source': 'tatoeba:5670795'}
+    assert s == {'id': 's-w-5670795', 'hanzi': '他打球。', 'pinyin': 'Tā dǎqiú.', 'vi': 'Anh ấy chơi bóng.', 'source': 'tatoeba:5670795'}
     assert staged(word, 'words', '打.yaml')['senses'][0] == {'vi': 'đánh', 'pos': 'v', 'example': 's-w-5670795'}
 
 

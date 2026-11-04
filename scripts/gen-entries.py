@@ -186,6 +186,10 @@ def check(e, cands, hz, readings):
                 text = cands[x['tatoeba']]['zh'] if x.get('tatoeba') else x.get('hz') or ''
                 if hz not in text:
                     errs.append(f'ví dụ của "{s["vi"]}" không chứa {hz}')
+                if g['pos'] == 'Lượng từ' and len(hz) == 1 and any(texts[i].lower().startswith('classifier') for i in s['src']) and not re.search(f'[一二两三四五六七八九十几这那每半百千万]{hz}', text):
+                    errs.append(f'ví dụ của lượng từ "{s["vi"]}" phải có số từ + 「{hz}」 đếm đúng danh từ đó')
+                if g['pos'] == 'Lượng từ' and re.match(r'(?i)\s*(lượng từ|classifier)', s['vi']):
+                    errs.append(f'nghĩa lượng từ "{s["vi"]}" chép nguyên từ CC-CEDICT: nêu đếm cái gì')
                 if x.get('ai') and not x.get('tatoeba') and len(re.findall(r'[\u4e00-\u9fff]', text)) > 12:
                     errs.append(f'câu AI của "{s["vi"]}" dài quá 12 chữ')
                 if sid({**x, 'hz': text}) in seen:
@@ -208,12 +212,54 @@ def main_reading(hz, readings):
 
 HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó từ', 'q': 'Lượng từ'}
 
+VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
+SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n|r)?(?![{VOWELS}])', re.I)
+PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
+CJK = re.compile(r'[\u3400-\u9fff]')
+
+def normalize_py(hz, py):
+    """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up."""
+    syls = SYLLABLE.findall(unicodedata.normalize('NFC', py))
+    chars = CJK.findall(hz)
+    if len(syls) != len(chars):
+        return py
+    for i, (c, y) in enumerate(zip(chars, syls)):
+        if c == '一' and y.lower() in ('yí', 'yì'):
+            syls[i] = y[0] + 'ī'
+        elif c == '不' and y.lower() == 'bú':
+            syls[i] = y[0] + 'ù'
+    out, k = '', 0
+    for tok in jieba.lcut(hz):
+        n = len(CJK.findall(tok))
+        if n:
+            word = ''
+            for y in syls[k:k + n]:
+                word += ("'" if word and y[0].lower() in 'aoe' else '') + y
+            out += (' ' if out and not out.endswith(' ') else '') + word
+            k += n
+        else:
+            out += ''.join(PUNCT.get(c, c) for c in tok if not c.isspace())
+    return out[:1].upper() + out[1:]
+
+HANVIET_FIX = {'冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
+
+def hanviet(hz, value):
+    parts = value.split()
+    if len(parts) != len(hz):
+        return HANVIET_FIX[hz] if hz in HANVIET_FIX else value
+    return ' '.join(HANVIET_FIX.get(c, p) for c, p in zip(hz, parts))
+
+def hanviet_dupes(w):
+    """A Hán Việt equal to one of the word's own Vietnamese glosses is usually the native word, not the Sino-Vietnamese reading."""
+    glosses = {re.sub(r'\(.*?\)', '', s['vi']).strip().lower() for s in w['senses']}
+    return w['hanviet'].lower() in glosses
+
 def pos_gaps(hz, e):
     """HSK list POS hints with no group in any reading: a core sense CC-CEDICT omits (真的 is also an adjective) may be missing."""
     have = {g['pos'] for r in e['readings'] for g in r['groups']}
     return [HINT_POS[p] for p in HSK[hz].get('p', []) if p in HINT_POS and HINT_POS[p] not in have]
 
-def audit(hz, e, llm):
+def audit(hz, e, llm, readings):
     """A second opinion on the finished entry: unnatural examples and senses starred rare that are everyday meanings."""
     rows = [{'id': f'{ri}.{gi}.{si}', 'pos': g['pos'], 'vi': s['vi'], 'rare': not s.get('common'), 'hz': s['ex'].get('hz') or '', 'py': s['ex'].get('py')}
             for ri, r in enumerate(e['readings']) for gi, g in enumerate(r['groups']) for si, s in enumerate(g['senses'])]
@@ -222,14 +268,19 @@ def audit(hz, e, llm):
             row['hz'] = '(Tatoeba, đã duyệt)'
     out = llm(f"""Kiểm tra mục từ 「{hz}」 cho người Việt học tiếng Trung. Mỗi dòng: một nghĩa, cờ rare (nghĩa hiếm), một câu ví dụ.
 {json.dumps(rows, ensure_ascii=False)}
-Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...]}}.
+Nghĩa gốc CC-CEDICT và bản dịch cvdict_vi để đối chiếu: {json.dumps(readings, ensure_ascii=False)}
+Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":["id",...],"missing":[{{"pos":"...","vi":"..."}}]}}.
 - bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn làm câu thay thế, hoặc không minh hoạ đúng nghĩa. Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
+- bound: id của nghĩa chỉ dùng trong một số kết cấu cố định hoặc chỉ ở dạng phủ định/nghi vấn, không đứng độc lập được (ví dụ 用 "cần phải" chỉ trong 不用; 要 tính từ "quan trọng" chỉ trong 要紧).
+- missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
     by_id = {r['id']: r for r in rows}
     bad = [f'ví dụ của "{by_id[b["id"]]["vi"]}" không tự nhiên: {b.get("why", "")}' for b in out.get('bad_example', []) if isinstance(b, dict) and b.get('id') in by_id]
     unstar = {by_id[i]['vi'] for i in out.get('common', []) if i in by_id}
-    return bad, unstar
+    bound = {by_id[i]['vi'] for i in out.get('bound', []) if i in by_id}
+    missing = [f'thiếu nghĩa cốt lõi {m["pos"]} "{m["vi"]}": thêm nó với "src": [], "core": true và ví dụ tự nhiên' for m in out.get('missing', []) if isinstance(m, dict) and m.get('pos') and m.get('vi')]
+    return bad + missing, unstar, bound
 
 def entry(hz, rows, llm=ask):
     readings, skipped = source(hz)
@@ -260,9 +311,9 @@ Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
     e = llm(prompt)
     errs = check(e, cands, hz, readings)
-    unstar = set()
+    unstar, bound = set(), set()
     if not errs:
-        bad, unstar = audit(hz, e, llm)
+        bad, unstar, bound = audit(hz, e, llm, readings)
         errs = bad + [f'danh sách HSK gợi ý từ loại "{p}" nhưng chưa có nghĩa nào. Nếu từ có nghĩa cốt lõi này mà CC-CEDICT không ghi (xem cvdict_vi), thêm nó với "src": [] và "core": true; nếu không thì để nguyên' for p in pos_gaps(hz, e)]
     if errs:  # one repair round with the concrete failures
         e = llm(prompt + f"\n\nBản trước cần sửa: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
@@ -276,11 +327,14 @@ Chỉ trả về JSON:
                 x = s['ex']
                 if x.get('tatoeba'):  # verbatim source text, not the model's copy
                     x['hz'] = cands[x['tatoeba']]['zh']
+                x['py'] = normalize_py(x['hz'], x['py'])
     for r in e['readings']:
         for g in r['groups']:
             for s in g['senses']:
                 if s['vi'] in unstar:
                     s['common'] = True
+                if s['vi'] in bound:
+                    s['common'] = False
     e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
     main = main_reading(hz, e['readings'])
     e['main'] = main
@@ -306,7 +360,7 @@ def to_yaml(hz, e):
         main = py == e['main']
         wid = hz if main else hz + '-' + ''.join(s if s[-1].isdigit() else s + '5' for s in nums[py].split())
         w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': py,
-                                   'hanviet': row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3]),
+                                   'hanviet': hanviet(hz, row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3])),
                                    'level': 1, 'pos': [], 'senses': [], 'examples': []})
         for g in r['groups']:
             code = POS_CODE[g['pos']]
@@ -448,6 +502,10 @@ def main(argv, llm=ask):
                 rejected.append(f'{w}: {err!r}')
                 print('FAIL', rejected[-1])
     write_out(done)
+    for hz, e in done:
+        for w in e['out'][0].values():
+            if hanviet_dupes(w):
+                print(f'warning: {w["id"]} hanviet "{w["hanviet"]}" equals one of its glosses')
     senses = [s for _, e in done for w in e['out'][0].values() for s in w['senses']]
     rare_words = {(hz, w['id']) for hz, e in done for w in e['out'][0].values() if any(s.get('rare') for s in w['senses'])}
     files = sum(len(e['out'][0]) for _, e in done)

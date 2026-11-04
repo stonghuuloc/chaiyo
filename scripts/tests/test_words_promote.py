@@ -160,3 +160,44 @@ def test_hsk_pos_hint_without_group_is_sent_back_and_core_sense_is_kept(word, mo
     llm = scripted(a, {'bad_example': [], 'common': []}, fixed)
     hz, e = word.entry('打', {}, llm)
     assert 'Tính từ' in llm.calls[2] and e['core'] == ['cốt lõi']
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('我不去。', 'Wǒ bú qù.', 'Wǒ bù qù.'),
+    ('这是一些书。', 'Zhè shì yìxiē shū.', 'Zhèshì yīxiē shū.'),
+    ('他走路去学校。', 'Tā zǒu lù qù xué xiào.', 'Tā zǒulù qù xuéxiào.'),
+    ('你好，你叫什么名字？', 'Nǐ hǎo, nǐ jiào shénme míngzi?', 'Nǐhǎo, nǐ jiào shénme míngzi?'),
+    ('他很好。', 'Tā hěn', 'Tā hěn')])
+def test_normalize_py_citation_tones_and_word_grouping(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_hanviet_fix_and_dupe_check(gen):
+    assert gen.hanviet('冷', 'lạnh') == 'lãnh' and gen.hanviet('读书', 'đọc thư') == 'độc thư'
+    assert gen.hanviet('电', 'điện') == 'điện'
+    assert gen.hanviet_dupes({'hanviet': 'lạnh', 'senses': [{'vi': 'lạnh (thời tiết)'}]})
+    assert not gen.hanviet_dupes({'hanviet': 'lãnh', 'senses': [{'vi': 'lạnh'}]})
+
+
+def test_audit_missing_core_sense_and_bound_form(word):
+    audit = {'bad_example': [], 'common': [], 'bound': ['0.0.1'], 'missing': [{'pos': 'Danh từ', 'vi': 'chỗ, điểm'}]}
+    fixed = answer()
+    llm = scripted(answer(), audit, fixed)
+    hz, e = word.entry('打', {}, llm)
+    assert len(llm.calls) == 3 and 'thiếu nghĩa cốt lõi Danh từ' in llm.calls[2] and 'chỗ, điểm' in llm.calls[2]
+
+
+def test_bound_form_gets_rare_flag(word):
+    hz, e = word.entry('打', {}, scripted(answer(), {'bad_example': [], 'common': [], 'bound': ['0.0.1'], 'missing': []}))
+    assert [s['common'] for s in e['readings'][0]['groups'][0]['senses']] == [True, False]
+
+
+def test_classifier_example_needs_numeral_before_classifier(word, monkeypatch):
+    monkeypatch.setitem(word.HSK['打'], 'f', [{'i': {'y': 'dǎ', 'n': 'da3'}, 'm': ['classifier for beds']}])
+    a = answer(covered=('0.0',), pos='Lượng từ')
+    a['readings'] = a['readings'][:1]
+    a['readings'][0]['groups'][0]['senses'] = [a['readings'][0]['groups'][0]['senses'][0]]
+    a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'ai': True, 'hz': '两张打', 'py': 'Liǎng zhāng dǎ', 'vi': 'x'}
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(a))
+    assert 'số từ' in str(e.value)
