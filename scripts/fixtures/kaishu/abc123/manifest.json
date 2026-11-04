@@ -1,0 +1,15 @@
+{
+  "sha": "abc123",
+  "lessons": [
+    {
+      "id": "h1-01",
+      "file": "h1-01.json",
+      "bytes": 0
+    },
+    {
+      "id": "h0-00",
+      "file": "h0-00.json",
+      "bytes": 0
+    }
+  ]
+}
