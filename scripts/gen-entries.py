@@ -106,10 +106,18 @@ def source(hz):
                          'senses': {f'{fi}.{i}': m for i, m in enumerate(keep)}})
     return readings, skipped
 
-def check(e, ids, ex_ids, hz):
+REASONS = {'trùng', 'cổ/văn ngôn', 'tên riêng'}
+
+class Reject(Exception):
+    def __init__(self, hz, errs):
+        super().__init__(f'{hz}: {"; ".join(errs)}')
+        self.hz, self.errs = hz, errs
+
+def check(e, ids, ex_ids, hz, texts):
     used = {i for r in e['readings'] for g in r['groups'] for s in g['senses'] for i in s.get('src', [])}
     dropped = {d['id'] for d in e.get('dropped', [])}
-    errs = [f'thiếu nghĩa {i}' for i in ids if i not in used | dropped]
+    errs = [f'thiếu nghĩa {i} "{texts[i]}"' for i in ids if i not in used | dropped]
+    errs += [f'lý do lạ {d.get("why")}' for d in e.get('dropped', []) if d.get('why') not in REASONS]
     for r in e['readings']:
         for g in r['groups']:
             if g['pos'] not in POS_VI:
@@ -126,7 +134,8 @@ def entry(hz, rows, llm=ask):
     readings, skipped = source(hz)
     level = DICT[hz][5]
     cands = candidates(hz, level, rows)
-    ids = [i for r in readings for i in r['senses']]
+    texts = {i: t for r in readings for i, t in r['senses'].items()}
+    ids = list(texts)
     pos = ', '.join(POS_HINT.get(p, p) for p in HSK[hz].get('p', []))
     prompt = f"""Bạn là biên tập viên từ điển Trung–Việt cho người Việt học HSK. Biên tập mục từ 「{hz}」 (HSK {level or 'ngoài'}).
 Bạn là người BIÊN TẬP, không phải tác giả: nghĩa lấy từ CC-CEDICT, câu ví dụ lấy từ Tatoeba.
@@ -149,21 +158,27 @@ Yêu cầu:
 Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
     e = llm(prompt)
-    errs = check(e, ids, cands, hz)
+    errs = check(e, ids, cands, hz, texts)
     if errs:  # one repair round with the concrete failures
         e = llm(prompt + f"\n\nBản trước sai: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
-        errs = check(e, ids, cands, hz)
+        errs = check(e, ids, cands, hz, texts)
+    if errs:
+        raise Reject(hz, errs)
     for r in e['readings']:
         for g in r['groups']:
             for s in g['senses']:
                 x = s['ex']
                 if x.get('tatoeba'):  # verbatim source text, not the model's copy
                     x['hz'] = cands[x['tatoeba']]['zh']
-    e['stats'] = {'cedict': len(ids), 'xref': len(skipped), 'dropped': len(e.get('dropped', [])), 'errors': errs,
+    main = DICT[hz][1].lower()  # the reading learners meet first (dǎ, not dá)
+    for r in list(e['readings']):
+        if r['pinyin'].lower() != main and not any(s.get('common') for g in r['groups'] for s in g['senses']):
+            e['readings'].remove(r)
+            e.setdefault('dropped', []).extend({'id': i, 'why': 'âm hiếm'} for g in r['groups'] for s in g['senses'] for i in s['src'])
+    e['stats'] = {'cedict': len(ids), 'xref': len(skipped), 'dropped': len(e.get('dropped', [])),
                   'tatoeba': sum(bool(s['ex'].get('tatoeba')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
                   'ai_ex': sum(bool(s['ex'].get('ai')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
                   'candidates': len(cands)}
-    main = DICT[hz][1].lower()  # the reading learners meet first (dǎ, not dá)
     e['readings'].sort(key=lambda r: (r['pinyin'].lower() != main, not any(s.get('common') for g in r['groups'] for s in g['senses'])))
     e['src'] = 'ai-edited'
     return hz, e
@@ -184,14 +199,22 @@ def main(argv, llm=ask):
             print(f'skip {w}: not in HSK1 list')
     rows = tatoeba()
     data = json.loads(OUT.read_text()) if OUT.exists() else {}
+    rejected = []
     with ThreadPoolExecutor(8) as pool:
-        for f in [pool.submit(entry, w, rows, llm) for w in words]:
+        for w, f in [(w, pool.submit(entry, w, rows, llm)) for w in words]:
             try:
                 hz, e = f.result(); data[hz] = e
                 print('ok', hz, json.dumps(e['stats'], ensure_ascii=False))
+            except Reject as err:
+                rejected.append(str(err))
+                print('REJECT', err)
             except Exception as err:
-                print('FAIL', repr(err))
+                rejected.append(f'{w}: {err!r}')
+                print('FAIL', rejected[-1])
     OUT.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+    if rejected:
+        print('\n'.join(f'REJECT {r}' for r in rejected))
+        sys.exit(1)
 
 if __name__ == '__main__':
     main(sys.argv[1:])
