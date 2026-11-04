@@ -33,7 +33,12 @@ const lesson = (parts: {
 	}) as unknown as Lesson;
 
 const grammar = [
-	{ pattern: '你 / 您 / 你们 + 好', pitfalls: [{ wrong: '好你', right: '你好' }] }
+	{
+		title: '问候',
+		pattern: '你 / 您 / 你们 + 好',
+		explain: 'Chào: 你好 là xin chào',
+		pitfalls: [{ wrong: '好你', right: '你好' }]
+	}
 ] as unknown as GrammarPoint[];
 
 describe('bundleHanzi', () => {
@@ -62,7 +67,9 @@ describe('bundleHanzi', () => {
 			'好',
 			'您',
 			'你们',
+			'问候',
 			'你 / 您 / 你们 + 好',
+			'Chào: 你好 là xin chào',
 			'好你',
 			'你好',
 			'你好'
@@ -118,6 +125,18 @@ describe('thinEntries', () => {
 		const lessonEntries = new Map([['你好', entry('你好', 'nǐ hǎo', 'nhĩ hảo', 'xin chào')]]);
 		const hit = thinEntries(['你好'], { lessonEntries, dict }).find((e) => e.hanzi === '你好');
 		expect(hit).toEqual(entry('你好', 'nǐ hǎo', 'nhĩ hảo', 'xin chào'));
+	});
+
+	it('gives a word that appears only in a grammar explain an entry', () => {
+		const d = dictOf('刻', '点');
+		const g = [
+			{ title: '点', pattern: '', explain: 'một 刻 là 15 phút' }
+		] as unknown as GrammarPoint[];
+		const strings = bundleHanzi(lesson({}), g, []);
+		expect(thinEntries(strings, { lessonEntries: noLesson, dict: d }).map((e) => e.hanzi)).toEqual([
+			'刻',
+			'点'
+		]);
 	});
 
 	it('adds nothing for a token with no row', () => {

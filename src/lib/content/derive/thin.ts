@@ -28,7 +28,9 @@ export function bundleHanzi(
 		...sentences.flatMap((s) => s.seg),
 		...questions.flatMap(questionHanzi),
 		...grammar.flatMap((g) => [
+			g.title,
 			g.pattern,
+			g.explain,
 			...(g.pitfalls ?? []).flatMap((p) => [p.wrong, p.right])
 		]),
 		lesson.titleHanzi

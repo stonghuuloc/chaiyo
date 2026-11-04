@@ -7,11 +7,10 @@ export function segment(
 	dict: ReadonlyMap<string, ThinEntry>
 ): string[] {
 	const cps = [...text];
-	const max = Math.max(
-		1,
-		...[...lessonWords].map((w) => [...w].length),
-		...[...dict.keys()].map((w) => [...w].length)
-	);
+	let max = 1;
+	for (const words of [lessonWords, dict.keys()]) {
+		for (const w of words) max = Math.max(max, [...w].length);
+	}
 	const tokens = new Array<number>(cps.length + 1).fill(0);
 	const covered = new Array<number>(cps.length + 1).fill(0);
 	const take = new Array<number>(cps.length + 1).fill(1);
