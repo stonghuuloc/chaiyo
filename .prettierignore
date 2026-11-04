@@ -29,3 +29,4 @@ src/lib/styles/tokens.css
 
 # Test fixtures
 /scripts/tests/fixtures/
+/.venv/
