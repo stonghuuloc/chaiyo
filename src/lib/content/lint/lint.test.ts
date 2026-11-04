@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { fixtureRefs } from './fixtures/refs';
 import { lint, loadContentDir, type ContentSet, type LintError } from './index';
 import { CHECK_NAMES } from './types';
-import type { Lesson } from '../schemas';
+import type { Lesson, Primer } from '../schemas';
 
 const { set: cleanSet } = loadContentDir(join(__dirname, 'fixtures/clean'));
 
@@ -330,6 +330,56 @@ describe('check 9 Audio', () => {
 			F,
 			'sections.dialogue.parts[0].lines[2]'
 		));
+});
+
+describe('primer', () => {
+	const primerSet = loadContentDir(join(__dirname, 'fixtures/primer')).set;
+	const withPrimer = (mutate: (p: Primer) => void) =>
+		run((s) => {
+			const p = structuredClone(primerSet.lessons[0].value) as Primer;
+			mutate(p);
+			s.lessons.push({ file: 'lessons/hsk1/h0-00.yaml', value: p });
+		});
+	const P = 'lessons/hsk1/h0-00.yaml';
+
+	it('clean set plus primer has no errors', () => expect(withPrimer(() => {})).toEqual([]));
+	it('flags a syllable that is not a row of syllables.yaml', () =>
+		only(
+			withPrimer((p) => (p.sections.finals.cards[0].syllables[1] = 'xyz')),
+			8,
+			P,
+			'sections.finals.cards[0].syllables[1]'
+		));
+	it('flags a pairs object chip by its say', () =>
+		only(
+			withPrimer((p) => (p.sections.tones.cards[0].pairs![0][0] = { say: 'xyz' })),
+			8,
+			P,
+			'sections.tones.cards[0].pairs[0][0].say'
+		));
+	it('flags a section with no drill', () =>
+		only(
+			withPrimer((p) => (p.sections.tones.drills = [])),
+			8,
+			P,
+			'sections.tones.drills'
+		));
+	it('flags a pool of 9 against draw 5', () =>
+		only(
+			withPrimer((p) => p.gate.pool.splice(1, 1)),
+			8,
+			P,
+			'gate.pool'
+		));
+	it('flags a pool question without section', () =>
+		only(
+			withPrimer((p) => delete p.gate.pool[0].section),
+			8,
+			P,
+			'gate.pool[0].section'
+		));
+	it('does not run the glyph check on a primer', () =>
+		expect(withPrimer((p) => (p.sections.sandhi.cards[0].explain = '⾒'))).toEqual([]));
 });
 
 describe('check 3 Tone marks', () => {

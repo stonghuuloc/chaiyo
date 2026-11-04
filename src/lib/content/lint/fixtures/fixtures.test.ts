@@ -19,6 +19,13 @@ describe('clean fixture tree', () => {
 		f.endsWith('.yaml')
 	);
 
+	it('primer fixture parses as a Primer', () => {
+		const file = 'lessons/hsk1/h0-00.yaml';
+		const text = readFileSync(join(__dirname, 'primer', file), 'utf8');
+		const result = parseContent('Primer', file, text);
+		expect(result.ok ? [] : result.errors).toEqual([]);
+	});
+
 	it('has the Bài 1 files', () => {
 		expect(files.filter((f) => f.startsWith('words/'))).toHaveLength(10);
 		expect(files.filter((f) => f.startsWith('chars/'))).toHaveLength(3);
