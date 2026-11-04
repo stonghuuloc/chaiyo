@@ -323,6 +323,19 @@ describe('check 9 Audio', () => {
 		expect(
 			run((s) => (lesson(s).sections.reading = { title: 'Đọc', lines: ['s-h1-01-08'] }))
 		).toEqual([]));
+	it('flags a bad speaker on a dialogue line that comes from a sentence file', () =>
+		only(
+			run((s) => {
+				s.sentences.push({
+					file: 'sentences/a.yaml',
+					value: [{ id: 's-x', hanzi: '你好', pinyin: 'nǐ hǎo', vi: 'Chào', speaker: 'panda' }]
+				});
+				lesson(s).sections.dialogue.parts[0].lines[2] = 's-x';
+			}),
+			9,
+			F,
+			'sections.dialogue.parts[0].lines[2]'
+		));
 	it('skips a line id that does not resolve; check 8 reports it', () =>
 		only(
 			run((s) => (lesson(s).sections.dialogue.parts[0].lines[2] = 's-xx')),

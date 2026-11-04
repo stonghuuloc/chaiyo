@@ -1,6 +1,6 @@
 import type { Char, GrammarPoint, Lesson, Primer, Sentence, Syllables, Word } from '../schemas';
 
-export type LintCheck = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type LintCheck = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 export type LintError = {
 	file: string;
@@ -39,7 +39,8 @@ export const CHECK_NAMES = [
 	'Real glyphs',
 	'Mnemonic reuse',
 	'References',
-	'Audio'
+	'Audio',
+	'Derive'
 ] as const;
 
 export const CAST = ['panda', 'redpanda', 'fawn', 'takin'];

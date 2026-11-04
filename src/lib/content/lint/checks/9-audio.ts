@@ -12,6 +12,7 @@ export const audio = (set: ContentSet): LintError[] => {
 			(s) => [s.id, s]
 		)
 	);
+	const inline = new Set(lessons.flatMap((l) => l.value.sentences));
 	for (const { file, value } of lessons) {
 		value.sentences.forEach((s, i) => {
 			if (s.speaker !== undefined && !SPEAKERS.includes(s.speaker))
@@ -39,6 +40,15 @@ export const audio = (set: ContentSet): LintError[] => {
 						)
 					);
 				else if (SPEAKERS.includes(sentence.speaker)) voices.add(sentence.speaker);
+				else if (!inline.has(sentence))
+					errors.push(
+						issue(
+							9,
+							file,
+							pathOf(['sections', 'dialogue', 'parts', p, 'lines', l]),
+							`Speaker ${sentence.speaker} is not a speaking voice (${SPEAKERS.join(', ')})`
+						)
+					);
 			});
 			if (voices.size < 2)
 				errors.push(

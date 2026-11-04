@@ -66,11 +66,7 @@ export function loadRefs(root = process.cwd()): { refs: LintRefs; notices: strin
 	const sources = join(root, 'data/sources');
 	const polyphonesFile = join(sources, 'polyphones.yaml');
 	const polyphones = new Map<string, string[]>(
-		Object.entries(
-			existsSync(polyphonesFile)
-				? (YAML.parse(readFileSync(polyphonesFile, 'utf8')) as Record<string, string[]>)
-				: {}
-		)
+		Object.entries(YAML.parse(readFileSync(polyphonesFile, 'utf8')) as Record<string, string[]>)
 	);
 	const syllabus = new Map<number, number>();
 	const [header, ...rows] = parseCsv(readFileSync(join(sources, 'hsk30-grammar.csv'), 'utf8'));
