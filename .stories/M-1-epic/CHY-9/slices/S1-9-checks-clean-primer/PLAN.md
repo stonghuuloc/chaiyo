@@ -10,10 +10,10 @@ ACs: AC1, AC2, AC3  ·  Spec rev 2  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CH
 - `package.json:16` `"test": "vitest --run --passWithNoTests"` · `:52` yaml · `:62` zod · `vite.config.ts:45` coverage excludes `src/**/fixtures/**` · `:56` vitest include `src/**/*.{test,spec}.{js,ts}`.
 - `.prettierignore` covers `/content/` but not `src/lib/content/lint/fixtures/`: `pnpm lint` (`prettier --check .`) checks the fixtures.
 - Vault (Mac only): `~/Documents/second-brain/mandarin/meo.py:28` `index()` → `{char: (lesson, pinyin, hv, {HÌNH, ÂM, ĐỜI THẬT, TƯƠNG PHẢN})}`.
-- `content/lessons/hsk1/h1-01.yaml` (level 1) is the Bài 1 source for the fixture; `docs/content-schema.md:155-265` the worked example. `content/grammar/h1-g01.yaml` has `std: []`. No `rg` on the Mac: use `grep`.
+- `content/lessons/hsk1/h1-01.yaml` (level 1) is the Bài 1 source for the fixture; `docs/content-schema.md:174-255` the worked example. `content/grammar/h1-g01.yaml` has `std: []`. No `rg` on the Mac: use `grep`.
 
 ## Task 1 [AC2] Types and clean Bài 1 fixture tree
-Files: new `src/lib/content/lint/types.ts`, `src/lib/content/lint/fixtures/clean/` — `lessons/hsk1/h1-01.yaml`, `words/*.yaml` (10), `chars/{你,好,们}.yaml`, `grammar/h1-g01.yaml`, `syllables.yaml` (the rows h1-01 needs) — plus `src/lib/content/lint/fixtures/refs.ts` (injected `LintRefs`: 好 → [hǎo, hào], 你 mnemonic equal to the fixture's, `syllabus` from the CSV levels the fixture needs)
+Files: new `src/lib/content/lint/types.ts`, `src/lib/content/lint/fixtures/clean/` — `lessons/hsk1/h1-01.yaml`, `words/*.yaml` (10), `chars/{你,好,们}.yaml`, `grammar/h1-g01.yaml`, `syllables.yaml` (the rows h1-01 needs) — plus `src/lib/content/lint/fixtures/refs.ts` (injected `LintRefs`: 好 → [hǎo, hào], 你 mnemonic equal to the fixture's, `syllabus` = { 1 → 1, 277 → 4 } (the Task 6 std cases))
 - Change: `types.ts` = C1 types (`LintError`, `LintCheck`, `ContentSet`, `LintRefs` = {polyphones: Map<string,string[]>, syllabus: Map<number,number>, mnemonics?: Map<string, Mnemonic>}), `type Mnemonic = Omit<NonNullable<Char['mnemonic']>, 'kind'>` (not on main: defined here), `CHECK_NAMES` (index 0–9), `CAST`, `SPEAKERS`. Fixture: copy h1-01 from `content/lessons/hsk1/h1-01.yaml` (19 sentences, dialogue parts, writing 你 好 们); fix what real content lacks: gate `pool` = 20 questions (`typePinyin`/`choice`), draw 10, every one of the 10 word ids in some `tests.words`; `q-h1-01-l01` is a `listenSpeak` question (not in the gate pool) and the only non-gate question testing 好; `你` and `好` in `tests.words` of a drill/dialogue/listenSpeak question (decision-1 clause, 好 also a token of h1-g01 pattern); every dialogue line has a speaker, each part uses both redpanda and takin (back-to-back same-voice pairs kept as in the doc example); `s-h1-01-18` pinyin `bù kèqi` with `spoken: bú kèqi`; 好 char lists `hǎo` and `hào`; word `parts` toned (`bù`, `xì`, `qì`) because real `对不起/没关系/不客气` parts carry `bu`/`xi`/`qi` (`content/words/对不起.yaml:12`, `没关系.yaml:13`, `不客气.yaml:14`); 们 reading `men` (neutral). Then `pnpm exec prettier --write src/lib/content/lint/fixtures` (a verbatim h1-01 copy, `[ 你, 好 ]`, fails `pnpm lint`).
 - Test first: `src/lib/content/lint/fixtures/fixtures.test.ts` — every fixture file parses under its `parseContent` type (`Sentences` for sentence files).
 - Verify: `pnpm vitest --run src/lib/content/lint/fixtures/fixtures.test.ts && pnpm exec prettier --check src/lib/content/lint/fixtures`
@@ -50,19 +50,19 @@ Files: new `checks/8-references.ts`
   - unknown sentence id: `warmup.extra: ['s-xx']` (not a dialogue line).
   - Word `senses[0].example: s-xx` on 你 → error at `senses[0].example` in `words/你.yaml`.
   - unknown grammar id, Cast id `scene.cast: [hachiware]`.
-  - 9 words: drop 你好 from `sections.words.ids` (dropping 再见 or 您 trips check 5).
+  - 7 words: drop 你, 你好 and 再见 from `sections.words.ids` and add `unknown: [{ hanzi: 再见, pinyin: zàijiàn, vi: Tạm biệt }]` to s-h1-01-07 and s-h1-01-19 → 1 error at `sections.words.ids` (你 stays known through 你们, 好 through 好; the pool's 再见 refs still resolve to the word file).
   - 16 words: add six new two-char Word entries with fresh chars and put their ids in a pool question's `tests.words` (else (d) fires six times).
   - pool 19 vs draw 10: drop a pool question whose words other questions also test.
   - word 再见 never tested: remove it from every pool `tests.words`.
   - 好 beside 你好 with 好 removed from the pattern `你 / 您 / 你们 + 好` and from `q-h1-01-l01`'s `tests.words`.
-  - std: h1-g01 `std [1, 277]` → 1 error at `grammar/h1-g01.yaml` `std[1]` (277 is level 4); h1-01 `level: 2` with h1-g01 `std [1]` → 1 error at `sections.grammar.ids` (a single `std [277]` gives 2 errors, so it is not used).
+  - std: h1-g01 `std [1, 277]` → 1 error at `grammar/h1-g01.yaml` `std[1]` (277 is level 4); h1-01 `level: 2` with h1-g01 `std [1]` → 1 error at `sections.grammar.ids` (a single `std [277]` gives 2 errors, so it is not used); h1-g01 `std [1, 9999]` → 1 error at `std[1]` (a lone `[9999]` also fires 'none at level').
   - `lintDir` with `only` leaving 再见's file out: `toContainEqual({ check: 8, path: 'sections.words.ids[9]' … })`, no count asserted (the missing word also trips the pool, `tests.words` and check 5).
 - Verify: `pnpm vitest --run src/lib/content/lint/lint.test.ts -t "check 8"`
 
 ## Task 7 [AC1] Check 9 Audio
 File: new `checks/9-audio.ts`
 - Change: over `lesson.sentences`: `speaker` present and not in `SPEAKERS` → error at `sentences[i].speaker`; over `dialogue.parts[].lines` resolve ids to sentences (an id that does not resolve is skipped; check 8 reports it): missing speaker → error at `sections.dialogue.parts[p].lines[l]`; a part with fewer than 2 distinct speakers (counted among `SPEAKERS`) → 1 error at `sections.dialogue.parts[p]`. Same-voice neighbours are NOT an error.
-- Test first: speaker `panda` set on `s-h1-01-08` → 1 check 9 at `sentences[7].speaker`, 0 check 8 (its part keeps ≥2 voices among the other lines); a line with its `speaker` removed, chosen from a repeating voice (one T of R·T·T·R) → 1 error; a part where every line is takin → 1 error; R·T·T·R → 0 errors; reading line without speaker → 0 errors; a dialogue line id replaced by `s-xx` (one T of R·T·T·R) → exactly 1 error, check 8, none from check 9.
+- Test first: speaker `panda` set on `s-h1-01-08` → 1 check 9 at `sentences[7].speaker`, 0 check 8 (s-h1-01-08 is in no dialogue part, so no part count changes); a line with its `speaker` removed, chosen from a repeating voice (one T of R·T·T·R) → 1 error; a part where every line is takin → 1 error; R·T·T·R → 0 errors; reading line without speaker → 0 errors; a dialogue line id replaced by `s-xx` (one T of R·T·T·R) → exactly 1 error, check 8, none from check 9.
 - Verify: `pnpm vitest --run src/lib/content/lint/lint.test.ts -t "check 9"`
 
 ## Task 8 [AC3] Primer fixture and skip proof
@@ -72,7 +72,7 @@ Files: new `fixtures/primer/lessons/hsk1/h0-00.yaml` (its syllable rows are appe
 - Verify: `pnpm vitest --run src/lib/content/lint/lint.test.ts -t primer`
 
 ## Task 9 [CHORE] Docs sync
-Files: `docs/content-schema.md:365-366` (add the std clause to row 8; row 9 → "≥2 distinct speaking voices per dialogue part, every line has a speaker"), `data/sources/README.md:5` (add polyphones.yaml row). The C1 edit is already in CONTRACTS.md:38-40.
+Files: `docs/content-schema.md:365-366` (add the std clause to row 8; row 9 → "≥2 distinct speaking voices per dialogue part, every line has a speaker"), `data/sources/README.md:5` (add polyphones.yaml row). The C1 sync (Sentences and section are on main) is already in CONTRACTS.md; Task 9 does not edit C1.
 - Verify: `pnpm check && pnpm lint && pnpm test` all green.
 
 ## Mutation paths covered
