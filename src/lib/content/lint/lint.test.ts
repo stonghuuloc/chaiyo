@@ -138,6 +138,163 @@ describe('check 7 Mnemonic reuse', () => {
 	});
 });
 
+describe('check 8 References', () => {
+	const F = 'lessons/hsk1/h1-01.yaml';
+	const grammar = (s: ContentSet) => s.grammar[0].value;
+	const pool = (s: ContentSet) => lesson(s).gate.pool;
+
+	it('flags an unknown word id in a question', () =>
+		only(
+			run((s) => pool(s)[0].tests.words!.push('xx')),
+			8,
+			F,
+			'gate.pool[0].tests.words[1]'
+		));
+	it('flags an unknown sentence id', () =>
+		only(
+			run((s) => (lesson(s).sections.warmup.extra = ['s-xx'])),
+			8,
+			F,
+			'sections.warmup.extra[0]'
+		));
+	it('flags an unknown Word senses example', () =>
+		only(
+			run((s) => (word(s, '你').value.senses[0].example = 's-xx')),
+			8,
+			'words/你.yaml',
+			'senses[0].example'
+		));
+	it('flags an unknown grammar id', () =>
+		only(
+			run((s) => lesson(s).sections.grammar.ids.push('h1-gxx')),
+			8,
+			F,
+			'sections.grammar.ids[1]'
+		));
+	it('flags an unknown Cast id', () =>
+		only(
+			run((s) => (lesson(s).scene.cast = ['panda', 'hachiware'])),
+			8,
+			F,
+			'scene.cast[1]'
+		));
+	it('flags an unresolved prompt ref', () =>
+		only(
+			run((s) => {
+				const q = pool(s)[0];
+				if ('prompt' in q && q.prompt.kind === 'hanzi') q.prompt.ref = 'zz';
+			}),
+			8,
+			F,
+			'gate.pool[0].prompt.ref'
+		));
+	it('flags an unknown readAloud sentence', () =>
+		only(
+			run((s) => {
+				const q = lesson(s).sections.listenSpeak.items[0];
+				if (q.type === 'readAloud') q.sentence = 's-xx';
+			}),
+			8,
+			F,
+			'sections.listenSpeak.items[0].sentence'
+		));
+	it('flags a duplicate sentence id', () =>
+		only(
+			run((s) =>
+				s.sentences.push({
+					file: 'sentences/a.yaml',
+					value: [{ id: 's-h1-01-01', hanzi: '你好', pinyin: 'nǐ hǎo', vi: 'Chào' }]
+				})
+			),
+			8,
+			'sentences/a.yaml',
+			'[0].id'
+		));
+	it('flags 7 words, dropping 你, 你好 and 再见', () =>
+		only(
+			run((s) => {
+				const l = lesson(s);
+				l.sections.words.ids = l.sections.words.ids.filter(
+					(id) => !['你', '你好', '再见'].includes(id)
+				);
+				for (const i of [6, 18])
+					l.sentences[i].unknown = [{ hanzi: '再见', pinyin: 'zàijiàn', vi: 'Tạm biệt' }];
+			}),
+			8,
+			F,
+			'sections.words.ids'
+		));
+	it('flags 16 words', () =>
+		only(
+			run((s) => {
+				const base = word(s, '你');
+				['朋友', '学校', '老师', '学生', '水果', '工作'].forEach((id) => {
+					s.words.push({
+						file: `words/${id}.yaml`,
+						value: { ...structuredClone(base.value), id, hanzi: id }
+					});
+					lesson(s).sections.words.ids.push(id);
+					pool(s)[0].tests.words!.push(id);
+				});
+			}),
+			8,
+			F,
+			'sections.words.ids'
+		));
+	it('flags a pool of 19 against draw 10', () =>
+		only(
+			run((s) => pool(s).splice(1, 1)),
+			8,
+			F,
+			'gate.pool'
+		));
+	it('flags a word no pool question tests', () =>
+		only(
+			run((s) =>
+				pool(s).forEach((q) => (q.tests.words = q.tests.words!.filter((w) => w !== '再见')))
+			),
+			8,
+			F,
+			'sections.words.ids[9]'
+		));
+	it('flags a single char beside its compound that is never taught alone', () =>
+		only(
+			run((s) => {
+				grammar(s).pattern = '你 / 您 / 你们';
+				lesson(s).sections.listenSpeak.items[0].tests.words = [];
+			}),
+			8,
+			F,
+			'sections.words.ids[1]'
+		));
+
+	it('flags a std item above the lesson level', () =>
+		only(
+			run((s) => (grammar(s).std = [1, 277])),
+			8,
+			'grammar/h1-g01.yaml',
+			'std[1]'
+		));
+	it('flags a std item missing from the CSV', () =>
+		only(
+			run((s) => (grammar(s).std = [1, 9999])),
+			8,
+			'grammar/h1-g01.yaml',
+			'std[1]'
+		));
+	it('flags a lesson with std but none at its level', () =>
+		only(
+			run((s) => {
+				lesson(s).level = 2;
+				grammar(s).std = [1];
+			}),
+			8,
+			F,
+			'sections.grammar.ids'
+		));
+	it('allows std: [] at any level', () => expect(run((s) => (lesson(s).level = 3))).toEqual([]));
+});
+
 describe('check 3 Tone marks', () => {
 	const sentencePinyin = (value: string) => run((s) => (lesson(s).sentences[0].pinyin = value));
 	it('flags an unmarked sentence pinyin', () =>

@@ -30,6 +30,23 @@ describe('loadContentDir', () => {
 		expect(set.words.map((w) => w.value.id)).toEqual(['你']);
 	});
 
+	it('a lesson word whose file is outside only gives a check 8 error', () => {
+		const words = ['你', '好', '您', '你们', '你好', '对不起', '没关系', '谢谢', '不客气'];
+		const { errors } = lintDir(dir, {
+			refs: fixtureRefs,
+			only: [
+				'lessons/hsk1',
+				'chars',
+				'grammar',
+				'syllables.yaml',
+				...words.map((w) => `words/${w}.yaml`)
+			]
+		});
+		expect(errors).toContainEqual(
+			expect.objectContaining({ check: 8, path: 'sections.words.ids[9]' })
+		);
+	});
+
 	it('no syllables.yaml gives an empty syllables list', () => {
 		rmSync(join(dir, 'syllables.yaml'));
 		expect(loadContentDir(dir).set.syllables).toEqual([]);
