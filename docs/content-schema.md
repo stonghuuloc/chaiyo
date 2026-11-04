@@ -47,6 +47,7 @@ content/
   lessons/hsk1/h1-01.yaml   one file per lesson: sections, dialogue, questions, inline sentences
   lessons/hsk1/h0-00.yaml   the Pinyin Primer (Bài 0): kind: primer, see below
   syllables.yaml            every valid pinyin syllable (initial × final), source of the Pinyin Table
+  sentences/*.yaml          Sentence[] (free sentences a Word lists as an example)
   mock/hsk1/m1-official.yaml
 ```
 
@@ -76,10 +77,11 @@ interface Word {
   hanzi: string;
   pinyin: string;                   // citation, tone marks: 'nǐ hǎo'
   spoken?: string;                  // override only; default derived by sandhi
+  source?: 'ai' | `tatoeba:${number}`;  // provenance of generated sentences
   hanviet?: string;                 // authored override; default derived from Char.readings
   level: Level;
-  pos: ('n' | 'v' | 'adj' | 'adv' | 'pron' | 'num' | 'mw' | 'prep' | 'conj' | 'part' | 'interj' | 'phrase')[];
-  senses: { vi: string; note?: string }[];   // one per meaning group, most used first
+  pos: ('n' | 'v' | 'adj' | 'adv' | 'pron' | 'num' | 'mw' | 'prep' | 'conj' | 'part' | 'interj' | 'phrase' | 'comp')[];
+  senses: { vi: string; note?: string; pos?: Word['pos'][number]; rare?: true; example?: SentenceId }[];   // one per meaning group, most used first
   collocations?: { hanzi: string; pinyin: string; vi: string }[]; // 搭配, shown first on Word Page
   examples: SentenceId[];           // 1–3, Word Page
   image?: { file: string; cast?: CastId[]; prompt?: string };
@@ -145,11 +147,14 @@ type Prompt =
   | { kind: 'audio'; ref: SentenceId | string }
   | { kind: 'image'; ref: string }                       // word id → its picture
   | { kind: 'vi'; text: string }
-  | { kind: 'syllable'; text: string };                   // pinyin syllable(s) with tone marks; audio = narrator voice
+  | { kind: 'syllable'; text: string; spoken?: string };                   // pinyin syllable(s) with tone marks; audio = narrator voice
 
 type Question = {
   id: string;                       // 'q-h1-01-g03'
   tests: { words?: string[]; grammar?: string[]; tone?: boolean }; // feeds Learner Stats
+  why?: string;                     // shown after answering
+  ask?: string;                     // sentence shown next to the audio
+  section?: 'tones' | 'finals' | 'initials' | 'spelling' | 'sandhi'; // Primer gate pool: which section the question belongs to
 } & (
   | { type: 'choice'; prompt: Prompt; options: string[]; answer: number /* 0-based index into options */; optionKind: 'hanzi' | 'pinyin' | 'vi' | 'hanviet' | 'image' }
   | { type: 'tone'; prompt: Prompt; syllable: number; answer: 1 | 2 | 3 | 4 | 5 }
@@ -297,12 +302,14 @@ interface Primer {
   gate: { pool: Question[]; draw: number; testOut: true }; // may be taken before the sections
 }
 
+type Chip = string | { say: string; label?: string; hanzi?: string }; // say = what is played (tone-marked); label = what the chip shows
+
 interface PrimerSection {
   cards: {
     title: string;                   // 'Thanh 3: xuống rồi lên'
     explain: string;                 // Vietnamese, ≤ 2 sentences
-    syllables: string[];             // played on tap: ['mā','má','mǎ','mà','ma']
-    pairs?: [string, string][];      // minimal pairs to contrast: [['zhī','jī'], ['bā','pā']]
+    syllables: Chip[];               // played on tap: ['mā','má','mǎ','mà','ma']
+    pairs?: [Chip, Chip][];          // minimal pairs to contrast: [['zhī','jī'], ['bā','pā']]
   }[];
   drills: Question[];                // tone / choice(optionKind: 'pinyin') with Prompt kind 'syllable'
 }
@@ -310,7 +317,7 @@ interface PrimerSection {
 
 - Nothing in the Primer enters the Lexicon or makes review cards. Its drill Attempts feed only the per-tone accuracy in Learner Stats.
 - Audio key per syllable: `sha256(syllable|narrator)`. The Pinyin Table needs every syllable in `syllables.yaml` × 4 tones ≈ 1,600 clips, rendered once.
-- Lint: checks 1–7 and the word-count part of 8 skip `kind: primer`; every `syllables` / `pairs` entry must exist in `syllables.yaml`; each section has ≥ 1 drill; gate pool ≥ 2 × draw and covers all 5 sections.
+- Lint: checks 1–7 and the word-count part of 8 skip `kind: primer`; every `syllables` / `pairs` entry (read through `say`) must exist in `syllables.yaml`; each section has ≥ 1 drill; gate pool ≥ 2 × draw and covers all 5 sections (pool questions carry `section`).
 
 ## Derived at import
 
