@@ -9,7 +9,7 @@ Sources (the LLM edits, it does not invent meanings):
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
 Output (staging, never content/): .cache/words/out/words/<id>.yaml (Word) + sentences/hsk1.yaml (Sentence[]) + src/<id>.json (numbered CC-CEDICT senses).
 Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [words]   (no words = all HSK 3.0 level 1 words in dict.json; sources download into .cache/words)"""
-import bz2, hashlib, json, os, re, sys, urllib.request, uuid
+import argparse, bz2, hashlib, json, os, random, re, shutil, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -276,7 +276,75 @@ def write_out(results):
             (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
     dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
 
+def staged_sha(out):
+    h = hashlib.sha256()
+    for f in sorted(p for p in out.rglob('*') if p.is_file() and p.parent.name in ('words', 'sentences')):
+        h.update(f.relative_to(out).as_posix().encode())
+        h.update(f.read_bytes())
+    return h.hexdigest()
+
+def review(out, seed, size=20):
+    ids = sorted(p.stem for p in (out / 'words').glob('*.yaml'))
+    if len(ids) < size:
+        print(f'warning: only {len(ids)} staged words, sampling all')
+    picked = sorted(random.Random(seed).sample(ids, min(size, len(ids))))
+    sentences = {s['id']: s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))}
+    total = [yaml.safe_load((out / 'words' / f'{i}.yaml').read_text(encoding='utf-8')) for i in ids]
+    rare = [sum(bool(s.get('rare')) for s in w['senses']) for w in total]
+    lines = [f'# Spot-check sample, seed {seed}', '',
+             f'staged-set sha: {staged_sha(out)}', '',
+             f'run totals: {len(ids)} word files, {len(sentences)} sentences, rare senses {sum(rare)} in {sum(bool(r) for r in rare)} words', '']
+    for i in picked:
+        w = yaml.safe_load((out / 'words' / f'{i}.yaml').read_text(encoding='utf-8'))
+        lines += [f'### {i} {w["hanzi"]} {w["pinyin"]} · {w.get("hanviet", "")}', '']
+        by_pos = {}
+        for s in w['senses']:
+            by_pos.setdefault(s.get('pos', '-'), []).append(s)
+        for pos, senses in by_pos.items():
+            lines.append(f'**{pos}**')
+            for s in senses:
+                x = sentences.get(s.get('example'))
+                label = ('Tatoeba #' + x['source'].split(':')[1]) if x and x['source'].startswith('tatoeba:') else 'AI viết'
+                lines.append(f'- {"★ " if s.get("rare") else ""}{s["vi"]}' + (f' — {x["hanzi"]} / {x["pinyin"]} / {x["vi"]} ({label})' if x else ''))
+            lines.append('')
+        src_file = out / 'src' / f'{i}.json'
+        if src_file.exists():
+            src = json.loads(src_file.read_text(encoding='utf-8'))
+            lines += ['CC-CEDICT: ' + '; '.join(f'{k} {v}' for k, v in src['senses'].items()), '']
+    (out / f'review-{seed}.md').write_text('\n'.join(lines), encoding='utf-8')
+    print(f'wrote {out / f"review-{seed}.md"} ({len(picked)} entries)')
+
+def promote(out, seed):
+    page = out / f'review-{seed}.md'
+    if not page.exists() or f'staged-set sha: {staged_sha(out)}' not in page.read_text(encoding='utf-8'):
+        print(f'review-{seed}.md is stale or missing', file=sys.stderr)
+        sys.exit(2)
+    words = sorted((out / 'words').glob('*.yaml'))
+    used = {x for f in words for w in [yaml.safe_load(f.read_text(encoding='utf-8'))] for x in [*w.get('examples', []), *(s['example'] for s in w['senses'] if 'example' in s)]}
+    sentences = [s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8')) if not s['id'].startswith('s-w-') or s['id'] in used]
+    CONTENT.mkdir(parents=True, exist_ok=True)
+    for f in words:
+        shutil.copy(f, CONTENT / f.name)
+    dump(CONTENT.parent / 'sentences/hsk1.yaml', sentences)
+    print(f'promoted {len(words)} words, {len(sentences)} sentences')
+
 def main(argv, llm=ask):
+    ap = argparse.ArgumentParser(prog='gen-entries.py')
+    ap.add_argument('words', nargs='*')
+    ap.add_argument('--sample', type=int)
+    ap.add_argument('--seed', type=int)
+    ap.add_argument('--promote', action='store_true')
+    ap.add_argument('--approved', type=int)
+    args = ap.parse_args(argv)
+    if args.promote and args.approved is None:
+        ap.error('--promote needs --approved N')
+    if args.sample and args.seed is None:
+        ap.error('--sample needs --seed N')
+    if args.promote:
+        return promote(CACHE / 'out', args.approved)
+    if args.sample:
+        return review(CACHE / 'out', args.seed, args.sample)
+    argv = args.words
     if llm is ask and not os.environ.get('OPENCODE_API_KEY'):
         print('OPENCODE_API_KEY is not set', file=sys.stderr)
         sys.exit(2)
@@ -305,7 +373,11 @@ def main(argv, llm=ask):
                 rejected.append(f'{w}: {err!r}')
                 print('FAIL', rejected[-1])
     write_out(done)
-    print(f'tatoeba {sum(e["stats"]["tatoeba"] for _, e in done)} / ai {sum(e["stats"]["ai_ex"] for _, e in done)}')
+    senses = [s for _, e in done for w in e['out'][0].values() for s in w['senses']]
+    rare_words = {(hz, w['id']) for hz, e in done for w in e['out'][0].values() if any(s.get('rare') for s in w['senses'])}
+    files = sum(len(e['out'][0]) for _, e in done)
+    print(f'words {len(words)}, files {files}, rejected {len(rejected)}, tatoeba {sum(e["stats"]["tatoeba"] for _, e in done)} / ai {sum(e["stats"]["ai_ex"] for _, e in done)}, '
+          f'rare senses {sum(bool(s.get("rare")) for s in senses)} in {len({hz for hz, _ in rare_words})} words')
     if rejected:
         print('\n'.join(f'REJECT {r}' for r in rejected))
         sys.exit(1)
