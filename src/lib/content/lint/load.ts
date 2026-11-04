@@ -5,15 +5,13 @@ import { parseContent } from '../parse';
 import type { ContentType } from '../schemas';
 import { CHECK_NAMES, type ContentSet, type LintError } from './types';
 
+const isErrno = (e: unknown): e is NodeJS.ErrnoException => e instanceof Error && 'code' in e;
+
 const statOrNull = (path: string) => {
 	try {
 		return statSync(path);
 	} catch (e) {
-		if (
-			(e as NodeJS.ErrnoException).code === 'ENOENT' ||
-			(e as NodeJS.ErrnoException).code === 'ENOTDIR'
-		)
-			return null;
+		if (isErrno(e) && (e.code === 'ENOENT' || e.code === 'ENOTDIR')) return null;
 		throw e;
 	}
 };
@@ -45,6 +43,7 @@ export function loadContentDir(
 	dir: string,
 	opts: { only?: string[] } = {}
 ): { set: ContentSet; errors: LintError[] } {
+	if (statOrNull(dir)?.isDirectory() === false) throw new Error(`${dir} is not a directory`);
 	const set: ContentSet = {
 		lessons: [],
 		words: [],
