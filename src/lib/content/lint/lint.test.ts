@@ -295,6 +295,43 @@ describe('check 8 References', () => {
 	it('allows std: [] at any level', () => expect(run((s) => (lesson(s).level = 3))).toEqual([]));
 });
 
+describe('check 9 Audio', () => {
+	const F = 'lessons/hsk1/h1-01.yaml';
+	it('flags a speaker that is not a speaking voice', () =>
+		only(
+			run((s) => (lesson(s).sentences[7].speaker = 'panda')),
+			9,
+			F,
+			'sentences[7].speaker'
+		));
+	it('flags a dialogue line without a speaker', () =>
+		only(
+			run((s) => delete lesson(s).sentences[2].speaker),
+			9,
+			F,
+			'sections.dialogue.parts[0].lines[2]'
+		));
+	it('flags a part where every line is one voice', () =>
+		only(
+			run((s) => (lesson(s).sentences[4].speaker = 'takin')),
+			9,
+			F,
+			'sections.dialogue.parts[1]'
+		));
+	it('allows back-to-back lines from one voice', () => expect(run(() => {})).toEqual([]));
+	it('ignores a reading line without a speaker', () =>
+		expect(
+			run((s) => (lesson(s).sections.reading = { title: 'Đọc', lines: ['s-h1-01-08'] }))
+		).toEqual([]));
+	it('skips a line id that does not resolve; check 8 reports it', () =>
+		only(
+			run((s) => (lesson(s).sections.dialogue.parts[0].lines[2] = 's-xx')),
+			8,
+			F,
+			'sections.dialogue.parts[0].lines[2]'
+		));
+});
+
 describe('check 3 Tone marks', () => {
 	const sentencePinyin = (value: string) => run((s) => (lesson(s).sentences[0].pinyin = value));
 	it('flags an unmarked sentence pinyin', () =>

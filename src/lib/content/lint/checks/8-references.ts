@@ -6,7 +6,7 @@ import { issue, pathOf, stripTones } from '../util';
 type Path = (string | number)[];
 
 const SECTIONS = ['tones', 'finals', 'initials', 'spelling', 'sandhi'] as const;
-const PATTERN_SPLIT = /[\s/+()（）\[\]［］，。、；：？！]+/;
+const PATTERN_SPLIT = /[\s/+()（）[\]［］，。、；：？！]+/;
 
 export const references = (set: ContentSet, refs: LintRefs): LintError[] => {
 	const errors: LintError[] = [];
