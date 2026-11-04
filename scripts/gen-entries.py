@@ -9,7 +9,7 @@ Sources (the LLM edits, it does not invent meanings):
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
 Output (staging, never content/): .cache/words/out/words/<id>.yaml (Word) + sentences/hsk1.yaml (Sentence[]) + src/<id>.json (numbered CC-CEDICT senses).
 Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [words]   (no words = all HSK 3.0 level 1 words in dict.json; sources download into .cache/words)"""
-import argparse, bz2, hashlib, json, os, random, re, shutil, sys, urllib.request, uuid
+import argparse, bz2, hashlib, unicodedata, json, os, random, re, shutil, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -30,6 +30,7 @@ SOURCES = {  # complete.min.json: drkameleon HSK (MIT), pinned; Tatoeba exports 
 }
 DICT = {r[0]: r for r in json.loads((ROOT / 'prototype/data/dict.json').read_text(encoding='utf-8'))}
 HSK = {}
+USAGE = {'calls': 0, 'input': 0, 'output': 0}
 POS_VI = ['Danh từ', 'Động từ', 'Tính từ', 'Phó từ', 'Lượng từ', 'Đại từ', 'Số từ', 'Giới từ', 'Liên từ', 'Trợ từ', 'Thán từ', 'Bổ ngữ', 'Cụm từ', 'Thành ngữ']
 POS_HINT = {'n': 'danh từ', 'v': 'động từ', 'a': 'tính từ', 'd': 'phó từ', 'q': 'lượng từ', 'r': 'đại từ', 'm': 'số từ',
             'p': 'giới từ', 'c': 'liên từ', 'u': 'trợ từ', 'e': 'thán từ', 'y': 'trợ từ ngữ khí', 'i': 'thành ngữ', 'l': 'cụm từ'}
@@ -87,6 +88,9 @@ def ask(prompt):
                                  headers={'Authorization': f'Bearer {key}', 'Content-Type': 'application/json',
                                           'User-Agent': 'chaiyo-gen/1', 'x-opencode-session': str(uuid.uuid4())})
     res = json.load(urllib.request.urlopen(req, timeout=240))
+    USAGE['calls'] += 1
+    USAGE['input'] += (res.get('usage') or {}).get('input_tokens', 0)
+    USAGE['output'] += (res.get('usage') or {}).get('output_tokens', 0)
     text = ''.join(c.get('text', '') for o in res.get('output', []) if o.get('type') == 'message' for c in o.get('content', []))
     return json.loads(re.search(r'\{.*\}', text, re.S).group(0))
 
@@ -130,16 +134,35 @@ def py_errors(py):
         errs.append('pinyin thiếu dấu thanh')
     return [f'{e} "{py}"' for e in errs]
 
+TONES = '̄́̌̀'
+
+def canon(py, readings):
+    """The source reading the model's pinyin names: spacing is ignored, a toneless source vowel accepts any tone, a dropped erhua r is accepted; a single-reading word also tolerates tone sandhi; an exact match wins."""
+    got = unicodedata.normalize('NFC', py.lower()).replace(' ', '')
+    flat = {r['pinyin']: unicodedata.normalize('NFC', r['pinyin'].lower()).replace(' ', '') for r in readings}
+    for want in flat.items():
+        if want[1] == got:
+            return want[0]
+    def loose(w):
+        return ''.join('[' + c + ''.join(unicodedata.normalize('NFC', c + t) for t in TONES) + ']' if c in 'aeiouü' else re.escape(c) for c in w)
+    for name, want in flat.items():
+        if re.fullmatch(loose(want), got) or (want.endswith('r') and re.fullmatch(loose(want[:-1]), got)):
+            return name
+    plain = lambda w: ''.join(c for c in unicodedata.normalize('NFD', w) if not unicodedata.combining(c))
+    if len(flat) == 1:  # tone sandhi (yī → yí): nothing else it could be
+        name, want = next(iter(flat.items()))
+        if plain(want).rstrip('r') == plain(got).rstrip('r'):
+            return name
+
 def check(e, cands, hz, readings):
     texts = {i: t for r in readings for i, t in r['senses'].items()}
     used = {i for r in e['readings'] for g in r['groups'] for s in g['senses'] for i in s.get('src', [])}
     dropped = {d['id'] for d in e.get('dropped', [])}
     errs = [f'thiếu nghĩa {i} "{t}"' for i, t in texts.items() if i not in used | dropped]
     errs += [f'lý do lạ {d.get("why")}' for d in e.get('dropped', []) if d.get('why') not in REASONS]
-    sources = {r['pinyin'].lower() for r in readings}
     seen = set()
     for r in e['readings']:
-        if r['pinyin'].lower() not in sources:
+        if not canon(r['pinyin'], readings):
             errs.append(f'âm đọc lạ {r["pinyin"]}')
         for g in r['groups']:
             if g['pos'] not in POS_VI:
@@ -205,6 +228,7 @@ Chỉ trả về JSON:
     if errs:
         raise Reject(hz, errs)
     for r in e['readings']:
+        r['pinyin'] = canon(r['pinyin'], readings)
         for g in r['groups']:
             for s in g['senses']:
                 x = s['ex']
@@ -378,6 +402,7 @@ def main(argv, llm=ask):
     files = sum(len(e['out'][0]) for _, e in done)
     print(f'words {len(words)}, files {files}, rejected {len(rejected)}, tatoeba {sum(e["stats"]["tatoeba"] for _, e in done)} / ai {sum(e["stats"]["ai_ex"] for _, e in done)}, '
           f'rare senses {sum(bool(s.get("rare")) for s in senses)} in {len({hz for hz, _ in rare_words})} words')
+    print(f'llm calls {USAGE["calls"]}, tokens in {USAGE["input"]} / out {USAGE["output"]}')
     if rejected:
         print('\n'.join(f'REJECT {r}' for r in rejected))
         sys.exit(1)

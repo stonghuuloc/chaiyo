@@ -100,3 +100,15 @@ def test_promote_matching_sha_copies_and_prunes_orphan_sentences(gen):
     assert sorted(p.name for p in gen.CONTENT.glob('*.yaml')) == ['字0.yaml', '字1.yaml', '字2.yaml']
     ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))]
     assert ids == ['s-w-ai-0', 's-w-ai-1', 's-w-ai-2', 's-h1-keep']
+
+
+@pytest.mark.parametrize('model,source,ok', [
+    ('biérén', 'bié ren', True), ('huí qù', 'huí qu', True), ('wán', 'wán r', True), ('yí kuàir', 'yī kuài r', True),
+    ('bàba', 'bà ba', True), ('dǎn', 'dǎ', False)])
+def test_reading_match_ignores_spacing_tone_and_erhua(gen, model, source, ok):
+    assert (gen.canon(model, [{'pinyin': source}]) == source) is ok
+
+
+def test_reading_match_prefers_exact(gen):
+    assert gen.canon('dōng xī', [{'pinyin': 'dōng xi'}, {'pinyin': 'dōng xī'}]) == 'dōng xī'
+
