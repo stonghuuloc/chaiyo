@@ -16,7 +16,8 @@ export function deriveSpoken(pinyin: string, hanzi: string): string {
 			if (s.tone === 3 && next === 3) tone = 2;
 			else if (hanziAt === '不' && lower === 'bù' && next === 4) tone = 2;
 			else if (hanziAt === '一' && lower === 'yī' && next) tone = next === 4 ? 2 : 4;
-			if (tone) edits.push({ start: s.start, end: s.start + s.syl.length, to: withTone(s.syl, tone) });
+			if (tone)
+				edits.push({ start: s.start, end: s.start + s.syl.length, to: withTone(s.syl, tone) });
 		}
 	}
 	if (!edits.length) return pinyin;
