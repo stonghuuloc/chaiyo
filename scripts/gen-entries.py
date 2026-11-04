@@ -213,7 +213,7 @@ def main_reading(hz, readings):
 HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó từ', 'q': 'Lượng từ'}
 
 VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
-SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n|r)?(?![{VOWELS}])', re.I)
+SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n)?r?(?![{VOWELS}])', re.I)
 PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
 CJK = re.compile(r'[\u3400-\u9fff]')
 
@@ -221,7 +221,10 @@ def normalize_py(hz, py):
     """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up."""
     syls = SYLLABLE.findall(unicodedata.normalize('NFC', py))
     chars = CJK.findall(hz)
-    if len(syls) != len(chars):
+    erhua = len(syls) != len(chars) and len(syls) == len(chars) - chars.count('儿')
+    if erhua:
+        chars = [c for c in chars if c != '儿']
+    elif len(syls) != len(chars):
         return py
     for i, (c, y) in enumerate(zip(chars, syls)):
         if c == '一' and y.lower() in ('yí', 'yì'):
@@ -230,7 +233,9 @@ def normalize_py(hz, py):
             syls[i] = y[0] + 'ù'
     out, k = '', 0
     for tok in jieba.lcut(hz):
-        n = len(CJK.findall(tok))
+        if erhua and tok == '儿':
+            continue
+        n = len(CJK.findall(tok.replace('儿', '') if erhua else tok))
         if n:
             word = ''
             for y in syls[k:k + n]:

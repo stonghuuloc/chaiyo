@@ -210,3 +210,12 @@ def test_classifier_example_accepts_digit_numeral(word, monkeypatch):
     a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'ai': True, 'hz': '他16打', 'py': 'Tā shíliù dǎ', 'vi': 'x'}
     hz, e = word.entry('打', {}, scripted(a))
     assert e['readings'][0]['groups'][0]['pos'] == 'Lượng từ'
+
+
+def test_normalize_py_handles_erhua(gen):
+    assert gen.normalize_py('给我一点儿。', 'Gěi wǒ yìdiǎnr.') == 'Gěi wǒ yīdiǎnr.'
+    assert gen.normalize_py('不用去。', 'Bú yòng qù.') == 'Bùyòng qù.'
+
+
+def test_normalize_py_erhua_as_its_own_jieba_token(gen):
+    assert gen.normalize_py('我看一下儿。', 'Wǒ kàn yíxiàr.') == 'Wǒ kàn yīxiàr.'
