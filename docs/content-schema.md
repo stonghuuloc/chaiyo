@@ -101,7 +101,7 @@ interface Sentence {
   hanzi: string;
   pinyin: string;                   // citation; spoken derived
   spoken?: string;                  // override only; default derived by sandhi
-  source?: 'ai' | `tatoeba:<digits>`;  // provenance of generated sentences
+  source?: 'ai' | `tatoeba:${number}`;  // provenance; runtime regex ^tatoeba:\d+$ (digits only)
   vi: string;
   speaker?: CastId;                 // dialogue only; picks the voice
   seg?: string[];                   // word boundaries for tap lookup; derived, override allowed
@@ -319,7 +319,7 @@ interface PrimerSection {
 
 - Nothing in the Primer enters the Lexicon or makes review cards. Its drill Attempts feed only the per-tone accuracy in Learner Stats.
 - Audio key per syllable: `sha256(syllable|narrator)`. The Pinyin Table needs every syllable in `syllables.yaml` × 4 tones ≈ 1,600 clips, rendered once.
-- Lint: checks 1–7 and the word-count part of 8 skip `kind: primer`; every `syllables` / `pairs` entry (read through `say`) must exist in `syllables.yaml`; each section has ≥ 1 drill; gate pool ≥ 2 × draw and covers all 5 sections (pool questions carry `section`).
+- Lint: checks 1–7 and the word-count part of 8 skip `kind: primer`; every `syllables` / `pairs` entry (string chips as is, object chips through `say`), after dropping tone marks (ü kept) and splitting on spaces, must be a `syllable` row of `syllables.yaml`; each section has ≥ 1 drill; gate pool ≥ 2 × draw and covers all 5 sections (pool questions carry `section`).
 
 ## Derived at import
 
