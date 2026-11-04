@@ -2,7 +2,7 @@
 ACs: AC1, AC2
 
 ## Current behaviour (verified, with anchors)
-- [AC1] No importer exists. `src/lib/content/` holds schemas.ts + parse.ts (`parseContent(type, file, text)`, errors as `{ file, path, message, line?, col? }`, parse.ts:4-9). The lint module is CHY-9's (C1 in CONTRACTS.md): `lintDir(dir, refs?) → { set, errors, notices }`, `LintError { file, path, check 0–9, name, message }`. Check 3 = tone marks (content-schema.md:350).
+- [AC1] No importer exists. `src/lib/content/` holds schemas.ts + parse.ts (`parseContent(type, file, text)`, errors as `{ file, path, message, line?, col? }`, parse.ts:4-9). The lint module is CHY-9's (C1 in CONTRACTS.md): `lintDir(dir, opts?: { refs?, only? }) → { set, errors, notices }`, `LintError { file, path, check 0–10 (10 = Derive, importer only), name, message }`. Check 3 = tone marks (content-schema.md:350).
 - [AC1] The repo's own `content/` is not lint-clean today: `content/chars/` is empty, so Hán Việt and polyphone checks have nothing to read; Bài 1 words and chars come from CHY-10. S2 tests therefore need their own fixture folder.
 - [AC2] No `content_versions` store exists; `supabase/` has no migrations (S3 adds them). Doc rule: one row per import, keyed by `sha` (content-schema.md:341).
 - [AC2] Delivery contract: the sha is the URL of every bundle (ADR 0002), so it must change exactly when a bundle's content changes: YAML whitespace/comment edits must not change it; a derive-rule or Dictionary change must.
@@ -19,6 +19,8 @@ ACs: AC1, AC2
 - [AC2] Q: missing `<dir>/dictionary.json`? A: empty Dictionary (every hanzi its own token, no thin entries beyond lesson words), no error, so lint fixture folders stay small. Confidence 80%.
 - [AC1] Q: lesson-less words? A: imported, `taughtIn` absent. Confidence 90%.
 - [AC1] Q: test fixture strategy? A: one frozen lint-clean folder `import/fixtures/ok/` and tests that copy it to a temp dir and mutate (bad pinyin, comment-only edit, Dictionary edit). It is built from CHY-10's Bài 1 when that lands; the executor stops and reports if `lintDir` rejects it. Confidence 80%.
+
+- [r1 advisor, 2026-11-04] Applied 11 fix-in-place items against main 63d1735: fixture moved to Task 2 and built from CHY-9's `lint/fixtures/clean` + `primer` (no wait on CHY-10/CHY-11); refs passed as `fixtureRefs`; check-10 test deletes the `hanviet:` line of 你们 and `chars/们.yaml`; `only` is the C2 production list, with a test that a broken `lessons/hsk2/x.yaml` is ignored under it; `sortErrors` replaced by `return { errors }` plus a local comparator for check-10 errors; S1 signatures (`deriveBacklinks` takes lesson values, `deriveHanViet` takes a Record); schemas.ts and C1 anchors refreshed; prettier fixture step. Confidence 95%, each cited line hand-checked on main.
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
