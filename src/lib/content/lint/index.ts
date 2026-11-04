@@ -1,6 +1,9 @@
 import { hanviet } from './checks/1-hanviet';
 import { polyphones } from './checks/2-polyphones';
 import { toneMarks } from './checks/3-tone-marks';
+import { sandhi } from './checks/4-sandhi';
+import { knownChars } from './checks/5-known-chars';
+import { realGlyphs } from './checks/6-real-glyphs';
 import { loadRefs } from './refs';
 import { loadContentDir } from './load';
 import type { ContentSet, LintError, LintRefs } from './types';
@@ -12,7 +15,10 @@ export { loadRefs } from './refs';
 const checks: ((set: ContentSet, refs: LintRefs) => LintError[])[] = [
 	hanviet,
 	polyphones,
-	toneMarks
+	toneMarks,
+	sandhi,
+	knownChars,
+	realGlyphs
 ];
 
 const byLocation = (a: LintError, b: LintError) =>

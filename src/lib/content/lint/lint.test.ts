@@ -54,6 +54,68 @@ describe('check 2 Polyphones', () => {
 		));
 });
 
+describe('check 4 Sandhi', () => {
+	it('flags a spoken that differs from the derived sandhi', () =>
+		only(
+			run((s) => (lesson(s).sentences[5].spoken = 'bù kèqi')),
+			4,
+			'lessons/hsk1/h1-01.yaml',
+			'sentences[5].spoken'
+		));
+	it('flags a bad spoken in a sentence file', () => {
+		const errors = run((s) =>
+			s.sentences.push({
+				file: 'sentences/a.yaml',
+				value: [{ id: 's-x', hanzi: '不客气。', pinyin: 'bù kèqi', spoken: 'bù kèqi', vi: 'x' }]
+			})
+		);
+		only(errors, 4, 'sentences/a.yaml', '[0].spoken');
+	});
+	it('ignores a sentence without spoken', () =>
+		expect(
+			run((s) => {
+				delete lesson(s).sentences[5].spoken;
+			})
+		).toEqual([]));
+});
+
+describe('check 5 80% known chars', () => {
+	const withUnknown = (unknown?: { hanzi: string; pinyin: string; vi: string }[]) =>
+		run((s) => {
+			const sentence = lesson(s).sentences[9];
+			sentence.hanzi = '我好！';
+			if (unknown) sentence.unknown = unknown;
+		});
+	it('flags a char no taught word has', () =>
+		only(withUnknown(), 5, 'lessons/hsk1/h1-01.yaml', 'sentences[9].hanzi'));
+	it('allows a char listed in unknown', () =>
+		expect(withUnknown([{ hanzi: '我', pinyin: 'wǒ', vi: 'tôi' }])).toEqual([]));
+	const extra = (order: number) =>
+		run((s) => {
+			const base = lesson(s);
+			s.lessons.push({
+				file: 'lessons/hsk1/h1-02.yaml',
+				value: {
+					...structuredClone(base),
+					id: 'h1-02',
+					order,
+					sections: { ...structuredClone(base.sections), words: { ids: [] } },
+					sentences: [{ id: 's-h1-02-01', hanzi: '你好！', pinyin: 'nǐ hǎo', vi: 'Chào' }]
+				}
+			});
+		}).filter((e) => e.check === 5);
+	it('counts words of earlier lessons as known', () => expect(extra(2)).toEqual([]));
+	it('does not count words of later lessons', () => expect(extra(0)).toHaveLength(1));
+});
+
+describe('check 6 Real glyphs', () => {
+	it('flags a Kangxi radical code point', () => {
+		const errors = run((s) => (word(s, '你').value.senses[0].vi = '⾒ bạn'));
+		only(errors, 6, 'words/你.yaml', 'senses[0].vi');
+		expect(errors[0].message).toContain('U+2F92');
+	});
+});
+
 describe('check 3 Tone marks', () => {
 	const sentencePinyin = (value: string) => run((s) => (lesson(s).sentences[0].pinyin = value));
 	it('flags an unmarked sentence pinyin', () =>
