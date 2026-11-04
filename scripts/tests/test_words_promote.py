@@ -112,3 +112,13 @@ def test_reading_match_ignores_spacing_tone_and_erhua(gen, model, source, ok):
 def test_reading_match_prefers_exact(gen):
     assert gen.canon('dōng xī', [{'pinyin': 'dōng xi'}, {'pinyin': 'dōng xī'}]) == 'dōng xī'
 
+
+
+def test_main_reading_falls_back_to_first_source_reading(word):
+    word.DICT['打'] = ['打', 'gě', 'da', 'đả', '', 1, [], [['dǎ', 'tá', []]]]
+    hz, e = word.entry('打', {}, scripted(answer()))
+    assert e['main'] == 'dǎ'
+
+
+def test_main_reading_override(word):
+    assert word.main_reading('行', []) == 'xíng'

@@ -194,6 +194,16 @@ def check(e, cands, hz, readings):
                 errs += [f'{err} (ví dụ của "{s["vi"]}")' for err in py_errors(x.get('py') or '')]
     return errs
 
+MAIN_OVERRIDE = {  # dict.json's first reading is a rare or unmarked one for these
+    '着': 'zhe', '起来': 'qǐ lai', '雨': 'yǔ', '看': 'kàn', '和': 'hé', '行': 'xíng', '差': 'chà', '累': 'lèi', '吧': 'ba',
+    '地方': 'dì fang', '页': 'yè'}
+
+def main_reading(hz, readings):
+    """The reading that gets the plain-hanzi id: the table above, else dict.json's reading, else the first source reading."""
+    if hz in MAIN_OVERRIDE:
+        return MAIN_OVERRIDE[hz]
+    return (canon(DICT[hz][1], readings) or readings[0]['pinyin']).lower()
+
 def entry(hz, rows, llm=ask):
     readings, skipped = source(hz)
     level = DICT[hz][5]
@@ -234,7 +244,8 @@ Chỉ trả về JSON:
                 x = s['ex']
                 if x.get('tatoeba'):  # verbatim source text, not the model's copy
                     x['hz'] = cands[x['tatoeba']]['zh']
-    main = DICT[hz][1].lower()  # the reading learners meet first (dǎ, not dá)
+    main = main_reading(hz, e['readings'])
+    e['main'] = main
     for r in list(e['readings']):
         if r['pinyin'].lower() != main and not any(s.get('common') for g in r['groups'] for s in g['senses']):
             e['readings'].remove(r)
@@ -254,10 +265,10 @@ def to_yaml(hz, e):
     words, sentences = {}, {}
     for r in e['readings']:
         py = r['pinyin'].lower()
-        main = py == row[1].lower()
+        main = py == e['main']
         wid = hz if main else hz + '-' + ''.join(s if s[-1].isdigit() else s + '5' for s in nums[py].split())
         w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': py,
-                                   'hanviet': row[3] if main else next((v for p, v, _ in row[7] if p.lower() == py), row[3]),
+                                   'hanviet': row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3]),
                                    'level': 1, 'pos': [], 'senses': [], 'examples': []})
         for g in r['groups']:
             code = POS_CODE[g['pos']]
