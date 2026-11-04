@@ -7,7 +7,7 @@ ACs: AC1, AC2, AC3, AC4
 - [AC1] Prototype questions are `{t, key, opts, ans, why}` with `s` on pool items; schema `Question` (schemas.ts:105-155) is `{id, tests, type, prompt, options, answer: index, optionKind}` and strict, so no `why`, no section tag, no instruction text.
 - [AC1] `Primer` schema (schemas.ts:197-225) is strict: `PrimerSection` has only `cards`, `drills`; prototype section `title`/`hint` and per-question `title` have no home.
 - [AC1] `Id` is `z.string()`; `scene.cast: ['panda']` but `content/cast.yaml` is `[]` (no schema or lint check on it today).
-- [AC1] CHY-9 will expose `lintDir(dir): { set, errors: LintError[] }` from `src/lib/content/lint/`; CLI `pnpm lint:content` is their S2. Normalisation: NFD, drop tone marks, keep ü, split on whitespace, each piece must be a syllables.yaml row; error path `sections.finals.cards[2].syllables[1]`; skip by `kind: primer` (CHAA-21 reply, items 1-5). No lint module or CLI on main yet (C1 draft, CHY-9). `parseContent('Primer'|'Syllables', …)` exists (parse.ts:13).
+- [AC1] lintDir on main (`src/lib/content/lint/`); CLI `pnpm lint:content` merged. Normalisation: NFD, drop tone marks, keep ü, split on whitespace, each piece must be a syllables.yaml row; path `sections.finals.cards[2].syllables[1]` for a string chip, `….say` for an object chip; skip by `kind: primer` (CHAA-21 reply, items 1-5). `parseContent('Primer'|'Syllables', …)` exists (parse.ts:13).
 
 - [AC1] CHY-8 (CHAA-20): `import` builds Primer into bundle `h0-00.json`; manifest = every syllables.yaml row × tones 1-4 + every Primer `syllables`/`pairs` entry; importer writes nothing back. Spoken derivation does not reach `kind: syllable` prompts (no hanzi), so only the 3-3 sandhi questions need an override (nǐ hǎo drill + pool = 2); the other sandhi prompts are already written as spoken (bú shì, yí gè, yì tiān). CHY-8 8.Q3 B settled it: optional `spoken?` on the syllable Prompt.
 
@@ -31,7 +31,7 @@ ACs: AC1, AC2, AC3, AC4
 | a12 | AC1 | 2 questions use `prompt.spoken: 'ní hǎo'`; all other syllable prompts omit `spoken` | 90% | prototype audio for those two is the said form |
 | a13 | AC1-4 | tests = new `primer.test.ts` calling `lintDir` on a temp dir holding h0-00.yaml + syllables.yaml (mutated copies for the negative cases); CLI half of AC1 rides on CHY-9 S2 wrapping `lintDir` | 85% | other lanes' unfinished content must not turn AC1 red; CHAA-21 said not to depend on the CLI |
 | a14 | AC1 | chips for 3-3 phrases (你好, 很好, 水果) play `say` as written; no `spoken` on chips (not in C6). Risk: a TTS that does not apply sandhi plays nǐ nǐ. Parked, checked at audio render | 80% | keeps C6 as agreed; 3 chips |
-| a15 | AC1 | `content.test.ts` picks `Primer` for `lessons/hsk1/h0-00.yaml` and expects 85 files | 90% | the folder map types every file under lessons/ as Lesson; h0-00 would fail |
+| a15 | AC1 | `content.test.ts` types by path, no count (C6 Shared files) | 90% | the folder map typed every file under lessons/ as Lesson; h0-00 would fail |
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |

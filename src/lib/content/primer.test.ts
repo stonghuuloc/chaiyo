@@ -1,7 +1,10 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import YAML from 'yaml';
+import { fixtureRefs } from './lint/fixtures/refs';
+import { lintDir } from './lint';
 import { parseContent } from './parse';
 import type { Primer, Question } from './schemas';
 
@@ -69,5 +72,102 @@ describe('h0-00 primer', () => {
 		const all = [...sectionNames.flatMap((s) => primer.sections[s].drills), ...pool];
 		expect(new Set(all.map((q) => q.id)).size).toBe(all.length);
 		for (const q of all) if (q.type === 'choice') expect(q.options[q.answer]).toBeDefined();
+	});
+});
+
+type Data = Primer & {
+	sections: Record<
+		string,
+		{ cards: { syllables: unknown[]; pairs?: unknown[][] }[]; drills: unknown[] }
+	>;
+};
+const syllablesText = readFileSync(join(root, 'syllables.yaml'), 'utf8');
+
+const lintCopy = (mutate?: (data: Data) => void, syllableRows?: { syllable: string }[]) => {
+	const dir = mkdtempSync(join(tmpdir(), 'primer-'));
+	mkdirSync(join(dir, 'lessons/hsk1'), { recursive: true });
+	const data = YAML.parse(text) as Data;
+	mutate?.(data);
+	writeFileSync(join(dir, 'lessons/hsk1/h0-00.yaml'), YAML.stringify(data));
+	writeFileSync(
+		join(dir, 'syllables.yaml'),
+		syllableRows ? YAML.stringify(syllableRows) : syllablesText
+	);
+	return lintDir(dir, { refs: fixtureRefs }).errors;
+};
+
+const paths = (errors: { path: string }[]) => errors.map((e) => e.path);
+
+describe('h0-00 primer through lintDir', () => {
+	it('AC1 lints with 0 errors', () => {
+		expect(lintCopy()).toEqual([]);
+	});
+
+	it('AC2 chip replaced by the string xyz errors at sections.finals.cards[0].syllables[0]', () => {
+		const errors = lintCopy((d) => {
+			d.sections.finals.cards[0].syllables[0] = 'xyz';
+		});
+		expect(paths(errors)).toEqual(['sections.finals.cards[0].syllables[0]']);
+	});
+
+	it('AC2 pairs entry replaced by the string xyz errors at sections.initials.cards[0].pairs[0][1]', () => {
+		const errors = lintCopy((d) => {
+			d.sections.initials.cards[0].pairs![0][1] = 'xyz';
+		});
+		expect(paths(errors)).toEqual(['sections.initials.cards[0].pairs[0][1]']);
+	});
+
+	it('AC2 syllables.yaml without row ma errors on every entry with a ma piece', () => {
+		const rows = (YAML.parse(syllablesText) as { syllable: string }[]).filter(
+			(r) => r.syllable !== 'ma'
+		);
+		const expected = new Set<string>();
+		for (const s of sectionNames)
+			primer.sections[s].cards.forEach((card, c) => {
+				const visit = (e: (typeof chips)[number], p: string) => {
+					if (toneless(say(e)).split(' ').includes('ma'))
+						expected.add(typeof e === 'string' ? p : p + '.say');
+				};
+				card.syllables.forEach((e, i) => visit(e, `sections.${s}.cards[${c}].syllables[${i}]`));
+				card.pairs?.forEach((pair, i) =>
+					pair.forEach((e, j) => visit(e, `sections.${s}.cards[${c}].pairs[${i}][${j}]`))
+				);
+			});
+		const errors = lintCopy(undefined, rows);
+		expect(expected.size).toBe(9);
+		expect(errors).toHaveLength(10);
+		expect(new Set(paths(errors))).toEqual(expected);
+	});
+
+	it('AC3 empty sandhi drills errors at sections.sandhi.drills', () => {
+		const errors = lintCopy((d) => {
+			d.sections.sandhi.drills = [];
+		});
+		expect(paths(errors)).toEqual(['sections.sandhi.drills']);
+	});
+
+	it('AC4 one item dropped per section (19, 5 sections) errors only on the count', () => {
+		const errors = lintCopy((d) => {
+			const seen = new Set<string>();
+			const drop = new Set<number>();
+			(d.gate.pool as { section: string }[]).forEach((q, i) => {
+				if (!seen.has(q.section)) {
+					seen.add(q.section);
+					drop.add(i);
+				}
+			});
+			d.gate.pool = d.gate.pool.filter((_, i) => !drop.has(i));
+		});
+		expect(paths(errors)).toEqual(['gate.pool']);
+		expect(errors[0].message).toMatch(/19 questions/);
+	});
+
+	it('AC4 sandhi items retagged tones (24) errors only on missing sandhi', () => {
+		const errors = lintCopy((d) => {
+			for (const q of d.gate.pool as { section: string }[])
+				if (q.section === 'sandhi') q.section = 'tones';
+		});
+		expect(paths(errors)).toEqual(['gate.pool']);
+		expect(errors[0].message).toMatch(/sandhi/);
 	});
 });
