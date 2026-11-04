@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -93,7 +93,11 @@ const lintCopy = (mutate?: (data: Data) => void, syllableRows?: { syllable: stri
 		join(dir, 'syllables.yaml'),
 		syllableRows ? YAML.stringify(syllableRows) : syllablesText
 	);
-	return lintDir(dir, { refs: fixtureRefs }).errors;
+	try {
+		return lintDir(dir, { refs: fixtureRefs }).errors;
+	} finally {
+		rmSync(dir, { recursive: true, force: true });
+	}
 };
 
 const paths = (errors: { path: string }[]) => errors.map((e) => e.path);

@@ -27,7 +27,7 @@ ACs: AC1, AC2, AC3, AC4  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 - [AC2] vitest: bogus chip (whole entry replaced by the string 'xyz') → 1 error at the expected path; syllables.yaml without row `ma` → errors on exactly the entries with a `ma` piece (path set computed from the YAML); a `pairs` entry replaced by the string 'xyz' → error at `sections.initials.cards[0].pairs[0][1]`.
 - [AC3] vitest: each section's `drills.length` ≥ 1; sandhi drills emptied → error at `sections.sandhi.drills`.
 - [AC4] vitest: pool length 24, covers the 5 `section` values, ≥ 2 × draw; one item dropped per section (24→19, 5 sections kept) → exactly the count error; the 5 sandhi items retagged `tones` (24 kept) → exactly the missing-sandhi error.
-- [AC1] exits 0: copy h0-00.yaml and syllables.yaml into `$T` as `lessons/hsk1/h0-00.yaml` and `syllables.yaml`, then run `pnpm -s lint:content $T` and expect exit 0 (CHY-9 S2 is on main). Default `content/` lints with 119 errors from other lanes, none in h0-00. Recorded in SUMMARY.
+- [AC1] exits 0: copy h0-00.yaml and syllables.yaml into `$T` as `lessons/hsk1/h0-00.yaml` and `syllables.yaml`, then run `pnpm -s lint:content $T` and expect exit 0 (CHY-9 S2 is on main). Default `content/` lints with 107 errors in 9 files from other lanes (measured on main f5896d6), none in h0-00. Recorded in SUMMARY.
 - [LOCK] vitest: schemas.test.ts valid/invalid fixture pair per changed type (plus `Sentences`) passes; new cases: `rare: false` rejected, sense `pos: foo` rejected, `source: tatoeba:abc` rejected, chip object accepted, unknown chip key rejected, bad `section` value rejected, `spoken` on a vi prompt rejected.
 
 ## Open assumptions
