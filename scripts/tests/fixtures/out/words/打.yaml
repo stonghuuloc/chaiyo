@@ -1,0 +1,18 @@
+id: 打
+hanzi: 打
+pinyin: dǎ
+hanviet: đả
+level: 1
+pos:
+- v
+senses:
+- vi: đánh
+  pos: v
+  example: s-w-5670795
+- vi: chơi
+  pos: v
+  rare: true
+  example: s-w-ai-aab40b76
+examples:
+- s-w-5670795
+- s-w-ai-aab40b76

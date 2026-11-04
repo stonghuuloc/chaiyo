@@ -26,3 +26,6 @@ src/lib/styles/tokens.css
 /.stories/
 /content/
 /project.inlang/.meta.json
+
+# Test fixtures
+/scripts/tests/fixtures/
