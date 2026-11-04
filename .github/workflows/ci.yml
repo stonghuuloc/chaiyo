@@ -32,6 +32,8 @@ jobs:
       - run: pnpm lint
       - run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - run: pnpm test:coverage
+      - uses: astral-sh/setup-uv@v6
+      - run: uv run pytest scripts/tests
       - name: Coverage summary
         if: always()
         run: |
