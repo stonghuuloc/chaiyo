@@ -30,3 +30,4 @@ src/lib/styles/tokens.css
 # Test fixtures
 /scripts/tests/fixtures/
 /.venv/
+/src/lib/content/lint/fixtures/cli-malformed/
