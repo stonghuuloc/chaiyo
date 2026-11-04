@@ -601,6 +601,7 @@ def main(argv, llm=ask):
     files = sum(len(e['out'][0]) for _, e in done)
     print(f'words {len(words)}, files {files}, rejected {len(rejected)}, tatoeba {sum(e["stats"]["tatoeba"] for _, e in done)} / ai {sum(e["stats"]["ai_ex"] for _, e in done)}, '
           f'rare senses {sum(bool(s.get("rare")) for s in senses)} in {len({hz for hz, _ in rare_words})} words')
+    print(f'cedict senses {sum(e["stats"]["cedict"] for _, e in done)} -> {sum(e["stats"]["merged"] for _, e in done)} after merging synonyms')
     print(f'llm calls {USAGE["calls"]}, tokens in {USAGE["input"]} / out {USAGE["output"]}')
     if rejected:
         print('\n'.join(f'REJECT {r}' for r in rejected))
