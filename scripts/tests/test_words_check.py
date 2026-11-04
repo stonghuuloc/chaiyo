@@ -57,3 +57,36 @@ def test_main_exits_1_and_lists_rejected(gen, seeded, monkeypatch, capsys, tmp_p
     assert 'ok 好' in out
     assert out.rstrip().splitlines()[-1].startswith('REJECT 打:')
     assert [p.name for p in (gen.CACHE / 'out/words').glob('*.yaml')] == ['好.yaml']
+
+
+def test_sense_without_source_is_error(word):
+    a = answer()
+    a['readings'][0]['groups'][0]['senses'].append(sense('bay', [], ex={'ai': True, 'hz': '打飞机', 'py': 'Dǎ fēijī', 'vi': 'x'}))
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(a))
+    assert 'nghĩa "bay" không có nguồn' in str(e.value)
+
+
+def test_invented_source_id_is_error(word):
+    a = answer()
+    a['readings'][0]['groups'][0]['senses'][0]['src'] = ['0.0', '9.9']
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(a))
+    assert 'không có nguồn' in str(e.value)
+
+
+@pytest.mark.parametrize('field', ['vi', 'py'])
+def test_example_missing_field_is_error(word, field):
+    a = answer()
+    del a['readings'][0]['groups'][0]['senses'][0]['ex'][field]
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(a))
+    assert 'thiếu "py" hoặc "vi"' in str(e.value)
+
+
+def test_sense_missing_vi_is_error(word):
+    a = answer()
+    del a['readings'][0]['groups'][0]['senses'][0]['vi']
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(a))
+    assert 'thiếu "vi"' in str(e.value)

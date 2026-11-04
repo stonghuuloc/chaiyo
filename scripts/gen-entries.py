@@ -145,7 +145,15 @@ def check(e, cands, hz, readings):
             if g['pos'] not in POS_VI:
                 errs.append(f'từ loại lạ {g["pos"]}')
             for s in g['senses']:
+                if not isinstance(s.get('vi'), str) or not s['vi'].strip():
+                    errs.append('nghĩa thiếu "vi"')
+                    continue
+                if not s.get('src') or any(i not in texts for i in s['src']):
+                    errs.append(f'nghĩa "{s["vi"]}" không có nguồn')
                 x = s.get('ex') or {}
+                if not isinstance(x.get('py'), str) or not isinstance(x.get('vi'), str):
+                    errs.append(f'ví dụ của "{s["vi"]}" thiếu "py" hoặc "vi"')
+                    continue
                 if x.get('tatoeba') and x['tatoeba'] not in cands:
                     errs.append(f'câu {x["tatoeba"]} không có trong danh sách')
                     continue
@@ -213,6 +221,7 @@ Chỉ trả về JSON:
                   'candidates': len(cands)}
     e['readings'].sort(key=lambda r: (r['pinyin'].lower() != main, not any(s.get('common') for g in r['groups'] for s in g['senses'])))
     e['cedict'] = readings
+    e['out'] = to_yaml(hz, e)
     return hz, e
 
 def to_yaml(hz, e):
@@ -251,7 +260,7 @@ def write_out(results):
         for sub, ext in (('words', 'yaml'), ('src', 'json')):
             for old in [*(out / sub).glob(f'{hz}.{ext}'), *(out / sub).glob(f'{hz}-*.{ext}')]:
                 old.unlink()
-        words, new = to_yaml(hz, e)
+        words, new = e['out']
         sentences.update(new)
         for wid, w in words.items():
             existing = CONTENT / f'{wid}.yaml'
