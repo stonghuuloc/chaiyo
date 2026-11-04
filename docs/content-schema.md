@@ -77,7 +77,6 @@ interface Word {
   hanzi: string;
   pinyin: string;                   // citation, tone marks: 'nǐ hǎo'
   spoken?: string;                  // override only; default derived by sandhi
-  source?: 'ai' | `tatoeba:${number}`;  // provenance of generated sentences
   hanviet?: string;                 // authored override; default derived from Char.readings
   level: Level;
   pos: ('n' | 'v' | 'adj' | 'adv' | 'pron' | 'num' | 'mw' | 'prep' | 'conj' | 'part' | 'interj' | 'phrase' | 'comp')[];
@@ -102,11 +101,14 @@ interface Sentence {
   hanzi: string;
   pinyin: string;                   // citation; spoken derived
   spoken?: string;                  // override only; default derived by sandhi
+  source?: 'ai' | `tatoeba:<digits>`;  // provenance of generated sentences
   vi: string;
   speaker?: CastId;                 // dialogue only; picks the voice
   seg?: string[];                   // word boundaries for tap lookup; derived, override allowed
   unknown?: { hanzi: string; pinyin: string; vi: string }[]; // 80% rule escape hatch, shown inline
 }
+
+type Sentences = Sentence[];        // content/sentences/*.yaml
 
 interface GrammarPoint {
   id: string;                       // 'h1-g01'
