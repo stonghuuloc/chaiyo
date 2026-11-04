@@ -13,7 +13,7 @@ import argparse, bz2, hashlib, unicodedata, json, os, random, re, shutil, sys, u
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import jieba, opencc, yaml
+import jieba, jieba.posseg as pseg, opencc, yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / 'content/words'
@@ -215,6 +215,7 @@ HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó
 VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
 SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n)?r?(?![{VOWELS}])', re.I)
 PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
+CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘')
 CJK = re.compile(r'[\u3400-\u9fff]')
 
 def normalize_py(hz, py):
@@ -231,19 +232,41 @@ def normalize_py(hz, py):
             syls[i] = y[0] + 'ī'
         elif c == '不' and y.lower() == 'bú':
             syls[i] = y[0] + 'ù'
-    out, k = '', 0
-    for tok in jieba.lcut(hz):
-        if erhua and tok == '儿':
+    toks = [(t.word, t.flag) for t in pseg.lcut(hz)]
+    split = []
+    for i, (w, f) in enumerate(toks):
+        if w == '的话' and not (i + 1 < len(toks) and toks[i + 1][0] in '，,'):  # 的话 is a unit only when conditional
+            split += [('的', 'u'), ('话', 'n')]
+        elif split and split[-1][1].startswith('m') and len(w) > 1 and w[0] in CLASSIFIERS and w not in DICT:
+            split += [(w[0], 'q'), (w[1:], f)]
+        else:
+            split.append((w, f))
+    units = []  # [text, syllable count, is_word, flag]
+    for w, f in split:
+        n = len(CJK.findall(w.replace('儿', '') if erhua else w))
+        if erhua and w == '儿':
             continue
-        n = len(CJK.findall(tok.replace('儿', '') if erhua else tok))
-        if n:
+        if not n:
+            units.append([w, 0, False, f])
+            continue
+        prev = units[-1] if units else None
+        particle = w in ('的', '了', '着', '过') and prev and prev[2]
+        classifier = f.startswith('q') and prev and prev[2] and prev[3].startswith('m')
+        if particle or classifier:
+            prev[1] += n
+            prev[3] = f
+        else:
+            units.append([w, n, True, f])
+    out, k = '', 0
+    for text, n, is_word, _ in units:
+        if is_word:
             word = ''
             for y in syls[k:k + n]:
                 word += ("'" if word and y[0].lower() in 'aoe' else '') + y
             out += (' ' if out and not out.endswith(' ') else '') + word
             k += n
         else:
-            out += ''.join(PUNCT.get(c, c) for c in tok if not c.isspace())
+            out += ''.join(PUNCT.get(c, c) for c in text if not c.isspace())
     return out[:1].upper() + out[1:]
 
 HANVIET_FIX = {'冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
@@ -264,6 +287,42 @@ def pos_gaps(hz, e):
     have = {g['pos'] for r in e['readings'] for g in r['groups']}
     return [HINT_POS[p] for p in HSK[hz].get('p', []) if p in HINT_POS and HINT_POS[p] not in have]
 
+MUST_HAVE = {  # core senses of the most polysemous HSK 1 words; the audit must see each one covered
+    '就': ['Phó từ: ngay, liền (我马上就来)', 'Phó từ: chỉ, vừa đúng (就一个)', 'Liên từ/Phó từ: thì (他不是在家就是在学校)'],
+    '地方': ['Danh từ: chỗ, nơi', 'Danh từ: chỗ, điểm (有不懂的地方)'],
+    '还有': ['Liên từ: ngoài ra, và còn', 'Động từ: còn có'],
+    '还': ['Phó từ: vẫn, còn', 'Phó từ: còn, hơn nữa', 'Động từ: trả lại (还-huan2)'],
+    '都': ['Phó từ: đều, tất cả', 'Phó từ: đã (都十点了)'],
+    '才': ['Phó từ: mới, vừa mới', 'Phó từ: mãi mới, đến khi'],
+    '也': ['Phó từ: cũng'], '又': ['Phó từ: lại, lần nữa (đã xảy ra)', 'Phó từ: vừa ... vừa'],
+    '在': ['Giới từ: ở, tại', 'Phó từ: đang', 'Động từ: ở, có mặt'],
+    '给': ['Động từ: cho, đưa', 'Giới từ: cho, giúp, để'],
+    '让': ['Động từ: để, cho phép', 'Động từ: bảo, khiến'], '叫': ['Động từ: gọi, tên là', 'Động từ: bảo, khiến'],
+    '会': ['Động từ: biết (kỹ năng)', 'Động từ: sẽ, có thể xảy ra', 'Danh từ: cuộc họp'],
+    '能': ['Động từ: có thể (khả năng)', 'Động từ: được phép'],
+    '可以': ['Động từ: có thể, được phép'], '要': ['Động từ: muốn', 'Động từ: cần, phải', 'Phó từ: sắp, sẽ'],
+    '得': ['Động từ: phải (děi)', 'Trợ từ: bổ ngữ (de)'], '了': ['Trợ từ: hoàn thành', 'Trợ từ: tình huống mới'],
+    '过': ['Trợ từ: đã từng', 'Động từ: qua, đi qua'], '对': ['Tính từ: đúng', 'Giới từ: đối với, với'],
+    '跟': ['Giới từ: với, cùng', 'Động từ: theo'], '从': ['Giới từ: từ'], '到': ['Động từ: đến', 'Bổ ngữ: được, tới (kết quả)'],
+    '说': ['Động từ: nói'], '看': ['Động từ: xem, nhìn', 'Động từ: thăm, khám (看病)', 'Động từ: cho rằng'],
+    '想': ['Động từ: nghĩ', 'Động từ: muốn', 'Động từ: nhớ'], '好': ['Tính từ: tốt', 'Phó từ: rất, thật (好大)', 'Bổ ngữ: xong'],
+    '有': ['Động từ: có', 'Động từ: có (tồn tại)'], '点': ['Danh từ: giờ', 'Lượng từ: chút, ít (一点)', 'Danh từ: điểm'],
+    '些': ['Lượng từ: một vài, những'], '没': ['Phó từ: chưa, không (没有)'], '用': ['Động từ: dùng, sử dụng'],
+    '开': ['Động từ: mở', 'Động từ: lái, bật'], '打': ['Động từ: đánh', 'Động từ: gọi (điện thoại)', 'Động từ: chơi (bóng)'],
+    '多': ['Tính từ: nhiều', 'Phó từ: bao nhiêu, mấy (多大)'], '下': ['Danh từ: dưới', 'Động từ: xuống', 'Lượng từ: lần (一下)'],
+    '上': ['Danh từ: trên', 'Động từ: lên'], '把': ['Giới từ: 把 (đưa tân ngữ lên trước)'],
+    '给': ['Động từ: cho, đưa', 'Giới từ: cho, giúp, để'], '做': ['Động từ: làm'], '的': ['Trợ từ: của, định ngữ'],
+}
+
+def standins(hz, e, bound):
+    # AI examples for a single hanzi must show it on its own, not only inside a longer compound (要是 for 要, 就算 for 就)
+    if len(hz) != 1:
+        return []
+    return [f'ví dụ của "{s["vi"]}" chỉ có từ ghép chứa 「{hz}」: viết lại câu với 「{hz}」 đứng riêng (không dùng từ ghép khác thay thế)'
+            for r in e['readings'] for g in r['groups'] for s in g['senses']
+            if s['ex'].get('ai') and not s['ex'].get('tatoeba') and g['pos'] != 'Lượng từ' and s['vi'] not in bound
+            and hz not in jieba.lcut(s['ex'].get('hz') or '')]
+
 def audit(hz, e, llm, readings):
     """A second opinion on the finished entry: unnatural examples and senses starred rare that are everyday meanings."""
     rows = [{'id': f'{ri}.{gi}.{si}', 'pos': g['pos'], 'vi': s['vi'], 'rare': not s.get('common'), 'hz': s['ex'].get('hz') or '', 'py': s['ex'].get('py')}
@@ -274,21 +333,45 @@ def audit(hz, e, llm, readings):
     out = llm(f"""Kiểm tra mục từ 「{hz}」 cho người Việt học tiếng Trung. Mỗi dòng: một nghĩa, cờ rare (nghĩa hiếm), một câu ví dụ.
 {json.dumps(rows, ensure_ascii=False)}
 Nghĩa gốc CC-CEDICT và bản dịch cvdict_vi để đối chiếu: {json.dumps(readings, ensure_ascii=False)}
-Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":["id",...],"missing":[{{"pos":"...","vi":"..."}}]}}.
-- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn làm câu thay thế, hoặc không minh hoạ đúng nghĩa. Bỏ qua dòng (Tatoeba).
+{('Nghĩa BẮT BUỘC phải có trong mục từ này (liệt kê vào missing nếu thiếu): ' + json.dumps(MUST_HAVE[hz], ensure_ascii=False)) if hz in MUST_HAVE else ''}
+Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":[{{"id":"...","pattern":"不用"}}],"missing":[{{"pos":"...","vi":"..."}}]}}.
+- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
-- bound: id của nghĩa chỉ dùng trong một số kết cấu cố định hoặc chỉ ở dạng phủ định/nghi vấn, không đứng độc lập được (ví dụ 用 "cần phải" chỉ trong 不用; 要 tính từ "quan trọng" chỉ trong 要紧).
+- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Ghi "pattern" là kết cấu đó. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
 - missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
     by_id = {r['id']: r for r in rows}
     bad = [f'ví dụ của "{by_id[b["id"]]["vi"]}" không tự nhiên: {b.get("why", "")}' for b in out.get('bad_example', []) if isinstance(b, dict) and b.get('id') in by_id]
     unstar = {by_id[i]['vi'] for i in out.get('common', []) if i in by_id}
-    bound = {by_id[i]['vi'] for i in out.get('bound', []) if i in by_id}
+    bound = {by_id[b['id']]['vi']: b.get('pattern') for b in out.get('bound', []) if isinstance(b, dict) and b.get('id') in by_id and b.get('pattern')}
     missing = [f'thiếu nghĩa cốt lõi {m["pos"]} "{m["vi"]}": thêm nó với "src": [], "core": true và ví dụ tự nhiên' for m in out.get('missing', []) if isinstance(m, dict) and m.get('pos') and m.get('vi')]
     return bad + missing, unstar, bound
 
-def entry(hz, rows, llm=ask):
+def merge_senses(hz, readings, merge):
+    """Fold CC-CEDICT senses that mean the same thing into one numbered sense before the model translates them."""
+    out = json.loads(json.dumps(readings))
+    answer = merge(f"""Mục từ 「{hz}」. Dưới đây là các nghĩa CC-CEDICT (đánh số).
+{json.dumps([{'pinyin': r['pinyin'], 'senses': r['senses']} for r in readings], ensure_ascii=False)}
+Gộp các nghĩa CÙNG MỘT nghĩa (đồng nghĩa, chỉ khác cách diễn đạt, như "left side" và "the left", "to get" và "to obtain") thành một nhóm. Không gộp nghĩa khác từ loại hoặc khác ngữ cảnh. Chỉ trả về JSON {{"groups": [["0.0", "0.1"], ...]}}, chỉ ghi nhóm có từ 2 số trở lên, các số trong nhóm cùng một cách đọc.""")
+    seen = set()
+    for group in answer.get('groups', []) if isinstance(answer, dict) else []:
+        if not isinstance(group, list) or len(group) < 2 or len({i.split('.')[0] for i in group if isinstance(i, str)}) != 1:
+            continue
+        for r in out:
+            texts = r['senses']
+            if all(isinstance(i, str) and i in texts and i not in seen for i in group):
+                texts[group[0]] = ' / '.join(texts[i] for i in group)
+                for i in group[1:]:
+                    del texts[i]
+                seen.update(group)
+    return out
+
+def entry(hz, rows, llm=ask, merge=None):
     readings, skipped = source(hz)
+    merge = merge or (llm if llm is ask else None)
+    before = sum(len(r['senses']) for r in readings)
+    if merge:
+        readings = merge_senses(hz, readings, merge)
     level = DICT[hz][5]
     cands = candidates(hz, level, rows)
     ids = [i for r in readings for i in r['senses']]
@@ -317,10 +400,10 @@ Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
     e = llm(prompt)
     errs = check(e, cands, hz, readings)
-    unstar, bound = set(), set()
+    unstar, bound = set(), {}
     if not errs:
         bad, unstar, bound = audit(hz, e, llm, readings)
-        errs = bad + [f'danh sách HSK gợi ý từ loại "{p}" nhưng chưa có nghĩa nào. Nếu từ có nghĩa cốt lõi này mà CC-CEDICT không ghi (xem cvdict_vi), thêm nó với "src": [] và "core": true; nếu không thì để nguyên' for p in pos_gaps(hz, e)]
+        errs = bad + standins(hz, e, bound) + [f'danh sách HSK gợi ý từ loại "{p}" nhưng chưa có nghĩa nào. Nếu từ có nghĩa cốt lõi này mà CC-CEDICT không ghi (xem cvdict_vi), thêm nó với "src": [] và "core": true; nếu không thì để nguyên' for p in pos_gaps(hz, e)]
     if errs:  # one repair round with the concrete failures
         e = llm(prompt + f"\n\nBản trước cần sửa: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
         errs = check(e, cands, hz, readings)
@@ -339,8 +422,9 @@ Chỉ trả về JSON:
             for s in g['senses']:
                 if s['vi'] in unstar:
                     s['common'] = True
-                if s['vi'] in bound:
-                    s['common'] = False
+                if bound.get(s['vi']):
+                    s['common'] = True
+                    s['vi'] += f' (chỉ dùng trong {bound[s["vi"]]})'
     e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
     main = main_reading(hz, e['readings'])
     e['main'] = main
@@ -348,7 +432,7 @@ Chỉ trả về JSON:
         if r['pinyin'].lower() != main and not any(s.get('common') for g in r['groups'] for s in g['senses']):
             e['readings'].remove(r)
             e.setdefault('dropped', []).extend({'id': i, 'why': 'âm hiếm'} for g in r['groups'] for s in g['senses'] for i in s['src'])
-    e['stats'] = {'cedict': len(ids), 'xref': len(skipped), 'dropped': len(e.get('dropped', [])),
+    e['stats'] = {'cedict': before, 'merged': len(ids), 'xref': len(skipped), 'dropped': len(e.get('dropped', [])),
                   'tatoeba': sum(bool(s['ex'].get('tatoeba')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
                   'ai_ex': sum(bool(s['ex'].get('ai')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
                   'candidates': len(cands)}

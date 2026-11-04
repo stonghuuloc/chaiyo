@@ -23,8 +23,15 @@ def stage_words(gen, n=3, rare_at=1):
     return out
 
 
+BARE = [{'ai': True, 'hz': '我打你', 'py': 'Wǒ dǎ nǐ', 'vi': 'x'}, {'ai': True, 'hz': '他打我', 'py': 'Tā dǎ wǒ', 'vi': 'x'}]
+
+
+def bare_answer():
+    return answer(ex0=BARE[0], ex1=BARE[1])
+
+
 def rare_answer():
-    a = answer()
+    a = bare_answer()
     a['readings'][0]['groups'][0]['senses'][1]['common'] = False
     return a
 
@@ -146,7 +153,7 @@ def test_audit_bad_example_triggers_one_repair_round(word):
 
 
 def test_audit_clean_entry_costs_two_calls(word):
-    llm = scripted(answer(), {'bad_example': [], 'common': []})
+    llm = scripted(bare_answer(), {'bad_example': [], 'common': []})
     word.entry('打', {}, llm)
     assert len(llm.calls) == 2
 
@@ -164,7 +171,7 @@ def test_hsk_pos_hint_without_group_is_sent_back_and_core_sense_is_kept(word, mo
 
 @pytest.mark.parametrize('hz,py,want', [
     ('我不去。', 'Wǒ bú qù.', 'Wǒ bù qù.'),
-    ('这是一些书。', 'Zhè shì yìxiē shū.', 'Zhèshì yīxiē shū.'),
+    ('这是一些书。', 'Zhè shì yìxiē shū.', 'Zhè shì yīxiē shū.'),
     ('他走路去学校。', 'Tā zǒu lù qù xué xiào.', 'Tā zǒulù qù xuéxiào.'),
     ('你好，你叫什么名字？', 'Nǐ hǎo, nǐ jiào shénme míngzi?', 'Nǐhǎo, nǐ jiào shénme míngzi?'),
     ('他很好。', 'Tā hěn', 'Tā hěn')])
@@ -180,16 +187,17 @@ def test_hanviet_fix_and_dupe_check(gen):
 
 
 def test_audit_missing_core_sense_and_bound_form(word):
-    audit = {'bad_example': [], 'common': [], 'bound': ['0.0.1'], 'missing': [{'pos': 'Danh từ', 'vi': 'chỗ, điểm'}]}
+    audit = {'bad_example': [], 'common': [], 'bound': [], 'missing': [{'pos': 'Danh từ', 'vi': 'chỗ, điểm'}]}
     fixed = answer()
     llm = scripted(answer(), audit, fixed)
     hz, e = word.entry('打', {}, llm)
     assert len(llm.calls) == 3 and 'thiếu nghĩa cốt lõi Danh từ' in llm.calls[2] and 'chỗ, điểm' in llm.calls[2]
 
 
-def test_bound_form_gets_rare_flag(word):
-    hz, e = word.entry('打', {}, scripted(answer(), {'bad_example': [], 'common': [], 'bound': ['0.0.1'], 'missing': []}))
-    assert [s['common'] for s in e['readings'][0]['groups'][0]['senses']] == [True, False]
+def test_bound_pattern_sense_is_noted_not_starred(word):
+    hz, e = word.entry('打', {}, scripted(bare_answer(), {'bad_example': [], 'common': [], 'bound': [{'id': '0.0.1', 'pattern': '打你'}], 'missing': []}))
+    senses = e['readings'][0]['groups'][0]['senses']
+    assert [s['common'] for s in senses] == [True, True] and senses[1]['vi'] == 'chơi (chỉ dùng trong 打你)'
 
 
 def test_classifier_example_needs_numeral_before_classifier(word, monkeypatch):
@@ -219,3 +227,46 @@ def test_normalize_py_handles_erhua(gen):
 
 def test_normalize_py_erhua_as_its_own_jieba_token(gen):
     assert gen.normalize_py('我看一下儿。', 'Wǒ kàn yíxiàr.') == 'Wǒ kàn yīxiàr.'
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('这是老师的话。', 'Zhè shì lǎoshī de huà.', 'Zhè shì lǎoshīde huà.'),
+    ('你去的话，我也去。', 'Nǐ qù de huà, wǒ yě qù.', 'Nǐ qù dehuà, wǒ yě qù.'),
+    ('我有一张床。', 'Wǒ yǒu yī zhāng chuáng.', 'Wǒ yǒu yīzhāng chuáng.'),
+    ('我买了三本书。', 'Wǒ mǎi le sān běn shū.', 'Wǒ mǎile sānběn shū.'),
+    ('他等着你。', 'Tā děng zhe nǐ.', 'Tā děngzhe nǐ.'),
+    ('我去过北京。', 'Wǒ qù guò Běijīng.', 'Wǒ qùguò Běijīng.')])
+def test_pinyin_grouping_rule_numeral_classifier_particles_conditional(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_merge_senses_folds_synonyms_before_translation(gen):
+    readings = [{'pinyin': 'zuǒ bian', 'senses': {'0.0': 'left side', '0.1': 'the left', '0.2': 'a different thing'}}]
+    merged = gen.merge_senses('左边', readings, lambda prompt: {'groups': [['0.0', '0.1'], ['0.0', '0.2'], ['0.2']]})
+    assert merged[0]['senses'] == {'0.0': 'left side / the left', '0.2': 'a different thing'}
+    assert readings[0]['senses']['0.1'] == 'the left'
+
+
+def test_merge_senses_ignores_groups_across_readings(gen):
+    readings = [{'pinyin': 'a', 'senses': {'0.0': 'x'}}, {'pinyin': 'b', 'senses': {'1.0': 'y'}}]
+    assert gen.merge_senses('字', readings, lambda prompt: {'groups': [['0.0', '1.0']]}) == readings
+
+
+def test_entry_merges_before_the_main_prompt(word):
+    llm = scripted(answer(covered=('0.0', '1.0')))
+    hz, e = word.entry('打', {}, llm, merge=lambda prompt: {'groups': [['0.0', '0.1']]})
+    assert '0.0 to hit / to play' not in llm.calls[0] and 'to hit / to play' in llm.calls[0]
+    assert e['stats']['cedict'] == 3 and e['stats']['merged'] == 2
+
+
+def test_stand_in_compound_goes_back_for_a_bare_example(word):
+    llm = scripted(answer(), {'bad_example': [], 'common': []}, bare_answer())
+    word.entry('打', {}, llm)
+    assert len(llm.calls) == 3 and 'đứng riêng' in llm.calls[2]
+
+
+def test_must_have_senses_reach_the_audit_prompt(word):
+    word.MUST_HAVE['打'] = ['Động từ: gọi (điện thoại)']
+    llm = scripted(bare_answer(), {'bad_example': [], 'common': []})
+    word.entry('打', {}, llm)
+    assert 'Động từ: gọi (điện thoại)' in llm.calls[1]
