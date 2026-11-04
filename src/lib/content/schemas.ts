@@ -14,7 +14,8 @@ const Pos = z.enum([
 	'conj',
 	'part',
 	'interj',
-	'phrase'
+	'phrase',
+	'comp'
 ]);
 const Gloss = z.strictObject({ hanzi: z.string(), pinyin: z.string(), vi: z.string() });
 const Scene = z.strictObject({ file: z.string(), cast: z.array(z.string()), prompt: z.string() });
@@ -47,7 +48,15 @@ export const Word = z.strictObject({
 	hanviet: z.string().optional(),
 	level: Level,
 	pos: z.array(Pos),
-	senses: z.array(z.strictObject({ vi: z.string(), note: z.string().optional() })),
+	senses: z.array(
+		z.strictObject({
+			vi: z.string(),
+			note: z.string().optional(),
+			pos: Pos.optional(),
+			rare: z.literal(true).optional(),
+			example: Id.optional()
+		})
+	),
 	collocations: z.array(Gloss).optional(),
 	examples: z.array(Id),
 	image: z
@@ -75,6 +84,7 @@ export const Sentence = z.strictObject({
 	vi: z.string(),
 	speaker: z.string().optional(),
 	seg: z.array(z.string()).optional(),
+	source: z.union([z.literal('ai'), z.string().regex(/^tatoeba:\d+$/)]).optional(),
 	unknown: z.array(Gloss).optional()
 });
 
@@ -96,11 +106,14 @@ const Prompt = z.discriminatedUnion('kind', [
 	z.strictObject({ kind: z.literal('audio'), ref: z.string() }),
 	z.strictObject({ kind: z.literal('image'), ref: z.string() }),
 	z.strictObject({ kind: z.literal('vi'), text: z.string() }),
-	z.strictObject({ kind: z.literal('syllable'), text: z.string() })
+	z.strictObject({ kind: z.literal('syllable'), text: z.string(), spoken: z.string().optional() })
 ]);
 
 const QuestionBase = {
 	id: Id,
+	why: z.string().optional(),
+	ask: z.string().optional(),
+	section: z.enum(['tones', 'finals', 'initials', 'spelling', 'sandhi']).optional(),
 	tests: z.strictObject({
 		words: z.array(z.string()).optional(),
 		grammar: z.array(z.string()).optional(),
@@ -194,13 +207,18 @@ export const Lesson = z.strictObject({
 	gate: z.strictObject({ pool: z.array(Question), draw: z.number() })
 });
 
+const Chip = z.union([
+	z.string(),
+	z.strictObject({ say: z.string(), label: z.string().optional(), hanzi: z.string().optional() })
+]);
+
 const PrimerSection = z.strictObject({
 	cards: z.array(
 		z.strictObject({
 			title: z.string(),
 			explain: z.string(),
-			syllables: z.array(z.string()),
-			pairs: z.array(z.tuple([z.string(), z.string()])).optional()
+			syllables: z.array(Chip),
+			pairs: z.array(z.tuple([Chip, Chip])).optional()
 		})
 	),
 	drills: z.array(Question)
@@ -228,13 +246,26 @@ export const Syllables = z.array(
 	z.strictObject({ syllable: z.string(), initial: z.string(), final: z.string() })
 );
 
-export const schemas = { Lesson, Word, Char, Sentence, GrammarPoint, Question, Primer, Syllables };
+export const Sentences = z.array(Sentence);
+
+export const schemas = {
+	Lesson,
+	Word,
+	Char,
+	Sentence,
+	Sentences,
+	GrammarPoint,
+	Question,
+	Primer,
+	Syllables
+};
 
 export type ContentType = keyof typeof schemas;
 export type Lesson = z.infer<typeof Lesson>;
 export type Word = z.infer<typeof Word>;
 export type Char = z.infer<typeof Char>;
 export type Sentence = z.infer<typeof Sentence>;
+export type Sentences = z.infer<typeof Sentences>;
 export type GrammarPoint = z.infer<typeof GrammarPoint>;
 export type Question = z.infer<typeof Question>;
 export type Primer = z.infer<typeof Primer>;

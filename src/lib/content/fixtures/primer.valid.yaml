@@ -16,8 +16,8 @@ sections:
           {
             title: 'Thanh 1: cao và đều',
             explain: Giữ giọng cao đều.,
-            syllables: [mā, má, mǎ, mà, ma],
-            pairs: [[zhī, jī]]
+            syllables: [mā, má, mǎ, mà, ma, { say: ā, label: a, hanzi: 啊 }],
+            pairs: [[zhī, { say: jī, label: j }]]
           }
         ],
       drills:
