@@ -1,5 +1,5 @@
 # CHY-8 S2 — plan
-ACs: AC1, AC2  ·  Spec rev 1  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-8 (after S1 and S4 are on it, and CHY-9's `lintDir` are merged) · run `pnpm install` first
+ACs: AC1, AC2  ·  Spec rev 1  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-8 (after S1 and S4 are on it, and CHY-9's `lintDir` is merged (63d1735)) · run `pnpm install` first
 
 ## Anchors (verified 2026-11-04 on main 63d1735; items marked ⏳ come from lanes not merged yet)
 - `src/lib/content/parse.ts:4-9` `ContentError`; `:16` `parseContent`. `schemas.ts:23` `Char`, `:43` `Word`, `:79` `Sentence`, `:91` `GrammarPoint`, `:128` `Question`, `:185` `Lesson`, `:227` `Primer` (`kind: 'primer'`), `:245` `Syllables`.
@@ -24,7 +24,6 @@ Files: new `src/lib/content/import/assemble.ts`, new `src/lib/content/import/ass
 
 ## Task 3 [AC1][AC2] `importContent` + canonical sha
 Files: new `src/lib/content/import/import.ts`, new `src/lib/content/import/import.test.ts`
-XXFIX (`content/lessons/hsk1/h1-01.yaml`, its `content/words`, `content/chars`, `content/grammar/h1-g01.yaml`, `content/syllables.yaml` trimmed only if lint allows) plus a 20-row `dictionary.json` extract that includes 们 and 你; one free `content/sentences/ok.yaml` (1 sentence, id `s-w-1`) listed in one word's `examples` so lint 8 resolves it; CHY-11's `h0-00.yaml` once merged (assert Primer handling in `assemble.test.ts` with a literal Primer otherwise). First run `lintDir(fixtures/ok)` in a throwaway test: it must return `errors: []`. If not, STOP and report the check ids to the Captain; never edit lint or loosen a check.
 - Test first (`import.test.ts`, helper `withTemp(fixture, mutate)` = `mkdtempSync` + `cpSync`; every test calls `vi.stubEnv('CHAIYO_VAULT', '/nonexistent')` and passes `refs: fixtureRefs` (`import { fixtureRefs } from '../lint/fixtures/refs'`), the same refs `clean.test.ts` uses; the stub env is only a safety net, `loadRefs` resolves against `process.cwd()`, not `dir`): AC1 bad pinyin `ni hao` → `{ errors }` with check 3, stub sink spy `has`/`write` not called, memory sink empty; derive error (no `hanviet:` line in `words/你们.yaml` and `chars/们.yaml` deleted) → one check 10 error `{ file: 'words/你们.yaml', path: 'hanviet' }`, nothing written; a broken `lessons/hsk2/x.yaml` in the temp dir → `{ errors }` without `only`, `{ sha }` with `only: ['lessons/hsk1', 'chars', 'sentences', 'syllables.yaml', 'words/…', 'grammar/…']` (C2 list: the `words/<id>.yaml` and `grammar/<id>.yaml` those lessons list); a stub sink whose `write` throws → the call rejects with that error; malformed `dictionary.json` row → check 10 on `dictionary.json`; AC2 A → B → A (revert) rewrites A: results `{sha:A}`,`{sha:B}`,`{sha:A}`, 3 writes, `versions` length 2; twice → `toEqual({ sha: A })`, `write` once, `versions` length 1; comment-only YAML edit → same sha; `senses[0].vi` edit, an edit of the 们 row's pinyin or meaning (not a lesson word, so its entry comes from the Dictionary; other columns are not in `ThinEntry` and do not change the sha) → different sha; no `dictionary.json` → success.
 - Change: `importContent(dir, sink, opts?: { refs?: LintRefs; only?: string[] }): Promise<{ sha: string } | { errors: LintError[] }>`: `lintDir(dir, opts)`; errors → `return { errors }` (lintDir already sorts); read `<dir>/dictionary.json` if present → `parseDictionary` (a malformed row becomes a check-10 error on `dictionary.json`); `assemble`; errors → return (check-10 errors from `assemble` and `dictionary.json` are sorted by a local comparator in import.ts: file, then path, then check); `sha = createHash('sha256').update(canonical(content)).digest('hex')` where `canonical` = `JSON.stringify` with recursively sorted object keys; `if (await sink.has(sha)) return { sha }`; `await sink.write({ ...content, sha })`; return `{ sha }`.
 - Verify: `pnpm vitest --run src/lib/content/import && pnpm prettier --check src/lib/content/import`
@@ -45,7 +44,7 @@ export async function importContent(dir: string, sink: Sink, opts?: { refs?: Lin
   const dict = loadDict(dir); // no file → `{ ok: true, value: new Map() }`; else parseDictionary('dictionary.json', JSON.parse(text)); !ok → return { errors } as LintError check 10 'Derive', file dictionary.json; a JSON.parse throw → one check-10 error; sort with the local comparator
   if (!dict.ok) return { errors: dict.errors };
   const built = assemble(set, dict.value);
-  if ('errors' in built) return { errors: built.errors };
+  if ('errors' in built) return { errors: built.errors.sort(byLocation) };
   const sha = createHash('sha256').update(canonical(built.content)).digest('hex');
   if (!(await sink.has(sha))) await sink.write({ ...built.content, sha });
   return { sha };
