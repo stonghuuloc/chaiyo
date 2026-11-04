@@ -33,13 +33,13 @@ def test_secondary_reading_without_common_sense_dropped(word):
     assert {'id': '1.0', 'why': 'âm hiếm'} in e['dropped']
 
 
-def test_main_reading_without_common_sense_kept(word):
-    a = answer()
+def test_main_reading_kept_when_no_reading_has_a_common_sense(word):
+    a = answer(second_common=False)
     for g in a['readings'][0]['groups']:
         for s in g['senses']:
             s['common'] = False
     hz, e = word.entry('打', {}, scripted(a))
-    assert [r['pinyin'] for r in e['readings']] == ['dǎ', 'dá']
+    assert [r['pinyin'] for r in e['readings']] == ['dǎ']
 
 
 def test_main_exits_1_and_lists_rejected(gen, seeded, monkeypatch, capsys, tmp_path):

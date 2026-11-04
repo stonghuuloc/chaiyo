@@ -110,7 +110,7 @@ def source(hz):
                          'senses': {f'{fi}.{i}': m for i, m in enumerate(keep)}})
     return readings, skipped
 
-REASONS = {'trùng', 'cổ/văn ngôn', 'tên riêng'}
+REASONS = {'trùng', 'cổ/văn ngôn', 'tên riêng', 'không có ví dụ tự nhiên'}
 POS_CODE = dict(zip(POS_VI, ['n', 'v', 'adj', 'adv', 'mw', 'pron', 'num', 'prep', 'conj', 'part', 'interj', 'comp', 'phrase', 'phrase']))
 MARKED = set('āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ')
 NEUTRAL = {'de', 'le', 'ma', 'me', 'men', 'ne', 'ba', 'zi', 'zhe', 'guo', 'a', 'ya', 'na', 'chu lai', 'qi lai'}
@@ -171,7 +171,7 @@ def check(e, cands, hz, readings):
                 if not isinstance(s.get('vi'), str) or not s['vi'].strip():
                     errs.append('nghĩa thiếu "vi"')
                     continue
-                if not s.get('src') or any(i not in texts for i in s['src']):
+                if not s.get('core') and (not s.get('src') or any(i not in texts for i in s['src'])):
                     errs.append(f'nghĩa "{s["vi"]}" không có nguồn')
                 x = s.get('ex') or {}
                 if not isinstance(x.get('py'), str) or not isinstance(x.get('vi'), str):
@@ -199,10 +199,37 @@ MAIN_OVERRIDE = {  # dict.json's first reading is a rare or unmarked one for the
     '地方': 'dì fang', '页': 'yè'}
 
 def main_reading(hz, readings):
-    """The reading that gets the plain-hanzi id: the table above, else dict.json's reading, else the first source reading."""
+    """The reading that gets the plain-hanzi id: the table above, else the reading with most common senses (告诉 gào su, not the legal gào sù), a tie going to dict.json's reading, then source order."""
     if hz in MAIN_OVERRIDE:
         return MAIN_OVERRIDE[hz]
-    return (canon(DICT[hz][1], readings) or readings[0]['pinyin']).lower()
+    dict_py = DICT[hz][1].lower()
+    common = lambda r: sum(bool(s.get('common')) for g in r['groups'] for s in g['senses'])
+    return max(readings, key=lambda r: (common(r), r['pinyin'].lower() == dict_py))['pinyin'].lower()
+
+HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó từ', 'q': 'Lượng từ'}
+
+def pos_gaps(hz, e):
+    """HSK list POS hints with no group in any reading: a core sense CC-CEDICT omits (真的 is also an adjective) may be missing."""
+    have = {g['pos'] for r in e['readings'] for g in r['groups']}
+    return [HINT_POS[p] for p in HSK[hz].get('p', []) if p in HINT_POS and HINT_POS[p] not in have]
+
+def audit(hz, e, llm):
+    """A second opinion on the finished entry: unnatural examples and senses starred rare that are everyday meanings."""
+    rows = [{'id': f'{ri}.{gi}.{si}', 'pos': g['pos'], 'vi': s['vi'], 'rare': not s.get('common'), 'hz': s['ex'].get('hz') or '', 'py': s['ex'].get('py')}
+            for ri, r in enumerate(e['readings']) for gi, g in enumerate(r['groups']) for si, s in enumerate(g['senses'])]
+    for row, (r, g, s) in zip(rows, [(r, g, s) for r in e['readings'] for g in r['groups'] for s in g['senses']]):
+        if s['ex'].get('tatoeba'):
+            row['hz'] = '(Tatoeba, đã duyệt)'
+    out = llm(f"""Kiểm tra mục từ 「{hz}」 cho người Việt học tiếng Trung. Mỗi dòng: một nghĩa, cờ rare (nghĩa hiếm), một câu ví dụ.
+{json.dumps(rows, ensure_ascii=False)}
+Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...]}}.
+- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn làm câu thay thế, hoặc không minh hoạ đúng nghĩa. Bỏ qua dòng (Tatoeba).
+- common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
+Không có gì sai → danh sách rỗng.""")
+    by_id = {r['id']: r for r in rows}
+    bad = [f'ví dụ của "{by_id[b["id"]]["vi"]}" không tự nhiên: {b.get("why", "")}' for b in out.get('bad_example', []) if isinstance(b, dict) and b.get('id') in by_id]
+    unstar = {by_id[i]['vi'] for i in out.get('common', []) if i in by_id}
+    return bad, unstar
 
 def entry(hz, rows, llm=ask):
     readings, skipped = source(hz)
@@ -221,19 +248,24 @@ Câu ví dụ có sẵn (Tatoeba, id → câu): {json.dumps(cands, ensure_ascii=
 Yêu cầu:
 - Mỗi số nghĩa ({', '.join(ids)}) PHẢI nằm trong "src" của đúng một nghĩa đầu ra, hoặc trong "dropped" với lý do "trùng" (gộp nghĩa đồng nghĩa vào chung một nghĩa thì ghi cả hai số vào src, không phải drop), "cổ/văn ngôn" hoặc "tên riêng". Không tự thêm nghĩa không có trong nguồn.
 - Gom theo cách đọc, rồi theo từ loại. Từ loại chỉ dùng: {', '.join(POS_VI)}. "classifier for …" là Lượng từ; 好/完/到 sau động từ chỉ kết quả là Bổ ngữ.
-- Nghĩa tiếng Việt ngắn, tự nhiên (2–8 từ), có thể thêm ghi chú trong ngoặc. Sắp nghĩa phổ biến trước.
-- "common": true cho nghĩa người học HSK 1–6 hay gặp (thường 2–5 nghĩa mỗi từ), false cho nghĩa hiếm/chuyên môn/chỉ còn trong từ ghép. Không bỏ nghĩa hiếm, chỉ đánh dấu.
+- Gộp các nghĩa gần đồng nghĩa (CC-CEDICT hay tách bằng dấu phẩy, ví dụ "to get; to obtain; to receive") thành MỘT nghĩa, ghi hết số vào src. Chỉ tách khi người học cần phân biệt.
+- Nghĩa tiếng Việt ngắn, tự nhiên (2–8 từ), dịch theo cách người Việt nói, KHÔNG dịch từng chữ (invalid = người ốm lâu năm, không phải "tàn tật"; building = nhà/toà nhà tuỳ ngữ cảnh). Có thể thêm ghi chú trong ngoặc. Sắp nghĩa hay dùng nhất trước.
+- "common": true cho mọi nghĩa người học HSK 1–6 hay gặp trong lời nói và văn viết thường ngày, kể cả khi nó chỉ xuất hiện trong cấu trúc hoặc từ ghép thông dụng (少 trong 很少 "hiếm khi", 少来/少废话 "thôi, đừng" là common). false CHỈ cho nghĩa hiếm: văn ngôn, phương ngữ, chuyên ngành, chỉ còn trong thành ngữ cố định, hoặc chỉ dùng làm tên riêng. Căn cứ vào mức độ thường dùng của nghĩa, KHÔNG phải thứ tự trong CC-CEDICT. Không bỏ nghĩa hiếm, chỉ đánh dấu.
 - Ví dụ: với mỗi nghĩa, chọn câu Tatoeba dùng ĐÚNG nghĩa đó (ghi "tatoeba": id, chép nguyên "hz"), ưu tiên câu ngắn, từ dễ. Một câu chỉ dùng cho một nghĩa.
-  Không có câu nào đúng nghĩa → tự viết câu ≤ 12 chữ Hán, từ vựng HSK ≤ {max(level or 3, 2)}, ghi "ai": true.
-  "py": pinyin có dấu, tách từ, viết hoa đầu câu. "vi": dịch tiếng Việt tự nhiên (dựa vào câu Trung, bản tiếng Anh/Việt kèm theo chỉ để hiểu nghĩa).
+  Không có câu nào đúng nghĩa → tự viết câu ≤ 12 chữ Hán, từ vựng HSK ≤ {max(level or 3, 2)}, ghi "ai": true. Câu tự viết phải là tiếng Trung hiện đại tự nhiên, dùng 「{hz}」 hoặc một từ ghép CÓ THẬT chứa nó (không bịa từ ghép, không dùng từ văn ngôn làm câu thay thế). Nếu nghĩa chỉ có ở từ không tự nhiên trong lời nói (hoặc ví dụ duy nhất là từ ghép văn ngôn), đưa nghĩa vào "dropped" với lý do "không có ví dụ tự nhiên" thay vì cố viết câu.
+  "py": pinyin có dấu, viết liền từng từ (zǒulù, jiàndào, tārén, wǒmen), cách nhau giữa các từ, viết hoa đầu câu; không đánh dấu biến điệu thanh 3-3 (giữ dấu gốc). "vi": dịch tiếng Việt tự nhiên (dựa vào câu Trung, bản tiếng Anh/Việt kèm theo chỉ để hiểu nghĩa).
 - "luongtu": lượng từ đi với danh từ này ([] nếu không phải danh từ). "cannghia": tối đa 3 từ gần nghĩa, [] nếu không chắc.
 
 Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
     e = llm(prompt)
     errs = check(e, cands, hz, readings)
+    unstar = set()
+    if not errs:
+        bad, unstar = audit(hz, e, llm)
+        errs = bad + [f'danh sách HSK gợi ý từ loại "{p}" nhưng chưa có nghĩa nào. Nếu từ có nghĩa cốt lõi này mà CC-CEDICT không ghi (xem cvdict_vi), thêm nó với "src": [] và "core": true; nếu không thì để nguyên' for p in pos_gaps(hz, e)]
     if errs:  # one repair round with the concrete failures
-        e = llm(prompt + f"\n\nBản trước sai: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
+        e = llm(prompt + f"\n\nBản trước cần sửa: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
         errs = check(e, cands, hz, readings)
     if errs:
         raise Reject(hz, errs)
@@ -244,6 +276,12 @@ Chỉ trả về JSON:
                 x = s['ex']
                 if x.get('tatoeba'):  # verbatim source text, not the model's copy
                     x['hz'] = cands[x['tatoeba']]['zh']
+    for r in e['readings']:
+        for g in r['groups']:
+            for s in g['senses']:
+                if s['vi'] in unstar:
+                    s['common'] = True
+    e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
     main = main_reading(hz, e['readings'])
     e['main'] = main
     for r in list(e['readings']):
@@ -306,7 +344,7 @@ def write_out(results):
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
                      'senses': hand + w['senses'], 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}
             dump(out / 'words' / f'{wid}.yaml', {k: w[k] for k in WORD_FIELDS if k in w})
-            nums = next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'])
+            nums = {**next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin']), 'core': e.get('core', [])}
             (out / 'src').mkdir(parents=True, exist_ok=True)
             (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
     dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
@@ -346,6 +384,8 @@ def review(out, seed, size=20):
         if src_file.exists():
             src = json.loads(src_file.read_text(encoding='utf-8'))
             lines += ['CC-CEDICT: ' + '; '.join(f'{k} {v}' for k, v in src['senses'].items()), '']
+            if src.get('core'):
+                lines += ['Added beyond CC-CEDICT: ' + '; '.join(src['core']), '']
     (out / f'review-{seed}.md').write_text('\n'.join(lines), encoding='utf-8')
     print(f'wrote {out / f"review-{seed}.md"} ({len(picked)} entries)')
 

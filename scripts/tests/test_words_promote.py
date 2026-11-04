@@ -122,3 +122,41 @@ def test_main_reading_falls_back_to_first_source_reading(word):
 
 def test_main_reading_override(word):
     assert word.main_reading('行', []) == 'xíng'
+
+
+def test_main_is_the_reading_with_common_senses_not_the_legal_one(word):
+    word.DICT['打'] = ['打', 'dá', 'da', 'đả', '', 1, [], [['dǎ', 'tá', []]]]
+    a = answer(second_common=False)
+    hz, e = word.entry('打', {}, scripted(a))
+    assert e['main'] == 'dǎ' and [r['pinyin'] for r in e['readings']] == ['dǎ']
+    assert sorted(word.to_yaml('打', e)[0]) == ['打']
+
+
+def test_audit_unstars_an_everyday_sense(word):
+    a = rare_answer()
+    hz, e = word.entry('打', {}, scripted(a, {'bad_example': [], 'common': ['0.0.1']}))
+    assert all(s['common'] for g in e['readings'][0]['groups'] for s in g['senses'])
+    assert 'rare' not in str(word.to_yaml('打', e)[0]['打']['senses'])
+
+
+def test_audit_bad_example_triggers_one_repair_round(word):
+    llm = scripted(answer(), {'bad_example': [{'id': '0.0.0', 'why': 'từ ghép không có thật'}], 'common': []}, answer())
+    word.entry('打', {}, llm)
+    assert len(llm.calls) == 3 and 'không tự nhiên: từ ghép không có thật' in llm.calls[2]
+
+
+def test_audit_clean_entry_costs_two_calls(word):
+    llm = scripted(answer(), {'bad_example': [], 'common': []})
+    word.entry('打', {}, llm)
+    assert len(llm.calls) == 2
+
+
+def test_hsk_pos_hint_without_group_is_sent_back_and_core_sense_is_kept(word, monkeypatch):
+    monkeypatch.setitem(word.HSK['打'], 'p', ['v', 'a'])
+    a = answer()
+    fixed = answer()
+    fixed['readings'][0]['groups'].append({'pos': 'Tính từ', 'senses': [
+        {'vi': 'cốt lõi', 'src': [], 'core': True, 'common': True, 'ex': {'ai': True, 'hz': '他很打', 'py': 'Tā hěn dǎ', 'vi': 'x'}}]})
+    llm = scripted(a, {'bad_example': [], 'common': []}, fixed)
+    hz, e = word.entry('打', {}, llm)
+    assert 'Tính từ' in llm.calls[2] and e['core'] == ['cốt lõi']
