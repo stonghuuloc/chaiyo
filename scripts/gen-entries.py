@@ -7,16 +7,16 @@ Sources (the LLM edits, it does not invent meanings):
   POS       HSK list field `p` (hint) → Vietnamese POS labels.
   examples  Tatoeba (CC BY 2.0 FR) simplified sentences that contain the word as a jieba token, with English
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
-Output: prototype/data/entries.json {hz: entry}.
+Output (staging, never content/): .cache/words/out/words/<id>.yaml (Word) + sentences/hsk1.yaml (Sentence[]) + src/<id>.json (numbered CC-CEDICT senses).
 Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [words]   (no words = all HSK 3.0 level 1 words in dict.json; sources download into .cache/words)"""
 import bz2, hashlib, json, os, re, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import jieba, opencc
+import jieba, opencc, yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / 'prototype/data/entries.json'
+CONTENT = ROOT / 'content/words'
 CACHE = ROOT / '.cache/words'
 HSK_COMMIT = '7ac65bf1a6387d35f1ade478906172a19311c7f9'
 TATOEBA = 'https://downloads.tatoeba.org/exports/per_language'
@@ -107,35 +107,67 @@ def source(hz):
     return readings, skipped
 
 REASONS = {'trùng', 'cổ/văn ngôn', 'tên riêng'}
+POS_CODE = dict(zip(POS_VI, ['n', 'v', 'adj', 'adv', 'mw', 'pron', 'num', 'prep', 'conj', 'part', 'interj', 'comp', 'phrase', 'phrase']))
+MARKED = set('āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ')
+NEUTRAL = {'de', 'le', 'ma', 'me', 'men', 'ne', 'ba', 'zi', 'zhe', 'guo', 'a', 'ya', 'na', 'chu lai', 'qi lai'}
+WORD_FIELDS = ['id', 'hanzi', 'pinyin', 'spoken', 'hanviet', 'level', 'pos', 'senses', 'collocations', 'examples', 'image', 'parts', 'components']
 
 class Reject(Exception):
     def __init__(self, hz, errs):
         super().__init__(f'{hz}: {"; ".join(errs)}')
         self.hz, self.errs = hz, errs
 
-def check(e, ids, ex_ids, hz, texts):
+def sid(x):
+    return f's-w-{x["tatoeba"]}' if x.get('tatoeba') else 's-w-ai-' + hashlib.sha1(x['hz'].encode()).hexdigest()[:8]
+
+def py_errors(py):
+    errs = []
+    if re.search(r'\d', py):
+        errs.append('pinyin có chữ số')
+    if re.search('[\u2e80-\u2fdf]', py):
+        errs.append('pinyin có bộ thủ')
+    if not MARKED & set(py.lower()) and ' '.join(re.sub(r'[^\w ]', '', py).lower().split()) not in NEUTRAL:
+        errs.append('pinyin thiếu dấu thanh')
+    return [f'{e} "{py}"' for e in errs]
+
+def check(e, cands, hz, readings):
+    texts = {i: t for r in readings for i, t in r['senses'].items()}
     used = {i for r in e['readings'] for g in r['groups'] for s in g['senses'] for i in s.get('src', [])}
     dropped = {d['id'] for d in e.get('dropped', [])}
-    errs = [f'thiếu nghĩa {i} "{texts[i]}"' for i in ids if i not in used | dropped]
+    errs = [f'thiếu nghĩa {i} "{t}"' for i, t in texts.items() if i not in used | dropped]
     errs += [f'lý do lạ {d.get("why")}' for d in e.get('dropped', []) if d.get('why') not in REASONS]
+    sources = {r['pinyin'].lower() for r in readings}
+    seen = set()
     for r in e['readings']:
+        if r['pinyin'].lower() not in sources:
+            errs.append(f'âm đọc lạ {r["pinyin"]}')
         for g in r['groups']:
             if g['pos'] not in POS_VI:
                 errs.append(f'từ loại lạ {g["pos"]}')
             for s in g['senses']:
                 x = s.get('ex') or {}
-                if x.get('tatoeba') and x['tatoeba'] not in ex_ids:
+                if x.get('tatoeba') and x['tatoeba'] not in cands:
                     errs.append(f'câu {x["tatoeba"]} không có trong danh sách')
-                if hz not in (x.get('hz') or ''):
+                    continue
+                if not x.get('tatoeba') and not x.get('ai'):
+                    errs.append(f'ví dụ của "{s["vi"]}" thiếu nguồn')
+                    continue
+                text = cands[x['tatoeba']]['zh'] if x.get('tatoeba') else x.get('hz') or ''
+                if hz not in text:
                     errs.append(f'ví dụ của "{s["vi"]}" không chứa {hz}')
+                if x.get('ai') and not x.get('tatoeba') and len(re.findall(r'[\u4e00-\u9fff]', text)) > 12:
+                    errs.append(f'câu AI của "{s["vi"]}" dài quá 12 chữ')
+                if sid({**x, 'hz': text}) in seen:
+                    errs.append(f'câu "{text}" dùng cho hai nghĩa')
+                seen.add(sid({**x, 'hz': text}))
+                errs += [f'{err} (ví dụ của "{s["vi"]}")' for err in py_errors(x.get('py') or '')]
     return errs
 
 def entry(hz, rows, llm=ask):
     readings, skipped = source(hz)
     level = DICT[hz][5]
     cands = candidates(hz, level, rows)
-    texts = {i: t for r in readings for i, t in r['senses'].items()}
-    ids = list(texts)
+    ids = [i for r in readings for i in r['senses']]
     pos = ', '.join(POS_HINT.get(p, p) for p in HSK[hz].get('p', []))
     prompt = f"""Bạn là biên tập viên từ điển Trung–Việt cho người Việt học HSK. Biên tập mục từ 「{hz}」 (HSK {level or 'ngoài'}).
 Bạn là người BIÊN TẬP, không phải tác giả: nghĩa lấy từ CC-CEDICT, câu ví dụ lấy từ Tatoeba.
@@ -158,10 +190,10 @@ Yêu cầu:
 Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
     e = llm(prompt)
-    errs = check(e, ids, cands, hz, texts)
+    errs = check(e, cands, hz, readings)
     if errs:  # one repair round with the concrete failures
         e = llm(prompt + f"\n\nBản trước sai: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
-        errs = check(e, ids, cands, hz, texts)
+        errs = check(e, cands, hz, readings)
     if errs:
         raise Reject(hz, errs)
     for r in e['readings']:
@@ -180,8 +212,60 @@ Chỉ trả về JSON:
                   'ai_ex': sum(bool(s['ex'].get('ai')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
                   'candidates': len(cands)}
     e['readings'].sort(key=lambda r: (r['pinyin'].lower() != main, not any(s.get('common') for g in r['groups'] for s in g['senses'])))
-    e['src'] = 'ai-edited'
+    e['cedict'] = readings
     return hz, e
+
+def to_yaml(hz, e):
+    row = DICT[hz]
+    nums = {f['i']['y'].lower(): f['i']['n'] for f in HSK[hz]['f']}
+    words, sentences = {}, {}
+    for r in e['readings']:
+        py = r['pinyin'].lower()
+        main = py == row[1].lower()
+        wid = hz if main else hz + '-' + ''.join(s if s[-1].isdigit() else s + '5' for s in nums[py].split())
+        w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': py,
+                                   'hanviet': row[3] if main else next((v for p, v, _ in row[7] if p.lower() == py), row[3]),
+                                   'level': 1, 'pos': [], 'senses': [], 'examples': []})
+        for g in r['groups']:
+            code = POS_CODE[g['pos']]
+            if code not in w['pos']:
+                w['pos'].append(code)
+            for s in sorted(g['senses'], key=lambda s: not s.get('common')):
+                x = s['ex']
+                sentences[sid(x)] = {'id': sid(x), 'hanzi': x['hz'], 'pinyin': x['py'], 'vi': x['vi'],
+                                     'source': f'tatoeba:{x["tatoeba"]}' if x.get('tatoeba') else 'ai'}
+                w['senses'].append({'vi': s['vi'], 'pos': code, **({} if s.get('common') else {'rare': True}), 'example': sid(x)})
+                if sid(x) not in w['examples']:
+                    w['examples'].append(sid(x))
+        w['examples'] = w['examples'][:3]
+    return words, sentences
+
+def dump(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000))
+
+def write_out(results):
+    out = CACHE / 'out'
+    sentences = {s['id']: s for s in (yaml.safe_load((out / 'sentences/hsk1.yaml').read_text()) if (out / 'sentences/hsk1.yaml').exists() else [])}
+    for hz, e in results:
+        for sub, ext in (('words', 'yaml'), ('src', 'json')):
+            for old in [*(out / sub).glob(f'{hz}.{ext}'), *(out / sub).glob(f'{hz}-*.{ext}')]:
+                old.unlink()
+        words, new = to_yaml(hz, e)
+        sentences.update(new)
+        for wid, w in words.items():
+            existing = CONTENT / f'{wid}.yaml'
+            if existing.exists():
+                old = yaml.safe_load(existing.read_text())
+                hand = [s for s in old.get('senses', []) if 'pos' not in s]
+                hand_ex = [x for x in old.get('examples', []) if not x.startswith('s-w-')]
+                w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
+                     'senses': hand + w['senses'], 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}
+            dump(out / 'words' / f'{wid}.yaml', {k: w[k] for k in WORD_FIELDS if k in w})
+            nums = next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'])
+            (out / 'src').mkdir(parents=True, exist_ok=True)
+            (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1))
+    dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
 
 def main(argv, llm=ask):
     if llm is ask and not os.environ.get('OPENCODE_API_KEY'):
@@ -198,12 +282,12 @@ def main(argv, llm=ask):
         else:
             print(f'skip {w}: not in HSK1 list')
     rows = tatoeba()
-    data = json.loads(OUT.read_text()) if OUT.exists() else {}
-    rejected = []
+    done, rejected = [], []
     with ThreadPoolExecutor(8) as pool:
         for w, f in [(w, pool.submit(entry, w, rows, llm)) for w in words]:
             try:
-                hz, e = f.result(); data[hz] = e
+                hz, e = f.result()
+                done.append((hz, e))
                 print('ok', hz, json.dumps(e['stats'], ensure_ascii=False))
             except Reject as err:
                 rejected.append(str(err))
@@ -211,7 +295,8 @@ def main(argv, llm=ask):
             except Exception as err:
                 rejected.append(f'{w}: {err!r}')
                 print('FAIL', rejected[-1])
-    OUT.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+    write_out(done)
+    print(f'tatoeba {sum(e["stats"]["tatoeba"] for _, e in done)} / ai {sum(e["stats"]["ai_ex"] for _, e in done)}')
     if rejected:
         print('\n'.join(f'REJECT {r}' for r in rejected))
         sys.exit(1)
