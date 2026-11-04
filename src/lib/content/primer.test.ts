@@ -85,15 +85,15 @@ const syllablesText = readFileSync(join(root, 'syllables.yaml'), 'utf8');
 
 const lintCopy = (mutate?: (data: Data) => void, syllableRows?: { syllable: string }[]) => {
 	const dir = mkdtempSync(join(tmpdir(), 'primer-'));
-	mkdirSync(join(dir, 'lessons/hsk1'), { recursive: true });
-	const data = YAML.parse(text) as Data;
-	mutate?.(data);
-	writeFileSync(join(dir, 'lessons/hsk1/h0-00.yaml'), YAML.stringify(data));
-	writeFileSync(
-		join(dir, 'syllables.yaml'),
-		syllableRows ? YAML.stringify(syllableRows) : syllablesText
-	);
 	try {
+		mkdirSync(join(dir, 'lessons/hsk1'), { recursive: true });
+		const data = YAML.parse(text) as Data;
+		mutate?.(data);
+		writeFileSync(join(dir, 'lessons/hsk1/h0-00.yaml'), YAML.stringify(data));
+		writeFileSync(
+			join(dir, 'syllables.yaml'),
+			syllableRows ? YAML.stringify(syllableRows) : syllablesText
+		);
 		return lintDir(dir, { refs: fixtureRefs }).errors;
 	} finally {
 		rmSync(dir, { recursive: true, force: true });
