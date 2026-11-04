@@ -1,75 +1,73 @@
 {
-  "lesson": {
-    "id": "h1-01",
-    "title": "Xin chào",
-    "titleHanzi": "你好"
-  },
-  "sentences": [
-    {
-      "id": "s-h1-01-01",
-      "hanzi": "你好！",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-02",
-      "hanzi": "对不起！",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-03",
-      "hanzi": "没关系。",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-04",
-      "hanzi": "谢谢！",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-05",
-      "hanzi": "不客气。",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-06",
-      "hanzi": "再见！",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-07",
-      "hanzi": "您好！",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    },
-    {
-      "id": "s-h1-01-08",
-      "hanzi": "你们好！",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào!"
-    }
-  ],
-  "dictionary": [
-    {
-      "word": "你好",
-      "pinyin": "nǐ hǎo",
-      "vi": "Chào"
-    }
-  ],
-  "words": [
-    {
-      "hanzi": "你",
-      "components": [
-        "亻"
-      ]
-    }
-  ],
-  "vi": "Chào!",
-  "note": "（ghi chú）",
-  "ascii": "hello 123"
+	"lesson": {
+		"id": "h1-01",
+		"title": "Xin chào",
+		"titleHanzi": "你好"
+	},
+	"sentences": [
+		{
+			"id": "s-h1-01-01",
+			"hanzi": "你好！",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-02",
+			"hanzi": "对不起！",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-03",
+			"hanzi": "没关系。",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-04",
+			"hanzi": "谢谢！",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-05",
+			"hanzi": "不客气。",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-06",
+			"hanzi": "再见！",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-07",
+			"hanzi": "您好！",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		},
+		{
+			"id": "s-h1-01-08",
+			"hanzi": "你们好！",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào!"
+		}
+	],
+	"dictionary": [
+		{
+			"word": "你好",
+			"pinyin": "nǐ hǎo",
+			"vi": "Chào"
+		}
+	],
+	"words": [
+		{
+			"hanzi": "你",
+			"components": ["亻"]
+		}
+	],
+	"vi": "Chào!",
+	"note": "（ghi chú）",
+	"ascii": "hello 123"
 }
