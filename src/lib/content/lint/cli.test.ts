@@ -24,6 +24,8 @@ describe('lint:content CLI', () => {
 		const { status, out } = run('src/lib/content/lint/fixtures/cli-malformed');
 		expect(status).toBe(1);
 		expect(out.trimEnd().split('\n')).toHaveLength(1);
+		expect(out).toMatch(/^words\/坏\.yaml {2}- {2}#0 schema {2}.+\\n/);
+		expect(out).not.toMatch(/ \n$/);
 	});
 
 	it('exits 0 with empty stdout on a clean tree', { timeout: 20_000 }, () => {

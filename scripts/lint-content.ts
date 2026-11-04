@@ -9,7 +9,7 @@ if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) {
 const { errors, notices } = lintDir(dir);
 for (const e of errors)
 	console.log(
-		`${e.file}  ${e.path || '-'}  #${e.check} ${e.name}  ${e.message.replace(/\s+/g, ' ')}`
+		`${e.file}  ${e.path || '-'}  #${e.check} ${e.name}  ${e.message.trimEnd().replace(/\r?\n/g, '\\n')}`
 	);
 for (const n of notices) console.error(n);
 console.error(
