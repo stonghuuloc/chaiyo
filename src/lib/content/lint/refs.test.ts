@@ -47,6 +47,9 @@ describe('loadRefs', () => {
 		);
 		expect(describeFailure(Object.assign(new Error('boom'), { stderr: '' }))).toBe('boom');
 		expect(describeFailure('plain')).toBe('plain');
+		expect(describeFailure(null)).toBe('null');
+		expect(describeFailure(undefined)).toBe('undefined');
+		expect(describeFailure(42)).toBe('42');
 	});
 
 	it('reads the four anchors from a vault with meo.py', () => {

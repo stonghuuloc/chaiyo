@@ -40,8 +40,11 @@ print(json.dumps({c: r[3] for c, r in meo.index().items()}, ensure_ascii=False))
 `;
 const NEO = { HÌNH: 'hinh', ÂM: 'am', 'ĐỜI THẬT': 'doiThat', 'TƯƠNG PHẢN': 'tuongPhan' } as const;
 
+const hasStderr = (e: unknown): e is { stderr: unknown } =>
+	typeof e === 'object' && e !== null && 'stderr' in e;
+
 export const describeFailure = (e: unknown) => {
-	const stderr = (e as { stderr?: unknown }).stderr;
+	const stderr = hasStderr(e) ? e.stderr : undefined;
 	const last = typeof stderr === 'string' ? stderr.trim().split('\n').pop() : undefined;
 	return last || (e instanceof Error ? e.message : String(e));
 };
