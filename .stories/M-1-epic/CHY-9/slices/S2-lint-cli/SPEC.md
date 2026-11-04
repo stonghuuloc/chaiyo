@@ -3,7 +3,7 @@ ACs: AC4  ·  Repo: stonghuuloc/chaiyo  ·  rev 1
 
 ## Behaviour
 - [AC4] `pnpm -s lint:content [dir]` (default `content`; `-s` hides pnpm's own banner so stdout is only the list) runs `lintDir(dir)` from S1 and prints one stdout line per `LintError`: `<file>  <path>  #<check> <name>  <message>`, path `-` when empty, in `lint()`'s order. 3 violations in 2 files → exactly 3 stdout lines, each with file, path, check number and message.
-- [AC4] Exit code is non-zero (1) when there is any error (schema errors, check 0, included) and 0 when there are none. A directory that does not exist → exit 1 and one stderr line (pnpm folds every failing exit code to 1, so no finer codes).
+- [AC4] Exit code is non-zero (1) when there is any error (schema errors, check 0, included) and 0 when there are none. A path that is not a directory (missing, or a regular file) → exit 1 and one stderr line (one failure code: callers only test non-zero).
 - [AC4] The summary (`3 errors in 2 files`, or `0 errors`) and every S1 notice (e.g. `check 7 skipped: vault not found`) go to stderr; stdout carries only error lines, so `pnpm lint:content > errors.txt` holds exactly the list (with `-s`).
 - [CHORE] `tsx` is a devDependency and `lint:content` is a `package.json` script, so CHY-8's import CLI can reuse the runner (C1).
 
