@@ -22,6 +22,7 @@ ACs: AC1, AC2, AC3
 - [AC1 c9] SUPERSEDED by Captain, 2026-11-03 (80% rule, from CHY-10 10.Q1): every dialogue-part line needs a speaker in {redpanda, takin}; each part has ≥2 distinct speakers; back-to-back same-voice lines allowed (Bài 1: R·T·T·R, R·T·T). Other sentences with a speaker must also be in the set.
 - [AC1/2/3] Q: how are fixtures built? A: one clean content tree on disk (Bài 1 + words/chars/grammar + primer), loaded by `loadContentDir`; each failing case = in-test mutation of the loaded set asserting exactly 1 error with the right check; mnemonic refs injected. 85%.
 - [AC1] Cross-lane, agreed: C1 (lint API) in CONTRACTS.md; CHY-8 exports `deriveSpoken`; CHY-12 adds `content/sentences` to the set; CHY-11 adds the pool `section` tag.
+- [AC1 c8f] Advisor r3 (2026-11-04): std rule "none at level" is reported in the lesson file at `sections.grammar.ids`; Word `senses[].example` is resolved by check 8; check 9 skips a dialogue line id that does not resolve (check 8 reports it). Anchors re-verified on main e4444ec (Sentences, Question section, deriveSpoken, Mnemonic type defined in types.ts). 90%.
 
 ## Advisor round 1 (2026-11-03)
 9 findings applied (anchor meo.py:28, 我 not 谢, 好 mutation, lintDir refs arg, toned fixture parts, `say` entries, S2 owns "exits 0", Sentences type asked of CHY-11, check 4 on sentence files). Parked: `senses[].example` field is CHY-12/C6.
