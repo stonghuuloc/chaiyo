@@ -33,6 +33,10 @@ class GlyphSetTests(unittest.TestCase):
     def test_Given_MarksWithoutHan_Then_Ignored(self):
         self.assertEqual(kaishu.glyph_set({'vi': 'Chào!', 'note': '（ghi chú）', 'a': ['abc', 3]}), set())
 
+    def test_Given_RadicalComponents_Then_Included(self):
+        self.assertEqual(kaishu.glyph_set({'components': ['⺌', '⻊']}), {'⺌', '⻊'})
+        self.assertEqual(kaishu.glyph_set({'c': '𰀀'}), {'𰀀'})
+
     def test_Given_Keys_Then_Ignored(self):
         self.assertEqual(kaishu.glyph_set({'你': 'x'}), set())
 

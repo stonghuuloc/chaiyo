@@ -23,6 +23,7 @@ ACs: AC1, AC2, AC3
 | Round | Q | Decision | Answer | Source |
 |---|---|---|---|---|
 | 1 | 13.Q1 [AC1] | fullwidth marks in the font? | A — hanzi + the marks that appear in hanzi strings (17 glyphs, 5,448 B for Bài 1) | Captain under Loc's 80% rule, 2026-11-03 (Loc may veto at PICTURE) |
+| 2 | Han ranges [AC1][AC3] | which blocks count as Han? | Add CJK Radicals/Kangxi (U+2E80–2FDF, vault components such as ⺌ ⻊) and Ext G (U+30000–3134F, ukai lacks it, so it errors loudly). Implementer, 90%, reviewer finding on 2807a4c |
 
 ## Open — needs an answer before spec
 None. 13.Q1 answered (see Resolved); numbering kept.
