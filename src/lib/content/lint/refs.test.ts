@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { loadRefs } from './refs';
+import { describeFailure, loadRefs } from './refs';
 
 beforeEach(() => vi.stubEnv('CHAIYO_VAULT', join(tmpdir(), 'no-such-vault')));
 afterEach(() => vi.unstubAllEnvs());
@@ -38,6 +38,15 @@ describe('loadRefs', () => {
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
+	});
+
+	it('describeFailure takes the last stderr line and survives a non-string stderr', () => {
+		expect(describeFailure({ stderr: 'Traceback\nRuntimeError: x\n' })).toBe('RuntimeError: x');
+		expect(describeFailure(Object.assign(new Error('boom'), { stderr: Buffer.from('x') }))).toBe(
+			'boom'
+		);
+		expect(describeFailure(Object.assign(new Error('boom'), { stderr: '' }))).toBe('boom');
+		expect(describeFailure('plain')).toBe('plain');
 	});
 
 	it('reads the four anchors from a vault with meo.py', () => {
