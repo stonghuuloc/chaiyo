@@ -1,3 +1,5 @@
+import { CHECK_NAMES, type LintCheck, type LintError } from './types';
+
 const NEUTRAL = new Set([
 	'de',
 	'le',
@@ -28,6 +30,13 @@ export const badPinyin = (s: string) => {
 	if (/\d/.test(t)) return 'digit';
 	return MARK.test(t) || NEUTRAL.has(t.trim()) ? null : 'no tone mark';
 };
+
+export const issue = (
+	check: LintCheck,
+	file: string,
+	path: string,
+	message: string
+): LintError => ({ file, path, check, name: CHECK_NAMES[check], message });
 
 export const ideographs = (s: string) => [...s].filter((c) => /[\u3400-\u9fff]/.test(c));
 

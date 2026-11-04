@@ -1,3 +1,6 @@
+import { hanviet } from './checks/1-hanviet';
+import { polyphones } from './checks/2-polyphones';
+import { toneMarks } from './checks/3-tone-marks';
 import { loadRefs } from './refs';
 import { loadContentDir } from './load';
 import type { ContentSet, LintError, LintRefs } from './types';
@@ -6,7 +9,11 @@ export type { ContentSet, LintError, LintRefs } from './types';
 export { loadContentDir } from './load';
 export { loadRefs } from './refs';
 
-const checks: ((set: ContentSet, refs: LintRefs) => LintError[])[] = [];
+const checks: ((set: ContentSet, refs: LintRefs) => LintError[])[] = [
+	hanviet,
+	polyphones,
+	toneMarks
+];
 
 const byLocation = (a: LintError, b: LintError) =>
 	a.file < b.file
