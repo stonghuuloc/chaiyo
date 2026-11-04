@@ -28,9 +28,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r scripts/requirements-fonts.txt
-      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - run: pnpm check
       - run: pnpm lint
+      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - run: pnpm test:coverage
       - name: Coverage summary
         if: always()
