@@ -4,7 +4,7 @@ export function deriveBacklinks(lessons: (Lesson | Primer)[]): {
 	taughtIn: Record<string, string>;
 	listedIn: Record<string, string[]>;
 } {
-	const listedIn: Record<string, string[]> = {};
+	const listedIn: Record<string, string[]> = Object.create(null);
 	const ordered = lessons
 		.filter((l): l is Lesson => !('kind' in l && l.kind === 'primer'))
 		.sort((a, b) => a.level - b.level || a.order - b.order || a.id.localeCompare(b.id));

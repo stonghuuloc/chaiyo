@@ -36,6 +36,12 @@ describe('deriveBacklinks', () => {
 		expect(r.taughtIn['再见']).toBeUndefined();
 	});
 
+	it('handles prototype-named word ids', () => {
+		const r = deriveBacklinks([lesson('h1-01', 1, 1, ['constructor', '__proto__'])]);
+		expect(r.taughtIn['constructor']).toBe('h1-01');
+		expect(r.listedIn['__proto__']).toEqual(['h1-01']);
+	});
+
 	it('lists a lesson once per word', () => {
 		expect(deriveBacklinks([lesson('h1-01', 1, 1, ['你好', '你好'])]).listedIn['你好']).toEqual([
 			'h1-01'

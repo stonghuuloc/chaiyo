@@ -2,8 +2,13 @@ import { describe, expect, it } from 'vitest';
 import type { Char } from '../schemas';
 import { deriveHanViet } from './hanviet';
 
-const ch = (hanzi: string, readings: Char['readings']) =>
-	({ hanzi, readings, radical: '', ids: '', strokes: 1 }) as Char;
+const ch = (hanzi: string, readings: Char['readings']): Char => ({
+	hanzi,
+	readings,
+	radical: '',
+	ids: '',
+	strokes: 1
+});
 
 const chars: Record<string, Char> = {
 	你: ch('你', [{ pinyin: 'nǐ', hanviet: 'nhĩ' }]),

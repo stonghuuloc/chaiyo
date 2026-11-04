@@ -20,7 +20,6 @@ export function deriveSpoken(pinyin: string, hanzi: string): string {
 				edits.push({ start: s.start, end: s.start + s.syl.length, to: withTone(s.syl, tone) });
 		}
 	}
-	if (!edits.length) return pinyin;
 	return edits.reduceRight((acc, e) => acc.slice(0, e.start) + e.to + acc.slice(e.end), text);
 }
 

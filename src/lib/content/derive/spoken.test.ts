@@ -52,6 +52,11 @@ describe('deriveSpoken', () => {
 		);
 	});
 
+	it('normalizes to NFC whether or not a rule fires', () => {
+		expect(deriveSpoken('ni\u030cmen', '你们')).toBe('nǐmen');
+		expect(deriveSpoken('ni\u030c ha\u030co', '你好')).toBe('ní hǎo');
+	});
+
 	it('returns the input unchanged when no rule fires', () => {
 		expect(deriveSpoken('xièxie', '谢谢')).toBe('xièxie');
 	});

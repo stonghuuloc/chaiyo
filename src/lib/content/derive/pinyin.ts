@@ -7,11 +7,14 @@ const MAX_SPLITS = 200;
 export type Tone = 0 | 1 | 2 | 3 | 4;
 export type Syllable = { syl: string; tone: Tone; charIndex: number; start: number; erhua?: true };
 
+const MARK_KEYS = ['a', 'e', 'i', 'o', 'u', 'ü'] as const;
+const TONES = [1, 2, 3, 4] as const;
+
 const toneOf = (syl: string) => {
 	for (const [i, c] of [...syl].entries())
-		for (const [v, m] of Object.entries(MARKS)) {
-			const t = m.indexOf(c.toLowerCase());
-			if (t >= 0) return { tone: (t + 1) as Tone, i, v: v as keyof typeof MARKS };
+		for (const v of MARK_KEYS) {
+			const tone = TONES[MARKS[v].indexOf(c.toLowerCase())];
+			if (tone !== undefined) return { tone, i, v };
 		}
 	return null;
 };
@@ -95,7 +98,8 @@ export function splitSyllables(
 	const pick = (u: number, left: number): number[] | null => {
 		if (u === units.length) return left === 0 ? [] : null;
 		const key = `${u}:${left}`;
-		if (memo.has(key)) return memo.get(key)!;
+		const cached = memo.get(key);
+		if (cached !== undefined) return cached;
 		let found: number[] | null = null;
 		for (const [oi, o] of units[u].options.entries()) {
 			const rest = pick(u + 1, left - weight(o));
