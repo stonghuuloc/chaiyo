@@ -116,6 +116,28 @@ describe('check 6 Real glyphs', () => {
 	});
 });
 
+describe('check 7 Mnemonic reuse', () => {
+	it('flags a field that differs from the vault', () =>
+		only(
+			run((s) => (char(s, '你').value.mnemonic!.am = 'khác')),
+			7,
+			'chars/你.yaml',
+			'mnemonic.am'
+		));
+	it('ignores trailing whitespace', () =>
+		expect(run((s) => (char(s, '你').value.mnemonic!.am += ' '))).toEqual([]));
+	it('ignores a char the vault does not have', () => {
+		const set = structuredClone(cleanSet);
+		char(set, '你').value.mnemonic!.am = 'khác';
+		expect(lint(set, { ...fixtureRefs, mnemonics: new Map() })).toEqual([]);
+	});
+	it('is skipped when the vault is undefined', () => {
+		const set = structuredClone(cleanSet);
+		char(set, '你').value.mnemonic!.am = 'khác';
+		expect(lint(set, { ...fixtureRefs, mnemonics: undefined })).toEqual([]);
+	});
+});
+
 describe('check 3 Tone marks', () => {
 	const sentencePinyin = (value: string) => run((s) => (lesson(s).sentences[0].pinyin = value));
 	it('flags an unmarked sentence pinyin', () =>

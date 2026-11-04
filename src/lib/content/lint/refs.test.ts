@@ -1,5 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { loadRefs } from './refs';
+
+beforeEach(() => vi.stubEnv('CHAIYO_VAULT', join(tmpdir(), 'no-such-vault')));
+afterEach(() => vi.unstubAllEnvs());
 
 describe('loadRefs', () => {
 	it('reads the grammar syllabus levels from the CSV', () => {
@@ -7,5 +13,33 @@ describe('loadRefs', () => {
 		expect(refs.syllabus.get(1)).toBe(1);
 		expect(refs.syllabus.get(277)).toBe(4);
 		expect(refs.syllabus.size).toBe(573);
+	});
+
+	it('reads the polyphone table', () => {
+		expect(loadRefs().refs.polyphones.get('行')).toEqual(['xíng', 'háng']);
+	});
+
+	it('skips check 7 with one notice when the vault is missing', () => {
+		const { refs, notices } = loadRefs();
+		expect(refs.mnemonics).toBeUndefined();
+		expect(notices).toEqual(['check 7 skipped: vault not found']);
+	});
+
+	it('reads the four anchors from a vault with meo.py', () => {
+		const dir = mkdtempSync(join(tmpdir(), 'vault-'));
+		try {
+			writeFileSync(
+				join(dir, 'meo.py'),
+				"def index():\n    return {'你': ('L1', 'nǐ', 'nhĩ', {'HÌNH': 'a', 'ÂM': 'b', 'ĐỜI THẬT': 'c', 'TƯƠNG PHẢN': 'd'}), '好': ('L1', 'hǎo', 'hảo', {'HÌNH': 'x'})}\n"
+			);
+			vi.stubEnv('CHAIYO_VAULT', dir);
+			const { refs, notices } = loadRefs();
+			expect(notices).toEqual([]);
+			expect([...refs.mnemonics!]).toEqual([
+				['你', { hinh: 'a', am: 'b', doiThat: 'c', tuongPhan: 'd' }]
+			]);
+		} finally {
+			rmSync(dir, { recursive: true, force: true });
+		}
 	});
 });

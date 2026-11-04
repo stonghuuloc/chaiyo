@@ -4,6 +4,7 @@ import { toneMarks } from './checks/3-tone-marks';
 import { sandhi } from './checks/4-sandhi';
 import { knownChars } from './checks/5-known-chars';
 import { realGlyphs } from './checks/6-real-glyphs';
+import { mnemonic } from './checks/7-mnemonic';
 import { loadRefs } from './refs';
 import { loadContentDir } from './load';
 import type { ContentSet, LintError, LintRefs } from './types';
@@ -18,7 +19,8 @@ const checks: ((set: ContentSet, refs: LintRefs) => LintError[])[] = [
 	toneMarks,
 	sandhi,
 	knownChars,
-	realGlyphs
+	realGlyphs,
+	mnemonic
 ];
 
 const byLocation = (a: LintError, b: LintError) =>
