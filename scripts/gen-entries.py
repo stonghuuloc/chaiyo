@@ -186,7 +186,7 @@ def check(e, cands, hz, readings):
                 text = cands[x['tatoeba']]['zh'] if x.get('tatoeba') else x.get('hz') or ''
                 if hz not in text:
                     errs.append(f'ví dụ của "{s["vi"]}" không chứa {hz}')
-                if g['pos'] == 'Lượng từ' and len(hz) == 1 and any(texts[i].lower().startswith('classifier') for i in s['src']) and not re.search(f'[一二两三四五六七八九十几这那每半百千万]{hz}', text):
+                if g['pos'] == 'Lượng từ' and len(hz) == 1 and any(texts[i].lower().startswith('classifier') for i in s['src']) and not re.search(f'[0-9０-９一二两三四五六七八九十几这那每半百千万]{hz}', text):
                     errs.append(f'ví dụ của lượng từ "{s["vi"]}" phải có số từ + 「{hz}」 đếm đúng danh từ đó')
                 if g['pos'] == 'Lượng từ' and re.match(r'(?i)\s*(lượng từ|classifier)', s['vi']):
                     errs.append(f'nghĩa lượng từ "{s["vi"]}" chép nguyên từ CC-CEDICT: nêu đếm cái gì')

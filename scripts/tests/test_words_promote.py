@@ -201,3 +201,12 @@ def test_classifier_example_needs_numeral_before_classifier(word, monkeypatch):
     with pytest.raises(word.Reject) as e:
         word.entry('打', {}, scripted(a))
     assert 'số từ' in str(e.value)
+
+
+def test_classifier_example_accepts_digit_numeral(word, monkeypatch):
+    monkeypatch.setitem(word.HSK['打'], 'f', [{'i': {'y': 'dǎ', 'n': 'da3'}, 'm': ['classifier for years of age']}])
+    a = answer(covered=('0.0',), pos='Lượng từ')
+    a['readings'][0]['groups'][0]['senses'] = [a['readings'][0]['groups'][0]['senses'][0]]
+    a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'ai': True, 'hz': '他16打', 'py': 'Tā shíliù dǎ', 'vi': 'x'}
+    hz, e = word.entry('打', {}, scripted(a))
+    assert e['readings'][0]['groups'][0]['pos'] == 'Lượng từ'
