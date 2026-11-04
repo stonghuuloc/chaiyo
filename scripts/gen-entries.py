@@ -7,9 +7,9 @@ Sources (the LLM edits, it does not invent meanings):
   POS       HSK list field `p` (hint) → Vietnamese POS labels.
   examples  Tatoeba (CC BY 2.0 FR) simplified sentences that contain the word as a jieba token, with English
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
-Output: prototype/data/entries.json {hz: entry}. Run with /tmp/etts/bin/python (jieba, opencc, pypinyin).
-Usage: gen-entries.py 环 好 打 …   (merges into the existing file; words run in parallel)"""
-import bz2, json, os, re, sqlite3, sys, urllib.request, uuid
+Output: prototype/data/entries.json {hz: entry}.
+Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [words]   (no words = all HSK 3.0 level 1 words in dict.json; sources download into .cache/words)"""
+import bz2, hashlib, json, os, re, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -17,21 +17,47 @@ import jieba, opencc
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'prototype/data/entries.json'
-SRC = Path('/tmp/dict')  # complete.min.json (drkameleon HSK, MIT) + Tatoeba per-language exports
+CACHE = ROOT / '.cache/words'
+HSK_COMMIT = '7ac65bf1a6387d35f1ade478906172a19311c7f9'
+TATOEBA = 'https://downloads.tatoeba.org/exports/per_language'
+SOURCES = {  # complete.min.json: drkameleon HSK (MIT), pinned; Tatoeba exports roll weekly, so their sha256 is only recorded
+    'complete.min.json': f'https://raw.githubusercontent.com/drkameleon/complete-hsk-vocabulary/{HSK_COMMIT}/complete.min.json',
+    'cmn_sentences.tsv.bz2': f'{TATOEBA}/cmn/cmn_sentences.tsv.bz2',
+    'eng_sentences.tsv.bz2': f'{TATOEBA}/eng/eng_sentences.tsv.bz2',
+    'vie_sentences.tsv.bz2': f'{TATOEBA}/vie/vie_sentences.tsv.bz2',
+    'cmn-eng_links.tsv.bz2': f'{TATOEBA}/cmn/cmn-eng_links.tsv.bz2',
+    'cmn-vie_links.tsv.bz2': f'{TATOEBA}/cmn/cmn-vie_links.tsv.bz2',
+}
 DICT = {r[0]: r for r in json.load(open(ROOT / 'prototype/data/dict.json'))}
-HSK = {e['s']: e for e in json.load(open(SRC / 'complete.min.json'))}
-KEY = sqlite3.connect(os.path.expanduser('~/.omp/agent/agent.db')).execute(
-    "select json_extract(data,'$.key') from auth_credentials where provider='opencode-go' and disabled_cause is null limit 1").fetchone()[0]
+HSK = {}
 POS_VI = ['Danh từ', 'Động từ', 'Tính từ', 'Phó từ', 'Lượng từ', 'Đại từ', 'Số từ', 'Giới từ', 'Liên từ', 'Trợ từ', 'Thán từ', 'Bổ ngữ', 'Cụm từ', 'Thành ngữ']
 POS_HINT = {'n': 'danh từ', 'v': 'động từ', 'a': 'tính từ', 'd': 'phó từ', 'q': 'lượng từ', 'r': 'đại từ', 'm': 'số từ',
             'p': 'giới từ', 'c': 'liên từ', 'u': 'trợ từ', 'e': 'thán từ', 'y': 'trợ từ ngữ khí', 'i': 'thành ngữ', 'l': 'cụm từ'}
 # CEDICT senses that are cross-references, not meanings
 XREF = re.compile(r'^(old |archaic |erhua )?variant of|^see (also )?\S|^surname |^used in |^abbr\. for|^also written|^also pr\.', re.I)
 
+def fetch(name):
+    path = CACHE / name
+    if not path.exists():
+        CACHE.mkdir(parents=True, exist_ok=True)
+        print('download', name, flush=True)
+        part = path.with_name(name + '.part')
+        with urllib.request.urlopen(SOURCES[name], timeout=300) as res:
+            part.write_bytes(res.read())
+        part.rename(path)
+    manifest_path = CACHE / 'manifest.json'
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    if manifest.get(name, digest) != digest:
+        print('sha changed', name, manifest[name], '->', digest)
+    manifest[name] = digest
+    manifest_path.write_text(json.dumps(manifest, indent=1))
+    return path
+
 def tatoeba():
     t2s = opencc.OpenCC('t2s')
     def tsv(name):
-        return [l.rstrip('\n').split('\t') for l in bz2.open(SRC / name, 'rt', encoding='utf-8')]
+        return [l.rstrip('\n').split('\t') for l in bz2.open(CACHE / name, 'rt', encoding='utf-8')]
     cmn = {r[0]: r[2] for r in tsv('cmn_sentences.tsv.bz2') if t2s.convert(r[2]) == r[2]}  # simplified only
     eng = {r[0]: r[2] for r in tsv('eng_sentences.tsv.bz2')}
     vie = {r[0]: r[2] for r in tsv('vie_sentences.tsv.bz2')}
@@ -55,9 +81,10 @@ def candidates(hz, level, rows, n=30):
     return {sid: {'zh': text, **tr} for _, _, sid, text, tr in hits[:n]}
 
 def ask(prompt):
+    key = os.environ['OPENCODE_API_KEY']
     body = {'model': 'gpt-6-luna', 'input': [{'role': 'user', 'content': [{'type': 'input_text', 'text': prompt}]}], 'store': False}
     req = urllib.request.Request('https://opencode.ai/inference/go/v1/responses', data=json.dumps(body).encode(),
-                                 headers={'Authorization': f'Bearer {KEY}', 'Content-Type': 'application/json',
+                                 headers={'Authorization': f'Bearer {key}', 'Content-Type': 'application/json',
                                           'User-Agent': 'chaiyo-gen/1', 'x-opencode-session': str(uuid.uuid4())})
     res = json.load(urllib.request.urlopen(req, timeout=240))
     text = ''.join(c.get('text', '') for o in res.get('output', []) if o.get('type') == 'message' for c in o.get('content', []))
@@ -95,7 +122,7 @@ def check(e, ids, ex_ids, hz):
                     errs.append(f'ví dụ của "{s["vi"]}" không chứa {hz}')
     return errs
 
-def entry(hz, rows):
+def entry(hz, rows, llm=ask):
     readings, skipped = source(hz)
     level = DICT[hz][5]
     cands = candidates(hz, level, rows)
@@ -121,10 +148,10 @@ Yêu cầu:
 
 Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
-    e = ask(prompt)
+    e = llm(prompt)
     errs = check(e, ids, cands, hz)
     if errs:  # one repair round with the concrete failures
-        e = ask(prompt + f"\n\nBản trước sai: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
+        e = llm(prompt + f"\n\nBản trước sai: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
         errs = check(e, ids, cands, hz)
     for r in e['readings']:
         for g in r['groups']:
@@ -141,14 +168,30 @@ Chỉ trả về JSON:
     e['src'] = 'ai-edited'
     return hz, e
 
-words = [w for w in sys.argv[1:] if w in DICT and w in HSK]
-rows = tatoeba()
-data = json.loads(OUT.read_text()) if OUT.exists() else {}
-with ThreadPoolExecutor(8) as pool:
-    for f in [pool.submit(entry, w, rows) for w in words]:
-        try:
-            hz, e = f.result(); data[hz] = e
-            print('ok', hz, json.dumps(e['stats'], ensure_ascii=False))
-        except Exception as err:
-            print('FAIL', repr(err))
-OUT.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+def main(argv, llm=ask):
+    if llm is ask and not os.environ.get('OPENCODE_API_KEY'):
+        print('OPENCODE_API_KEY is not set', file=sys.stderr)
+        sys.exit(2)
+    for name in SOURCES:
+        fetch(name)
+    HSK.update({e['s']: e for e in json.load(open(CACHE / 'complete.min.json'))})
+    hsk1 = {s for s, e in HSK.items() if 'n1' in e['l']} & DICT.keys()
+    words = []
+    for w in argv or sorted(hsk1):
+        if w in hsk1:
+            words.append(w)
+        else:
+            print(f'skip {w}: not in HSK1 list')
+    rows = tatoeba()
+    data = json.loads(OUT.read_text()) if OUT.exists() else {}
+    with ThreadPoolExecutor(8) as pool:
+        for f in [pool.submit(entry, w, rows, llm) for w in words]:
+            try:
+                hz, e = f.result(); data[hz] = e
+                print('ok', hz, json.dumps(e['stats'], ensure_ascii=False))
+            except Exception as err:
+                print('FAIL', repr(err))
+    OUT.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
