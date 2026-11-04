@@ -28,7 +28,7 @@ SOURCES = {  # complete.min.json: drkameleon HSK (MIT), pinned; Tatoeba exports 
     'cmn-eng_links.tsv.bz2': f'{TATOEBA}/cmn/cmn-eng_links.tsv.bz2',
     'cmn-vie_links.tsv.bz2': f'{TATOEBA}/cmn/cmn-vie_links.tsv.bz2',
 }
-DICT = {r[0]: r for r in json.load(open(ROOT / 'prototype/data/dict.json'))}
+DICT = {r[0]: r for r in json.loads((ROOT / 'prototype/data/dict.json').read_text(encoding='utf-8'))}
 HSK = {}
 POS_VI = ['Danh từ', 'Động từ', 'Tính từ', 'Phó từ', 'Lượng từ', 'Đại từ', 'Số từ', 'Giới từ', 'Liên từ', 'Trợ từ', 'Thán từ', 'Bổ ngữ', 'Cụm từ', 'Thành ngữ']
 POS_HINT = {'n': 'danh từ', 'v': 'động từ', 'a': 'tính từ', 'd': 'phó từ', 'q': 'lượng từ', 'r': 'đại từ', 'm': 'số từ',
@@ -46,12 +46,12 @@ def fetch(name):
             part.write_bytes(res.read())
         part.rename(path)
     manifest_path = CACHE / 'manifest.json'
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     if manifest.get(name, digest) != digest:
         print('sha changed', name, manifest[name], '->', digest)
     manifest[name] = digest
-    manifest_path.write_text(json.dumps(manifest, indent=1))
+    manifest_path.write_text(json.dumps(manifest, indent=1), encoding='utf-8')
     return path
 
 def tatoeba():
@@ -251,11 +251,11 @@ def to_yaml(hz, e):
 
 def dump(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000))
+    path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000), encoding='utf-8')
 
 def write_out(results):
     out = CACHE / 'out'
-    sentences = {s['id']: s for s in (yaml.safe_load((out / 'sentences/hsk1.yaml').read_text()) if (out / 'sentences/hsk1.yaml').exists() else [])}
+    sentences = {s['id']: s for s in (yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8')) if (out / 'sentences/hsk1.yaml').exists() else [])}
     for hz, e in results:
         for sub, ext in (('words', 'yaml'), ('src', 'json')):
             for old in [*(out / sub).glob(f'{hz}.{ext}'), *(out / sub).glob(f'{hz}-*.{ext}')]:
@@ -265,7 +265,7 @@ def write_out(results):
         for wid, w in words.items():
             existing = CONTENT / f'{wid}.yaml'
             if existing.exists():
-                old = yaml.safe_load(existing.read_text())
+                old = yaml.safe_load(existing.read_text(encoding='utf-8'))
                 hand = [s for s in old.get('senses', []) if 'pos' not in s]
                 hand_ex = [x for x in old.get('examples', []) if not x.startswith('s-w-')]
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
@@ -273,7 +273,7 @@ def write_out(results):
             dump(out / 'words' / f'{wid}.yaml', {k: w[k] for k in WORD_FIELDS if k in w})
             nums = next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'])
             (out / 'src').mkdir(parents=True, exist_ok=True)
-            (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1))
+            (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
     dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
 
 def main(argv, llm=ask):
@@ -282,7 +282,7 @@ def main(argv, llm=ask):
         sys.exit(2)
     for name in SOURCES:
         fetch(name)
-    HSK.update({e['s']: e for e in json.load(open(CACHE / 'complete.min.json'))})
+    HSK.update({e['s']: e for e in json.loads((CACHE / 'complete.min.json').read_text(encoding='utf-8'))})
     hsk1 = {s for s, e in HSK.items() if 'n1' in e['l']} & DICT.keys()
     words = []
     for w in argv or sorted(hsk1):
