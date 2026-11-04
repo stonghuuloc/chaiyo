@@ -5,7 +5,7 @@ Needs fonttools + brotli: run with /tmp/etts/bin/python, as build-lesson-media.p
 import sys
 from fontTools.ttLib import TTFont
 
-NOTICE = ('Modified by chaiyo on {date}: subset to the glyphs one screen uses (fontTools pyftsubset) '
+NOTICE = ('Modified by chaiyo on {date}: subset to the glyphs one lesson uses (fontTools pyftsubset) '
           'and converted to WOFF2. Original: AR PL UKai CN 0.2.20080216, (c) Arphic Technology Co., Ltd., '
           'Arphic Public License, see ARPHICPL.TXT.')
 

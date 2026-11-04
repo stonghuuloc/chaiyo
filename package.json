@@ -20,6 +20,7 @@
 		"brand": "scripts/build-brand.sh",
 		"assets:push": "python3 scripts/assets_push.py",
 		"assets:pull": "python3 scripts/assets_pull.py",
+		"fonts": "python3 scripts/build-kaishu-subsets.py",
 		"supabase:push": "scripts/supabase-push.sh"
 	},
 	"devDependencies": {
