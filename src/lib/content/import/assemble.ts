@@ -11,7 +11,7 @@ import {
 } from '../derive';
 import { audioManifest } from './audio';
 import type { ContentSet, LintError } from '../lint';
-import type { Lesson, Primer, Question, Sentence } from '../schemas';
+import type { GrammarPoint, Lesson, Primer, Question, Sentence, Word } from '../schemas';
 import type {
 	ImportedContent,
 	ImportedLesson,
@@ -29,6 +29,18 @@ const isPrimer = (l: Lesson | Primer): l is Primer => 'kind' in l && l.kind === 
 
 const role = (lessonId: string, r: ImportedQuestion['role'], qs: Question[]): ImportedQuestion[] =>
 	qs.map((body) => ({ id: body.id, lessonId, role: r, body }));
+
+export function bundleSentences(
+	taught: Word[],
+	points: GrammarPoint[],
+	free: Iterable<ImportedSentence>
+): ImportedSentence[] {
+	const listed = new Set([
+		...taught.flatMap((w) => [...w.examples, ...w.senses.flatMap((s) => s.example ?? [])]),
+		...points.flatMap((g) => g.examples)
+	]);
+	return [...free].filter((s) => listed.has(s.id));
+}
 
 export function assemble(
 	set: ContentSet,
@@ -93,11 +105,7 @@ export function assemble(
 		}));
 		const points = lesson.sections.grammar.ids.flatMap((id) => grammarById.get(id) ?? []);
 		const taught = lesson.sections.words.ids.flatMap((id) => wordsById.get(id) ?? []);
-		const listed = new Set([
-			...taught.flatMap((w) => [...w.examples, ...w.senses.flatMap((s) => s.example ?? [])]),
-			...points.flatMap((g) => g.examples)
-		]);
-		const shipped = [...own, ...[...free.values()].filter((s) => listed.has(s.id))];
+		const shipped = [...own, ...bundleSentences(taught, points, free.values())];
 		lessons.push({
 			...lesson,
 			gateCoverage: { ...gateCoverage(lesson) },
