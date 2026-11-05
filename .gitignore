@@ -38,3 +38,5 @@ prototype/lesson-images.html
 __pycache__/
 .annotate/
 .cache/
+static/content/
+static/fonts/lessons/

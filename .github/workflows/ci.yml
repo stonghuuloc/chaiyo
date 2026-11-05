@@ -32,6 +32,7 @@ jobs:
       - run: pnpm lint
       - run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - run: pnpm test:coverage
+      - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv run --locked pytest scripts/tests
       - name: Coverage summary

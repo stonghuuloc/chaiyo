@@ -328,7 +328,7 @@ interface PrimerSection {
 | Spoken pinyin | `pinyin` + sandhi | 3-3 → 2-3 · 不 before tone 4 → bú · 一 by next tone; `spoken` overrides |
 | Hán Việt per word | `Char.readings` matched to word pinyin | polyphones pick the reading whose pinyin matches |
 | `Word.taughtIn`, Word Page backlinks | `sections.words.ids` + every sentence's `seg` | first lesson that lists it in `words` |
-| Audio key | `sha256(hanzi|voice)` per Sentence and Word, normal speed only | voice = speaker's Cast voice, else default narrator; slow play is the client replaying at 0.5× |
+| Audio key | `sha256(hanzi|voice)` per Sentence and Word, normal speed only | voice = speaker's Cast voice, else default narrator; a Word whose id differs from its hanzi keys on `id|voice`; voice = the CastId, the Audio Renderer maps it to a provider voice; slow play is the client replaying at 0.5× |
 | `seg` | longest match against Dictionary, preferring lesson words | author override wins |
 | Warm-up set | due Lexicon cards + previous lesson's words | runtime, not import |
 | Gate draw | `gate.pool` | `draw` random items, covering every `words` id at least once across pool |
