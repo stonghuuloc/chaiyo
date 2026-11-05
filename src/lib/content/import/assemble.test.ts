@@ -6,6 +6,7 @@ import { parseDictionary } from '../derive';
 import { lintDir } from '../lint';
 import { fixtureRefs } from '../lint/fixtures/refs';
 import { assemble } from './assemble';
+import { audioManifest } from './audio';
 
 const OK = join(__dirname, 'fixtures/ok');
 
@@ -124,6 +125,25 @@ describe('assemble on fixtures/ok', () => {
 		]);
 		expect(lesson.thin.length).toBeGreaterThan(0);
 		expect(lesson.thin.map((t) => t.hanzi)).toContain('们');
+	});
+
+	it('audio is the manifest of the content and changes with a speaker', () => {
+		const c = built();
+		expect(c.audio).toEqual(audioManifest(c));
+		const dir = mkdtempSync(join(tmpdir(), 'assemble-'));
+		temps.push(dir);
+		cpSync(OK, dir, { recursive: true });
+		const f = join(dir, 'lessons/hsk1/h1-01.yaml');
+		writeFileSync(
+			f,
+			readFileSync(f, 'utf8').replace(
+				'vi: Không sao., speaker: redpanda',
+				'vi: Không sao., speaker: takin'
+			)
+		);
+		const speaker = built(dir).audio;
+		expect(speaker).not.toEqual(c.audio);
+		expect(speaker.find((e) => e.ref === 's-h1-01-04')?.voice).toBe('takin');
 	});
 
 	it('holds only plain objects and arrays', () => {

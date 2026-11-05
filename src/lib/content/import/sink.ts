@@ -1,4 +1,5 @@
 import type { ThinEntry } from '../derive';
+import type { AudioEntry } from './audio';
 import type {
 	Char,
 	GrammarPoint,
@@ -35,6 +36,7 @@ export type ImportedContent = {
 	grammar: GrammarPoint[];
 	questions: ImportedQuestion[];
 	syllables: Syllables;
+	audio: AudioEntry[];
 };
 
 export type Sink = {

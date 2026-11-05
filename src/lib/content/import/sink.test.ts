@@ -9,7 +9,8 @@ const make = (sha: string): ImportedContent => ({
 	chars: [],
 	grammar: [],
 	questions: [],
-	syllables: []
+	syllables: [],
+	audio: []
 });
 
 describe('createMemorySink', () => {

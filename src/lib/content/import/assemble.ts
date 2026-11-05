@@ -9,6 +9,7 @@ import {
 	thinEntries,
 	type ThinEntry
 } from '../derive';
+import { audioManifest } from './audio';
 import type { ContentSet, LintError } from '../lint';
 import type { Lesson, Primer, Question, Sentence } from '../schemas';
 import type {
@@ -112,17 +113,16 @@ export function assemble(
 	}
 	sentences.push(...free.values());
 
-	return {
-		content: {
-			lessons: lessons.sort(
-				(a, b) => a.level - b.level || a.order - b.order || byKey<ImportedLesson>((x) => x.id)(a, b)
-			),
-			words: words.sort(byKey((w) => w.id)),
-			sentences: sentences.sort(byKey((s) => s.id)),
-			chars: set.chars.map((c) => c.value).sort(byKey((c) => c.hanzi)),
-			grammar: set.grammar.map((g) => g.value).sort(byKey((g) => g.id)),
-			questions: questions.sort(byKey((q) => q.id + '\0' + q.lessonId)),
-			syllables: [...set.syllables].sort(byKey((s) => s.syllable))
-		}
+	const content: Omit<ImportedContent, 'sha' | 'audio'> = {
+		lessons: lessons.sort(
+			(a, b) => a.level - b.level || a.order - b.order || byKey<ImportedLesson>((x) => x.id)(a, b)
+		),
+		words: words.sort(byKey((w) => w.id)),
+		sentences: sentences.sort(byKey((s) => s.id)),
+		chars: set.chars.map((c) => c.value).sort(byKey((c) => c.hanzi)),
+		grammar: set.grammar.map((g) => g.value).sort(byKey((g) => g.id)),
+		questions: questions.sort(byKey((q) => q.id + '\0' + q.lessonId)),
+		syllables: [...set.syllables].sort(byKey((s) => s.syllable))
 	};
+	return { content: { ...content, audio: audioManifest(content) } };
 }
