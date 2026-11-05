@@ -63,6 +63,11 @@ function parity(b: Bundle, proto: Proto, fx: FxQuestion[]): string[] {
 	const sentence = (id: string) => b.sentences.find((s) => s.id === id);
 	const lesson = b.lesson.sections as unknown as Record<string, Section>;
 
+	check(
+		'words ids',
+		JSON.stringify(lesson.words?.ids) === JSON.stringify(proto.WORDS.map((p) => p.hz))
+	);
+
 	for (const p of proto.WORDS) {
 		const w = b.words.find((x) => x.hanzi === p.hz);
 		if (!w) {
@@ -284,7 +289,8 @@ describe('h1-01 prototype parity', () => {
 		const sink = createMemorySink();
 		const r = await importContent('content', sink, { only: scopeFor('content', ['lessons/hsk1']) });
 		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
-		b = buildBundle(sink.content!, 'h1-01');
+		if (!sink.content) throw new Error('import wrote no content');
+		b = buildBundle(sink.content, 'h1-01');
 	});
 	afterAll(() => vi.unstubAllEnvs());
 
@@ -323,7 +329,9 @@ describe('h1-01 prototype parity', () => {
 	});
 	it('negative control: changing 你 senses[0].vi is the only mismatch', () => {
 		const clone = structuredClone(b);
-		clone.words.find((w) => w.hanzi === '你')!.senses[0].vi = 'changed';
+		const ni = clone.words.find((w) => w.hanzi === '你');
+		if (!ni) throw new Error('你 missing from bundle');
+		ni.senses[0].vi = 'changed';
 		expect(parity(clone, proto, FX)).toEqual(['你 vi']);
 	});
 
