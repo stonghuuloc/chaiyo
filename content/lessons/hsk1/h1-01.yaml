@@ -28,7 +28,7 @@ sentences:
   - { id: s-h1-01-15, hanzi: 对不起！, pinyin: duìbuqǐ, vi: Xin lỗi! }
   - { id: s-h1-01-16, hanzi: 没关系。, pinyin: méi guānxi, vi: Không sao. }
   - { id: s-h1-01-17, hanzi: 谢谢！, pinyin: xièxie, vi: Cảm ơn! }
-  - { id: s-h1-01-18, hanzi: 不客气。, pinyin: bú kèqi, vi: Không có gì. }
+  - { id: s-h1-01-18, hanzi: 不客气。, pinyin: bù kèqi, spoken: bú kèqi, vi: Không có gì. }
   - { id: s-h1-01-19, hanzi: 再见！, pinyin: zàijiàn, vi: Tạm biệt! }
 sections:
   warmup: {}
@@ -36,18 +36,200 @@ sections:
     ids: [ 你, 好, 您, 你们, 你好, 对不起, 没关系, 谢谢, 不客气, 再见 ]
   grammar:
     ids: [ h1-g01 ]
-    drills: []
+    drills:
+      - id: q-h1-01-g01
+        type: choice
+        tests: { grammar: [ h1-g01 ], words: [ 您 ] }
+        prompt: { kind: vi, text: Chào thầy cô (lịch sự) }
+        optionKind: hanzi
+        options: [ 你好, 您好, 你们好 ]
+        answer: 1
+      - id: q-h1-01-g02
+        type: choice
+        tests: { grammar: [ h1-g01 ], words: [ 你们 ] }
+        prompt: { kind: vi, text: Chào cả nhóm bạn }
+        optionKind: hanzi
+        options: [ 你好, 您好, 你们好 ]
+        answer: 2
+      - id: q-h1-01-g03
+        type: order
+        tests: { grammar: [ h1-g01 ] }
+        tiles: [ 们, 你, 好 ]
+        answer: s-h1-01-09
   dialogue:
     parts:
       - title: Gặp nhau
         lines: [ s-h1-01-01, s-h1-01-02, s-h1-01-03, s-h1-01-04 ]
       - title: Chia tay
         lines: [ s-h1-01-05, s-h1-01-06, s-h1-01-07 ]
-    questions: []
+    questions:
+      - id: q-h1-01-d01
+        type: choice
+        tests: { words: [ 没关系 ] }
+        prompt: { kind: audio, ref: s-h1-01-03 }
+        optionKind: hanzi
+        options: [ 没关系。, 不客气。, 再见！ ]
+        answer: 0
   listenSpeak:
-    items: []
+    items:
+      - id: q-h1-01-l01
+        type: tone
+        tests: { words: [ 好 ], tone: true }
+        prompt: { kind: audio, ref: 好 }
+        syllable: 0
+        answer: 3
+      - id: q-h1-01-l02
+        type: choice
+        tests: { words: [ 你好 ] }
+        prompt: { kind: audio, ref: 你好 }
+        optionKind: hanzi
+        options: [ 你好, 你们, 您, 再见 ]
+        answer: 0
+      - id: q-h1-01-l03
+        type: choice
+        tests: { words: [ 不客气 ] }
+        prompt: { kind: audio, ref: s-h1-01-18 }
+        optionKind: vi
+        options: [ Không có gì., Xin lỗi!, Cảm ơn!, Tạm biệt! ]
+        answer: 0
+      - id: q-h1-01-s01
+        type: readAloud
+        tests: { words: [ 不客气 ], tone: true }
+        sentence: s-h1-01-06
+      - id: q-h1-01-f01
+        type: freeAnswer
+        tests: { words: [ 对不起 ] }
+        prompt: { kind: vi, text: Bạn làm đổ trà của bạn mình. Nói gì? }
+        rubric: [ Nói 对不起 (xin lỗi) bằng một câu ngắn ]
   writing:
     chars: [ 你, 好, 们 ]
 gate:
   draw: 10
-  pool: []
+  pool:
+    - id: q-h1-01-x01
+      type: choice
+      tests: { words: [ 谢谢 ] }
+      prompt: { kind: audio, ref: 谢谢 }
+      optionKind: hanzi
+      options: [ 谢谢, 没关系, 不客气, 对不起 ]
+      answer: 0
+    - id: q-h1-01-x02
+      type: choice
+      tests: { words: [ 对不起 ] }
+      prompt: { kind: hanzi, ref: 对不起 }
+      optionKind: vi
+      options: [ xin lỗi, không sao, cảm ơn, tạm biệt ]
+      answer: 0
+    - id: q-h1-01-x03
+      type: choice
+      tests: { words: [ 没关系 ] }
+      prompt: { kind: vi, text: không sao }
+      optionKind: hanzi
+      options: [ 对不起, 没关系, 谢谢, 再见 ]
+      answer: 1
+    - id: q-h1-01-x04
+      type: order
+      tests: { words: [ 你们 ], grammar: [ h1-g01 ] }
+      tiles: [ 们, 你, 好 ]
+      answer: s-h1-01-09
+    - id: q-h1-01-x05
+      type: choice
+      tests: { words: [ 你们 ] }
+      prompt: { kind: audio, ref: 你们 }
+      optionKind: hanzi
+      options: [ 你好, 您, 你们, 谢谢 ]
+      answer: 2
+    - id: q-h1-01-x06
+      type: typePinyin
+      tests: { words: [ 再见 ] }
+      prompt: { kind: hanzi, ref: 再见 }
+      answer: zàijiàn
+    - id: q-h1-01-x07
+      type: choice
+      tests: { words: [ 好 ] }
+      prompt: { kind: hanzi, ref: 好 }
+      optionKind: vi
+      options: [ "bạn, anh, chị", "ông, bà, thầy cô (lịch sự)", "tốt, khỏe, hay", cảm ơn ]
+      answer: 2
+    - id: q-h1-01-x08
+      type: typePinyin
+      tests: { words: [ 谢谢 ] }
+      prompt: { kind: hanzi, ref: 谢谢 }
+      answer: xièxie
+    - id: q-h1-01-x09
+      type: choice
+      tests: { words: [ 不客气 ] }
+      prompt: { kind: audio, ref: 不客气 }
+      optionKind: hanzi
+      options: [ 谢谢, 没关系, 再见, 不客气 ]
+      answer: 3
+    - id: q-h1-01-x10
+      type: choice
+      tests: { words: [ 您 ], grammar: [ h1-g01 ] }
+      prompt: { kind: vi, text: Chào thầy cô (lịch sự) }
+      optionKind: hanzi
+      options: [ 您好, 你好, 你们好, 好你 ]
+      answer: 0
+    - id: q-h1-01-x11
+      type: choice
+      tests: { words: [ 你 ] }
+      prompt: { kind: audio, ref: 你 }
+      optionKind: hanzi
+      options: [ 您, 你, 好, 谢谢 ]
+      answer: 1
+    - id: q-h1-01-x12
+      type: choice
+      tests: { words: [ 你 ] }
+      prompt: { kind: hanzi, ref: 你 }
+      optionKind: vi
+      options: [ "ông, bà, thầy cô (lịch sự)", "bạn, anh, chị", các bạn, xin chào ]
+      answer: 1
+    - id: q-h1-01-x13
+      type: choice
+      tests: { words: [ 您 ] }
+      prompt: { kind: hanzi, ref: 您 }
+      optionKind: vi
+      options: [ "ông, bà, thầy cô (lịch sự)", "bạn, anh, chị", các bạn, xin chào ]
+      answer: 0
+    - id: q-h1-01-x14
+      type: choice
+      tests: { words: [ 对不起 ] }
+      prompt: { kind: vi, text: xin lỗi }
+      optionKind: hanzi
+      options: [ 谢谢, 对不起, 没关系, 再见 ]
+      answer: 1
+    - id: q-h1-01-x15
+      type: choice
+      tests: { words: [ 你好 ] }
+      prompt: { kind: vi, text: xin chào }
+      optionKind: hanzi
+      options: [ 谢谢, 再见, 你好, 没关系 ]
+      answer: 2
+    - id: q-h1-01-x16
+      type: typePinyin
+      tests: { words: [ 你好 ] }
+      prompt: { kind: hanzi, ref: 你好 }
+      answer: nǐ hǎo
+    - id: q-h1-01-x17
+      type: typePinyin
+      tests: { words: [ 不客气 ] }
+      prompt: { kind: hanzi, ref: 不客气 }
+      answer: bù kèqi
+    - id: q-h1-01-x18
+      type: tone
+      tests: { words: [ 没关系 ], tone: true }
+      prompt: { kind: audio, ref: 没关系 }
+      syllable: 0
+      answer: 2
+    - id: q-h1-01-x19
+      type: trueFalse
+      tests: { words: [ 好 ] }
+      prompt: { kind: hanzi, ref: 好 }
+      statement: "好 nghĩa là tốt, khỏe, hay."
+      answer: true
+    - id: q-h1-01-x20
+      type: trueFalse
+      tests: { words: [ 再见 ] }
+      prompt: { kind: hanzi, ref: 再见 }
+      statement: 再见 nghĩa là xin chào.
+      answer: false
