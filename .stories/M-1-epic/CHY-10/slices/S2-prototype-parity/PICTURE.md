@@ -1,5 +1,5 @@
 # CHY-10 S2 — picture
-ACs: AC2, AC3 · Spec rev 1 · Sub-task CHY-10 S2
+ACs: AC2, AC3 · Spec rev 2 · Sub-task CHY-10 S2
 
 ## What this slice is about
 
@@ -70,7 +70,7 @@ Adds one test that imports Bài 1 and checks it against the prototype: words, se
 | 1 | Transcribe the 19 prototype questions into a fixture | AC2 | `l4-grammar.html:118`, `l5-dialogue.html:135`, `l6-listen.html:243`, `l8-gate.html:155` | question comparison in Task 2 |
 | 2 | Parity test: words, sentences, dialogue, grammar, questions | AC2 | `prototype/data/h1-01.js:12,37,49,54` | `pnpm test -- h1-01.parity` |
 | 3 | Seven-row section coverage table | AC3 | `l2-warmup.html:33`, `l3-words.html:62`, `l7-writing.html:57`, `l8-gate.html:155` | same file; negative control on an in-memory clone |
-| 4 | Prove: full test, check, lint, `import:content` memory sink | AC2, AC3 | `content.test.ts:14-19` pattern, `vite.config.ts:33` | `pnpm test`, `pnpm check`, `pnpm lint` |
+| 4 | Prove: full test, check, lint, scoped `import:content` memory sink, `build-content.sh` bundle + Kaishu fonts | AC2, AC3 | `vite.config.ts:56`, `scripts/build-content.sh` (PR #35) | `pnpm test`, `pnpm check`, `pnpm lint`, `pnpm import:content --only lessons/hsk1` |
 
 Mutation paths: read-only test, negative controls edit an in-memory clone. Rollback: `git revert`.
 
