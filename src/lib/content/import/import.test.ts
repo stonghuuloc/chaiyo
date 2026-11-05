@@ -1,4 +1,12 @@
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+	cpSync,
+	mkdirSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	symlinkSync,
+	writeFileSync
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -99,6 +107,19 @@ describe('importContent lint gate [AC1]', () => {
 		expect(result).toEqual({
 			errors: [expect.objectContaining({ file: 'dictionary.json', check: 10 })]
 		});
+	});
+
+	it('a dictionary.json symlink loop is a check 10 error, not an empty Dictionary', async () => {
+		const dir = withTemp((d) => {
+			rmSync(join(d, 'dictionary.json'));
+			symlinkSync(join(d, 'dictionary.json'), join(d, 'dictionary.json'));
+		});
+		const stub = spySink();
+		const result = await importContent(dir, stub, { refs });
+		expect(result).toEqual({
+			errors: [expect.objectContaining({ file: 'dictionary.json', check: 10, name: 'Derive' })]
+		});
+		expect(stub.write).not.toHaveBeenCalled();
 	});
 
 	it('a sink whose write throws makes importContent reject with that error', async () => {

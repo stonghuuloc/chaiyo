@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseDictionary, type ThinEntry } from '../derive';
 import { lintDir, type LintError, type LintRefs } from '../lint';
@@ -36,11 +36,12 @@ const loadDictionary = (
 	dir: string
 ): { ok: true; value: Map<string, ThinEntry> } | { ok: false; errors: LintError[] } => {
 	const file = join(dir, 'dictionary.json');
-	if (!existsSync(file)) return { ok: true, value: new Map() };
 	let rows: unknown;
 	try {
 		rows = JSON.parse(readFileSync(file, 'utf8'));
 	} catch (e) {
+		if (e instanceof Error && 'code' in e && e.code === 'ENOENT')
+			return { ok: true, value: new Map() };
 		return { ok: false, errors: [deriveError('', e instanceof Error ? e.message : String(e))] };
 	}
 	const parsed = parseDictionary('dictionary.json', rows);
