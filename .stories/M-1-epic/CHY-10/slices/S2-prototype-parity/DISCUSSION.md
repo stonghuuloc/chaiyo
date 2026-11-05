@@ -20,6 +20,7 @@ ACs: AC2, AC3  ·  rev 2 (delta vs main 9b7ab62)
 - [AC2] (rev 2) `ex` pinyin is compared with the bundle sentence's `spoken` when the word has `say`, else with its `pinyin`. C2 always sets a sentence's `spoken` (derived when not authored), so rev 1's "`spoken ?? pinyin`" would compare 你's `nǐ hǎo` with the derived `ní hǎo` and fail. 90%, hand walk above.
 - [AC3] (rev 2) The Gate row asserts ≥ 2 ids per word in `gateCoverage`, not "lists all 10 words". `gateCoverage` always has all 10 keys (derive/gate.ts), so a key check proves nothing. 95%.
 - [AC3] (rev 2) S2's proof runs `scripts/build-content.sh` on the real content (manual, Mac). Exit 0 proves every Bài 1 Han char maps in face 0 (CHY-13 AC1 error otherwise). That closes CHY-13 AC3's real-bundle item and meets CHY-25's `vercel.json` condition. It stays out of CI, because CHY-8 S3 never imports `content/` in CI. 80%.
+- [AC2] (impl) PLAN said "no `content/` edits", but CHY-12's step-0 `parts[].pinyin` fix (bu→bù, xi→xì, qi→qì in `words/{对不起,没关系,不客气}.yaml`) was on no branch, so the scoped import returned `{ errors }` and the parity test could not run. Commit 8d33032 carries exactly those 3 one-token edits until CHY-12 lands the same change, then drops out on rebase. Captain approved, 2026-11-05. Reviewer CHAA-33 raised it (C4 ownership). 90%.
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
