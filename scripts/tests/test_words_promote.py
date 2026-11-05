@@ -235,7 +235,7 @@ def test_normalize_py_erhua_as_its_own_jieba_token(gen):
     ('我有一张床。', 'Wǒ yǒu yī zhāng chuáng.', 'Wǒ yǒu yīzhāng chuáng.'),
     ('我买了三本书。', 'Wǒ mǎi le sān běn shū.', 'Wǒ mǎile sānběn shū.'),
     ('他等着你。', 'Tā děng zhe nǐ.', 'Tā děngzhe nǐ.'),
-    ('我去过北京。', 'Wǒ qù guò Běijīng.', 'Wǒ qùguò Běijīng.')])
+    ('我去过北京。', 'Wǒ qù guo Běijīng.', 'Wǒ qùguo Běijīng.')])
 def test_pinyin_grouping_rule_numeral_classifier_particles_conditional(gen, hz, py, want):
     assert gen.normalize_py(hz, py) == want
 
@@ -297,3 +297,22 @@ def test_bound_note_merges_into_existing_parentheses_and_fullwidth_brackets_are_
 def test_parse_json_takes_the_first_object_only(gen):
     assert gen.parse_json('```json\n{"a": 1}\n``` then {"b": 2}') == {'a': 1}
     assert gen.parse_json('{"a": {"b": [1, 2]}} trailing') == {'a': {'b': [1, 2]}}
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('她过了马路。', 'Tāguòle mǎlù.', 'Tā guòle mǎlù.'),
+    ('冬天过了。', 'Dōngtiānguòle.', 'Dōngtiān guòle.'),
+    ('我们过春节。', 'Wǒmenguò Chūnjié.', 'Wǒmen guò Chūnjié.'),
+    ('我过得很好。', 'Wǒguò de hěn hǎo.', 'Wǒ guò de hěn hǎo.'),
+    ('我去过北京。', 'Wǒ qù guo Běijīng.', 'Wǒ qùguo Běijīng.'),
+    ('天一黑，就会开始放烟花了。', 'Tiānyī hēi, jiù huì kāishǐ fàng yānhuā le.', 'Tiān yī hēi, jiù huì kāishǐ fàng yānhuāle.'),
+    ('他一醒就哭。', 'Tā yīxǐng jiù kū.', 'Tā yī xǐng jiù kū.')])
+def test_pinyin_full_tone_guo_is_a_verb_and_yi_is_its_own_word(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_erhua_pinyin_without_儿_in_the_hanzi_is_rejected(word):
+    bad = {'ai': True, 'hz': '你跑哪去了', 'py': 'Nǐ pǎo nǎr qù le', 'vi': 'x'}
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(answer(ex0=bad)))
+    assert 'erhua' in str(e.value)

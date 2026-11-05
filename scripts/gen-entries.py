@@ -194,6 +194,8 @@ def check(e, cands, hz, readings):
                     errs.append(f'ví dụ của lượng từ "{s["vi"]}" phải có số từ + 「{hz}」 đếm đúng danh từ đó')
                 if g['pos'] == 'Lượng từ' and re.match(r'(?i)\s*(lượng từ|classifier)', s['vi']):
                     errs.append(f'nghĩa lượng từ "{s["vi"]}" chép nguyên từ CC-CEDICT: nêu đếm cái gì')
+                if any(y.lower().endswith('r') and not re.fullmatch(r'[eēéěè]r', y.lower()) for y in SYLLABLE.findall(x.get('py') or '')) and '儿' not in text:
+                    errs.append(f'pinyin của ví dụ "{s["vi"]}" có âm r (erhua) nhưng câu không có 儿')
                 if x.get('ai') and not x.get('tatoeba') and len(re.findall(r'[\u4e00-\u9fff]', text)) > 12:
                     errs.append(f'câu AI của "{s["vi"]}" dài quá 12 chữ')
                 if sid({**x, 'hz': text}) in seen:
@@ -220,7 +222,7 @@ VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
 SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n)?r?(?![{VOWELS}])', re.I)
 PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
 TONED = set(VOWELS) - set('aeiouüv')
-CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘')
+CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘打')
 CJK = re.compile(r'[\u3400-\u9fff]')
 
 def normalize_py(hz, py):
@@ -261,12 +263,14 @@ def normalize_py(hz, py):
         if n > 1 and w not in DICT:
             if w[0] in '我你他她它别' and w not in ('我们', '你们', '他们', '她们', '它们'):
                 pieces = [(w[0], 'r'), (w[1:], f)]
-            elif w[-1] in '着了的' and toned(c + n - 1):  # a full-tone 着 (zháo) is a verb, not the particle
+            elif w[-1] == '一' or (w[0] == '一' and w[1] not in CLASSIFIERS and w[1] not in '下会些起共定样直般边半'):  # 天一黑, 一醒: 一 is its own word
+                pieces = [(w[:-1], f), ('一', 'm')] if w[-1] == '一' else [('一', 'm'), (w[1:], f)]
+            elif w[-1] in '着了的过' and toned(c + n - 1):  # a full-tone 着 (zháo) is a verb, not the particle
                 pieces = [(w[:-1], f), (w[-1], 'x')]
         for pw, pf in pieces:
             pn = count(pw)
             prev = units[-1] if units else None
-            particle = pw in ('的', '了', '着', '过') and prev and prev[2] and (pw == '过' or not toned(c))
+            particle = pw in ('的', '了', '着', '过') and prev and prev[2] and not toned(c)
             classifier = pf.startswith('q') and prev and prev[2] and prev[3].startswith('m')
             if particle or classifier:
                 prev[1] += pn
@@ -325,7 +329,7 @@ MUST_HAVE = {  # core senses of the most polysemous HSK 1 words; the audit must 
     '想': ['Động từ: nghĩ', 'Động từ: muốn', 'Động từ: nhớ'], '好': ['Tính từ: tốt', 'Phó từ: rất, thật (好大)', 'Bổ ngữ: xong'],
     '有': ['Động từ: có', 'Động từ: có (tồn tại)'], '点': ['Danh từ: giờ', 'Lượng từ: chút, ít (一点)', 'Danh từ: điểm'],
     '些': ['Lượng từ: một vài, những'], '没': ['Phó từ: chưa, không (没有)'], '用': ['Động từ: dùng, sử dụng'],
-    '开': ['Động từ: mở', 'Động từ: lái, bật'], '打': ['Động từ: đánh', 'Động từ: gọi (điện thoại)', 'Động từ: chơi (bóng)'],
+    '开': ['Động từ: mở', 'Động từ: lái (xe) (开车)', 'Động từ: bật, vận hành (máy)'], '很': ['Phó từ: rất'], '打': ['Động từ: đánh', 'Động từ: gọi (điện thoại)', 'Động từ: chơi (bóng)'],
     '多': ['Tính từ: nhiều', 'Phó từ: bao nhiêu, mấy (多大)'], '下': ['Danh từ: dưới', 'Động từ: xuống', 'Lượng từ: lần (一下)'],
     '上': ['Danh từ: trên', 'Động từ: lên'], '把': ['Giới từ: 把 (đưa tân ngữ lên trước)'],
     '给': ['Động từ: cho, đưa', 'Giới từ: cho, giúp, để'], '做': ['Động từ: làm'], '的': ['Trợ từ: của, định ngữ'],
@@ -352,9 +356,9 @@ def audit(hz, e, llm, readings):
 Nghĩa gốc CC-CEDICT và bản dịch cvdict_vi để đối chiếu: {json.dumps(readings, ensure_ascii=False)}
 {('Nghĩa BẮT BUỘC phải có trong mục từ này (liệt kê vào missing nếu thiếu): ' + json.dumps(MUST_HAVE[hz], ensure_ascii=False)) if hz in MUST_HAVE else ''}
 Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":[{{"id":"...","pattern":"不用"}}],"missing":[{{"pos":"...","vi":"..."}}]}}.
-- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
+- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: nghĩa tiếng Việt dịch theo từ tiếng Anh mơ hồ của CC-CEDICT chứ không theo cách dùng trong câu (quite → khá thay vì rất, boil → đun sôi thay vì sôi, get along → hợp nhau thay vì sống qua ngày), hoặc không khớp tự/tha động từ; câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
-- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
+- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Nghĩa chỉ có trong một từ ghép cụ thể (去 "ngoái" chỉ trong 去年) cũng là bound; nghĩa uyển ngữ hoặc văn chương (去 "qua đời", 冬天去了) phải rare. Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
 - missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
     by_id = {r['id']: r for r in rows}
@@ -407,13 +411,14 @@ Yêu cầu:
 - Gộp các nghĩa gần đồng nghĩa (CC-CEDICT hay tách bằng dấu phẩy, ví dụ "to get; to obtain; to receive") thành MỘT nghĩa, ghi hết số vào src. Chỉ tách khi người học cần phân biệt.
 - Nghĩa tiếng Việt ngắn, tự nhiên (2–8 từ), dịch theo cách người Việt nói, KHÔNG dịch từng chữ (invalid = người ốm lâu năm, không phải "tàn tật"; building = nhà/toà nhà tuỳ ngữ cảnh). Có thể thêm ghi chú trong ngoặc. Sắp nghĩa hay dùng nhất trước.
 - Nghĩa động từ KHÔNG chứa tân ngữ trong chính nó: viết "lấy, múc (nước)", "thắt, buộc (nút, dây)", không viết "đi lấy nước". Tân ngữ thường gặp đặt trong ngoặc. Không chép nguyên cvdict_vi hay dịch từng chữ từ tiếng Anh: nếu tiếng Việt đã bao hàm ý (cơm = cooked rice) thì dùng từ đơn ("cơm", không phải "cơm đã nấu"; "vé xe, vé tàu", không phải "vé xe buýt hoặc tàu hỏa").
+- Từ tiếng Anh mơ hồ trong CC-CEDICT (quite, boil, get along, to issue…) KHÔNG dùng để dịch: dịch theo cách dùng tiếng Trung đúng trong câu ví dụ. Ví dụ 很 "quite" = "rất" (không phải "khá"); 开 水开了 = "sôi (nước)" (nước tự sôi, không phải "đun sôi"); 过 "to get along" = "sống qua ngày", không phải "hợp nhau" (đó là 合得来). Nghĩa tiếng Việt phải khớp ngữ pháp (tự/tha động từ) và mức độ của câu.
 - Lý do "trùng" chỉ cho nghĩa GIỐNG HỆT một nghĩa khác. Nghĩa mượn hay hiếm (fan/devotee, tên gọi mới) vẫn phải có trong mục từ, đánh common: false.
 - Phân biệt từ gần nghĩa mà người Việt hay lẫn: 还是 hỏi lựa chọn là "hay, hay là", còn "hoặc" là 或者.
 - "common": true cho mọi nghĩa người học HSK 1–6 hay gặp trong lời nói và văn viết thường ngày, kể cả khi nó chỉ xuất hiện trong cấu trúc hoặc từ ghép thông dụng (少 trong 很少 "hiếm khi", 少来/少废话 "thôi, đừng" là common). false CHỈ cho nghĩa hiếm: văn ngôn, phương ngữ, chuyên ngành, chỉ còn trong thành ngữ cố định, hoặc chỉ dùng làm tên riêng. Căn cứ vào mức độ thường dùng của nghĩa, KHÔNG phải thứ tự trong CC-CEDICT. Không bỏ nghĩa hiếm, chỉ đánh dấu.
 - Lượng từ: nghĩa viết bằng từ đếm tiếng Việt kèm (danh từ được đếm), ví dụ 本 "quyển, cuốn (sách)", 杯 "cốc, ly (đồ uống)", 床 "tấm, chiếc (chăn, nệm)"; KHÔNG bắt đầu bằng "lượng từ" hay "classifier for". Ví dụ phải có số từ ngay trước đúng lượng từ 「{hz}」 (一床被子, 三岁), không dùng lượng từ khác (两张床 là sai cho 床).
 - Ví dụ: với mỗi nghĩa, chọn câu Tatoeba dùng ĐÚNG nghĩa đó (ghi "tatoeba": id, chép nguyên "hz"), ưu tiên câu ngắn, từ dễ. Một câu chỉ dùng cho một nghĩa.
   Không có câu nào đúng nghĩa → tự viết câu ≤ 12 chữ Hán, từ vựng HSK ≤ {max(level or 3, 2)}, ghi "ai": true. Câu tự viết phải là tiếng Trung hiện đại tự nhiên, dùng 「{hz}」 hoặc một từ ghép CÓ THẬT chứa nó (không bịa từ ghép, không dùng từ văn ngôn làm câu thay thế). Nếu nghĩa chỉ có ở từ không tự nhiên trong lời nói (hoặc ví dụ duy nhất là từ ghép văn ngôn), đưa nghĩa vào "dropped" với lý do "không có ví dụ tự nhiên" thay vì cố viết câu.
-  "py": pinyin có dấu, viết liền từng từ (zǒulù, jiàndào, tārén, wǒmen), cách nhau giữa các từ, viết hoa đầu câu; không đánh dấu biến điệu thanh 3-3 (giữ dấu gốc). "vi": dịch tiếng Việt tự nhiên (dựa vào câu Trung, bản tiếng Anh/Việt kèm theo chỉ để hiểu nghĩa).
+  "py": pinyin phải khớp chữ Hán (không thêm r khi câu không có 儿); trợ từ 了/着/过/的 viết thanh nhẹ (le, zhe, guo, de), động từ viết dấu (guò, zháo); pinyin có dấu, viết liền từng từ (zǒulù, jiàndào, tārén, wǒmen), cách nhau giữa các từ, viết hoa đầu câu; không đánh dấu biến điệu thanh 3-3 (giữ dấu gốc). "vi": dịch tiếng Việt tự nhiên (dựa vào câu Trung, bản tiếng Anh/Việt kèm theo chỉ để hiểu nghĩa).
 - "luongtu": lượng từ đi với danh từ này ([] nếu không phải danh từ). "cannghia": tối đa 3 từ gần nghĩa, [] nếu không chắc.
 
 Chỉ trả về JSON:
@@ -444,7 +449,7 @@ Chỉ trả về JSON:
                     s['common'] = True
                 if bound.get(s['vi']):
                     s['common'] = True
-                    note = f'chỉ dùng trong {bound[s["vi"]]}'
+                    note = 'chỉ dùng trong ' + bound[s['vi']].replace('、', ', ')
                     s['vi'] = s['vi'][:-1] + f'; {note})' if s['vi'].endswith(')') else f'{s["vi"]} ({note})'
                 s['vi'] = s['vi'].replace('（', '(').replace('）', ')')
     e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
@@ -471,7 +476,8 @@ def to_yaml(hz, e):
         py = r['pinyin'].lower()
         main = py == e['main']
         wid = hz if main else hz + '-' + ''.join(s if s[-1].isdigit() else s + '5' for s in nums[py].split())
-        w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': py,
+        proper = next((r['pinyin'] for r in e['cedict'] if r['pinyin'].lower() == py and r['pinyin'][:1].isupper()), py)
+        w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': proper,
                                    'hanviet': hanviet(hz, row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3])),
                                    'level': 1, 'pos': [], 'senses': [], 'examples': []})
         for g in r['groups']:
