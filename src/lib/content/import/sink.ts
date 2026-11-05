@@ -1,3 +1,4 @@
+import type { ThinEntry } from '../derive';
 import type {
 	Char,
 	GrammarPoint,
@@ -8,8 +9,6 @@ import type {
 	Syllables,
 	Word
 } from '../schemas';
-
-export type ThinEntry = { hanzi: string; pinyin: string; hanviet: string; meaning: string };
 
 export type ImportedLesson = (Lesson | Primer) & {
 	gateCoverage: Record<string, string[]>;

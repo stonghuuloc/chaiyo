@@ -1,0 +1,177 @@
+kind: primer
+id: h0-00
+level: 1
+order: 0
+title: Bảng phát âm
+titleHanzi: 拼音
+scene:
+  { 'file': 'lessons/h0-00.png', 'cast': ['panda'], 'prompt': 'A panda pointing at a pinyin chart' }
+sections:
+  tones:
+    cards:
+      - {
+          'title': 'Bốn thanh',
+          'explain': 'Bốn thanh điệu của tiếng Trung.',
+          'syllables': ['mā', 'má', 'mǎ', 'mà', 'ma'],
+          'pairs': [['mā', 'má'], [{ 'say': 'ā', 'label': 'a' }, 'ma']]
+        }
+    drills:
+      - {
+          'id': 'q-h0-00-tones',
+          'type': 'tone',
+          'prompt': { 'kind': 'syllable', 'text': 'mā' },
+          'syllable': 0,
+          'answer': 1,
+          'tests': { 'tone': true }
+        }
+  finals:
+    cards:
+      - { 'title': 'Vần đơn', 'explain': 'Các vần a o e.', 'syllables': ['a', 'o', 'e'] }
+    drills:
+      - {
+          'id': 'q-h0-00-finals',
+          'type': 'tone',
+          'prompt': { 'kind': 'syllable', 'text': 'mā' },
+          'syllable': 0,
+          'answer': 1,
+          'tests': { 'tone': true }
+        }
+  initials:
+    cards:
+      - { 'title': 'Thanh mẫu', 'explain': 'Thanh mẫu m n h.', 'syllables': ['ma', 'ni', 'hao'] }
+    drills:
+      - {
+          'id': 'q-h0-00-initials',
+          'type': 'tone',
+          'prompt': { 'kind': 'syllable', 'text': 'mā' },
+          'syllable': 0,
+          'answer': 1,
+          'tests': { 'tone': true }
+        }
+  spelling:
+    cards:
+      - {
+          'title': 'Ghép vần',
+          'explain': 'Ghép thanh mẫu với vần.',
+          'syllables': ['ni', 'nin'],
+          'pairs': [['ni', 'nin']]
+        }
+    drills:
+      - {
+          'id': 'q-h0-00-spelling',
+          'type': 'tone',
+          'prompt': { 'kind': 'syllable', 'text': 'mā' },
+          'syllable': 0,
+          'answer': 1,
+          'tests': { 'tone': true }
+        }
+  sandhi:
+    cards:
+      - {
+          'title': 'Biến điệu',
+          'explain': 'Hai thanh ba đi liền: nǐ hǎo đọc là ní hǎo.',
+          'syllables': ['ni', 'hao']
+        }
+    drills:
+      - {
+          'id': 'q-h0-00-sandhi',
+          'type': 'tone',
+          'prompt': { 'kind': 'syllable', 'text': 'mā' },
+          'syllable': 0,
+          'answer': 1,
+          'tests': { 'tone': true }
+        }
+gate:
+  draw: 5
+  testOut: true
+  pool:
+    - {
+        'id': 'q-h0-00-g01',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'tones',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g02',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'tones',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g03',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'finals',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g04',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'finals',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g05',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'initials',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g06',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'initials',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g07',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'spelling',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g08',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'spelling',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g09',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'sandhi',
+        'tests': { 'tone': true }
+      }
+    - {
+        'id': 'q-h0-00-g10',
+        'type': 'tone',
+        'prompt': { 'kind': 'syllable', 'text': 'mā' },
+        'syllable': 0,
+        'answer': 1,
+        'section': 'sandhi',
+        'tests': { 'tone': true }
+      }

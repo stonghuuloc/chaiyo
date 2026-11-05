@@ -1,0 +1,264 @@
+[
+	[
+		"好",
+		"hǎo",
+		"hao",
+		"hảo",
+		"tốt; thích hợp; đúng; (trước động từ) dễ; (trước động từ) tốt để",
+		1,
+		[
+			"tốt",
+			"thích hợp; đúng",
+			"(trước động từ) dễ",
+			"(trước động từ) tốt để",
+			"(trước tính từ để nhấn mạnh) rất",
+			"(bổ ngữ động từ chỉ sự hoàn thành)",
+			"(hai người) thân thiết; có quan hệ gần gũi",
+			"(sau đại từ nhân xưng) xin chào"
+		],
+		[["hào", "hiếu", ["thích; có khuynh hướng; dễ"]]]
+	],
+	[
+		"们",
+		"men",
+		"men",
+		"môn",
+		"dùng để chỉ số nhiều cho đại từ và danh từ chỉ người",
+		1,
+		["dùng để chỉ số nhiều cho đại từ và danh từ chỉ người"],
+		[]
+	],
+	[
+		"你",
+		"nǐ",
+		"ni",
+		"nhĩ",
+		"bạn (ngôi thứ hai thông dụng, khác với kính trọng 您[nin2])",
+		1,
+		["bạn (ngôi thứ hai thông dụng, khác với kính trọng 您[nin2])"],
+		[]
+	],
+	[
+		"你们",
+		"nǐ men",
+		"nimen",
+		"nhĩ môn",
+		"các bạn (số nhiều); các vị",
+		1,
+		["các bạn (số nhiều)", "các vị"],
+		[]
+	],
+	[
+		"爱",
+		"ài",
+		"ai",
+		"ái",
+		"yêu; thích; tình cảm; có khuynh hướng (làm gì đó)",
+		1,
+		["yêu; thích", "tình cảm", "có khuynh hướng (làm gì đó); có xu hướng (xảy ra)"],
+		[]
+	],
+	["八", "bā", "ba", "bát", "tám; 8", 1, ["tám; 8"], []],
+	["爸", "bà", "ba", "ba", "cha; ba; bố; papa", 1, ["cha", "ba", "bố", "papa"], []],
+	[
+		"吧",
+		"bā",
+		"ba",
+		"ba",
+		"quán bar (phục vụ đồ uống, hoặc cung cấp truy cập Internet, v.v.)",
+		1,
+		[
+			"quán bar (phục vụ đồ uống, hoặc cung cấp truy cập Internet, v.v.)",
+			"hút (thuốc lá, tẩu thuốc, v.v.)",
+			"(từ tượng thanh) bùm",
+			"viết tắt của 貼吧|贴吧[tie1 ba1]"
+		],
+		[
+			[
+				"ba",
+				"ba",
+				[
+					"(trợ từ ngữ khí chỉ gợi ý hoặc phỏng đoán)",
+					"...phải không?",
+					"...được chứ?",
+					"...tôi đoán."
+				]
+			],
+			["biā", "ba", ["(từ tượng thanh) chụt!"]]
+		]
+	],
+	[
+		"白",
+		"bái",
+		"bai",
+		"bạch",
+		"trắng; tuyết; tinh khiết; sáng; trống; rỗng; đơn giản; rõ ràng; làm rõ",
+		1,
+		[
+			"trắng",
+			"tuyết",
+			"tinh khiết",
+			"sáng",
+			"trống",
+			"rỗng",
+			"đơn giản",
+			"rõ ràng",
+			"làm rõ",
+			"uổng",
+			"phí phạm",
+			"miễn phí",
+			"phản động",
+			"chống cộng",
+			"tang lễ",
+			"nhìn chằm chằm",
+			"viết sai chữ",
+			"phát biểu",
+			"giải thích",
+			"bạch thoại",
+			"lời thoại trong kinh kịch"
+		],
+		[]
+	],
+	[
+		"百",
+		"bǎi",
+		"bai",
+		"bách",
+		"một trăm; nhiều; tất cả các loại",
+		1,
+		["một trăm", "nhiều", "tất cả các loại"],
+		[]
+	],
+	[
+		"班",
+		"bān",
+		"ban",
+		"ban",
+		"nhóm; lớp; khối; (quân sự) tiểu đội; ca làm việc",
+		1,
+		[
+			"nhóm; lớp; khối",
+			"(quân sự) tiểu đội",
+			"ca làm việc",
+			"lượng từ cho nhóm người và các phương tiện giao thông theo lịch trình"
+		],
+		[]
+	],
+	[
+		"半",
+		"bàn",
+		"ban",
+		"bán",
+		"một nửa; bán-; chưa hoàn chỉnh; (sau một số) một nửa",
+		1,
+		["một nửa", "bán-", "chưa hoàn chỉnh", "(sau một số) một nửa"],
+		[]
+	],
+	["帮", "bāng", "bang", "bang", "", 1, [], []],
+	[
+		"包",
+		"bāo",
+		"bao",
+		"bao",
+		"che phủ; gói; cầm; nắm bao gồm; phụ trách; hợp đồng (làm hoặc cho)",
+		1,
+		[
+			"che phủ",
+			"gói",
+			"cầm",
+			"nắm bao gồm",
+			"phụ trách",
+			"hợp đồng (làm hoặc cho)",
+			"bọc",
+			"đựng",
+			"túi",
+			"ôm hoặc ôm chặt",
+			"bó"
+		],
+		[]
+	],
+	[
+		"杯",
+		"bēi",
+		"bei",
+		"bôi",
+		"cái cúp; cúp vô địch; lượng từ cho một số đồ chứa chất lỏng: ly, cốc",
+		1,
+		["cái cúp", "cúp vô địch", "lượng từ cho một số đồ chứa chất lỏng: ly, cốc"],
+		[]
+	],
+	[
+		"北",
+		"běi",
+		"bei",
+		"bắc",
+		"phía bắc; (văn cổ) bị đánh bại",
+		1,
+		["phía bắc", "(văn cổ) bị đánh bại"],
+		[]
+	],
+	[
+		"本",
+		"běn",
+		"ben",
+		"bản",
+		"(hình thức kết hợp) gốc; rễ; (hình thức kết hợp) nguồn gốc",
+		1,
+		[
+			"(hình thức kết hợp) gốc; rễ",
+			"(hình thức kết hợp) nguồn gốc; nguyên nhân",
+			"(hình thức kết hợp) của mình; này",
+			"(hình thức kết hợp) này; hiện tại (năm này, v.v.)",
+			"(hình thức kết hợp) ban đầu",
+			"(hình thức kết hợp) vốn có",
+			"nguyên gốc; ban đầu",
+			"vốn; chính",
+			"lượng từ cho sách, tạp chí, hồ sơ, v.v."
+		],
+		[]
+	],
+	[
+		"比",
+		"bǐ",
+		"bi",
+		"tỷ",
+		"so sánh; (theo sau bởi danh từ và tính từ) {tính từ} hơn {danh từ}",
+		1,
+		[
+			"so sánh",
+			"(theo sau bởi danh từ và tính từ) {tính từ} hơn {danh từ}",
+			"tỉ lệ",
+			"ra hiệu",
+			"(phát âm [bi4] ở Đài Loan trong một số từ ghép có nguồn gốc từ văn học cổ điển Trung Quốc)"
+		],
+		[]
+	],
+	[
+		"别",
+		"bié",
+		"bie",
+		"biệt",
+		"đừng ...!; rời khỏi; chia tay; (văn học) phân biệt",
+		1,
+		[
+			"đừng ...!",
+			"rời khỏi; chia tay",
+			"(văn học) phân biệt",
+			"(hình thức kết hợp) khác; nữa; khác biệt",
+			"ghim; kẹp lại",
+			"chen vào; chèn vào (để cản trở chuyển động)",
+			"(hậu tố danh từ) loại (ví dụ 性別|性别[xing4 bie2], 派別|派别[pai4 bie2])"
+		],
+		[["biè", "biệt", ["khiến ai đó thay đổi cách cư xử, ý kiến, v.v."]]]
+	],
+	[
+		"病",
+		"bìng",
+		"bing",
+		"bệnh",
+		"bệnh; bệnh tật; ngã bệnh; khuyết điểm",
+		1,
+		["bệnh", "bệnh tật", "ngã bệnh", "khuyết điểm"],
+		[]
+	]
+]
