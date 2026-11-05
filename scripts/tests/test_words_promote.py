@@ -270,3 +270,25 @@ def test_must_have_senses_reach_the_audit_prompt(word):
     llm = scripted(bare_answer(), {'bad_example': [], 'common': []})
     word.entry('打', {}, llm)
     assert 'Động từ: gọi (điện thoại)' in llm.calls[1]
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('别碰着。', 'Biépèng zháo.', 'Bié pèng zháo.'),
+    ('你着什么急？', 'Nǐzháo shénme jí?', 'Nǐ zháo shénme jí?'),
+    ('火着了。', 'Huǒzháole.', 'Huǒ zháole.'),
+    ('他看着我。', 'Tā kàn zhe wǒ.', 'Tā kànzhe wǒ.')])
+def test_pinyin_full_tone_zhao_is_a_word_and_pronoun_stays_apart(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_native_words_not_stored_as_hanviet(gen):
+    assert gen.hanviet('喝', 'húp') == 'hát' and gen.hanviet('女', 'nhữ') == 'nữ' and gen.hanviet('女生', 'nhữ sinh') == 'nữ sinh'
+
+
+def test_bound_note_merges_into_existing_parentheses_and_fullwidth_brackets_are_normalized(word):
+    a = bare_answer()
+    a['readings'][0]['groups'][0]['senses'][0]['vi'] = 'đánh（bóng）'
+    a['readings'][0]['groups'][0]['senses'][1]['vi'] = 'chơi (bóng)'
+    audit = {'bad_example': [], 'common': [], 'bound': [{'id': '0.0.1', 'pattern': '打球'}], 'missing': []}
+    hz, e = word.entry('打', {}, scripted(a, audit))
+    assert [s['vi'] for s in e['readings'][0]['groups'][0]['senses']] == ['đánh(bóng)', 'chơi (bóng; chỉ dùng trong 打球)']

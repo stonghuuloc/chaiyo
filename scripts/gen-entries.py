@@ -215,6 +215,7 @@ HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó
 VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
 SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n)?r?(?![{VOWELS}])', re.I)
 PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
+TONED = set(VOWELS) - set('aeiouüv')
 CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘')
 CJK = re.compile(r'[\u3400-\u9fff]')
 
@@ -242,21 +243,33 @@ def normalize_py(hz, py):
         else:
             split.append((w, f))
     units = []  # [text, syllable count, is_word, flag]
+    c = 0  # syllables consumed
+    toned = lambda i: any(ch in TONED for ch in syls[i].lower())
+    count = lambda t: len(CJK.findall(t.replace('儿', '') if erhua else t))
     for w, f in split:
-        n = len(CJK.findall(w.replace('儿', '') if erhua else w))
         if erhua and w == '儿':
             continue
+        n = count(w)
         if not n:
             units.append([w, 0, False, f])
             continue
-        prev = units[-1] if units else None
-        particle = w in ('的', '了', '着', '过') and prev and prev[2]
-        classifier = f.startswith('q') and prev and prev[2] and prev[3].startswith('m')
-        if particle or classifier:
-            prev[1] += n
-            prev[3] = f
-        else:
-            units.append([w, n, True, f])
+        pieces = [(w, f)]
+        if n > 1 and w not in DICT:
+            if w[0] in '我你他她它别' and w not in ('我们', '你们', '他们', '她们', '它们'):
+                pieces = [(w[0], 'r'), (w[1:], f)]
+            elif w[-1] in '着了的' and toned(c + n - 1):  # a full-tone 着 (zháo) is a verb, not the particle
+                pieces = [(w[:-1], f), (w[-1], 'x')]
+        for pw, pf in pieces:
+            pn = count(pw)
+            prev = units[-1] if units else None
+            particle = pw in ('的', '了', '着', '过') and prev and prev[2] and (pw == '过' or not toned(c))
+            classifier = pf.startswith('q') and prev and prev[2] and prev[3].startswith('m')
+            if particle or classifier:
+                prev[1] += pn
+                prev[3] = pf
+            else:
+                units.append([pw, pn, True, pf])
+            c += pn
     out, k = '', 0
     for text, n, is_word, _ in units:
         if is_word:
@@ -269,7 +282,7 @@ def normalize_py(hz, py):
             out += ''.join(PUNCT.get(c, c) for c in text if not c.isspace())
     return out[:1].upper() + out[1:]
 
-HANVIET_FIX = {'冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
+HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
 
 def hanviet(hz, value):
     parts = value.split()
@@ -335,9 +348,9 @@ def audit(hz, e, llm, readings):
 Nghĩa gốc CC-CEDICT và bản dịch cvdict_vi để đối chiếu: {json.dumps(readings, ensure_ascii=False)}
 {('Nghĩa BẮT BUỘC phải có trong mục từ này (liệt kê vào missing nếu thiếu): ' + json.dumps(MUST_HAVE[hz], ensure_ascii=False)) if hz in MUST_HAVE else ''}
 Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":[{{"id":"...","pattern":"不用"}}],"missing":[{{"pos":"...","vi":"..."}}]}}.
-- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Bỏ qua dòng (Tatoeba).
+- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
-- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Ghi "pattern" là kết cấu đó. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
+- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
 - missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
     by_id = {r['id']: r for r in rows}
@@ -389,6 +402,9 @@ Yêu cầu:
 - Gom theo cách đọc, rồi theo từ loại. Từ loại chỉ dùng: {', '.join(POS_VI)}. "classifier for …" là Lượng từ; 好/完/到 sau động từ chỉ kết quả là Bổ ngữ.
 - Gộp các nghĩa gần đồng nghĩa (CC-CEDICT hay tách bằng dấu phẩy, ví dụ "to get; to obtain; to receive") thành MỘT nghĩa, ghi hết số vào src. Chỉ tách khi người học cần phân biệt.
 - Nghĩa tiếng Việt ngắn, tự nhiên (2–8 từ), dịch theo cách người Việt nói, KHÔNG dịch từng chữ (invalid = người ốm lâu năm, không phải "tàn tật"; building = nhà/toà nhà tuỳ ngữ cảnh). Có thể thêm ghi chú trong ngoặc. Sắp nghĩa hay dùng nhất trước.
+- Nghĩa động từ KHÔNG chứa tân ngữ trong chính nó: viết "lấy, múc (nước)", "thắt, buộc (nút, dây)", không viết "đi lấy nước". Tân ngữ thường gặp đặt trong ngoặc. Không chép nguyên cvdict_vi hay dịch từng chữ từ tiếng Anh: nếu tiếng Việt đã bao hàm ý (cơm = cooked rice) thì dùng từ đơn ("cơm", không phải "cơm đã nấu"; "vé xe, vé tàu", không phải "vé xe buýt hoặc tàu hỏa").
+- Lý do "trùng" chỉ cho nghĩa GIỐNG HỆT một nghĩa khác. Nghĩa mượn hay hiếm (fan/devotee, tên gọi mới) vẫn phải có trong mục từ, đánh common: false.
+- Phân biệt từ gần nghĩa mà người Việt hay lẫn: 还是 hỏi lựa chọn là "hay, hay là", còn "hoặc" là 或者.
 - "common": true cho mọi nghĩa người học HSK 1–6 hay gặp trong lời nói và văn viết thường ngày, kể cả khi nó chỉ xuất hiện trong cấu trúc hoặc từ ghép thông dụng (少 trong 很少 "hiếm khi", 少来/少废话 "thôi, đừng" là common). false CHỈ cho nghĩa hiếm: văn ngôn, phương ngữ, chuyên ngành, chỉ còn trong thành ngữ cố định, hoặc chỉ dùng làm tên riêng. Căn cứ vào mức độ thường dùng của nghĩa, KHÔNG phải thứ tự trong CC-CEDICT. Không bỏ nghĩa hiếm, chỉ đánh dấu.
 - Lượng từ: nghĩa viết bằng từ đếm tiếng Việt kèm (danh từ được đếm), ví dụ 本 "quyển, cuốn (sách)", 杯 "cốc, ly (đồ uống)", 床 "tấm, chiếc (chăn, nệm)"; KHÔNG bắt đầu bằng "lượng từ" hay "classifier for". Ví dụ phải có số từ ngay trước đúng lượng từ 「{hz}」 (一床被子, 三岁), không dùng lượng từ khác (两张床 là sai cho 床).
 - Ví dụ: với mỗi nghĩa, chọn câu Tatoeba dùng ĐÚNG nghĩa đó (ghi "tatoeba": id, chép nguyên "hz"), ưu tiên câu ngắn, từ dễ. Một câu chỉ dùng cho một nghĩa.
@@ -424,7 +440,9 @@ Chỉ trả về JSON:
                     s['common'] = True
                 if bound.get(s['vi']):
                     s['common'] = True
-                    s['vi'] += f' (chỉ dùng trong {bound[s["vi"]]})'
+                    note = f'chỉ dùng trong {bound[s["vi"]]}'
+                    s['vi'] = s['vi'][:-1] + f'; {note})' if s['vi'].endswith(')') else f'{s["vi"]} ({note})'
+                s['vi'] = s['vi'].replace('（', '(').replace('）', ')')
     e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
     main = main_reading(hz, e['readings'])
     e['main'] = main
