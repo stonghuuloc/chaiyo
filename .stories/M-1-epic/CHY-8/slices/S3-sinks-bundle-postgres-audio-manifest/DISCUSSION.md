@@ -39,6 +39,7 @@ ACs: AC3, AC7, LOC-10
 - [AC3] Q (execute): what is `lessons.sections` in Postgres? A: the lesson's sections with every Question list replaced by question ids (content-schema.md "ids only"); questions live in `questions`. Confidence 85%.
 - [AC3] Q (execute): migration file name and CLI default sink? A: `20261105000000_content_tables.sql`; `--sink` defaults to `memory`, so a bare `pnpm import:content` writes nothing. Confidence 85%.
 - [AC3] Q (execute): `word_chars`? A: one row per character of the word's `hanzi` (no FK to `chars`: untaught chars have no row). Confidence 85%.
+- [AC3] Q (CodeRabbit PR #35): `--only` with `--sink postgres`? A: the CLI rejects it (exit 1 before any file read): the Postgres sink prunes rows absent from the import, so a scoped import would delete the rest of the mirror. Postgres imports always run on the full tree; the promotion step must lint `content/` clean first. Confidence 90%.
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
