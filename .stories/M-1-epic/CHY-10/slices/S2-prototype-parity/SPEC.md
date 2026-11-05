@@ -31,9 +31,9 @@ ACs: AC2, AC3  ·  Repo: stonghuuloc/chaiyo  ·  rev 2 (delta vs main 9b7ab62; C
 One vitest file, `src/lib/content/h1-01.parity.test.ts`, plus its JSON fixture. It calls `importContent` with the memory sink on the real `content/` dir, scoped to `lessons/hsk1`, and reads `buildBundle(…, 'h1-01')`.
 
 ## Test contract
-- [AC2] `pnpm test -- h1-01.parity`: 10 word, 9 sentence, 2 dialogue-part, 1 grammar and 19 question comparisons, all equal. Negative control: change one `vi` in a `structuredClone` of the bundle and expect exactly that mismatch.
+- [AC2] `pnpm test -- h1-01.parity`: 10 word, 9 sentence, 2 dialogue-part, 1 grammar and 19 question comparisons, all equal. Negative control: the pure `parity(clone, fixture)` over a `structuredClone` of the bundle with 你's `senses[0].vi` changed returns exactly `['你 vi']`.
 - [AC3] Same file, section coverage table: 7 rows, each field present. Negative control: pass the table a `structuredClone` of the bundle with `lesson.gate.pool` emptied and `gateCoverage` lists cleared. An on-disk change fails lint, and the import then returns `{ errors }`. Expect only the Gate Test row to fail.
-- [AC3] Manual, Mac: `scripts/build-content.sh` exits 0, and `ls static/fonts/lessons` shows `ukai-h0-00.woff2` and `ukai-h1-01.woff2`.
+- [AC3] Manual, Mac, with fontTools importable (CHY-13's venv): `scripts/build-content.sh` exits 0, and `ls static/fonts/lessons` shows `ukai-h0-00.woff2` and `ukai-h1-01.woff2`.
 
 ## Open assumptions
 - [AC2] `senses[0].vi` of the 10 words stays the prototype gloss. CHY-12 keeps existing hand `senses` (no `pos`) first and verbatim, and appends generated ones (C4). Wrong pick: up to 9 word-gloss mismatches (你好 is outside CHY-12's list).

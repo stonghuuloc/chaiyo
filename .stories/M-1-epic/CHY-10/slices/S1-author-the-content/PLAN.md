@@ -9,7 +9,7 @@ Not edited (other lanes): `content/words/*` (C4, CHY-12), `content/levels/hsk1.y
 
 ## Anchors (verified 2026-11-05 on main 9b7ab62)
 - `content/lessons/hsk1/h1-01.yaml:31` `s-h1-01-18 … pinyin: bú kèqi` (no `spoken`); line 19 (`s-h1-01-06`) already has `pinyin: bù kèqi, spoken: bú kèqi`. `:39` `drills: []` · `:46` `questions: []` · `:48` `items: []` · `:52` `draw: 10` · `:53` `pool: []`.
-- `package.json:18` `"lint:content": "tsx scripts/lint-content.ts"` (no `--only` flag; `scripts/lint-content.ts:11` calls `lintDir(dir)`). `pnpm import:content` arrives with PR #35 (CHY-8 S3).
+- `package.json:18` `"lint:content": "tsx scripts/lint-content.ts"` (no `--only` flag; `scripts/lint-content.ts:10` calls `lintDir(dir)`). `pnpm import:content` arrives with PR #35 (CHY-8 S3).
 - `pnpm -s lint:content content` at 9b7ab62, default vault: 107 errors in 9 files. 11 are in `lessons/hsk1/h1-01.yaml` (`gate.pool` has 0 questions, and each of the 10 `sections.words.ids` is not tested). 3 are `words/{不客气,对不起,没关系}.yaml parts[…].pinyin #3`. The other 93 are h2–h5 lessons (92) and `words/关系.yaml` (1). `lintDir` on the 15-entry Bài 1 scope: 14 = the 11 + the 3.
 - `src/lib/content/content.test.ts:10-15` `folders` = words, grammar, chars, sentences; the file count is glob-derived.
 - `src/lib/content/schemas.ts` Char (strict): hanzi, readings[{pinyin, hanviet, rare?}], radical, ids, strokes, mnemonic?{hinh, am, doiThat, tuongPhan, kind: 'etymology'|'invented'}. `Question` union: `choice` (prompt, options, answer, `optionKind` hanzi|pinyin|vi|hanviet|image), `tone` (prompt, syllable, answer 1–5), `typePinyin`, `order` (tiles, answer = sentence id), `fill`, `trueFalse` (prompt, statement, answer), `readAloud` (sentence), `freeAnswer` (prompt, rubric); base `why?`, `ask?`, `section?`, `tests`.
@@ -21,7 +21,7 @@ File: `scripts/chars-from-vault.ts` (new), output `content/chars/<hanzi>.yaml`
 - Change: `loadVaultMnemonics(process.env.CHAIYO_VAULT ?? join(homedir(), 'Documents/second-brain/mandarin'))` gives the four texts. The script writes each file with `YAML.stringify` (the `yaml` devDependency). Hard-coded tables:
   - Readings (pinyin → Hán Việt; rare marked): 你 nǐ nhĩ · 好 hǎo hảo, hào hiếu · 您 nín nâm · 们 men môn · 对 duì đối · 不 bù bất · 起 qǐ khởi · 没 méi một, mò một (rare) · 关 guān quan · 系 xì hệ, jì hệ (rare) · 谢 xiè tạ · 客 kè khách · 气 qì khí · 再 zài tái · 见 jiàn kiến, xiàn hiện (rare).
   - Radical (spelled from IDS): 你 亻 · 好 女 · 您 心 · 们 亻 · 对 寸 · 不 一 · 起 走 · 没 氵 · 关 丷 · 系 糸 · 谢 讠 · 客 宀 · 气 气 · 再 冂 · 见 见. Never a code point in U+2E80–U+2FDF.
-  - `ids` from `_ids.txt`: take the variant whose tag contains G and strip the tags (起 ⿺走巳, 关 ⿱丷天). 不 and 见 are written atomic as `不` and `见`, because the vault's 不 entry `⿱一③` holds a placeholder code point.
+  - `ids` from `_ids.txt`: one variant → take it (你 ⿰亻尔); several → the one whose `[…]` tag contains G, tags stripped (起 ⿺走巳, 关 ⿱丷天). 不 and 见 are written atomic as `不` and `见`, because the vault's 不 entry `⿱一③` holds a placeholder code point.
   - `strokes` from the vault md; 系 7 and 客 9 (standard count).
   - `kind` per char: the executor reads the HÌNH line of the char in its own vault lesson. `[từ nguyên]` gives `etymology`; anything else gives `invented`. The PR body lists char → lesson → label so the reviewer can check each one.
   A char with no `loadVaultMnemonics` entry (系, 客) gets no `mnemonic` key.
@@ -42,7 +42,7 @@ File: `content/lessons/hsk1/h1-01.yaml:39,46,48`
 | l03 | choice, optionKind vi | audio s-h1-01-18, [Không có gì., Xin lỗi!, Cảm ơn!, Tạm biệt!] → 0 | words 不客气 |
 | s01 | readAloud | sentence s-h1-01-06 | words 不客气, tone true |
 | f01 | freeAnswer | vi "Bạn làm đổ trà của bạn mình. Nói gì?", rubric [Nói 对不起 (xin lỗi) bằng một câu ngắn] | words 对不起 |
-- Ids carry the `q-h1-01-` prefix. Option text copies the prototype (`l4-grammar.html:118-125`, `l5-dialogue.html:127-134`, `l6-listen.html:90-235`).
+- Ids carry the `q-h1-01-` prefix. Option text copies the prototype (`l4-grammar.html:118-125`, `l5-dialogue.html:135-146`, `l6-listen.html:90-235`).
 - Test first: `pnpm -s lint:content content | rg '^lessons/hsk1/h1-01'` before the edit shows the 11 errors. After the edit the count still shows 11, because the pool is still empty, and no new error appears.
 - Verify: `pnpm test -- src/lib/content/content.test.ts` (schema) and the same `rg` (checks 5, 8, 9).
 

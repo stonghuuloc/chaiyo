@@ -54,7 +54,10 @@ Adds one test that imports Bài 1 and checks it against the prototype: words, se
 | AC3 proven at bundle level per section | Captain default 2026-11-03; `DISCUSSION.md` |
 | Word pinyin compared without spaces; sentence pinyin exact | CHY-12 rewrites word `pinyin` (C4); advisor round 2 |
 | `senses[0].vi` equals the prototype gloss | C4: hand senses kept first and verbatim (CHAA-24) |
-| Options compared as sets; order, tone, typePinyin, readAloud, freeAnswer have their own resolvers | `PLAN.md` Task 2; advisor round 1 |
+| Options compared as sets; order, tone, typePinyin, readAloud, freeAnswer have their own resolvers (order tiles as a multiset) | `PLAN.md` Task 2; advisor round 1 |
+| Import with `CHAIYO_VAULT` stubbed to a missing dir: check 7 skipped, same result on Mac and CI | `DISCUSSION.md` "Answered here" rev 2, 85% |
+| Word `parts[].pinyin`: exact when the prototype syllable is tone-marked, else compared tone-stripped (CHY-12's bù/xì/qì still match bu/xi/qi) | `DISCUSSION.md` rev 2, 85% |
+| Word `ex` pinyin = sentence `spoken` when the word has `say`, else `pinyin` | `DISCUSSION.md` rev 2, 90% |
 
 ## Carried elsewhere
 

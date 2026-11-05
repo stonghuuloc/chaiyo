@@ -47,6 +47,7 @@ Fills the hollow parts of Bài 1 "Xin chào": 15 character files, 29 practice qu
 | Chars generated from the vault, 13 mnemonics verbatim | `DISCUSSION.md`; lint 7 compares with `meo.py` |
 | Readings list all vault readings; mò, xiàn, jì marked rare | C2 (CHAA-20) matching rule; CHAA-21 check 2 passes |
 | Radical spelled from IDS (你 亻) | `DISCUSSION.md` (80%); no lint reads it |
+| AC1 "lint CLI on content/ → 0 errors" = the Bài 1 scope: `import:content --only lessons/hsk1` exits 0. The full CLI keeps 93 h2–h5 / `words/关系.yaml` errors (96 until CHY-12's 3 tone marks) | `DISCUSSION.md` "Answered here" rev 2, 90%; the lint CLI has no `--only` (`scripts/lint-content.ts:10`) |
 
 ## Carried elsewhere
 
