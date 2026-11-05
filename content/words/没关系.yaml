@@ -10,6 +10,6 @@ senses:
 parts:
   - { hanzi: 没, pinyin: méi, hanviet: một, vi: không có }
   - { hanzi: 关, pinyin: guān, hanviet: quan, vi: liên quan }
-  - { hanzi: 系, pinyin: xi, hanviet: hệ, vi: "nối, buộc" }
+  - { hanzi: 系, pinyin: xì, hanviet: hệ, vi: "nối, buộc" }
 examples: [ s-h1-01-16 ]
 image: { file: words/meiguanxi.png }

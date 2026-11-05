@@ -11,6 +11,6 @@ senses:
 parts:
   - { hanzi: 不, pinyin: bù, hanviet: bất, vi: không }
   - { hanzi: 客, pinyin: kè, hanviet: khách, vi: khách }
-  - { hanzi: 气, pinyin: qi, hanviet: khí, vi: "khí, khách sáo" }
+  - { hanzi: 气, pinyin: qì, hanviet: khí, vi: "khí, khách sáo" }
 examples: [ s-h1-01-18 ]
 image: { file: words/bukeqi.png }

@@ -9,7 +9,7 @@ senses:
   - { vi: xin lỗi }
 parts:
   - { hanzi: 对, pinyin: duì, hanviet: đối, vi: "đúng, đối với" }
-  - { hanzi: 不, pinyin: bu, hanviet: bất, vi: không }
+  - { hanzi: 不, pinyin: bù, hanviet: bất, vi: không }
   - { hanzi: 起, pinyin: qǐ, hanviet: khởi, vi: "dậy, nổi" }
 examples: [ s-h1-01-15 ]
 image: { file: words/duibuqi.png }
