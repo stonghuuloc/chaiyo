@@ -516,7 +516,7 @@ def write_out(results):
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
                      'senses': hand + w['senses'], 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}
             dump(out / 'words' / f'{wid}.yaml', {k: w[k] for k in WORD_FIELDS if k in w})
-            nums = {**next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin']), 'core': e.get('core', [])}
+            nums = {**next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'].lower()), 'core': e.get('core', [])}
             (out / 'src').mkdir(parents=True, exist_ok=True)
             (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
     dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))

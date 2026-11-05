@@ -316,3 +316,13 @@ def test_erhua_pinyin_without_儿_in_the_hanzi_is_rejected(word):
     with pytest.raises(word.Reject) as e:
         word.entry('打', {}, scripted(answer(ex0=bad)))
     assert 'erhua' in str(e.value)
+
+
+def test_proper_noun_keeps_its_capital_and_is_written_out(word, monkeypatch):
+    monkeypatch.setitem(word.HSK['打'], 'f', [{'i': {'y': 'Dǎ jīng', 'n': 'da3 jing1'}, 'm': ['to hit', 'to play']}])
+    monkeypatch.setitem(word.DICT, '打', ['打', 'Dǎ jīng', 'da', 'đả', '', 1, [], []])
+    a = answer(covered=('0.0', '0.1'))
+    a['readings'] = a['readings'][:1]
+    a['readings'][0]['pinyin'] = 'Dǎ jīng'
+    word.write_out([word.entry('打', {}, scripted(a))])
+    assert yaml.safe_load((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'))['pinyin'] == 'Dǎ jīng'
