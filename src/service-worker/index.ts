@@ -33,7 +33,7 @@ self.addEventListener('fetch', (event) => {
 				const hit = await cache.match(url.pathname);
 				if (hit) return hit;
 			}
-			return networkFirst(event.request, cache, fetch);
+			return networkFirst(event.request, cache, fetch, (p) => event.waitUntil(p));
 		})()
 	);
 });
