@@ -1,5 +1,6 @@
 import { globSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import YAML from 'yaml';
 import { parseContent } from '../parse';
 import type { Lesson } from '../schemas';
 import { parseDictionary, type ThinEntry } from './dictionary';
@@ -65,7 +66,7 @@ describe('segment', () => {
 		let sentences = 0;
 		for (const file of files) {
 			const text = readFileSync(file, 'utf8');
-			if (/^kind: primer$/m.test(text)) continue;
+			if ((YAML.parse(text) as { kind?: string } | null)?.kind === 'primer') continue;
 			const result = parseContent('Lesson', file, text);
 			if (!result.ok) throw new Error(`${file} did not parse`);
 			for (const s of (result.value as Lesson).sentences ?? []) {
