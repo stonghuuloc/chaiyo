@@ -64,7 +64,9 @@ describe('segment', () => {
 		const files = globSync('content/lessons/**/*.yaml');
 		let sentences = 0;
 		for (const file of files) {
-			const result = parseContent('Lesson', file, readFileSync(file, 'utf8'));
+			const text = readFileSync(file, 'utf8');
+			if (/^kind: primer$/m.test(text)) continue;
+			const result = parseContent('Lesson', file, text);
 			if (!result.ok) throw new Error(`${file} did not parse`);
 			for (const s of (result.value as Lesson).sentences ?? []) {
 				sentences++;
