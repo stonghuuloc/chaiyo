@@ -1,0 +1,13 @@
+hanzi: 关
+readings:
+  - pinyin: guān
+    hanviet: quan
+radical: 丷
+ids: ⿱丷天
+strokes: 6
+mnemonic:
+  hinh: 'hai giọt nước (丷) rơi từ TRỜI (天) xuống → ĐÓNG cửa lại tránh mưa. (Từ nguyên thật: phồn thể 關 = 門(cửa) + 丱丱(then cài) = cửa cài then, tức "đóng".)'
+  am: Hán-Việt **quan** — quan hệ, liên quan, hải quan, rất quen thuộc.
+  doiThat: nút "关闭" (đóng/tắt) xuất hiện trên mọi app, dialog box; biển "海关" (hải quan) ở sân bay.
+  tuongPhan: 关 (giản thể 6 nét, "đóng/liên quan") ≠ 天 (4 nét, "trời", đã học) — 关 chứa 天 nhưng thêm 丷 phía trên.
+  kind: invented

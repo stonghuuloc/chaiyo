@@ -1,0 +1,13 @@
+hanzi: 您
+readings:
+  - pinyin: nín
+    hanviet: nâm
+radical: 心
+ids: ⿱你心
+strokes: 11
+mnemonic:
+  hinh: '"bạn" (你) + "tim" (心) = xưng hô với ai đó bằng cả tấm lòng → thành kính ngữ "ngài/anh/chị".'
+  am: "Hán-Việt **nâm**. Âm hiếm, không dùng trong tiếng Việt — kênh âm ở đây là biểu âm nội bộ: 你 (nǐ, HV nhĩ) cho âm nền, thêm 心 và đổi vần thành nín."
+  doiThat: '"您好" trên biển chào ở cửa hàng, quán ăn; tin nhắn dịch vụ khách hàng "请问您需要什么帮助?".'
+  tuongPhan: ≠ 你 (đã biết — "bạn" suồng sã) — 您 thêm bộ 心 để tỏ ý kính trọng, dùng với người lớn tuổi/khách hàng/cấp trên.
+  kind: invented

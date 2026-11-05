@@ -1,0 +1,16 @@
+hanzi: 没
+readings:
+  - pinyin: méi
+    hanviet: một
+  - pinyin: mò
+    hanviet: một
+    rare: true
+radical: 氵
+ids: ⿰氵殳
+strokes: 7
+mnemonic:
+  hinh: vật bị nước (氵) nhấn chìm, khuấy động bởi cây gậy (殳) → "chìm, mất, không còn".
+  am: 'Hán-Việt "một" — như trong "mai một" (埋没: bị vùi lấp, phai nhạt dần theo thời gian).'
+  doiThat: 没关系 câu cửa miệng khi ai xin lỗi, 没事儿 khi từ chối nhẹ nhàng, 没有 trong mọi câu phủ định "có/không".
+  tuongPhan: 不 phủ định ý muốn/tính chất chung (不去, 不好); 没 chỉ phủ định "có" và việc đã xảy ra trong quá khứ (没去 = đã không đi).
+  kind: etymology

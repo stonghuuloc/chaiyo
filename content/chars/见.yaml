@@ -1,0 +1,16 @@
+hanzi: 见
+readings:
+  - pinyin: jiàn
+    hanviet: kiến
+  - pinyin: xiàn
+    hanviet: hiện
+    rare: true
+radical: 见
+ids: 见
+strokes: 4
+mnemonic:
+  hinh: một người 儿 phía dưới với con mắt 目 to phía trên được nhấn mạnh — người mở to mắt để "thấy".
+  am: Hán Việt "kiến" — nhớ qua "ý kiến", "kiến thức" (tri kiến), "phát kiến".
+  doiThat: 再见 câu chào tạm biệt cuối tin nhắn/cuộc gọi, 意见 nút "góp ý" trong app, 看不见 báo lỗi tín hiệu/hình ảnh.
+  tuongPhan: ≠ 贝 (bèi, "bối", vỏ sò/tiền) — khác hẳn nghĩa dù nét gần giống nếu viết ẩu.
+  kind: etymology
