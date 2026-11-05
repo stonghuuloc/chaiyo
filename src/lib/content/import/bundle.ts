@@ -20,7 +20,7 @@ export function buildBundle(content: ImportedContent, id: string): Bundle {
 	if (!found) throw new Error(`no lesson ${id}`);
 	const { gateCoverage, thin, ...lesson } = found;
 	const questions = content.questions.filter((q) => q.lessonId === id).map((q) => q.body);
-	if ('kind' in lesson && lesson.kind === 'primer')
+	if ('kind' in found)
 		return {
 			sha: content.sha,
 			lesson,
@@ -32,8 +32,8 @@ export function buildBundle(content: ImportedContent, id: string): Bundle {
 			gateCoverage,
 			thin
 		};
-	const wordIds = new Set(lesson.sections.words.ids);
-	const grammarIds = new Set(lesson.sections.grammar.ids);
+	const wordIds = new Set(found.sections.words.ids);
+	const grammarIds = new Set(found.sections.grammar.ids);
 	const words = content.words.filter((w) => wordIds.has(w.id));
 	const grammar = content.grammar.filter((g) => grammarIds.has(g.id));
 	const picked = new Set(
