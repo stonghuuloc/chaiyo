@@ -1,0 +1,168 @@
+[
+	{
+		"id": "q-h1-01-g01",
+		"section": "grammar",
+		"page": "l4-grammar.html",
+		"kind": "choice",
+		"prompt": "Chào thầy cô (lịch sự)",
+		"options": ["你好", "您好", "你们好"],
+		"answer": "您好"
+	},
+	{
+		"id": "q-h1-01-g02",
+		"section": "grammar",
+		"page": "l4-grammar.html",
+		"kind": "choice",
+		"prompt": "Chào cả nhóm bạn",
+		"options": ["你好", "您好", "你们好"],
+		"answer": "你们好"
+	},
+	{
+		"id": "q-h1-01-g03",
+		"section": "grammar",
+		"page": "l4-grammar.html",
+		"kind": "order",
+		"prompt": "Chào các bạn!",
+		"options": ["们", "你", "好"],
+		"answer": "你们好"
+	},
+	{
+		"id": "q-h1-01-d01",
+		"section": "dialogue",
+		"page": "l5-dialogue.html",
+		"kind": "choice",
+		"prompt": "对不起！",
+		"options": ["没关系。", "不客气。", "再见！"],
+		"answer": "没关系。"
+	},
+	{
+		"id": "q-h1-01-l01",
+		"section": "listenSpeak",
+		"page": "l6-listen.html",
+		"kind": "tone",
+		"prompt": "好",
+		"answer": "hǎo"
+	},
+	{
+		"id": "q-h1-01-l02",
+		"section": "listenSpeak",
+		"page": "l6-listen.html",
+		"kind": "choice",
+		"prompt": "你好",
+		"options": ["你好", "你们", "您", "再见"],
+		"answer": "你好"
+	},
+	{
+		"id": "q-h1-01-l03",
+		"section": "listenSpeak",
+		"page": "l6-listen.html",
+		"kind": "choice",
+		"prompt": "不客气。",
+		"options": ["Không có gì.", "Xin lỗi!", "Cảm ơn!", "Tạm biệt!"],
+		"answer": "Không có gì."
+	},
+	{
+		"id": "q-h1-01-s01",
+		"section": "listenSpeak",
+		"page": "l6-listen.html",
+		"kind": "readAloud",
+		"prompt": "不客气。",
+		"answer": "不客气。"
+	},
+	{
+		"id": "q-h1-01-f01",
+		"section": "listenSpeak",
+		"page": "l6-listen.html",
+		"kind": "freeAnswer",
+		"prompt": "Bạn làm đổ trà của bạn mình. Nói gì?",
+		"answer": "对不起"
+	},
+	{
+		"id": "q-h1-01-x01",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "谢谢",
+		"options": ["谢谢", "没关系", "不客气", "对不起"],
+		"answer": "谢谢"
+	},
+	{
+		"id": "q-h1-01-x02",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "对不起",
+		"options": ["xin lỗi", "không sao", "cảm ơn", "tạm biệt"],
+		"answer": "xin lỗi"
+	},
+	{
+		"id": "q-h1-01-x03",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "không sao",
+		"options": ["没关系", "对不起", "谢谢", "再见"],
+		"answer": "没关系"
+	},
+	{
+		"id": "q-h1-01-x04",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "order",
+		"prompt": "Chào các bạn!",
+		"options": ["们", "你", "好"],
+		"answer": "你们好"
+	},
+	{
+		"id": "q-h1-01-x05",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "你们",
+		"options": ["你好", "您", "你们", "谢谢"],
+		"answer": "你们"
+	},
+	{
+		"id": "q-h1-01-x06",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "typePinyin",
+		"prompt": "再见",
+		"answer": "zàijiàn"
+	},
+	{
+		"id": "q-h1-01-x07",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "好",
+		"options": ["bạn, anh, chị", "ông, bà, thầy cô (lịch sự)", "tốt, khỏe, hay", "cảm ơn"],
+		"answer": "tốt, khỏe, hay"
+	},
+	{
+		"id": "q-h1-01-x08",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "typePinyin",
+		"prompt": "谢谢",
+		"answer": "xièxie"
+	},
+	{
+		"id": "q-h1-01-x09",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "不客气",
+		"options": ["谢谢", "没关系", "再见", "不客气"],
+		"answer": "不客气"
+	},
+	{
+		"id": "q-h1-01-x10",
+		"section": "gate",
+		"page": "l8-gate.html",
+		"kind": "choice",
+		"prompt": "Chào thầy cô (lịch sự)",
+		"options": ["您好", "你好", "你们好", "好你"],
+		"answer": "您好"
+	}
+]
