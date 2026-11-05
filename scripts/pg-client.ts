@@ -17,7 +17,7 @@ export function createPgClient(url: string): SqlClient & { close(): Promise<void
 				await query('commit');
 				return result;
 			} catch (e) {
-				await query('rollback');
+				await query('rollback').catch(() => {});
 				throw e;
 			}
 		},

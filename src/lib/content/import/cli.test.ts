@@ -80,6 +80,21 @@ describe('import:content CLI', () => {
 		}
 	);
 
+	it('--sink postgres with --only exits 1', { timeout: 30_000 }, () => {
+		const res = spawnSync(
+			'pnpm',
+			['-s', 'import:content', copy(), '--sink', 'postgres', '--only', 'lessons/hsk1'],
+			{
+				encoding: 'utf8',
+				timeout: 20_000,
+				env: { ...process.env, CHAIYO_VAULT: '/nonexistent', SUPABASE_DB_URL: 'postgres://x' }
+			}
+		);
+		expect(res.status).toBe(1);
+		expect(res.stdout).toBe('');
+		expect(res.stderr).toContain('--only cannot be used with --sink postgres');
+	});
+
 	it('--sink bundle --out writes the bundle folder', { timeout: 30_000 }, () => {
 		const out = mkdtempSync(join(tmpdir(), 'cli-out-'));
 		temps.push(out);

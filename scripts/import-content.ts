@@ -25,6 +25,8 @@ const dir = args[0] ?? 'content';
 if (!['memory', 'bundle', 'postgres'].includes(sinkName)) fail(`unknown sink: ${sinkName}`);
 const url = process.env.SUPABASE_DB_URL;
 if (sinkName === 'postgres' && !url) fail('--sink postgres needs SUPABASE_DB_URL');
+if (sinkName === 'postgres' && only)
+	fail('--only cannot be used with --sink postgres: the sink prunes rows outside the scope');
 if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) fail(`not a directory: ${dir}`);
 
 const pgClient = sinkName === 'postgres' ? createPgClient(url!) : undefined;
