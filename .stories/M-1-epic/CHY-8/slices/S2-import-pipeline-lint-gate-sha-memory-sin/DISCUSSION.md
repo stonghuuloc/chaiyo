@@ -21,6 +21,7 @@ ACs: AC1, AC2
 - [AC1] Q: test fixture strategy? A: one frozen lint-clean folder `import/fixtures/ok/` and tests that copy it to a temp dir and mutate (bad pinyin, comment-only edit, Dictionary edit). It is built from CHY-9's lint/fixtures/clean + primer, plus sentences/ok.yaml and a 20-row dictionary.json; the executor stops and reports if `lintDir` rejects it. Confidence 80%.
 
 - [r1 advisor, 2026-11-04] Applied 11 fix-in-place items against main 63d1735: fixture moved to Task 2 and built from CHY-9's `lint/fixtures/clean` + `primer` (no wait on CHY-10/CHY-11); refs passed as `fixtureRefs`; check-10 test deletes the `hanviet:` line of 你们 and `chars/们.yaml`; `only` is the C2 production list, with a test that a broken `lessons/hsk2/x.yaml` is ignored under it; `sortErrors` replaced by `return { errors }` plus a local comparator for check-10 errors; S1 signatures (`deriveBacklinks` takes lesson values, `deriveHanViet` takes a Record); schemas.ts and C1 anchors refreshed; prettier fixture step. Confidence 95%, each cited line hand-checked on main.
+- [tester CHAA-32, 2026-11-05] `importContent` on a missing directory returns a sha and writes an empty `ImportedContent` (`lintDir` treats an absent root as an empty set, CHY-9). Decision: not guarded here; the importer stays a pure function of what lint loads, and S3's CLI must reject a content path that does not exist before calling it. Confidence 80%.
 
 ## Resolved in grilling
 | Round | Q | Decision | Answer | Source |
