@@ -292,3 +292,8 @@ def test_bound_note_merges_into_existing_parentheses_and_fullwidth_brackets_are_
     audit = {'bad_example': [], 'common': [], 'bound': [{'id': '0.0.1', 'pattern': '打球'}], 'missing': []}
     hz, e = word.entry('打', {}, scripted(a, audit))
     assert [s['vi'] for s in e['readings'][0]['groups'][0]['senses']] == ['đánh(bóng)', 'chơi (bóng; chỉ dùng trong 打球)']
+
+
+def test_parse_json_takes_the_first_object_only(gen):
+    assert gen.parse_json('```json\n{"a": 1}\n``` then {"b": 2}') == {'a': 1}
+    assert gen.parse_json('{"a": {"b": [1, 2]}} trailing') == {'a': {'b': [1, 2]}}

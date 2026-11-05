@@ -81,6 +81,10 @@ def candidates(hz, level, rows, n=30):
     hits.sort(key=lambda h: (max(h[0], level or 1) > (level or 1) + 1, h[1]))
     return {sid: {'zh': text, **tr} for _, _, sid, text, tr in hits[:n]}
 
+def parse_json(text):
+    """The first JSON object in the model's text; trailing text, a second object or a code fence is ignored."""
+    return json.JSONDecoder().raw_decode(text[text.index('{'):])[0]
+
 def ask(prompt):
     key = os.environ['OPENCODE_API_KEY']
     body = {'model': 'gpt-6-luna', 'input': [{'role': 'user', 'content': [{'type': 'input_text', 'text': prompt}]}], 'store': False}
@@ -92,7 +96,7 @@ def ask(prompt):
     USAGE['input'] += (res.get('usage') or {}).get('input_tokens', 0)
     USAGE['output'] += (res.get('usage') or {}).get('output_tokens', 0)
     text = ''.join(c.get('text', '') for o in res.get('output', []) if o.get('type') == 'message' for c in o.get('content', []))
-    return json.loads(re.search(r'\{.*\}', text, re.S).group(0))
+    return parse_json(text)
 
 def source(hz):
     """Numbered CEDICT senses per reading; cross-reference senses removed up front."""
