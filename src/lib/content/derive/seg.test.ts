@@ -66,7 +66,9 @@ describe('segment', () => {
 		let sentences = 0;
 		for (const file of files) {
 			const text = readFileSync(file, 'utf8');
-			if ((YAML.parse(text) as { kind?: string } | null)?.kind === 'primer') continue;
+			const doc: unknown = YAML.parse(text);
+			if (typeof doc === 'object' && doc !== null && 'kind' in doc && doc.kind === 'primer')
+				continue;
 			const result = parseContent('Lesson', file, text);
 			if (!result.ok) throw new Error(`${file} did not parse`);
 			for (const s of (result.value as Lesson).sentences ?? []) {
