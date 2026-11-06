@@ -20,18 +20,22 @@ No content, schema or lint edit.
 - After S2: `src/lib/catalog/http.ts` (`httpSource`), `src/lib/catalog/index.ts` (`catalog`), the lesson route `+page.ts` (`catalog.lesson(params.id)`) and `+page.svelte` (title + words + `data-content-sha`).
 - `docs/screens.md:114` names the "cần mạng" state for a lesson whose section is not cached.
 
-## Task 1 [AC5] Keep `/content/` out of the precache
+## Task 1 [AC5] Precache filter + app-shell navigation fallback
 Files: create `src/service-worker/shell.ts`, `src/service-worker/shell.test.ts`; edit `src/service-worker/index.ts`
-- Test first: `appShell(['/_app/a.js', '/content/current.json', '/content/<64hex>/h1-01.json', '/fonts/lessons/ukai-h1-01.woff2', '/'])` -> `['/_app/a.js', '/fonts/lessons/ukai-h1-01.woff2', '/']` (order kept); an input with no `/content/` path returns a new array with the same items; `appShell([])` -> `[]`.
+- Test first: `appShell(['/_app/a.js', '/content/current.json', '/content/<64hex>/h1-01.json', '/fonts/lessons/ukai-h1-01.woff2', '/'])` -> `['/_app/a.js', '/fonts/lessons/ukai-h1-01.woff2', '/']` (order kept); an input with no `/content/` path returns a new array with the same items; `appShell([])` -> `[]`. `cachedPage` over a fake cache: a cached path wins; a missing path returns the `APP_SHELL` response; neither returns `undefined`.
 - Change:
   ```ts
+  export const APP_SHELL = '/today';
   export function appShell(paths: string[]): string[] {
     return paths.filter((p) => !p.startsWith('/content/'));
   }
+  export async function cachedPage(cache: Pick<Cache, 'match'>, request: Request, shellRequest: Request) {
+    return (await cache.match(request)) ?? (await cache.match(shellRequest));
+  }
   ```
-  `index.ts:9-11` wraps the mapped paths in `appShell(...)` and imports it from `./shell`.
-- Verify: `pnpm test -- src/service-worker/shell.test.ts`; `pnpm check` (the SW tsconfig `src/service-worker/tsconfig.json` includes the new file).
-- Note: this is the AC5/AC6 hinge; without it, the built worker precaches every bundle and AC6's "never opened" lesson is offline anyway.
+  `index.ts`: `const SHELL = appShell(...)`; `const appShellRequest = new Request(new URL(APP_SHELL, self.registration.scope));`; install caches `[...SHELL, APP_SHELL]` (`cache.addAll` resolves the relative path, as it does for `SHELL` today); the fetch handler starts with `const cache = await caches.open(CACHE);` then, `if (event.request.mode === 'navigate') { const hit = await cachedPage(cache, event.request, appShellRequest); if (hit) return hit; }` before the existing `SHELL.includes` branch and `networkFirst`.
+- Verify: `pnpm test -- src/service-worker/shell.test.ts`; `pnpm check` (the SW tsconfig `src/service-worker/tsconfig.json` includes the new file); a `pnpm build` with `static/content` present and the emitted `service-worker.js` inspected: no `content/` path in the asset list, `/today` present.
+- Note: this is the AC5/AC6 hinge. Without the filter, the built worker precaches every bundle and AC6's "never opened" lesson is offline anyway; without the fallback, AC5 fails after the normal client-side navigation (no document request for the lesson URL exists).
 
 ## Task 2 [AC5] Await the current.json cache write too
 Files: `src/service-worker/network.ts`, `src/service-worker/network.test.ts`
@@ -65,15 +69,19 @@ File: create `src/lib/catalog/offline.test.ts`
 - Verify: `pnpm test -- src/lib/catalog/offline.test.ts`.
 - Manual browser (one run on the final tree):
   1. `source ~/.capy/work/ft/bin/activate`; `bash scripts/build-content.sh`; `PUBLIC_SUPABASE_URL=http://127.0.0.1:56321 PUBLIC_SUPABASE_PUBLISHABLE_KEY=ci-placeholder pnpm build`; `pnpm preview`.
-  2. Signed in, open `/lesson/h1-01/tu-moi` online; record `data-content-sha`.
-  3. DevTools -> Network -> Offline (or airplane mode); reload; the title, the 10 words and `data-content-sha` render unchanged (AC5).
-  4. Open `/lesson/h1-02/tu-moi` offline; the page shows "Bài này cần mạng." (AC6). `data-content-sha` is absent.
-  5. DevTools -> Application -> Cache Storage `shell-*`: before step 2 there is no `/content/` entry; after it there is `current.json` and `h1-01.json`, and still no `h1-02.json`.
-  6. Open `/lesson/h1-02/tu-moi` online; its bundle appears in `shell-*` only after that open, and step 4 then loads it offline. This shows the cache grows per opened lesson, not at install.
+  2. Signed in, clear site data, load `/today` (the document request; the SW installs and precaches the shell + `/today`).
+  3. Reach `/lesson/h1-01/tu-moi` by clicking through the app (client-side navigation); record `data-content-sha`; in DevTools the lesson URL has no document request, only `current.json` and `h1-01.json`.
+  4. DevTools -> Network -> Offline (or airplane mode); reload; the `/today` shell serves the lesson URL and the title, the 10 words and `data-content-sha` render unchanged (AC5).
+  5. Open `/lesson/h1-02/tu-moi` offline; the page shows "Bài này cần mạng." (AC6). `data-content-sha` is absent.
+  6. DevTools -> Application -> Cache Storage `shell-*`: `/today` is there from install; no `/content/` entry before step 3; after it `current.json` and `h1-01.json`, and still no `h1-02.json`.
+  7. Repeat AC5 with a direct online load of `/lesson/h1-01/tu-moi` (the path-cache branch), then offline reload.
+  8. Shell check: `curl -s http://localhost:4173/today > /tmp/today.html` and the same for `/lesson/h1-01/tu-moi`; the bodies are the same shell (route hints may differ). A materially different body means the fallback is wrong — report it.
+  9. Open `/lesson/h1-02/tu-moi` online; its bundle appears in `shell-*` only after that open, and step 5 then loads it offline. The cache grows per opened lesson, not at install.
 - If no signed-in session is available locally, report the manual items as not run and do not claim AC5/AC6 verified; the node test is not a substitute for the browser check.
 
 ## Mutation paths covered
-- Precache: online install with content present, content absent, a path set with no content; the filter preserves order and other files.
+- Precache: online install with content present, content absent, a path set with no content; the filter preserves order and other files; `/today` in the install list returns 200.
+- Navigation: a lesson URL with no path cache gets the `/today` shell; a navigation to a path that is cached gets that path; neither cached falls through to `networkFirst`; `/` is never used as the app shell.
 - networkFirst: awaited bundle, awaited current.json, deferred API GET, rejecting put, non-ok response, offline with cache, offline without cache.
 - Catalog: offline before the sha, offline after the sha, cached sha + uncached bundle, cached bundle + uncached sha, ok.
 - Page: `ok` branch, `offline` branch, an unknown id (re-thrown, SvelteKit error), a lesson fetched twice (same sha).
