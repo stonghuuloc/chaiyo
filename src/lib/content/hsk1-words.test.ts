@@ -99,4 +99,18 @@ describe('HSK 3.0 level 1 words', () => {
 		}
 		expect(marked).toEqual([]);
 	});
+	it('every sentence aligns syllable for syllable with its hanzi', () => {
+		const sentences = YAML.parse(readFileSync(sentencesPath, 'utf8')) as {
+			id: string;
+			hanzi: string;
+			pinyin: string;
+		}[];
+		const unaligned = sentences
+			.filter((s) => {
+				const count = [...s.hanzi].filter((c) => /[\u3400-\u9fff]/.test(c)).length;
+				return !splitSyllables(s.pinyin, count).aligned;
+			})
+			.map((s) => s.id);
+		expect(unaligned).toEqual([]);
+	});
 });

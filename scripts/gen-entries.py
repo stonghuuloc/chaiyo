@@ -77,7 +77,7 @@ def candidates(hz, level, rows, n=30):
     """Sentences using hz as a word; easiest vocabulary first, then shortest."""
     def hardness(toks):
         return max([((DICT[w][5] or 7) if w in DICT else (0 if not re.search(r'[\u4e00-\u9fff]', w) else 8)) for w in toks] or [0])
-    hits = [(hardness(toks), len(text), sid, text, tr) for sid, (text, toks, tr) in rows.items() if hz in toks]
+    hits = [(hardness(toks), len(text), sid, text, tr) for sid, (text, toks, tr) in rows.items() if hz in toks and not re.search(r'[0-9A-Za-z０-９]', text)]
     hits.sort(key=lambda h: (max(h[0], level or 1) > (level or 1) + 1, h[1]))
     return {sid: {'zh': text, **tr} for _, _, sid, text, tr in hits[:n]}
 
@@ -210,6 +210,9 @@ def check(e, cands, hz, readings):
                     errs.append(f'nghĩa lượng từ "{s["vi"]}" chép nguyên từ CC-CEDICT: nêu đếm cái gì')
                 if re.search(r'[0-9０-９]', x.get('hz') or '') and not x.get('tatoeba'):
                     errs.append(f'câu AI của "{s["vi"]}" dùng chữ số Ả Rập: viết số bằng chữ Hán')
+                chars = CJK.findall(text)
+                if len(split_syllables(x.get('py') or '', (len(chars), len(chars) - chars.count('儿')))) not in (len(chars), len(chars) - chars.count('儿')):
+                    errs.append(f'pinyin của ví dụ "{s["vi"]}" không khớp số chữ Hán của câu: mỗi chữ một âm tiết, 儿 gộp vào âm trước')
                 if any(y.lower().endswith('r') and not re.fullmatch(r'[eēéěè]r', y.lower()) for y in split_syllables(x.get('py') or '')) and '儿' not in text:
                     errs.append(f'pinyin của ví dụ "{s["vi"]}" có âm r (erhua) nhưng câu không có 儿')
                 if x.get('ai') and not x.get('tatoeba') and len(re.findall(r'[\u4e00-\u9fff]', text)) > 12:
@@ -339,7 +342,8 @@ def normalize_py(hz, py):
         if is_word:
             word = ''
             for y in syls[k:k + n]:
-                word += ("'" if word and unicodedata.normalize('NFD', y[0].lower())[0] in 'aoe' else '') + y
+                glue = ' ' if word.endswith('r') and not re.search(r'(?i)(^|[^a-z])[eēéěè]r$', word) else ("'" if word and unicodedata.normalize('NFD', y[0].lower())[0] in 'aoe' else '')
+                word += (glue if word else '') + y
             out += (' ' if out and not out.endswith(' ') else '') + word
             k += n
         else:

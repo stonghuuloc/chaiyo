@@ -213,10 +213,10 @@ def test_classifier_example_needs_numeral_before_classifier(word, monkeypatch):
 
 def test_classifier_example_accepts_digit_numeral(word, monkeypatch):
     monkeypatch.setitem(word.HSK['打'], 'f', [{'i': {'y': 'dǎ', 'n': 'da3'}, 'm': ['classifier for years of age']}])
-    rows = {'77': ('他16打', {'他', '16', '打'}, {'en': 'x'})}
+    rows = {'77': ('他十六打', {'他', '十六', '打'}, {'en': 'x'})}
     a = answer(covered=('0.0',), pos='Lượng từ')
     a['readings'][0]['groups'][0]['senses'] = [a['readings'][0]['groups'][0]['senses'][0]]
-    a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'tatoeba': '77', 'hz': '他16打', 'py': 'Tā shíliù dǎ', 'vi': 'x'}
+    a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'tatoeba': '77', 'hz': '他十六打', 'py': 'Tā shíliù dǎ', 'vi': 'x'}
     hz, e = word.entry('打', rows, scripted(a))
     assert e['readings'][0]['groups'][0]['pos'] == 'Lượng từ'
 
@@ -400,3 +400,20 @@ def test_split_syllables_keeps_r_initial_syllable_out_of_erhua(gen, py, want):
 def test_normalize_py_uses_the_hanzi_count_to_split_bun_eng(gen):
     assert gen.normalize_py('有的地方不能理解。', 'Yǒude dìfang bùnéng lǐjiě.') == 'Yǒude dìfang bùnéng lǐjiě.'
     assert gen.normalize_py('这小男孩能数到十。', 'Zhè xiǎonánhái néngshǔ dào shí.') == 'Zhè xiǎonánhái néngshǔ dào shí.'
+
+
+def test_tatoeba_rows_with_digits_or_latin_letters_are_not_candidates(word):
+    rows = {'1': ('我打人', {'我', '打', '人'}, {'en': 'x'}), '2': ('我打7个', {'我', '打', '7', '个'}, {'en': 'x'}), '3': ('Tom打我', {'Tom', '打', '我'}, {'en': 'x'})}
+    assert list(word.candidates('打', 1, rows)) == ['1']
+
+
+def test_example_pinyin_must_cover_every_hanzi(word):
+    short = {'ai': True, 'hz': '他打球，我拿来送人的', 'py': 'Tā dǎ qiú', 'vi': 'x'}
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(answer(ex0=short)))
+    assert 'không khớp số chữ Hán' in str(e.value)
+
+
+def test_a_syllable_after_erhua_is_spaced_so_the_importer_can_align(gen):
+    assert gen.normalize_py('哪儿的话！', 'Nǎrde huà!') == 'Nǎr de huà!'
+    assert gen.normalize_py('我一点儿也不怕狗。', 'Wǒ yīdiǎnr yě bù pà gǒu.') == 'Wǒ yīdiǎnr yě bùpà gǒu.'
