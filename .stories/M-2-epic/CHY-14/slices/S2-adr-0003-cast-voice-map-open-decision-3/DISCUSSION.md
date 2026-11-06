@@ -1,0 +1,17 @@
+# CHY-14 S2 — discussion
+ACs: AC4, AC5 · design lead CHAA-49 · 2026-11-06 · runs after S1 (needs `spike/results.json`)
+
+## Answered here (≥80% rule, CREW.md)
+- [AC4] Q: the ticket says `docs/adr/0002-tts-engine.md`; 0002 exists. A: `docs/adr/0003-tts-engine.md`, same layout as 0002 (title line, `Status:`, Context, Decision, Consequences). Confidence 95%: `docs/adr/` holds 0001 and 0002 on main 23f1db9.
+- [AC4] Q: whose licence? A: the winner's model weights, by licence name and "commercial use: yes/no", with a link to the licence text; the loser gets one row too, so the ADR shows what the choice traded. Known today: OmniVoice weights CC-BY-NC (no), Fun-CosyVoice3-0.5B-2512 Apache-2.0 (yes), IndexTTS 2.5 bilibili Model Use License (yes below a revenue cap), Azure = hosted service, no weights shipped (output use per Microsoft Product Terms). Confidence 85%: model cards read 2026-11-06; S2 re-reads the card of the engine Loc picked in Q1.
+- [AC4] Q: the voice map keys? A: the manifest's `voice` values, `redpanda`, `takin`, `narrator` (audio.ts:49, C5), each to one provider voice id. Hachiware = redpanda, Momonga = takin (S1 DISCUSSION). Confidence 95%.
+- [AC4] Q: does a "fixed voice id" have to survive a new Mac? A: yes; the ADR says per id how it is restored (Azure: the voice name; VoiceStudio: engine, saved profile and where its export lives). Confidence 80%: the renderer re-renders every new sentence for years with the same voice.
+- [AC5] Q: `content/cast.yaml` shape? A: `{ engine, voices: { redpanda, takin, narrator } }`, replacing `[]`. Keys are the manifest voices, so CHY-15 looks up `voices[entry.voice]`. Non-speaking members (panda, fawn) get no row: no clip uses their voice. Confidence 80%: nothing reads cast.yaml today (content.test.ts:9 skips it; lint keeps its own list, lint/types.ts:46-48, CONTRACTS C1), so the shape is free; CHY-15 adds a schema when it reads the file.
+- [CHORE] Q: architecture.md says "VoiceStudio now; Azure TTS is the fallback" (:28) and "until the VoiceStudio spike decides" (:44). A: S2 rewrites :18, :28 and the last sentence of :44 to name the winner and cite ADR 0003, so the module design and the ADR agree. No AC asks for it; tagged CHORE (advisor r1). Confidence 85%.
+- [AC5] Q: wording for decision 3? A: the pattern of decisions 1 and 2 (content-schema.md:370-371) plus a Markdown link, since AC5 says "links to the ADR": `3. ~~Cast voice per member (and gender) waits on the VoiceStudio spike.~~ **Decided <date>:** [ADR 0003](adr/0003-tts-engine.md) …` with the three voice ids. Confidence 90%.
+
+## Open — needs an answer before execute
+None in this file. The winner and tally come from Loc's `spike/results.json` (S1 AC3); the licence row follows WAVE-PLAN Q1. `content/cast.yaml` is inside `content/**`, which CHY-12 S2 holds now: S2 executes after that lane merges (WAVE-PLAN lane map).
+
+## Locked (do not re-open)
+- Speaking Cast = redpanda, takin (lint check 9); key `sha256(hanzi|voice)` with voice = the CastId or `narrator` (C5).

@@ -1,0 +1,46 @@
+{
+  "story": "CHY-14",
+  "title": "TTS spike: VoiceStudio vs Azure",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "test set, two renders, listening sheet",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 2,
+      "note": "design READY (Opus r1+r2, Sonnet delta); picture next",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "ADR 0003, cast voice map, open decision 3",
+      "acs": [
+        "AC4",
+        "AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 2,
+      "note": "design READY (Opus r1+r2, Sonnet delta); executes after S1 + CHY-12 S2",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-14",
+  "log": [
+    "2026-11-06 init",
+    "2026-11-06 +S1 test set, two renders, listening sheet [AC1,AC2,AC3]",
+    "2026-11-06 +S2 ADR 0003, cast voice map, open decision 3 [AC4,AC5]",
+    "2026-11-06 S1 \u2192 plan",
+    "2026-11-06 S2 \u2192 plan"
+  ],
+  "updated": "2026-11-06T05:19:14+00:00"
+}
