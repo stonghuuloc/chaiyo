@@ -32,6 +32,7 @@ SOURCES = {  # complete.min.json: drkameleon HSK (MIT), pinned; Tatoeba exports 
 DICT = {r[0]: r for r in json.loads((ROOT / 'prototype/data/dict.json').read_text(encoding='utf-8'))}
 HSK = {}
 USAGE = {'calls': 0, 'input': 0, 'output': 0}
+HINTS = {}  # GEN_HINTS: {headword: reviewer note appended to that entry's prompt}
 POS_VI = ['Danh từ', 'Động từ', 'Tính từ', 'Phó từ', 'Lượng từ', 'Đại từ', 'Số từ', 'Giới từ', 'Liên từ', 'Trợ từ', 'Thán từ', 'Bổ ngữ', 'Cụm từ', 'Thành ngữ']
 POS_HINT = {'n': 'danh từ', 'v': 'động từ', 'a': 'tính từ', 'd': 'phó từ', 'q': 'lượng từ', 'r': 'đại từ', 'm': 'số từ',
             'p': 'giới từ', 'c': 'liên từ', 'u': 'trợ từ', 'e': 'thán từ', 'y': 'trợ từ ngữ khí', 'i': 'thành ngữ', 'l': 'cụm từ'}
@@ -179,6 +180,8 @@ def check(e, cands, hz, readings):
     dropped = {d['id'] for d in e.get('dropped', [])}
     errs = [f'thiếu nghĩa {i} "{t}"' for i, t in texts.items() if i not in used | dropped]
     errs += [f'lý do lạ {d.get("why")}' for d in e.get('dropped', []) if d.get('why') not in REASONS]
+    glosses = [re.sub(r'\s*\(.*?\)', '', s['vi']).strip().casefold() for r in e['readings'] for g in r['groups'] for s in g['senses'] if isinstance(s.get('vi'), str)]
+    errs += [f'hai nghĩa có cùng lời giải thích "{v}": gộp thành một (một nghĩa, một ví dụ)' for v in dict.fromkeys(glosses) if glosses.count(v) > 1]
     seen = set()
     for r in e['readings']:
         if not canon(r['pinyin'], readings):
@@ -381,8 +384,12 @@ def cut_py(hz, py, classifiers):
     for i, (w, f) in enumerate(toks):
         if w == '的话' and not (i + 1 < len(toks) and toks[i + 1][0] in '，,'):  # 的话 is a unit only when conditional
             split += [('的', 'u'), ('话', 'n')]
-        elif split and split[-1][1].startswith('m') and len(w) > 1 and w[0] in CLASSIFIERS and w not in DICT:
+        elif split and (split[-1][1].startswith('m') or split[-1][0] in '这那哪每几') and len(w) > 1 and w[0] in CLASSIFIERS and w not in DICT and w not in HSK:  # 这|本书: the classifier is not part of the noun
             split += [(w[0], 'q'), (w[1:], f)]
+        elif len(w) > 2 and w[0] in '这那哪每' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK:  # 那本书 as one token
+            split += [(w[0], 'r'), (w[1], 'q'), (w[2:], f)]
+        elif len(w) > 2 and w[0] == '几' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK:
+            split += [(w[0], 'm'), (w[1], 'q'), (w[2:], f)]
         else:
             split.append((w, f))
     units = []  # [text, syllable count, is_word, flag]
@@ -586,6 +593,8 @@ Yêu cầu:
 
 Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
+    if HINTS.get(hz):
+        prompt += f'\n\nGhi chú của người kiểm duyệt cho mục từ này, bắt buộc áp dụng: {HINTS[hz]}'
     e = llm(prompt)
     errs = check(e, cands, hz, readings)
     unstar, bound, dup = set(), {}, {}
@@ -675,15 +684,18 @@ def dump(path, data):
     path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000), encoding='utf-8')
 
 def fold_hand(senses):
-    """A generated sense whose gloss equals a hand gloss, or one of its ;/,-separated terms, folds into the hand sense: hand wording stays, pos, example and rare come from the generated one."""
+    """A generated sense whose gloss equals a hand gloss, or one of its ;/,-separated terms, folds into the hand sense: hand wording stays, pos, example and rare come from the first generated twin and later twins are dropped. A sense that repeats an earlier gloss is dropped too; its example stays in the word's example list."""
     norm = lambda v: re.sub(r'\s*\(.*?\)', '', v).strip().casefold()
     hand = [h for h in senses if 'pos' not in h]
     for g in [g for g in senses if 'pos' in g]:
         terms = {norm(g['vi']), *(t.strip() for t in re.split(r'[;,]', norm(g['vi'])))}
         twin = next((h for h in hand if norm(h['vi']) in terms), None)
         if twin:
-            twin.update({k: g[k] for k in ('pos', 'example', 'rare') if k in g})
-            senses.remove(g)
+            if 'pos' not in twin:
+                twin.update({k: g[k] for k in ('pos', 'example', 'rare') if k in g})
+            senses[:] = [x for x in senses if x is not g]
+    seen = set()
+    senses[:] = [x for x in senses if not (norm(x['vi']) in seen or seen.add(norm(x['vi'])))]
     return senses
 
 def write_out(results):
@@ -838,6 +850,8 @@ def main(argv, llm=ask):
         HSK.update({e['s']: e for e in json.loads((CACHE / 'complete.min.json').read_text(encoding='utf-8'))})
         return restage()
     argv = args.words
+    if os.environ.get('GEN_HINTS'):
+        HINTS.update(json.loads(Path(os.environ['GEN_HINTS']).read_text(encoding='utf-8')))
     if llm is ask and os.environ.get('GEN_OFFLINE_DIR'):
         llm = ask_files
     if llm is ask and not os.environ.get('OPENCODE_API_KEY'):

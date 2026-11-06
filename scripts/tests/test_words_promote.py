@@ -525,3 +525,36 @@ def test_a_bound_form_sense_without_a_note_is_sent_back(word, monkeypatch):
         return audit if 'bound_form' in prompt and 'Kiểm tra' in prompt else bare_answer()
     word.entry('打', {}, llm)
     assert any('lấy từ dòng' in c and 'Bản trước cần sửa' in c for c in calls)
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('这本书我看过两回。', 'Zhè běn shū wǒ kàn guo liǎng huí.', 'Zhè běn shū wǒ kànguo liǎnghuí.'),
+    ('那本书是我的。', 'Nà běn shū shì wǒ de.', 'Nà běn shū shì wǒde.'),
+    ('这条路很长。', 'Zhè tiáo lù hěn cháng.', 'Zhè tiáo lù hěn cháng.'),
+    ('每本书都很好。', 'Měi běn shū dōu hěn hǎo.', 'Měi běn shū dōu hěn hǎo.')])
+def test_demonstrative_classifier_and_noun_are_three_words(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_every_hand_twin_folds_and_the_hand_sense_is_kept_by_identity(gen):
+    senses = [{'vi': 'cảm ơn'}, {'vi': 'cảm ơn', 'pos': 'v', 'example': 's-w-1'}, {'vi': 'cảm ơn', 'pos': 'interj', 'example': 's-w-2'}]
+    folded = gen.fold_hand(senses)
+    assert folded == [{'vi': 'cảm ơn', 'pos': 'v', 'example': 's-w-1'}]
+
+
+def test_a_repeated_gloss_is_sent_back(word):
+    a = bare_answer()
+    a['readings'][0]['groups'][0]['senses'][1]['vi'] = 'đánh (khác)'
+    calls = []
+    def llm(prompt):
+        calls.append(prompt)
+        return a if len(calls) == 1 else bare_answer()
+    word.entry('打', {}, llm)
+    assert any('cùng lời giải thích' in c for c in calls[1:])
+
+
+def test_a_reviewer_hint_reaches_the_entry_prompt(word, monkeypatch):
+    monkeypatch.setitem(word.HINTS, '打', 'không dùng 比')
+    seen = []
+    word.entry('打', {}, lambda p: seen.append(p) or bare_answer())
+    assert 'không dùng 比' in seen[0]
