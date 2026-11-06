@@ -194,7 +194,9 @@ def check(e, cands, hz, readings):
                     errs.append(f'ví dụ của lượng từ "{s["vi"]}" phải có số từ + 「{hz}」 đếm đúng danh từ đó')
                 if g['pos'] == 'Lượng từ' and re.match(r'(?i)\s*(lượng từ|classifier)', s['vi']):
                     errs.append(f'nghĩa lượng từ "{s["vi"]}" chép nguyên từ CC-CEDICT: nêu đếm cái gì')
-                if any(y.lower().endswith('r') and not re.fullmatch(r'[eēéěè]r', y.lower()) for y in SYLLABLE.findall(x.get('py') or '')) and '儿' not in text:
+                if re.search(r'[0-9０-９]', x.get('hz') or '') and not x.get('tatoeba'):
+                    errs.append(f'câu AI của "{s["vi"]}" dùng chữ số Ả Rập: viết số bằng chữ Hán')
+                if any(y.lower().endswith('r') and not re.fullmatch(r'[eēéěè]r', y.lower()) for y in split_syllables(x.get('py') or '')) and '儿' not in text:
                     errs.append(f'pinyin của ví dụ "{s["vi"]}" có âm r (erhua) nhưng câu không có 儿')
                 if x.get('ai') and not x.get('tatoeba') and len(re.findall(r'[\u4e00-\u9fff]', text)) > 12:
                     errs.append(f'câu AI của "{s["vi"]}" dài quá 12 chữ')
@@ -220,14 +222,36 @@ HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó
 
 VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
 SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n)?r?(?![{VOWELS}])', re.I)
+SYLLABLE_FULL = re.compile(rf'(?:(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])[{VOWELS}]+|[aoeāáǎàōóǒòēéěèAOEĀÁǍÀŌÓǑÒĒÉĚÈ][{VOWELS}]*)(?:ng|n)?r?', re.I)
 PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
 TONED = set(VOWELS) - set('aeiouüv')
-CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘打')
+CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘打分元角')
+NUMERAL_UNIT = re.compile('[一二两三四五六七八九十百千万零〇半几]+[个本张只条件杯瓶些位块双把辆支页岁次年口家间层碗盘打分元角]')
 CJK = re.compile(r'[\u3400-\u9fff]')
+
+def split_syllables(py):
+    """Pinyin syllables, longest first and at most one tone mark each, so 'nǚér' still splits into nǚ + ér when the apostrophe is missing."""
+    def seg(run):
+        if not run:
+            return []
+        for end in range(len(run), 0, -1):
+            cand = run[:end]
+            if SYLLABLE_FULL.fullmatch(cand) and sum(ch in TONED for ch in cand.lower()) <= 1:
+                rest = seg(run[end:])
+                if rest is not None:
+                    return [cand, *rest]
+        return None
+    out = []
+    for run in re.findall(rf"[A-Za-z{VOWELS.replace('v', '')}ÀÁÈÉÌÍÒÓÙÚǍǏǑǓǕǗǙǛĀĒĚĪŌŪ]+", unicodedata.normalize('NFC', py)):
+        parts = seg(run)
+        out += parts if parts is not None else [run]
+    return out
 
 def normalize_py(hz, py):
     """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up."""
-    syls = SYLLABLE.findall(unicodedata.normalize('NFC', py))
+    for m in NUMERAL_UNIT.finditer(hz):  # 六十分 must not cut as 六 + 十分
+        jieba.suggest_freq(m.group(0), True)
+    syls = split_syllables(py)
     chars = CJK.findall(hz)
     erhua = len(syls) != len(chars) and len(syls) == len(chars) - chars.count('儿')
     if erhua:
@@ -283,7 +307,7 @@ def normalize_py(hz, py):
         if is_word:
             word = ''
             for y in syls[k:k + n]:
-                word += ("'" if word and y[0].lower() in 'aoe' else '') + y
+                word += ("'" if word and unicodedata.normalize('NFD', y[0].lower())[0] in 'aoe' else '') + y
             out += (' ' if out and not out.endswith(' ') else '') + word
             k += n
         else:
@@ -355,18 +379,20 @@ def audit(hz, e, llm, readings):
 {json.dumps(rows, ensure_ascii=False)}
 Nghĩa gốc CC-CEDICT và bản dịch cvdict_vi để đối chiếu: {json.dumps(readings, ensure_ascii=False)}
 {('Nghĩa BẮT BUỘC phải có trong mục từ này (liệt kê vào missing nếu thiếu): ' + json.dumps(MUST_HAVE[hz], ensure_ascii=False)) if hz in MUST_HAVE else ''}
-Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":[{{"id":"...","pattern":"不用"}}],"missing":[{{"pos":"...","vi":"..."}}]}}.
-- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: nghĩa tiếng Việt dịch theo từ tiếng Anh mơ hồ của CC-CEDICT chứ không theo cách dùng trong câu (quite → khá thay vì rất, boil → đun sôi thay vì sôi, get along → hợp nhau thay vì sống qua ngày), hoặc không khớp tự/tha động từ; câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
+Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":[{{"id":"...","pattern":"不用"}}],"duplicate":[{{"id":"...","of":"id của nghĩa giống hệt"}}],"missing":[{{"pos":"...","vi":"..."}}]}}.
+- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: nghĩa chỉ có nhờ một từ khác trong câu hoặc vị trí bổ ngữ (一整晚 là nhờ 整, 他脑子转得快 là bổ ngữ mức độ, 他的前途 chỉ có trong từ ghép 前途 mà không có ghi chú) hoặc nghĩa tiếng Anh dịch sát chữ (single → duy nhất, almost → suýt, "in sports or games" → thi đấu khi câu là điểm thi); nghĩa tiếng Việt dịch theo từ tiếng Anh mơ hồ của CC-CEDICT chứ không theo cách dùng trong câu (quite → khá thay vì rất, boil → đun sôi thay vì sôi, get along → hợp nhau thay vì sống qua ngày), hoặc không khớp tự/tha động từ; câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
-- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Nghĩa chỉ có trong một từ ghép cụ thể (去 "ngoái" chỉ trong 去年) cũng là bound; nghĩa uyển ngữ hoặc văn chương (去 "qua đời", 冬天去了) phải rare. Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
+- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Nghĩa chỉ có trong một từ ghép cụ thể (去 "ngoái" chỉ trong 去年) cũng là bound; nghĩa uyển ngữ hoặc văn chương (去 "qua đời", 冬天去了) phải rare. Ghi chú bound phải đúng với MỌI nửa của nghĩa (哪儿 "bất cứ đâu" chỉ trong 哪儿都…; "đâu đó" trong 好像在哪儿见过 là nghĩa khác, tách riêng và không có ghi chú), bằng tiếng Việt, ngăn cách bằng ", ", không dùng 等 「」 反问. Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
+- duplicate: nghĩa chỉ là cách nói khác của một nghĩa có sẵn (东边 "phía đông" và "ở phía đông của"; 快 "sắp" và "suýt"): ghi id của nghĩa thừa và id của nghĩa giữ lại.
 - missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
     by_id = {r['id']: r for r in rows}
     bad = [f'ví dụ của "{by_id[b["id"]]["vi"]}" không tự nhiên: {b.get("why", "")}' for b in out.get('bad_example', []) if isinstance(b, dict) and b.get('id') in by_id]
     unstar = {by_id[i]['vi'] for i in out.get('common', []) if i in by_id}
     bound = {by_id[b['id']]['vi']: b.get('pattern') for b in out.get('bound', []) if isinstance(b, dict) and b.get('id') in by_id and b.get('pattern')}
+    dup = {by_id[d['id']]['vi']: by_id[d['of']]['vi'] for d in out.get('duplicate', []) if isinstance(d, dict) and d.get('id') in by_id and d.get('of') in by_id and d['id'] != d['of']}
     missing = [f'thiếu nghĩa cốt lõi {m["pos"]} "{m["vi"]}": thêm nó với "src": [], "core": true và ví dụ tự nhiên' for m in out.get('missing', []) if isinstance(m, dict) and m.get('pos') and m.get('vi')]
-    return bad + missing, unstar, bound
+    return bad + missing, unstar, bound, dup
 
 def merge_senses(hz, readings, merge):
     """Fold CC-CEDICT senses that mean the same thing into one numbered sense before the model translates them."""
@@ -418,6 +444,7 @@ Yêu cầu:
 - Lượng từ: nghĩa viết bằng từ đếm tiếng Việt kèm (danh từ được đếm), ví dụ 本 "quyển, cuốn (sách)", 杯 "cốc, ly (đồ uống)", 床 "tấm, chiếc (chăn, nệm)"; KHÔNG bắt đầu bằng "lượng từ" hay "classifier for". Ví dụ phải có số từ ngay trước đúng lượng từ 「{hz}」 (一床被子, 三岁), không dùng lượng từ khác (两张床 là sai cho 床).
 - Ví dụ: với mỗi nghĩa, chọn câu Tatoeba dùng ĐÚNG nghĩa đó (ghi "tatoeba": id, chép nguyên "hz"), ưu tiên câu ngắn, từ dễ. Một câu chỉ dùng cho một nghĩa.
   Không có câu nào đúng nghĩa → tự viết câu ≤ 12 chữ Hán, từ vựng HSK ≤ {max(level or 3, 2)}, ghi "ai": true. Câu tự viết phải là tiếng Trung hiện đại tự nhiên, dùng 「{hz}」 hoặc một từ ghép CÓ THẬT chứa nó (không bịa từ ghép, không dùng từ văn ngôn làm câu thay thế). Nếu nghĩa chỉ có ở từ không tự nhiên trong lời nói (hoặc ví dụ duy nhất là từ ghép văn ngôn), đưa nghĩa vào "dropped" với lý do "không có ví dụ tự nhiên" thay vì cố viết câu.
+  Không dùng chữ số Ả Rập trong câu tự viết: viết số bằng chữ Hán (六十, 一百). Nghĩa uyển ngữ hoặc hiếm (去 "qua đời") phải đánh common: false và câu dùng chính chữ đó (他爷爷病了很久，上个月去了), không dùng từ khác (去世) thay thế.
   "py": pinyin phải khớp chữ Hán (không thêm r khi câu không có 儿); trợ từ 了/着/过/的 viết thanh nhẹ (le, zhe, guo, de), động từ viết dấu (guò, zháo); pinyin có dấu, viết liền từng từ (zǒulù, jiàndào, tārén, wǒmen), cách nhau giữa các từ, viết hoa đầu câu; không đánh dấu biến điệu thanh 3-3 (giữ dấu gốc). "vi": dịch tiếng Việt tự nhiên (dựa vào câu Trung, bản tiếng Anh/Việt kèm theo chỉ để hiểu nghĩa).
 - "luongtu": lượng từ đi với danh từ này ([] nếu không phải danh từ). "cannghia": tối đa 3 từ gần nghĩa, [] nếu không chắc.
 
@@ -425,9 +452,9 @@ Chỉ trả về JSON:
 {{"readings":[{{"pinyin":"...","hanviet":"...","groups":[{{"pos":"Danh từ","senses":[{{"vi":"...","src":["1.0"],"common":true,"ex":{{"tatoeba":"123","hz":"...","py":"...","vi":"..."}}}}]}}]}}],"dropped":[{{"id":"1.5","why":"trùng"}}],"luongtu":[],"cannghia":[]}}"""
     e = llm(prompt)
     errs = check(e, cands, hz, readings)
-    unstar, bound = set(), {}
+    unstar, bound, dup = set(), {}, {}
     if not errs:
-        bad, unstar, bound = audit(hz, e, llm, readings)
+        bad, unstar, bound, dup = audit(hz, e, llm, readings)
         errs = bad + standins(hz, e, bound) + [f'danh sách HSK gợi ý từ loại "{p}" nhưng chưa có nghĩa nào. Nếu từ có nghĩa cốt lõi này mà CC-CEDICT không ghi (xem cvdict_vi), thêm nó với "src": [] và "core": true; nếu không thì để nguyên' for p in pos_gaps(hz, e)]
     if errs:  # one repair round with the concrete failures
         e = llm(prompt + f"\n\nBản trước cần sửa: {json.dumps(errs, ensure_ascii=False)}. Sửa và trả lại toàn bộ JSON:\n{json.dumps(e, ensure_ascii=False)}")
@@ -441,7 +468,9 @@ Chỉ trả về JSON:
                 x = s['ex']
                 if x.get('tatoeba'):  # verbatim source text, not the model's copy
                     x['hz'] = cands[x['tatoeba']]['zh']
-                x['py'] = normalize_py(x['hz'], x['py'])
+    for g in [g for r in e['readings'] for g in r['groups']]:  # a sense the audit calls a synonym split of another folds into it
+        keep = {s['vi']: s for r in e['readings'] for g2 in r['groups'] for s in g2['senses']}
+        g['senses'] = [s for s in g['senses'] if not (dup.get(s['vi']) in keep and keep[dup[s['vi']]] is not s and keep[dup[s['vi']]].setdefault('src', []).extend(s.get('src', [])) is None)]
     for r in e['readings']:
         for g in r['groups']:
             for s in g['senses']:
@@ -449,9 +478,18 @@ Chỉ trả về JSON:
                     s['common'] = True
                 if bound.get(s['vi']):
                     s['common'] = True
-                    note = 'chỉ dùng trong ' + bound[s['vi']].replace('、', ', ')
+                    note = 'chỉ dùng trong ' + re.sub(r'[「」]', '', bound[s['vi']]).replace('、', ', ').replace('，', ', ').replace('；', '; ')
                     s['vi'] = s['vi'][:-1] + f'; {note})' if s['vi'].endswith(')') else f'{s["vi"]} ({note})'
                 s['vi'] = s['vi'].replace('（', '(').replace('）', ')')
+    taught = [w for w in {hz, *(c for p in bound.values() for c in re.findall(r'[\u4e00-\u9fff]{2,}', p))} if not jieba.dt.FREQ.get(w)]
+    for w in taught:  # the headword and its bound-note compounds are single words for this entry only
+        jieba.add_word(w)
+    for r in e['readings']:
+        for g in r['groups']:
+            for s in g['senses']:
+                s['ex']['py'] = normalize_py(s['ex']['hz'], s['ex']['py'])
+    for w in taught:
+        jieba.del_word(w)
     e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
     main = main_reading(hz, e['readings'])
     e['main'] = main
@@ -511,7 +549,13 @@ def write_out(results):
             existing = CONTENT / f'{wid}.yaml'
             if existing.exists():
                 old = yaml.safe_load(existing.read_text(encoding='utf-8'))
-                hand = [s for s in old.get('senses', []) if 'pos' not in s]
+                hand = [dict(s) for s in old.get('senses', []) if 'pos' not in s]
+                norm = lambda v: re.sub(r'\s*\(.*?\)', '', v).strip().casefold()
+                for g in list(w['senses']):  # a generated gloss that equals a hand gloss folds into it: the hand wording stays, pos and example come from the generated one
+                    twin = next((h for h in hand if 'pos' not in h and norm(h['vi']) == norm(g['vi'])), None)
+                    if twin:
+                        twin.update({k: g[k] for k in ('pos', 'example', 'rare') if k in g})
+                        w['senses'].remove(g)
                 hand_ex = [x for x in old.get('examples', []) if not x.startswith('s-w-')]
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
                      'senses': hand + w['senses'], 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}

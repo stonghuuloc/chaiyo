@@ -213,11 +213,13 @@ def test_classifier_example_needs_numeral_before_classifier(word, monkeypatch):
 
 def test_classifier_example_accepts_digit_numeral(word, monkeypatch):
     monkeypatch.setitem(word.HSK['打'], 'f', [{'i': {'y': 'dǎ', 'n': 'da3'}, 'm': ['classifier for years of age']}])
+    rows = {'77': ('他16打', {'他', '16', '打'}, {'en': 'x'})}
     a = answer(covered=('0.0',), pos='Lượng từ')
     a['readings'][0]['groups'][0]['senses'] = [a['readings'][0]['groups'][0]['senses'][0]]
-    a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'ai': True, 'hz': '他16打', 'py': 'Tā shíliù dǎ', 'vi': 'x'}
-    hz, e = word.entry('打', {}, scripted(a))
+    a['readings'][0]['groups'][0]['senses'][0]['ex'] = {'tatoeba': '77', 'hz': '他16打', 'py': 'Tā shíliù dǎ', 'vi': 'x'}
+    hz, e = word.entry('打', rows, scripted(a))
     assert e['readings'][0]['groups'][0]['pos'] == 'Lượng từ'
+
 
 
 def test_normalize_py_handles_erhua(gen):
@@ -326,3 +328,44 @@ def test_proper_noun_keeps_its_capital_and_is_written_out(word, monkeypatch):
     a['readings'][0]['pinyin'] = 'Dǎ jīng'
     word.write_out([word.entry('打', {}, scripted(a))])
     assert yaml.safe_load((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'))['pinyin'] == 'Dǎ jīng'
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('他是我女儿。', 'Tā shì wǒ nǚér.', "Tā shì wǒ nǚ'ér."),
+    ('第二天我去学校。', 'Dìèrtiān wǒ qù xuéxiào.', "Dì'èrtiān wǒ qù xuéxiào."),
+    ('这道题的答案是三分之一。', 'Zhè dào tí de dáàn shì sān fēn zhī yī.', "Zhè dàotíde dá'àn shì sānfēnzhī yī."),
+    ('我去天安门。', 'Wǒ qù Tiānānmén.', "Wǒ qù Tiān'ānmén."),
+    ('一度等于六十分。', 'Yī dù děngyú liùshí fēn.', 'Yī dù děngyú liùshífēn.')])
+def test_apostrophe_before_a_o_e_inside_a_word_and_numeral_unit_stays_whole(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_digits_in_an_ai_example_are_rejected(word):
+    bad = {'ai': True, 'hz': '他考60打', 'py': 'Tā kǎo liùshí dǎ', 'vi': 'x'}
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(answer(ex0=bad)))
+    assert 'chữ số Ả Rập' in str(e.value)
+
+
+def test_audit_duplicate_sense_folds_into_the_kept_one(word):
+    audit = {'bad_example': [], 'common': [], 'bound': [], 'missing': [], 'duplicate': [{'id': '0.0.1', 'of': '0.0.0'}]}
+    hz, e = word.entry('打', {}, scripted(bare_answer(), audit))
+    senses = e['readings'][0]['groups'][0]['senses']
+    assert [s['vi'] for s in senses] == ['đánh'] and senses[0]['src'] == ['0.0', '0.1']
+
+
+def test_bound_note_is_vietnamese_with_comma_separators(word):
+    audit = {'bad_example': [], 'common': [], 'bound': [{'id': '0.0.1', 'pattern': '「打球」、打人，等'}], 'missing': []}
+    hz, e = word.entry('打', {}, scripted(bare_answer(), audit))
+    assert e['readings'][0]['groups'][0]['senses'][1]['vi'] == 'chơi (chỉ dùng trong 打球, 打人, 等)'
+
+
+def test_hand_gloss_folds_in_the_generated_twin_and_keeps_its_wording(word):
+    word.CONTENT.mkdir(parents=True)
+    (word.CONTENT / '打.yaml').write_text(yaml.safe_dump({
+        'id': '打', 'hanzi': '打', 'pinyin': 'dǎ', 'level': 1, 'pos': ['v'],
+        'senses': [{'vi': 'Đánh'}, {'vi': 'tay đôi'}], 'examples': []}, allow_unicode=True), encoding='utf-8')
+    word.write_out([word.entry('打', {}, scripted(answer()))])
+    w = yaml.safe_load((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'))
+    assert [s['vi'] for s in w['senses']] == ['Đánh', 'tay đôi', 'chơi']
+    assert w['senses'][0]['pos'] == 'v' and w['senses'][0]['example'].startswith('s-w-') and 'pos' not in w['senses'][1]
