@@ -369,3 +369,23 @@ def test_hand_gloss_folds_in_the_generated_twin_and_keeps_its_wording(word):
     w = yaml.safe_load((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'))
     assert [s['vi'] for s in w['senses']] == ['Đánh', 'tay đôi', 'chơi']
     assert w['senses'][0]['pos'] == 'v' and w['senses'][0]['example'].startswith('s-w-') and 'pos' not in w['senses'][1]
+
+
+def test_offline_provider_exports_prompt_then_reads_answer(gen, tmp_path, monkeypatch):
+    monkeypatch.setenv('GEN_OFFLINE_DIR', str(tmp_path / 'off'))
+    with pytest.raises(gen.Pending) as e:
+        gen.ask_files('hỏi')
+    key = str(e.value)
+    assert (tmp_path / 'off/prompts' / f'{key}.txt').read_text(encoding='utf-8') == 'hỏi'
+    (tmp_path / 'off/answers').mkdir()
+    (tmp_path / 'off/answers' / f'{key}.json').write_text('here: {"a": 1} trailing', encoding='utf-8')
+    assert gen.ask_files('hỏi') == {'a': 1}
+
+
+def test_main_with_offline_dir_waits_for_answers_instead_of_calling_the_api(word, seeded, tmp_path, monkeypatch, capsys):
+    monkeypatch.setenv('GEN_OFFLINE_DIR', str(tmp_path / 'off'))
+    monkeypatch.delenv('OPENCODE_API_KEY', raising=False)
+    with pytest.raises(SystemExit) as e:
+        word.main(['打'])
+    assert e.value.code == 3 and 'PENDING 打' in capsys.readouterr().out
+    assert list((tmp_path / 'off/prompts').glob('*.txt'))

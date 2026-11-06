@@ -98,6 +98,20 @@ def ask(prompt):
     text = ''.join(c.get('text', '') for o in res.get('output', []) if o.get('type') == 'message' for c in o.get('content', []))
     return parse_json(text)
 
+class Pending(Exception):
+    """No answer file yet for a prompt: the prompt was exported to GEN_OFFLINE_DIR/prompts."""
+
+def ask_files(prompt):
+    """Offline provider: prompts go to GEN_OFFLINE_DIR/prompts/<sha>.txt, answers come back as GEN_OFFLINE_DIR/answers/<sha>.json (the raw model text)."""
+    root = Path(os.environ['GEN_OFFLINE_DIR'])
+    key = hashlib.sha256(prompt.encode()).hexdigest()[:16]
+    answer = root / 'answers' / f'{key}.json'
+    if answer.exists():
+        return parse_json(answer.read_text(encoding='utf-8'))
+    (root / 'prompts').mkdir(parents=True, exist_ok=True)
+    (root / 'prompts' / f'{key}.txt').write_text(prompt, encoding='utf-8')
+    raise Pending(key)
+
 def source(hz):
     """Numbered CEDICT senses per reading; cross-reference senses removed up front."""
     row, h = DICT[hz], HSK[hz]
@@ -415,7 +429,7 @@ Gộp các nghĩa CÙNG MỘT nghĩa (đồng nghĩa, chỉ khác cách diễn �
 
 def entry(hz, rows, llm=ask, merge=None):
     readings, skipped = source(hz)
-    merge = merge or (llm if llm is ask else None)
+    merge = merge or (llm if llm in (ask, ask_files) else None)
     before = sum(len(r['senses']) for r in readings)
     if merge:
         readings = merge_senses(hz, readings, merge)
@@ -636,6 +650,8 @@ def main(argv, llm=ask):
     if args.sample:
         return review(CACHE / 'out', args.seed, args.sample)
     argv = args.words
+    if llm is ask and os.environ.get('GEN_OFFLINE_DIR'):
+        llm = ask_files
     if llm is ask and not os.environ.get('OPENCODE_API_KEY'):
         print('OPENCODE_API_KEY is not set', file=sys.stderr)
         sys.exit(2)
@@ -650,13 +666,16 @@ def main(argv, llm=ask):
         else:
             print(f'skip {w}: not in HSK1 list')
     rows = tatoeba()
-    done, rejected = [], []
+    done, rejected, pending = [], [], []
     with ThreadPoolExecutor(8) as pool:
         for w, f in [(w, pool.submit(entry, w, rows, llm)) for w in words]:
             try:
                 hz, e = f.result()
                 done.append((hz, e))
                 print('ok', hz, json.dumps(e['stats'], ensure_ascii=False))
+            except Pending:
+                pending.append(w)
+                print('PENDING', w)
             except Reject as err:
                 rejected.append(str(err))
                 print('REJECT', err)
@@ -675,9 +694,13 @@ def main(argv, llm=ask):
           f'rare senses {sum(bool(s.get("rare")) for s in senses)} in {len({hz for hz, _ in rare_words})} words')
     print(f'cedict senses {sum(e["stats"]["cedict"] for _, e in done)} -> {sum(e["stats"]["merged"] for _, e in done)} after merging synonyms')
     print(f'llm calls {USAGE["calls"]}, tokens in {USAGE["input"]} / out {USAGE["output"]}')
+    if pending:
+        print(f'{len(pending)} words wait for answers: ' + ' '.join(pending))
     if rejected:
         print('\n'.join(f'REJECT {r}' for r in rejected))
         sys.exit(1)
+    if pending:
+        sys.exit(3)
 
 if __name__ == '__main__':
     main(sys.argv[1:])
