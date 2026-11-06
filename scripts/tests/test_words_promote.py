@@ -558,3 +558,27 @@ def test_a_reviewer_hint_reaches_the_entry_prompt(word, monkeypatch):
     seen = []
     word.entry('打', {}, lambda p: seen.append(p) or bare_answer())
     assert 'không dùng 比' in seen[0]
+
+
+def test_a_doubled_bound_note_collapses_to_the_union_in_order(gen):
+    assert gen.collapse_notes('cung cấp (chỉ dùng trong 供给, 补给; chỉ dùng trong 供给, 补给, 配给)') == 'cung cấp (chỉ dùng trong 供给, 补给, 配给)'
+    assert gen.collapse_notes('năng lượng (vật lý; chỉ dùng trong 能量, 能源; chỉ dùng trong 能源, 核能)') == 'năng lượng (vật lý; chỉ dùng trong 能量, 能源, 核能)'
+    assert gen.collapse_notes('ăn (chỉ dùng trong 吃饭)') == 'ăn (chỉ dùng trong 吃饭)'
+
+
+def test_a_doubled_bound_note_is_sent_back(word):
+    a = bare_answer()
+    a['readings'][0]['groups'][0]['senses'][1]['vi'] = 'đánh (chỉ dùng trong 打算盘; chỉ dùng trong 打算盘, 打字)'
+    calls = []
+    def llm(prompt):
+        calls.append(prompt)
+        return a if len(calls) == 1 else bare_answer()
+    word.entry('打', {}, llm)
+    assert any('có hai ghi chú' in c for c in calls[1:])
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('他每分钟打字。', 'Tā měifēnzhōng dǎ zì.', 'Tā měi fēnzhōng dǎzì.'),
+    ('工人们在打地基。', 'Gōngrén men zài dǎ dìjī.', 'Gōngrénmen zài dǎ dìjī.')])
+def test_vocabulary_after_a_demonstrative_stays_whole_and_men_attaches(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want

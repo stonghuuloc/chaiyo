@@ -181,6 +181,7 @@ def check(e, cands, hz, readings):
     errs = [f'thiếu nghĩa {i} "{t}"' for i, t in texts.items() if i not in used | dropped]
     errs += [f'lý do lạ {d.get("why")}' for d in e.get('dropped', []) if d.get('why') not in REASONS]
     glosses = [re.sub(r'\s*\(.*?\)', '', s['vi']).strip().casefold() for r in e['readings'] for g in r['groups'] for s in g['senses'] if isinstance(s.get('vi'), str)]
+    errs += [f'nghĩa "{s["vi"]}" có hai ghi chú "chỉ dùng trong": gộp thành một ghi chú liệt kê đủ các từ ghép' for r in e['readings'] for g in r['groups'] for s in g['senses'] if isinstance(s.get('vi'), str) and s['vi'].count('chỉ dùng trong') > 1]
     errs += [f'hai nghĩa có cùng lời giải thích "{v}": gộp thành một (một nghĩa, một ví dụ)' for v in dict.fromkeys(glosses) if glosses.count(v) > 1]
     seen = set()
     for r in e['readings']:
@@ -303,6 +304,22 @@ def set_freq(word, freq=None):
         jieba.dt.FREQ.setdefault(word[:i], 0)
     return old
 
+def collapse_notes(vi):
+    """One 'chỉ dùng trong' note per gloss: the compounds of every repeated note, in order, without repeats."""
+    m = re.search(r' \(([^()]*)\)$', vi)
+    if not m or m.group(1).count('chỉ dùng trong') < 2:
+        return vi
+    parts, compounds, at = [], [], None
+    for piece in (p.strip() for p in m.group(1).split(';')):
+        if not piece.startswith('chỉ dùng trong'):
+            parts.append(piece)
+            continue
+        at = len(parts) if at is None else at
+        compounds += [c for c in (t.strip() for t in piece[len('chỉ dùng trong'):].split(',')) if c and c not in compounds]
+    parts.insert(at, 'chỉ dùng trong ' + ', '.join(compounds))
+    return vi[:m.start()] + f' ({"; ".join(parts)})'
+
+
 def note_compounds(vi):
     """Hanzi compounds named by a 'chỉ dùng trong …' note."""
     return [c for m in re.findall(r'chỉ dùng trong ([^)]*)', vi) for c in re.findall(r'[\u4e00-\u9fff]{2,}', m)]
@@ -386,10 +403,14 @@ def cut_py(hz, py, classifiers):
             split += [('的', 'u'), ('话', 'n')]
         elif split and (split[-1][1].startswith('m') or split[-1][0] in '这那哪每几') and len(w) > 1 and w[0] in CLASSIFIERS and w not in DICT and w not in HSK:  # 这|本书: the classifier is not part of the noun
             split += [(w[0], 'q'), (w[1:], f)]
-        elif len(w) > 2 and w[0] in '这那哪每' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK:  # 那本书 as one token
+        elif len(w) > 2 and w[0] in '这那哪每' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK and w[1:] not in HSK and w[1:] not in DICT:  # 那本书 as one token
             split += [(w[0], 'r'), (w[1], 'q'), (w[2:], f)]
-        elif len(w) > 2 and w[0] == '几' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK:
+        elif len(w) > 2 and w[0] in '这那哪每几' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK:  # 每|分钟: the rest is a word of its own
+            split += [(w[0], 'm' if w[0] == '几' else 'r'), (w[1:], f)]
+        elif len(w) > 2 and w[0] == '几' and w[1] in CLASSIFIERS and w not in DICT and w not in HSK and w[1:] not in HSK and w[1:] not in DICT:
             split += [(w[0], 'm'), (w[1], 'q'), (w[2:], f)]
+        elif w == '们' and split and re.fullmatch(r'[\u4e00-\u9fff]+', split[-1][0]):  # 工人|们 is one word
+            split[-1] = (split[-1][0] + w, split[-1][1])
         else:
             split.append((w, f))
     units = []  # [text, syllable count, is_word, flag]
@@ -499,7 +520,7 @@ def standins(hz, e, bound):
         return []
     return [f'ví dụ của "{s["vi"]}" chỉ có từ ghép chứa 「{hz}」: viết lại câu với 「{hz}」 đứng riêng (không dùng từ ghép khác thay thế)'
             for r in e['readings'] for g in r['groups'] for s in g['senses']
-            if s['ex'].get('ai') and not s['ex'].get('tatoeba') and g['pos'] != 'Lượng từ' and s['vi'] not in bound
+            if s['ex'].get('ai') and not s['ex'].get('tatoeba') and g['pos'] != 'Lượng từ' and s['vi'] not in bound and 'chỉ dùng trong' not in s['vi']
             and hz not in jieba.lcut(s['ex'].get('hz') or '')
             and not (hz in '百千万' and ('一' + hz) in (s['ex'].get('hz') or ''))]
 
@@ -747,6 +768,7 @@ def restage():
             w['pinyin'] = proper
             changed['headers'] += 1
         for sense in w['senses']:
+            sense['vi'] = collapse_notes(sense['vi'])
             repeat = re.search(r' \(([^()]*?);? ?chỉ dùng trong ([^()]*)\)$', sense['vi'])
             if repeat and set(re.findall(r'[\u4e00-\u9fff]{2,}', repeat.group(1))) <= set(re.findall(r'[\u4e00-\u9fff]{2,}', repeat.group(2))) and not re.sub(r'trong|[\u4e00-\u9fff]|[;, ]', '', repeat.group(1)):
                 tidy = sense['vi'][:repeat.start()] + f' (chỉ dùng trong {repeat.group(2)})'
