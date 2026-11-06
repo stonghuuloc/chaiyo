@@ -1,0 +1,60 @@
+id: 白
+hanzi: 白
+pinyin: bái
+hanviet: bạch
+level: 1
+pos:
+- adj
+- adv
+- v
+- n
+senses:
+- vi: trắng
+  pos: adj
+  example: s-w-1422180
+- vi: rõ ràng, sáng tỏ (chỉ dùng trong 明白, 说白, 说白了, 真相大白)
+  pos: adj
+  example: s-w-ai-6618f54f
+- vi: sáng (chỉ dùng trong 白天, 东方发白, 白昼)
+  pos: adj
+  example: s-w-ai-c2407030
+- vi: trong sạch, thuần khiết (chỉ dùng trong 清白, 洁白)
+  pos: adj
+  example: s-w-ai-0585215b
+- vi: trống, để trắng (chỉ dùng trong 空白, 留白, 白卷)
+  pos: adj
+  example: s-w-ai-7e30589f
+- vi: suông, không pha gì (chỉ dùng trong 白开水, 白饭, 白粥, 白水)
+  pos: adj
+  example: s-w-ai-8d3c201a
+- vi: 'sai, nhầm (chữ; chỉ dùng trong 白字: 写白字, 念白字)'
+  pos: adj
+  rare: true
+  example: s-w-ai-6abb4cd7
+- vi: uổng công, phí công
+  pos: adv
+  example: s-w-ai-21007009
+- vi: không mất tiền, cho không
+  pos: adv
+  example: s-w-ai-e7fc8ed7
+- vi: lườm (trợn mắt để lộ lòng trắng)
+  pos: v
+  example: s-w-ai-b7062637
+- vi: nói rõ, bày tỏ, giãi bày (chỉ dùng trong 表白, 辩白, 自白, 告白)
+  pos: v
+  example: s-w-ai-94950228
+- vi: văn bạch thoại (chỉ dùng trong 白话, 白话文)
+  pos: n
+  example: s-w-ai-d8f976b4
+- vi: lời thoại, lời nói (trong kinh kịch; chỉ dùng trong 道白, 念白, 对白, 旁白)
+  pos: n
+  rare: true
+  example: s-w-ai-17597850
+- vi: tang, việc tang (chỉ dùng trong 白事, 红白事)
+  pos: n
+  rare: true
+  example: s-w-ai-963bd69e
+examples:
+- s-w-1422180
+- s-w-ai-6618f54f
+- s-w-ai-c2407030

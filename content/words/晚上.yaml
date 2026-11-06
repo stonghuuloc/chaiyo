@@ -1,0 +1,17 @@
+id: 晚上
+hanzi: 晚上
+pinyin: wǎn shang
+hanviet: vãn thượng
+level: 1
+pos:
+- n
+senses:
+- vi: buổi tối
+  pos: n
+  example: s-w-10604652
+- vi: ban đêm
+  pos: n
+  example: s-w-333994
+examples:
+- s-w-10604652
+- s-w-333994

@@ -1,0 +1,18 @@
+id: 休息
+hanzi: 休息
+pinyin: xiū xi
+hanviet: hưu tức
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: giờ nghỉ
+  pos: n
+  example: s-w-1188449
+- vi: nghỉ ngơi
+  pos: v
+  example: s-w-10283157
+examples:
+- s-w-1188449
+- s-w-10283157

@@ -1,0 +1,30 @@
+id: 干-gan1
+hanzi: 干
+pinyin: gān
+hanviet: can
+level: 1
+pos:
+- adj
+- n
+- adv
+- v
+senses:
+- vi: khô
+  pos: adj
+  example: s-w-333589
+- vi: nuôi (nhận làm cha mẹ danh nghĩa; chỉ dùng trong 干妈, 干爸, 干爹, 干儿子, 干女儿)
+  pos: adj
+  example: s-w-ai-965dd20f
+- vi: đồ khô, thực phẩm khô (chỉ dùng trong 牛肉干, 饼干, 豆腐干, 果干, 葡萄干)
+  pos: n
+  example: s-w-ai-0fe05464
+- vi: uổng công, suông, vô ích
+  pos: adv
+  example: s-w-ai-3ddd4016
+- vi: dính dáng, liên quan (đến; chỉ dùng trong 相干, 不相干, 干涉, 干预, 干系)
+  pos: v
+  example: s-w-ai-2062f4ce
+examples:
+- s-w-333589
+- s-w-ai-965dd20f
+- s-w-ai-0fe05464

@@ -1,0 +1,22 @@
+id: 吃
+hanzi: 吃
+pinyin: chī
+hanviet: cật
+level: 1
+pos:
+- v
+senses:
+- vi: ăn (cơm, đồ ăn)
+  pos: v
+  example: s-w-843482
+- vi: chịu (khổ, thiệt thòi; chỉ dùng trong 吃苦, 吃亏, 吃力, 吃紧)
+  pos: v
+  example: s-w-ai-255317d8
+- vi: thấm, hút (mực, nước)
+  pos: v
+  rare: true
+  example: s-w-ai-248164e7
+examples:
+- s-w-843482
+- s-w-ai-255317d8
+- s-w-ai-248164e7

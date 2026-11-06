@@ -1,0 +1,40 @@
+id: 帮
+hanzi: 帮
+pinyin: bāng
+hanviet: bang
+level: 1
+pos:
+- v
+- mw
+- n
+senses:
+- vi: giúp, giúp đỡ (ai làm gì)
+  pos: v
+  example: s-w-7772052
+- vi: làm thuê (chỉ dùng trong 帮工)
+  pos: v
+  rare: true
+  example: s-w-ai-35c655b0
+- vi: nhóm, bọn, đám (người)
+  pos: mw
+  example: s-w-ai-085d727d
+- vi: mũ giày (phần trên của giày; chỉ dùng trong 鞋帮)
+  pos: n
+  rare: true
+  example: s-w-ai-ae3b0f02
+- vi: thành, mạn (thuyền, thùng; chỉ dùng trong 船帮, 车帮)
+  pos: n
+  rare: true
+  example: s-w-ai-39e9e955
+- vi: bẹ ngoài, lớp ngoài (của rau; chỉ dùng trong 菜帮, 菜帮子)
+  pos: n
+  rare: true
+  example: s-w-ai-6af807da
+- vi: bang hội, hội kín (chỉ dùng trong 帮会, 帮派, 黑帮, 青帮)
+  pos: n
+  rare: true
+  example: s-w-ai-fffcf118
+examples:
+- s-w-7772052
+- s-w-ai-35c655b0
+- s-w-ai-085d727d

@@ -1,0 +1,18 @@
+id: 多少
+hanzi: 多少
+pinyin: duō shǎo
+hanviet: đa thiểu
+level: 1
+pos:
+- n
+- adv
+senses:
+- vi: số lượng
+  pos: n
+  example: s-w-5092260
+- vi: phần nào
+  pos: adv
+  example: s-w-ai-712ac8a0
+examples:
+- s-w-5092260
+- s-w-ai-712ac8a0

@@ -1,0 +1,26 @@
+id: 路
+hanzi: 路
+pinyin: lù
+hanviet: lộ
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: đường, con đường, tuyến đường
+  pos: n
+  example: s-w-1395080
+- vi: quãng đường, chặng đường
+  pos: n
+  example: s-w-2113788
+- vi: loại, hạng (người, vật; chỉ dùng trong 这路人, 那路人, 这路东西)
+  pos: n
+  rare: true
+  example: s-w-ai-4ac1336c
+- vi: tuyến (xe buýt; chỉ dùng trong 几路车, 五路车, 路线, 三路公共汽车)
+  pos: mw
+  example: s-w-ai-16a758a4
+examples:
+- s-w-1395080
+- s-w-2113788
+- s-w-ai-4ac1336c

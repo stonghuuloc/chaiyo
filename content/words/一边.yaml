@@ -1,0 +1,23 @@
+id: 一边
+hanzi: 一边
+pinyin: yī biān
+hanviet: nhất biên
+level: 1
+pos:
+- adv
+- n
+- conj
+senses:
+- vi: vừa… vừa…
+  pos: adv
+  example: s-w-1454456
+- vi: một bên, một phía
+  pos: n
+  example: s-w-2242083
+- vi: một mặt…, mặt khác…
+  pos: conj
+  example: s-w-ai-39e1332a
+examples:
+- s-w-1454456
+- s-w-2242083
+- s-w-ai-39e1332a

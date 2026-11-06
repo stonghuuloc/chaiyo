@@ -1,0 +1,13 @@
+id: 机票
+hanzi: 机票
+pinyin: jī piào
+hanviet: cơ phiếu
+level: 1
+pos:
+- n
+senses:
+- vi: vé máy bay
+  pos: n
+  example: s-w-6482556
+examples:
+- s-w-6482556

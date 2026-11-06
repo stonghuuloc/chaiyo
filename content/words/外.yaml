@@ -1,0 +1,26 @@
+id: 外
+hanzi: 外
+pinyin: wài
+hanviet: ngoại
+level: 1
+pos:
+- n
+- conj
+- adj
+senses:
+- vi: ngoài, bên ngoài
+  pos: n
+  example: s-w-6054155
+- vi: ngoài ra, thêm vào đó (chỉ dùng trong 此外, 另外, 除……外)
+  pos: conj
+  example: s-w-ai-1353ee7c
+- vi: ngoại, nước ngoài (chỉ dùng trong 外国, 外语, 外宾, 外币)
+  pos: adj
+  example: s-w-ai-48a2af58
+- vi: bên ngoài, ngoại (chỉ dùng trong 外表, 外部, 外伤, 外界)
+  pos: adj
+  example: s-w-ai-ec482428
+examples:
+- s-w-6054155
+- s-w-ai-1353ee7c
+- s-w-ai-48a2af58

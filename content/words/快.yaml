@@ -1,0 +1,39 @@
+id: 快
+hanzi: 快
+pinyin: kuài
+hanviet: khoái
+level: 1
+pos:
+- adj
+- adv
+- v
+senses:
+- vi: nhanh
+  pos: adj
+  example: s-w-ai-172311e8
+- vi: sắc, bén (dao, kéo)
+  pos: adj
+  example: s-w-ai-057cd2f2
+- vi: lanh lợi, nhanh trí (chỉ dùng trong 脑子快, 眼明手快)
+  pos: adj
+  example: s-w-ai-ad18ea34
+- vi: vui, vui vẻ, dễ chịu (chỉ dùng trong 快乐, 愉快, 欢快)
+  pos: adj
+  example: s-w-ai-fff643e6
+- vi: sướng, hả hê (chỉ dùng trong 痛快, 大快人心)
+  pos: adj
+  example: s-w-ai-90c314fc
+- vi: thẳng tính, bộc trực (chỉ dùng trong 快人快语, 快人)
+  pos: adj
+  rare: true
+  example: s-w-ai-4157400c
+- vi: sắp, sắp sửa
+  pos: adv
+  example: s-w-761062
+- vi: mau, nhanh lên
+  pos: v
+  example: s-w-419944
+examples:
+- s-w-ai-172311e8
+- s-w-ai-057cd2f2
+- s-w-ai-ad18ea34

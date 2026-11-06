@@ -1,0 +1,18 @@
+id: 高
+hanzi: 高
+pinyin: gāo
+hanviet: cao
+level: 1
+pos:
+- adj
+senses:
+- vi: cao
+  pos: adj
+  example: s-w-1361951
+- vi: to, lớn (tiếng; chỉ dùng trong 高声, 高呼, 高喊)
+  pos: adj
+  example: s-w-ai-27f76fb1
+examples:
+- s-w-1361951
+- s-w-ai-dbed7875
+- s-w-ai-27f76fb1

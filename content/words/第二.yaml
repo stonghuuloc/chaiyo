@@ -1,0 +1,17 @@
+id: 第二
+hanzi: 第二
+pinyin: dì èr
+hanviet: đệ nhị
+level: 1
+pos:
+- num
+senses:
+- vi: thứ hai, số hai
+  pos: num
+  example: s-w-1721862
+- vi: thứ yếu, kém quan trọng hơn
+  pos: num
+  example: s-w-ai-feb9b179
+examples:
+- s-w-1721862
+- s-w-ai-feb9b179

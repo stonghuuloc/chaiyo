@@ -1,0 +1,21 @@
+id: 怎么
+hanzi: 怎么
+pinyin: zěn me
+hanviet: chẩm ma
+level: 1
+pos:
+- pron
+senses:
+- vi: thế nào, làm sao
+  pos: pron
+  example: s-w-2257020
+- vi: gì?
+  pos: pron
+  example: s-w-2158925
+- vi: tại sao, sao
+  pos: pron
+  example: s-w-1746056
+examples:
+- s-w-2257020
+- s-w-2158925
+- s-w-1746056

@@ -1,0 +1,13 @@
+id: 国家
+hanzi: 国家
+pinyin: guó jiā
+hanviet: quốc gia
+level: 1
+pos:
+- n
+senses:
+- vi: quốc gia, nước
+  pos: n
+  example: s-w-75
+examples:
+- s-w-75

@@ -1,0 +1,13 @@
+id: 水果
+hanzi: 水果
+pinyin: shuǐ guǒ
+hanviet: thuỷ quả
+level: 1
+pos:
+- n
+senses:
+- vi: trái cây
+  pos: n
+  example: s-w-4105310
+examples:
+- s-w-4105310

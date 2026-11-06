@@ -1,0 +1,23 @@
+id: 听写
+hanzi: 听写
+pinyin: tīng xiě
+hanviet: thính tả
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: nghe viết (chính tả)
+  pos: v
+  example: s-w-ai-556d5c92
+- vi: chép nhạc bằng tai
+  pos: v
+  rare: true
+  example: s-w-ai-36f28bb6
+- vi: bài chính tả
+  pos: n
+  example: s-w-ai-f3b4fd9e
+examples:
+- s-w-ai-556d5c92
+- s-w-ai-36f28bb6
+- s-w-ai-f3b4fd9e

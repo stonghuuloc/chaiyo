@@ -1,0 +1,21 @@
+id: 什么
+hanzi: 什么
+pinyin: shén me
+hanviet: thậm ma
+level: 1
+pos:
+- pron
+senses:
+- vi: gì?, cái gì?
+  pos: pron
+  example: s-w-465906
+- vi: thứ gì đó
+  pos: pron
+  example: s-w-ai-5bc33369
+- vi: bất cứ thứ gì
+  pos: pron
+  example: s-w-ai-1e035c51
+examples:
+- s-w-465906
+- s-w-ai-5bc33369
+- s-w-ai-1e035c51

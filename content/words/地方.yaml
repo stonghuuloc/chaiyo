@@ -1,0 +1,28 @@
+id: 地方
+hanzi: 地方
+pinyin: dì fang
+hanviet: địa phương
+level: 1
+pos:
+- n
+senses:
+- vi: nơi, chỗ
+  pos: n
+  example: s-w-5863300
+- vi: khu vực
+  pos: n
+  example: s-w-9971529
+- vi: chỗ, điểm
+  pos: n
+  example: s-w-13505779
+- vi: chỗ trống, chỗ
+  pos: n
+  example: s-w-5102267
+- vi: lãnh thổ, địa bàn
+  pos: n
+  rare: true
+  example: s-w-ai-8c5f9dc6
+examples:
+- s-w-5863300
+- s-w-9971529
+- s-w-13505779

@@ -1,0 +1,17 @@
+id: 不对
+hanzi: 不对
+pinyin: bù duì
+hanviet: bất đối
+level: 1
+pos:
+- adj
+senses:
+- vi: sai, không đúng
+  pos: adj
+  example: s-w-ai-1b73b00e
+- vi: không ổn, bất thường
+  pos: adj
+  example: s-w-ai-120c03c2
+examples:
+- s-w-ai-1b73b00e
+- s-w-ai-120c03c2

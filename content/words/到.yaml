@@ -1,0 +1,27 @@
+id: 到
+hanzi: 到
+pinyin: dào
+hanviet: đáo
+level: 1
+pos:
+- v
+- prep
+- comp
+- adj
+senses:
+- vi: đến, tới (nơi, lúc)
+  pos: v
+  example: s-w-1865015
+- vi: cho đến (lúc), đến (mức)
+  pos: prep
+  example: s-w-1324867
+- vi: 'được, đạt được (bổ ngữ chỉ kết quả: 见到, 买到, 找到)'
+  pos: comp
+  example: s-w-349702
+- vi: chu đáo, kỹ lưỡng (chỉ dùng trong 周到)
+  pos: adj
+  example: s-w-ai-32a95e9c
+examples:
+- s-w-1865015
+- s-w-1324867
+- s-w-349702

@@ -1,0 +1,22 @@
+id: 明白
+hanzi: 明白
+pinyin: míng bai
+hanviet: minh bạch
+level: 1
+pos:
+- v
+- adj
+senses:
+- vi: hiểu
+  pos: v
+  example: s-w-1692255
+- vi: nhận ra, hiểu ra
+  pos: v
+  example: s-w-2296399
+- vi: rõ ràng, hiển nhiên
+  pos: adj
+  example: s-w-ai-689be696
+examples:
+- s-w-1692255
+- s-w-2296399
+- s-w-ai-689be696

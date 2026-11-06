@@ -1,0 +1,37 @@
+id: 干
+hanzi: 干
+pinyin: gàn
+hanviet: cán
+level: 1
+pos:
+- v
+- n
+- adj
+senses:
+- vi: làm, làm việc, quản lý
+  pos: v
+  example: s-w-482712
+- vi: giết, thủ tiêu (tiếng lóng)
+  pos: v
+  rare: true
+  example: s-w-ai-729e905a
+- vi: đụ, địt (tục)
+  pos: v
+  rare: true
+  example: s-w-ai-83b5e893
+- vi: cán bộ (chỉ dùng trong 干部, 干事)
+  pos: n
+  example: s-w-ai-e05e2d18
+- vi: thân (cây; chỉ dùng trong 树干, 躯干, 枝干)
+  pos: n
+  example: s-w-ai-413ceea5
+- vi: phần chính, trục chính (chỉ dùng trong 主干, 骨干, 干线, 干道)
+  pos: n
+  example: s-w-ai-f458db46
+- vi: giỏi, có năng lực (chỉ dùng trong 能干, 精干, 干练)
+  pos: adj
+  example: s-w-ai-0c046c9a
+examples:
+- s-w-482712
+- s-w-ai-729e905a
+- s-w-ai-83b5e893

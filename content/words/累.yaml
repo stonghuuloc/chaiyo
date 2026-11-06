@@ -1,0 +1,22 @@
+id: 累
+hanzi: 累
+pinyin: lèi
+hanviet: luỵ
+level: 1
+pos:
+- adj
+- v
+senses:
+- vi: mệt, mệt mỏi
+  pos: adj
+  example: s-w-397734
+- vi: làm mệt, làm mỏi (người, mắt)
+  pos: v
+  example: s-w-ai-e35a3404
+- vi: làm lụng vất vả, cực nhọc
+  pos: v
+  example: s-w-ai-24bce613
+examples:
+- s-w-397734
+- s-w-ai-e35a3404
+- s-w-ai-24bce613

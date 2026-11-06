@@ -1,0 +1,13 @@
+id: 学生
+hanzi: 学生
+pinyin: xué sheng
+hanviet: học sinh
+level: 1
+pos:
+- n
+senses:
+- vi: học sinh, sinh viên
+  pos: n
+  example: s-w-1163561
+examples:
+- s-w-1163561

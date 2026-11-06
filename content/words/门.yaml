@@ -1,0 +1,39 @@
+id: 门
+hanzi: 门
+pinyin: mén
+hanviet: môn
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: cửa, cổng, lối vào
+  pos: n
+  example: s-w-10007048
+- vi: mẹo, bí quyết (chỉ dùng trong 窍门, 门道)
+  pos: n
+  example: s-w-ai-b35dcda5
+- vi: gia tộc, dòng họ (chỉ dùng trong 名门, 豪门, 满门, 门第)
+  pos: n
+  example: s-w-ai-fa8a189e
+- vi: phái, môn phái (chỉ dùng trong 门派, 佛门, 同门, 师门)
+  pos: n
+  example: s-w-ai-f7bde880
+- vi: vụ bê bối, -gate (hậu tố; chỉ dùng trong 水门, 艳照门, 变性门, 泄密门)
+  pos: n
+  example: s-w-ai-2ccd64b9
+- vi: ngành (đơn vị phân loại sinh học; chỉ dùng sau tên nhóm, như 脊索动物门, 节肢动物门)
+  pos: n
+  rare: true
+  example: s-w-ai-48017174
+- vi: môn (học, khoa học, kỹ thuật)
+  pos: mw
+  example: s-w-ai-1a59ab17
+- vi: khẩu (đại bác, pháo)
+  pos: mw
+  rare: true
+  example: s-w-ai-90b174a0
+examples:
+- s-w-10007048
+- s-w-ai-b35dcda5
+- s-w-ai-fa8a189e

@@ -1,0 +1,18 @@
+id: 新
+hanzi: 新
+pinyin: xīn
+hanviet: tân
+level: 1
+pos:
+- adj
+- adv
+senses:
+- vi: mới
+  pos: adj
+  example: s-w-2393852
+- vi: vừa mới, mới
+  pos: adv
+  example: s-w-ai-c9aa1701
+examples:
+- s-w-2393852
+- s-w-ai-c9aa1701

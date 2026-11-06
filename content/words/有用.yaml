@@ -1,0 +1,18 @@
+id: 有用
+hanzi: 有用
+pinyin: yǒu yòng
+hanviet: hữu dụng
+level: 1
+pos:
+- adj
+- v
+senses:
+- vi: hữu ích
+  pos: adj
+  example: s-w-1397334
+- vi: có tác dụng
+  pos: v
+  example: s-w-9953347
+examples:
+- s-w-1397334
+- s-w-9953347

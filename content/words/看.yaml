@@ -1,0 +1,41 @@
+id: 看
+hanzi: 看
+pinyin: kàn
+hanviet: khán
+level: 1
+pos:
+- v
+- part
+senses:
+- vi: nhìn, xem
+  pos: v
+  example: s-w-349701
+- vi: đọc (sách, báo)
+  pos: v
+  example: s-w-1450538
+- vi: đi khám (bệnh)
+  pos: v
+  example: s-w-6055184
+- vi: thăm, đến thăm (người)
+  pos: v
+  example: s-w-ai-f24431a6
+- vi: tuỳ, phụ thuộc vào
+  pos: v
+  example: s-w-347705
+- vi: thấy, cho rằng
+  pos: v
+  example: s-w-ai-d9815875
+- vi: xem như, coi như
+  pos: v
+  example: s-w-ai-b64a7ade
+- vi: coi chừng, cẩn thận
+  pos: v
+  rare: true
+  example: s-w-ai-1c2ec20e
+- vi: thử (đặt sau động từ)
+  pos: part
+  example: s-w-ai-6347eb26
+examples:
+- s-w-349701
+- s-w-1450538
+- s-w-6055184

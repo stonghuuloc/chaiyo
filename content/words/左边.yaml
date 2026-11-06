@@ -1,0 +1,17 @@
+id: 左边
+hanzi: 左边
+pinyin: zuǒ bian
+hanviet: tả biên
+level: 1
+pos:
+- n
+senses:
+- vi: bên trái, phía trái
+  pos: n
+  example: s-w-1865299
+- vi: ở bên trái (của)
+  pos: n
+  example: s-w-466125
+examples:
+- s-w-1865299
+- s-w-466125

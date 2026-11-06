@@ -1,0 +1,17 @@
+id: 下边
+hanzi: 下边
+pinyin: xià bian
+hanviet: hạ biên
+level: 1
+pos:
+- n
+senses:
+- vi: phía dưới
+  pos: n
+  example: s-w-6002105
+- vi: mặt dưới
+  pos: n
+  example: s-w-ai-d258aac3
+examples:
+- s-w-6002105
+- s-w-ai-d258aac3

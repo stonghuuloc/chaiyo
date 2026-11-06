@@ -1,0 +1,21 @@
+id: 了
+hanzi: 了
+pinyin: le
+hanviet: liễu
+level: 1
+pos:
+- part
+senses:
+- vi: đã, xong (đặt sau động từ)
+  pos: part
+  example: s-w-2481833
+- vi: rồi (cuối câu, chỉ sự thay đổi)
+  pos: part
+  example: s-w-346836
+- vi: 'quá, lắm (chỉ đi sau 极, 死, 坏, 多: 极了, 死了, 坏了; chỉ dùng trong 极了, 死了, 坏了, 多了)'
+  pos: part
+  example: s-w-ai-8bf0e416
+examples:
+- s-w-2481833
+- s-w-346836
+- s-w-ai-8bf0e416

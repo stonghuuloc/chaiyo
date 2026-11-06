@@ -1,0 +1,29 @@
+id: 错
+hanzi: 错
+pinyin: cuò
+hanviet: thác
+level: 1
+pos:
+- adj
+- n
+- v
+senses:
+- vi: sai, không đúng
+  pos: adj
+  example: s-w-1752972
+- vi: tệ, xấu (chỉ dùng trong 不错)
+  pos: adj
+  example: s-w-ai-9dc4ead0
+- vi: lỗi, sai lầm
+  pos: n
+  example: s-w-707263
+- vi: lỡ, bỏ lỡ (chỉ dùng trong 错过, 错失)
+  pos: v
+  example: s-w-ai-299050a3
+- vi: so le, lệch nhau (thời gian, vị trí; chỉ dùng trong 错开, 错位)
+  pos: v
+  example: s-w-ai-cedde8a3
+examples:
+- s-w-1752972
+- s-w-ai-9dc4ead0
+- s-w-707263

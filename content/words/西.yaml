@@ -1,0 +1,22 @@
+id: 西
+hanzi: 西
+pinyin: xī
+hanviet: tây
+level: 1
+pos:
+- n
+senses:
+- vi: phương Tây (chỉ dùng trong 西方, 西式, 西化, 中西)
+  pos: n
+  example: s-w-ai-20c660a3
+- vi: tiếng Tây Ban Nha (viết tắt)
+  pos: n
+  rare: true
+  example: s-w-ai-99d5a7f1
+- vi: tây, phía tây
+  pos: n
+  example: s-w-ai-9c01c00c
+examples:
+- s-w-ai-20c660a3
+- s-w-ai-99d5a7f1
+- s-w-ai-9c01c00c

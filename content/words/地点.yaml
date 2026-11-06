@@ -1,0 +1,17 @@
+id: 地点
+hanzi: 地点
+pinyin: dì diǎn
+hanviet: địa điểm
+level: 1
+pos:
+- n
+senses:
+- vi: nơi, địa điểm
+  pos: n
+  example: s-w-775637
+- vi: địa điểm tổ chức
+  pos: n
+  example: s-w-ai-78623823
+examples:
+- s-w-775637
+- s-w-ai-78623823

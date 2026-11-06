@@ -1,0 +1,29 @@
+id: 进
+hanzi: 进
+pinyin: jìn
+hanviet: tiến
+level: 1
+pos:
+- v
+- mw
+senses:
+- vi: vào, đi vào
+  pos: v
+  example: s-w-348105
+- vi: nhập (hàng), thu vào
+  pos: v
+  example: s-w-ai-0199df20
+- vi: tiến lên, tiến triển (chỉ dùng trong 前进, 进步, 进展, 上进)
+  pos: v
+  example: s-w-ai-70625cc4
+- vi: hệ (đếm), hệ cơ số (chỉ dùng trong 十进制, 二进制, 十六进制)
+  pos: v
+  example: s-w-ai-dc455ecd
+- vi: lớp, dãy (nhà, sân trong tứ hợp viện)
+  pos: mw
+  rare: true
+  example: s-w-ai-704af198
+examples:
+- s-w-348105
+- s-w-ai-0199df20
+- s-w-ai-70625cc4

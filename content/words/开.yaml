@@ -1,0 +1,42 @@
+id: 开
+hanzi: 开
+pinyin: kāi
+hanviet: khai
+level: 1
+pos:
+- v
+- comp
+- mw
+senses:
+- vi: mở (cửa, hộp)
+  pos: v
+  example: s-w-1753100
+- vi: lái (xe, tàu)
+  pos: v
+  example: s-w-5102335
+- vi: bật, mở (máy, đèn)
+  pos: v
+  example: s-w-ai-984fcab8
+- vi: tổ chức, mở (cuộc họp, buổi tiệc)
+  pos: v
+  example: s-w-2889820
+- vi: nở (hoa)
+  pos: v
+  example: s-w-13949066
+- vi: sôi (nước)
+  pos: v
+  example: s-w-ai-0a8bbef4
+- vi: kê, viết (đơn thuốc, hoá đơn)
+  pos: v
+  example: s-w-8650501
+- vi: ra, rời, tách ra (bổ ngữ kết quả; chỉ dùng sau động từ trong 走开, 离开, 躲开, 让开, 走不开)
+  pos: comp
+  example: s-w-12363093
+- vi: cara (vàng)
+  pos: mw
+  rare: true
+  example: s-w-ai-adde02d7
+examples:
+- s-w-1753100
+- s-w-5102335
+- s-w-ai-984fcab8

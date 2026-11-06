@@ -1,0 +1,27 @@
+id: 呢
+hanzi: 呢
+pinyin: ne
+hanviet: ni
+level: 1
+pos:
+- part
+senses:
+- vi: thì sao, còn ... thì sao (hỏi tiếp)
+  pos: part
+  example: s-w-691992
+- vi: đâu (hỏi vị trí)
+  pos: part
+  example: s-w-10966817
+- vi: 'đang (cuối câu: việc, trạng thái còn tiếp diễn)'
+  pos: part
+  example: s-w-ai-1c837365
+- vi: đấy, kìa (khẳng định mạnh, cuối câu)
+  pos: part
+  example: s-w-334276
+- vi: thì (ngắt giọng sau chủ đề, nhấn mạnh)
+  pos: part
+  example: s-w-ai-c1551c6a
+examples:
+- s-w-691992
+- s-w-10966817
+- s-w-ai-1c837365

@@ -1,0 +1,27 @@
+id: 是
+hanzi: 是
+pinyin: shì
+hanviet: thị
+level: 1
+pos:
+- v
+- adj
+- interj
+- adv
+senses:
+- vi: là
+  pos: v
+  example: s-w-334971
+- vi: đúng, phải
+  pos: adj
+  example: s-w-776420
+- vi: vâng, dạ (đáp lại mệnh lệnh)
+  pos: interj
+  example: s-w-13111625
+- vi: quả là, đúng là (nhấn mạnh)
+  pos: adv
+  example: s-w-ai-04f67685
+examples:
+- s-w-334971
+- s-w-776420
+- s-w-13111625

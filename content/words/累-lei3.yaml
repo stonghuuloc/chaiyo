@@ -1,0 +1,17 @@
+id: 累-lei3
+hanzi: 累
+pinyin: lěi
+hanviet: luỵ
+level: 1
+pos:
+- v
+senses:
+- vi: tích luỹ, cộng dồn (chỉ dùng trong 累计, 累积, 积累, 日积月累)
+  pos: v
+  example: s-w-ai-226c566f
+- vi: liên luỵ, làm vạ lây (chỉ dùng trong 连累, 牵累, 拖累, 累及)
+  pos: v
+  example: s-w-ai-cf619ad1
+examples:
+- s-w-ai-226c566f
+- s-w-ai-cf619ad1

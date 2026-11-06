@@ -1,0 +1,19 @@
+id: 钱
+hanzi: 钱
+pinyin: qián
+hanviet: tiền
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: tiền, tiền bạc
+  pos: n
+  example: s-w-687042
+- vi: đồng cân (bằng 1/10 lạng Trung Quốc, 5 gam)
+  pos: mw
+  rare: true
+  example: s-w-ai-0ed4d306
+examples:
+- s-w-687042
+- s-w-ai-0ed4d306

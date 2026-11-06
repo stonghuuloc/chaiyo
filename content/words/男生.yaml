@@ -1,0 +1,21 @@
+id: 男生
+hanzi: 男生
+pinyin: nán shēng
+hanviet: nam sinh
+level: 1
+pos:
+- n
+senses:
+- vi: học sinh nam
+  pos: n
+  example: s-w-332709
+- vi: bé trai, con trai
+  pos: n
+  example: s-w-8888007
+- vi: chàng trai
+  pos: n
+  example: s-w-464776
+examples:
+- s-w-332709
+- s-w-8888007
+- s-w-464776

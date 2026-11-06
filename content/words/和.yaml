@@ -1,0 +1,37 @@
+id: 和
+hanzi: 和
+pinyin: hé
+hanviet: hoà
+level: 1
+pos:
+- conj
+- prep
+- n
+- v
+- adj
+senses:
+- vi: và, với, cùng (nối hai danh từ)
+  pos: conj
+  example: s-w-3667681
+- vi: với, cùng (làm gì với ai)
+  pos: prep
+  example: s-w-9475958
+- vi: tổng (toán học)
+  pos: n
+  example: s-w-ai-c132696d
+- vi: Nhật Bản, Nhật (trong từ ghép; chỉ dùng trong 和服, 和食, 和风, 和歌, 和室, 和纸)
+  pos: n
+  example: s-w-ai-af08b21b
+- vi: hoà, hoà cờ (thể thao; chỉ dùng trong 和棋, 和局, 打和, 下和, 踢和)
+  pos: v
+  example: s-w-ai-235114bf
+- vi: làm hoà, giảng hoà (chỉ dùng trong 讲和, 求和, 议和, 媾和)
+  pos: v
+  example: s-w-ai-e9de5c85
+- vi: hài hoà, hoà thuận (chỉ dùng trong 和谐, 和睦, 和平, 和气, 和蔼, 温和)
+  pos: adj
+  example: s-w-ai-5a763d99
+examples:
+- s-w-3667681
+- s-w-9475958
+- s-w-ai-c132696d

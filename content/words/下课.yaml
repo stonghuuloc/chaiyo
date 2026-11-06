@@ -1,0 +1,17 @@
+id: 下课
+hanzi: 下课
+pinyin: xià kè
+hanviet: hạ khoá
+level: 1
+pos:
+- v
+senses:
+- vi: tan học
+  pos: v
+  example: s-w-2298602
+- vi: bị sa thải
+  pos: v
+  example: s-w-ai-02791fa1
+examples:
+- s-w-2298602
+- s-w-ai-02791fa1

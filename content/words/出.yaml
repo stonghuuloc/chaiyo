@@ -1,0 +1,39 @@
+id: 出
+hanzi: 出
+pinyin: chū
+hanviet: xuất
+level: 1
+pos:
+- v
+- comp
+- mw
+senses:
+- vi: ra, đi ra (khỏi)
+  pos: v
+  example: s-w-816478
+- vi: xảy ra, xuất hiện (sự cố, chuyện)
+  pos: v
+  example: s-w-8759489
+- vi: sinh ra, tạo ra, cho ra đời
+  pos: v
+  example: s-w-349679
+- vi: bỏ ra, đưa ra (tiền, sức, ý kiến)
+  pos: v
+  example: s-w-5097642
+- vi: vượt ra ngoài, quá (giới hạn)
+  pos: v
+  example: s-w-ai-651ed117
+- vi: mọc, hiện ra (mặt trời)
+  pos: v
+  example: s-w-ai-bae312fe
+- vi: 'ra (bổ ngữ chỉ kết quả, sự xuất hiện: 想出, 看出)'
+  pos: comp
+  example: s-w-5933783
+- vi: vở (kịch, tuồng, ca kịch)
+  pos: mw
+  rare: true
+  example: s-w-ai-a4dc86cb
+examples:
+- s-w-816478
+- s-w-8759489
+- s-w-349679

@@ -1,0 +1,30 @@
+id: 大
+hanzi: 大
+pinyin: dà
+hanviet: đại
+level: 1
+pos:
+- adj
+- adv
+- n
+senses:
+- vi: to, lớn
+  pos: adj
+  example: s-w-13504539
+- vi: lớn tuổi, nhiều tuổi
+  pos: adj
+  example: s-w-1178883
+- vi: cả, lớn nhất (anh chị em; chỉ dùng trong 大哥, 大姐, 大伯)
+  pos: adj
+  example: s-w-ai-e8bbb137
+- vi: rất, hết sức, hoàn toàn (chỉ dùng trong 大有, 大笑, 大哭, 大吃一惊, 大受欢迎)
+  pos: adv
+  example: s-w-ai-7144f6dc
+- vi: cha, bố (phương ngữ)
+  pos: n
+  rare: true
+  example: s-w-ai-191c0c1a
+examples:
+- s-w-13504539
+- s-w-1178883
+- s-w-ai-e8bbb137

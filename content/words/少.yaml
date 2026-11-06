@@ -1,0 +1,29 @@
+id: 少
+hanzi: 少
+pinyin: shǎo
+hanviet: thiểu
+level: 1
+pos:
+- adj
+- adv
+- v
+senses:
+- vi: ít, không nhiều
+  pos: adj
+  example: s-w-426436
+- vi: bớt, giảm (làm gì đó)
+  pos: adv
+  example: s-w-9415402
+- vi: hiếm khi, ít khi
+  pos: adv
+  example: s-w-ai-0e3edea7
+- vi: thiếu, mất (đồ vật)
+  pos: v
+  example: s-w-472901
+- vi: thôi, đừng (làm gì)
+  pos: v
+  example: s-w-1766223
+examples:
+- s-w-426436
+- s-w-9415402
+- s-w-ai-0e3edea7

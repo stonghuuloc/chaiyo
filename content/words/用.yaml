@@ -1,0 +1,28 @@
+id: 用
+hanzi: 用
+pinyin: yòng
+hanviet: dụng
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: dùng, sử dụng
+  pos: v
+  example: s-w-420048
+- vi: 'cần (thường phủ định: 不用 = không cần; chỉ dùng trong 不用, 用不着, 用得着)'
+  pos: v
+  example: s-w-ai-05dae5eb
+- vi: dùng (bữa, trà; lịch sự)
+  pos: v
+  example: s-w-ai-9bf1e6d1
+- vi: tác dụng, ích lợi
+  pos: n
+  example: s-w-ai-22e3c7ad
+- vi: chi phí, khoản tiêu (chỉ dùng trong 费用, 用度, 零用钱)
+  pos: n
+  example: s-w-ai-40aa17ee
+examples:
+- s-w-420048
+- s-w-ai-05dae5eb
+- s-w-ai-9bf1e6d1

@@ -1,0 +1,21 @@
+id: 穿
+hanzi: 穿
+pinyin: chuān
+hanviet: xuyên
+level: 1
+pos:
+- v
+senses:
+- vi: mặc, mang, đi (quần áo, giày)
+  pos: v
+  example: s-w-10491160
+- vi: băng qua, xuyên qua (đường, hang)
+  pos: v
+  example: s-w-847027
+- vi: xâu, luồn (kim, chỉ, hạt)
+  pos: v
+  example: s-w-ai-55f8d683
+examples:
+- s-w-10491160
+- s-w-847027
+- s-w-ai-55f8d683

@@ -1,0 +1,17 @@
+id: 南边
+hanzi: 南边
+pinyin: nán bian
+hanviet: nam biên
+level: 1
+pos:
+- n
+senses:
+- vi: phía nam, miền nam
+  pos: n
+  example: s-w-7704609
+- vi: ở phía nam của
+  pos: n
+  example: s-w-6833033
+examples:
+- s-w-7704609
+- s-w-6833033

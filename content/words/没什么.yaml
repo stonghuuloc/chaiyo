@@ -1,0 +1,22 @@
+id: 没什么
+hanzi: 没什么
+pinyin: méi shén me
+hanviet: một thậm ma
+level: 1
+pos:
+- v
+- phrase
+senses:
+- vi: không có gì
+  pos: v
+  example: s-w-4264935
+- vi: không sao; chẳng đáng gì
+  pos: phrase
+  example: s-w-8744875
+- vi: thôi, bỏ qua đi
+  pos: phrase
+  example: s-w-ai-4920ba33
+examples:
+- s-w-4264935
+- s-w-8744875
+- s-w-ai-4920ba33

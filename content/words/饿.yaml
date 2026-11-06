@@ -1,0 +1,18 @@
+id: 饿
+hanzi: 饿
+pinyin: è
+hanviet: ngạ
+level: 1
+pos:
+- adj
+- v
+senses:
+- vi: đói
+  pos: adj
+  example: s-w-7768272
+- vi: làm cho đói, bỏ đói
+  pos: v
+  example: s-w-ai-b7fb1706
+examples:
+- s-w-7768272
+- s-w-ai-b7fb1706

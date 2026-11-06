@@ -1,0 +1,17 @@
+id: 几
+hanzi: 几
+pinyin: jǐ
+hanviet: kỷ
+level: 1
+pos:
+- num
+senses:
+- vi: mấy (hỏi số nhỏ)
+  pos: num
+  example: s-w-385098
+- vi: vài (số không xác định)
+  pos: num
+  example: s-w-ai-77a62943
+examples:
+- s-w-385098
+- s-w-ai-77a62943

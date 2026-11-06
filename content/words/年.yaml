@@ -1,0 +1,17 @@
+id: 年
+hanzi: 年
+pinyin: nián
+hanviet: niên
+level: 1
+pos:
+- n
+senses:
+- vi: năm
+  pos: n
+  example: s-w-5092260
+- vi: Tết (chỉ dùng trong 过年, 拜年, 年货, 年夜饭, 年味)
+  pos: n
+  example: s-w-ai-5aad37fc
+examples:
+- s-w-5092260
+- s-w-ai-5aad37fc

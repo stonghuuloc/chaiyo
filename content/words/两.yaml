@@ -1,0 +1,22 @@
+id: 两
+hanzi: 两
+pinyin: liǎng
+hanviet: lưỡng
+level: 1
+pos:
+- num
+- mw
+senses:
+- vi: hai
+  pos: num
+  example: s-w-6047457
+- vi: vài, mấy (số ước chừng)
+  pos: num
+  example: s-w-ai-32f93f8b
+- vi: lạng Trung Quốc (50 gam, bằng nửa lạng thường dùng ở Việt Nam)
+  pos: mw
+  example: s-w-ai-4d80ed24
+examples:
+- s-w-6047457
+- s-w-ai-32f93f8b
+- s-w-ai-4d80ed24

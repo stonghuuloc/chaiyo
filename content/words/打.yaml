@@ -1,0 +1,60 @@
+id: 打
+hanzi: 打
+pinyin: dǎ
+hanviet: đả
+level: 1
+pos:
+- v
+- prep
+senses:
+- vi: chơi (bóng, thể thao)
+  pos: v
+  example: s-w-669021
+- vi: đánh, đập
+  pos: v
+  example: s-w-5670795
+- vi: gọi (điện thoại)
+  pos: v
+  example: s-w-345859
+- vi: đánh nhau, đấu
+  pos: v
+  example: s-w-5983588
+- vi: gõ, đánh (chữ, máy chữ)
+  pos: v
+  example: s-w-ai-63f176c3
+- vi: lấy, múc (nước, cơm)
+  pos: v
+  example: s-w-ai-84a19014
+- vi: bắn (súng)
+  pos: v
+  example: s-w-ai-d368144e
+- vi: buộc, bó, gói (hành lý, đồ đạc)
+  pos: v
+  example: s-w-ai-6934e2b5
+- vi: đánh, trộn đều (trứng, bột)
+  pos: v
+  example: s-w-ai-2aa591d5
+- vi: cấp, làm (giấy xác nhận, chứng từ)
+  pos: v
+  rare: true
+  example: s-w-ai-238da043
+- vi: làm, đóng (đồ gỗ, đồ sắt)
+  pos: v
+  rare: true
+  example: s-w-ai-2cbdc6f0
+- vi: xây, đắp (móng, tường)
+  pos: v
+  rare: true
+  example: s-w-ai-d4e5c7e2
+- vi: gẩy (bàn tính), tính toán (chỉ dùng trong 打算盘)
+  pos: v
+  rare: true
+  example: s-w-ai-3c1e97dd
+- vi: từ, kể từ (khẩu ngữ)
+  pos: prep
+  rare: true
+  example: s-w-ai-33e8eb73
+examples:
+- s-w-669021
+- s-w-5670795
+- s-w-345859

@@ -1,0 +1,38 @@
+id: 走
+hanzi: 走
+pinyin: zǒu
+hanviet: tẩu
+level: 1
+pos:
+- v
+- comp
+senses:
+- vi: đi bộ, đi
+  pos: v
+  example: s-w-3575629
+- vi: rời đi, đi (khỏi)
+  pos: v
+  example: s-w-345397
+- vi: đi qua, đi theo (đường)
+  pos: v
+  example: s-w-ai-da2e26e0
+- vi: chạy (xe, tàu)
+  pos: v
+  example: s-w-ai-3de4df11
+- vi: thăm, qua lại (họ hàng, bạn bè; chỉ dùng trong 走亲戚, 走亲访友, 走访, 走动)
+  pos: v
+  example: s-w-ai-29d0796f
+- vi: lệch, sai (hình dạng, giọng, nghĩa; chỉ dùng trong 走调, 走样, 走味, 走形)
+  pos: v
+  example: s-w-ai-c307871d
+- vi: mất, qua đời (nói tránh)
+  pos: v
+  rare: true
+  example: s-w-ai-5c6121f0
+- vi: đi, mất (bổ ngữ sau động từ; chỉ dùng trong 拿走, 带走, 搬走, 送走)
+  pos: comp
+  example: s-w-ai-dfaea8cc
+examples:
+- s-w-3575629
+- s-w-345397
+- s-w-ai-da2e26e0

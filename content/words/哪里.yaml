@@ -1,0 +1,31 @@
+id: 哪里
+hanzi: 哪里
+pinyin: nǎ lǐ
+hanviet: nả lý
+level: 1
+pos:
+- pron
+- interj
+senses:
+- vi: ở đâu?
+  pos: pron
+  example: s-w-5214237
+- vi: một nơi nào đó
+  pos: pron
+  example: s-w-ai-35760329
+- vi: bất cứ đâu (chỉ dùng trong 哪里都…, 哪里也…)
+  pos: pron
+  example: s-w-ai-ecb4cee4
+- vi: dù ở đâu (chỉ dùng trong 哪里…, 就哪里…; 哪里…, 哪里…; 无论哪里…)
+  pos: pron
+  example: s-w-ai-b72cb23a
+- vi: chẳng đi đâu cả (chỉ dùng trong 哪里也不…, 哪里也没…, 哪里都不…, 哪里都没…)
+  pos: pron
+  example: s-w-ai-5b5fb030
+- vi: đâu có, đâu có (chỉ dùng trong 哪里哪里)
+  pos: interj
+  example: s-w-ai-5dd279bb
+examples:
+- s-w-5214237
+- s-w-ai-35760329
+- s-w-ai-ecb4cee4

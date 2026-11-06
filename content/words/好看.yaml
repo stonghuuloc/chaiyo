@@ -1,0 +1,21 @@
+id: 好看
+hanzi: 好看
+pinyin: hǎo kàn
+hanviet: hảo khán
+level: 1
+pos:
+- adj
+senses:
+- vi: đẹp, ưa nhìn
+  pos: adj
+  example: s-w-1178172
+- vi: hay (phim, sách)
+  pos: adj
+  example: s-w-9958206
+- vi: mất mặt, khó xử (chỉ dùng trong 有你好看的; 这下/这回……可好看了)
+  pos: adj
+  example: s-w-ai-34d15d63
+examples:
+- s-w-1178172
+- s-w-9958206
+- s-w-ai-34d15d63

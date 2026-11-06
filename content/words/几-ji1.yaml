@@ -1,0 +1,18 @@
+id: 几-ji1
+hanzi: 几
+pinyin: jī
+hanviet: cơ
+level: 1
+pos:
+- adv
+- n
+senses:
+- vi: hầu như, gần như (chỉ dùng trong 几乎, 几近)
+  pos: adv
+  example: s-w-ai-2b8492c4
+- vi: bàn nhỏ, kỷ (chỉ dùng trong 茶几, 条几, 几案)
+  pos: n
+  example: s-w-ai-0858419c
+examples:
+- s-w-ai-2b8492c4
+- s-w-ai-0858419c

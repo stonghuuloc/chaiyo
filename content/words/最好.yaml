@@ -1,0 +1,18 @@
+id: 最好
+hanzi: 最好
+pinyin: zuì hǎo
+hanviet: tối hảo
+level: 1
+pos:
+- adj
+- adv
+senses:
+- vi: tốt nhất
+  pos: adj
+  example: s-w-5983570
+- vi: tốt hơn hết nên...
+  pos: adv
+  example: s-w-826070
+examples:
+- s-w-5983570
+- s-w-826070

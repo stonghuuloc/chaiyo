@@ -1,0 +1,17 @@
+id: 觉得
+hanzi: 觉得
+pinyin: jué de
+hanviet: giác đắc
+level: 1
+pos:
+- v
+senses:
+- vi: nghĩ rằng, thấy rằng
+  pos: v
+  example: s-w-966523
+- vi: cảm thấy (nóng, lạnh, khó chịu)
+  pos: v
+  example: s-w-352054
+examples:
+- s-w-966523
+- s-w-352054

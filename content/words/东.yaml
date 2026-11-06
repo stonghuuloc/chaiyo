@@ -1,0 +1,21 @@
+id: 东
+hanzi: 东
+pinyin: dōng
+hanviet: đông
+level: 1
+pos:
+- n
+senses:
+- vi: phía đông, hướng đông
+  pos: n
+  example: s-w-ai-26863615
+- vi: chủ, người chủ (chỉ dùng trong 房东, 东家, 股东)
+  pos: n
+  example: s-w-ai-ec1498b5
+- vi: chủ tiệc (chỉ dùng trong 做东, 作东, 东道主)
+  pos: n
+  example: s-w-ai-84c70d72
+examples:
+- s-w-ai-26863615
+- s-w-ai-ec1498b5
+- s-w-ai-84c70d72

@@ -1,0 +1,21 @@
+id: 天
+hanzi: 天
+pinyin: tiān
+hanviet: thiên
+level: 1
+pos:
+- n
+senses:
+- vi: ngày
+  pos: n
+  example: s-w-4757610
+- vi: trời (bầu trời, thời tiết)
+  pos: n
+  example: s-w-4764640
+- vi: 'ông trời (天啊: trời ơi)'
+  pos: n
+  example: s-w-13210539
+examples:
+- s-w-4757610
+- s-w-4764640
+- s-w-13210539

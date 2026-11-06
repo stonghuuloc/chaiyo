@@ -1,0 +1,28 @@
+id: 跑
+hanzi: 跑
+pinyin: pǎo
+hanviet: bào
+level: 1
+pos:
+- v
+- comp
+senses:
+- vi: chạy
+  pos: v
+  example: s-w-347083
+- vi: chạy trốn, bỏ chạy
+  pos: v
+  example: s-w-9963109
+- vi: chạy vạy, chạy việc vặt
+  pos: v
+  example: s-w-ai-11d5eccc
+- vi: rò, xì, bay hơi (khí, chất lỏng; chỉ dùng trong 跑气, 跑电, 跑油, 跑味)
+  pos: v
+  example: s-w-ai-a3299927
+- vi: đi mất, chạy mất (bổ ngữ sau động từ; chỉ dùng trong 吓跑, 赶跑, 逃跑)
+  pos: comp
+  example: s-w-ai-d10ae8c7
+examples:
+- s-w-347083
+- s-w-9963109
+- s-w-ai-11d5eccc

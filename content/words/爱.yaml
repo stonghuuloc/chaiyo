@@ -1,0 +1,22 @@
+id: 爱
+hanzi: 爱
+pinyin: ài
+hanviet: ái
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: yêu, thích
+  pos: v
+  example: s-w-1192448
+- vi: hay, dễ (làm gì)
+  pos: v
+  example: s-w-ai-193fd9f0
+- vi: tình yêu, tình thương
+  pos: n
+  example: s-w-ai-770bccbc
+examples:
+- s-w-1192448
+- s-w-ai-193fd9f0
+- s-w-ai-770bccbc

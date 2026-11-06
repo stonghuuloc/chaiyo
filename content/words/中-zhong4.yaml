@@ -1,0 +1,22 @@
+id: 中-zhong4
+hanzi: 中
+pinyin: zhòng
+hanviet: trúng
+level: 1
+pos:
+- v
+- comp
+senses:
+- vi: trúng (giải, xổ số)
+  pos: v
+  example: s-w-ai-2619b131
+- vi: bị, mắc, trúng (độc, bệnh, bẫy)
+  pos: v
+  example: s-w-ai-bc9561d5
+- vi: trúng, đúng (đích, điều đoán; thường dùng sau động từ / trong 命中, 击中, 猜中, 说中)
+  pos: comp
+  example: s-w-2490065
+examples:
+- s-w-ai-2619b131
+- s-w-ai-bc9561d5
+- s-w-2490065

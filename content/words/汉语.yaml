@@ -1,0 +1,13 @@
+id: 汉语
+hanzi: 汉语
+pinyin: Hàn yǔ
+hanviet: hán ngữ
+level: 1
+pos:
+- n
+senses:
+- vi: tiếng Trung
+  pos: n
+  example: s-w-2321655
+examples:
+- s-w-2321655

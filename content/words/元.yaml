@@ -1,0 +1,33 @@
+id: 元
+hanzi: 元
+pinyin: yuán
+hanviet: nguyên
+level: 1
+pos:
+- mw
+- adj
+senses:
+- vi: đồng, tệ (tiền Trung Quốc)
+  pos: mw
+  example: s-w-440130
+- vi: đầu tiên, đứng đầu (chỉ dùng trong 元旦, 元月, 元首, 元老, 元年)
+  pos: adj
+  example: s-w-ai-65e096bd
+- vi: thành phần, bộ phận (chỉ dùng trong 单元, 元素, 元件)
+  pos: adj
+  example: s-w-ai-31a9bd22
+- vi: kỷ nguyên (chỉ dùng trong 公元, 纪元)
+  pos: adj
+  example: s-w-ai-b5d035ae
+- vi: ẩn số (chỉ dùng trong 一元, 二元, 多元)
+  pos: adj
+  rare: true
+  example: s-w-ai-f8ad0312
+- vi: siêu- (tiền tố; chỉ dùng trong 元宇宙, 元数据)
+  pos: adj
+  rare: true
+  example: s-w-ai-0dc0f2a9
+examples:
+- s-w-440130
+- s-w-ai-65e096bd
+- s-w-ai-31a9bd22

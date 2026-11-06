@@ -1,0 +1,21 @@
+id: 吧
+hanzi: 吧
+pinyin: ba
+hanviet: ba
+level: 1
+pos:
+- part
+senses:
+- vi: nhé, đi, thôi (đề nghị, thúc giục)
+  pos: part
+  example: s-w-334277
+- vi: nhỉ, chắc là (đoán, thương lượng nhẹ)
+  pos: part
+  example: s-w-ai-129f87bd
+- vi: nhé, được chứ (hỏi ý kiến)
+  pos: part
+  example: s-w-1927720
+examples:
+- s-w-334277
+- s-w-ai-129f87bd
+- s-w-1927720

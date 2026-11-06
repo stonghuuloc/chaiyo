@@ -1,0 +1,17 @@
+id: 网友
+hanzi: 网友
+pinyin: wǎng yǒu
+hanviet: võng hữu
+level: 1
+pos:
+- n
+senses:
+- vi: bạn trên mạng
+  pos: n
+  example: s-w-ai-040f9ef5
+- vi: người dùng mạng
+  pos: n
+  example: s-w-ai-eeb2684f
+examples:
+- s-w-ai-040f9ef5
+- s-w-ai-eeb2684f

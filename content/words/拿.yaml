@@ -1,0 +1,26 @@
+id: 拿
+hanzi: 拿
+pinyin: ná
+hanviet: nã
+level: 1
+pos:
+- v
+- prep
+senses:
+- vi: lấy, mang (đi)
+  pos: v
+  example: s-w-11524931
+- vi: cầm, nắm (trong tay)
+  pos: v
+  example: s-w-1325218
+- vi: bắt, tóm (người)
+  pos: v
+  rare: true
+  example: s-w-ai-b733cf65
+- vi: 'lấy, đem (giới từ, dùng như 把: 拿…当/来说)'
+  pos: prep
+  example: s-w-788174
+examples:
+- s-w-11524931
+- s-w-1325218
+- s-w-ai-b733cf65

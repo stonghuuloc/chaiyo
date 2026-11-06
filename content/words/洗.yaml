@@ -1,0 +1,21 @@
+id: 洗
+hanzi: 洗
+pinyin: xǐ
+hanviet: tẩy
+level: 1
+pos:
+- v
+senses:
+- vi: rửa, giặt (洗澡 là tắm)
+  pos: v
+  example: s-w-9795198
+- vi: rửa (ảnh)
+  pos: v
+  example: s-w-ai-a707f5a6
+- vi: xào, xáo (bài)
+  pos: v
+  example: s-w-ai-56767778
+examples:
+- s-w-9795198
+- s-w-ai-a707f5a6
+- s-w-ai-56767778

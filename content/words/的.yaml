@@ -1,0 +1,21 @@
+id: 的
+hanzi: 的
+pinyin: de
+hanviet: đích
+level: 1
+pos:
+- part
+senses:
+- vi: của (chỉ sở hữu)
+  pos: part
+  example: s-w-487593
+- vi: (đứng sau định ngữ, nối với danh từ)
+  pos: part
+  example: s-w-3378123
+- vi: cái, người (tạo cụm danh từ)
+  pos: part
+  example: s-w-4760167
+examples:
+- s-w-487593
+- s-w-3378123
+- s-w-4760167

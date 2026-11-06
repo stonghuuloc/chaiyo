@@ -1,0 +1,32 @@
+id: 本
+hanzi: 本
+pinyin: běn
+hanviet: bản
+level: 1
+pos:
+- mw
+- adv
+- pron
+- adj
+- n
+senses:
+- vi: quyển, cuốn (sách, tạp chí)
+  pos: mw
+  example: s-w-8621496
+- vi: 'vốn, vốn dĩ (chỉ dùng trước động từ: 本想, 本以为, 本来; chỉ dùng trong 本想, 本以为, 本打算, 本来)'
+  pos: adv
+  example: s-w-ai-e0cf404a
+- vi: này, hiện nay (như 本周, 本月, 本人; chỉ dùng trong 本周, 本月, 本年, 本人, 本校)
+  pos: pron
+  example: s-w-ai-3df03b54
+- vi: vốn có, nguyên gốc (chỉ dùng trong 本意, 本能, 本性, 本色)
+  pos: adj
+  example: s-w-ai-4e83d648
+- vi: gốc, cội nguồn (chỉ dùng trong 忘本, 根本, 本源, 本质)
+  pos: n
+  rare: true
+  example: s-w-ai-4021e8a9
+examples:
+- s-w-8621496
+- s-w-ai-e0cf404a
+- s-w-ai-3df03b54

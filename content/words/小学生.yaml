@@ -1,0 +1,18 @@
+id: 小学生
+hanzi: 小学生
+pinyin: xiǎo xué shēng
+hanviet: tiểu học sinh
+level: 1
+pos:
+- n
+senses:
+- vi: học sinh tiểu học
+  pos: n
+  example: s-w-13138444
+- vi: người mới bắt đầu
+  pos: n
+  rare: true
+  example: s-w-ai-67f91614
+examples:
+- s-w-13138444
+- s-w-ai-67f91614

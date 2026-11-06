@@ -1,0 +1,22 @@
+id: 先生
+hanzi: 先生
+pinyin: xiān sheng
+hanviet: tiên sinh
+level: 1
+pos:
+- n
+senses:
+- vi: ông, ngài; quý ông
+  pos: n
+  example: s-w-10966853
+- vi: chồng
+  pos: n
+  example: s-w-ai-9b0f1e15
+- vi: thầy giáo
+  pos: n
+  rare: true
+  example: s-w-ai-9f99324d
+examples:
+- s-w-10966853
+- s-w-ai-9b0f1e15
+- s-w-ai-9f99324d

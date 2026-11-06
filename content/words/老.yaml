@@ -1,0 +1,41 @@
+id: 老
+hanzi: 老
+pinyin: lǎo
+hanviet: lão
+level: 1
+pos:
+- adj
+- adv
+- n
+senses:
+- vi: già, lớn tuổi
+  pos: adj
+  example: s-w-2411946
+- vi: lâu năm, lâu đời, cổ
+  pos: adj
+  example: s-w-335380
+- vi: cũ, lỗi thời
+  pos: adj
+  example: s-w-1977201
+- vi: có kinh nghiệm, lão luyện (chỉ dùng trong 老手, 老练, 老司机)
+  pos: adj
+  example: s-w-ai-e23ef3cc
+- vi: cao tuổi đáng kính (chỉ dùng trong 老人家, 老前辈, 老先生)
+  pos: adj
+  example: s-w-ai-aa6f82e9
+- vi: dai, già (thịt, rau)
+  pos: adj
+  example: s-w-ai-71baf9cd
+- vi: luôn, cứ, hay (làm gì)
+  pos: adv
+  example: s-w-10002079
+- vi: rất, quá (chỉ dùng trong 老远, 老早, 老大)
+  pos: adv
+  example: s-w-ai-c0ec8ff7
+- vi: tiền tố thân mật (trước họ, số thứ tự)
+  pos: n
+  example: s-w-ai-bb0dedf1
+examples:
+- s-w-2411946
+- s-w-335380
+- s-w-1977201

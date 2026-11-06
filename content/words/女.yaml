@@ -1,0 +1,22 @@
+id: 女
+hanzi: 女
+pinyin: nǚ
+hanviet: nữ
+level: 1
+pos:
+- adj
+- n
+senses:
+- vi: nữ, thuộc giới nữ
+  pos: adj
+  example: s-w-7771928
+- vi: phụ nữ, đàn bà (chỉ dùng trong 女人, 妇女, 男女, 女士, 女性, 少女, 美女)
+  pos: n
+  example: s-w-819780
+- vi: con gái (chỉ dùng trong 儿女, 子女, 长女, 女儿, 一儿一女)
+  pos: n
+  example: s-w-ai-e001a0f2
+examples:
+- s-w-7771928
+- s-w-819780
+- s-w-ai-e001a0f2

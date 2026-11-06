@@ -1,0 +1,17 @@
+id: 是不是
+hanzi: 是不是
+pinyin: shì bù shì
+hanviet: thị bất thị
+level: 1
+pos:
+- v
+senses:
+- vi: có phải ... không; có ... không
+  pos: v
+  example: s-w-3378183
+- vi: liệu ... hay không
+  pos: v
+  example: s-w-ai-62aba76b
+examples:
+- s-w-3378183
+- s-w-ai-62aba76b

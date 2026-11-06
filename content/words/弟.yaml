@@ -1,0 +1,23 @@
+id: 弟
+hanzi: 弟
+pinyin: dì
+hanviet: đệ
+level: 1
+pos:
+- n
+- pron
+senses:
+- vi: em trai
+  pos: n
+  example: s-w-ai-fee2cd24
+- vi: đàn em (nam, nhỏ tuổi hơn; chỉ dùng trong 学弟, 师弟, 徒弟, 子弟, 兄弟)
+  pos: n
+  example: s-w-ai-d7909b5c
+- vi: tôi, đệ (khiêm xưng, nam)
+  pos: pron
+  rare: true
+  example: s-w-ai-c3a6d282
+examples:
+- s-w-ai-fee2cd24
+- s-w-ai-d7909b5c
+- s-w-ai-c3a6d282

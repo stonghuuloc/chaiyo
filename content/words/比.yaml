@@ -1,0 +1,26 @@
+id: 比
+hanzi: 比
+pinyin: bǐ
+hanviet: tỷ
+level: 1
+pos:
+- prep
+- v
+- n
+senses:
+- vi: hơn, so với
+  pos: prep
+  example: s-w-635805
+- vi: so, so sánh
+  pos: v
+  example: s-w-ai-ec1e2da8
+- vi: ra hiệu, làm điệu bộ, ra dấu
+  pos: v
+  example: s-w-ai-41469bce
+- vi: tỉ số, tỉ lệ (hai bên so với nhau; chỉ dùng trong 二比一, 三比二, 比例, 比率)
+  pos: n
+  example: s-w-ai-e76445fc
+examples:
+- s-w-635805
+- s-w-ai-ec1e2da8
+- s-w-ai-41469bce

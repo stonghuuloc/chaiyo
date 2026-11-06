@@ -1,0 +1,17 @@
+id: 小姐
+hanzi: 小姐
+pinyin: xiǎo jie
+hanviet: tiểu tỷ
+level: 1
+pos:
+- n
+senses:
+- vi: cô, cô gái trẻ
+  pos: n
+  example: s-w-472315
+- vi: gái mại dâm (tiếng lóng)
+  pos: n
+  example: s-w-ai-edbf8781
+examples:
+- s-w-472315
+- s-w-ai-edbf8781

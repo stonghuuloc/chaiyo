@@ -1,0 +1,30 @@
+id: 动
+hanzi: 动
+pinyin: dòng
+hanviet: động
+level: 1
+pos:
+- v
+senses:
+- vi: động đậy, cử động, di chuyển
+  pos: v
+  example: s-w-461602
+- vi: chạm vào, đụng vào
+  pos: v
+  example: s-w-ai-4afc7f13
+- vi: dùng, vận dụng (trí óc, sức; thường trong 动脑, 动笔, 动手; chỉ dùng trong 动脑, 动脑筋, 动笔, 动手, 动用)
+  pos: v
+  example: s-w-ai-030e19c2
+- vi: xê dịch, làm chuyển động (vật)
+  pos: v
+  example: s-w-ai-baa6ad3e
+- vi: làm xúc động, lay động (lòng người; chỉ dùng trong 动人, 动心, 动情, 感动)
+  pos: v
+  example: s-w-ai-c8fbc236
+- vi: thay đổi, sửa (như 改动, 变动; chỉ dùng trong 改动, 变动, 更动)
+  pos: v
+  example: s-w-ai-64348723
+examples:
+- s-w-461602
+- s-w-ai-4afc7f13
+- s-w-ai-030e19c2

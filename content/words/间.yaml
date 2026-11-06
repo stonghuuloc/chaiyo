@@ -1,0 +1,25 @@
+id: 间
+hanzi: 间
+pinyin: jiān
+hanviet: gian
+level: 1
+pos:
+- mw
+- n
+senses:
+- vi: căn, gian (phòng, nhà)
+  pos: mw
+  example: s-w-ai-d91d0253
+- vi: phòng (trong từ ghép; chỉ dùng trong 房间, 卫生间, 洗手间, 车间)
+  pos: n
+  example: s-w-769747
+- vi: giữa, trong số (chỉ dùng trong 之间, 中间)
+  pos: n
+  example: s-w-ai-f7fe75a3
+- vi: trong khoảng (thời gian, không gian; chỉ dùng trong 期间, 瞬间, 突然间, 夜间)
+  pos: n
+  example: s-w-7976851
+examples:
+- s-w-ai-d91d0253
+- s-w-769747
+- s-w-ai-f7fe75a3

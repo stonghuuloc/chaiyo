@@ -1,0 +1,28 @@
+id: 过
+hanzi: 过
+pinyin: guò
+hanviet: quá
+level: 1
+pos:
+- v
+- adv
+senses:
+- vi: qua, đi qua, băng qua (đường, sông)
+  pos: v
+  example: s-w-2411916
+- vi: trôi qua, qua đi (thời gian)
+  pos: v
+  example: s-w-9415382
+- vi: ăn mừng, đón (lễ, Tết, sinh nhật)
+  pos: v
+  example: s-w-ai-196151f1
+- vi: sống, sống qua ngày, trải qua (ngày tháng)
+  pos: v
+  example: s-w-472764
+- vi: quá, quá mức (chỉ dùng trong 过大, 过多, 过高, 过快, 过度, 过于)
+  pos: adv
+  example: s-w-ai-8aaabf38
+examples:
+- s-w-2411916
+- s-w-9415382
+- s-w-ai-196151f1

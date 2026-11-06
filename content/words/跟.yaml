@@ -1,0 +1,34 @@
+id: 跟
+hanzi: 跟
+pinyin: gēn
+hanviet: cân
+level: 1
+pos:
+- prep
+- v
+- conj
+- n
+senses:
+- vi: với, cùng (ai; còn dùng trong 跟…一样)
+  pos: prep
+  example: s-w-635626
+- vi: với (ai; sau động từ nói, hỏi, mượn)
+  pos: prep
+  example: s-w-13941586
+- vi: theo, đi theo (ai)
+  pos: v
+  example: s-w-13119386
+- vi: lấy, theo (làm vợ ai; khẩu ngữ)
+  pos: v
+  rare: true
+  example: s-w-ai-56d4e871
+- vi: và, với (nối hai danh từ)
+  pos: conj
+  example: s-w-ai-6aa7853e
+- vi: gót (chân, giày)
+  pos: n
+  example: s-w-ai-8e200efc
+examples:
+- s-w-635626
+- s-w-13941586
+- s-w-13119386

@@ -1,14 +1,57 @@
-# content/words/好.yaml
 id: 好
 hanzi: 好
 pinyin: hǎo
 hanviet: hảo
 level: 1
-pos: [ phrase ]
+pos:
+- adj
+- adv
+- comp
+- interj
+- phrase
 senses:
-  - { vi: "tốt, khỏe, hay" }
+- vi: tốt, khỏe, hay
+- vi: tốt, hay, khỏe
+  pos: adj
+  example: s-w-ai-0e7e6aef
+- vi: hợp, thích hợp
+  pos: adj
+  example: s-w-ai-159bfa32
+- vi: thân, thân thiết (hai người)
+  pos: adj
+  rare: true
+  example: s-w-ai-4759a4f6
+- vi: quá, thật là (nhấn mạnh, trước tính từ)
+  pos: adv
+  example: s-w-785298
+- vi: 'mấy, khá nhiều (trước số từ: 好几个, 好几天)'
+  pos: adv
+  example: s-w-ai-c2482e5d
+- vi: 'dễ (đứng trước động từ: 好用, 好找)'
+  pos: adv
+  example: s-w-ai-f43fcbef
+- vi: 'tốt để, dễ chịu khi (đứng trước động từ: 好吃, 好听, 好睡)'
+  pos: adv
+  example: s-w-ai-d29c49e5
+- vi: xong, hoàn tất (sau động từ)
+  pos: comp
+  example: s-w-ai-551ccbe4
+- vi: được, ừ được (đồng ý)
+  pos: interj
+  example: s-w-6057700
+- vi: chào (đứng sau đại từ)
+  pos: phrase
+  example: s-w-338827
+examples:
+- s-h1-01-11
+- s-w-ai-0e7e6aef
+- s-w-ai-159bfa32
+image:
+  file: words/hao.png
 components:
-  - { hanzi: 女, name: nữ, vi: người mẹ }
-  - { hanzi: 子, name: tử, vi: đứa con }
-examples: [ s-h1-01-11 ]
-image: { file: words/hao.png }
+- hanzi: 女
+  name: nữ
+  vi: người mẹ
+- hanzi: 子
+  name: tử
+  vi: đứa con

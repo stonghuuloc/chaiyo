@@ -1,0 +1,36 @@
+id: 子
+hanzi: 子
+pinyin: zǐ
+hanviet: tử
+level: 1
+pos:
+- n
+senses:
+- vi: con trai, con (chỉ dùng trong 父子, 子女, 孝子, 母子)
+  pos: n
+  example: s-w-ai-4e318ba9
+- vi: hạt, hạt giống (chỉ dùng trong 瓜子, 种子, 莲子)
+  pos: n
+  example: s-w-ai-1a2d80f4
+- vi: vật nhỏ, viên (chỉ dùng trong 石子, 棋子, 子弹)
+  pos: n
+  example: s-w-ai-48ecba1a
+- vi: phụ, con, chi (tiền tố; chỉ dùng trong 子公司, 子集)
+  pos: n
+  example: s-w-ai-5c57404e
+- vi: trứng (cá, tôm, tằm)
+  pos: n
+  rare: true
+  example: s-w-ai-ceb996a2
+- vi: Tý (địa chi thứ nhất)
+  pos: n
+  rare: true
+  example: s-w-ai-17f76489
+- vi: tử tước (bậc thứ tư trong năm bậc quý tộc)
+  pos: n
+  rare: true
+  example: s-w-ai-c16d958a
+examples:
+- s-w-ai-4e318ba9
+- s-w-ai-1a2d80f4
+- s-w-ai-48ecba1a

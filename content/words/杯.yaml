@@ -1,0 +1,22 @@
+id: 杯
+hanzi: 杯
+pinyin: bēi
+hanviet: bôi
+level: 1
+pos:
+- mw
+- n
+senses:
+- vi: cốc, ly (đồ uống)
+  pos: mw
+  example: s-w-ai-dd0d4dd0
+- vi: cốc, ly, chén (uống nước; chỉ dùng trong 水杯, 茶杯, 酒杯, 杯子)
+  pos: n
+  example: s-w-ai-651e9d26
+- vi: cúp (giải thưởng, giải đấu; chỉ dùng trong 世界杯, 奖杯, 金杯, 杯赛)
+  pos: n
+  example: s-w-ai-00b76855
+examples:
+- s-w-ai-dd0d4dd0
+- s-w-ai-651e9d26
+- s-w-ai-00b76855

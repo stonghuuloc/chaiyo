@@ -1,0 +1,17 @@
+id: 家里
+hanzi: 家里
+pinyin: jiā lǐ
+hanviet: gia lý
+level: 1
+pos:
+- n
+senses:
+- vi: nhà, ở nhà
+  pos: n
+  example: s-w-406192
+- vi: gia đình, người nhà
+  pos: n
+  example: s-w-3537983
+examples:
+- s-w-406192
+- s-w-3537983

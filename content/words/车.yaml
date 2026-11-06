@@ -1,0 +1,28 @@
+id: 车
+hanzi: 车
+pinyin: chē
+hanviet: xa
+level: 1
+pos:
+- n
+- mw
+- v
+senses:
+- vi: xe (ô tô, xe cộ)
+  pos: n
+  example: s-w-472404
+- vi: máy, máy móc (chỉ dùng trong 车间, 车床)
+  pos: n
+  rare: true
+  example: s-w-ai-88ac0f66
+- vi: xe, chuyến (hàng, người)
+  pos: mw
+  example: s-w-ai-80f50a6b
+- vi: tiện (gia công kim loại)
+  pos: v
+  rare: true
+  example: s-w-ai-d335c694
+examples:
+- s-w-472404
+- s-w-ai-88ac0f66
+- s-w-ai-80f50a6b

@@ -1,0 +1,17 @@
+id: 有
+hanzi: 有
+pinyin: yǒu
+hanviet: hữu
+level: 1
+pos:
+- v
+senses:
+- vi: có (sở hữu, tồn tại)
+  pos: v
+  example: s-w-679442
+- vi: 'có, mang (tạo từ: 有名, 有用; chỉ dùng trong 有名, 有用, 有意, 有趣, 有益, 有利, 有效, 有力)'
+  pos: v
+  example: s-w-ai-a4ac415b
+examples:
+- s-w-679442
+- s-w-ai-a4ac415b

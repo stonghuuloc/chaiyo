@@ -1,0 +1,24 @@
+id: 再
+hanzi: 再
+pinyin: zài
+hanviet: tái
+level: 1
+pos:
+- adv
+senses:
+- vi: lại, lần nữa
+  pos: adv
+  example: s-w-10981498
+- vi: thêm (một cái nữa)
+  pos: adv
+  example: s-w-405218
+- vi: rồi mới, đến lúc đó mới
+  pos: adv
+  example: s-w-8734952
+- vi: dù … đến đâu (cũng; chỉ dùng trong 再…也, 再…都, 再怎么…也)
+  pos: adv
+  example: s-w-ai-6cfdef3c
+examples:
+- s-w-10981498
+- s-w-405218
+- s-w-8734952

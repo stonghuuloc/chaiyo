@@ -1,0 +1,26 @@
+id: 坏
+hanzi: 坏
+pinyin: huài
+hanviet: hoại
+level: 1
+pos:
+- adj
+- v
+- comp
+senses:
+- vi: xấu, tồi (người, việc)
+  pos: adj
+  example: s-w-8727903
+- vi: hỏng, thiu, ôi (đồ ăn)
+  pos: adj
+  example: s-w-784455
+- vi: hỏng, hư (đồ vật)
+  pos: adj
+  example: s-w-1372542
+- vi: cực kỳ, chết đi được (sau tính từ)
+  pos: comp
+  example: s-w-ai-5da5e594
+examples:
+- s-w-8727903
+- s-w-784455
+- s-w-1372542

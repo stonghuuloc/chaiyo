@@ -1,0 +1,17 @@
+id: 学院
+hanzi: 学院
+pinyin: xué yuàn
+hanviet: học viện
+level: 1
+pos:
+- n
+senses:
+- vi: trường, học viện
+  pos: n
+  example: s-w-1577196
+- vi: khoa (đại học)
+  pos: n
+  example: s-w-ai-5fdfcbad
+examples:
+- s-w-1577196
+- s-w-ai-5fdfcbad

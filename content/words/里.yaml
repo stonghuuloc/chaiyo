@@ -1,0 +1,30 @@
+id: 里
+hanzi: 里
+pinyin: lǐ
+hanviet: lý
+level: 1
+pos:
+- n
+- adj
+- mw
+senses:
+- vi: trong, bên trong
+  pos: n
+  example: s-w-10961067
+- vi: lớp lót, vải lót (áo)
+  pos: n
+  rare: true
+  example: s-w-ai-29869d03
+- vi: 'ở trong, bên trong (đứng trước danh từ: 里屋, 里间)'
+  pos: adj
+  example: s-w-ai-542c232d
+- vi: lý (đơn vị đo chiều dài cũ của Trung Quốc, 1 里 = 500 mét)
+  pos: mw
+  example: s-w-ai-bc1cb36a
+- vi: làng xóm, quê hương (chỉ dùng trong 邻里, 乡里, 故里)
+  pos: n
+  example: s-w-ai-0534bdcf
+examples:
+- s-w-10961067
+- s-w-ai-29869d03
+- s-w-ai-542c232d

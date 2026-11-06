@@ -1,0 +1,19 @@
+id: 吧-ba1
+hanzi: 吧
+pinyin: bā
+hanviet: ba
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: quán bar, quán net (chỉ dùng trong 酒吧, 网吧, 咖啡吧, 书吧)
+  pos: n
+  example: s-w-ai-febd877f
+- vi: hút, rít (tẩu, thuốc lá; khẩu ngữ)
+  pos: v
+  rare: true
+  example: s-w-ai-31c1df50
+examples:
+- s-w-ai-febd877f
+- s-w-ai-31c1df50

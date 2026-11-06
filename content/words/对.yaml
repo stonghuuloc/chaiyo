@@ -1,0 +1,47 @@
+id: 对
+hanzi: 对
+pinyin: duì
+hanviet: đối
+level: 1
+pos:
+- adj
+- prep
+- v
+- mw
+senses:
+- vi: đúng
+  pos: adj
+  example: s-w-349193
+- vi: đối diện, đối nhau (chỉ dùng trong 对面, 对立, 对门, 对岸, 对称)
+  pos: adj
+  example: s-w-ai-e73b0d98
+- vi: với, đối với (ai)
+  pos: prep
+  example: s-w-3378261
+- vi: hướng về, quay về phía
+  pos: v
+  example: s-w-ai-4b1b9ad3
+- vi: hợp, vừa (khẩu vị, tính tình; chỉ dùng trong 对胃口, 对脾气, 对味, 对劲, 对路)
+  pos: v
+  example: s-w-ai-8a2b0b4b
+- vi: chỉnh cho khớp (đồng hồ, số liệu)
+  pos: v
+  example: s-w-ai-4a687d26
+- vi: đối chiếu, kiểm tra (đáp án, số)
+  pos: v
+  example: s-w-ai-b1ecaaa6
+- vi: pha thêm, rót thêm (nước, chất lỏng)
+  pos: v
+  rare: true
+  example: s-w-ai-77ebab36
+- vi: đáp, trả lời (chỉ dùng trong 对答, 对歌)
+  pos: v
+  rare: true
+  example: s-w-ai-a714bda7
+- vi: đôi, cặp (vợ chồng, đồ vật thành đôi)
+  pos: mw
+  example: s-w-ai-e357cfc5
+examples:
+- s-w-349193
+- s-w-ai-e73b0d98
+- s-w-3378261

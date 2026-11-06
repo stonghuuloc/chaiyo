@@ -1,0 +1,18 @@
+id: 非常
+hanzi: 非常
+pinyin: fēi cháng
+hanviet: phi thường
+level: 1
+pos:
+- adv
+- adj
+senses:
+- vi: rất, vô cùng
+  pos: adv
+  example: s-w-2357636
+- vi: khác thường, đặc biệt (chỉ dùng trong 非常时期, 非常措施, 非常手段)
+  pos: adj
+  example: s-w-ai-90bbfd90
+examples:
+- s-w-2357636
+- s-w-ai-90bbfd90

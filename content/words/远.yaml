@@ -1,0 +1,18 @@
+id: 远
+hanzi: 远
+pinyin: yuǎn
+hanviet: viễn
+level: 1
+pos:
+- adj
+- adv
+senses:
+- vi: xa, xa xôi
+  pos: adj
+  example: s-w-407259
+- vi: nhiều, hẳn, xa (nhấn mạnh mức chênh lệch lớn; chỉ dùng trong 远比, 远不如, 远超, 远高于, 远不及, 远低于)
+  pos: adv
+  example: s-w-ai-0ef52bd2
+examples:
+- s-w-407259
+- s-w-ai-0ef52bd2

@@ -1,0 +1,17 @@
+id: 考
+hanzi: 考
+pinyin: kǎo
+hanviet: khảo
+level: 1
+pos:
+- v
+senses:
+- vi: thi, dự thi (kỳ thi)
+  pos: v
+  example: s-w-4273635
+- vi: kiểm tra, khảo hạch (ai đó)
+  pos: v
+  example: s-w-ai-7115dabf
+examples:
+- s-w-4273635
+- s-w-ai-7115dabf

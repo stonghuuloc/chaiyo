@@ -1,0 +1,22 @@
+id: 一会儿
+hanzi: 一会儿
+pinyin: yī huì r
+hanviet: nhất hội nhi
+level: 1
+pos:
+- mw
+- adv
+senses:
+- vi: lát, chốc (thời gian)
+  pos: mw
+  example: s-w-374841
+- vi: lát nữa, chốc nữa
+  pos: mw
+  example: s-w-337874
+- vi: lúc thì…, lúc thì…
+  pos: adv
+  example: s-w-ai-4895e967
+examples:
+- s-w-374841
+- s-w-337874
+- s-w-ai-4895e967

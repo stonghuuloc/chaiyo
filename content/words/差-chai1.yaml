@@ -1,0 +1,18 @@
+id: 差-chai1
+hanzi: 差
+pinyin: chāi
+hanviet: sai
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: sai đi, cử đi (làm việc; thường gặp trong 差人, 差遣)
+  pos: v
+  example: s-w-ai-22972e2e
+- vi: chức vụ, công việc (chỉ dùng trong 差事, 出差, 公差, 美差, 苦差)
+  pos: n
+  example: s-w-ai-007d9c27
+examples:
+- s-w-ai-22972e2e
+- s-w-ai-007d9c27

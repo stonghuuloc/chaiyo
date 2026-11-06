@@ -1,0 +1,18 @@
+id: 机场
+hanzi: 机场
+pinyin: jī chǎng
+hanviet: cơ trường
+level: 1
+pos:
+- n
+senses:
+- vi: sân bay, phi trường
+  pos: n
+  example: s-w-794232
+- vi: (tiếng lóng) nhà cung cấp dịch vụ vượt kiểm duyệt mạng
+  pos: n
+  rare: true
+  example: s-w-ai-f5d9cf1c
+examples:
+- s-w-794232
+- s-w-ai-f5d9cf1c

@@ -1,0 +1,18 @@
+id: 楼上
+hanzi: 楼上
+pinyin: lóu shàng
+hanviet: lâu thượng
+level: 1
+pos:
+- n
+senses:
+- vi: tầng trên
+  pos: n
+  example: s-w-8932580
+- vi: người đăng trước (trên diễn đàn)
+  pos: n
+  rare: true
+  example: s-w-ai-3e225e6e
+examples:
+- s-w-8932580
+- s-w-ai-3e225e6e

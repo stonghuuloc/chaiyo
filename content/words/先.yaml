@@ -1,0 +1,25 @@
+id: 先
+hanzi: 先
+pinyin: xiān
+hanviet: tiên
+level: 1
+pos:
+- adv
+- adj
+senses:
+- vi: trước tiên, trước hết (làm việc này trước việc khác)
+  pos: adv
+  example: s-w-400336
+- vi: trước (làm trước người khác)
+  pos: adv
+  example: s-w-ai-70004491
+- vi: trước, sẵn (làm hoặc nói trước khi việc xảy ra)
+  pos: adv
+  example: s-w-545880
+- vi: trước đây, từ trước (chỉ dùng trong 先前, 先例)
+  pos: adj
+  example: s-w-ai-b87c040f
+examples:
+- s-w-400336
+- s-w-ai-70004491
+- s-w-545880

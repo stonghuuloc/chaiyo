@@ -1,0 +1,13 @@
+id: 医院
+hanzi: 医院
+pinyin: yī yuàn
+hanviet: y viện
+level: 1
+pos:
+- n
+senses:
+- vi: bệnh viện
+  pos: n
+  example: s-w-5072292
+examples:
+- s-w-5072292

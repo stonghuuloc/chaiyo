@@ -1,0 +1,25 @@
+id: 没有
+hanzi: 没有
+pinyin: méi yǒu
+hanviet: một hữu
+level: 1
+pos:
+- v
+- adv
+senses:
+- vi: không có (sở hữu)
+  pos: v
+  example: s-w-407226
+- vi: không tồn tại
+  pos: v
+  example: s-w-335530
+- vi: chưa (làm gì)
+  pos: adv
+  example: s-w-945672
+- vi: không (ở trong trạng thái...)
+  pos: adv
+  example: s-w-3078818
+examples:
+- s-w-407226
+- s-w-335530
+- s-w-945672

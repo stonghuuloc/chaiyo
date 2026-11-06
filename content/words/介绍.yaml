@@ -1,0 +1,25 @@
+id: 介绍
+hanzi: 介绍
+pinyin: jiè shào
+hanviet: giới thiệu
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: giới thiệu (người với nhau)
+  pos: v
+  example: s-w-3378090
+- vi: trình bày
+  pos: v
+  example: s-w-1441829
+- vi: giới thiệu, tiến cử
+  pos: v
+  example: s-w-9423273
+- vi: lời giới thiệu
+  pos: n
+  example: s-w-3526288
+examples:
+- s-w-3378090
+- s-w-1441829
+- s-w-9423273

@@ -1,0 +1,22 @@
+id: 难
+hanzi: 难
+pinyin: nán
+hanviet: nan
+level: 1
+pos:
+- adj
+- n
+senses:
+- vi: khó
+  pos: adj
+  example: s-w-869094
+- vi: 'tệ, khó chịu (đứng trước động từ: 难看, 难听, 难吃; chỉ dùng trong 难看, 难听, 难吃, 难闻)'
+  pos: adj
+  example: s-w-ai-8fd4f911
+- vi: vấn đề, khó khăn (chỉ dùng trong 难题, 困难, 难处)
+  pos: n
+  example: s-w-ai-95fe5089
+examples:
+- s-w-869094
+- s-w-ai-8fd4f911
+- s-w-ai-95fe5089

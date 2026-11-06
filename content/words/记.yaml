@@ -1,0 +1,27 @@
+id: 记
+hanzi: 记
+pinyin: jì
+hanviet: ký
+level: 1
+pos:
+- v
+- n
+- mw
+senses:
+- vi: nhớ, ghi nhớ
+  pos: v
+  example: s-w-405087
+- vi: ghi chép, ghi lại
+  pos: v
+  example: s-w-ai-f22419e8
+- vi: dấu hiệu, ký hiệu (chỉ dùng trong 记号, 标记, 印记, 暗记)
+  pos: n
+  example: s-w-ai-c8f4bbbd
+- vi: cú, phát, cái (đòn, cái tát)
+  pos: mw
+  rare: true
+  example: s-w-ai-d5322450
+examples:
+- s-w-405087
+- s-w-ai-f22419e8
+- s-w-ai-c8f4bbbd

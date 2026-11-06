@@ -1,0 +1,17 @@
+id: 星期
+hanzi: 星期
+pinyin: xīng qī
+hanviet: tinh kỳ
+level: 1
+pos:
+- n
+senses:
+- vi: tuần
+  pos: n
+  example: s-w-407248
+- vi: thứ mấy trong tuần
+  pos: n
+  example: s-w-385098
+examples:
+- s-w-407248
+- s-w-385098

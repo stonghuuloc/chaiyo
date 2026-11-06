@@ -1,0 +1,22 @@
+id: 上网
+hanzi: 上网
+pinyin: shàng wǎng
+hanviet: thượng võng
+level: 1
+pos:
+- v
+senses:
+- vi: lên mạng, kết nối Internet
+  pos: v
+  example: s-w-797368
+- vi: được tải lên mạng (tài liệu)
+  pos: v
+  example: s-w-ai-15bc5938
+- vi: tiến sát lưới (thể thao)
+  pos: v
+  rare: true
+  example: s-w-ai-4dbf525f
+examples:
+- s-w-797368
+- s-w-ai-15bc5938
+- s-w-ai-4dbf525f

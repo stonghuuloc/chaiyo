@@ -1,0 +1,17 @@
+id: 女生
+hanzi: 女生
+pinyin: nǚ shēng
+hanviet: nữ sinh
+level: 1
+pos:
+- n
+senses:
+- vi: nữ sinh, học sinh nữ
+  pos: n
+  example: s-w-784478
+- vi: cô gái, bạn nữ (trẻ)
+  pos: n
+  example: s-w-332523
+examples:
+- s-w-784478
+- s-w-332523

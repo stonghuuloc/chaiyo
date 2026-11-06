@@ -1,0 +1,26 @@
+id: 从
+hanzi: 从
+pinyin: cóng
+hanviet: tòng
+level: 1
+pos:
+- prep
+- adv
+- v
+senses:
+- vi: từ, qua
+  pos: prep
+  example: s-w-333281
+- vi: chưa từng, không bao giờ (dùng với phủ định; chỉ dùng trong 从不, 从没)
+  pos: adv
+  example: s-w-ai-4ea153e3
+- vi: theo, nghe theo, tuân theo (chỉ dùng trong 听从, 服从, 顺从)
+  pos: v
+  example: s-w-ai-51ac84d7
+- vi: theo, làm (một nghề, hoạt động; chỉ dùng trong 从事)
+  pos: v
+  example: s-w-ai-df630b3e
+examples:
+- s-w-333281
+- s-w-ai-4ea153e3
+- s-w-ai-51ac84d7

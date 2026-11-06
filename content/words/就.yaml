@@ -1,0 +1,57 @@
+id: 就
+hanzi: 就
+pinyin: jiù
+hanviet: tựu
+level: 1
+pos:
+- adv
+- prep
+- v
+- phrase
+senses:
+- vi: ngay, liền, sắp (nhanh, sớm)
+  pos: adv
+  example: s-w-13943493
+- vi: hễ… là…, vừa… là… (mẫu 一…就…)
+  pos: adv
+  example: s-w-ai-038059c8
+- vi: thì (sau mệnh đề giả định)
+  pos: adv
+  example: s-w-9963184
+- vi: chính, đúng là, chỉ là (nhấn mạnh)
+  pos: adv
+  example: s-w-2367521
+- vi: chỉ có, mới có (số lượng ít)
+  pos: adv
+  example: s-w-ai-5963c7c7
+- vi: đến tận, nhiều đến (số lượng)
+  pos: adv
+  example: s-w-ai-7a623b73
+- vi: về, đối với, xét về
+  pos: prep
+  example: s-w-ai-a0f6a863
+- vi: kèm với, ăn với (đồ ăn; thường dùng 就着)
+  pos: v
+  example: s-w-ai-e5a4930a
+- vi: nhân lúc, dựa vào (thường dùng 就着)
+  pos: v
+  rare: true
+  example: s-w-ai-723f3713
+- vi: đảm nhận, nhận (việc, chức; chỉ dùng trong 就业, 就职, 就任)
+  pos: v
+  rare: true
+  example: s-w-ai-428c40bb
+- vi: lại gần, lấy gần (chỉ dùng trong 就近, 就医)
+  pos: v
+  rare: true
+  example: s-w-ai-d9ebf3f7
+- vi: dù… cũng… (mẫu 就…也…)
+  pos: phrase
+  example: s-w-ai-b2090cd8
+- vi: không… thì… (mẫu 不…就…)
+  pos: phrase
+  example: s-w-ai-4d186099
+examples:
+- s-w-13943493
+- s-w-ai-038059c8
+- s-w-9963184

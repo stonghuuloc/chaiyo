@@ -1,0 +1,22 @@
+id: 听
+hanzi: 听
+pinyin: tīng
+hanviet: thính
+level: 1
+pos:
+- v
+- mw
+senses:
+- vi: nghe
+  pos: v
+  example: s-w-747653
+- vi: nghe theo, vâng lời
+  pos: v
+  example: s-w-399179
+- vi: lon (đồ uống, đồ hộp đóng lon); cũng dùng trong 听装
+  pos: mw
+  example: s-w-ai-a751b646
+examples:
+- s-w-747653
+- s-w-399179
+- s-w-ai-a751b646

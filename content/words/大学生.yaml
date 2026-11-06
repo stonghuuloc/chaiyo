@@ -1,0 +1,17 @@
+id: 大学生
+hanzi: 大学生
+pinyin: dà xué shēng
+hanviet: đại học sinh
+level: 1
+pos:
+- n
+senses:
+- vi: sinh viên đại học
+  pos: n
+  example: s-w-567558
+- vi: sinh viên cao đẳng
+  pos: n
+  example: s-w-475871
+examples:
+- s-w-567558
+- s-w-475871

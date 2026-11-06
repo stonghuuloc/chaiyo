@@ -1,0 +1,21 @@
+id: 上班
+hanzi: 上班
+pinyin: shàng bān
+hanviet: thượng ban
+level: 1
+pos:
+- v
+senses:
+- vi: đi làm
+  pos: v
+  example: s-w-13158370
+- vi: trực
+  pos: v
+  example: s-w-427960
+- vi: bắt đầu làm việc
+  pos: v
+  example: s-w-5575448
+examples:
+- s-w-13158370
+- s-w-427960
+- s-w-5575448

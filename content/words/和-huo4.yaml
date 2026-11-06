@@ -1,0 +1,24 @@
+id: 和-huo4
+hanzi: 和
+pinyin: huò
+hanviet: hoà
+level: 1
+pos:
+- v
+- mw
+senses:
+- vi: trộn, hoà lẫn (nguyên liệu)
+  pos: v
+  example: s-w-ai-49690f43
+- vi: lần (nước giặt, xả quần áo)
+  pos: mw
+  rare: true
+  example: s-w-ai-3913779c
+- vi: lần, nước (sắc thuốc)
+  pos: mw
+  rare: true
+  example: s-w-ai-b707cdcc
+examples:
+- s-w-ai-49690f43
+- s-w-ai-3913779c
+- s-w-ai-b707cdcc

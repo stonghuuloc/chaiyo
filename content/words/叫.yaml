@@ -1,0 +1,34 @@
+id: 叫
+hanzi: 叫
+pinyin: jiào
+hanviet: khiếu
+level: 1
+pos:
+- v
+- prep
+senses:
+- vi: tên là, gọi là
+  pos: v
+  example: s-w-346883
+- vi: kêu, la, hét (người hoặc thú vật)
+  pos: v
+  example: s-w-2482139
+- vi: gọi (ai đó)
+  pos: v
+  example: s-w-832942
+- vi: gọi, đặt (gọi người hoặc vật đến phục vụ mình)
+  pos: v
+  example: s-w-1205903
+- vi: bảo, bắt (ai làm gì)
+  pos: v
+  example: s-w-1516179
+- vi: khiến, làm cho
+  pos: v
+  example: s-w-ai-1b61db58
+- vi: bị (do ai làm)
+  pos: prep
+  example: s-w-ai-4031f64c
+examples:
+- s-w-346883
+- s-w-2482139
+- s-w-832942

@@ -1,0 +1,33 @@
+id: 电
+hanzi: 电
+pinyin: diàn
+hanviet: điện
+level: 1
+pos:
+- n
+- adj
+- v
+senses:
+- vi: điện
+  pos: n
+  example: s-w-1397334
+- vi: chớp, tia chớp (chỉ dùng trong 闪电, 雷电, 电闪雷鸣)
+  pos: n
+  example: s-w-ai-b14f2c6f
+- vi: cuộc gọi, điện báo (chỉ dùng trong 来电, 回电, 电报, 急电, 致电)
+  pos: n
+  example: s-w-9969179
+- vi: điện, chạy bằng điện (chỉ dùng trong 电灯, 电视, 电车, 电脑, 电话, 电影, 电梯)
+  pos: adj
+  example: s-w-420838
+- vi: bị điện giật
+  pos: v
+  example: s-w-ai-374bbcec
+- vi: gọi điện thoại, gửi điện báo cho (ai) (khẩu ngữ, hiếm)
+  pos: v
+  rare: true
+  example: s-w-ai-e0f0618f
+examples:
+- s-w-1397334
+- s-w-ai-b14f2c6f
+- s-w-9969179

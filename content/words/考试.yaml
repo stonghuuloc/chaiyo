@@ -1,0 +1,18 @@
+id: 考试
+hanzi: 考试
+pinyin: kǎo shì
+hanviet: khảo thí
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: thi, dự thi
+  pos: v
+  example: s-w-5581609
+- vi: kỳ thi, cuộc thi
+  pos: n
+  example: s-w-6451949
+examples:
+- s-w-5581609
+- s-w-6451949

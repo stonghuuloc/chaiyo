@@ -1,0 +1,34 @@
+id: 多
+hanzi: 多
+pinyin: duō
+hanviet: đa
+level: 1
+pos:
+- adj
+- v
+- comp
+- num
+- adv
+senses:
+- vi: nhiều
+  pos: adj
+  example: s-w-813630
+- vi: đa-, nhiều- (trong từ ghép; chỉ dùng trong 多云, 多样, 多元, 多功能, 多媒体)
+  pos: adj
+  example: s-w-ai-df6f57c3
+- vi: thừa ra, có thêm
+  pos: v
+  example: s-w-ai-ded3e7d4
+- vi: quá nhiều, quá mức (sau động từ, 了)
+  pos: comp
+  example: s-w-11046276
+- vi: hơn, lẻ (sau số từ)
+  pos: num
+  example: s-w-ai-fffce46e
+- vi: bao nhiêu, đến mức nào (hỏi mức độ, trước tính từ)
+  pos: adv
+  example: s-w-335417
+examples:
+- s-w-813630
+- s-w-ai-df6f57c3
+- s-w-ai-ded3e7d4

@@ -1,0 +1,17 @@
+id: 东西
+hanzi: 东西
+pinyin: dōng xi
+hanviet: đông tây
+level: 1
+pos:
+- n
+senses:
+- vi: đồ vật, thứ
+  pos: n
+  example: s-w-420698
+- vi: người (cách gọi chê)
+  pos: n
+  example: s-w-ai-f77e3f42
+examples:
+- s-w-420698
+- s-w-ai-f77e3f42

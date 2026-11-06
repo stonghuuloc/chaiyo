@@ -1,0 +1,38 @@
+id: 正
+hanzi: 正
+pinyin: zhèng
+hanviet: chính
+level: 1
+pos:
+- adv
+- adj
+- v
+senses:
+- vi: đang, đang lúc (hành động đang diễn ra)
+  pos: adv
+  example: s-w-1406494
+- vi: đúng, vừa đúng (như 正好, 正是)
+  pos: adv
+  example: s-w-ai-157d7a81
+- vi: trúng ngay, đúng ngay (vị trí/thời điểm)
+  pos: adv
+  example: s-w-ai-98b25723
+- vi: chính (chủ yếu; chỉ dùng trong 正门, 正文, 正式, 正面)
+  pos: adj
+  example: s-w-ai-7ee88efb
+- vi: thẳng, ngay ngắn
+  pos: adj
+  example: s-w-ai-d86f2f61
+- vi: chính trực, đứng đắn (chỉ dùng trong 正直, 正派, 公正)
+  pos: adj
+  example: s-w-ai-827c3437
+- vi: dương (toán học)
+  pos: adj
+  example: s-w-ai-417d056d
+- vi: sửa, chỉnh cho đúng (như 纠正, 改正; chỉ dùng trong 纠正, 改正, 更正, 校正)
+  pos: v
+  example: s-w-ai-786c8f30
+examples:
+- s-w-1406494
+- s-w-ai-157d7a81
+- s-w-ai-98b25723

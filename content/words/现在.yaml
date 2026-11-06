@@ -1,0 +1,17 @@
+id: 现在
+hanzi: 现在
+pinyin: xiàn zài
+hanviet: hiện tại
+level: 1
+pos:
+- adv
+senses:
+- vi: bây giờ, hiện tại, hiện nay
+  pos: adv
+  example: s-w-735147
+- vi: ngày nay
+  pos: adv
+  example: s-w-ai-06330b38
+examples:
+- s-w-735147
+- s-w-ai-06330b38

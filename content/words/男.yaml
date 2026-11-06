@@ -1,0 +1,19 @@
+id: 男
+hanzi: 男
+pinyin: nán
+hanviet: nam
+level: 1
+pos:
+- adj
+- n
+senses:
+- vi: nam, thuộc nam giới (trai)
+  pos: adj
+  example: s-w-2202364
+- vi: nam tước (bậc thấp nhất trong năm bậc quý tộc)
+  pos: n
+  rare: true
+  example: s-w-ai-be4a4066
+examples:
+- s-w-2202364
+- s-w-ai-be4a4066

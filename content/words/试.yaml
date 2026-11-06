@@ -1,0 +1,22 @@
+id: 试
+hanzi: 试
+pinyin: shì
+hanviet: thí
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: thử, thử nghiệm
+  pos: v
+  example: s-w-4620857
+- vi: thí nghiệm (chỉ dùng trong 试验)
+  pos: n
+  example: s-w-ai-db445569
+- vi: kỳ thi, bài thi (chỉ dùng trong 考试, 笔试, 口试, 面试, 试题, 试卷)
+  pos: n
+  example: s-w-ai-21ef5cec
+examples:
+- s-w-4620857
+- s-w-ai-db445569
+- s-w-ai-21ef5cec

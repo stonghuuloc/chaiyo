@@ -1,0 +1,18 @@
+id: 岁
+hanzi: 岁
+pinyin: suì
+hanviet: tuế
+level: 1
+pos:
+- mw
+- n
+senses:
+- vi: tuổi (người, vật)
+  pos: mw
+  example: s-w-ai-4de49c3d
+- vi: năm, năm tháng (trong từ ghép; chỉ dùng trong 岁月, 年岁, 岁末)
+  pos: n
+  example: s-w-ai-c46274cb
+examples:
+- s-w-ai-4de49c3d
+- s-w-ai-c46274cb

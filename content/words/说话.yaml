@@ -1,0 +1,18 @@
+id: 说话
+hanzi: 说话
+pinyin: shuō huà
+hanviet: thuyết thoại
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: nói, nói chuyện
+  pos: v
+  example: s-w-478844
+- vi: lời nói (chỉ dùng trong 说话算数, 说话算话)
+  pos: n
+  example: s-w-ai-4c32ddb0
+examples:
+- s-w-478844
+- s-w-ai-4c32ddb0

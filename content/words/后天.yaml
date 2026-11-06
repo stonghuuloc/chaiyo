@@ -1,0 +1,27 @@
+id: 后天
+hanzi: 后天
+pinyin: hòu tiān
+hanviet: hậu thiên
+level: 1
+pos:
+- n
+- adj
+senses:
+- vi: ngày kia
+  pos: n
+  example: s-w-5571069
+- vi: cuộc sống sau khi sinh
+  pos: n
+  rare: true
+  example: s-w-ai-f0fe913c
+- vi: có được (không bẩm sinh)
+  pos: adj
+  example: s-w-ai-e3662a1b
+- vi: hậu nghiệm (dựa trên kinh nghiệm)
+  pos: adj
+  rare: true
+  example: s-w-ai-fc28c9fa
+examples:
+- s-w-5571069
+- s-w-ai-f0fe913c
+- s-w-ai-e3662a1b

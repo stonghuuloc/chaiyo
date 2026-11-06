@@ -1,0 +1,21 @@
+id: 电话
+hanzi: 电话
+pinyin: diàn huà
+hanviet: điện thoại
+level: 1
+pos:
+- n
+senses:
+- vi: điện thoại
+  pos: n
+  example: s-w-3625661
+- vi: cuộc gọi
+  pos: n
+  example: s-w-5556160
+- vi: số điện thoại
+  pos: n
+  example: s-w-10966785
+examples:
+- s-w-3625661
+- s-w-5556160
+- s-w-10966785

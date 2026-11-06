@@ -1,0 +1,17 @@
+id: 西边
+hanzi: 西边
+pinyin: xī biān
+hanviet: tây biên
+level: 1
+pos:
+- n
+senses:
+- vi: phía tây
+  pos: n
+  example: s-w-2595792
+- vi: phía tây của
+  pos: n
+  example: s-w-1394838
+examples:
+- s-w-2595792
+- s-w-1394838

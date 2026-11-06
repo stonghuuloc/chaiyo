@@ -1,0 +1,24 @@
+id: 没事儿
+hanzi: 没事儿
+pinyin: méi shì r
+hanviet: một sự nhi
+level: 1
+pos:
+- v
+senses:
+- vi: rảnh, không bận
+  pos: v
+  example: s-w-ai-b11314b7
+- vi: không sao, không đáng ngại
+  pos: v
+  example: s-w-374840
+- vi: có gì đâu
+  pos: v
+  example: s-w-383010
+- vi: thôi, bỏ qua đi
+  pos: v
+  example: s-w-ai-79f18851
+examples:
+- s-w-ai-b11314b7
+- s-w-374840
+- s-w-383010

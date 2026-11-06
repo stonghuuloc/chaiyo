@@ -1,0 +1,22 @@
+id: 小
+hanzi: 小
+pinyin: xiǎo
+hanviet: tiểu
+level: 1
+pos:
+- adj
+senses:
+- vi: nhỏ, bé
+  pos: adj
+  example: s-w-3378103
+- vi: nhỏ tuổi, ít tuổi
+  pos: adj
+  example: s-w-ai-46e5d84c
+- vi: một chút, ít (trong 小有名气, 小半)
+  pos: adj
+  rare: true
+  example: s-w-ai-24a7b43d
+examples:
+- s-w-3378103
+- s-w-ai-46e5d84c
+- s-w-ai-24a7b43d

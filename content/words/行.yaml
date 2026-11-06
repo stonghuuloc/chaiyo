@@ -1,0 +1,42 @@
+id: 行
+hanzi: 行
+pinyin: xíng
+hanviet: hành
+level: 1
+pos:
+- adj
+- v
+- n
+senses:
+- vi: được, ổn, đồng ý
+  pos: adj
+  example: s-w-7817193
+- vi: giỏi, cừ (khẩu ngữ)
+  pos: adj
+  example: s-w-ai-b15c6c43
+- vi: thịnh hành, lưu hành (chỉ dùng trong 流行, 通行, 现行)
+  pos: adj
+  example: s-w-ai-946ce5db
+- vi: tạm thời, dã chiến (chỉ dùng trong 行军床, 行宫, 行营)
+  pos: adj
+  rare: true
+  example: s-w-ai-cb827cd9
+- vi: đi, đi lại (chỉ dùng trong 步行, 行走, 行人)
+  pos: v
+  example: s-w-ai-0456d7d2
+- vi: du hành, đi xa (chỉ dùng trong 旅行, 出行, 远行)
+  pos: v
+  example: s-w-ai-121010ce
+- vi: làm, thực hành (chỉ dùng trong 实行, 进行, 举行, 行善, 行动)
+  pos: v
+  example: s-w-ai-32a260c1
+- vi: chuyến đi (chỉ dùng trong 之行, 此行, 一行)
+  pos: n
+  example: s-w-ai-d63cb2cf
+- vi: hành vi, đức hạnh (chỉ dùng trong 行为, 品行, 德行, 言行)
+  pos: n
+  example: s-w-ai-3802ffae
+examples:
+- s-w-7817193
+- s-w-ai-b15c6c43
+- s-w-ai-946ce5db

@@ -1,0 +1,30 @@
+id: 花
+hanzi: 花
+pinyin: huā
+hanviet: hoa
+level: 1
+pos:
+- n
+- v
+- adj
+senses:
+- vi: hoa, bông hoa
+  pos: n
+  example: s-w-11508980
+- vi: hoa văn, họa tiết (chỉ dùng trong 花色, 花纹, 花样, 花布)
+  pos: n
+  example: s-w-ai-a0c77bf0
+- vi: tiêu, tốn (tiền, thời gian)
+  pos: v
+  example: s-w-1454462
+- vi: lòe loẹt, sặc sỡ
+  pos: adj
+  example: s-w-ai-cb6f836e
+- vi: trăng hoa, lăng nhăng (khẩu ngữ)
+  pos: adj
+  rare: true
+  example: s-w-ai-17c4a10e
+examples:
+- s-w-11508980
+- s-w-ai-a0c77bf0
+- s-w-1454462

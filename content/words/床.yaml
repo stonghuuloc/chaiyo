@@ -1,0 +1,18 @@
+id: 床
+hanzi: 床
+pinyin: chuáng
+hanviet: sàng
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: giường
+  pos: n
+  example: s-w-10303628
+- vi: tấm, chiếc (chăn, nệm)
+  pos: mw
+  example: s-w-ai-4d437a94
+examples:
+- s-w-10303628
+- s-w-ai-4d437a94

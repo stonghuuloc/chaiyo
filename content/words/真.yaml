@@ -1,0 +1,18 @@
+id: 真
+hanzi: 真
+pinyin: zhēn
+hanviet: chân
+level: 1
+pos:
+- adv
+- adj
+senses:
+- vi: thật, thật là (nhấn mạnh)
+  pos: adv
+  example: s-w-9433052
+- vi: thật, thật sự (không giả)
+  pos: adj
+  example: s-w-1746054
+examples:
+- s-w-9433052
+- s-w-1746054

@@ -1,0 +1,18 @@
+id: 有一些
+hanzi: 有一些
+pinyin: yǒu yī xiē
+hanviet: hữu nhất ta
+level: 1
+pos:
+- adv
+- num
+senses:
+- vi: hơi, có phần
+  pos: adv
+  example: s-w-ai-502b2246
+- vi: một vài, một ít
+  pos: num
+  example: s-w-ai-3c89bca3
+examples:
+- s-w-ai-502b2246
+- s-w-ai-3c89bca3

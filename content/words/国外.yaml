@@ -1,0 +1,17 @@
+id: 国外
+hanzi: 国外
+pinyin: guó wài
+hanviet: quốc ngoại
+level: 1
+pos:
+- n
+senses:
+- vi: ở nước ngoài, nước ngoài
+  pos: n
+  example: s-w-719761
+- vi: chuyện ở nước ngoài
+  pos: n
+  example: s-w-ai-0ce75664
+examples:
+- s-w-719761
+- s-w-ai-0ce75664

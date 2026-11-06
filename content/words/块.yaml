@@ -1,0 +1,22 @@
+id: 块
+hanzi: 块
+pinyin: kuài
+hanviet: khối
+level: 1
+pos:
+- mw
+- n
+senses:
+- vi: đồng (tiền, khẩu ngữ)
+  pos: mw
+  example: s-w-ai-bae14586
+- vi: miếng, cục, tấm (bánh, xà phòng, vải…)
+  pos: mw
+  example: s-w-400199
+- vi: cục, khối, miếng (trong từ ghép; chỉ dùng trong 冰块, 石块, 肉块, 方块)
+  pos: n
+  example: s-w-ai-f254d614
+examples:
+- s-w-ai-bae14586
+- s-w-400199
+- s-w-ai-f254d614

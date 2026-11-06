@@ -1,0 +1,18 @@
+id: 真的
+hanzi: 真的
+pinyin: zhēn de
+hanviet: chân đích
+level: 1
+pos:
+- adv
+- adj
+senses:
+- vi: thật sự, quả thật
+  pos: adv
+  example: s-w-6065730
+- vi: thật, đúng
+  pos: adj
+  example: s-w-782197
+examples:
+- s-w-6065730
+- s-w-782197

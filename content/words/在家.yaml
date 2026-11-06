@@ -1,0 +1,18 @@
+id: 在家
+hanzi: 在家
+pinyin: zài jiā
+hanviet: tại gia
+level: 1
+pos:
+- v
+senses:
+- vi: ở nhà
+  pos: v
+  example: s-w-336238
+- vi: vẫn là cư sĩ tại gia
+  pos: v
+  rare: true
+  example: s-w-ai-5e4992bd
+examples:
+- s-w-336238
+- s-w-ai-5e4992bd

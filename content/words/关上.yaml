@@ -1,0 +1,17 @@
+id: 关上
+hanzi: 关上
+pinyin: guān shàng
+hanviet: quan thượng
+level: 1
+pos:
+- v
+senses:
+- vi: đóng (cửa, cửa sổ)
+  pos: v
+  example: s-w-3976893
+- vi: tắt (đèn, thiết bị điện)
+  pos: v
+  example: s-w-ai-9cdbd300
+examples:
+- s-w-3976893
+- s-w-ai-9cdbd300

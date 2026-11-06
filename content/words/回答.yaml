@@ -1,0 +1,18 @@
+id: 回答
+hanzi: 回答
+pinyin: huí dá
+hanviet: hồi đáp
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: trả lời, đáp lại
+  pos: v
+  example: s-w-1492091
+- vi: câu trả lời, lời đáp
+  pos: n
+  example: s-w-1752972
+examples:
+- s-w-1492091
+- s-w-1752972

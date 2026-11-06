@@ -1,0 +1,17 @@
+id: 电影
+hanzi: 电影
+pinyin: diàn yǐng
+hanviet: điện ảnh
+level: 1
+pos:
+- n
+senses:
+- vi: phim
+  pos: n
+  example: s-w-7771886
+- vi: điện ảnh
+  pos: n
+  example: s-w-3378035
+examples:
+- s-w-7771886
+- s-w-3378035

@@ -1,0 +1,34 @@
+id: 别
+hanzi: 别
+pinyin: bié
+hanviet: biệt
+level: 1
+pos:
+- adv
+- v
+- pron
+- n
+senses:
+- vi: đừng, chớ
+  pos: adv
+  example: s-w-10570094
+- vi: chia tay, từ biệt (chỉ dùng trong 告别, 分别, 离别, 临别)
+  pos: v
+  example: s-w-ai-4773647a
+- vi: cài, gài (bằng ghim, kẹp)
+  pos: v
+  example: s-w-ai-35b23de6
+- vi: giắt, nhét (vào thắt lưng, túi)
+  pos: v
+  rare: true
+  example: s-w-ai-9ba6d365
+- vi: khác, cái khác, người khác (chỉ dùng trong 别的, 别人, 别处, 别国)
+  pos: pron
+  example: s-w-ai-a15dcece
+- vi: 'loại, phân loại (hậu tố chỉ sự phân chia: 性别 giới tính, 派别 phe phái, 类别 chủng loại, 级别 cấp bậc; chỉ dùng trong các từ ghép này)'
+  pos: n
+  example: s-w-ai-625ac1f0
+examples:
+- s-w-10570094
+- s-w-ai-4773647a
+- s-w-ai-35b23de6

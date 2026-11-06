@@ -1,0 +1,27 @@
+id: 放
+hanzi: 放
+pinyin: fàng
+hanviet: phóng
+level: 1
+pos:
+- v
+senses:
+- vi: để, đặt, bỏ (vào)
+  pos: v
+  example: s-w-8905124
+- vi: thả, thả ra, cho đi
+  pos: v
+  example: s-w-1899677
+- vi: phát, bật, chiếu (nhạc, phim)
+  pos: v
+  example: s-w-784104
+- vi: cho nghỉ, nghỉ (lễ, học)
+  pos: v
+  example: s-w-846117
+- vi: bắn, đốt (pháo hoa, pháo)
+  pos: v
+  example: s-w-335169
+examples:
+- s-w-8905124
+- s-w-1899677
+- s-w-784104

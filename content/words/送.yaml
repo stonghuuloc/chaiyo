@@ -1,0 +1,24 @@
+id: 送
+hanzi: 送
+pinyin: sòng
+hanviet: tống
+level: 1
+pos:
+- v
+senses:
+- vi: tặng, biếu (quà)
+  pos: v
+  example: s-w-2024174
+- vi: tiễn (người đi xa)
+  pos: v
+  example: s-w-336651
+- vi: đưa, đưa đi cùng (ai về, đến)
+  pos: v
+  example: s-w-526394
+- vi: gửi, giao (hàng, thư)
+  pos: v
+  example: s-w-6799710
+examples:
+- s-w-2024174
+- s-w-336651
+- s-w-526394

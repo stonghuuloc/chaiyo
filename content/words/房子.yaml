@@ -1,0 +1,17 @@
+id: 房子
+hanzi: 房子
+pinyin: fáng zi
+hanviet: phòng tử
+level: 1
+pos:
+- n
+senses:
+- vi: nhà, căn nhà
+  pos: n
+  example: s-w-8698976
+- vi: căn hộ
+  pos: n
+  example: s-w-1223781
+examples:
+- s-w-8698976
+- s-w-1223781

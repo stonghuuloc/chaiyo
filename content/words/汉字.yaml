@@ -1,0 +1,13 @@
+id: 汉字
+hanzi: 汉字
+pinyin: hàn zì
+hanviet: hán tự
+level: 1
+pos:
+- n
+senses:
+- vi: chữ Hán
+  pos: n
+  example: s-w-3378013
+examples:
+- s-w-3378013

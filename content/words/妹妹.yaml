@@ -1,0 +1,17 @@
+id: 妹妹
+hanzi: 妹妹
+pinyin: mèi mei
+hanviet: muội muội
+level: 1
+pos:
+- n
+senses:
+- vi: em gái
+  pos: n
+  example: s-w-3378193
+- vi: cô gái trẻ
+  pos: n
+  example: s-w-ai-2bed22c6
+examples:
+- s-w-3378193
+- s-w-ai-2bed22c6

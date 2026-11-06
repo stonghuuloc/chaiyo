@@ -1,0 +1,26 @@
+id: 班
+hanzi: 班
+pinyin: bān
+hanviet: ban
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: lớp, lớp học
+  pos: n
+  example: s-w-3378105
+- vi: ca làm việc
+  pos: n
+  example: s-w-ai-9863046b
+- vi: tiểu đội (quân đội)
+  pos: n
+  rare: true
+  example: s-w-ai-d39c49d0
+- vi: chuyến (xe, tàu, máy bay)
+  pos: mw
+  example: s-w-ai-235b5978
+examples:
+- s-w-3378105
+- s-w-ai-9863046b
+- s-w-ai-d39c49d0

@@ -1,0 +1,18 @@
+id: 爱好
+hanzi: 爱好
+pinyin: ài hào
+hanviet: ái hiếu
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: sở thích
+  pos: n
+  example: s-w-3658530
+- vi: yêu thích
+  pos: v
+  example: s-w-9991916
+examples:
+- s-w-3658530
+- s-w-9991916

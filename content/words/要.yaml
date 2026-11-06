@@ -1,0 +1,29 @@
+id: 要
+hanzi: 要
+pinyin: yào
+hanviet: yếu
+level: 1
+pos:
+- v
+- adj
+senses:
+- vi: muốn, cần, xin (…)
+  pos: v
+  example: s-w-9970077
+- vi: sắp, sẽ, định (làm gì)
+  pos: v
+  example: s-w-4761392
+- vi: phải, cần phải, nên
+  pos: v
+  example: s-w-1907654
+- vi: nếu (khẩu ngữ)
+  pos: v
+  rare: true
+  example: s-w-ai-f709124b
+- vi: quan trọng, chủ yếu (chỉ dùng trong 重要, 主要, 次要, 要紧)
+  pos: adj
+  example: s-w-ai-48a6b449
+examples:
+- s-w-9970077
+- s-w-4761392
+- s-w-1907654

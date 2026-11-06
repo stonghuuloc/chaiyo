@@ -1,0 +1,42 @@
+id: 来
+hanzi: 来
+pinyin: lái
+hanviet: lai
+level: 1
+pos:
+- v
+- comp
+- part
+- num
+- conj
+- adj
+senses:
+- vi: đến, tới, lại (phía người nói)
+  pos: v
+  example: s-w-4970134
+- vi: làm, xử lý (thay cho động từ cụ thể)
+  pos: v
+  example: s-w-5092185
+- vi: 'lại, về (hướng về phía người nói: 回来, 过来)'
+  pos: comp
+  example: s-w-ai-0757f796
+- vi: 'được, không được (sau 得/不: 谈得来 hợp chuyện, 吃不来 không quen ăn; chỉ dùng trong 谈得来, 谈不来, 合得来, 合不来, 吃不来)'
+  pos: comp
+  example: s-w-ai-44d13925
+- vi: 'từ khi, suốt (khoảng thời gian qua: 以来, 三年来; chỉ dùng trong 以来, 三年来, 多年来, 近年来)'
+  pos: part
+  example: s-w-ai-823bc261
+- vi: 'khoảng, chừng (sau số tròn: 二十来个)'
+  pos: num
+  example: s-w-ai-d32e6bbb
+- vi: để (nối hai động từ)
+  pos: conj
+  example: s-w-ai-3151c61c
+- vi: sắp tới, sau (tiền tố thời gian; chỉ dùng trong 来年, 来世, 来日, 来生)
+  pos: adj
+  rare: true
+  example: s-w-ai-3f7bb4fd
+examples:
+- s-w-4970134
+- s-w-5092185
+- s-w-ai-0757f796

@@ -1,0 +1,18 @@
+id: 字
+hanzi: 字
+pinyin: zì
+hanviet: tự
+level: 1
+pos:
+- n
+senses:
+- vi: chữ, chữ viết, ký tự
+  pos: n
+  example: s-w-1216051
+- vi: tên tự (tên chữ thời xưa)
+  pos: n
+  rare: true
+  example: s-w-ai-f03e1060
+examples:
+- s-w-1216051
+- s-w-ai-f03e1060

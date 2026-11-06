@@ -1,0 +1,17 @@
+id: 笑
+hanzi: 笑
+pinyin: xiào
+hanviet: tiếu
+level: 1
+pos:
+- v
+senses:
+- vi: cười, mỉm cười
+  pos: v
+  example: s-w-335165
+- vi: cười nhạo, chê cười (ai)
+  pos: v
+  example: s-w-385298
+examples:
+- s-w-335165
+- s-w-385298

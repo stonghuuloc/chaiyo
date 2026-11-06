@@ -1,0 +1,17 @@
+id: 地上
+hanzi: 地上
+pinyin: dì shang
+hanviet: địa thượng
+level: 1
+pos:
+- n
+senses:
+- vi: trên mặt đất
+  pos: n
+  example: s-w-817370
+- vi: trên sàn nhà
+  pos: n
+  example: s-w-799117
+examples:
+- s-w-817370
+- s-w-799117

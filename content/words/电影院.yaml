@@ -1,0 +1,13 @@
+id: 电影院
+hanzi: 电影院
+pinyin: diàn yǐng yuàn
+hanviet: điện ảnh viện
+level: 1
+pos:
+- n
+senses:
+- vi: rạp chiếu phim
+  pos: n
+  example: s-w-2779141
+examples:
+- s-w-2779141

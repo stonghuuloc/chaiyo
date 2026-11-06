@@ -1,0 +1,35 @@
+id: 包
+hanzi: 包
+pinyin: bāo
+hanviet: bao
+level: 1
+pos:
+- n
+- v
+- mw
+senses:
+- vi: túi, cặp (đựng đồ)
+  pos: n
+  example: s-w-2040518
+- vi: gói, kiện (hàng, bưu phẩm)
+  pos: n
+  example: s-w-ai-e2e2c615
+- vi: gói, bọc
+  pos: v
+  example: s-w-2023499
+- vi: bao gồm
+  pos: v
+  example: s-w-ai-9a86a970
+- vi: bao, đài thọ (trả hết chi phí)
+  pos: v
+  example: s-w-ai-a0409532
+- vi: bao thầu, nhận làm trọn (công trình, công việc)
+  pos: v
+  example: s-w-ai-beb8cf56
+- vi: gói, bó (đồ đóng gói)
+  pos: mw
+  example: s-w-ai-1bc4ce11
+examples:
+- s-w-2040518
+- s-w-ai-e2e2c615
+- s-w-2023499

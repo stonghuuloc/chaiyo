@@ -1,0 +1,21 @@
+id: 找
+hanzi: 找
+pinyin: zhǎo
+hanviet: trảo
+level: 1
+pos:
+- v
+senses:
+- vi: tìm, tìm kiếm (找到/找不到 = tìm thấy/không tìm thấy)
+  pos: v
+  example: s-w-4971559
+- vi: tìm gặp, đến gặp (ai)
+  pos: v
+  example: s-w-2062938
+- vi: thối, trả lại (tiền thừa)
+  pos: v
+  example: s-w-1411509
+examples:
+- s-w-4971559
+- s-w-2062938
+- s-w-1411509

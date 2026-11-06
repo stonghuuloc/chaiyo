@@ -1,0 +1,24 @@
+id: 都
+hanzi: 都
+pinyin: dōu
+hanviet: đô
+level: 1
+pos:
+- adv
+senses:
+- vi: đều, tất cả, cả
+  pos: adv
+  example: s-w-9419130
+- vi: đã (nhấn mạnh thời điểm)
+  pos: adv
+  example: s-w-ai-7c94bddc
+- vi: ngay cả, đến (cũng; chỉ dùng trong 连…都)
+  pos: adv
+  example: s-w-ai-54855d82
+- vi: (không) chút nào, hề (không; chỉ dùng trong 一点都不, 一点都没)
+  pos: adv
+  example: s-w-ai-2a6b5a42
+examples:
+- s-w-9419130
+- s-w-ai-7c94bddc
+- s-w-ai-54855d82

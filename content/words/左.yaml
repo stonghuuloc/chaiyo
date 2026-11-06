@@ -1,0 +1,26 @@
+id: 左
+hanzi: 左
+pinyin: zuǒ
+hanviet: tả
+level: 1
+pos:
+- adj
+- n
+senses:
+- vi: trái, bên trái
+  pos: adj
+  example: s-w-8555762
+- vi: bất đồng, trái ngược (ý kiến; chỉ dùng trong 相左)
+  pos: adj
+  example: s-w-ai-10c79030
+- vi: sai, lệch (cách nghĩ)
+  pos: adj
+  rare: true
+  example: s-w-ai-4d2caae4
+- vi: phe tả, cánh tả (chính trị; chỉ dùng trong 左派, 左翼, 左倾)
+  pos: n
+  example: s-w-ai-9864c514
+examples:
+- s-w-8555762
+- s-w-ai-10c79030
+- s-w-ai-4d2caae4

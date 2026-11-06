@@ -1,0 +1,18 @@
+id: 一些
+hanzi: 一些
+pinyin: yī xiē
+hanviet: nhất ta
+level: 1
+pos:
+- mw
+- adv
+senses:
+- vi: một ít, một vài
+  pos: mw
+  example: s-w-510745
+- vi: hơn một chút
+  pos: adv
+  example: s-w-2076255
+examples:
+- s-w-510745
+- s-w-2076255

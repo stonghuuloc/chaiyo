@@ -1,0 +1,23 @@
+id: 忙
+hanzi: 忙
+pinyin: máng
+hanviet: mang
+level: 1
+pos:
+- adj
+- v
+- adv
+senses:
+- vi: bận, bận rộn
+  pos: adj
+  example: s-w-819333
+- vi: bận rộn với, bận làm (việc gì)
+  pos: v
+  example: s-w-ai-8a4f8a7a
+- vi: vội, vội vàng (chỉ dùng trong 连忙, 赶忙, 急忙)
+  pos: adv
+  example: s-w-ai-9d35a728
+examples:
+- s-w-819333
+- s-w-ai-8a4f8a7a
+- s-w-ai-9d35a728

@@ -1,0 +1,18 @@
+id: 树
+hanzi: 树
+pinyin: shù
+hanviet: thụ
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: cây
+  pos: n
+  example: s-w-4761858
+- vi: dựng nên, lập nên (gương, uy tín; chỉ dùng trong 树立, 树敌, 树威)
+  pos: v
+  example: s-w-ai-f026bbfa
+examples:
+- s-w-4761858
+- s-w-ai-f026bbfa

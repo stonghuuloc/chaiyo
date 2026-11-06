@@ -1,0 +1,17 @@
+id: 上课
+hanzi: 上课
+pinyin: shàng kè
+hanviet: thượng khoá
+level: 1
+pos:
+- v
+senses:
+- vi: đi học, dự lớp
+  pos: v
+  example: s-w-3378245
+- vi: lên lớp (dạy)
+  pos: v
+  example: s-w-ai-978c8e0e
+examples:
+- s-w-3378245
+- s-w-ai-978c8e0e

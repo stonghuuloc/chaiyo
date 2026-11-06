@@ -1,0 +1,22 @@
+id: 一点儿
+hanzi: 一点儿
+pinyin: yī diǎn r
+hanviet: nhất điểm nhi
+level: 1
+pos:
+- mw
+- adv
+senses:
+- vi: một chút, một ít
+  pos: mw
+  example: s-w-7817196
+- vi: một chút (cũng không), chút nào (chỉ dùng trong 一点儿也不, 一点儿也没, 一点儿都不, 一点儿都没)
+  pos: adv
+  example: s-w-2325071
+- vi: hơn một chút (sau tính từ)
+  pos: adv
+  example: s-w-6451960
+examples:
+- s-w-7817196
+- s-w-2325071
+- s-w-6451960

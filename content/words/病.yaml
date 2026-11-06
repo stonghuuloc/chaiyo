@@ -1,0 +1,22 @@
+id: 病
+hanzi: 病
+pinyin: bìng
+hanviet: bệnh
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: bệnh, bệnh tật
+  pos: n
+  example: s-w-5780588
+- vi: khuyết điểm, lỗi, trục trặc (chỉ dùng trong 毛病, 语病, 弊病)
+  pos: n
+  example: s-w-ai-e8526fc2
+- vi: ốm, ngã bệnh
+  pos: v
+  example: s-w-10603028
+examples:
+- s-w-5780588
+- s-w-ai-e8526fc2
+- s-w-10603028

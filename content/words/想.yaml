@@ -1,0 +1,24 @@
+id: 想
+hanzi: 想
+pinyin: xiǎng
+hanviet: tưởng
+level: 1
+pos:
+- v
+senses:
+- vi: muốn
+  pos: v
+  example: s-w-380912
+- vi: nghĩ rằng, cho rằng
+  pos: v
+  example: s-w-ai-f345fd29
+- vi: nghĩ, nghĩ ra, nghĩ đến
+  pos: v
+  example: s-w-ai-4794e8ca
+- vi: nhớ (người vắng xa)
+  pos: v
+  example: s-w-29
+examples:
+- s-w-380912
+- s-w-ai-f345fd29
+- s-w-ai-4794e8ca

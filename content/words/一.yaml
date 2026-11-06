@@ -1,0 +1,23 @@
+id: 一
+hanzi: 一
+pinyin: yī
+hanviet: nhất
+level: 1
+pos:
+- num
+- adv
+- adj
+senses:
+- vi: một (số đếm; cái, chiếc không xác định)
+  pos: num
+  example: s-w-336921
+- vi: vừa … là, hễ … thì (一…就…)
+  pos: adv
+  example: s-w-401127
+- vi: cả, suốt, toàn bộ (chỉ dùng trong 一路, 一生, 一身)
+  pos: adj
+  example: s-w-ai-54871e63
+examples:
+- s-w-336921
+- s-w-401127
+- s-w-ai-54871e63

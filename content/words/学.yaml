@@ -1,0 +1,22 @@
+id: 学
+hanzi: 学
+pinyin: xué
+hanviet: học
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: học, học tập
+  pos: v
+  example: s-w-1843469
+- vi: bắt chước, nhại theo
+  pos: v
+  example: s-w-ai-c943a396
+- vi: môn học, ngành khoa học (hậu tố -học; chỉ dùng trong 数学, 化学, 文学, 科学, 语言学)
+  pos: n
+  example: s-w-ai-44fef2ae
+examples:
+- s-w-1843469
+- s-w-ai-c943a396
+- s-w-ai-44fef2ae

@@ -1,0 +1,40 @@
+id: 去
+hanzi: 去
+pinyin: qù
+hanviet: khứ
+level: 1
+pos:
+- v
+- adj
+- comp
+senses:
+- vi: đi, đi tới (một nơi)
+  pos: v
+  example: s-w-1504028
+- vi: bỏ, loại bỏ (去掉)
+  pos: v
+  example: s-w-ai-2bfa1aa4
+- vi: giảm, làm dịu (chỉ dùng trong 去火, 去痛)
+  pos: v
+  example: s-w-ai-dd909e80
+- vi: gửi (chỉ dùng trong 去信, 去电, 去函)
+  pos: v
+  rare: true
+  example: s-w-ai-a0c9e140
+- vi: mất, qua đời (uyển ngữ)
+  pos: v
+  rare: true
+  example: s-w-ai-28861b5f
+- vi: ngoái, vừa qua (chỉ dùng trong 去年)
+  pos: adj
+  example: s-w-ai-0442c8bf
+- vi: 'đi (bổ ngữ chỉ hướng ra xa người nói: 回去, 过去)'
+  pos: comp
+  example: s-w-1646776
+- vi: 'đi, mất đi (bổ ngữ chỉ sự tách rời, sau động từ: 删去, 除去)'
+  pos: comp
+  example: s-w-ai-bf99e0e2
+examples:
+- s-w-1504028
+- s-w-ai-2bfa1aa4
+- s-w-ai-dd909e80

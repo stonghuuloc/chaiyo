@@ -1,0 +1,17 @@
+id: 汽车
+hanzi: 汽车
+pinyin: qì chē
+hanviet: khí xa
+level: 1
+pos:
+- n
+senses:
+- vi: xe hơi, ô tô
+  pos: n
+  example: s-w-782343
+- vi: xe buýt, xe khách
+  pos: n
+  example: s-w-430153
+examples:
+- s-w-782343
+- s-w-430153

@@ -1,0 +1,27 @@
+id: 差
+hanzi: 差
+pinyin: chà
+hanviet: sai
+level: 1
+pos:
+- adj
+- v
+- comp
+senses:
+- vi: kém, tệ
+  pos: adj
+  example: s-w-8854425
+- vi: thiếu
+  pos: v
+  example: s-w-ai-481f06fc
+- vi: chênh nhau, hơn kém nhau (số lượng)
+  pos: v
+  example: s-w-519938
+- vi: 'nhầm, sai (sau động từ: 记差, 说差)'
+  pos: comp
+  rare: true
+  example: s-w-ai-e1856288
+examples:
+- s-w-8854425
+- s-w-ai-481f06fc
+- s-w-519938

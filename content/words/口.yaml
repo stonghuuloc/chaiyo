@@ -1,0 +1,28 @@
+id: 口
+hanzi: 口
+pinyin: kǒu
+hanviet: khẩu
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: miệng, mồm
+  pos: n
+  example: s-w-ai-584d6265
+- vi: cửa, lối (出口, 入口, 门口)
+  pos: n
+  example: s-w-374848
+- vi: 'người (đếm thành viên gia đình: 五口人)'
+  pos: mw
+  example: s-w-ai-fc23f018
+- vi: cái (giếng, chum…)
+  pos: mw
+  example: s-w-ai-bf9a3965
+- vi: ngụm, miếng (nước, đồ ăn)
+  pos: mw
+  example: s-w-ai-d8a50c79
+examples:
+- s-w-ai-584d6265
+- s-w-374848
+- s-w-ai-fc23f018

@@ -1,0 +1,42 @@
+id: 下
+hanzi: 下
+pinyin: xià
+hanviet: hạ
+level: 1
+pos:
+- v
+- n
+- adj
+- mw
+senses:
+- vi: rơi, xuống (mưa, tuyết)
+  pos: v
+  example: s-w-2481833
+- vi: xuống (xe, tàu)
+  pos: v
+  example: s-w-6559053
+- vi: giảm, hạ (chỉ dùng trong 下降, 下跌, 下滑, 下调)
+  pos: v
+  example: s-w-ai-a3316240
+- vi: đưa ra (quyết định, kết luận; chỉ dùng trong 下决心, 下结论, 下定义)
+  pos: v
+  example: s-w-ai-0cbe9d92
+- vi: dưới, bên dưới
+  pos: n
+  example: s-w-13971953
+- vi: cấp dưới, thuộc hạ (chỉ dùng trong 下级, 手下, 部下, 属下)
+  pos: n
+  example: s-w-ai-d667dc62
+- vi: sau, kế tiếp (tuần, tháng, lần; chỉ dùng trong 下周, 下月, 下次, 下个月)
+  pos: adj
+  example: s-w-345857
+- vi: phần sau (trong hai phần; chỉ dùng trong 下半年, 下半场, 下半夜, 下册)
+  pos: adj
+  example: s-w-ai-6c05367e
+- vi: lần, cái (đếm hành động)
+  pos: mw
+  example: s-w-ai-3d7e751d
+examples:
+- s-w-2481833
+- s-w-6559053
+- s-w-ai-a3316240

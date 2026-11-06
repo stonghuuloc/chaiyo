@@ -1,0 +1,28 @@
+id: 准备
+hanzi: 准备
+pinyin: zhǔn bèi
+hanviet: chuẩn bị
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: chuẩn bị
+  pos: v
+  example: s-w-1424176
+- vi: định, dự định
+  pos: v
+  example: s-w-419934
+- vi: sắp, đang định
+  pos: v
+  example: s-w-6452037
+- vi: sự chuẩn bị
+  pos: n
+  example: s-w-1397121
+- vi: quỹ dự phòng (chỉ dùng trong 准备金)
+  pos: n
+  example: s-w-ai-cef91446
+examples:
+- s-w-1424176
+- s-w-419934
+- s-w-6452037

@@ -1,0 +1,24 @@
+id: 读
+hanzi: 读
+pinyin: dú
+hanviet: độc
+level: 1
+pos:
+- v
+senses:
+- vi: đọc (sách, báo)
+  pos: v
+  example: s-w-1312439
+- vi: đọc to, đọc thành tiếng
+  pos: v
+  example: s-w-7817194
+- vi: học, theo học (ở trường)
+  pos: v
+  example: s-w-334302
+- vi: đọc, phát âm (chữ, từ)
+  pos: v
+  example: s-w-8895540
+examples:
+- s-w-1312439
+- s-w-7817194
+- s-w-334302

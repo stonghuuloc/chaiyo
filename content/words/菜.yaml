@@ -1,0 +1,28 @@
+id: 菜
+hanzi: 菜
+pinyin: cài
+hanviet: thái
+level: 1
+pos:
+- n
+- adj
+senses:
+- vi: món ăn, món
+  pos: n
+  example: s-w-3700708
+- vi: rau, rau củ
+  pos: n
+  example: s-w-2411926
+- vi: món (theo vùng, nước)
+  pos: n
+  example: s-w-3377911
+- vi: mẫu người mình thích (khẩu ngữ; chỉ dùng trong 是我的菜, 不是我的菜)
+  pos: n
+  example: s-w-3742628
+- vi: kém, dở (kỹ năng; khẩu ngữ)
+  pos: adj
+  example: s-w-ai-a15ccab0
+examples:
+- s-w-3700708
+- s-w-2411926
+- s-w-3377911

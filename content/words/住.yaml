@@ -1,0 +1,22 @@
+id: 住
+hanzi: 住
+pinyin: zhù
+hanviet: trú
+level: 1
+pos:
+- v
+- comp
+senses:
+- vi: ở, sống, cư trú
+  pos: v
+  example: s-w-136401
+- vi: ở tạm, lưu lại (tạm trú)
+  pos: v
+  example: s-w-12686901
+- vi: chặt, vững, giữ được (bổ ngữ kết quả; chỉ sự chắc chắn hoặc dừng lại)
+  pos: comp
+  example: s-w-ai-b480277f
+examples:
+- s-w-136401
+- s-w-12686901
+- s-w-ai-b480277f

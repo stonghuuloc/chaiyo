@@ -1,0 +1,26 @@
+id: 零
+hanzi: 零
+pinyin: líng
+hanviet: linh
+level: 1
+pos:
+- num
+- adj
+- n
+senses:
+- vi: không, số không
+  pos: num
+  example: s-w-ai-98d71062
+- vi: 'lẻ, linh (đệm giữa các số: một nghìn lẻ một)'
+  pos: num
+  example: s-w-1750549
+- vi: lẻ, lặt vặt, vụn vặt (chỉ dùng trong 零钱, 零食, 零件, 零碎, 零售, 零花钱)
+  pos: adj
+  example: s-w-ai-6fd2deb3
+- vi: phần lẻ, số lẻ (sau số tròn; chỉ dùng trong 零头)
+  pos: n
+  example: s-w-ai-6d590164
+examples:
+- s-w-ai-98d71062
+- s-w-1750549
+- s-w-ai-6fd2deb3

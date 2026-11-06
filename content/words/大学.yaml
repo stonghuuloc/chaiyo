@@ -1,0 +1,17 @@
+id: 大学
+hanzi: 大学
+pinyin: dà xué
+hanviet: đại học
+level: 1
+pos:
+- n
+senses:
+- vi: trường đại học
+  pos: n
+  example: s-w-3378097
+- vi: trường cao đẳng
+  pos: n
+  example: s-w-348014
+examples:
+- s-w-3378097
+- s-w-348014

@@ -1,0 +1,22 @@
+id: 中间
+hanzi: 中间
+pinyin: zhōng jiān
+hanviet: trung gian
+level: 1
+pos:
+- n
+- adv
+senses:
+- vi: ở giữa, bên trong
+  pos: n
+  example: s-w-487597
+- vi: giữa, trong số
+  pos: n
+  example: s-w-1454465
+- vi: giữa chừng, trong lúc đó
+  pos: adv
+  example: s-w-ai-85ef3919
+examples:
+- s-w-487597
+- s-w-1454465
+- s-w-ai-85ef3919

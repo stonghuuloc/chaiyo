@@ -1,0 +1,38 @@
+id: 次
+hanzi: 次
+pinyin: cì
+hanviet: thứ
+level: 1
+pos:
+- mw
+- adj
+- n
+senses:
+- vi: lần, lượt (sự việc)
+  pos: mw
+  example: s-w-ai-936e70a4
+- vi: kế tiếp, sau (chỉ dùng trong 次日, 次年, 次晨, 次月)
+  pos: adj
+  example: s-w-ai-c1134574
+- vi: thứ yếu, phụ (chỉ dùng trong 次要, 次级, 次长, 次品)
+  pos: adj
+  example: s-w-ai-6281eec6
+- vi: kém, tồi (chất lượng; khẩu ngữ)
+  pos: adj
+  rare: true
+  example: s-w-ai-9d47f5f8
+- vi: hạ-, dưới (tiền tố khoa học; chỉ dùng trong 次声, 次声波, 次生)
+  pos: adj
+  rare: true
+  example: s-w-ai-96e0faf7
+- vi: hipo- (tiền tố hoá học; chỉ dùng trong 次氯酸, 次磷酸, 次氯酸钠)
+  pos: adj
+  rare: true
+  example: s-w-ai-fad38b89
+- vi: thứ tự, trình tự (chỉ dùng trong 次序, 依次, 次第, 按次)
+  pos: n
+  example: s-w-ai-3a5e3b42
+examples:
+- s-w-ai-936e70a4
+- s-w-ai-c1134574
+- s-w-ai-6281eec6

@@ -1,0 +1,24 @@
+id: 请
+hanzi: 请
+pinyin: qǐng
+hanviet: thỉnh
+level: 1
+pos:
+- v
+senses:
+- vi: xin, làm ơn (đặt trước động từ để nhờ/mời lịch sự)
+  pos: v
+  example: s-w-2076255
+- vi: mời
+  pos: v
+  example: s-w-373432
+- vi: nhờ, yêu cầu
+  pos: v
+  example: s-w-5949249
+- vi: đãi, khao (ăn uống)
+  pos: v
+  example: s-w-ai-a9980e88
+examples:
+- s-w-2076255
+- s-w-373432
+- s-w-5949249

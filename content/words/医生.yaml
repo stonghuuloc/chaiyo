@@ -1,0 +1,13 @@
+id: 医生
+hanzi: 医生
+pinyin: yī shēng
+hanviet: y sinh
+level: 1
+pos:
+- n
+senses:
+- vi: bác sĩ
+  pos: n
+  example: s-w-334971
+examples:
+- s-w-334971

@@ -1,0 +1,21 @@
+id: 正在
+hanzi: 正在
+pinyin: zhèng zài
+hanviet: chính tại
+level: 1
+pos:
+- adv
+senses:
+- vi: đúng lúc ấy
+  pos: adv
+  example: s-w-ai-52559b6a
+- vi: ngay tại (địa điểm)
+  pos: adv
+  example: s-w-ai-35e6f140
+- vi: đang (làm gì)
+  pos: adv
+  example: s-w-1974803
+examples:
+- s-w-ai-52559b6a
+- s-w-ai-35e6f140
+- s-w-1974803

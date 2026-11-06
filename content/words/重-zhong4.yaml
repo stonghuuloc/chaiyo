@@ -1,0 +1,22 @@
+id: 重-zhong4
+hanzi: 重
+pinyin: zhòng
+hanviet: trọng
+level: 1
+pos:
+- adj
+- v
+senses:
+- vi: nặng (trọng lượng)
+  pos: adj
+  example: s-w-10617224
+- vi: nghiêm trọng, nặng (bệnh, thương)
+  pos: adj
+  example: s-w-ai-01ddcb6b
+- vi: coi trọng, xem trọng
+  pos: v
+  example: s-w-ai-ca6194c6
+examples:
+- s-w-10617224
+- s-w-ai-01ddcb6b
+- s-w-ai-ca6194c6

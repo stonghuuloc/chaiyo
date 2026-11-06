@@ -1,0 +1,22 @@
+id: 本子
+hanzi: 本子
+pinyin: běn zi
+hanviet: bản tử
+level: 1
+pos:
+- n
+senses:
+- vi: vở, sổ (ghi chép)
+  pos: n
+  example: s-w-ai-aa1499c0
+- vi: bản, ấn bản (của sách, văn bản)
+  pos: n
+  example: s-w-ai-2ccedc58
+- vi: truyện tranh tự xuất bản (doujinshi)
+  pos: n
+  rare: true
+  example: s-w-ai-60767dc4
+examples:
+- s-w-ai-aa1499c0
+- s-w-ai-2ccedc58
+- s-w-ai-60767dc4

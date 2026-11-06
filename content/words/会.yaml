@@ -1,0 +1,31 @@
+id: 会
+hanzi: 会
+pinyin: huì
+hanviet: hội
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: biết, có thể (nhờ đã học)
+  pos: v
+  example: s-w-2934370
+- vi: sẽ, có thể sẽ (khả năng xảy ra)
+  pos: v
+  example: s-w-1438994
+- vi: gặp, gặp gỡ (chỉ dùng trong 会面, 会见, 会客)
+  pos: v
+  example: s-w-ai-9098fdf3
+- vi: cuộc họp, buổi họp
+  pos: n
+  example: s-w-ai-91398164
+- vi: 'hội, hiệp hội, nhóm (hậu tố: 学生会 hội sinh viên; chỉ dùng trong 学生会, 工会, 协会, 商会)'
+  pos: n
+  example: s-w-ai-995c4590
+- vi: lát, một lúc (会儿, 一会儿; chỉ dùng trong 一会儿, 这会儿, 那会儿, 等会儿)
+  pos: n
+  example: s-w-ai-9210314f
+examples:
+- s-w-2934370
+- s-w-1438994
+- s-w-ai-9098fdf3

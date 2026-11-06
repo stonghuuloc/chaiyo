@@ -1,0 +1,21 @@
+id: 哪些
+hanzi: 哪些
+pinyin: nǎ xiē
+hanviet: nả ta
+level: 1
+pos:
+- pron
+senses:
+- vi: những ... nào
+  pos: pron
+  example: s-w-11321735
+- vi: những ai
+  pos: pron
+  example: s-w-10966749
+- vi: những gì
+  pos: pron
+  example: s-w-1516217
+examples:
+- s-w-11321735
+- s-w-10966749
+- s-w-1516217

@@ -1,0 +1,17 @@
+id: 这
+hanzi: 这
+pinyin: zhè
+hanviet: giá
+level: 1
+pos:
+- pron
+senses:
+- vi: đây, cái này, điều này
+  pos: pron
+  example: s-w-347291
+- vi: này (đứng trước danh từ, lượng từ)
+  pos: pron
+  example: s-w-ai-3e15d32e
+examples:
+- s-w-347291
+- s-w-ai-3e15d32e

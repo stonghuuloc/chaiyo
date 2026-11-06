@@ -1,0 +1,18 @@
+id: 睡
+hanzi: 睡
+pinyin: shuì
+hanviet: thuỵ
+level: 1
+pos:
+- v
+senses:
+- vi: ngủ
+  pos: v
+  example: s-w-9433041
+- vi: nằm xuống (thường dùng trong 睡下)
+  pos: v
+  rare: true
+  example: s-w-ai-ad9f7faa
+examples:
+- s-w-9433041
+- s-w-ai-ad9f7faa

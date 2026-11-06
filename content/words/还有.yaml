@@ -1,0 +1,18 @@
+id: 还有
+hanzi: 还有
+pinyin: hái yǒu
+hanviet: hoàn hữu
+level: 1
+pos:
+- conj
+- v
+senses:
+- vi: ngoài ra, và còn
+  pos: conj
+  example: s-w-ai-085f7cde
+- vi: vẫn còn, còn có
+  pos: v
+  example: s-w-349705
+examples:
+- s-w-ai-085f7cde
+- s-w-349705

@@ -1,0 +1,17 @@
+id: 都-du1
+hanzi: 都
+pinyin: dū
+hanviet: đô
+level: 1
+pos:
+- n
+senses:
+- vi: thủ đô, kinh đô (chỉ dùng trong 首都, 古都, 建都)
+  pos: n
+  example: s-w-ai-0e6b8ba6
+- vi: thành phố lớn, đô thị (chỉ dùng trong 都市, 都会)
+  pos: n
+  example: s-w-ai-be539f14
+examples:
+- s-w-ai-0e6b8ba6
+- s-w-ai-be539f14

@@ -1,0 +1,18 @@
+id: 没
+hanzi: 没
+pinyin: méi
+hanviet: một
+level: 1
+pos:
+- adv
+- v
+senses:
+- vi: không, chưa (phủ định việc đã xảy ra)
+  pos: adv
+  example: s-w-2299590
+- vi: không có, chưa có
+  pos: v
+  example: s-w-782929
+examples:
+- s-w-2299590
+- s-w-782929

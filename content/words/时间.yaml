@@ -1,0 +1,17 @@
+id: 时间
+hanzi: 时间
+pinyin: shí jiān
+hanviet: thời gian
+level: 1
+pos:
+- n
+senses:
+- vi: thời gian
+  pos: n
+  example: s-w-782929
+- vi: khoảng thời gian
+  pos: n
+  example: s-w-4104783
+examples:
+- s-w-782929
+- s-w-4104783

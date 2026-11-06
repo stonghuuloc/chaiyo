@@ -1,0 +1,33 @@
+id: 上
+hanzi: 上
+pinyin: shàng
+hanviet: thượng
+level: 1
+pos:
+- v
+- n
+- comp
+- adj
+senses:
+- vi: lên, đi lên
+  pos: v
+  example: s-w-334266
+- vi: học, vào học (lớp, đại học)
+  pos: v
+  example: s-w-1510613
+- vi: trên (đặt sau danh từ chỉ vị trí)
+  pos: n
+  example: s-w-2345989
+- vi: vào, lên (bổ ngữ kết quả, chỉ sự tiếp xúc/gắn vào)
+  pos: comp
+  example: s-w-13210530
+- vi: trước, vừa qua (chỉ dùng trong 上次, 上个月, 上周, 上星期, 上学期)
+  pos: adj
+  example: s-w-2737447
+- vi: thượng, phần đầu (chỉ dùng trong 上册, 上集, 上篇, 上卷)
+  pos: adj
+  example: s-w-ai-a697098d
+examples:
+- s-w-334266
+- s-w-1510613
+- s-w-2345989

@@ -1,0 +1,25 @@
+id: 能
+hanzi: 能
+pinyin: néng
+hanviet: năng
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: có thể, có khả năng
+  pos: v
+  example: s-w-10966843
+- vi: được phép
+  pos: v
+  example: s-w-476636
+- vi: năng lực, khả năng (chỉ dùng trong 能力, 才能, 技能)
+  pos: n
+  example: s-w-ai-34733cdc
+- vi: năng lượng (vật lý; chỉ dùng trong 能量, 能源, 太阳能, 核能)
+  pos: n
+  example: s-w-ai-13c72771
+examples:
+- s-w-10966843
+- s-w-476636
+- s-w-ai-34733cdc

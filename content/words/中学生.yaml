@@ -1,0 +1,17 @@
+id: 中学生
+hanzi: 中学生
+pinyin: zhōng xué shēng
+hanviet: trung học sinh
+level: 1
+pos:
+- n
+senses:
+- vi: học sinh cấp hai
+  pos: n
+  example: s-w-333482
+- vi: học sinh cấp ba
+  pos: n
+  example: s-w-ai-5b3ebabc
+examples:
+- s-w-333482
+- s-w-ai-5b3ebabc

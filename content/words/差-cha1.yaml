@@ -1,0 +1,17 @@
+id: 差-cha1
+hanzi: 差
+pinyin: chā
+hanviet: sai
+level: 1
+pos:
+- n
+senses:
+- vi: sự khác biệt, chênh lệch (chỉ dùng trong 时差, 差别, 差距, 差额, 误差)
+  pos: n
+  example: s-w-ai-e1852cc3
+- vi: hiệu (kết quả phép trừ)
+  pos: n
+  example: s-w-ai-1aca600d
+examples:
+- s-w-ai-e1852cc3
+- s-w-ai-1aca600d

@@ -1,0 +1,22 @@
+id: 他
+hanzi: 他
+pinyin: tā
+hanviet: tha
+level: 1
+pos:
+- pron
+senses:
+- vi: anh ấy, ông ấy, nó (ngôi thứ ba)
+  pos: pron
+  example: s-w-348032
+- vi: khác (chỉ dùng trong 其他, 他人, 他乡)
+  pos: pron
+  example: s-w-ai-95a241ae
+- vi: (đặt trước tên người, nhấn mạnh)
+  pos: pron
+  rare: true
+  example: s-w-ai-cf871de4
+examples:
+- s-w-348032
+- s-w-ai-95a241ae
+- s-w-ai-cf871de4

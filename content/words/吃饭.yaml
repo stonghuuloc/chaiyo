@@ -1,0 +1,17 @@
+id: 吃饭
+hanzi: 吃饭
+pinyin: chī fàn
+hanviet: cật phạn
+level: 1
+pos:
+- v
+senses:
+- vi: ăn, dùng bữa
+  pos: v
+  example: s-w-1163518
+- vi: kiếm sống
+  pos: v
+  example: s-w-ai-93434e73
+examples:
+- s-w-1163518
+- s-w-ai-93434e73

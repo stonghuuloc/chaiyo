@@ -1,0 +1,26 @@
+id: 间-jian4
+hanzi: 间
+pinyin: jiàn
+hanviet: gián
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: khe hở, khoảng trống (chỉ dùng trong 间隙)
+  pos: n
+  example: s-w-ai-bccc30df
+- vi: cách nhau, ngăn cách (chỉ dùng trong 间隔)
+  pos: v
+  example: s-w-ai-15e9b79b
+- vi: chia rẽ, ly gián (chỉ dùng trong 离间, 挑拨离间)
+  pos: v
+  example: s-w-ai-93486975
+- vi: tỉa (cây con)
+  pos: v
+  rare: true
+  example: s-w-ai-2a4b2ee1
+examples:
+- s-w-ai-bccc30df
+- s-w-ai-15e9b79b
+- s-w-ai-93486975

@@ -1,0 +1,28 @@
+id: 着-zhao2
+hanzi: 着
+pinyin: zháo
+hanviet: trước
+level: 1
+pos:
+- comp
+- v
+senses:
+- vi: được, trúng (chỉ kết quả đạt được sau động từ)
+  pos: comp
+  example: s-w-ai-262dcfe0
+- vi: cháy, bắt lửa
+  pos: v
+  example: s-w-ai-1f4760d7
+- vi: cảm thấy, bị (chỉ dùng trong 着急, 着慌, 着忙, 着凉)
+  pos: v
+  example: s-w-3698035
+- vi: chạm tới, với tới (chỉ dùng trong 够不着, 摸不着, 够得着, 摸得着)
+  pos: v
+  example: s-w-ai-80022c5c
+- vi: ngủ thiếp đi (chỉ dùng trong 睡着)
+  pos: v
+  example: s-w-ai-6d4f7010
+examples:
+- s-w-ai-262dcfe0
+- s-w-ai-1f4760d7
+- s-w-3698035

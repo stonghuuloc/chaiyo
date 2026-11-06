@@ -1,0 +1,22 @@
+id: 一块儿
+hanzi: 一块儿
+pinyin: yī kuài r
+hanviet: nhất khối nhi
+level: 1
+pos:
+- adv
+- n
+senses:
+- vi: cùng nhau, với nhau
+  pos: adv
+  example: s-w-12316272
+- vi: miếng, khúc
+  pos: n
+  example: s-w-ai-8b56868c
+- vi: một tệ, một đô la
+  pos: n
+  example: s-w-ai-f4686922
+examples:
+- s-w-12316272
+- s-w-ai-8b56868c
+- s-w-ai-f4686922

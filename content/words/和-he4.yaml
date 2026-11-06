@@ -1,0 +1,18 @@
+id: 和-he4
+hanzi: 和
+pinyin: hè
+hanviet: hoạ
+level: 1
+pos:
+- v
+senses:
+- vi: hát theo, hoà giọng
+  pos: v
+  example: s-w-ai-6e265479
+- vi: hoạ lại, đáp lại (bằng cùng vần; chỉ dùng trong 唱和, 和诗)
+  pos: v
+  rare: true
+  example: s-w-ai-2b38ada4
+examples:
+- s-w-ai-6e265479
+- s-w-ai-2b38ada4

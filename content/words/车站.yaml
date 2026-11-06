@@ -1,0 +1,17 @@
+id: 车站
+hanzi: 车站
+pinyin: chē zhàn
+hanviet: xa trạm
+level: 1
+pos:
+- n
+senses:
+- vi: nhà ga
+  pos: n
+  example: s-w-1408054
+- vi: trạm xe buýt
+  pos: n
+  example: s-w-334028
+examples:
+- s-w-1408054
+- s-w-334028

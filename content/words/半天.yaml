@@ -1,0 +1,17 @@
+id: 半天
+hanzi: 半天
+pinyin: bàn tiān
+hanviet: bán thiên
+level: 1
+pos:
+- n
+senses:
+- vi: nửa ngày
+  pos: n
+  example: s-w-ai-0713b580
+- vi: lâu lắm
+  pos: n
+  example: s-w-1305934
+examples:
+- s-w-ai-0713b580
+- s-w-1305934

@@ -1,0 +1,21 @@
+id: 哪
+hanzi: 哪
+pinyin: nǎ
+hanviet: nả
+level: 1
+pos:
+- pron
+senses:
+- vi: đâu, ở đâu
+  pos: pron
+  example: s-w-8775856
+- vi: nào, cái nào
+  pos: pron
+  example: s-w-710869
+- vi: 'đâu, nào (phản vấn: 哪有, 哪能)'
+  pos: pron
+  example: s-w-ai-ed6f0467
+examples:
+- s-w-8775856
+- s-w-710869
+- s-w-ai-ed6f0467

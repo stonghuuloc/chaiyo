@@ -1,0 +1,21 @@
+id: 后
+hanzi: 后
+pinyin: hòu
+hanviet: hậu
+level: 1
+pos:
+- n
+senses:
+- vi: hậu, vợ vua (chỉ dùng trong 皇后, 王后, 太后, 后妃)
+  pos: n
+  example: s-w-ai-ccbefa50
+- vi: sau, phía sau
+  pos: n
+  example: s-w-8780275
+- vi: 'sau, sau khi, về sau (cũng nghĩa hậu-: 战后, 术后)'
+  pos: n
+  example: s-w-344414
+examples:
+- s-w-ai-ccbefa50
+- s-w-8780275
+- s-w-344414

@@ -1,0 +1,25 @@
+id: 出来
+hanzi: 出来
+pinyin: chū lái
+hanviet: xuất lai
+level: 1
+pos:
+- v
+- comp
+senses:
+- vi: ra ngoài
+  pos: v
+  example: s-w-407251
+- vi: xuất hiện
+  pos: v
+  example: s-w-4270731
+- vi: nảy sinh
+  pos: v
+  example: s-w-ai-fe4449ae
+- vi: ra; … ra được
+  pos: comp
+  example: s-w-662314
+examples:
+- s-w-407251
+- s-w-4270731
+- s-w-ai-fe4449ae

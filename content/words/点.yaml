@@ -1,0 +1,63 @@
+id: 点
+hanzi: 点
+pinyin: diǎn
+hanviet: điểm
+level: 1
+pos:
+- mw
+- v
+- n
+senses:
+- vi: giờ (chỉ giờ đồng hồ)
+  pos: mw
+  example: s-w-ai-49ad8985
+- vi: điều, điểm, ý (mục, ý kiến)
+  pos: mw
+  example: s-w-ai-4563f1a1
+- vi: chút, ít (đồ, thời gian)
+  pos: mw
+  example: s-w-ai-7fc92c30
+- vi: gọi (món ăn)
+  pos: v
+  example: s-w-3630686
+- vi: chọn, gọi (bài hát, người)
+  pos: v
+  example: s-w-ai-84ebf18b
+- vi: điểm, kiểm tra (theo danh sách)
+  pos: v
+  example: s-w-ai-b6dff683
+- vi: chạm nhẹ, bấm
+  pos: v
+  example: s-w-ai-96e93498
+- vi: gật (đầu)
+  pos: v
+  example: s-w-ai-4e60d2cb
+- vi: thắp, đốt, châm (đèn, lửa)
+  pos: v
+  example: s-w-ai-ee8d2c24
+- vi: nhỏ (từng giọt)
+  pos: v
+  example: s-w-ai-6882a550
+- vi: gợi ý, chỉ điểm (chỉ dùng trong 一点就通, 一点就明白, 点拨, 点醒, 点破)
+  pos: v
+  example: s-w-ai-d67b84c4
+- vi: chấm (một chấm)
+  pos: v
+  rare: true
+  example: s-w-ai-251880df
+- vi: 'điểm (vị trí, thời điểm: 起点, 地点; chỉ dùng trong 起点, 终点, 地点, 重点, 优点, 缺点)'
+  pos: n
+  example: s-w-ai-5435ccaa
+- vi: chấm, vệt nhỏ
+  pos: n
+  example: s-w-ai-5ae86933
+- vi: giọt (mưa, nước)
+  pos: n
+  example: s-w-ai-7105ab1e
+- vi: nét chấm (trong chữ Hán)
+  pos: n
+  example: s-w-ai-a04a1acc
+examples:
+- s-w-ai-49ad8985
+- s-w-ai-4563f1a1
+- s-w-ai-7fc92c30

@@ -1,0 +1,18 @@
+id: 个
+hanzi: 个
+pinyin: gè
+hanviet: cá
+level: 1
+pos:
+- mw
+- adj
+senses:
+- vi: cái (lượng từ dùng chung cho nhiều danh từ)
+  pos: mw
+  example: s-w-ai-ec0d8e2d
+- vi: cá nhân, riêng (chỉ dùng trong 个人, 个体, 个性)
+  pos: adj
+  example: s-w-ai-e5908c1e
+examples:
+- s-w-ai-ec0d8e2d
+- s-w-ai-e5908c1e

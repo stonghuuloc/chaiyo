@@ -1,0 +1,19 @@
+id: 奶
+hanzi: 奶
+pinyin: nǎi
+hanviet: nãi
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: sữa
+  pos: n
+  example: s-w-487605
+- vi: cho bú (con)
+  pos: v
+  rare: true
+  example: s-w-ai-e57f9226
+examples:
+- s-w-487605
+- s-w-ai-e57f9226

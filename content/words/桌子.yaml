@@ -1,0 +1,17 @@
+id: 桌子
+hanzi: 桌子
+pinyin: zhuō zi
+hanviet: trác tử
+level: 1
+pos:
+- n
+senses:
+- vi: bàn
+  pos: n
+  example: s-w-2345989
+- vi: bàn làm việc
+  pos: n
+  example: s-w-2370640
+examples:
+- s-w-2345989
+- s-w-2370640

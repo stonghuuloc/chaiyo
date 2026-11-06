@@ -1,0 +1,17 @@
+id: 坐
+hanzi: 坐
+pinyin: zuò
+hanviet: toạ
+level: 1
+pos:
+- v
+senses:
+- vi: ngồi
+  pos: v
+  example: s-w-1216136
+- vi: đi, ngồi (xe, tàu, máy bay)
+  pos: v
+  example: s-w-4563171
+examples:
+- s-w-1216136
+- s-w-4563171

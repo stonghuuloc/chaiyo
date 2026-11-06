@@ -1,0 +1,34 @@
+id: 起来
+hanzi: 起来
+pinyin: qǐ lai
+hanviet: khởi lai
+level: 1
+pos:
+- v
+- comp
+senses:
+- vi: đứng lên
+  pos: v
+  example: s-w-797554
+- vi: thức dậy, dậy
+  pos: v
+  example: s-w-8727845
+- vi: bắt đầu, dần trở nên
+  pos: comp
+  example: s-w-3430898
+- vi: lên (chỉ hướng đi lên)
+  pos: comp
+  example: s-w-2188401
+- vi: nhớ ra
+  pos: comp
+  example: s-w-472898
+- vi: nghe có vẻ
+  pos: comp
+  example: s-w-10783861
+- vi: hoàn tất, tạo trạng thái kết quả
+  pos: comp
+  example: s-w-ai-ff04ed31
+examples:
+- s-w-797554
+- s-w-8727845
+- s-w-3430898

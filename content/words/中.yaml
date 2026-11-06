@@ -1,0 +1,31 @@
+id: 中
+hanzi: 中
+pinyin: zhōng
+hanviet: trung
+level: 1
+pos:
+- n
+- prep
+- part
+- adj
+senses:
+- vi: Trung Quốc, của Trung Quốc (gọi tắt, như 中美, 中文; chỉ dùng trong 中美, 中文, 中日, 中外, 中餐, 中医)
+  pos: n
+  example: s-w-ai-341382ca
+- vi: trong, giữa (phạm vi, nhóm)
+  pos: prep
+  example: s-w-5845651
+- vi: đang (diễn ra), trong lúc (chỉ dùng trong 进行中, 建设中, 使用中, 考虑中)
+  pos: part
+  example: s-w-512439
+- vi: giữa, vừa, trung bình (như 中号, 中间; chỉ dùng trong 中间, 中心, 中号, 中等, 中年, 中途)
+  pos: adj
+  example: s-w-1589735
+- vi: được, ổn (phương ngữ)
+  pos: adj
+  rare: true
+  example: s-w-13925665
+examples:
+- s-w-ai-341382ca
+- s-w-5845651
+- s-w-512439

@@ -1,0 +1,31 @@
+id: 肉
+hanzi: 肉
+pinyin: ròu
+hanviet: nhục
+level: 1
+pos:
+- n
+- adj
+senses:
+- vi: thịt
+  pos: n
+  example: s-w-843486
+- vi: cùi, thịt (quả)
+  pos: n
+  example: s-w-ai-fd3620d0
+- vi: nhũn, mềm (quả, khẩu ngữ)
+  pos: adj
+  rare: true
+  example: s-w-ai-240b0ca1
+- vi: nhão, mềm nhẽo (người, khẩu ngữ)
+  pos: adj
+  rare: true
+  example: s-w-ai-56b4d284
+- vi: ề à, thiếu dứt khoát (khẩu ngữ)
+  pos: adj
+  rare: true
+  example: s-w-ai-8e735c99
+examples:
+- s-w-843486
+- s-w-ai-fd3620d0
+- s-w-ai-240b0ca1

@@ -1,0 +1,21 @@
+id: 球
+hanzi: 球
+pinyin: qiú
+hanviet: cầu
+level: 1
+pos:
+- n
+senses:
+- vi: bóng, quả bóng
+  pos: n
+  example: s-w-1411677
+- vi: 'trận bóng (khẩu ngữ, ví dụ 看球: xem trận bóng)'
+  pos: n
+  example: s-w-ai-cf9f8911
+- vi: vật hình cầu, quả cầu (chủ yếu trong 地球, 眼球; chỉ dùng trong 地球, 眼球, 星球, 球形)
+  pos: n
+  example: s-w-ai-c134ed12
+examples:
+- s-w-1411677
+- s-w-ai-cf9f8911
+- s-w-ai-c134ed12

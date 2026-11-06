@@ -1,0 +1,18 @@
+id: 一下儿
+hanzi: 一下儿
+pinyin: yī xià r
+hanviet: nhất hạ nhi
+level: 1
+pos:
+- comp
+- adv
+senses:
+- vi: một chút, một lần
+  pos: comp
+  example: s-w-ai-8c82784a
+- vi: đột nhiên
+  pos: adv
+  example: s-w-ai-283496c6
+examples:
+- s-w-ai-8c82784a
+- s-w-ai-283496c6

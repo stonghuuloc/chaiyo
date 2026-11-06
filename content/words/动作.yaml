@@ -1,0 +1,18 @@
+id: 动作
+hanzi: 动作
+pinyin: dòng zuò
+hanviet: động tác
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: động tác, cử chỉ
+  pos: n
+  example: s-w-2031470
+- vi: hành động, di chuyển
+  pos: v
+  example: s-w-1894685
+examples:
+- s-w-2031470
+- s-w-1894685

@@ -1,0 +1,30 @@
+id: 等
+hanzi: 等
+pinyin: děng
+hanviet: đẳng
+level: 1
+pos:
+- v
+- conj
+- part
+- n
+senses:
+- vi: chờ, đợi
+  pos: v
+  example: s-w-1227093
+- vi: bằng, ngang với (chỉ dùng trong 等于, 相等, 同等)
+  pos: v
+  example: s-w-ai-33c914a3
+- vi: đến khi, đến lúc, hễ
+  pos: conj
+  example: s-w-6130934
+- vi: vân vân, và những thứ khác
+  pos: part
+  example: s-w-ai-a5c99be0
+- vi: hạng, cấp, loại (chỉ dùng trong 上等, 中等, 高等, 等级)
+  pos: n
+  example: s-w-ai-21457519
+examples:
+- s-w-1227093
+- s-w-ai-33c914a3
+- s-w-6130934

@@ -1,0 +1,21 @@
+id: 我们
+hanzi: 我们
+pinyin: wǒ men
+hanviet: ngã môn
+level: 1
+pos:
+- pron
+senses:
+- vi: chúng tôi, chúng ta
+  pos: pron
+  example: s-w-335262
+- vi: chính chúng tôi, chính chúng ta
+  pos: pron
+  example: s-w-ai-0b05c2cf
+- vi: của chúng tôi, của chúng ta
+  pos: pron
+  example: s-w-ai-dc16e243
+examples:
+- s-w-335262
+- s-w-ai-0b05c2cf
+- s-w-ai-dc16e243

@@ -1,0 +1,18 @@
+id: 右
+hanzi: 右
+pinyin: yòu
+hanviet: hữu
+level: 1
+pos:
+- n
+- adj
+senses:
+- vi: bên phải, phía phải (chỉ dùng trong 右边, 右手, 向右…)
+  pos: n
+  example: s-w-5113391
+- vi: hữu, cánh hữu (chính trị; chỉ dùng trong 右派, 右翼, 右倾)
+  pos: adj
+  example: s-w-ai-607d891a
+examples:
+- s-w-5113391
+- s-w-ai-607d891a

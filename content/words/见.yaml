@@ -1,0 +1,26 @@
+id: 见
+hanzi: 见
+pinyin: jiàn
+hanviet: kiến
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: thấy, nhìn thấy
+  pos: v
+  example: s-w-471037
+- vi: gặp, gặp mặt, tiếp kiến
+  pos: v
+  example: s-w-5685923
+- vi: tỏ ra, thấy rõ (kết quả)
+  pos: v
+  rare: true
+  example: s-w-ai-2d913d5a
+- vi: ý kiến, quan điểm (chỉ dùng trong 意见, 见解, 偏见, 成见)
+  pos: n
+  example: s-w-ai-83e166b9
+examples:
+- s-w-471037
+- s-w-5685923
+- s-w-ai-2d913d5a

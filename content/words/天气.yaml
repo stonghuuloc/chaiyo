@@ -1,0 +1,13 @@
+id: 天气
+hanzi: 天气
+pinyin: tiān qì
+hanviet: thiên khí
+level: 1
+pos:
+- n
+senses:
+- vi: thời tiết
+  pos: n
+  example: s-w-3078820
+examples:
+- s-w-3078820

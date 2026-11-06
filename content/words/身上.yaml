@@ -1,0 +1,21 @@
+id: 身上
+hanzi: 身上
+pinyin: shēn shang
+hanviet: thân thượng
+level: 1
+pos:
+- n
+senses:
+- vi: trên cơ thể
+  pos: n
+  example: s-w-1790081
+- vi: mang theo người
+  pos: n
+  example: s-w-10192320
+- vi: ở chỗ (ai)
+  pos: n
+  example: s-w-13890357
+examples:
+- s-w-1790081
+- s-w-10192320
+- s-w-13890357

@@ -1,0 +1,21 @@
+id: 身体
+hanzi: 身体
+pinyin: shēn tǐ
+hanviet: thân thể
+level: 1
+pos:
+- n
+senses:
+- vi: thân hình
+  pos: n
+  example: s-w-3526181
+- vi: sức khỏe
+  pos: n
+  example: s-w-3378000
+- vi: cơ thể
+  pos: n
+  example: s-w-1551887
+examples:
+- s-w-3526181
+- s-w-3378000
+- s-w-1551887

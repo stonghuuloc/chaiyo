@@ -1,0 +1,21 @@
+id: 地
+hanzi: 地
+pinyin: dì
+hanviet: địa
+level: 1
+pos:
+- n
+senses:
+- vi: đất, mặt đất
+  pos: n
+  example: s-w-408831
+- vi: nơi, chỗ, vùng (chỉ dùng trong 地方, 当地, 各地, 本地, 地点, 地区)
+  pos: n
+  example: s-w-ai-e9635985
+- vi: ruộng, đồng
+  pos: n
+  example: s-w-ai-7eb2a5ff
+examples:
+- s-w-408831
+- s-w-ai-e9635985
+- s-w-ai-7eb2a5ff

@@ -1,0 +1,18 @@
+id: 病人
+hanzi: 病人
+pinyin: bìng rén
+hanviet: bệnh nhân
+level: 1
+pos:
+- n
+senses:
+- vi: người bệnh, bệnh nhân
+  pos: n
+  example: s-w-769699
+- vi: người ốm lâu năm
+  pos: n
+  rare: true
+  example: s-w-ai-b920c535
+examples:
+- s-w-769699
+- s-w-ai-b920c535

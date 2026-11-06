@@ -1,0 +1,22 @@
+id: 那
+hanzi: 那
+pinyin: nà
+hanviet: na
+level: 1
+pos:
+- pron
+- conj
+senses:
+- vi: kia, đó (đứng trước danh từ)
+  pos: pron
+  example: s-w-4649886
+- vi: đó, kia (chỉ người, vật, việc)
+  pos: pron
+  example: s-w-465906
+- vi: vậy thì, thế thì
+  pos: conj
+  example: s-w-ai-6231331a
+examples:
+- s-w-4649886
+- s-w-465906
+- s-w-ai-6231331a

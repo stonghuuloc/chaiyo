@@ -1,0 +1,25 @@
+id: 贵
+hanzi: 贵
+pinyin: guì
+hanviet: quý
+level: 1
+pos:
+- adj
+- pron
+senses:
+- vi: đắt
+  pos: adj
+  example: s-w-924018
+- vi: quý, quý giá (chỉ dùng trong 宝贵, 珍贵, 可贵, 贵重)
+  pos: adj
+  example: s-w-ai-1e71a3c6
+- vi: cao quý, sang (địa vị; chỉ dùng trong 贵族, 权贵, 显贵, 富贵, 高贵)
+  pos: adj
+  example: s-w-ai-91cf3577
+- vi: quý (kính ngữ chỉ người đối diện; chỉ dùng trong 贵姓, 贵国, 贵公司, 贵校, 贵方)
+  pos: pron
+  example: s-w-ai-6300d2b5
+examples:
+- s-w-924018
+- s-w-ai-1e71a3c6
+- s-w-ai-91cf3577

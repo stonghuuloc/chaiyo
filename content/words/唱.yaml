@@ -1,0 +1,23 @@
+id: 唱
+hanzi: 唱
+pinyin: chàng
+hanviet: xướng
+level: 1
+pos:
+- v
+senses:
+- vi: hát, ca
+  pos: v
+  example: s-w-499612
+- vi: hô to, xướng (tên, phiếu)
+  pos: v
+  rare: true
+  example: s-w-ai-d1bdeff0
+- vi: tụng, ngâm xướng (kinh)
+  pos: v
+  rare: true
+  example: s-w-ai-5701d499
+examples:
+- s-w-499612
+- s-w-ai-d1bdeff0
+- s-w-ai-5701d499

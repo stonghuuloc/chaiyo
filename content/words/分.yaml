@@ -1,0 +1,42 @@
+id: 分
+hanzi: 分
+pinyin: fēn
+hanviet: phân
+level: 1
+pos:
+- v
+- adj
+- n
+- mw
+senses:
+- vi: chia, tách ra
+  pos: v
+  example: s-w-1185803
+- vi: chia, phân phát (tiền, đồ)
+  pos: v
+  example: s-w-813546
+- vi: phân biệt, nhận ra sự khác nhau
+  pos: v
+  example: s-w-ai-6a3d03ff
+- vi: chi nhánh, phân- (như 分公司, 分局; chỉ dùng trong 分公司, 分局, 分店, 分行, 分校)
+  pos: adj
+  example: s-w-ai-d7acebb6
+- vi: phần (trong phân số; chỉ dùng trong 几分之几, 三分之一, 百分之十)
+  pos: n
+  example: s-w-ai-f55d5ca8
+- vi: điểm (thi cử, thể thao)
+  pos: n
+  example: s-w-13190504
+- vi: phút (giờ giấc, đo góc)
+  pos: mw
+  example: s-w-ai-900cd4f0
+- vi: thành, phần mười (七分像, 三分熟)
+  pos: mw
+  example: s-w-ai-ed48eff8
+- vi: xu (một phần trăm tệ)
+  pos: mw
+  example: s-w-ai-4b8119d8
+examples:
+- s-w-1185803
+- s-w-813546
+- s-w-ai-6a3d03ff

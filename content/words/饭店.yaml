@@ -1,0 +1,17 @@
+id: 饭店
+hanzi: 饭店
+pinyin: fàn diàn
+hanviet: phạn điếm
+level: 1
+pos:
+- n
+senses:
+- vi: nhà hàng, quán ăn
+  pos: n
+  example: s-w-1120765
+- vi: khách sạn
+  pos: n
+  example: s-w-ai-e290673e
+examples:
+- s-w-1120765
+- s-w-ai-e290673e

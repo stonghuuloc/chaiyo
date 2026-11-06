@@ -1,0 +1,30 @@
+id: 给
+hanzi: 给
+pinyin: gěi
+hanviet: cấp
+level: 1
+pos:
+- v
+- prep
+- part
+senses:
+- vi: cho, đưa, tặng (ai đó)
+  pos: v
+  example: s-w-1264867
+- vi: cho, cho phép (làm gì)
+  pos: v
+  example: s-w-ai-67047c63
+- vi: cho, giúp (ai đó)
+  pos: prep
+  example: s-w-4264973
+- vi: bị (như 被, khẩu ngữ)
+  pos: prep
+  rare: true
+  example: s-w-ai-56125ac1
+- vi: nhấn mạnh (đứng trước động từ)
+  pos: part
+  example: s-w-ai-635e212f
+examples:
+- s-w-1264867
+- s-w-ai-67047c63
+- s-w-4264973

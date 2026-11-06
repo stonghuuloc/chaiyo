@@ -1,0 +1,28 @@
+id: 工作
+hanzi: 工作
+pinyin: gōng zuò
+hanviet: công tác
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: làm việc
+  pos: v
+  example: s-w-333483
+- vi: hoạt động (máy móc)
+  pos: v
+  example: s-w-ai-3bb3a4b2
+- vi: việc làm, nghề nghiệp
+  pos: n
+  example: s-w-406364
+- vi: công việc
+  pos: n
+  example: s-w-5100103
+- vi: việc cần làm
+  pos: n
+  example: s-w-13150950
+examples:
+- s-w-333483
+- s-w-ai-3bb3a4b2
+- s-w-406364

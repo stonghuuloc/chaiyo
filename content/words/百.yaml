@@ -1,0 +1,18 @@
+id: 百
+hanzi: 百
+pinyin: bǎi
+hanviet: bách
+level: 1
+pos:
+- num
+- adj
+senses:
+- vi: trăm, một trăm
+  pos: num
+  example: s-w-ai-e5fff42f
+- vi: nhiều, đủ loại (trong từ ghép; chỉ dùng trong 百货, 百姓, 百科, 百花, 百般)
+  pos: adj
+  example: s-w-ai-25d58a81
+examples:
+- s-w-ai-e5fff42f
+- s-w-ai-25d58a81

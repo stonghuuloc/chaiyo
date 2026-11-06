@@ -1,0 +1,17 @@
+id: 书
+hanzi: 书
+pinyin: shū
+hanviet: thư
+level: 1
+pos:
+- n
+senses:
+- vi: sách
+  pos: n
+  example: s-w-334383
+- vi: văn bản, giấy tờ (chỉ dùng trong 说明书, 证书, 申请书, 保证书)
+  pos: n
+  example: s-w-ai-a97213f7
+examples:
+- s-w-334383
+- s-w-ai-a97213f7

@@ -1,0 +1,41 @@
+id: 前
+hanzi: 前
+pinyin: qián
+hanviet: tiền
+level: 1
+pos:
+- n
+- adv
+- adj
+senses:
+- vi: phía trước, đằng trước
+  pos: n
+  example: s-w-7768235
+- vi: cách đây, … trước (khoảng thời gian)
+  pos: n
+  example: s-w-10002074
+- vi: trước (khi), trước lúc
+  pos: n
+  example: s-w-6956275
+- vi: tương lai (chỉ dùng trong 前途, 前景)
+  pos: n
+  example: s-w-ai-7f3593a9
+- vi: trước Công nguyên (chỉ dùng trong 公元前, 前221年)
+  pos: n
+  example: s-w-ai-a061df98
+- vi: về phía trước, tiến lên
+  pos: adv
+  example: s-w-ai-09eebab5
+- vi: hôm trước, trước đây (chỉ dùng trong 前几天, 前些天)
+  pos: adv
+  example: s-w-335520
+- vi: đầu, top (đứng trước số; chỉ dùng trong 前三名, 前十名, 前五)
+  pos: adj
+  example: s-w-ai-8d120fc5
+- vi: cựu, trước (người, chức vụ; chỉ dùng trong 前任, 前夫, 前妻, 前男友, 前总统)
+  pos: adj
+  example: s-w-ai-c27d6a92
+examples:
+- s-w-7768235
+- s-w-10002074
+- s-w-6956275

@@ -1,0 +1,24 @@
+id: 哪儿
+hanzi: 哪儿
+pinyin: nǎ r
+hanviet: nả nhi
+level: 1
+pos:
+- pron
+senses:
+- vi: đâu, ở đâu (hỏi nơi chốn)
+  pos: pron
+  example: s-w-ai-57ba3022
+- vi: bất cứ đâu, nơi nào cũng
+  pos: pron
+  example: s-w-ai-33c42e4d
+- vi: đâu đó (không xác định)
+  pos: pron
+  example: s-w-ai-92613f46
+- vi: đâu có, làm sao … được (hỏi tu từ)
+  pos: pron
+  example: s-w-ai-5e1f4b69
+examples:
+- s-w-ai-57ba3022
+- s-w-ai-33c42e4d
+- s-w-ai-92613f46

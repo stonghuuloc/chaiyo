@@ -1,0 +1,22 @@
+id: 话
+hanzi: 话
+pinyin: huà
+hanviet: thoại
+level: 1
+pos:
+- n
+- v
+senses:
+- vi: lời nói, lời
+  pos: n
+  example: s-w-4878741
+- vi: 'tiếng, ngôn ngữ, phương ngữ (đặt sau tên nước/vùng: 日本话, 上海话)'
+  pos: n
+  example: s-w-374892
+- vi: trò chuyện, nói (chỉ dùng trong 话家常, 话旧, 话别)
+  pos: v
+  example: s-w-ai-78b6f198
+examples:
+- s-w-4878741
+- s-w-374892
+- s-w-ai-78b6f198

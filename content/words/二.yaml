@@ -1,0 +1,19 @@
+id: 二
+hanzi: 二
+pinyin: èr
+hanviet: nhị
+level: 1
+pos:
+- num
+- adj
+senses:
+- vi: hai (số 2)
+  pos: num
+  example: s-w-4289997
+- vi: ngố, khờ (tiếng Bắc Kinh)
+  pos: adj
+  rare: true
+  example: s-w-1750497
+examples:
+- s-w-4289997
+- s-w-1750497

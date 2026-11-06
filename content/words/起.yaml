@@ -1,0 +1,47 @@
+id: 起
+hanzi: 起
+pinyin: qǐ
+hanviet: khởi
+level: 1
+pos:
+- v
+- comp
+- prep
+- mw
+senses:
+- vi: dậy, thức dậy
+  pos: v
+  example: s-w-10966847
+- vi: đặt (tên, biệt danh)
+  pos: v
+  example: s-w-5983655
+- vi: phát sinh, nổi lên, khởi phát (起火, 起风)
+  pos: v
+  example: s-w-3437281
+- vi: soạn, thảo (văn bản)
+  pos: v
+  rare: true
+  example: s-w-ai-f88878ae
+- vi: lên, nhấc lên (bổ ngữ sau động từ; chỉ dùng trong 拿起, 站起, 抬起, 升起)
+  pos: comp
+  example: s-w-5869906
+- vi: bắt đầu (bổ ngữ sau động từ; chỉ dùng trong 下起, 唱起, 说起, 想起)
+  pos: comp
+  example: s-w-798067
+- vi: 'đủ sức, kham nổi (sau động từ: 买得起, 买不起)'
+  pos: comp
+  example: s-w-ai-220c8d69
+- vi: từ… trở đi, kể từ (thời điểm)
+  pos: prep
+  example: s-w-2017445
+- vi: vụ (tai nạn, vụ án)
+  pos: mw
+  example: s-w-ai-912b30f9
+- vi: đợt, nhóm (người)
+  pos: mw
+  rare: true
+  example: s-w-ai-818d5728
+examples:
+- s-w-10966847
+- s-w-5983655
+- s-w-3437281

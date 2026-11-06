@@ -1,0 +1,26 @@
+id: 在
+hanzi: 在
+pinyin: zài
+hanviet: tại
+level: 1
+pos:
+- v
+- prep
+- adv
+senses:
+- vi: ở, có mặt (ở nơi nào)
+  pos: v
+  example: s-w-1851461
+- vi: còn sống, tồn tại
+  pos: v
+  example: s-w-ai-b4fafba8
+- vi: ở, tại (nơi chốn, thời gian)
+  pos: prep
+  example: s-w-5102308
+- vi: đang (làm gì)
+  pos: adv
+  example: s-w-1189717
+examples:
+- s-w-1851461
+- s-w-ai-b4fafba8
+- s-w-5102308

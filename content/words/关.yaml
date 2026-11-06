@@ -1,0 +1,25 @@
+id: 关
+hanzi: 关
+pinyin: guān
+hanviet: quan
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: đóng, tắt (cửa, đèn, máy)
+  pos: v
+  example: s-w-10484388
+- vi: nhốt, giam (người, vật)
+  pos: v
+  example: s-w-512107
+- vi: liên quan, dính dáng (chỉ dùng trong 有关, 无关, 关于, 关系)
+  pos: v
+  example: s-w-ai-9d1bb221
+- vi: ải, cửa ải (chỉ dùng trong 关口, 关卡, 关隘, 边关)
+  pos: n
+  example: s-w-ai-bcc1f7d3
+examples:
+- s-w-10484388
+- s-w-512107
+- s-w-ai-9d1bb221

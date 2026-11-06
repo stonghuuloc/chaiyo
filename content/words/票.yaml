@@ -1,0 +1,26 @@
+id: 票
+hanzi: 票
+pinyin: piào
+hanviet: phiếu
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: vé
+  pos: n
+  example: s-w-6822547
+- vi: phiếu (bầu)
+  pos: n
+  example: s-w-ai-26a96f96
+- vi: tiền giấy (chỉ dùng trong 钞票, 票子)
+  pos: n
+  example: s-w-ai-6db9d4e3
+- vi: vụ, lô, mẻ (giao dịch, hàng, nhóm người)
+  pos: mw
+  rare: true
+  example: s-w-ai-977f28b9
+examples:
+- s-w-6822547
+- s-w-ai-26a96f96
+- s-w-ai-6db9d4e3

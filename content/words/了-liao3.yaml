@@ -1,0 +1,22 @@
+id: 了-liao3
+hanzi: 了
+pinyin: liǎo
+hanviet: liễu
+level: 1
+pos:
+- comp
+- v
+senses:
+- vi: 'nổi, xuể, hết (đi sau 得/不: 得了, 不了)'
+  pos: comp
+  example: s-w-ai-e252ffba
+- vi: xong, kết thúc (chỉ dùng trong 了结, 没完没了)
+  pos: v
+  example: s-w-ai-052ec96c
+- vi: hiểu rõ (chỉ dùng trong 了解, 了然, 一目了然)
+  pos: v
+  example: s-w-ai-611e06d1
+examples:
+- s-w-ai-e252ffba
+- s-w-ai-052ec96c
+- s-w-ai-611e06d1

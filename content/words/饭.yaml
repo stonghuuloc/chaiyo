@@ -1,0 +1,22 @@
+id: 饭
+hanzi: 饭
+pinyin: fàn
+hanviet: phạn
+level: 1
+pos:
+- n
+senses:
+- vi: bữa ăn, bữa cơm
+  pos: n
+  example: s-w-2737459
+- vi: cơm
+  pos: n
+  example: s-w-ai-df7a2905
+- vi: fan, người hâm mộ (tiếng lóng)
+  pos: n
+  rare: true
+  example: s-w-ai-3cd84f25
+examples:
+- s-w-2737459
+- s-w-ai-df7a2905
+- s-w-ai-3cd84f25

@@ -1,0 +1,48 @@
+id: 号
+hanzi: 号
+pinyin: hào
+hanviet: hiệu
+level: 1
+pos:
+- n
+- mw
+- v
+senses:
+- vi: số (số thứ tự)
+  pos: n
+  example: s-w-332881
+- vi: cỡ, size
+  pos: n
+  example: s-w-1589735
+- vi: dấu, ký hiệu (chỉ dùng trong 符号, 信号, 记号, 问号)
+  pos: n
+  example: s-w-ai-ff14d6ed
+- vi: ngày (trong tháng, khẩu ngữ)
+  pos: n
+  example: s-w-385097
+- vi: tàu (hậu tố tên tàu)
+  pos: n
+  example: s-w-5962259
+- vi: biệt hiệu, tên hiệu (chỉ dùng trong 外号, 别号, 绰号)
+  pos: n
+  example: s-w-ai-8b9d37d2
+- vi: 'kèn (nhạc cụ hơi: 小号, 圆号)'
+  pos: n
+  rare: true
+  example: s-w-ai-75d6406b
+- vi: tiếng kèn, hiệu lệnh kèn (号声)
+  pos: n
+  rare: true
+  example: s-w-ai-ea1b2a29
+- vi: người (đếm số người, ước chừng; chỉ dùng trong 号人)
+  pos: mw
+  rare: true
+  example: s-w-ai-cdddd885
+- vi: bắt, xem (chỉ dùng trong 号脉)
+  pos: v
+  rare: true
+  example: s-w-ai-e8b152a7
+examples:
+- s-w-332881
+- s-w-1589735
+- s-w-ai-ff14d6ed

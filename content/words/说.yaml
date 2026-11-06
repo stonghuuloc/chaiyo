@@ -1,0 +1,26 @@
+id: 说
+hanzi: 说
+pinyin: shuō
+hanviet: thuyết
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: nói
+  pos: v
+  example: s-w-2223019
+- vi: giải thích, nói rõ
+  pos: v
+  example: s-w-ai-24840043
+- vi: mắng, trách (khẩu ngữ)
+  pos: v
+  rare: true
+  example: s-w-ai-7c592df4
+- vi: thuyết, học thuyết (chỉ dùng trong 学说, 假说, 邪说, 日心说, 地心说)
+  pos: n
+  example: s-w-ai-a40fd49d
+examples:
+- s-w-2223019
+- s-w-ai-24840043
+- s-w-ai-7c592df4

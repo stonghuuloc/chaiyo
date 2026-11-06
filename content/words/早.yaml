@@ -1,0 +1,27 @@
+id: 早
+hanzi: 早
+pinyin: zǎo
+hanviet: tảo
+level: 1
+pos:
+- adj
+- n
+- adv
+- phrase
+senses:
+- vi: sớm (hơn giờ thường, hơn dự kiến)
+  pos: adj
+  example: s-w-6678462
+- vi: buổi sáng, sáng sớm (chỉ dùng trong 早上, 早饭, 早晨, 从早到晚)
+  pos: n
+  example: s-w-1324867
+- vi: từ lâu, từ trước
+  pos: adv
+  example: s-w-5092045
+- vi: chào buổi sáng
+  pos: phrase
+  example: s-w-2032292
+examples:
+- s-w-6678462
+- s-w-1324867
+- s-w-5092045

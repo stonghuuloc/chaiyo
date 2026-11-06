@@ -1,0 +1,24 @@
+id: 风
+hanzi: 风
+pinyin: fēng
+hanviet: phong
+level: 1
+pos:
+- n
+senses:
+- vi: gió
+  pos: n
+  example: s-w-1216057
+- vi: phong cách, tác phong, phong thái (chỉ dùng trong 风格, 风度, 作风, 文风, 画风)
+  pos: n
+  example: s-w-ai-6e4b2ece
+- vi: phong tục, nếp (chỉ dùng trong 风俗, 风气, 民风, 家风)
+  pos: n
+  example: s-w-ai-2fc77101
+- vi: tin tức, tin đồn phong thanh (chỉ dùng trong 风声, 闻风, 听风就是雨)
+  pos: n
+  example: s-w-ai-e5c5d2cc
+examples:
+- s-w-1216057
+- s-w-ai-6e4b2ece
+- s-w-ai-2fc77101

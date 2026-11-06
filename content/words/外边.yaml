@@ -1,0 +1,17 @@
+id: 外边
+hanzi: 外边
+pinyin: wài bian
+hanviet: ngoại biên
+level: 1
+pos:
+- n
+senses:
+- vi: bên ngoài, ngoài nhà
+  pos: n
+  example: s-w-1216057
+- vi: mặt ngoài
+  pos: n
+  example: s-w-ai-0f415f5d
+examples:
+- s-w-1216057
+- s-w-ai-0f415f5d

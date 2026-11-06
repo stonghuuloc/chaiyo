@@ -1,0 +1,17 @@
+id: 老人
+hanzi: 老人
+pinyin: lǎo rén
+hanviet: lão nhân
+level: 1
+pos:
+- n
+senses:
+- vi: người già, người cao tuổi
+  pos: n
+  example: s-w-9415393
+- vi: ông bà, cha mẹ già (của mình)
+  pos: n
+  example: s-w-ai-bf661572
+examples:
+- s-w-9415393
+- s-w-ai-bf661572

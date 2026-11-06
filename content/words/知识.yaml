@@ -1,0 +1,17 @@
+id: 知识
+hanzi: 知识
+pinyin: zhī shi
+hanviet: tri thức
+level: 1
+pos:
+- n
+senses:
+- vi: kiến thức
+  pos: n
+  example: s-w-1314409
+- vi: trí thức (chỉ dùng trong 知识分子)
+  pos: n
+  example: s-w-ai-1f2dbbef
+examples:
+- s-w-1314409
+- s-w-ai-1f2dbbef

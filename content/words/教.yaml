@@ -1,0 +1,17 @@
+id: 教
+hanzi: 教
+pinyin: jiào
+hanviet: giáo
+level: 1
+pos:
+- n
+senses:
+- vi: tôn giáo, đạo (chỉ dùng trong 信教, 宗教, 佛教, 基督教)
+  pos: n
+  example: s-w-ai-e54c6a15
+- vi: giáo dục, sự dạy bảo (chỉ dùng trong 教育, 教学, 教师)
+  pos: n
+  example: s-w-ai-51a83617
+examples:
+- s-w-ai-e54c6a15
+- s-w-ai-51a83617

@@ -1,0 +1,18 @@
+id: 忘
+hanzi: 忘
+pinyin: wàng
+hanviet: vong
+level: 1
+pos:
+- v
+senses:
+- vi: quên, bỏ quên
+  pos: v
+  example: s-w-335875
+- vi: quên (cội nguồn, ơn nghĩa; chỉ dùng trong 忘本, 忘恩负义)
+  pos: v
+  rare: true
+  example: s-w-ai-c56a1f78
+examples:
+- s-w-335875
+- s-w-ai-c56a1f78

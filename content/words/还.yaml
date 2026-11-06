@@ -1,0 +1,30 @@
+id: 还
+hanzi: 还
+pinyin: hái
+hanviet: hoàn
+level: 1
+pos:
+- adv
+senses:
+- vi: vẫn, còn (đang)
+  pos: adv
+  example: s-w-465860
+- vi: vẫn chưa (đi với 没, 不; chỉ dùng trong 还没, 还没有, 还不)
+  pos: adv
+  example: s-w-2299589
+- vi: còn, thậm chí còn (nhấn mạnh mức độ cao hơn kỳ vọng)
+  pos: adv
+  example: s-w-ai-3f487761
+- vi: thêm vào đó, ngoài ra còn
+  pos: adv
+  example: s-w-ai-8b0a0367
+- vi: thậm chí, đến cả
+  pos: adv
+  example: s-w-ai-0033ebd2
+- vi: tạm được, cũng khá
+  pos: adv
+  example: s-w-ai-8a9d2ddf
+examples:
+- s-w-465860
+- s-w-2299589
+- s-w-ai-3f487761

@@ -1,0 +1,17 @@
+id: 今天
+hanzi: 今天
+pinyin: jīn tiān
+hanviet: kim thiên
+level: 1
+pos:
+- n
+senses:
+- vi: hôm nay
+  pos: n
+  example: s-w-343752
+- vi: ngày nay, hiện nay
+  pos: n
+  example: s-w-ai-0b27e64b
+examples:
+- s-w-343752
+- s-w-ai-0b27e64b

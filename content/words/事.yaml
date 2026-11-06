@@ -1,0 +1,17 @@
+id: 事
+hanzi: 事
+pinyin: shì
+hanviet: sự
+level: 1
+pos:
+- n
+senses:
+- vi: việc, chuyện, sự việc
+  pos: n
+  example: s-w-7773141
+- vi: việc làm, công việc
+  pos: n
+  example: s-w-785833
+examples:
+- s-w-7773141
+- s-w-785833

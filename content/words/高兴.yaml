@@ -1,0 +1,18 @@
+id: 高兴
+hanzi: 高兴
+pinyin: gāo xìng
+hanviet: cao hứng
+level: 1
+pos:
+- adj
+- v
+senses:
+- vi: vui, vui vẻ, vui mừng
+  pos: adj
+  example: s-w-924590
+- vi: vui lòng, có hứng (làm gì; chỉ dùng trong 不高兴)
+  pos: v
+  example: s-w-ai-2ae3f948
+examples:
+- s-w-924590
+- s-w-ai-2ae3f948

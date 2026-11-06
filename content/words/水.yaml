@@ -1,0 +1,34 @@
+id: 水
+hanzi: 水
+pinyin: shuǐ
+hanviet: thuỷ
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: nước
+  pos: n
+  example: s-w-8888006
+- vi: chất lỏng (chỉ dùng trong 药水, 香水, 墨水, 汗水)
+  pos: n
+  example: s-w-ai-cd624789
+- vi: đồ uống (chỉ dùng trong 茶水, 酒水, 汽水)
+  pos: n
+  example: s-w-ai-89514000
+- vi: sông (chỉ dùng trong tên sông như 汉水, 渭水, 湘水)
+  pos: n
+  rare: true
+  example: s-w-ai-8edea77a
+- vi: khoản thu thêm, lợi lộc (chỉ dùng trong 外水, 油水)
+  pos: n
+  rare: true
+  example: s-w-ai-bcb95166
+- vi: lần (giặt quần áo)
+  pos: mw
+  rare: true
+  example: s-w-ai-761de90a
+examples:
+- s-w-8888006
+- s-w-ai-cd624789
+- s-w-ai-89514000

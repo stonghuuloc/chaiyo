@@ -1,0 +1,18 @@
+id: 晚
+hanzi: 晚
+pinyin: wǎn
+hanviet: vãn
+level: 1
+pos:
+- adj
+- n
+senses:
+- vi: muộn, trễ
+  pos: adj
+  example: s-w-3378156
+- vi: buổi tối (chỉ dùng trong 晚上, 晚饭, 晚会, 从早到晚)
+  pos: n
+  example: s-w-1324867
+examples:
+- s-w-3378156
+- s-w-1324867

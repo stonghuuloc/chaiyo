@@ -1,0 +1,17 @@
+id: 分-fen4
+hanzi: 分
+pinyin: fèn
+hanviet: phận
+level: 1
+pos:
+- n
+senses:
+- vi: thành phần (của chất, vật; chỉ dùng trong 成分, 水分, 养分, 糖分)
+  pos: n
+  example: s-w-ai-b37a2b85
+- vi: phần, bộ phận (chỉ dùng trong 部分, 一部分, 大部分)
+  pos: n
+  example: s-w-ai-8ecb047f
+examples:
+- s-w-ai-b37a2b85
+- s-w-ai-8ecb047f

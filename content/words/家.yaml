@@ -1,0 +1,33 @@
+id: 家
+hanzi: 家
+pinyin: jiā
+hanviet: gia
+level: 1
+pos:
+- n
+- mw
+senses:
+- vi: nhà
+  pos: n
+  example: s-w-335119
+- vi: gia đình
+  pos: n
+  example: s-w-2555373
+- vi: -gia, nhà … (người chuyên một lĩnh vực; chỉ dùng trong 画家, 作家, 科学家, 艺术家, 专家, 音乐家)
+  pos: n
+  example: s-w-ai-f038ccea
+- vi: học phái, trường phái (triết học tiền Tần; chỉ dùng trong 儒家, 道家, 法家, 百家)
+  pos: n
+  rare: true
+  example: s-w-ai-7a641735
+- vi: gia- (tiền tố khiêm xưng khi nói về người thân lớn tuổi của mình; chỉ dùng trong 家父, 家母, 家兄, 家姐)
+  pos: n
+  rare: true
+  example: s-w-ai-e84cd931
+- vi: nhà, tiệm, hãng (gia đình, cửa hàng, công ty)
+  pos: mw
+  example: s-w-ai-10aba209
+examples:
+- s-w-335119
+- s-w-2555373
+- s-w-ai-f038ccea

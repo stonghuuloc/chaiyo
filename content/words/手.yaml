@@ -1,0 +1,33 @@
+id: 手
+hanzi: 手
+pinyin: shǒu
+hanviet: thủ
+level: 1
+pos:
+- n
+- adv
+- adj
+- mw
+senses:
+- vi: tay, bàn tay
+  pos: n
+  example: s-w-8934349
+- vi: người làm (nghề), cầu thủ (chỉ dùng trong 歌手, 水手, 选手, 助手, 射手)
+  pos: n
+  example: s-w-335624
+- vi: tay cừ, người giỏi (nghề; chỉ dùng trong 老手, 高手, 能手, 好手)
+  pos: n
+  example: s-w-ai-9bbafe66
+- vi: đích thân, tự tay (chỉ dùng trong 亲手, 手写, 手抄)
+  pos: adv
+  example: s-w-ai-b0788c91
+- vi: tiện, thuận tay (chỉ dùng trong 顺手, 趁手, 称手, 得手)
+  pos: adj
+  example: s-w-ai-2b3cea2d
+- vi: tay, nét (tài nghệ, chữ viết; chỉ dùng trong 一手, 露一手, 留一手)
+  pos: mw
+  example: s-w-ai-7f195c1a
+examples:
+- s-w-8934349
+- s-w-335624
+- s-w-ai-9bbafe66

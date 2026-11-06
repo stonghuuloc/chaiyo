@@ -1,0 +1,25 @@
+id: 认识
+hanzi: 认识
+pinyin: rèn shi
+hanviet: nhận thức
+level: 1
+pos:
+- v
+- n
+senses:
+- vi: biết, quen biết
+  pos: v
+  example: s-w-772314
+- vi: nhận biết, nhận ra
+  pos: v
+  example: s-w-3378013
+- vi: làm quen
+  pos: v
+  example: s-w-493913
+- vi: nhận thức, hiểu biết
+  pos: n
+  example: s-w-ai-9f7b1845
+examples:
+- s-w-772314
+- s-w-3378013
+- s-w-493913

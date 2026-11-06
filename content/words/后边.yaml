@@ -1,0 +1,18 @@
+id: 后边
+hanzi: 后边
+pinyin: hòu bian
+hanviet: hậu biên
+level: 1
+pos:
+- n
+- adv
+senses:
+- vi: phía sau, đằng sau; phần cuối
+  pos: n
+  example: s-w-1577382
+- vi: sau đó, về sau
+  pos: adv
+  example: s-w-ai-c01adf85
+examples:
+- s-w-1577382
+- s-w-ai-c01adf85

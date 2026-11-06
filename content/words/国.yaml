@@ -1,0 +1,17 @@
+id: 国
+hanzi: 国
+pinyin: guó
+hanviet: quốc
+level: 1
+pos:
+- n
+senses:
+- vi: nước, quốc gia
+  pos: n
+  example: s-w-10157022
+- vi: thuộc quốc gia (trong từ ghép; chỉ dùng trong 国旗, 国歌, 国民, 国产, 国庆, 国内)
+  pos: n
+  example: s-w-ai-8bb01074
+examples:
+- s-w-10157022
+- s-w-ai-8bb01074

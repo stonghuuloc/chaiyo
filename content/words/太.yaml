@@ -1,0 +1,17 @@
+id: 太
+hanzi: 太
+pinyin: tài
+hanviet: thái
+level: 1
+pos:
+- adv
+senses:
+- vi: quá, quá mức
+  pos: adv
+  example: s-w-10570094
+- vi: rất, thật là (cảm thán)
+  pos: adv
+  example: s-w-332578
+examples:
+- s-w-10570094
+- s-w-332578

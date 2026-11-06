@@ -1,0 +1,21 @@
+id: 读书
+hanzi: 读书
+pinyin: dú shū
+hanviet: độc thư
+level: 1
+pos:
+- v
+senses:
+- vi: đọc (sách)
+  pos: v
+  example: s-w-5640765
+- vi: học
+  pos: v
+  example: s-w-843491
+- vi: đi học
+  pos: v
+  example: s-w-2052515
+examples:
+- s-w-5640765
+- s-w-843491
+- s-w-2052515

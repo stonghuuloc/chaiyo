@@ -1,0 +1,23 @@
+id: 重
+hanzi: 重
+pinyin: chóng
+hanviet: trùng
+level: 1
+pos:
+- v
+- adv
+- mw
+senses:
+- vi: lặp lại, nhắc lại (chỉ dùng trong 重复, 重叠)
+  pos: v
+  example: s-w-ai-2cd16e56
+- vi: lại, lần nữa; tái- (chỉ dùng trong 重新, 重来, 重写, 重建, 重逢)
+  pos: adv
+  example: s-w-ai-7fff288f
+- vi: tầng, lớp (nghĩa, khó khăn)
+  pos: mw
+  example: s-w-ai-7dea5fe2
+examples:
+- s-w-ai-2cd16e56
+- s-w-ai-7fff288f
+- s-w-ai-7dea5fe2

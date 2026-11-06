@@ -1,0 +1,26 @@
+id: 热
+hanzi: 热
+pinyin: rè
+hanviet: nhiệt
+level: 1
+pos:
+- adj
+- v
+- n
+senses:
+- vi: nóng (thời tiết)
+  pos: adj
+  example: s-w-343752
+- vi: nhiệt tình, sôi nổi (chỉ dùng trong 热情, 热心, 热烈)
+  pos: adj
+  example: s-w-ai-c2f715fe
+- vi: hâm, làm nóng (đồ ăn)
+  pos: v
+  example: s-w-ai-0a6530e4
+- vi: nhiệt, sức nóng (chỉ dùng trong 散热, 发热, 热量, 热能)
+  pos: n
+  example: s-w-ai-7df3bfc5
+examples:
+- s-w-343752
+- s-w-ai-c2f715fe
+- s-w-ai-0a6530e4

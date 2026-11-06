@@ -1,16 +1,38 @@
-# content/words/不客气.yaml
 id: 不客气
 hanzi: 不客气
-pinyin: bù kèqi
+pinyin: bù kè qi
 spoken: bú kèqi
 hanviet: bất khách khí
 level: 1
-pos: [ phrase ]
+pos:
+- interj
+- adj
 senses:
-  - { vi: không có gì }
+- vi: không có gì
+  pos: interj
+  example: s-w-ai-ef70158e
+- vi: bất lịch sự, thô lỗ
+  pos: adj
+  example: s-w-ai-8c1850b0
+- vi: thẳng thừng
+  pos: adj
+  example: s-w-ai-bd464a11
+examples:
+- s-h1-01-18
+- s-w-ai-ef70158e
+- s-w-ai-8c1850b0
+image:
+  file: words/bukeqi.png
 parts:
-  - { hanzi: 不, pinyin: bù, hanviet: bất, vi: không }
-  - { hanzi: 客, pinyin: kè, hanviet: khách, vi: khách }
-  - { hanzi: 气, pinyin: qì, hanviet: khí, vi: "khí, khách sáo" }
-examples: [ s-h1-01-18 ]
-image: { file: words/bukeqi.png }
+- hanzi: 不
+  pinyin: bù
+  hanviet: bất
+  vi: không
+- hanzi: 客
+  pinyin: kè
+  hanviet: khách
+  vi: khách
+- hanzi: 气
+  pinyin: qì
+  hanviet: khí
+  vi: khí, khách sáo

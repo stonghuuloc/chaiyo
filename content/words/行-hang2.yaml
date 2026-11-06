@@ -1,0 +1,29 @@
+id: 行-hang2
+hanzi: 行
+pinyin: háng
+hanviet: hàng
+level: 1
+pos:
+- n
+- v
+- mw
+senses:
+- vi: hàng, dòng
+  pos: n
+  example: s-w-ai-aa022f0f
+- vi: nghề, ngành, lĩnh vực
+  pos: n
+  example: s-w-ai-c990c678
+- vi: hãng, cửa hiệu (chỉ dùng trong 银行, 商行, 洋行)
+  pos: n
+  example: s-w-ai-efd85ecd
+- vi: xếp thứ (trong anh chị em; chỉ dùng trong 排行)
+  pos: v
+  example: s-w-ai-3660a2f6
+- vi: dòng (chữ, thơ)
+  pos: mw
+  example: s-w-ai-7f167ef1
+examples:
+- s-w-ai-aa022f0f
+- s-w-ai-c990c678
+- s-w-ai-efd85ecd

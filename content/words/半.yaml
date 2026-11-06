@@ -1,0 +1,27 @@
+id: 半
+hanzi: 半
+pinyin: bàn
+hanviet: bán
+level: 1
+pos:
+- num
+- adv
+- adj
+senses:
+- vi: một nửa, nửa phần (số lượng)
+  pos: num
+  example: s-w-ai-a8d6a821
+- vi: rưỡi (đứng sau số từ, lượng từ)
+  pos: num
+  example: s-w-10982825
+- vi: 'nửa, một phần (đứng trước động từ, tính từ: 半躺)'
+  pos: adv
+  example: s-w-ai-0ce5ffc1
+- vi: dở dang, chưa hoàn chỉnh (chỉ dùng trong 半成品, 半途而废)
+  pos: adj
+  rare: true
+  example: s-w-ai-1580e664
+examples:
+- s-w-ai-a8d6a821
+- s-w-10982825
+- s-w-ai-0ce5ffc1

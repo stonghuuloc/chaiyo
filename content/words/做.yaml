@@ -1,0 +1,31 @@
+id: 做
+hanzi: 做
+pinyin: zuò
+hanviet: tố
+level: 1
+pos:
+- v
+senses:
+- vi: làm, thực hiện
+  pos: v
+  example: s-w-2912848
+- vi: làm ra, chế tạo
+  pos: v
+  example: s-w-ai-3a79bb34
+- vi: làm, trở thành (vai trò, quan hệ)
+  pos: v
+  example: s-w-ai-2a76b166
+- vi: dùng làm, dùng để
+  pos: v
+  example: s-w-ai-1d0955a2
+- vi: làm bộ, giả vờ (chỉ dùng trong 做样子, 做作)
+  pos: v
+  example: s-w-ai-4a1d891f
+- vi: viết, sáng tác (thơ, văn)
+  pos: v
+  rare: true
+  example: s-w-ai-54f0c026
+examples:
+- s-w-2912848
+- s-w-ai-3a79bb34
+- s-w-ai-2a76b166

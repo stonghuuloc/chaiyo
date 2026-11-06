@@ -1,0 +1,18 @@
+id: 日
+hanzi: 日
+pinyin: rì
+hanviet: nhật
+level: 1
+pos:
+- n
+senses:
+- vi: ngày (trong từ ghép; chỉ dùng trong 节日, 假日, 生日, 日记)
+  pos: n
+  example: s-w-9956081
+- vi: mặt trời (chỉ dùng trong 日出, 日落, 日光, 日食)
+  pos: n
+  example: s-w-336958
+examples:
+- s-w-9956081
+- s-w-ai-3ef69e53
+- s-w-336958

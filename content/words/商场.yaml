@@ -1,0 +1,21 @@
+id: 商场
+hanzi: 商场
+pinyin: shāng chǎng
+hanviet: thương trường
+level: 1
+pos:
+- n
+senses:
+- vi: trung tâm thương mại
+  pos: n
+  example: s-w-5556118
+- vi: cửa hàng bách hóa
+  pos: n
+  example: s-w-ai-06cef198
+- vi: giới kinh doanh
+  pos: n
+  example: s-w-ai-db9af0e7
+examples:
+- s-w-5556118
+- s-w-ai-06cef198
+- s-w-ai-db9af0e7

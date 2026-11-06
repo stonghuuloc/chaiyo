@@ -1,0 +1,23 @@
+id: 常
+hanzi: 常
+pinyin: cháng
+hanviet: thường
+level: 1
+pos:
+- adv
+- adj
+senses:
+- vi: thường, thường xuyên
+  pos: adv
+  example: s-w-5663550
+- vi: thông thường, phổ biến (chỉ dùng trong 常见, 常识, 常用, 常规)
+  pos: adj
+  example: s-w-ai-d4cfd00e
+- vi: không đổi, bất biến (chỉ dùng trong 常青, 常数)
+  pos: adj
+  rare: true
+  example: s-w-ai-29ab9ce4
+examples:
+- s-w-5663550
+- s-w-ai-d4cfd00e
+- s-w-ai-29ab9ce4

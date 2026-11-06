@@ -1,0 +1,18 @@
+id: 有些
+hanzi: 有些
+pinyin: yǒu xiē
+hanviet: hữu ta
+level: 1
+pos:
+- pron
+- adv
+senses:
+- vi: một số, vài
+  pos: pron
+  example: s-w-333128
+- vi: hơi, có phần
+  pos: adv
+  example: s-w-4625759
+examples:
+- s-w-333128
+- s-w-4625759

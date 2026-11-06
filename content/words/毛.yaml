@@ -1,0 +1,40 @@
+id: 毛
+hanzi: 毛
+pinyin: máo
+hanviet: mao
+level: 1
+pos:
+- mw
+- n
+- adj
+senses:
+- vi: hào (tiền, một phần mười tệ)
+  pos: mw
+  example: s-w-ai-25c8c51a
+- vi: lông (người, thú, chim)
+  pos: n
+  example: s-w-3364539
+- vi: len, lông cừu (như 毛衣, 毛线; chỉ dùng trong 毛衣, 毛线, 羊毛)
+  pos: n
+  example: s-w-ai-f938f8fb
+- vi: mốc, meo (khẩu ngữ, thường nói 长毛)
+  pos: n
+  rare: true
+  example: s-w-ai-b0d9fb96
+- vi: cẩu thả, hấp tấp (như 毛手毛脚, 毛躁; chỉ dùng trong 毛手毛脚, 毛躁, 毛糙)
+  pos: adj
+  example: s-w-ai-c5f6655a
+- vi: non, nhỏ (như 毛孩子; chỉ dùng trong 毛孩子, 毛头小子)
+  pos: adj
+  example: s-w-ai-e836d77c
+- vi: hoảng, sợ (như 发毛; chỉ dùng trong 发毛)
+  pos: adj
+  example: s-w-ai-4cb6db78
+- vi: thô, sống, chưa hoàn thiện (chỉ dùng trong 毛坯, 毛料, 毛重)
+  pos: adj
+  rare: true
+  example: s-w-ai-085f24a3
+examples:
+- s-w-ai-25c8c51a
+- s-w-3364539
+- s-w-ai-f938f8fb

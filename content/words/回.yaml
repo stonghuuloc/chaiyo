@@ -1,0 +1,37 @@
+id: 回
+hanzi: 回
+pinyin: huí
+hanviet: hồi
+level: 1
+pos:
+- v
+- mw
+- n
+senses:
+- vi: về, trở về (nơi nào đó)
+  pos: v
+  example: s-w-10270526
+- vi: trả lời, hồi âm (thư, tin nhắn)
+  pos: v
+  example: s-w-408474
+- vi: quay lại, ngoảnh lại (chỉ dùng trong 回头, 回身, 头也不回)
+  pos: v
+  example: s-w-4081389
+- vi: xoay vòng, uốn quanh (chỉ dùng trong 回旋, 回转, 迂回, 回环)
+  pos: v
+  example: s-w-ai-959e65ac
+- vi: lần, lượt (sự việc)
+  pos: mw
+  example: s-w-ai-4af91aeb
+- vi: hồi (chương tiểu thuyết, màn kịch)
+  pos: mw
+  rare: true
+  example: s-w-ai-44bf1c94
+- vi: dân tộc Hồi, người Hồi (Trung Quốc; chỉ dùng trong 回族, 回民, 回教)
+  pos: n
+  rare: true
+  example: s-w-ai-1e1d5ced
+examples:
+- s-w-10270526
+- s-w-408474
+- s-w-4081389

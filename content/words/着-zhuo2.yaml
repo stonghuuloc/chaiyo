@@ -1,0 +1,22 @@
+id: 着-zhuo2
+hanzi: 着
+pinyin: zhuó
+hanviet: trước
+level: 1
+pos:
+- v
+senses:
+- vi: bắt tay vào, dồn vào, chú trọng (chỉ dùng trong 着手, 着眼, 着重, 着力)
+  pos: v
+  example: s-w-ai-877c8cd0
+- vi: chạm, tiếp xúc, bám vào (chỉ dùng trong 附着, 着陆, 不着边际)
+  pos: v
+  example: s-w-ai-906c71f1
+- vi: mặc (quần áo; chỉ dùng trong 着装, 穿着)
+  pos: v
+  rare: true
+  example: s-w-ai-d5bbfda7
+examples:
+- s-w-ai-877c8cd0
+- s-w-ai-906c71f1
+- s-w-ai-d5bbfda7

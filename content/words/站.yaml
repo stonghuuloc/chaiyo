@@ -1,0 +1,30 @@
+id: 站
+hanzi: 站
+pinyin: zhàn
+hanviet: trạm
+level: 1
+pos:
+- v
+- n
+- mw
+senses:
+- vi: đứng, đứng lại
+  pos: v
+  example: s-w-7768235
+- vi: ga, bến, trạm
+  pos: n
+  example: s-w-8120972
+- vi: trang web, website (chỉ dùng trong 网站, 站点, 本站)
+  pos: n
+  example: s-w-ai-6e290baa
+- vi: điểm, chi nhánh (của tổ chức)
+  pos: n
+  rare: true
+  example: s-w-ai-c10c8d89
+- vi: trạm, chặng (số điểm dừng xe, tàu)
+  pos: mw
+  example: s-w-ai-1bcc9773
+examples:
+- s-w-7768235
+- s-w-8120972
+- s-w-ai-6e290baa

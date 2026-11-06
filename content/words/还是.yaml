@@ -1,0 +1,25 @@
+id: 还是
+hanzi: 还是
+pinyin: hái shi
+hanviet: hoàn thị
+level: 1
+pos:
+- adv
+- conj
+senses:
+- vi: vẫn, vẫn còn
+  pos: adv
+  example: s-w-5897900
+- vi: nên, tốt hơn là
+  pos: adv
+  example: s-w-395058
+- vi: rốt cuộc vẫn, vậy mà vẫn
+  pos: adv
+  example: s-w-10019775
+- vi: hay, hay là
+  pos: conj
+  example: s-w-1358670
+examples:
+- s-w-5897900
+- s-w-395058
+- s-w-10019775

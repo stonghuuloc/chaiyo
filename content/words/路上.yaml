@@ -1,0 +1,17 @@
+id: 路上
+hanzi: 路上
+pinyin: lù shang
+hanviet: lộ thượng
+level: 1
+pos:
+- n
+senses:
+- vi: trên đường, đang trên đường đi
+  pos: n
+  example: s-w-3467921
+- vi: mặt đường
+  pos: n
+  example: s-w-816518
+examples:
+- s-w-3467921
+- s-w-816518

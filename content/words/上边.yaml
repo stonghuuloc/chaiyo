@@ -1,0 +1,31 @@
+id: 上边
+hanzi: 上边
+pinyin: shàng bian
+hanviet: thượng biên
+level: 1
+pos:
+- n
+senses:
+- vi: mặt trên
+  pos: n
+  example: s-w-5091438
+- vi: ở phía trên
+  pos: n
+  example: s-w-ai-e778f7fc
+- vi: lên trên
+  pos: n
+  example: s-w-ai-ba807482
+- vi: nói ở trên
+  pos: n
+  example: s-w-ai-5c23f5f3
+- vi: cấp trên
+  pos: n
+  example: s-w-ai-bd89cf50
+- vi: lề trên
+  pos: n
+  rare: true
+  example: s-w-ai-5aa181d8
+examples:
+- s-w-5091438
+- s-w-ai-e778f7fc
+- s-w-ai-ba807482

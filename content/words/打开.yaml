@@ -1,0 +1,21 @@
+id: 打开
+hanzi: 打开
+pinyin: dǎ kāi
+hanviet: đả khai
+level: 1
+pos:
+- v
+senses:
+- vi: mở
+  pos: v
+  example: s-w-10733790
+- vi: cho xem (vé)
+  pos: v
+  example: s-w-ai-83f3b373
+- vi: bật (đèn, máy)
+  pos: v
+  example: s-w-2032175
+examples:
+- s-w-10733790
+- s-w-ai-83f3b373
+- s-w-2032175

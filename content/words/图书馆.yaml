@@ -1,0 +1,13 @@
+id: 图书馆
+hanzi: 图书馆
+pinyin: tú shū guǎn
+hanviet: đồ thư quán
+level: 1
+pos:
+- n
+senses:
+- vi: thư viện
+  pos: n
+  example: s-w-9432392
+examples:
+- s-w-9432392

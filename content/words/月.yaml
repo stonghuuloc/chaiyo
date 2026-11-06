@@ -1,0 +1,22 @@
+id: 月
+hanzi: 月
+pinyin: yuè
+hanviet: nguyệt
+level: 1
+pos:
+- n
+- adj
+senses:
+- vi: tháng
+  pos: n
+  example: s-w-333474
+- vi: mặt trăng, trăng (chỉ dùng trong 月亮, 月光, 月球, 月食)
+  pos: n
+  example: s-w-ai-4f65ac36
+- vi: hàng tháng, theo tháng (chỉ dùng trong 月薪, 月刊, 月租, 月票)
+  pos: adj
+  example: s-w-ai-78b72fb9
+examples:
+- s-w-333474
+- s-w-ai-4f65ac36
+- s-w-ai-78b72fb9

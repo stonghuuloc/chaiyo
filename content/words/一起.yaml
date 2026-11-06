@@ -1,0 +1,21 @@
+id: 一起
+hanzi: 一起
+pinyin: yī qǐ
+hanviet: nhất khởi
+level: 1
+pos:
+- adv
+senses:
+- vi: ở cùng một chỗ
+  pos: adv
+  example: s-w-10733681
+- vi: cùng nhau, cùng với
+  pos: adv
+  example: s-w-397152
+- vi: tổng cộng
+  pos: adv
+  example: s-w-ai-c187d676
+examples:
+- s-w-10733681
+- s-w-397152
+- s-w-ai-c187d676

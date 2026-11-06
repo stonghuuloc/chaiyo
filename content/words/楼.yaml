@@ -1,0 +1,17 @@
+id: 楼
+hanzi: 楼
+pinyin: lóu
+hanviet: lâu
+level: 1
+pos:
+- n
+senses:
+- vi: toà nhà, nhà (nhiều tầng)
+  pos: n
+  example: s-w-791618
+- vi: tầng
+  pos: n
+  example: s-w-ai-9ecb93c9
+examples:
+- s-w-791618
+- s-w-ai-9ecb93c9
