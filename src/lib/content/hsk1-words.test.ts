@@ -71,9 +71,15 @@ describe('HSK 3.0 level 1 words', () => {
 
 	it('leaves no unreferenced generated sentence', () => {
 		const used = new Set(
-			words.flatMap((w) =>
-				existsSync(w.path) ? (YAML.parse(w.text).senses as Sense[]).map((s) => s.example) : []
-			)
+			readdirSync(join(content, 'words'))
+				.filter((f) => f.endsWith('.yaml'))
+				.flatMap((f) => {
+					const word = YAML.parse(readFileSync(join(content, 'words', f), 'utf8')) as {
+						senses: Sense[];
+						examples?: string[];
+					};
+					return [...word.senses.map((s) => s.example), ...(word.examples ?? [])];
+				})
 		);
 		const orphans = [...sentenceIds].filter((id) => id.startsWith('s-w-') && !used.has(id));
 		expect(orphans).toEqual([]);
