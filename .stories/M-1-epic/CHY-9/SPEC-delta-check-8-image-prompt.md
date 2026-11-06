@@ -26,12 +26,12 @@ if ('prompt' in q && q.prompt.kind !== 'vi' && q.prompt.kind !== 'syllable') {
 }
 ```
 
-So both of these pass although neither supplies a picture:
+So the current check accepts both of these even though an image prompt needs a picture:
 
 - `{ kind: 'image', ref: 's-h1-01-01' }` — a sentence id; a Sentence has no `image`.
-- `{ kind: 'image', ref: '你好' }` — a known Word id; `Word.image` is optional
-  (`src/lib/content/schemas.ts:62-68`), so a Word may have no picture. No current word omits it, but
-  the case is reachable as soon as one does.
+- an image prompt on any Word whose file omits `image`. `Word.image` is optional
+  (`src/lib/content/schemas.ts:62-68`); `fixtures/cli-three/words/你好.yaml` is schema-valid without
+  it. The clean fixture gives all 10 words a picture, so the gap is not exercised there.
 
 No current `content/` YAML and no lint or import fixture carries a `kind: 'image'` prompt, so there
 is nothing to migrate.
@@ -95,7 +95,7 @@ if ('prompt' in q && q.prompt.kind === 'image') {
 | Case | Example | Result |
 |---|---|---|
 | image prompt names a word with an image | `{ kind: 'image', ref: '谢谢' }`, `words/谢谢.yaml` has `image.file` | pass |
-| image prompt names a word without an image | `ref: '谢谢'`, no `image:` line | 1 error, check 8 |
+| image prompt names a word without an image | `ref: '谢谢'` after deleting its `image:` line | 1 error, check 8 |
 | image prompt names a word with `image: { file: '' }` | `file: ''` | 1 error, check 8 (pending Q2) |
 | image prompt names a sentence id | `ref: 's-h1-01-01'` | 1 error, check 8 |
 | image prompt names an unknown id | `ref: 'xx'` | 1 error, today's `Unknown word or sentence id` |
