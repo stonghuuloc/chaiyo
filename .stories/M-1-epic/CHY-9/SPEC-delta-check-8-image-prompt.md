@@ -29,8 +29,9 @@ if ('prompt' in q && q.prompt.kind !== 'vi' && q.prompt.kind !== 'syllable') {
 So both of these pass although neither supplies a picture:
 
 - `{ kind: 'image', ref: 's-h1-01-01' }` — a sentence id; a Sentence has no `image`.
-- `{ kind: 'image', ref: '你好' }` — a known Word id whose file omits `image` (the field is optional,
-  `src/lib/content/schemas.ts:62-68`).
+- `{ kind: 'image', ref: '你好' }` — a known Word id; `Word.image` is optional
+  (`src/lib/content/schemas.ts:62-68`), so a Word may have no picture. No current word omits it, but
+  the case is reachable as soon as one does.
 
 No current `content/` YAML and no lint or import fixture carries a `kind: 'image'` prompt, so there
 is nothing to migrate.
@@ -65,15 +66,24 @@ One error per offending field, at `...prompt.ref`, `check: 8`, `name: 'Reference
 | `ref` is a known Word with no `image` (or an empty `file`) | `Word <ref> has no image` |
 | `ref` is neither a Word nor a Sentence id | `Unknown word or sentence id <ref>` (today's message; do not add a second error) |
 
-Control flow (for the later code slice, not this change):
+Control flow (for the later code slice, not this change). Split the shared prompt branch at
+`8-references.ts:43-47`: the image case below, then the existing hanzi/audio case:
 
 ```ts
-const word = wordById.get(ref);
-if (!word) {
-	if (sentenceIds.has(ref)) add(file, [...base, 'prompt', 'ref'], `Image prompt ref ${ref} is a sentence id, not a word with an image`);
-	else add(file, [...base, 'prompt', 'ref'], `Unknown word or sentence id ${ref}`);
-} else if (!word.image?.file) {
-	add(file, [...base, 'prompt', 'ref'], `Word ${ref} has no image`);
+if ('prompt' in q && q.prompt.kind === 'image') {
+	const { ref } = q.prompt;
+	const word = wordById.get(ref);
+	if (!word) {
+		if (sentenceIds.has(ref)) add(file, [...base, 'prompt', 'ref'], `Image prompt ref ${ref} is a sentence id, not a word with an image`);
+		else add(file, [...base, 'prompt', 'ref'], `Unknown word or sentence id ${ref}`);
+	} else if (!word.image?.file) {
+		add(file, [...base, 'prompt', 'ref'], `Word ${ref} has no image`);
+	}
+} else if ('prompt' in q && q.prompt.kind !== 'vi' && q.prompt.kind !== 'syllable') {
+	// existing word-or-sentence check, unchanged
+	const { ref } = q.prompt;
+	if (!wordIds.has(ref) && !sentenceIds.has(ref))
+		add(file, [...base, 'prompt', 'ref'], `Unknown word or sentence id ${ref}`);
 }
 ```
 
