@@ -9,8 +9,9 @@ Sources (the LLM edits, it does not invent meanings):
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
 Output (staging, never content/): .cache/words/out/words/<id>.yaml (Word) + sentences/hsk1.yaml (Sentence[]) + src/<id>.json (numbered CC-CEDICT senses).
 Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [words]   (no words = all HSK 3.0 level 1 words in dict.json; sources download into .cache/words)"""
-import argparse, bz2, hashlib, unicodedata, json, os, random, re, shutil, sys, urllib.request, uuid
+import argparse, bz2, hashlib, threading, unicodedata, json, os, random, re, shutil, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from pathlib import Path
 
 import jieba, jieba.posseg as pseg, opencc, yaml
@@ -282,10 +283,82 @@ def split_syllables(py, want=()):
     chosen = pick(0, 0) if want else None
     return chosen if chosen is not None else [y for r in runs for y in next(iter(r.values()))]
 
-def normalize_py(hz, py):
-    """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up."""
-    for m in NUMERAL_UNIT.finditer(hz):  # 六十分 must not cut as 六 + 十分
-        jieba.suggest_freq(m.group(0), True)
+JIEBA_LOCK = threading.RLock()
+
+def set_freq(word, freq=None):
+    """Make jieba cut word as one token (freq None: just enough to beat its own pieces) without inflating the corpus total, which add_word and suggest_freq do on every call and which made cuts depend on call order. Returns the old frequency."""
+    jieba.dt.initialize()
+    old = jieba.dt.FREQ.get(word)
+    if freq is None:
+        share = 1.0
+        for seg in jieba.cut(word, HMM=False):
+            share *= jieba.dt.FREQ.get(seg, 1) / jieba.dt.total
+        freq = max(int(share * jieba.dt.total) + 1, old or 1)
+    jieba.dt.total += freq - (old or 0)
+    jieba.dt.FREQ[word] = freq
+    for i in range(1, len(word)):
+        jieba.dt.FREQ.setdefault(word[:i], 0)
+    return old
+
+def note_compounds(vi):
+    """Hanzi compounds named by a 'chỉ dùng trong …' note."""
+    return [c for m in re.findall(r'chỉ dùng trong ([^)]*)', vi) for c in re.findall(r'[\u4e00-\u9fff]{2,}', m)]
+
+@contextmanager
+def taught(hz, compounds, sentences=()):
+    """For one entry only: the headword and its bound-note compounds are single words. A single hanzi that jieba strands next to a longer word (这位|子, 常见|到) is joined to the neighbour's edge character when that is a vocabulary word (位子, 见到)."""
+    known = lambda w: w in HSK or w in DICT
+    words = {w for w in {hz, *compounds} if len(w) > 1}
+    with JIEBA_LOCK:
+        jieba.dt.initialize()
+        saved = {}
+        def teach(ws, strong=False):
+            for w in ws - saved.keys():
+                saved[w] = set_freq(w, 10**7 if strong else None)
+        teach(words)
+        try:
+            if len(hz) == 1 and hz not in '一不了的着过':
+                extra = set()
+                for text in sentences:
+                    toks = jieba.lcut(text)
+                    for i, t in enumerate(toks):
+                        if t != hz:
+                            continue
+                        if i and len(toks[i - 1]) > 1 and known(toks[i - 1][-1] + hz):
+                            extra.add(toks[i - 1][-1] + hz)
+                        if i + 1 < len(toks) and len(toks[i + 1]) > 1 and known(hz + toks[i + 1][0]):
+                            extra.add(hz + toks[i + 1][0])
+                teach(extra, True)
+            yield
+        finally:
+            for w, f in saved.items():
+                set_freq(w, f or 0)
+
+def normalize_py(hz, py, classifiers=()):
+    units = {m.group(0) for m in NUMERAL_UNIT.finditer(hz)}  # 六十分 must not cut as 六 + 十分, for this sentence only
+    with JIEBA_LOCK:
+        saved = {w: set_freq(w) for w in units}
+        try:
+            return cut_py(hz, py, classifiers)
+        finally:
+            for w, f in saved.items():
+                set_freq(w, f or 0)
+
+def drop_false_apostrophes(py):
+    """An apostrophe stays only when both syllables around it exist: bàng'ōngshì (ōng) and niún'ǎi (niún) were splitter slips, dá'àn is real."""
+    plain = lambda y: re.sub(r'[\u0300-\u036f]', '', unicodedata.normalize('NFD', y.lower())).replace('v', 'ü')
+    chunks, out = re.split(r"['’]", py), ''
+    for i, chunk in enumerate(chunks):
+        if i:
+            last = split_syllables(re.findall(r'[^\W\d_]+$', chunks[i - 1])[-1])[-1] if re.search(r'[^\W\d_]$', chunks[i - 1]) else ''
+            first = split_syllables(re.match(r'[^\W\d_]+', chunk).group(0))[0] if re.match(r'[^\W\d_]', chunk) else ''
+            out += "'" if plain(last) in SYLLABLES and plain(first) in SYLLABLES else ''
+        out += chunk
+    return out
+
+def cut_py(hz, py, classifiers):
+    py = drop_false_apostrophes(py)
+    """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up. classifiers: the entry's own headword when it is a measure word, so 一出戏 is yīchū xì."""
     chars = CJK.findall(hz)
     syls = split_syllables(py, (len(chars), len(chars) - chars.count('儿')))
     erhua = len(syls) != len(chars) and len(syls) == len(chars) - chars.count('儿')
@@ -322,9 +395,11 @@ def normalize_py(hz, py):
         if n > 1 and w not in DICT:
             if w[0] in '我你他她它别' and w not in ('我们', '你们', '他们', '她们', '它们'):
                 pieces = [(w[0], 'r'), (w[1:], f)]
-            elif w[-1] == '一' or (w[0] == '一' and w[1] not in CLASSIFIERS and w[1] not in '下会些起共定样直般边半'):  # 天一黑, 一醒: 一 is its own word
+            elif w[0] == '一' and len(w) > 2 and w[1] in classifiers:  # 一出戏: numeral + the headword classifier is one word, the noun is another
+                pieces = [(w[:2], 'm'), (w[2:], f)]
+            elif w[-1] == '一' or (w[0] == '一' and w[1] not in CLASSIFIERS and w[1] not in '下会些起共定样直般边半百千万亿零两二三四五六七八九十'):  # 天一黑, 一醒: 一 is its own word
                 pieces = [(w[:-1], f), ('一', 'm')] if w[-1] == '一' else [('一', 'm'), (w[1:], f)]
-            elif w[-1] in '着了的过' and toned(c + n - 1):  # a full-tone 着 (zháo) is a verb, not the particle
+            elif w[-1] in '着了的过' and toned(c + n - 1) and w not in HSK:  # a full-tone 着 (zháo) is a verb, not the particle; 错过, 经过, 通过 are words
                 pieces = [(w[:-1], f), (w[-1], 'x')]
         for pw, pf in pieces:
             pn = count(pw)
@@ -377,7 +452,7 @@ MUST_HAVE = {  # core senses of the most polysemous HSK 1 words; the audit must 
     '才': ['Phó từ: mới, vừa mới', 'Phó từ: mãi mới, đến khi'],
     '也': ['Phó từ: cũng'], '又': ['Phó từ: lại, lần nữa (đã xảy ra)', 'Phó từ: vừa ... vừa'],
     '在': ['Giới từ: ở, tại', 'Phó từ: đang', 'Động từ: ở, có mặt'],
-    '给': ['Động từ: cho, đưa', 'Giới từ: cho, giúp, để'],
+    '给': ['Động từ: cho, đưa (nghĩa phải có từ "cho": 给我一本书)', 'Giới từ: cho, giúp (làm việc gì cho ai), để'],
     '让': ['Động từ: để, cho phép', 'Động từ: bảo, khiến'], '叫': ['Động từ: gọi, tên là', 'Động từ: bảo, khiến'],
     '会': ['Động từ: biết (kỹ năng)', 'Động từ: sẽ, có thể xảy ra', 'Danh từ: cuộc họp'],
     '能': ['Động từ: có thể (khả năng)', 'Động từ: được phép'],
@@ -385,14 +460,14 @@ MUST_HAVE = {  # core senses of the most polysemous HSK 1 words; the audit must 
     '得': ['Động từ: phải (děi)', 'Trợ từ: bổ ngữ (de)'], '了': ['Trợ từ: hoàn thành', 'Trợ từ: tình huống mới'],
     '过': ['Trợ từ: đã từng', 'Động từ: qua, đi qua'], '对': ['Tính từ: đúng', 'Giới từ: đối với, với'],
     '跟': ['Giới từ: với, cùng', 'Động từ: theo'], '从': ['Giới từ: từ'], '到': ['Động từ: đến', 'Bổ ngữ: được, tới (kết quả)'],
-    '说': ['Động từ: nói'], '看': ['Động từ: xem, nhìn', 'Động từ: thăm, khám (看病)', 'Động từ: cho rằng'],
+    '说': ['Động từ: nói'], '看': ['Động từ: xem, nhìn', 'Động từ: thăm, khám (看病)', 'Động từ: cho rằng', 'Động từ: trông, canh (kān: 看孩子, 看门)'],
     '想': ['Động từ: nghĩ', 'Động từ: muốn', 'Động từ: nhớ'], '好': ['Tính từ: tốt', 'Phó từ: rất, thật (好大)', 'Bổ ngữ: xong'],
     '有': ['Động từ: có', 'Động từ: có (tồn tại)'], '点': ['Danh từ: giờ', 'Lượng từ: chút, ít (一点)', 'Danh từ: điểm'],
     '些': ['Lượng từ: một vài, những'], '没': ['Phó từ: chưa, không (没有)'], '用': ['Động từ: dùng, sử dụng'],
     '开': ['Động từ: mở', 'Động từ: lái (xe) (开车)', 'Động từ: bật, vận hành (máy)'], '很': ['Phó từ: rất'], '打': ['Động từ: đánh', 'Động từ: gọi (điện thoại)', 'Động từ: chơi (bóng)'],
     '多': ['Tính từ: nhiều', 'Phó từ: bao nhiêu, mấy (多大)'], '下': ['Danh từ: dưới', 'Động từ: xuống', 'Lượng từ: lần (一下)'],
     '上': ['Danh từ: trên', 'Động từ: lên'], '把': ['Giới từ: 把 (đưa tân ngữ lên trước)'],
-    '给': ['Động từ: cho, đưa', 'Giới từ: cho, giúp, để'], '做': ['Động từ: làm'], '的': ['Trợ từ: của, định ngữ'],
+    '给': ['Động từ: cho, đưa (nghĩa phải có từ "cho": 给我一本书)', 'Giới từ: cho, giúp (làm việc gì cho ai), để'], '做': ['Động từ: làm'], '的': ['Trợ từ: của, định ngữ'],
 }
 
 def standins(hz, e, bound):
@@ -416,9 +491,9 @@ def audit(hz, e, llm, readings):
 Nghĩa gốc CC-CEDICT và bản dịch cvdict_vi để đối chiếu: {json.dumps(readings, ensure_ascii=False)}
 {('Nghĩa BẮT BUỘC phải có trong mục từ này (liệt kê vào missing nếu thiếu): ' + json.dumps(MUST_HAVE[hz], ensure_ascii=False)) if hz in MUST_HAVE else ''}
 Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...],"bound":[{{"id":"...","pattern":"不用"}}],"duplicate":[{{"id":"...","of":"id của nghĩa giống hệt"}}],"missing":[{{"pos":"...","vi":"..."}}]}}.
-- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: nghĩa chỉ có nhờ một từ khác trong câu hoặc vị trí bổ ngữ (一整晚 là nhờ 整, 他脑子转得快 là bổ ngữ mức độ, 他的前途 chỉ có trong từ ghép 前途 mà không có ghi chú) hoặc nghĩa tiếng Anh dịch sát chữ (single → duy nhất, almost → suýt, "in sports or games" → thi đấu khi câu là điểm thi); nghĩa tiếng Việt dịch theo từ tiếng Anh mơ hồ của CC-CEDICT chứ không theo cách dùng trong câu (quite → khá thay vì rất, boil → đun sôi thay vì sôi, get along → hợp nhau thay vì sống qua ngày), hoặc không khớp tự/tha động từ; câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
+- bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: nghĩa chỉ có nhờ một từ khác trong câu hoặc vị trí bổ ngữ (一整晚 là nhờ 整, 他脑子转得快 là bổ ngữ mức độ, 他的前途 chỉ có trong từ ghép 前途 mà không có ghi chú) hoặc câu dùng chữ ở âm đọc khác với nghĩa đang kiểm tra (看 kàn thay cho kān), hoặc nghĩa do chữ kế bên gánh (到银行去: "đi" là nhờ 去; 多出不少: "nhiều hơn" là nhờ 多), hoặc nghĩa tiếng Anh dịch sát chữ (single → duy nhất, almost → suýt, "in sports or games" → thi đấu khi câu là điểm thi); nghĩa tiếng Việt dịch theo từ tiếng Anh mơ hồ của CC-CEDICT chứ không theo cách dùng trong câu (quite → khá thay vì rất, boil → đun sôi thay vì sôi, get along → hợp nhau thay vì sống qua ngày), hoặc không khớp tự/tha động từ; câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
-- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Nghĩa chỉ có trong một từ ghép cụ thể (去 "ngoái" chỉ trong 去年) cũng là bound; nghĩa uyển ngữ hoặc văn chương (去 "qua đời", 冬天去了) phải rare. Ghi chú bound phải đúng với MỌI nửa của nghĩa (哪儿 "bất cứ đâu" chỉ trong 哪儿都…; "đâu đó" trong 好像在哪儿见过 là nghĩa khác, tách riêng và không có ghi chú), bằng tiếng Việt, ngăn cách bằng ", ", không dùng 等 「」 反问. Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
+- bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Nghĩa chỉ có trong một từ ghép cụ thể (去 "ngoái" chỉ trong 去年) cũng là bound; nghĩa uyển ngữ, văn chương hoặc chuyên ngành (去 "qua đời", 冬天去了; 元 "ẩn" trong 一元方程) phải rare, không phải bound. Ghi chú bound phải đúng với MỌI nửa của nghĩa (哪儿 "bất cứ đâu" chỉ trong 哪儿都…; "đâu đó" trong 好像在哪儿见过 là nghĩa khác, tách riêng và không có ghi chú), bằng tiếng Việt, ngăn cách bằng ", ", không dùng 等 「」 反问. Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
 - duplicate: nghĩa chỉ là cách nói khác của một nghĩa có sẵn (东边 "phía đông" và "ở phía đông của"; 快 "sắp" và "suýt"): ghi id của nghĩa thừa và id của nghĩa giữ lại.
 - missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
@@ -478,6 +553,8 @@ Yêu cầu:
 - Phân biệt từ gần nghĩa mà người Việt hay lẫn: 还是 hỏi lựa chọn là "hay, hay là", còn "hoặc" là 或者.
 - "common": true cho mọi nghĩa người học HSK 1–6 hay gặp trong lời nói và văn viết thường ngày, kể cả khi nó chỉ xuất hiện trong cấu trúc hoặc từ ghép thông dụng (少 trong 很少 "hiếm khi", 少来/少废话 "thôi, đừng" là common). false CHỈ cho nghĩa hiếm: văn ngôn, phương ngữ, chuyên ngành, chỉ còn trong thành ngữ cố định, hoặc chỉ dùng làm tên riêng. Căn cứ vào mức độ thường dùng của nghĩa, KHÔNG phải thứ tự trong CC-CEDICT. Không bỏ nghĩa hiếm, chỉ đánh dấu.
 - Lượng từ: nghĩa viết bằng từ đếm tiếng Việt kèm (danh từ được đếm), ví dụ 本 "quyển, cuốn (sách)", 杯 "cốc, ly (đồ uống)", 床 "tấm, chiếc (chăn, nệm)"; KHÔNG bắt đầu bằng "lượng từ" hay "classifier for". Ví dụ phải có số từ ngay trước đúng lượng từ 「{hz}」 (一床被子, 三岁), không dùng lượng từ khác (两张床 là sai cho 床).
+- Giới từ, bổ ngữ, động từ: dịch theo cách dùng của tiếng Việt, không dịch sát giới từ tiếng Anh của CC-CEDICT (for the benefit of → cho, giúp; không dùng "vì"; to → cho, không dùng "tới"). Hai nghĩa chỉ là cách nói khác của nhau (đi tới / đến, tới; làm… cho / cho, giúp) thì gộp thành một.
+- Ví dụ phải đúng ÂM ĐỌC của nghĩa đang viết (看 kān "trông, canh" khác 看 kàn "xem"): không chọn câu mà chữ đó đọc âm khác.
 - Ví dụ: với mỗi nghĩa, chọn câu Tatoeba dùng ĐÚNG nghĩa đó (ghi "tatoeba": id, chép nguyên "hz"), ưu tiên câu ngắn, từ dễ. Một câu chỉ dùng cho một nghĩa.
   Không có câu nào đúng nghĩa → tự viết câu ≤ 12 chữ Hán, từ vựng HSK ≤ {max(level or 3, 2)}, ghi "ai": true. Câu tự viết phải là tiếng Trung hiện đại tự nhiên, dùng 「{hz}」 hoặc một từ ghép CÓ THẬT chứa nó (không bịa từ ghép, không dùng từ văn ngôn làm câu thay thế). Nếu nghĩa chỉ có ở từ không tự nhiên trong lời nói (hoặc ví dụ duy nhất là từ ghép văn ngôn), đưa nghĩa vào "dropped" với lý do "không có ví dụ tự nhiên" thay vì cố viết câu.
   Không dùng chữ số Ả Rập trong câu tự viết: viết số bằng chữ Hán (六十, 一百). Nghĩa uyển ngữ hoặc hiếm (去 "qua đời") phải đánh common: false và câu dùng chính chữ đó (他爷爷病了很久，上个月去了), không dùng từ khác (去世) thay thế.
@@ -513,19 +590,20 @@ Chỉ trả về JSON:
                 if s['vi'] in unstar:
                     s['common'] = True
                 if bound.get(s['vi']):
-                    s['common'] = True
                     note = 'chỉ dùng trong ' + re.sub(r'[「」]', '', bound[s['vi']]).replace('、', ', ').replace('，', ', ').replace('；', '; ')
-                    s['vi'] = s['vi'][:-1] + f'; {note})' if s['vi'].endswith(')') else f'{s["vi"]} ({note})'
+                    paren = re.search(r' \(([^()]*)\)$', s['vi'])
+                    named = re.findall(r'[\u4e00-\u9fff]{2,}', paren.group(1)) if paren else []
+                    if paren and named and set(named) <= set(re.findall(r'[\u4e00-\u9fff]{2,}', note)) and not re.sub(r'trong|[\u4e00-\u9fff]|[;, ]', '', paren.group(1)):
+                        s['vi'] = s['vi'][:paren.start()] + f' ({note})'
+                    else:
+                        s['vi'] = s['vi'][:-1] + f'; {note})' if s['vi'].endswith(')') else f'{s["vi"]} ({note})'
                 s['vi'] = s['vi'].replace('（', '(').replace('）', ')')
-    taught = [w for w in {hz, *(c for p in bound.values() for c in re.findall(r'[\u4e00-\u9fff]{2,}', p))} if not jieba.dt.FREQ.get(w)]
-    for w in taught:  # the headword and its bound-note compounds are single words for this entry only
-        jieba.add_word(w)
     for r in e['readings']:
-        for g in r['groups']:
-            for s in g['senses']:
-                s['ex']['py'] = normalize_py(s['ex']['hz'], s['ex']['py'])
-    for w in taught:
-        jieba.del_word(w)
+        sents = [s['ex']['hz'] for g in r['groups'] for s in g['senses']]
+        with taught(hz, [c for g in r['groups'] for s in g['senses'] for c in note_compounds(s['vi'])], sents):
+            for g in r['groups']:
+                for s in g['senses']:
+                    s['ex']['py'] = normalize_py(s['ex']['hz'], s['ex']['py'], {hz} if g['pos'] == 'Lượng từ' else ())
     e['core'] = [s['vi'] for r in e['readings'] for g in r['groups'] for s in g['senses'] if s.get('core')]
     main = main_reading(hz, e['readings'])
     e['main'] = main
@@ -550,7 +628,8 @@ def to_yaml(hz, e):
         py = r['pinyin'].lower()
         main = py == e['main']
         wid = hz if main else hz + '-' + ''.join(s if s[-1].isdigit() else s + '5' for s in nums[py].split())
-        proper = next((r['pinyin'] for r in e['cedict'] if r['pinyin'].lower() == py and r['pinyin'][:1].isupper()), py)
+        variants = [r['pinyin'] for r in e['cedict'] if r['pinyin'].lower() == py]
+        proper = variants[0] if variants and all(v[:1].isupper() for v in variants) else py
         w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': proper,
                                    'hanviet': hanviet(hz, row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3])),
                                    'level': 1, 'pos': [], 'senses': [], 'examples': []})
@@ -572,6 +651,18 @@ def dump(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000), encoding='utf-8')
 
+def fold_hand(senses):
+    """A generated sense whose gloss equals a hand gloss, or one of its ;/,-separated terms, folds into the hand sense: hand wording stays, pos, example and rare come from the generated one."""
+    norm = lambda v: re.sub(r'\s*\(.*?\)', '', v).strip().casefold()
+    hand = [h for h in senses if 'pos' not in h]
+    for g in [g for g in senses if 'pos' in g]:
+        terms = {norm(g['vi']), *(t.strip() for t in re.split(r'[;,]', norm(g['vi'])))}
+        twin = next((h for h in hand if norm(h['vi']) in terms), None)
+        if twin:
+            twin.update({k: g[k] for k in ('pos', 'example', 'rare') if k in g})
+            senses.remove(g)
+    return senses
+
 def write_out(results):
     out = CACHE / 'out'
     sentences = {s['id']: s for s in (yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8')) if (out / 'sentences/hsk1.yaml').exists() else [])}
@@ -586,20 +677,66 @@ def write_out(results):
             if existing.exists():
                 old = yaml.safe_load(existing.read_text(encoding='utf-8'))
                 hand = [dict(s) for s in old.get('senses', []) if 'pos' not in s]
-                norm = lambda v: re.sub(r'\s*\(.*?\)', '', v).strip().casefold()
-                for g in list(w['senses']):  # a generated gloss that equals a hand gloss folds into it: the hand wording stays, pos and example come from the generated one
-                    twin = next((h for h in hand if 'pos' not in h and norm(h['vi']) == norm(g['vi'])), None)
-                    if twin:
-                        twin.update({k: g[k] for k in ('pos', 'example', 'rare') if k in g})
-                        w['senses'].remove(g)
+                merged = fold_hand([*hand, *w['senses']])
                 hand_ex = [x for x in old.get('examples', []) if not x.startswith('s-w-')]
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
-                     'senses': hand + w['senses'], 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}
+                     'senses': merged, 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}
             dump(out / 'words' / f'{wid}.yaml', {k: w[k] for k in WORD_FIELDS if k in w})
-            nums = {**next(r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'].lower()), 'core': e.get('core', [])}
+            same = [r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'].lower()]
+            base = next((r for r in same if not r['pinyin'][:1].isupper()), same[0])
+            nums = {**base, 'senses': {k: v for r in same for k, v in r['senses'].items()}, 'core': e.get('core', [])}
             (out / 'src').mkdir(parents=True, exist_ok=True)
             (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
     dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
+
+def restage_sentences(w, sentences):
+    """The pinyin every example sentence of a staged word gets from the current normalize_py, under that word's taught compounds and classifier."""
+    ids = [x for x in dict.fromkeys([*w.get('examples', []), *(s['example'] for s in w['senses'] if 'example' in s)]) if x in sentences and x.startswith('s-w-')]
+    texts = [sentences[i]['hanzi'] for i in ids]
+    with taught(w['hanzi'], [c for s in w['senses'] for c in note_compounds(s['vi'])], texts):
+        return {i: normalize_py(sentences[i]['hanzi'], sentences[i]['pinyin'], {w['hanzi']} if 'mw' in w['pos'] else ()) for i in ids}
+
+def restage():
+    """Deterministic fixes over the staged set, no model call: sentence pinyin, header case, hand-gloss folds and the CC-CEDICT source of case-variant readings."""
+    out = CACHE / 'out'
+    sentences = {s['id']: s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))}
+    changed = {'sentences': 0, 'headers': 0, 'folds': 0, 'notes': 0, 'src': 0}
+    settled = set()  # a sentence shared by several words takes the pinyin of the first word in file order
+    for f in sorted((out / 'words').glob('*.yaml')):
+        w = yaml.safe_load(f.read_text(encoding='utf-8'))
+        hz, py = w['hanzi'], w['pinyin'].lower()
+        readings, _ = source(hz)
+        same = [r for r in readings if r['pinyin'].lower() == py]
+        proper = same[0]['pinyin'] if same and all(r['pinyin'][:1].isupper() for r in same) else py
+        if proper != w['pinyin']:
+            w['pinyin'] = proper
+            changed['headers'] += 1
+        for sense in w['senses']:
+            repeat = re.search(r' \(([^()]*?);? ?chỉ dùng trong ([^()]*)\)$', sense['vi'])
+            if repeat and set(re.findall(r'[\u4e00-\u9fff]{2,}', repeat.group(1))) <= set(re.findall(r'[\u4e00-\u9fff]{2,}', repeat.group(2))) and not re.sub(r'trong|[\u4e00-\u9fff]|[;, ]', '', repeat.group(1)):
+                tidy = sense['vi'][:repeat.start()] + f' (chỉ dùng trong {repeat.group(2)})'
+                changed['notes'] += tidy != sense['vi']
+                sense['vi'] = tidy
+        before = len(w['senses'])
+        w['senses'] = fold_hand(w['senses'])
+        changed['folds'] += before - len(w['senses'])
+        for i, new in restage_sentences(w, sentences).items():
+            if i in settled:
+                continue
+            settled.add(i)
+            if sentences[i]['pinyin'] != new:
+                sentences[i]['pinyin'] = new
+                changed['sentences'] += 1
+        dump(f, {k: w[k] for k in WORD_FIELDS if k in w})
+        src = out / 'src' / f.with_suffix('.json').name
+        old = json.loads(src.read_text(encoding='utf-8'))
+        base = next((r for r in same if not r['pinyin'][:1].isupper()), same[0])
+        nums = {**old, **{k: base[k] for k in ('pinyin', 'hanviet', 'cvdict_vi')}, 'senses': {**{k: v for r in same for k, v in r['senses'].items()}, **old['senses']}} if len(same) > 1 else old
+        if nums != old:
+            src.write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
+            changed['src'] += 1
+    dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
+    print('restaged', json.dumps(changed))
 
 def staged_sha(out):
     h = hashlib.sha256()
@@ -661,6 +798,7 @@ def main(argv, llm=ask):
     ap.add_argument('--sample', type=int)
     ap.add_argument('--seed', type=int)
     ap.add_argument('--promote', action='store_true')
+    ap.add_argument('--restage', action='store_true')
     ap.add_argument('--approved', type=int)
     args = ap.parse_args(argv)
     if args.promote and args.approved is None:
@@ -671,6 +809,11 @@ def main(argv, llm=ask):
         return promote(CACHE / 'out', args.approved)
     if args.sample:
         return review(CACHE / 'out', args.seed, args.sample)
+    if args.restage:
+        for name in SOURCES:
+            fetch(name)
+        HSK.update({e['s']: e for e in json.loads((CACHE / 'complete.min.json').read_text(encoding='utf-8'))})
+        return restage()
     argv = args.words
     if llm is ask and os.environ.get('GEN_OFFLINE_DIR'):
         llm = ask_files

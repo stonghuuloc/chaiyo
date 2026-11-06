@@ -417,3 +417,73 @@ def test_example_pinyin_must_cover_every_hanzi(word):
 def test_a_syllable_after_erhua_is_spaced_so_the_importer_can_align(gen):
     assert gen.normalize_py('哪儿的话！', 'Nǎrde huà!') == 'Nǎr de huà!'
     assert gen.normalize_py('我一点儿也不怕狗。', 'Wǒ yīdiǎnr yě bù pà gǒu.') == 'Wǒ yīdiǎnr yě bùpà gǒu.'
+
+
+def test_numeral_one_hundred_forty_is_not_cut_after_yi(gen):
+    assert gen.normalize_py('二十美金等于一百四十元。', 'Èrshí měijīn děngyú yī bǎi sì shí yuán.') == 'Èrshí měijīn děngyú yībǎisìshíyuán.'
+
+
+def test_numeral_plus_headword_classifier_is_one_word_and_the_noun_another(gen):
+    assert gen.normalize_py('我看了一出戏。', 'Wǒ kàn le yì chū xì.', {'出'}) == 'Wǒ kànle yīchū xì.'
+
+
+def test_toned_guo_inside_a_vocabulary_word_stays_whole(gen, monkeypatch):
+    monkeypatch.setitem(gen.HSK, '错过', {})
+    assert gen.normalize_py('我错过了火车。', 'Wǒ cuò guò le huǒchē.') == 'Wǒ cuòguòle huǒchē.'
+
+
+def test_a_neighbour_is_not_glued_onto_a_single_hanzi_headword(gen, monkeypatch):
+    monkeypatch.setitem(gen.HSK, '见到', {})
+    monkeypatch.setitem(gen.HSK, '位子', {})
+    for hz, text, py, want in (('到', '你常见到她吗？', 'Nǐ cháng jiàn dào tā ma?', 'Nǐ cháng jiàndào tā ma?'),
+                               ('子', '这位子很好。', 'Zhè wèi zi hěn hǎo.', 'Zhè wèizi hěn hǎo.')):
+        with gen.taught(hz, [], [text]):
+            assert gen.normalize_py(text, py) == want
+
+
+def test_hand_gloss_folds_in_a_generated_gloss_that_lists_it_as_a_term(gen):
+    senses = [{'vi': 'các bạn'}, {'vi': 'các bạn; quý vị', 'pos': 'pron', 'example': 's-w-1'}, {'vi': 'bạn', 'pos': 'pron', 'example': 's-w-2'}]
+    assert gen.fold_hand(senses) == [{'vi': 'các bạn', 'pos': 'pron', 'example': 's-w-1'}, {'vi': 'bạn', 'pos': 'pron', 'example': 's-w-2'}]
+
+
+def test_header_is_capitalised_only_when_every_cedict_reading_is(word):
+    hz, e = word.entry('打', {}, scripted(answer()))
+    reading = lambda py: {'pinyin': py, 'hanviet': 'đả', 'cvdict_vi': [], 'senses': {'0.0': 'x'}}
+    e['cedict'] = [reading('Dǎ'), reading('dǎ')]
+    assert [w['pinyin'] for w in word.to_yaml('打', e)[0].values()][0] == 'dǎ'
+    e['cedict'] = [reading('Dǎ')]
+    assert [w['pinyin'] for w in word.to_yaml('打', e)[0].values()][0] == 'Dǎ'
+
+
+def test_bound_note_keeps_a_rare_sense_starred_and_replaces_a_repeated_parenthesis(word):
+    audit = {'bad_example': [], 'common': [], 'bound': [{'id': '0.0.0', 'pattern': '打人'}, {'id': '0.0.1', 'pattern': '打球, 打人'}], 'missing': []}
+    a = rare_answer()
+    a['readings'][0]['groups'][0]['senses'][0]['vi'] = 'đánh (trong 打人)'
+    hz, e = word.entry('打', {}, scripted(a, audit))
+    senses = e['readings'][0]['groups'][0]['senses']
+    assert senses[0]['vi'] == 'đánh (chỉ dùng trong 打人)' and senses[0]['common'] is True
+    assert senses[1]['common'] is False and senses[1]['vi'].endswith('(chỉ dùng trong 打球, 打人)')
+
+
+def test_every_staged_sentence_is_a_fixed_point_of_normalize_py(gen):
+    out, sources = gen.ROOT / '.cache/words/out', gen.ROOT / '.cache/words/complete.min.json'
+    if not out.exists() or not sources.exists():
+        pytest.skip('no staged corpus')
+    gen.HSK.update({e['s']: e for e in __import__('json').loads(sources.read_text(encoding='utf-8'))})
+    sentences = {s['id']: s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))}
+    moved, settled = [], set()
+    for f in sorted((out / 'words').glob('*.yaml')):
+        for i, py in gen.restage_sentences(yaml.safe_load(f.read_text(encoding='utf-8')), sentences).items():
+            if i not in settled and py != sentences[i]['pinyin']:
+                moved.append((i, sentences[i]['pinyin'], py))
+            settled.add(i)
+    assert moved == []
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('他急忙出了办公室。', "Tā jímáng chūle bàng'ōngshì.", 'Tā jímáng chūle bàngōngshì.'),
+    ('我喝了牛奶。', "Wǒ hēle niún'ǎi.", 'Wǒ hēle niúnǎi.'),
+    ('这是我的答案。', "Zhè shì wǒ de dá'àn.", "Zhè shì wǒde dá'àn."),
+    ('他是我女儿。', "Tā shì wǒ nǚ'ér.", "Tā shì wǒ nǚ'ér.")])
+def test_a_false_apostrophe_is_dropped_and_a_real_one_kept(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
