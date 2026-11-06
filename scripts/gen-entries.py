@@ -243,31 +243,48 @@ CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年�
 NUMERAL_UNIT = re.compile('[一二两三四五六七八九十百千万零〇半几]+[个本张只条件杯瓶些位块双把辆支页岁次年口家间层碗盘打分元角]')
 CJK = re.compile(r'[\u3400-\u9fff]')
 
-def split_syllables(py):
-    """Pinyin syllables, longest first and at most one tone mark each, so 'nǚér' still splits into nǚ + ér when the apostrophe is missing."""
-    def seg(run):
-        if not run:
-            return []
-        for end in range(len(run), 0, -1):
-            cand = run[:end]
-            erhua_cut = cand[-1] in 'rR' and len(cand) > 1 and run[end:end + 1] and run[end].lower() in VOWELS
-            if SYLLABLE_FULL.fullmatch(cand) and sum(ch in TONED for ch in cand.lower()) <= 1 and not erhua_cut:
-                rest = seg(run[end:])
-                if rest is not None:
-                    return [cand, *rest]
+SYLLABLES = {re.sub(r'[\u0300-\u036f]', '', unicodedata.normalize('NFD', y)) for row in DICT.values() for y in re.findall(r'[a-zü\u0300-\u036f]+', unicodedata.normalize('NFD', row[1].lower()))}
+
+def split_syllables(py, want=()):
+    """Pinyin syllables, longest first and at most one tone mark each, so 'nǚér' still splits into nǚ + ér when the apostrophe is missing. When the syllable count is ambiguous ('bùnéng' is bù + néng or bùn + éng) a parse with one of the counts in want wins."""
+    def bare(parse):  # a syllable outside the dictionary's inventory costs more than a zero-initial one, which only follows an apostrophe: bùnéng is bù néng, Tiānānmén is Tiān ān mén
+        plain = lambda y: re.sub(r'[\u0300-\u036f]', '', unicodedata.normalize('NFD', y.lower()).replace('ü', 'v')).replace('v', 'ü')
+        return (sum(plain(y) not in SYLLABLES for y in parse), sum(not re.match(r'[bpmfdtnlgkhjqxrzcsyw]', y, re.I) for y in parse))
+    def parses(run):
+        memo = {len(run): {0: []}}
+        def at(i):
+            if i in memo:
+                return memo[i]
+            out = {}
+            for end in range(len(run), i, -1):
+                cand = run[i:end]
+                erhua_cut = cand[-1] in 'rR' and len(cand) > 1 and run[end:end + 1] and run[end].lower() in VOWELS
+                if SYLLABLE_FULL.fullmatch(cand) and sum(ch in TONED for ch in cand.lower()) <= 1 and not erhua_cut:
+                    for k, rest in at(end).items():
+                        parse = [cand, *rest]
+                        if k + 1 not in out or bare(parse) < bare(out[k + 1]):
+                            out[k + 1] = parse
+            memo[i] = out
+            return out
+        return at(0) or {1: [run]}
+    runs = [parses(r) for r in re.findall(rf"[A-Za-z{VOWELS.replace('v', '')}ÀÁÈÉÌÍÒÓÙÚǍǏǑǓǕǗǙǛĀĒĚĪŌŪ]+", unicodedata.normalize('NFC', py))]
+    def pick(i, total):
+        if i == len(runs):
+            return [] if total in want else None
+        for k, parts in runs[i].items():
+            rest = pick(i + 1, total + k)
+            if rest is not None:
+                return [*parts, *rest]
         return None
-    out = []
-    for run in re.findall(rf"[A-Za-z{VOWELS.replace('v', '')}ÀÁÈÉÌÍÒÓÙÚǍǏǑǓǕǗǙǛĀĒĚĪŌŪ]+", unicodedata.normalize('NFC', py)):
-        parts = seg(run)
-        out += parts if parts is not None else [run]
-    return out
+    chosen = pick(0, 0) if want else None
+    return chosen if chosen is not None else [y for r in runs for y in next(iter(r.values()))]
 
 def normalize_py(hz, py):
     """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up."""
     for m in NUMERAL_UNIT.finditer(hz):  # 六十分 must not cut as 六 + 十分
         jieba.suggest_freq(m.group(0), True)
-    syls = split_syllables(py)
     chars = CJK.findall(hz)
+    syls = split_syllables(py, (len(chars), len(chars) - chars.count('儿')))
     erhua = len(syls) != len(chars) and len(syls) == len(chars) - chars.count('儿')
     if erhua:
         chars = [c for c in chars if c != '儿']

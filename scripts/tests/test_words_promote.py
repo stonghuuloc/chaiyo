@@ -395,3 +395,8 @@ def test_main_with_offline_dir_waits_for_answers_instead_of_calling_the_api(word
     ('lǎorén', ['lǎo', 'rén']), ('nánrén', ['nán', 'rén']), ('huār', ['huār']), ('nǚér', ['nǚ', 'ér']), ('Dōngtiānguòle', ['Dōng', 'tiān', 'guò', 'le'])])
 def test_split_syllables_keeps_r_initial_syllable_out_of_erhua(gen, py, want):
     assert gen.split_syllables(py) == want
+
+
+def test_normalize_py_uses_the_hanzi_count_to_split_bun_eng(gen):
+    assert gen.normalize_py('有的地方不能理解。', 'Yǒude dìfang bùnéng lǐjiě.') == 'Yǒude dìfang bùnéng lǐjiě.'
+    assert gen.normalize_py('这小男孩能数到十。', 'Zhè xiǎonánhái néngshǔ dào shí.') == 'Zhè xiǎonánhái néngshǔ dào shí.'
