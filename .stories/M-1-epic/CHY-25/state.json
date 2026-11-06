@@ -16,7 +16,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "SPEC+PLAN written by the docs-only design PR; picture/execute not started",
+      "note": "review round 1 (Loc, 2026-11-06) addressed; awaiting re-review",
       "jira": ""
     },
     {
@@ -28,7 +28,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "SPEC+PLAN written by the docs-only design PR; picture/execute not started",
+      "note": "review round 1 (Loc, 2026-11-06) addressed; awaiting re-review",
       "jira": ""
     },
     {
@@ -41,7 +41,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "SPEC+PLAN written by the docs-only design PR; picture/execute not started",
+      "note": "review round 1 (Loc, 2026-11-06) addressed; awaiting re-review",
       "jira": ""
     }
   ],
@@ -57,5 +57,5 @@
     "2026-11-06 S2 \u2192 plan",
     "2026-11-06 S3 \u2192 plan"
   ],
-  "updated": "2026-11-06T11:56:08+07:00"
+  "updated": "2026-11-06T13:51:00+07:00"
 }
