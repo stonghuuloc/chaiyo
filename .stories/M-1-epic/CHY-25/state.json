@@ -1,0 +1,61 @@
+{
+  "story": "CHY-25",
+  "title": "Catalog: content reads + offline",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "Catalog reads from a lesson bundle",
+      "acs": [
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC7"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 0,
+      "note": "SPEC+PLAN written by the docs-only design PR; picture/execute not started",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "Bundle Source and Vercel delivery",
+      "acs": [
+        "AC1"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 0,
+      "note": "SPEC+PLAN written by the docs-only design PR; picture/execute not started",
+      "jira": ""
+    },
+    {
+      "id": "S3",
+      "name": "Offline reopen and c\u1ea7n m\u1ea1ng",
+      "acs": [
+        "AC5",
+        "AC6"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 0,
+      "note": "SPEC+PLAN written by the docs-only design PR; picture/execute not started",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "agent/chy-25-design-slice-18d36a30eaa8",
+  "log": [
+    "2026-11-06 init",
+    "2026-11-06 +S1 Catalog reads from a lesson bundle [AC2,AC3,AC4,AC7]",
+    "2026-11-06 +S2 Bundle Source and Vercel delivery [AC1]",
+    "2026-11-06 +S3 Offline reopen and c\u1ea7n m\u1ea1ng [AC5,AC6]",
+    "2026-11-06 S1 \u2192 plan",
+    "2026-11-06 S2 \u2192 plan",
+    "2026-11-06 S3 \u2192 plan"
+  ],
+  "updated": "2026-11-06T11:56:08+07:00"
+}
