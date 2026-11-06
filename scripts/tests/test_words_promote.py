@@ -275,7 +275,7 @@ def test_must_have_senses_reach_the_audit_prompt(word):
 
 
 @pytest.mark.parametrize('hz,py,want', [
-    ('别碰着。', 'Biépèng zháo.', 'Bié pèng zháo.'),
+    ('别碰着。', 'Biépèng zháo.', 'Bié pèngzháo.'),
     ('你着什么急？', 'Nǐzháo shénme jí?', 'Nǐ zháo shénme jí?'),
     ('火着了。', 'Huǒzháole.', 'Huǒ zháole.'),
     ('他看着我。', 'Tā kàn zhe wǒ.', 'Tā kànzhe wǒ.')])
@@ -487,3 +487,41 @@ def test_every_staged_sentence_is_a_fixed_point_of_normalize_py(gen):
     ('他是我女儿。', "Tā shì wǒ nǚ'ér.", "Tā shì wǒ nǚ'ér.")])
 def test_a_false_apostrophe_is_dropped_and_a_real_one_kept(gen, hz, py, want):
     assert gen.normalize_py(hz, py) == want
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('他不客气地说：“不行。”', 'Tā bù kèqi de shuō: " Bùxíng. "', 'Tā bù kèqi de shuō: "Bùxíng."'),
+    ('她喜欢雨和雪。', 'Tā xǐhuan yǔ hé xuě.', 'Tā xǐhuan yǔ hé xuě.'),
+    ('二加三的和是五。', 'Èr jiā sān de hé shì wǔ.', 'Èr jiā sānde hé shì wǔ.'),
+    ('汤姆喜欢她。', 'Tāngmǔ xǐhuan tā.', 'Tāngmǔ xǐhuan tā.'),
+    ('别冻着了。', 'Bié dòng zháo le.', 'Bié dòngzháole.'),
+    ('我找着工作了。', 'Wǒ zhǎo zháo gōngzuò le.', 'Wǒ zhǎozháo gōngzuòle.'),
+    ('他的脚着地了。', 'Tā de jiǎo zháo dì le.', 'Tāde jiǎo zháodìle.')])
+def test_round_nine_pinyin_cuts(gen, hz, py, want):
+    assert gen.normalize_py(hz, py) == want
+
+
+def test_one_hundred_is_exempt_from_the_bare_hanzi_rule(gen):
+    e = {'readings': [{'groups': [{'pos': 'Số từ', 'senses': [{'vi': 'trăm', 'ex': {'ai': True, 'hz': '一百块钱够吗？'}}]}]}]}
+    assert gen.standins('百', e, {}) == []
+
+
+def test_main_reading_overrides_cover_ji3_and_zhong1(gen):
+    assert gen.MAIN_OVERRIDE['几'] == 'jǐ' and gen.MAIN_OVERRIDE['中'] == 'zhōng'
+
+
+def test_straight_quotes_alternate_open_and_close(gen):
+    assert gen.normalize_py('硬币的一面叫做"公"。', 'Yìngbì de yī miàn jiàozuò" gōng".') == 'Yìngbìde yī miàn jiàozuò "gōng".'
+
+
+def test_a_bound_form_sense_without_a_note_is_sent_back(word, monkeypatch):
+    src = word.source('打')[0]
+    src[0]['senses']['0.1'] = '(bound form) to play'
+    monkeypatch.setattr(word, 'source', lambda hz: (src, []))
+    audit = {'bad_example': [], 'common': [], 'bound': [], 'missing': []}
+    calls = []
+    def llm(prompt):
+        calls.append(prompt)
+        return audit if 'bound_form' in prompt and 'Kiểm tra' in prompt else bare_answer()
+    word.entry('打', {}, llm)
+    assert any('lấy từ dòng' in c and 'Bản trước cần sửa' in c for c in calls)

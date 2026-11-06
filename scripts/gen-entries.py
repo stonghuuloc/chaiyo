@@ -226,7 +226,7 @@ def check(e, cands, hz, readings):
 
 MAIN_OVERRIDE = {  # dict.json's first reading is a rare or unmarked one for these
     '着': 'zhe', '起来': 'qǐ lai', '雨': 'yǔ', '看': 'kàn', '和': 'hé', '行': 'xíng', '差': 'chà', '累': 'lèi', '吧': 'ba',
-    '地方': 'dì fang', '页': 'yè'}
+    '地方': 'dì fang', '页': 'yè', '几': 'jǐ', '中': 'zhōng'}
 
 def main_reading(hz, readings):
     """The reading that gets the plain-hanzi id: the table above, else the reading with most common senses (告诉 gào su, not the legal gào sù), a tie going to dict.json's reading, then source order."""
@@ -241,7 +241,7 @@ HINT_POS = {'n': 'Danh từ', 'v': 'Động từ', 'a': 'Tính từ', 'd': 'Phó
 VOWELS = 'aeiouüvāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ'
 SYLLABLE = re.compile(rf'(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])?[{VOWELS}]+(?:ng|n)?r?(?![{VOWELS}])', re.I)
 SYLLABLE_FULL = re.compile(rf'(?:(?:[zcs]h|[bpmfdtnlgkhjqxrzcsyw])[{VOWELS}]+|[aoeāáǎàōóǒòēéěèAOEĀÁǍÀŌÓǑÒĒÉĚÈ][{VOWELS}]*)(?:ng|n)?r?', re.I)
-PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '…': '...'}
+PUNCT = {'，': ',', '。': '.', '？': '?', '！': '!', '、': ',', '；': ';', '：': ':', '“': '"', '”': '"', '「': '"', '」': '"', '《': '"', '》': '"', '（': '(', '）': ')', '…': '...'}
 TONED = set(VOWELS) - set('aeiouüv')
 CLASSIFIERS = set('个本张只条件杯瓶些位块双把辆支页岁次点年口家间层碗盘打分元角')
 NUMERAL_UNIT = re.compile('[一二两三四五六七八九十百千万零〇半几]+[个本张只条件杯瓶些位块双把辆支页岁次年口家间层碗盘打分元角]')
@@ -371,7 +371,12 @@ def cut_py(hz, py, classifiers):
             syls[i] = y[0] + 'ī'
         elif c == '不' and y.lower() == 'bú':
             syls[i] = y[0] + 'ù'
-    toks = [(t.word, t.flag) for t in pseg.lcut(hz)]
+    toks = []
+    for t in pseg.lcut(hz):  # an HMM-only token (雨和雪, 二加) that holds a function word or numeral is cut again from the dictionary
+        if len(t.word) > 1 and not jieba.dt.FREQ.get(t.word) and re.search('[和与跟同及的了着过在是有不也都就还又加减乘除等一二三四五六七八九十百千万两零]', t.word):
+            toks += [(u.word, u.flag) for u in pseg.lcut(t.word, HMM=False)]
+        else:
+            toks.append((t.word, t.flag))
     split = []
     for i, (w, f) in enumerate(toks):
         if w == '的话' and not (i + 1 < len(toks) and toks[i + 1][0] in '，,'):  # 的话 is a unit only when conditional
@@ -404,7 +409,8 @@ def cut_py(hz, py, classifiers):
         for pw, pf in pieces:
             pn = count(pw)
             prev = units[-1] if units else None
-            particle = pw in ('的', '了', '着', '过') and prev and prev[2] and not toned(c)
+            complement = pw == '着' and toned(c) and prev and prev[2] and prev[3].startswith('v') and prev[1] == 1  # 冻着, 猜着, 找着: zháo joins the verb
+            particle = pw in ('的', '了', '着', '过') and prev and prev[2] and not toned(c) or complement
             classifier = pf.startswith('q') and prev and prev[2] and prev[3].startswith('m')
             if particle or classifier:
                 prev[1] += pn
@@ -412,17 +418,27 @@ def cut_py(hz, py, classifiers):
             else:
                 units.append([pw, pn, True, pf])
             c += pn
-    out, k = '', 0
+    out, k, opened, straight = '', 0, False, False
     for text, n, is_word, _ in units:
         if is_word:
             word = ''
             for y in syls[k:k + n]:
                 glue = ' ' if word.endswith('r') and not re.search(r'(?i)(^|[^a-z])[eēéěè]r$', word) else ("'" if word and unicodedata.normalize('NFD', y[0].lower())[0] in 'aoe' else '')
                 word += (glue if word else '') + y
-            out += (' ' if out and not out.endswith(' ') else '') + word
+            out += (' ' if out and not out.endswith(' ') and not opened else '') + word
+            opened = False
             k += n
         else:
-            out += ''.join(PUNCT.get(c, c) for c in text if not c.isspace())
+            for c in text:
+                if c.isspace():
+                    continue
+                if c == '"':
+                    straight = not straight
+                if c in '“「《（(' or (c == '"' and straight):
+                    out += (' ' if out and not out.endswith(' ') else '') + PUNCT.get(c, c)
+                    opened = True
+                else:
+                    out += PUNCT.get(c, c)
     return out[:1].upper() + out[1:]
 
 HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
@@ -477,11 +493,14 @@ def standins(hz, e, bound):
     return [f'ví dụ của "{s["vi"]}" chỉ có từ ghép chứa 「{hz}」: viết lại câu với 「{hz}」 đứng riêng (không dùng từ ghép khác thay thế)'
             for r in e['readings'] for g in r['groups'] for s in g['senses']
             if s['ex'].get('ai') and not s['ex'].get('tatoeba') and g['pos'] != 'Lượng từ' and s['vi'] not in bound
-            and hz not in jieba.lcut(s['ex'].get('hz') or '')]
+            and hz not in jieba.lcut(s['ex'].get('hz') or '')
+            and not (hz in '百千万' and ('一' + hz) in (s['ex'].get('hz') or ''))]
 
 def audit(hz, e, llm, readings):
     """A second opinion on the finished entry: unnatural examples and senses starred rare that are everyday meanings."""
-    rows = [{'id': f'{ri}.{gi}.{si}', 'pos': g['pos'], 'vi': s['vi'], 'rare': not s.get('common'), 'hz': s['ex'].get('hz') or '', 'py': s['ex'].get('py')}
+    texts = {i: t for r in readings for i, t in r['senses'].items()}
+    rows = [{'id': f'{ri}.{gi}.{si}', 'pos': g['pos'], 'vi': s['vi'], 'rare': not s.get('common'), 'hz': s['ex'].get('hz') or '', 'py': s['ex'].get('py'),
+             **({'bound_form': True} if s.get('src') and all(texts.get(i, '').lower().startswith('(bound form)') for i in s['src']) else {})}
             for ri, r in enumerate(e['readings']) for gi, g in enumerate(r['groups']) for si, s in enumerate(g['senses'])]
     for row, (r, g, s) in zip(rows, [(r, g, s) for r in e['readings'] for g in r['groups'] for s in g['senses']]):
         if s['ex'].get('tatoeba'):
@@ -494,6 +513,7 @@ Trả về JSON {{"bad_example":[{{"id":"...","why":"..."}}],"common":["id",...]
 - bad_example: câu tiếng Trung không tự nhiên, dùng từ ghép không có thật (ví dụ 本干), từ văn ngôn, hoặc từ ghép khác thay cho chính chữ đó (要是 thay cho 要, 就算 thay cho 就), hoặc không minh hoạ đúng nghĩa. Trong "why" nêu rõ dạng đúng: câu phải chứa 「{hz}」 đứng riêng hoặc trong cấu trúc thông dụng của nó. Cũng là bad_example: nghĩa chỉ có nhờ một từ khác trong câu hoặc vị trí bổ ngữ (一整晚 là nhờ 整, 他脑子转得快 là bổ ngữ mức độ, 他的前途 chỉ có trong từ ghép 前途 mà không có ghi chú) hoặc câu dùng chữ ở âm đọc khác với nghĩa đang kiểm tra (看 kàn thay cho kān), hoặc nghĩa do chữ kế bên gánh (到银行去: "đi" là nhờ 去; 多出不少: "nhiều hơn" là nhờ 多), hoặc nghĩa tiếng Anh dịch sát chữ (single → duy nhất, almost → suýt, "in sports or games" → thi đấu khi câu là điểm thi); nghĩa tiếng Việt dịch theo từ tiếng Anh mơ hồ của CC-CEDICT chứ không theo cách dùng trong câu (quite → khá thay vì rất, boil → đun sôi thay vì sôi, get along → hợp nhau thay vì sống qua ngày), hoặc không khớp tự/tha động từ; câu mà nghĩa đang minh hoạ do một từ khác gánh (显示出来 không minh hoạ 出来 "nảy sinh"; 碰着/淋着 là bổ ngữ, không minh hoạ 着 zháo "chạm"), hoặc câu ghép từ chưa chuẩn (算盘 phải là 打算盘). Bỏ qua dòng (Tatoeba).
 - common: id của nghĩa đang rare=true nhưng thực ra người học gặp thường xuyên trong lời nói hằng ngày. Chỉ liệt kê khi chắc chắn.
 - bound: nghĩa thông dụng nhưng chỉ dùng trong một kết cấu cố định, phủ định hoặc nghi vấn, không đứng độc lập được (用 "cần" chỉ trong 不用 hoặc câu hỏi; 要 "quan trọng" chỉ trong 要紧). Nghĩa chỉ có trong một từ ghép cụ thể (去 "ngoái" chỉ trong 去年) cũng là bound; nghĩa uyển ngữ, văn chương hoặc chuyên ngành (去 "qua đời", 冬天去了; 元 "ẩn" trong 一元方程) phải rare, không phải bound. Ghi chú bound phải đúng với MỌI nửa của nghĩa (哪儿 "bất cứ đâu" chỉ trong 哪儿都…; "đâu đó" trong 好像在哪儿见过 là nghĩa khác, tách riêng và không có ghi chú), bằng tiếng Việt, ngăn cách bằng ", ", không dùng 等 「」 反问. Ghi "pattern" liệt kê ĐỦ các kết cấu chính (少 shào "trẻ": 少年, 少女, 年少; 热 "nhiệt tình": 热情, 热心; 着 "sốt ruột": 着急, 着凉), không chỉ một ví dụ. Nghĩa là cách dùng chính sau động từ (V+出来: 拿出来, 想出来) KHÔNG phải bound. Nghĩa kiểu này KHÔNG phải nghĩa hiếm.
+- bound_form: dòng có bound_form=true là nghĩa CC-CEDICT ghi "(bound form)" (chỉ có trong từ ghép: 和 "Nhật Bản" trong 和服, 和 "hài hòa" trong 和谐). Nghĩa đó phải nằm trong bound với pattern đủ (và nếu là nghĩa chuyên ngành hay văn chương thì cũng phải rare).
 - duplicate: nghĩa chỉ là cách nói khác của một nghĩa có sẵn (东边 "phía đông" và "ở phía đông của"; 快 "sắp" và "suýt"): ghi id của nghĩa thừa và id của nghĩa giữ lại.
 - missing: nghĩa CỐT LÕI mà người học gặp rất thường nhưng mục từ chưa có, dù CC-CEDICT không ghi (ví dụ 地方 "chỗ, điểm" trong 有不懂的地方; 真的 tính từ "thật"). Dựa vào cvdict_vi. Chỉ liệt kê khi chắc chắn, tối đa 2.
 Không có gì sai → danh sách rỗng.""")
@@ -501,9 +521,11 @@ Không có gì sai → danh sách rỗng.""")
     bad = [f'ví dụ của "{by_id[b["id"]]["vi"]}" không tự nhiên: {b.get("why", "")}' for b in out.get('bad_example', []) if isinstance(b, dict) and b.get('id') in by_id]
     unstar = {by_id[i]['vi'] for i in out.get('common', []) if i in by_id}
     bound = {by_id[b['id']]['vi']: b.get('pattern') for b in out.get('bound', []) if isinstance(b, dict) and b.get('id') in by_id and b.get('pattern')}
+    boundless = [f'nghĩa "{r["vi"]}" lấy từ dòng "(bound form)" của CC-CEDICT nhưng chưa có ghi chú: thêm "(chỉ dùng trong …)" liệt kê các từ ghép chính, hoặc bỏ nghĩa vào dropped nếu không có ví dụ tự nhiên'
+                 for r in rows if r.get('bound_form') and r['vi'] not in bound and 'chỉ dùng trong' not in r['vi']]
     dup = {by_id[d['id']]['vi']: by_id[d['of']]['vi'] for d in out.get('duplicate', []) if isinstance(d, dict) and d.get('id') in by_id and d.get('of') in by_id and d['id'] != d['of']}
     missing = [f'thiếu nghĩa cốt lõi {m["pos"]} "{m["vi"]}": thêm nó với "src": [], "core": true và ví dụ tự nhiên' for m in out.get('missing', []) if isinstance(m, dict) and m.get('pos') and m.get('vi')]
-    return bad + missing, unstar, bound, dup
+    return bad + missing + boundless, unstar, bound, dup
 
 def merge_senses(hz, readings, merge):
     """Fold CC-CEDICT senses that mean the same thing into one numbered sense before the model translates them."""
@@ -554,6 +576,7 @@ Yêu cầu:
 - "common": true cho mọi nghĩa người học HSK 1–6 hay gặp trong lời nói và văn viết thường ngày, kể cả khi nó chỉ xuất hiện trong cấu trúc hoặc từ ghép thông dụng (少 trong 很少 "hiếm khi", 少来/少废话 "thôi, đừng" là common). false CHỈ cho nghĩa hiếm: văn ngôn, phương ngữ, chuyên ngành, chỉ còn trong thành ngữ cố định, hoặc chỉ dùng làm tên riêng. Căn cứ vào mức độ thường dùng của nghĩa, KHÔNG phải thứ tự trong CC-CEDICT. Không bỏ nghĩa hiếm, chỉ đánh dấu.
 - Lượng từ: nghĩa viết bằng từ đếm tiếng Việt kèm (danh từ được đếm), ví dụ 本 "quyển, cuốn (sách)", 杯 "cốc, ly (đồ uống)", 床 "tấm, chiếc (chăn, nệm)"; KHÔNG bắt đầu bằng "lượng từ" hay "classifier for". Ví dụ phải có số từ ngay trước đúng lượng từ 「{hz}」 (一床被子, 三岁), không dùng lượng từ khác (两张床 là sai cho 床).
 - Giới từ, bổ ngữ, động từ: dịch theo cách dùng của tiếng Việt, không dịch sát giới từ tiếng Anh của CC-CEDICT (for the benefit of → cho, giúp; không dùng "vì"; to → cho, không dùng "tới"). Hai nghĩa chỉ là cách nói khác của nhau (đi tới / đến, tới; làm… cho / cho, giúp) thì gộp thành một.
+- Mỗi nghĩa chỉ một ý và một ví dụ: không gộp hai nghĩa khác nhau vào một dòng (几 "mấy (hỏi số nhỏ)" khác 几 "vài (số không xác định)"). 几 dịch là "mấy", không phải "bao nhiêu" (đó là 多少). Nghĩa chỉ dùng ở khẩu ngữ, phương ngữ hoặc thô (女人 "vợ") phải common: false.
 - Ví dụ phải đúng ÂM ĐỌC của nghĩa đang viết (看 kān "trông, canh" khác 看 kàn "xem"): không chọn câu mà chữ đó đọc âm khác.
 - Ví dụ: với mỗi nghĩa, chọn câu Tatoeba dùng ĐÚNG nghĩa đó (ghi "tatoeba": id, chép nguyên "hz"), ưu tiên câu ngắn, từ dễ. Một câu chỉ dùng cho một nghĩa.
   Không có câu nào đúng nghĩa → tự viết câu ≤ 12 chữ Hán, từ vựng HSK ≤ {max(level or 3, 2)}, ghi "ai": true. Câu tự viết phải là tiếng Trung hiện đại tự nhiên, dùng 「{hz}」 hoặc một từ ghép CÓ THẬT chứa nó (không bịa từ ghép, không dùng từ văn ngôn làm câu thay thế). Nếu nghĩa chỉ có ở từ không tự nhiên trong lời nói (hoặc ví dụ duy nhất là từ ghép văn ngôn), đưa nghĩa vào "dropped" với lý do "không có ví dụ tự nhiên" thay vì cố viết câu.
