@@ -77,8 +77,8 @@ if (!word) {
 }
 ```
 
-`wordById` replaces the current `wordIds` Set or is built beside it. Every other clause of check 8 is
-unchanged.
+`wordById` is added beside the current `wordIds` Set (which `need()` still uses) or is built once and
+`need()` reads its keys. Every other clause of check 8 is unchanged.
 
 ## What it flags, and what it does not
 
@@ -161,8 +161,8 @@ exception.
 - `.stories/M-1-epic/CHY-9/slices/S1-9-checks-clean-primer/SPEC.md:13` check 8: add clause (g) with
   the rule and the two messages above.
 - `.stories/M-1-epic/CHY-9/slices/S1-9-checks-clean-primer/DISCUSSION.md`: log the Q1–Q5 answers.
-- `src/lib/content/lint/checks/8-references.ts`: swap `wordIds` for a `wordById` Map and add the
-  image branch in `question()`. Tests: P1–P2, N1–N4, C1–C2 above.
+- `src/lib/content/lint/checks/8-references.ts`: add a `wordById` Map beside `wordIds` and the image
+  branch in `question()`. Tests: P1–P2, N1–N4, C1–C2 above.
 
 ## Not this slice
 
