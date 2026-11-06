@@ -250,7 +250,8 @@ def split_syllables(py):
             return []
         for end in range(len(run), 0, -1):
             cand = run[:end]
-            if SYLLABLE_FULL.fullmatch(cand) and sum(ch in TONED for ch in cand.lower()) <= 1:
+            erhua_cut = cand[-1] in 'rR' and len(cand) > 1 and run[end:end + 1] and run[end].lower() in VOWELS
+            if SYLLABLE_FULL.fullmatch(cand) and sum(ch in TONED for ch in cand.lower()) <= 1 and not erhua_cut:
                 rest = seg(run[end:])
                 if rest is not None:
                     return [cand, *rest]

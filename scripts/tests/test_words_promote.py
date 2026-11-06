@@ -389,3 +389,9 @@ def test_main_with_offline_dir_waits_for_answers_instead_of_calling_the_api(word
         word.main(['打'])
     assert e.value.code == 3 and 'PENDING 打' in capsys.readouterr().out
     assert list((tmp_path / 'off/prompts').glob('*.txt'))
+
+
+@pytest.mark.parametrize('py,want', [
+    ('lǎorén', ['lǎo', 'rén']), ('nánrén', ['nán', 'rén']), ('huār', ['huār']), ('nǚér', ['nǚ', 'ér']), ('Dōngtiānguòle', ['Dōng', 'tiān', 'guò', 'le'])])
+def test_split_syllables_keeps_r_initial_syllable_out_of_erhua(gen, py, want):
+    assert gen.split_syllables(py) == want
