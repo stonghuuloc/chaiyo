@@ -16,6 +16,10 @@ ACs: AC1, AC2, AC3 · design lead CHAA-49 · 2026-11-06
 - [AC3] Q (advisor r1): rows #28/#29 are A-vs-B; how does S2 learn whether an engine said the forced reading? A: those two rows also ask "which clip said <force>?" (A / B / both / neither), stored as `said`. Confidence 85%.
 - Parked (advisor r1, no AC): clip `src` paths (`azure/NN.mp3`) and the committed `order.json` reveal the engine to anyone who looks; AC3 asks only for a shuffled sheet. Loc listens without opening devtools.
 
+- [AC1] Changed at execute (Loc, 2026-11-07, WAVE-PLAN Q1-Q3 answers): one engine, OmniVoice, called directly through its Python package (`spike/omnivoice_render.py`); the VoiceStudio app, Azure and CosyVoice are dropped. "Both engines" became two OmniVoice arms: **design** (voice prompt + seed) and **refclip** (one reference clip per voice). Folders `spike/design` and `spike/refclip` replace `spike/voicestudio` and `spike/azure`; `order.json` and the sheet shuffle those two arms. Confidence 100%: Loc's decision.
+- [AC2] Changed at execute: `voices` in `sentences.yaml` holds text prompts and seeds (redpanda fixed by Loc, three candidates each for takin and narrator), plus `chosen`, `pace` (atempo factor) and optional per-item `say` and `seed`. Loc picked takin-3, narrator-1; paces 0.85 / 0.85 / 0.75. Row 8 sends `NIN2HAO3！` with seed 7 (ear-checked).
+- [CHORE] Added at execute after Loc's "broken" rows: `render` gates each clip (speech per syllable, clipping, silence, Whisper), retries with a new seed, and `check` flags stale ref, tempo, text and pinned seed. Confidence 90%: the broken rows were rushed, not garbled.
+
 ## Open — needs an answer before execute
 None in this file. WAVE-PLAN.md Q1 (which VoiceStudio engine), Q2 (VoiceStudio voices) and Q3 (Azure resource) gate execute, not spec: their answers are values in `spike/sentences.yaml` `voices` and in the Mac's `.env`, and no requirement here changes with them.
 
