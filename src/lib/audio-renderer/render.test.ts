@@ -135,4 +135,23 @@ describe('render', () => {
 		expect(err.failures[0].message).toBe('plain string');
 		expect(err.uploaded).toBe(2);
 	});
+
+	it('keeps going after a bucket put failure and reports it', async () => {
+		const bucket = fakeBucket();
+		const flaky = {
+			has: bucket.has,
+			async put(name: string, body: Uint8Array, contentType: string) {
+				if (name === sha('你好！|takin') + '.mp3') throw new Error('r2 down');
+				return bucket.put(name, body, contentType);
+			}
+		};
+		const err = await render(three(), { engine: fakeEngine(), bucket: flaky }).catch((e) => e);
+		expect(err).toBeInstanceOf(RenderError);
+		expect(err.uploaded).toBe(2);
+		expect(err.skipped).toBe(0);
+		expect(err.failures).toEqual([
+			{ key: sha('你好！|takin'), ref: '你好！@takin', message: 'r2 down' }
+		]);
+		expect(bucket.objects.size).toBe(2);
+	});
 });
