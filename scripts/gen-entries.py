@@ -209,7 +209,7 @@ def check(e, cands, hz, readings):
                 text = cands[x['tatoeba']]['zh'] if x.get('tatoeba') else x.get('hz') or ''
                 if hz not in text:
                     errs.append(f'ví dụ của "{s["vi"]}" không chứa {hz}')
-                if g['pos'] == 'Lượng từ' and len(hz) == 1 and any(texts[i].lower().startswith('classifier') for i in s['src']) and not re.search(f'[0-9０-９一二两三四五六七八九十几这那每半百千万]{hz}', text):
+                if g['pos'] == 'Lượng từ' and len(hz) == 1 and any(texts.get(i, '').lower().startswith('classifier') for i in s.get('src', [])) and not re.search(f'[0-9０-９一二两三四五六七八九十几这那每半百千万]{hz}', text):
                     errs.append(f'ví dụ của lượng từ "{s["vi"]}" phải có số từ + 「{hz}」 đếm đúng danh từ đó')
                 if g['pos'] == 'Lượng từ' and re.match(r'(?i)\s*(lượng từ|classifier)', s['vi']):
                     errs.append(f'nghĩa lượng từ "{s["vi"]}" chép nguyên từ CC-CEDICT: nêu đếm cái gì')
@@ -518,11 +518,12 @@ def standins(hz, e, bound):
     # AI examples for a single hanzi must show it on its own, not only inside a longer compound (要是 for 要, 就算 for 就)
     if len(hz) != 1:
         return []
-    return [f'ví dụ của "{s["vi"]}" chỉ có từ ghép chứa 「{hz}」: viết lại câu với 「{hz}」 đứng riêng (không dùng từ ghép khác thay thế)'
-            for r in e['readings'] for g in r['groups'] for s in g['senses']
-            if s['ex'].get('ai') and not s['ex'].get('tatoeba') and g['pos'] != 'Lượng từ' and s['vi'] not in bound and 'chỉ dùng trong' not in s['vi']
-            and hz not in jieba.lcut(s['ex'].get('hz') or '')
-            and not (hz in '百千万' and ('一' + hz) in (s['ex'].get('hz') or ''))]
+    with JIEBA_LOCK:  # entry runs in a pool; another thread's taught() changes FREQ
+        return [f'ví dụ của "{s["vi"]}" chỉ có từ ghép chứa 「{hz}」: viết lại câu với 「{hz}」 đứng riêng (không dùng từ ghép khác thay thế)'
+                for r in e['readings'] for g in r['groups'] for s in g['senses']
+                if s['ex'].get('ai') and not s['ex'].get('tatoeba') and g['pos'] != 'Lượng từ' and s['vi'] not in bound and 'chỉ dùng trong' not in s['vi']
+                and hz not in jieba.lcut(s['ex'].get('hz') or '')
+                and not (hz in '百千万' and ('一' + hz) in (s['ex'].get('hz') or ''))]
 
 def audit(hz, e, llm, readings):
     """A second opinion on the finished entry: unnatural examples and senses starred rare that are everyday meanings."""
@@ -634,9 +635,19 @@ Chỉ trả về JSON:
                 x = s['ex']
                 if x.get('tatoeba'):  # verbatim source text, not the model's copy
                     x['hz'] = cands[x['tatoeba']]['zh']
-    for g in [g for r in e['readings'] for g in r['groups']]:  # a sense the audit calls a synonym split of another folds into it
-        keep = {s['vi']: s for r in e['readings'] for g2 in r['groups'] for s in g2['senses']}
-        g['senses'] = [s for s in g['senses'] if not (dup.get(s['vi']) in keep and keep[dup[s['vi']]] is not s and keep[dup[s['vi']]].setdefault('src', []).extend(s.get('src', [])) is None)]
+    redirect = {}  # removed gloss -> survivor, so a mirrored pair or a chain folds into a live sense instead of removing both
+    for extra, kept in dup.items():  # a sense the audit calls a synonym split of another folds into it
+        if extra in redirect:
+            continue
+        while kept in redirect:
+            kept = redirect[kept]
+        live = {s['vi']: (g, s) for r in e['readings'] for g in r['groups'] for s in g['senses']}
+        if extra not in live or kept not in live or live[extra][1] is live[kept][1]:
+            continue
+        g, s = live[extra]
+        live[kept][1].setdefault('src', []).extend(s.get('src', []))
+        g['senses'] = [x for x in g['senses'] if x is not s]
+        redirect[extra] = kept
     for r in e['readings']:
         for g in r['groups']:
             for s in g['senses']:
@@ -663,7 +674,7 @@ Chỉ trả về JSON:
     for r in list(e['readings']):
         if r['pinyin'].lower() != main and not any(s.get('common') for g in r['groups'] for s in g['senses']):
             e['readings'].remove(r)
-            e.setdefault('dropped', []).extend({'id': i, 'why': 'âm hiếm'} for g in r['groups'] for s in g['senses'] for i in s['src'])
+            e.setdefault('dropped', []).extend({'id': i, 'why': 'âm hiếm'} for g in r['groups'] for s in g['senses'] for i in s.get('src', []))
     e['stats'] = {'cedict': before, 'merged': len(ids), 'xref': len(skipped), 'dropped': len(e.get('dropped', [])),
                   'tatoeba': sum(bool(s['ex'].get('tatoeba')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
                   'ai_ex': sum(bool(s['ex'].get('ai')) for r in e['readings'] for g in r['groups'] for s in g['senses']),
@@ -704,16 +715,23 @@ def dump(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=1000), encoding='utf-8')
 
+HAND = 'hand'  # sense note marking wording a person wrote, so it stays a hand sense after promotion (the Word schema allows note)
+HAND_GLOSSES = {  # hand glosses an earlier promotion folded into a generated twin, so no pos-less sense marks them any more
+    '不客气': {'không có gì'}, '你们': {'các bạn'}, '再见': {'tạm biệt'},
+    '对不起': {'xin lỗi'}, '没关系': {'không sao'}, '谢谢': {'cảm ơn'},
+}
+
 def fold_hand(senses):
-    """A generated sense whose gloss equals a hand gloss, or one of its ;/,-separated terms, folds into the hand sense: hand wording stays, pos, example and rare come from the first generated twin and later twins are dropped. A sense that repeats an earlier gloss is dropped too; its example stays in the word's example list."""
+    """A generated sense whose gloss equals a hand gloss, or one of its ;/,-separated terms, folds into the hand sense: hand wording stays, pos, example and rare come from the first generated twin and later twins are dropped; the hand sense keeps note 'hand' so it stays hand after promotion. A sense that repeats an earlier gloss is dropped too; its example stays in the word's example list."""
     norm = lambda v: re.sub(r'\s*\(.*?\)', '', v).strip().casefold()
-    hand = [h for h in senses if 'pos' not in h]
+    hand = [h for h in senses if 'pos' not in h or h.get('note') == HAND]
     for g in [g for g in senses if 'pos' in g]:
         terms = {norm(g['vi']), *(t.strip() for t in re.split(r'[;,]', norm(g['vi'])))}
-        twin = next((h for h in hand if norm(h['vi']) in terms), None)
+        twin = next((h for h in hand if h is not g and norm(h['vi']) in terms), None)
         if twin:
             if 'pos' not in twin:
                 twin.update({k: g[k] for k in ('pos', 'example', 'rare') if k in g})
+                twin['note'] = HAND
             senses[:] = [x for x in senses if x is not g]
     seen = set()
     senses[:] = [x for x in senses if not (norm(x['vi']) in seen or seen.add(norm(x['vi'])))]
@@ -732,7 +750,12 @@ def write_out(results):
             existing = CONTENT / f'{wid}.yaml'
             if existing.exists():
                 old = yaml.safe_load(existing.read_text(encoding='utf-8'))
-                hand = [dict(s) for s in old.get('senses', []) if 'pos' not in s]
+                hand = []
+                for s in old.get('senses', []):
+                    if 'pos' not in s or s.get('note') == HAND:
+                        hand.append(dict(s))
+                    elif s.get('vi') in HAND_GLOSSES.get(wid, ()):  # hand wording a promotion folded before the marker existed
+                        hand.append({**s, 'note': HAND})
                 merged = fold_hand([*hand, *w['senses']])
                 hand_ex = [x for x in old.get('examples', []) if not x.startswith('s-w-')]
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
