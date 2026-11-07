@@ -60,10 +60,10 @@ else:
         row = {"syllable": s, "form": f, "text": x, "target": int(s[-1]), "dur": round(snd.duration, 2)}
         # trim to the longest voiced run
         idx = np.where(f0 > 0)[0]
-        if len(idx) < 8:
-            row.update(tone=None, reason="unvoiced"); out.append(row); continue
-        runs = np.split(idx, np.where(np.diff(idx) > 3)[0] + 1)
-        run = max(runs, key=len)
+        runs = np.split(idx, np.where(np.diff(idx) > 3)[0] + 1) if len(idx) else []
+        run = max(runs, key=len) if runs else []
+        if len(run) < 8:
+            row.update(tone=None, ok=False, reason="unvoiced"); out.append(row); continue
         c = 12 * np.log2(f0[run[0]:run[-1] + 1] / np.median(v))
         c = c[f0[run[0]:run[-1] + 1] > 0]
         n = len(c); q = max(1, n // 5)
@@ -72,12 +72,12 @@ else:
         voiced_s = round(len(run) * 0.01, 2)
         if voiced_s < 0.22 and rng < 4:
             tone = 5
+        elif 0.2 * n < mn < 0.8 * n and start - c[mn] > 1.5 and end - c[mn] > 1.0:
+            tone = 3
         elif end - start > 2.5 and mn < n * 0.4:
             tone = 2
         elif start - end > 3.0 and mn > n * 0.6:
             tone = 4
-        elif 0.2 * n < mn < 0.8 * n and start - c[mn] > 1.5 and end - c[mn] > 1.0:
-            tone = 3
         elif rng < 3.0:
             tone = 1
         elif end > start:

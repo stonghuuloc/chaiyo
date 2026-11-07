@@ -202,6 +202,7 @@
   "target": 3,
   "dur": 0.42,
   "tone": null,
+  "ok": false,
   "reason": "unvoiced"
  },
  {
@@ -448,13 +449,9 @@
   "text": "马MA3",
   "target": 3,
   "dur": 0.64,
-  "tone": 5,
+  "tone": null,
   "ok": false,
-  "voiced": 0.07,
-  "start": -5.7,
-  "end": -3.0,
-  "rng": 2.7,
-  "minpos": 0.0
+  "reason": "unvoiced"
  },
  {
   "syllable": "ma3",
@@ -574,7 +571,7 @@
   "text": "ba5",
   "target": 5,
   "dur": 0.92,
-  "tone": 4,
+  "tone": 3,
   "ok": false,
   "voiced": 0.52,
   "start": 1.2,

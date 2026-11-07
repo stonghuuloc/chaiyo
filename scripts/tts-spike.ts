@@ -129,10 +129,7 @@ function audioFaults(file: string, hanzi?: number): string[] {
 	const ends = [...log.matchAll(/silence_end: ([\d.]+)/g)].map((m) => +m[1]);
 	const spans = starts.map((st, i) => [st, ends[i] ?? total] as const);
 	const silent = spans.reduce((acc, [st, en]) => acc + en - st, 0);
-	const lead = spans[0] && spans[0][0] < 0.01 ? spans[0][1] : 0;
-	const last = spans[spans.length - 1];
-	const tail = last && last[1] > total - 0.02 && last[0] > 0.01 ? last[1] - last[0] : 0;
-	const speech = total - lead - tail;
+	const speech = total - silent;
 	const peak = +(log.match(/max_volume: (-?[\d.]+) dB/)?.[1] ?? -99);
 	if (total < 0.3) out.push(`broken: ${name} too short (${total.toFixed(2)} s)`);
 	if (total > 0 && silent / total > 0.8) out.push(`broken: ${name} mostly silence`);
@@ -144,6 +141,9 @@ function audioFaults(file: string, hanzi?: number): string[] {
 	return out;
 }
 
+const countHanzi = (text: string) => (text.match(/[\u4e00-\u9fff]/g) ?? []).length;
+const itemText = (it: Item) => it.say ?? (it.force ? toneDigits(it.force) : it.hanzi);
+
 function check() {
 	const set = load();
 	const faults = testSetFaults(set);
@@ -154,10 +154,15 @@ function check() {
 	for (const it of set.items ?? []) {
 		const f = join(DIR, 'refclip', `${pad(it.n)}.mp3`);
 		if (!existsSync(f)) continue;
-		faults.push(...audioFaults(f, (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length));
+		faults.push(...audioFaults(f, countHanzi(it.hanzi)));
 		const e = inputs.get(pad(it.n));
 		const role = it.voice as Role;
-		if (e?.ref !== set.voices.chosen?.[role] || e?.tempo !== set.voices.pace?.[role])
+		if (
+			e?.ref !== set.voices.chosen?.[role] ||
+			e?.tempo !== set.voices.pace?.[role] ||
+			e?.text !== itemText(it) ||
+			(it.seed !== undefined && e?.seed !== it.seed)
+		)
 			faults.push(
 				`stale: refclip/${pad(it.n)}.mp3 ref ${e?.ref} tempo ${e?.tempo}, want ${set.voices.chosen?.[role]} ${set.voices.pace?.[role]}`
 			);
@@ -295,13 +300,18 @@ function render() {
 				text: set.voices.audition,
 				seed: set.voices.seeds[r],
 				instruct: c.instruct,
+				pinned: true,
 				tempo: 1,
 				control: 'none'
 			});
-	const prev = readInputs('refclip');
+	const prevByGroup: Record<string, Map<string, Input>> = {
+		voices: readInputs('voices'),
+		refclip: readInputs('refclip')
+	};
+	const prev = prevByGroup.refclip;
 	for (const it of set.items) {
 		const r = it.voice as Role;
-		const text = it.say ?? (it.force ? toneDigits(it.force) : it.hanzi);
+		const text = itemText(it);
 		const job: Job = {
 			group: 'refclip',
 			id: pad(it.n),
@@ -312,7 +322,8 @@ function render() {
 			pinned: it.seed !== undefined,
 			ref: set.voices.chosen[r],
 			tempo: set.voices.pace[r],
-			hanzi: (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length,
+			hanzi: countHanzi(it.hanzi),
+			expect: it.force || it.say ? undefined : heard(it.hanzi),
 			control: it.say ? 'say' : it.force ? 'pinyin' : 'none'
 		};
 		const e = prev.get(job.id);
@@ -402,7 +413,7 @@ function render() {
 				id: j.id,
 				text: j.text,
 				control: j.control,
-				seed: had.has(j.mp3) ? (prev.get(j.id)?.seed ?? j.seed) : j.seed,
+				seed: had.has(j.mp3) ? (prevByGroup[g].get(j.id)?.seed ?? j.seed) : j.seed,
 				tempo: j.tempo,
 				...(j.instruct ? { instruct: j.instruct } : {}),
 				...(j.ref ? { ref: j.ref } : {})
