@@ -1,13 +1,15 @@
 import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
 
-const run = (dir: string) => {
-	const res = spawnSync('pnpm', ['-s', 'lint:content', dir], {
+const cli = (...args: string[]) => {
+	const res = spawnSync('pnpm', ['-s', 'lint:content', ...args], {
 		encoding: 'utf8',
 		env: { ...process.env, CHAIYO_VAULT: '/nonexistent' }
 	});
 	return { status: res.status, out: res.stdout, err: res.stderr };
 };
+
+const run = (dir: string, ...args: string[]) => cli(dir, ...args);
 
 describe('lint:content CLI', () => {
 	it('prints one stdout line per error and exits 1', { timeout: 20_000 }, () => {
@@ -40,6 +42,34 @@ describe('lint:content CLI', () => {
 		expect(status).toBe(0);
 		expect(out).toBe('');
 		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
+	});
+
+	it('lints the production scope when no directory is given', { timeout: 120_000 }, () => {
+		const { status, out, err } = cli();
+		expect(status).toBe(0);
+		expect(out).toBe('');
+		expect(err).toContain('scope = lessons/hsk1');
+		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
+	});
+
+	it('--only keeps the files the roots reference loaded', { timeout: 20_000 }, () => {
+		const { status, out, err } = run(
+			'src/lib/content/lint/fixtures/clean',
+			'--only',
+			'lessons/hsk1'
+		);
+		expect(status).toBe(0);
+		expect(out).toBe('');
+		expect(err).toContain('scope = lessons/hsk1');
+		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
+	});
+
+	it('rejects --only without a value', { timeout: 20_000 }, () => {
+		const { status, out, err } = run('src/lib/content/lint/fixtures/clean', '--only');
+		expect(status).toBe(1);
+		expect(out).toBe('');
+		expect(err.trimEnd().split('\n')).toHaveLength(1);
+		expect(err).toContain('--only needs a value');
 	});
 
 	it.each(['nope', 'package.json'])(
