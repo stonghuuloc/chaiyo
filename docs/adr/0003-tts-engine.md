@@ -38,7 +38,7 @@ Full picks and Loc's notes: [`spike/results.json`](../../spike/results.json).
 
 **Forced readings (#28, #29, 行 as háng and xíng).** OmniVoice documents pinyin with tone digits in uppercase, inline (`打ZHE2出售`). Sent alone, every form of a single syllable was unreliable: a probe of 9 syllables × 5 forms (45 clips, F0 contour on the voiced span) matched the target tone for the documented uppercase form 4 of 9, lowercase digits 1 of 9, hanzi plus uppercase 1 of 9, toned marks 3 of 9, and the plain unambiguous hanzi 5 of 9 ([`spike/tone-probe/results.json`](../../spike/tone-probe/results.json)). Loc heard neither forced reading in rows 28 and 29 (`said: []`). Control used: #28 `HANG2`, #29 `XING2` (`spike/refclip/inputs.json`). CHY-15 should not rely on forcing a reading of an isolated syllable; force inside a sentence and check by ear.
 
-**Known gaps.** 您好 renders with the nǐ/ní onset instead of nín (Loc, row 8); F0 cannot separate them, so candidates (`NIN2好` and others) went to a listening page and the pick is not recorded here yet.
+**Rare and sandhi-prone syllables need an ear-checked seed.** A forced reading is not reliable by itself. 您好 should say nín, but of 12 candidates (4 text forms × 3 seeds) Loc heard nín in one: `NIN2HAO3！` with seed 7. Plain 您好！, `NIN2好！`, `NIN2 HAO3！` and the other seeds of `NIN2HAO3！` all said ní. The rule for the pipeline: an item can set the text form it sends (`say`) and its own seed (`seed`) in `spike/sentences.yaml`, and the renderer must keep both in its manifest or voice map. A pinned item is not retried with another seed, because the seed was chosen by ear. Row 8 is rendered that way and is bit-identical to the clip Loc approved.
 
 ### Licence
 
