@@ -1,12 +1,10 @@
 import { statSync } from 'node:fs';
-import { scopeFor } from '../src/lib/content/import/scope';
+import { join } from 'node:path';
+import { PRODUCTION_ROOTS, scopeFor } from '../src/lib/content/import/scope';
 import { lintDir } from '../src/lib/content/lint';
 
-// The roots the production build ships (scripts/build-content.sh and the CI import step pass
-// --only lessons/hsk1). The first lesson of each HSK level is preview content until its
-// curriculum is authored, so a bare `pnpm lint:content` checks this scope, not every lesson.
-const PRODUCTION_ROOTS = ['lessons/hsk1'];
-
+// The first lesson of each HSK level is preview content until its curriculum is authored, so a
+// bare `pnpm lint:content` checks the production roots; a directory lints that tree in full.
 const args = process.argv.slice(2);
 const flag = (name: string) => {
 	const at = args.indexOf(`--${name}`);
@@ -28,7 +26,20 @@ if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) {
 // --only names roots explicitly and expands to the files they reference, as import-content
 // does (so the shared words/chars/grammar/sentences stay loaded for the lessons).
 const scope =
-	only !== undefined ? only.split(',') : args[0] === undefined ? PRODUCTION_ROOTS : undefined;
+	only !== undefined
+		? only.split(',').map((root) => root.trim())
+		: args[0] === undefined
+			? PRODUCTION_ROOTS
+			: undefined;
+// A root that matches nothing is silently dropped by loadContentDir and scopeFor, so a typo
+// would lint only the shared files and pass: reject a root that does not exist under dir.
+for (const root of scope ?? []) {
+	const path = root.replace(/\/$/, '');
+	if (!path || !statSync(join(dir, path), { throwIfNoEntry: false })) {
+		console.error(`lint-content: no such root in ${dir}: ${root}`);
+		process.exit(1);
+	}
+}
 if (scope) console.error(`lint-content: scope = ${scope.join(', ')}`);
 const { errors, notices } = lintDir(dir, scope ? { only: scopeFor(dir, scope) } : {});
 const oneLine = (s: string) => s.trimEnd().replace(/\r?\n/g, '\\n');

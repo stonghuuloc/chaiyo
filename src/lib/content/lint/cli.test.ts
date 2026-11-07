@@ -9,11 +9,9 @@ const cli = (...args: string[]) => {
 	return { status: res.status, out: res.stdout, err: res.stderr };
 };
 
-const run = (dir: string, ...args: string[]) => cli(dir, ...args);
-
 describe('lint:content CLI', () => {
 	it('prints one stdout line per error and exits 1', { timeout: 20_000 }, () => {
-		const { status, out, err } = run('src/lib/content/lint/fixtures/cli-three');
+		const { status, out, err } = cli('src/lib/content/lint/fixtures/cli-three');
 		const lines = out.trimEnd().split('\n');
 		expect(status).toBe(1);
 		expect(lines).toHaveLength(3);
@@ -23,7 +21,7 @@ describe('lint:content CLI', () => {
 	});
 
 	it('keeps a multi-line parse error on one stdout line', { timeout: 20_000 }, () => {
-		const { status, out } = run('src/lib/content/lint/fixtures/cli-malformed');
+		const { status, out } = cli('src/lib/content/lint/fixtures/cli-malformed');
 		expect(status).toBe(1);
 		expect(out.trimEnd().split('\n')).toHaveLength(1);
 		expect(out).toMatch(/^words\/坏\.yaml {2}- {2}#0 schema {2}.+\\n/);
@@ -31,14 +29,14 @@ describe('lint:content CLI', () => {
 	});
 
 	it('keeps a newline-bearing content key on one stdout line', { timeout: 20_000 }, () => {
-		const { status, out } = run('src/lib/content/lint/fixtures/cli-newline-key');
+		const { status, out } = cli('src/lib/content/lint/fixtures/cli-newline-key');
 		expect(status).toBe(1);
 		expect(out.trimEnd().split('\n')).toHaveLength(1);
 		expect(out).toMatch(/^chars\/你\.yaml {2}bad\\nkey {2}/);
 	});
 
 	it('exits 0 with empty stdout on a clean tree', { timeout: 20_000 }, () => {
-		const { status, out, err } = run('src/lib/content/lint/fixtures/clean');
+		const { status, out, err } = cli('src/lib/content/lint/fixtures/clean');
 		expect(status).toBe(0);
 		expect(out).toBe('');
 		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
@@ -53,7 +51,7 @@ describe('lint:content CLI', () => {
 	});
 
 	it('--only keeps the files the roots reference loaded', { timeout: 20_000 }, () => {
-		const { status, out, err } = run(
+		const { status, out, err } = cli(
 			'src/lib/content/lint/fixtures/clean',
 			'--only',
 			'lessons/hsk1'
@@ -65,18 +63,30 @@ describe('lint:content CLI', () => {
 	});
 
 	it('rejects --only without a value', { timeout: 20_000 }, () => {
-		const { status, out, err } = run('src/lib/content/lint/fixtures/clean', '--only');
+		const { status, out, err } = cli('src/lib/content/lint/fixtures/clean', '--only');
 		expect(status).toBe(1);
 		expect(out).toBe('');
 		expect(err.trimEnd().split('\n')).toHaveLength(1);
 		expect(err).toContain('--only needs a value');
 	});
 
+	it('rejects an --only root that does not exist', { timeout: 20_000 }, () => {
+		const { status, out, err } = cli(
+			'src/lib/content/lint/fixtures/clean',
+			'--only',
+			'lessons/hsk1, lessons/hskl'
+		);
+		expect(status).toBe(1);
+		expect(out).toBe('');
+		expect(err.trimEnd().split('\n')).toHaveLength(1);
+		expect(err).toContain('no such root in src/lib/content/lint/fixtures/clean: lessons/hskl');
+	});
+
 	it.each(['nope', 'package.json'])(
 		'exits 1 with one stderr line for %s',
 		{ timeout: 20_000 },
 		(dir) => {
-			const { status, out, err } = run(dir);
+			const { status, out, err } = cli(dir);
 			expect(status).toBe(1);
 			expect(out).toBe('');
 			expect(err.trimEnd().split('\n')).toHaveLength(1);
