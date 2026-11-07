@@ -1,5 +1,5 @@
 import { statSync } from 'node:fs';
-import { join } from 'node:path';
+import { relative, resolve, sep } from 'node:path';
 import { PRODUCTION_ROOTS, scopeFor } from '../src/lib/content/import/scope';
 import { lintDir } from '../src/lib/content/lint';
 
@@ -32,10 +32,13 @@ const scope =
 			? PRODUCTION_ROOTS
 			: undefined;
 // A root that matches nothing is silently dropped by loadContentDir and scopeFor, so a typo
-// would lint only the shared files and pass: reject a root that does not exist under dir.
+// would lint only the shared files and pass: reject a root that does not exist under dir, or
+// that resolves outside it.
 for (const root of scope ?? []) {
 	const path = root.replace(/\/$/, '');
-	if (!path || !statSync(join(dir, path), { throwIfNoEntry: false })) {
+	const abs = resolve(dir, path);
+	const outside = relative(resolve(dir), abs).split(sep)[0] === '..';
+	if (!path || outside || !statSync(abs, { throwIfNoEntry: false })) {
 		console.error(`lint-content: no such root in ${dir}: ${root}`);
 		process.exit(1);
 	}

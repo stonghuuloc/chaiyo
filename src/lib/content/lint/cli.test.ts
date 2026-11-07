@@ -82,6 +82,14 @@ describe('lint:content CLI', () => {
 		expect(err).toContain('no such root in src/lib/content/lint/fixtures/clean: lessons/hskl');
 	});
 
+	it('rejects an --only root outside the linted directory', { timeout: 20_000 }, () => {
+		const { status, out, err } = cli('src/lib/content/lint/fixtures/clean', '--only', '..');
+		expect(status).toBe(1);
+		expect(out).toBe('');
+		expect(err.trimEnd().split('\n')).toHaveLength(1);
+		expect(err).toContain('no such root in src/lib/content/lint/fixtures/clean: ..');
+	});
+
 	it.each(['nope', 'package.json'])(
 		'exits 1 with one stderr line for %s',
 		{ timeout: 20_000 },
