@@ -1,0 +1,175 @@
+{
+  "date": "2026-11-07",
+  "picks": [
+    {
+      "n": 1,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 2,
+      "pick": "B",
+      "engine": "design"
+    },
+    {
+      "n": 3,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 4,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 5,
+      "pick": "B",
+      "engine": "design",
+      "note": "broken"
+    },
+    {
+      "n": 6,
+      "pick": "B",
+      "engine": "refclip",
+      "note": "broken"
+    },
+    {
+      "n": 7,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 8,
+      "pick": "B",
+      "engine": "refclip",
+      "note": "wrong, should be nín hao4"
+    },
+    {
+      "n": 9,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 10,
+      "pick": "A",
+      "engine": "refclip",
+      "note": "A but it's too fast"
+    },
+    {
+      "n": 11,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 12,
+      "pick": "A",
+      "engine": "refclip",
+      "note": "A is too fast"
+    },
+    {
+      "n": 13,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 14,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 15,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 16,
+      "pick": "A",
+      "engine": "refclip",
+      "note": "A is fast"
+    },
+    {
+      "n": 17,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 18,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 19,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 20,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 21,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 22,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 23,
+      "pick": "A",
+      "engine": "refclip"
+    },
+    {
+      "n": 24,
+      "pick": "B",
+      "engine": "refclip",
+      "note": "broken"
+    },
+    {
+      "n": 25,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 26,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 27,
+      "pick": "B",
+      "engine": "refclip"
+    },
+    {
+      "n": 28,
+      "pick": "B",
+      "engine": "refclip",
+      "said": []
+    },
+    {
+      "n": 29,
+      "pick": "B",
+      "engine": "refclip",
+      "said": []
+    },
+    {
+      "n": 30,
+      "pick": "B",
+      "engine": "refclip",
+      "note": "B is wrong"
+    }
+  ],
+  "voices": {
+    "redpanda": "redpanda-1",
+    "takin": "takin-3",
+    "narrator": "narrator-1"
+  },
+  "tally": {
+    "design": 2,
+    "refclip": 28
+  },
+  "winner": "refclip"
+}

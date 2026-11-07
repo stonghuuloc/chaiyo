@@ -19,6 +19,7 @@ const CASES = [
 	'force',
 	'syllable'
 ];
+const MIN_SECONDS_PER_SYLLABLE = 0.13;
 const pad = (n: number) => String(n).padStart(2, '0');
 
 type Mode = (typeof MODES)[number];
@@ -102,6 +103,48 @@ function folderFaults(name: string, want: string[]): string[] {
 	];
 }
 
+function audioFaults(file: string, hanzi?: number): string[] {
+	const r = spawnSync(
+		'ffmpeg',
+		[
+			'-hide_banner',
+			'-i',
+			file,
+			'-af',
+			'silencedetect=noise=-35dB:d=0.1,volumedetect',
+			'-f',
+			'null',
+			'-'
+		],
+		{ encoding: 'utf8' }
+	);
+	const log = r.stderr;
+	const dur = log
+		.match(/time=(\d+):(\d+):([\d.]+)/g)
+		?.pop()
+		?.match(/(\d+):(\d+):([\d.]+)/);
+	const total = dur ? +dur[1] * 3600 + +dur[2] * 60 + +dur[3] : 0;
+	const out: string[] = [];
+	const name = file.replace(DIR + '/', '');
+	const starts = [...log.matchAll(/silence_start: ([\d.]+)/g)].map((m) => +m[1]);
+	const ends = [...log.matchAll(/silence_end: ([\d.]+)/g)].map((m) => +m[1]);
+	const spans = starts.map((st, i) => [st, ends[i] ?? total] as const);
+	const silent = spans.reduce((acc, [st, en]) => acc + en - st, 0);
+	const lead = spans[0] && spans[0][0] < 0.01 ? spans[0][1] : 0;
+	const last = spans[spans.length - 1];
+	const tail = last && last[1] > total - 0.02 && last[0] > 0.01 ? last[1] - last[0] : 0;
+	const speech = total - lead - tail;
+	const peak = +(log.match(/max_volume: (-?[\d.]+) dB/)?.[1] ?? -99);
+	if (total < 0.3) out.push(`broken: ${name} too short (${total.toFixed(2)} s)`);
+	if (total > 0 && silent / total > 0.8) out.push(`broken: ${name} mostly silence`);
+	if (peak > -0.1) out.push(`broken: ${name} clipping (peak ${peak} dB)`);
+	if (hanzi && speech / hanzi < MIN_SECONDS_PER_SYLLABLE)
+		out.push(
+			`broken: ${name} rushed (${(speech / hanzi).toFixed(2)} s/syllable, min ${MIN_SECONDS_PER_SYLLABLE})`
+		);
+	return out;
+}
+
 function check() {
 	const set = load();
 	const faults = testSetFaults(set);
@@ -109,6 +152,17 @@ function check() {
 	const voices = ROLES.flatMap((r) => (set.voices.candidates[r] ?? []).map((c) => `${c.id}.mp3`));
 	for (const m of MODES) faults.push(...folderFaults(m, names));
 	faults.push(...folderFaults('voices', voices));
+	for (const m of MODES)
+		for (const it of set.items ?? []) {
+			const f = join(DIR, m, `${pad(it.n)}.mp3`);
+			if (existsSync(f))
+				faults.push(...audioFaults(f, (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length));
+		}
+	for (const r of ROLES)
+		for (const c of set.voices.candidates[r] ?? []) {
+			const f = join(DIR, 'voices', `${c.id}.mp3`);
+			if (existsSync(f)) faults.push(...audioFaults(f));
+		}
 	const order = loadOrder();
 	if (order) {
 		const a = order.filter((o) => o.A === 'design').length;
