@@ -25,7 +25,7 @@ items:
   - { n: 5, hanzi: "对不起！", voice: takin, cases: [takin], expected: "duìbuqǐ" }
   - { n: 6, hanzi: "不客气。", voice: takin, cases: [bu-t4, takin], expected: "bú kèqi" }
   - { n: 7, hanzi: "再见！", voice: takin, cases: [takin], expected: "zàijiàn" }
-  - { n: 8, hanzi: "您好！", voice: narrator, cases: [], expected: "nín hǎo" }
+  - { n: 8, hanzi: "您好！", voice: narrator, cases: [], expected: "nín hǎo", say: "NIN2HAO3！", seed: 7 }
   - { n: 9, hanzi: "你们好！", voice: narrator, cases: [], expected: "nǐmen hǎo" }
   - { n: 10, hanzi: "我去银行。", voice: narrator, cases: [hang], expected: "wǒ qù yín háng" }
   - { n: 11, hanzi: "不行！", voice: redpanda, cases: [xing, redpanda], expected: "bù xíng" }

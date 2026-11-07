@@ -57,9 +57,9 @@
 	},
 	{
 		"id": "08",
-		"text": "您好！",
-		"control": "none",
-		"seed": 1403,
+		"text": "NIN2HAO3！",
+		"control": "say",
+		"seed": 7,
 		"tempo": 0.75,
 		"ref": "narrator-1"
 	},

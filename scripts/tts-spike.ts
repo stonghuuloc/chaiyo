@@ -32,6 +32,7 @@ type Item = {
 	expected: string;
 	force?: string;
 	say?: string;
+	seed?: number;
 };
 type Candidate = { id: string; instruct: string };
 type Spec = {
@@ -253,6 +254,7 @@ type Job = {
 	ref?: string;
 	tempo: number;
 	hanzi?: number;
+	pinned?: boolean;
 	expect?: string;
 	control: 'pinyin' | 'say' | 'none';
 };
@@ -306,7 +308,8 @@ function render() {
 			wav: join(wavDir, 'refclip', `${pad(it.n)}.wav`),
 			mp3: join(DIR, 'refclip', `${pad(it.n)}.mp3`),
 			text,
-			seed: set.voices.seeds[r],
+			seed: it.seed ?? set.voices.seeds[r],
+			pinned: it.seed !== undefined,
 			ref: set.voices.chosen[r],
 			tempo: set.voices.pace[r],
 			hanzi: (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length,
@@ -315,7 +318,10 @@ function render() {
 		const e = prev.get(job.id);
 		if (
 			existsSync(job.mp3) &&
-			(e?.ref !== job.ref || e?.tempo !== job.tempo || e?.text !== job.text)
+			(e?.ref !== job.ref ||
+				e?.tempo !== job.tempo ||
+				e?.text !== job.text ||
+				(job.pinned && e?.seed !== job.seed))
 		) {
 			rmSync(job.mp3);
 			rmSync(job.wav, { force: true });
@@ -326,7 +332,7 @@ function render() {
 	const failed = new Map<string, string[]>();
 	const attempts = new Map<Job, number>();
 	for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-		const pending = jobs.filter((j) => !existsSync(j.mp3));
+		const pending = jobs.filter((j) => !existsSync(j.mp3) && !(j.pinned && attempt > 0));
 		if (!pending.length) break;
 		for (const j of pending) {
 			j.seed = j.seed + (attempts.get(j) ?? 0) * 1000;
