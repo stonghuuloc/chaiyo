@@ -46,10 +46,18 @@ def transcribe(job):
     return {"text": r["text"].strip()}
 
 
+replies = sys.stdout
+sys.stdout = sys.stderr
 for line in sys.stdin:
-    job = json.loads(line)
     try:
-        reply = render(job) if job["op"] == "render" else transcribe(job)
+        job = json.loads(line)
+        if job.get("op") == "render":
+            reply = render(job)
+        elif job.get("op") == "transcribe":
+            reply = transcribe(job)
+        else:
+            reply = {"error": f"unknown op: {job.get('op')}"}
     except Exception as e:
         reply = {"error": f"{type(e).__name__}: {e}"}
-    print(json.dumps(reply, ensure_ascii=False), flush=True)
+    replies.write(json.dumps(reply, ensure_ascii=False) + "\n")
+    replies.flush()

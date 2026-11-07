@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import type { AudioEntry } from '../content/import/audio';
 import { fakeBucket } from './fakes';
-import { omniVoiceEngine, parseCast, type RenderJob, type Worker } from './omnivoice';
+import { omniVoiceEngine, parseCast, type Cast, type RenderJob, type Worker } from './omnivoice';
 import { render } from './render';
 
 const key = (hanzi: string, voice: string) =>
@@ -30,7 +30,14 @@ const req = (hanzi: string, voice = 'narrator', kind: AudioEntry['kind'] = 'sent
 	hanzi
 });
 
-function setup(opts: { said?: (text: string, seed: number) => string; faults?: string[][] } = {}) {
+function setup(
+	opts: {
+		said?: (text: string, seed: number) => string;
+		faults?: string[][];
+		cast?: Cast;
+		cacheDir?: string;
+	} = {}
+) {
 	const jobs: RenderJob[] = [];
 	const transcribed: string[] = [];
 	const faultQueue = [...(opts.faults ?? [])];
@@ -47,9 +54,9 @@ function setup(opts: { said?: (text: string, seed: number) => string; faults?: s
 		close() {}
 	};
 	const startWorker = vi.fn(() => worker);
-	const engine = omniVoiceEngine(cast, {
+	const engine = omniVoiceEngine(opts.cast ?? cast, {
 		startWorker,
-		cacheDir: mkdtempSync(join(tmpdir(), 'chaiyo-test-')),
+		cacheDir: opts.cacheDir ?? mkdtempSync(join(tmpdir(), 'chaiyo-test-')),
 		encode: (_wav, mp3) => writeFileSync(mp3, 'mp3'),
 		faults: () => faultQueue.shift() ?? []
 	});
@@ -137,5 +144,42 @@ describe('omniVoiceEngine', () => {
 		await bucket.put(entry.key + '.mp3', new Uint8Array([1]), 'audio/mpeg');
 		expect(await render([entry], { engine, bucket })).toEqual({ uploaded: 0, skipped: 1 });
 		expect(startWorker).not.toHaveBeenCalled();
+	});
+
+	it('compares Whisper with the hanzi, not the pinyin reading of a split Word', async () => {
+		const { engine, clips } = setup({ said: () => '打' });
+		const split = { ...req('打', 'narrator', 'word'), text: 'dá' };
+		await engine.synthesize(split);
+		expect(clips()).toMatchObject([{ text: 'dá' }]);
+	});
+
+	it.each([
+		['say only', '{ hanzi: "再见", voice: narrator, say: "ZAI4JIAN4" }'],
+		['seed only', '{ hanzi: "再见", voice: narrator, seed: 9 }']
+	])('attempts an override with %s once and skips Whisper', async (_name, entry) => {
+		const pinnedCast = parseCast(`
+audition: 试音
+voices:
+  narrator: { id: narrator-1, instruct: "male", seed: 1403, pace: 0.75 }
+overrides:
+  ${key('再见', 'narrator')}: ${entry}
+`);
+		const { engine, clips, transcribed } = setup({ cast: pinnedCast, faults: [[], ['rushed']] });
+		await expect(engine.synthesize(req('再见'))).rejects.toThrow('rushed');
+		expect(clips()).toHaveLength(1);
+		expect(transcribed).toHaveLength(0);
+	});
+
+	it('misses the reference cache when instruct changes', async () => {
+		const cacheDir = mkdtempSync(join(tmpdir(), 'chaiyo-cache-'));
+		const first = setup({ cacheDir });
+		await first.engine.synthesize(req('谢谢', 'redpanda'));
+		const edited = parseCast(
+			'audition: 试音\nvoices:\n  redpanda: { id: redpanda-1, instruct: "female, bright", seed: 1401, pace: 0.85 }\n'
+		);
+		const second = setup({ cacheDir, cast: edited });
+		await second.engine.synthesize(req('谢谢', 'redpanda'));
+		expect(first.jobs.filter((j) => j.instruct)).toHaveLength(1);
+		expect(second.jobs.filter((j) => j.instruct)).toMatchObject([{ instruct: 'female, bright' }]);
 	});
 });

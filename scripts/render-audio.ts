@@ -20,6 +20,10 @@ const flag = (name: string) => {
 const kinds = flag('kind')?.split(',');
 const refPrefix = flag('ref-prefix');
 const limit = flag('limit');
+if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
+	console.error('render-audio: --limit needs a positive integer');
+	process.exit(1);
+}
 const [manifestPath] = args;
 if (!manifestPath) {
 	console.error(

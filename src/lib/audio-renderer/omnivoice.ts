@@ -60,9 +60,10 @@ export function pythonWorker(python: string): Worker {
 	const script = join(dirname(fileURLToPath(import.meta.url)), 'omnivoice_worker.py');
 	const child = spawn(python, [script], { stdio: ['pipe', 'pipe', 'inherit'] });
 	const lines = createInterface({ input: child.stdout })[Symbol.asyncIterator]();
+	const spawnFailed = new Promise<never>((_, reject) => child.once('error', reject));
 	const ask = async (request: object) => {
 		child.stdin.write(JSON.stringify(request) + '\n');
-		const next = await lines.next();
+		const next = await Promise.race([lines.next(), spawnFailed]);
 		if (next.done) throw new Error('OmniVoice worker exited');
 		const reply = JSON.parse(next.value) as { text?: string; error?: string };
 		if (reply.error) throw new Error(reply.error);
