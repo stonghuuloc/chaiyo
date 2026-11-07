@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { AudioEntry } from '../content/import/audio';
 import { fakeBucket, fakeEngine } from './fakes';
 import { render } from './render';
-import { RenderError } from './types';
+import { RenderError, type Bytes } from './types';
 
 const sha = (s: string) => createHash('sha256').update(s).digest('hex');
 const entry = (hanzi: string, voice: string): AudioEntry => ({
@@ -18,6 +18,13 @@ const three = () => [
 	entry('你好！', 'takin'),
 	entry('谢谢', 'narrator')
 ];
+const call = (hanzi: string, voice: string) => ({
+	text: hanzi,
+	voice,
+	key: sha(hanzi + '|' + voice),
+	kind: 'sentence',
+	hanzi
+});
 const names = (entries: AudioEntry[]) => entries.map((e) => e.key + '.mp3').sort();
 
 describe('render', () => {
@@ -28,9 +35,9 @@ describe('render', () => {
 		expect([...bucket.objects.keys()].sort()).toEqual(names(three()));
 		for (const o of bucket.objects.values()) expect(o.contentType).toBe('audio/mpeg');
 		expect(engine.calls).toEqual([
-			{ text: '你好！', voice: 'redpanda' },
-			{ text: '你好！', voice: 'takin' },
-			{ text: '谢谢', voice: 'narrator' }
+			call('你好！', 'redpanda'),
+			call('你好！', 'takin'),
+			call('谢谢', 'narrator')
 		]);
 	});
 
@@ -52,7 +59,7 @@ describe('render', () => {
 			uploaded: 1,
 			skipped: 3
 		});
-		expect(engine.calls).toEqual([{ text: '再见', voice: 'narrator' }]);
+		expect(engine.calls).toEqual([call('再见', 'narrator')]);
 	});
 
 	it('keys on sha256 of text and voice, one object per key', async () => {
@@ -78,7 +85,9 @@ describe('render', () => {
 		};
 		await render([split], { engine, bucket });
 		expect([...bucket.objects.keys()]).toEqual([sha('打-da2|narrator') + '.mp3']);
-		expect(engine.calls).toEqual([{ text: 'dá', voice: 'narrator' }]);
+		expect(engine.calls).toEqual([
+			{ text: 'dá', voice: 'narrator', key: split.key, kind: 'word', hanzi: '打' }
+		]);
 	});
 
 	it('rejects a tampered key before any engine call', async () => {
@@ -140,7 +149,7 @@ describe('render', () => {
 		const bucket = fakeBucket();
 		const flaky = {
 			has: bucket.has,
-			async put(name: string, body: Uint8Array, contentType: string) {
+			async put(name: string, body: Bytes, contentType: string) {
 				if (name === sha('你好！|takin') + '.mp3') throw new Error('r2 down');
 				return bucket.put(name, body, contentType);
 			}

@@ -28,7 +28,13 @@ export async function render(
 				skipped++;
 				continue;
 			}
-			const body = await engine.synthesize({ text: e.reading ?? e.hanzi, voice: e.voice });
+			const body = await engine.synthesize({
+				text: e.reading ?? e.hanzi,
+				voice: e.voice,
+				key: e.key,
+				kind: e.kind,
+				hanzi: e.hanzi
+			});
 			if (!body.byteLength) throw new Error('engine returned 0 bytes');
 			await bucket.put(name, body, 'audio/mpeg');
 			uploaded++;

@@ -1,9 +1,7 @@
-import type { Bucket, Engine } from './types';
+import type { Bucket, Bytes, Engine, EngineRequest } from './types';
 
-type Request = Parameters<Engine['synthesize']>[0];
-
-export function fakeEngine(impl?: (req: Request) => Uint8Array) {
-	const calls: Request[] = [];
+export function fakeEngine(impl?: (req: EngineRequest) => Bytes) {
+	const calls: EngineRequest[] = [];
 	const engine: Engine = {
 		async synthesize(req) {
 			calls.push(req);
@@ -14,7 +12,7 @@ export function fakeEngine(impl?: (req: Request) => Uint8Array) {
 }
 
 export function fakeBucket() {
-	const objects = new Map<string, { body: Uint8Array; contentType: string }>();
+	const objects = new Map<string, { body: Bytes; contentType: string }>();
 	const bucket: Bucket = {
 		async has(name) {
 			return objects.has(name);

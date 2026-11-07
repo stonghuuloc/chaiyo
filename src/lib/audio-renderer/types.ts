@@ -1,10 +1,16 @@
+import type { AudioEntry } from '../content/import/audio';
+
+export type EngineRequest = Pick<AudioEntry, 'key' | 'kind' | 'voice' | 'hanzi'> & { text: string };
+
+export type Bytes = Uint8Array<ArrayBuffer>;
+
 export type Engine = {
-	synthesize(req: { text: string; voice: string }): Promise<Uint8Array>;
+	synthesize(req: EngineRequest): Promise<Bytes>;
 };
 
 export type Bucket = {
 	has(name: string): Promise<boolean>;
-	put(name: string, body: Uint8Array, contentType: string): Promise<void>;
+	put(name: string, body: Bytes, contentType: string): Promise<void>;
 };
 
 export type RenderResult = { uploaded: number; skipped: number };
