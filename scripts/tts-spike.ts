@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parse } from 'yaml';
 
@@ -31,6 +31,7 @@ type Item = {
 	cases: string[];
 	expected: string;
 	force?: string;
+	say?: string;
 };
 type Candidate = { id: string; instruct: string };
 type Spec = {
@@ -38,22 +39,13 @@ type Spec = {
 		engine: string;
 		audition: string;
 		seeds: Record<Role, number>;
+		chosen: Record<Role, string>;
+		pace: Record<Role, number>;
 		candidates: Record<Role, Candidate[]>;
 	};
 	items: Item[];
 };
 type Order = { n: number; A: Mode }[];
-type Job = {
-	group: string;
-	id: string;
-	wav: string;
-	mp3: string;
-	text: string;
-	seed: number;
-	instruct?: string;
-	ref?: { id: string; wav: string };
-	control: 'pinyin' | 'none';
-};
 
 const load = (): Spec => parse(readFileSync(join(DIR, 'sentences.yaml'), 'utf8'));
 const loadOrder = (): Order | undefined =>
@@ -91,6 +83,12 @@ function testSetFaults(set: Spec): string[] {
 	for (const r of ROLES)
 		if (!set.voices?.candidates?.[r]?.length || !set.voices?.seeds?.[r])
 			out.push(`voices missing: ${r}`);
+	for (const r of ROLES)
+		if (
+			!set.voices?.candidates?.[r]?.some((c) => c.id === set.voices.chosen?.[r]) ||
+			!set.voices.pace?.[r]
+		)
+			out.push(`voice not pinned: ${r}`);
 	return out;
 }
 
@@ -150,14 +148,19 @@ function check() {
 	const faults = testSetFaults(set);
 	const names = Array.from({ length: 30 }, (_, i) => `${pad(i + 1)}.mp3`);
 	const voices = ROLES.flatMap((r) => (set.voices.candidates[r] ?? []).map((c) => `${c.id}.mp3`));
-	for (const m of MODES) faults.push(...folderFaults(m, names));
-	faults.push(...folderFaults('voices', voices));
-	for (const m of MODES)
-		for (const it of set.items ?? []) {
-			const f = join(DIR, m, `${pad(it.n)}.mp3`);
-			if (existsSync(f))
-				faults.push(...audioFaults(f, (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length));
-		}
+	faults.push(...folderFaults('refclip', names), ...folderFaults('voices', voices));
+	const inputs = readInputs('refclip');
+	for (const it of set.items ?? []) {
+		const f = join(DIR, 'refclip', `${pad(it.n)}.mp3`);
+		if (!existsSync(f)) continue;
+		faults.push(...audioFaults(f, (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length));
+		const e = inputs.get(pad(it.n));
+		const role = it.voice as Role;
+		if (e?.ref !== set.voices.chosen?.[role] || e?.tempo !== set.voices.pace?.[role])
+			faults.push(
+				`stale: refclip/${pad(it.n)}.mp3 ref ${e?.ref} tempo ${e?.tempo}, want ${set.voices.chosen?.[role]} ${set.voices.pace?.[role]}`
+			);
+	}
 	for (const r of ROLES)
 		for (const c of set.voices.candidates[r] ?? []) {
 			const f = join(DIR, 'voices', `${c.id}.mp3`);
@@ -171,11 +174,49 @@ function check() {
 	}
 	for (const f of faults) console.log(f);
 	if (faults.length) process.exit(1);
-	console.log(`design 30/30 · refclip 30/30 · voices ${voices.length}/${voices.length}`);
+	console.log(`refclip 30/30 · voices ${voices.length}/${voices.length}`);
 }
 
-function encode(wav: string, out: string) {
+type Input = {
+	id: string;
+	text: string;
+	control: string;
+	seed: number;
+	ref?: string;
+	instruct?: string;
+	tempo: number;
+};
+function readInputs(group: string): Map<string, Input> {
+	const file = join(DIR, group, 'inputs.json');
+	const list: Input[] = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : [];
+	return new Map(list.map((e) => [e.id, e]));
+}
+
+const TONE_MARKS: Record<string, [string, number]> = {};
+for (const [v, marks] of Object.entries({
+	a: 'āáǎà',
+	e: 'ēéěè',
+	i: 'īíǐì',
+	o: 'ōóǒò',
+	u: 'ūúǔù',
+	ü: 'ǖǘǚǜ'
+}))
+	[...marks].forEach((m, i) => (TONE_MARKS[m] = [v, i + 1]));
+const toneDigits = (pinyin: string) => {
+	let tone = 5;
+	const plain = [...pinyin]
+		.map((c) => {
+			if (!TONE_MARKS[c]) return c;
+			tone = TONE_MARKS[c][1];
+			return TONE_MARKS[c][0];
+		})
+		.join('');
+	return `${plain.replace('ü', 'v').toUpperCase()}${tone}`;
+};
+
+function encode(wav: string, out: string, tempo: number) {
 	mkdirSync(join(out, '..'), { recursive: true });
+	const filter = (tempo === 1 ? '' : `atempo=${tempo},`) + 'loudnorm=I=-16:TP=-1.5:LRA=11';
 	const r = spawnSync(
 		'ffmpeg',
 		[
@@ -185,7 +226,7 @@ function encode(wav: string, out: string) {
 			'-i',
 			wav,
 			'-af',
-			'loudnorm=I=-16:TP=-1.5:LRA=11',
+			filter,
 			'-ac',
 			'1',
 			'-ar',
@@ -201,6 +242,37 @@ function encode(wav: string, out: string) {
 	process.exit(1);
 }
 
+type Job = {
+	group: string;
+	id: string;
+	wav: string;
+	mp3: string;
+	text: string;
+	seed: number;
+	instruct?: string;
+	ref?: string;
+	tempo: number;
+	hanzi?: number;
+	expect?: string;
+	control: 'pinyin' | 'say' | 'none';
+};
+const MAX_ATTEMPTS = 4;
+const DIGITS = '零一二三四五六七八九';
+const heard = (t: string) =>
+	[...t]
+		.map((c) => (/[0-9]/.test(c) ? DIGITS[+c] : c === '您' ? '你' : c === '對' ? '对' : c))
+		.filter((c) => /[一-鿿]/.test(c))
+		.join('');
+
+function transcribe(python: string, mp3s: string[]): Record<string, string> {
+	const r = spawnSync(python, [join(DIR, 'asr_check.py')], {
+		input: JSON.stringify(mp3s.map((mp3) => ({ mp3 }))),
+		encoding: 'utf8'
+	});
+	if (r.status !== 0) return {};
+	return JSON.parse(r.stdout.trim().split('\n').pop()!);
+}
+
 function render() {
 	const python = process.env.OMNIVOICE_PYTHON ?? '';
 	if (!python) {
@@ -209,88 +281,130 @@ function render() {
 	}
 	const set = load();
 	const wavDir = resolve(DIR, '_wav');
-	const first = (r: Role) => set.voices.candidates[r][0];
+	const refWav = (id: string) => join(wavDir, 'voices', `${id}.wav`);
 	const jobs: Job[] = [];
 	for (const r of ROLES)
 		for (const c of set.voices.candidates[r])
 			jobs.push({
 				group: 'voices',
 				id: c.id,
-				wav: join(wavDir, 'voices', `${c.id}.wav`),
+				wav: refWav(c.id),
 				mp3: join(DIR, 'voices', `${c.id}.mp3`),
 				text: set.voices.audition,
 				seed: set.voices.seeds[r],
 				instruct: c.instruct,
+				tempo: 1,
 				control: 'none'
 			});
-	for (const m of MODES)
-		for (const it of set.items) {
-			const r = it.voice as Role;
-			jobs.push({
-				group: m,
-				id: pad(it.n),
-				wav: join(wavDir, m, `${pad(it.n)}.wav`),
-				mp3: join(DIR, m, `${pad(it.n)}.mp3`),
-				text: it.force ?? it.hanzi,
-				seed: set.voices.seeds[r],
-				...(m === 'design'
-					? { instruct: first(r).instruct }
-					: { ref: { id: first(r).id, wav: join(wavDir, 'voices', `${first(r).id}.wav`) } }),
-				control: it.force ? 'pinyin' : 'none'
-			});
+	const prev = readInputs('refclip');
+	for (const it of set.items) {
+		const r = it.voice as Role;
+		const text = it.say ?? (it.force ? toneDigits(it.force) : it.hanzi);
+		const job: Job = {
+			group: 'refclip',
+			id: pad(it.n),
+			wav: join(wavDir, 'refclip', `${pad(it.n)}.wav`),
+			mp3: join(DIR, 'refclip', `${pad(it.n)}.mp3`),
+			text,
+			seed: set.voices.seeds[r],
+			ref: set.voices.chosen[r],
+			tempo: set.voices.pace[r],
+			hanzi: (it.hanzi.match(/[\u4e00-\u9fff]/g) ?? []).length,
+			control: it.say ? 'say' : it.force ? 'pinyin' : 'none'
+		};
+		const e = prev.get(job.id);
+		if (
+			existsSync(job.mp3) &&
+			(e?.ref !== job.ref || e?.tempo !== job.tempo || e?.text !== job.text)
+		) {
+			rmSync(job.mp3);
+			rmSync(job.wav, { force: true });
 		}
+		jobs.push(job);
+	}
 	const had = new Set(jobs.filter((j) => existsSync(j.mp3)).map((j) => j.mp3));
-	const pending = jobs.filter((j) => !had.has(j.mp3) && !existsSync(j.wav));
-	if (pending.length) {
-		const run = spawnSync(python, [join(DIR, 'omnivoice_render.py')], {
-			input: JSON.stringify(
-				jobs
-					.filter((j) => !had.has(j.mp3))
-					.map((j) => ({
+	const failed = new Map<string, string[]>();
+	const attempts = new Map<Job, number>();
+	for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+		const pending = jobs.filter((j) => !existsSync(j.mp3));
+		if (!pending.length) break;
+		for (const j of pending) {
+			j.seed = j.seed + (attempts.get(j) ?? 0) * 1000;
+			attempts.set(j, attempt + 1);
+		}
+		const todo = pending.filter((j) => !existsSync(j.wav));
+		if (todo.length) {
+			const run = spawnSync(python, [join(DIR, 'omnivoice_render.py')], {
+				input: JSON.stringify(
+					[
+						...jobs.filter((j) => j.group === 'voices' && !existsSync(j.wav)),
+						...todo.filter((j) => j.group !== 'voices')
+					].map((j) => ({
 						out: j.wav,
 						text: j.text,
 						seed: j.seed,
 						instruct: j.instruct,
-						ref_audio: j.ref?.wav,
+						ref_audio: j.ref && refWav(j.ref),
 						ref_text: j.ref && set.voices.audition
 					}))
-			),
-			stdio: ['pipe', 'inherit', 'inherit'],
-			encoding: 'utf8'
-		});
-		if (run.status !== 0) console.error(`omnivoice exited with ${run.status}`);
-	}
-	let failed = 0;
-	for (const g of ['voices', ...MODES]) {
-		let r = 0;
-		let s = 0;
-		let f = 0;
-		const done: Job[] = [];
-		for (const j of jobs.filter((x) => x.group === g)) {
-			if (had.has(j.mp3)) s++;
-			else if (existsSync(j.wav)) {
-				encode(j.wav, j.mp3);
-				r++;
-			} else {
-				f++;
+				),
+				stdio: ['pipe', 'inherit', 'inherit'],
+				encoding: 'utf8'
+			});
+			if (run.status !== 0) console.error(`omnivoice exited with ${run.status}`);
+		}
+		for (const j of pending) {
+			if (!existsSync(j.wav)) {
+				failed.set(j.mp3, ['no audio']);
 				continue;
 			}
-			done.push(j);
+			encode(j.wav, j.mp3, j.tempo);
+			const faults = audioFaults(j.mp3, j.hanzi);
+			failed.set(j.mp3, faults);
+			if (faults.length) {
+				rmSync(j.mp3);
+				rmSync(j.wav);
+			}
 		}
-		failed += f;
-		console.log(`${g}: ${r} rendered, ${s} skipped, ${f} failed`);
-		const entries = done.map((j) => ({
-			id: j.id,
-			text: j.text,
-			control: j.control,
-			seed: j.seed,
-			...(j.instruct ? { instruct: j.instruct } : {}),
-			...(j.ref ? { ref: j.ref.id } : {})
-		}));
+		const checked = pending.filter((j) => j.expect && existsSync(j.mp3));
+		const text = checked.length
+			? transcribe(
+					python,
+					checked.map((j) => j.mp3)
+				)
+			: {};
+		for (const j of checked) {
+			if (text[j.mp3] === undefined || heard(text[j.mp3]) === j.expect) continue;
+			failed.set(j.mp3, [`Whisper heard "${text[j.mp3]}", want "${j.expect}"`]);
+			rmSync(j.mp3);
+			rmSync(j.wav);
+		}
+		for (const j of pending)
+			if (existsSync(j.mp3) && !failed.get(j.mp3)?.length) failed.delete(j.mp3);
+	}
+	let bad = 0;
+	for (const g of ['voices', 'refclip']) {
+		const mine = jobs.filter((j) => j.group === g);
+		const f = mine.filter((j) => failed.has(j.mp3));
+		const s = mine.filter((j) => had.has(j.mp3)).length;
+		bad += f.length;
+		console.log(`${g}: ${mine.length - s - f.length} rendered, ${s} skipped, ${f.length} failed`);
+		for (const j of f) console.log(`  ${j.mp3}: ${failed.get(j.mp3)!.join('; ')}`);
+		const entries = mine
+			.filter((j) => existsSync(j.mp3))
+			.map((j) => ({
+				id: j.id,
+				text: j.text,
+				control: j.control,
+				seed: had.has(j.mp3) ? (prev.get(j.id)?.seed ?? j.seed) : j.seed,
+				tempo: j.tempo,
+				...(j.instruct ? { instruct: j.instruct } : {}),
+				...(j.ref ? { ref: j.ref } : {})
+			}));
 		mkdirSync(join(DIR, g), { recursive: true });
 		writeFileSync(join(DIR, g, 'inputs.json'), JSON.stringify(entries, null, '\t') + '\n');
 	}
-	if (failed) process.exit(1);
+	if (bad) process.exit(1);
 }
 
 function mulberry32(a: number) {

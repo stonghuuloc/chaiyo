@@ -4,6 +4,8 @@ voices:
   engine: k2-fsa/OmniVoice
   audition: "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？"
   seeds: { redpanda: 1401, takin: 1402, narrator: 1403 }
+  chosen: { redpanda: redpanda-1, takin: takin-3, narrator: narrator-1 }
+  pace: { redpanda: 0.85, takin: 0.85, narrator: 0.75 }
   candidates:
     redpanda:
       - { id: redpanda-1, instruct: "female, teenager, moderate pitch" }

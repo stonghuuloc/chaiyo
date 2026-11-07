@@ -4,6 +4,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1401,
+		"tempo": 1,
 		"instruct": "female, teenager, moderate pitch"
 	},
 	{
@@ -11,6 +12,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1402,
+		"tempo": 1,
 		"instruct": "male, young adult, moderate pitch"
 	},
 	{
@@ -18,6 +20,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1402,
+		"tempo": 1,
 		"instruct": "male, teenager, moderate pitch"
 	},
 	{
@@ -25,6 +28,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1402,
+		"tempo": 1,
 		"instruct": "male, young adult, high pitch"
 	},
 	{
@@ -32,6 +36,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 1,
 		"instruct": "male, middle-aged, moderate pitch"
 	},
 	{
@@ -39,6 +44,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 1,
 		"instruct": "male, middle-aged, low pitch"
 	},
 	{
@@ -46,6 +52,7 @@
 		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 1,
 		"instruct": "male, young adult, low pitch"
 	}
 ]

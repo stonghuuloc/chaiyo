@@ -4,6 +4,7 @@
 		"text": "你好！",
 		"control": "none",
 		"seed": 1401,
+		"tempo": 0.85,
 		"ref": "redpanda-1"
 	},
 	{
@@ -11,13 +12,15 @@
 		"text": "你好！",
 		"control": "none",
 		"seed": 1402,
-		"ref": "takin-1"
+		"tempo": 0.85,
+		"ref": "takin-3"
 	},
 	{
 		"id": "03",
 		"text": "没关系。",
 		"control": "none",
 		"seed": 1401,
+		"tempo": 0.85,
 		"ref": "redpanda-1"
 	},
 	{
@@ -25,6 +28,7 @@
 		"text": "谢谢！",
 		"control": "none",
 		"seed": 1401,
+		"tempo": 0.85,
 		"ref": "redpanda-1"
 	},
 	{
@@ -32,27 +36,31 @@
 		"text": "对不起！",
 		"control": "none",
 		"seed": 1402,
-		"ref": "takin-1"
+		"tempo": 0.85,
+		"ref": "takin-3"
 	},
 	{
 		"id": "06",
 		"text": "不客气。",
 		"control": "none",
 		"seed": 1402,
-		"ref": "takin-1"
+		"tempo": 0.85,
+		"ref": "takin-3"
 	},
 	{
 		"id": "07",
 		"text": "再见！",
 		"control": "none",
 		"seed": 1402,
-		"ref": "takin-1"
+		"tempo": 0.85,
+		"ref": "takin-3"
 	},
 	{
 		"id": "08",
 		"text": "您好！",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -60,6 +68,7 @@
 		"text": "你们好！",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -67,6 +76,7 @@
 		"text": "我去银行。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -74,6 +84,7 @@
 		"text": "不行！",
 		"control": "none",
 		"seed": 1401,
+		"tempo": 0.85,
 		"ref": "redpanda-1"
 	},
 	{
@@ -81,6 +92,7 @@
 		"text": "他在银行工作。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -88,6 +100,7 @@
 		"text": "他还没来。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -95,6 +108,7 @@
 		"text": "我明天还你书。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -102,6 +116,7 @@
 		"text": "我觉得很好。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -109,6 +124,7 @@
 		"text": "他在睡觉。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -116,6 +132,7 @@
 		"text": "他长得很高。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -123,6 +140,7 @@
 		"text": "这条路很长。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -130,6 +148,7 @@
 		"text": "今天是一月一号。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -137,6 +156,7 @@
 		"text": "我有一个朋友。",
 		"control": "none",
 		"seed": 1401,
+		"tempo": 0.85,
 		"ref": "redpanda-1"
 	},
 	{
@@ -144,6 +164,7 @@
 		"text": "我学了一天。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -151,6 +172,7 @@
 		"text": "他来了一年了。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -158,6 +180,7 @@
 		"text": "我们一起去吧。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -165,13 +188,15 @@
 		"text": "我不去。",
 		"control": "none",
 		"seed": 1402,
-		"ref": "takin-1"
+		"tempo": 0.85,
+		"ref": "takin-3"
 	},
 	{
 		"id": "25",
 		"text": "我不喝茶。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -179,6 +204,7 @@
 		"text": "天气很好。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -186,20 +212,23 @@
 		"text": "我想去。",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
 		"id": "28",
-		"text": "háng",
+		"text": "HANG2",
 		"control": "pinyin",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
 		"id": "29",
-		"text": "xíng",
+		"text": "XING2",
 		"control": "pinyin",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	},
 	{
@@ -207,6 +236,7 @@
 		"text": "马",
 		"control": "none",
 		"seed": 1403,
+		"tempo": 0.75,
 		"ref": "narrator-1"
 	}
 ]
