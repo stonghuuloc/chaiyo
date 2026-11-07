@@ -14,7 +14,7 @@ export function createPlayer({ base = '/audio', createAudio = () => new Audio() 
 			const mine = ++token;
 			audio.src = `${base}/${key}.mp3`;
 			audio.preservesPitch = true;
-			(audio as { webkitPreservesPitch?: boolean }).webkitPreservesPitch = true;
+			if ('webkitPreservesPitch' in audio) audio.webkitPreservesPitch = true;
 			audio.defaultPlaybackRate = audio.playbackRate = plays % 2 ? 1 : 0.5;
 			audio.currentTime = 0;
 			let started: Promise<void>;
