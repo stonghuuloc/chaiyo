@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { buildBundle, createMemorySink, importContent, type Bundle } from './import';
-import { scopeFor } from './import/scope';
+import { scopeFor, PRODUCTION_ROOTS } from './import/scope';
 import fixture from './fixtures/h1-01.prototype-questions.json';
 
 type FxQuestion = {
@@ -287,7 +287,7 @@ describe('h1-01 prototype parity', () => {
 			/* @vite-ignore */ pathToFileURL(resolve('prototype/data/h1-01.js')).href
 		)) as Proto;
 		const sink = createMemorySink();
-		const r = await importContent('content', sink, { only: scopeFor('content', ['lessons/hsk1']) });
+		const r = await importContent('content', sink, { only: scopeFor('content', PRODUCTION_ROOTS) });
 		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
 		if (!sink.content) throw new Error('import wrote no content');
 		b = buildBundle(sink.content, 'h1-01');

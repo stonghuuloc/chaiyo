@@ -36,7 +36,7 @@ sentences:
 sections:
   warmup: {}
   words:
-    ids: [ 差距, 繁荣, 污染, 竞争, 邻居, 乡村, 社区, 便利, 郊区, 物价, 休闲, 享受, 心态, 流动, 熟悉, 随着, 尽管 ]
+    ids: [ 差距, 繁荣, 污染, 竞争, 邻居, 乡村, 社区, 便利, 郊区, 物价, 休闲, 享受, 心态, 流动, 熟悉 ]
   grammar:
     ids: [ h5-g01, h5-g02 ]
     drills: []
@@ -144,10 +144,10 @@ gate:
     - id: q-h5-01-x13
       type: order
       tests: { words: [ 繁荣, 乡村 ] }
-      tiles: [ 繁荣, 乡村, 越来越, 了 ]
-      answer: 乡村越来越繁荣了
+      tiles: [ 随着, 乡村, 差距, 了, 交通, 还, 繁荣, 发展, 在, 不过, 越来越, 的 ]
+      answer: s-h5-01-09
     - id: q-h5-01-x14
       type: order
       tests: { words: [ 邻居, 熟悉 ] }
-      tiles: [ 都不熟悉, 我连, 邻居 ]
-      answer: 我连邻居都不熟悉
+      tiles: [ 邻居, 就, 我, 熟悉, 更, 连, 郊区, 的, 没有, 现在, 都, 朋友, 搬到, 不, 了 ]
+      answer: s-h5-01-06

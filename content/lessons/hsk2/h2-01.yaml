@@ -11,7 +11,7 @@ scene:
   cast: [ redpanda, takin ]
   prompt: The red panda and the takin stand in a sunny morning garden beside a big round clock with hands, the takin stretching proudly after waking up while the red panda holds a small towel and smiles. Only the red panda and the takin.
 sentences:
-  - { id: s-h2-01-01, hanzi: 你一般几点起床？, pinyin: nǐ yībān jǐ diǎn qǐchuáng?, spoken: ní yìbān jǐ diǎn qǐchuáng?, vi: Bạn thường mấy giờ dậy?, speaker: redpanda }
+  - { id: s-h2-01-01, hanzi: 你一般几点起床？, pinyin: nǐ yībān jǐ diǎn qǐchuáng?, spoken: nǐ yìbān jí dián qǐchuáng?, vi: Bạn thường mấy giờ dậy?, speaker: redpanda }
   - { id: s-h2-01-02, hanzi: 我一般七点一刻起床。, pinyin: wǒ yībān qī diǎn yī kè qǐchuáng., spoken: wǒ yìbān qī diǎn yí kè qǐchuáng., vi: Tớ thường dậy lúc bảy giờ mười lăm., speaker: takin }
   - { id: s-h2-01-03, hanzi: 起床以后，你先做什么？, pinyin: "qǐchuáng yǐhòu, nǐ xiān zuò shénme?", spoken: "qǐchuáng yǐhòu, ní xiān zuò shénme?", vi: "Sau khi dậy, bạn làm gì trước?", speaker: redpanda }
   - { id: s-h2-01-04, hanzi: 我先洗澡，然后吃早饭。, pinyin: "wǒ xiān xǐzǎo, ránhòu chī zǎofàn.", spoken: "wǒ xiān xízǎo, ránhòu chī zǎofàn.", vi: "Tớ tắm trước, rồi mới ăn sáng.", speaker: takin }

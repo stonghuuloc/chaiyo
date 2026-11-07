@@ -3,6 +3,9 @@ import { join } from 'node:path';
 import { loadContentDir } from '../lint';
 import type { Question } from '../schemas';
 
+// The roots the production build ships (scripts/build-content.sh and the CI import step).
+export const PRODUCTION_ROOTS = ['lessons/hsk1'];
+
 export function scopeFor(dir: string, roots: string[]): string[] {
 	const only = roots.map((r) => r.replace(/\/$/, ''));
 	const { set } = loadContentDir(dir, { only });
