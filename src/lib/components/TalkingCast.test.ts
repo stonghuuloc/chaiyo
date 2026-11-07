@@ -59,6 +59,16 @@ describe('envelope', () => {
 		expect(env).toEqual([0, 1, 0.65]);
 	});
 
+	it('Given_LongClip_When_Envelope_Then_NoArgumentLimitError', () => {
+		// Arrange
+		const samples = new Float32Array(600_000).fill(0.5);
+		// Act
+		const env = envelope(samples, 100);
+		// Assert
+		expect(env).toHaveLength(300_000);
+		expect(env[0]).toBe(1);
+	});
+
 	it('Given_Silence_When_Envelope_Then_AllZero', () => {
 		// Arrange
 		// Act

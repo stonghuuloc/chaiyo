@@ -26,7 +26,7 @@ export function envelope(samples: Float32Array | number[], sampleRate: number): 
 		for (let k = s; k < s + win && k < samples.length; k++) e += samples[k] * samples[k];
 		out.push(Math.sqrt(e / win));
 	}
-	const max = Math.max(...out) || 1;
+	const max = out.reduce((m, v) => (v > m ? v : m), 0) || 1;
 	return out.map((v) => Math.min(1, (v / max) * 1.3));
 }
 

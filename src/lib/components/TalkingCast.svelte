@@ -38,6 +38,7 @@
 		let decoding = '';
 
 		const rest = () => {
+			if (env === null) decoding = '';
 			level = 0;
 			frame = 0;
 			pic.style.transform = '';
