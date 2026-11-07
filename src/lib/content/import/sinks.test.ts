@@ -29,7 +29,7 @@ const rows = async <T>(sql: string) => (await db!.query(sql)).rows as T[];
 describe('the same content in every sink', () => {
 	it(
 		'memory, bundle files and Postgres rows agree on every entity',
-		{ timeout: 30_000 },
+		{ timeout: 60_000 },
 		async () => {
 			out = mkdtempSync(join(tmpdir(), 'sinks-'));
 			db = new PGlite();

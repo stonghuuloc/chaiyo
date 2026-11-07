@@ -1,3 +1,5 @@
+import threading
+
 import pytest
 import yaml
 from helpers import answer, scripted
@@ -221,6 +223,25 @@ def test_classifier_example_accepts_digit_numeral(word, monkeypatch):
     assert e['readings'][0]['groups'][0]['pos'] == 'Lượng từ'
 
 
+def test_classifier_sense_with_an_unknown_src_is_rejected_not_crashed(word, monkeypatch):
+    monkeypatch.setitem(word.HSK['打'], 'f', [{'i': {'y': 'dǎ', 'n': 'da3'}, 'm': ['classifier for beds']}])
+    a = answer(covered=('0.0',), pos='Lượng từ')
+    a['readings'] = a['readings'][:1]
+    a['readings'][0]['groups'][0]['senses'] = [a['readings'][0]['groups'][0]['senses'][0]]
+    a['readings'][0]['groups'][0]['senses'][0]['src'] = ['0.9']  # the model invented an id: check() records it, validation must not index texts['0.9']
+    with pytest.raises(word.Reject) as e:
+        word.entry('打', {}, scripted(a))
+    assert 'không có nguồn' in str(e.value)
+
+
+def test_core_sense_without_src_on_a_dropped_reading_does_not_crash(word):
+    a = answer()
+    a['readings'][1]['groups'] = [{'pos': 'Danh từ', 'senses': [
+        {'vi': 'tá (đơn vị)', 'core': True, 'common': False, 'ex': {'ai': True, 'hz': '打人', 'py': 'Dǎ rén', 'vi': 'x'}},
+        {'vi': 'một tá (hộp)', 'src': ['1.0'], 'common': False, 'ex': {'ai': True, 'hz': '一打纸', 'py': 'Yì dá zhǐ', 'vi': 'x'}}]}]
+    hz, e = word.entry('打', {}, scripted(a))
+    assert e['dropped'] == [{'id': '1.0', 'why': 'âm hiếm'}]
+
 
 def test_normalize_py_handles_erhua(gen):
     assert gen.normalize_py('给我一点儿。', 'Gěi wǒ yìdiǎnr.') == 'Gěi wǒ yīdiǎnr.'
@@ -265,6 +286,20 @@ def test_stand_in_compound_goes_back_for_a_bare_example(word):
     llm = scripted(answer(), {'bad_example': [], 'common': []}, bare_answer())
     word.entry('打', {}, llm)
     assert len(llm.calls) == 3 and 'đứng riêng' in llm.calls[2]
+
+
+def test_standins_reads_jieba_under_the_lock(gen, monkeypatch):
+    inside = {'held': False}
+    class ProbeLock:
+        def __init__(self): self.lock = threading.RLock()
+        def __enter__(self): self.lock.acquire(); inside['held'] = True
+        def __exit__(self, *exc): inside['held'] = False; self.lock.release()
+    calls = []
+    monkeypatch.setattr(gen, 'JIEBA_LOCK', ProbeLock())
+    monkeypatch.setattr(gen.jieba, 'lcut', lambda text: calls.append(inside['held']) or list(text))
+    e = {'readings': [{'groups': [{'pos': 'Động từ', 'senses': [{'vi': 'muốn', 'ex': {'ai': True, 'hz': '要是'}}]}]}]}
+    gen.standins('要', e, set())
+    assert calls and all(calls)
 
 
 def test_must_have_senses_reach_the_audit_prompt(word):
@@ -354,6 +389,14 @@ def test_audit_duplicate_sense_folds_into_the_kept_one(word):
     assert [s['vi'] for s in senses] == ['đánh'] and senses[0]['src'] == ['0.0', '0.1']
 
 
+def test_audit_mirrored_duplicate_pair_keeps_the_surviving_sense(word):
+    audit = {'bad_example': [], 'common': [], 'bound': [], 'missing': [],
+             'duplicate': [{'id': '0.0.1', 'of': '0.0.0'}, {'id': '0.0.0', 'of': '0.0.1'}]}
+    hz, e = word.entry('打', {}, scripted(bare_answer(), audit))
+    senses = e['readings'][0]['groups'][0]['senses']
+    assert [s['vi'] for s in senses] == ['đánh'] and senses[0]['src'] == ['0.0', '0.1']
+
+
 def test_bound_note_is_vietnamese_with_comma_separators(word):
     audit = {'bad_example': [], 'common': [], 'bound': [{'id': '0.0.1', 'pattern': '「打球」、打人，等'}], 'missing': []}
     hz, e = word.entry('打', {}, scripted(bare_answer(), audit))
@@ -369,6 +412,36 @@ def test_hand_gloss_folds_in_the_generated_twin_and_keeps_its_wording(word):
     w = yaml.safe_load((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'))
     assert [s['vi'] for s in w['senses']] == ['Đánh', 'tay đôi', 'chơi']
     assert w['senses'][0]['pos'] == 'v' and w['senses'][0]['example'].startswith('s-w-') and 'pos' not in w['senses'][1]
+    assert w['senses'][0]['note'] == 'hand'
+
+
+def test_hand_gloss_provenance_survives_a_second_promotion(word):
+    word.CONTENT.mkdir(parents=True)
+    (word.CONTENT / '打.yaml').write_text(yaml.safe_dump({
+        'id': '打', 'hanzi': '打', 'pinyin': 'dǎ', 'level': 1, 'pos': ['v'],
+        'senses': [{'vi': 'Đánh'}], 'examples': []}, allow_unicode=True), encoding='utf-8')
+    word.write_out([word.entry('打', {}, scripted(answer()))])
+    (word.CONTENT / '打.yaml').write_text((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'), encoding='utf-8')  # promotion
+    later = answer()
+    later['readings'][0]['groups'][0]['senses'][0]['vi'] = 'đập'
+    word.write_out([word.entry('打', {}, scripted(later))])
+    w = yaml.safe_load((word.CACHE / 'out/words/打.yaml').read_text(encoding='utf-8'))
+    assert [s['vi'] for s in w['senses']] == ['Đánh', 'đập', 'chơi'] and w['senses'][0]['note'] == 'hand'
+
+
+def test_a_folded_hand_gloss_is_recovered_for_an_already_promoted_word(word, monkeypatch):
+    monkeypatch.setattr(word, 'HSK', {'谢谢': {'s': '谢谢', 'l': ['n1'], 'p': ['v'], 'f': [{'i': {'y': 'xiè xie', 'n': 'xie4 xie5'}, 'm': ['to thank']}]}})
+    monkeypatch.setattr(word, 'DICT', {'谢谢': ['谢谢', 'xiè xie', 'tạ', 'tạ ơn', '', 1, [], []]})
+    word.CONTENT.mkdir(parents=True)
+    (word.CONTENT / '谢谢.yaml').write_text(yaml.safe_dump({
+        'id': '谢谢', 'hanzi': '谢谢', 'pinyin': 'xiè xie', 'level': 1, 'pos': ['v'],
+        'senses': [{'vi': 'cảm ơn', 'pos': 'v', 'example': 's-w-old'}], 'examples': []}, allow_unicode=True), encoding='utf-8')
+    a = {'readings': [{'pinyin': 'xiè xie', 'hanviet': 'tạ tạ', 'groups': [{'pos': 'Động từ', 'senses': [
+        {'vi': 'cảm ơn (cảm tạ)', 'src': ['0.0'], 'common': True, 'ex': {'ai': True, 'hz': '谢谢你', 'py': 'Xièxie nǐ', 'vi': 'Cảm ơn bạn.'}}]}]}], 'dropped': [], 'luongtu': [], 'cannghia': []}
+    word.write_out([word.entry('谢谢', {}, scripted(a, {}))])
+    w = yaml.safe_load((word.CACHE / 'out/words/谢谢.yaml').read_text(encoding='utf-8'))
+    assert [s['vi'] for s in w['senses']] == ['cảm ơn']
+    assert w['senses'][0]['note'] == 'hand' and w['senses'][0]['example'] == 's-w-old'
 
 
 def test_offline_provider_exports_prompt_then_reads_answer(gen, tmp_path, monkeypatch):
@@ -443,7 +516,7 @@ def test_a_neighbour_is_not_glued_onto_a_single_hanzi_headword(gen, monkeypatch)
 
 def test_hand_gloss_folds_in_a_generated_gloss_that_lists_it_as_a_term(gen):
     senses = [{'vi': 'các bạn'}, {'vi': 'các bạn; quý vị', 'pos': 'pron', 'example': 's-w-1'}, {'vi': 'bạn', 'pos': 'pron', 'example': 's-w-2'}]
-    assert gen.fold_hand(senses) == [{'vi': 'các bạn', 'pos': 'pron', 'example': 's-w-1'}, {'vi': 'bạn', 'pos': 'pron', 'example': 's-w-2'}]
+    assert gen.fold_hand(senses) == [{'vi': 'các bạn', 'pos': 'pron', 'example': 's-w-1', 'note': 'hand'}, {'vi': 'bạn', 'pos': 'pron', 'example': 's-w-2'}]
 
 
 def test_header_is_capitalised_only_when_every_cedict_reading_is(word):
@@ -539,7 +612,7 @@ def test_demonstrative_classifier_and_noun_are_three_words(gen, hz, py, want):
 def test_every_hand_twin_folds_and_the_hand_sense_is_kept_by_identity(gen):
     senses = [{'vi': 'cảm ơn'}, {'vi': 'cảm ơn', 'pos': 'v', 'example': 's-w-1'}, {'vi': 'cảm ơn', 'pos': 'interj', 'example': 's-w-2'}]
     folded = gen.fold_hand(senses)
-    assert folded == [{'vi': 'cảm ơn', 'pos': 'v', 'example': 's-w-1'}]
+    assert folded == [{'vi': 'cảm ơn', 'pos': 'v', 'example': 's-w-1', 'note': 'hand'}]
 
 
 def test_a_repeated_gloss_is_sent_back(word):
