@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import TalkingCast from './TalkingCast.svelte';
 import {
 	bob,
-	createTap,
+	isPlaying,
 	envelope,
 	frameFor,
 	levelAt,
@@ -132,56 +132,33 @@ describe('bob', () => {
 	});
 });
 
-describe('createTap', () => {
+describe('isPlaying', () => {
 	vi.stubGlobal('location', { href: 'https://app.test/lesson' });
 
-	it('Given_FourTapsOnSameClip_When_Tapped_Then_SlowFalseTrueFalseTrue', () => {
+	it.each([
+		['https://clips.test/11.mp3', true],
+		['https://clips.test/12.mp3', false],
+		[null, false]
+	])('Given_ElementSrc_%s_When_IsPlaying_Then_%s', (src, want) => {
 		// Arrange
-		const { player, play } = fakePlayer(() => 'https://clips.test/11.mp3');
-		const tap = createTap(player, '11');
+		const { player } = fakePlayer(() => src);
 		// Act
-		for (let i = 0; i < 4; i++) tap();
+		const got = isPlaying(player, '11', player.element());
 		// Assert
-		expect(play.mock.calls.map(([key, o]) => [key, o.slow])).toEqual([
-			['11', false],
-			['11', true],
-			['11', false],
-			['11', true]
-		]);
+		expect(got).toBe(want);
 	});
 
-	it('Given_OtherClipPlayedBetween_When_Tapped_Then_CountRestarts', () => {
+	it('Given_RelativeUrl_When_IsPlaying_Then_MatchesAbsoluteElementSrc', () => {
 		// Arrange
-		let src: string | null = 'https://clips.test/11.mp3';
-		const { player, play } = fakePlayer(() => src);
-		const tap = createTap(player, '11');
-		tap();
-		tap();
+		const player: TalkingCastPlayer = {
+			play: () => Promise.resolve(true),
+			url: (key) => `/audio/${key}.mp3`,
+			element: () => ({ src: 'https://app.test/audio/11.mp3' }) as HTMLAudioElement
+		};
 		// Act
-		src = 'https://clips.test/12.mp3';
-		tap();
+		const got = isPlaying(player, '11', player.element());
 		// Assert
-		expect(play.mock.calls.map(([, o]) => o.slow)).toEqual([false, true, false]);
-	});
-
-	it('Given_NullElement_When_Tapped_Then_NotSlow', () => {
-		// Arrange
-		const { player, play } = fakePlayer(() => null);
-		// Act
-		createTap(player, '11')();
-		// Assert
-		expect(play).toHaveBeenCalledWith('11', { slow: false });
-	});
-
-	it('Given_RejectedPlay_When_Tapped_Then_NoThrowNoUnhandledRejection', async () => {
-		// Arrange
-		const { player, play } = fakePlayer(() => null);
-		play.mockRejectedValue(new Error('NotAllowedError'));
-		// Act
-		const tap = () => createTap(player, '11')();
-		// Assert
-		expect(tap).not.toThrow();
-		await Promise.resolve();
+		expect(got).toBe(true);
 	});
 });
 

@@ -6,7 +6,7 @@ In listening steps the red panda says the clip with a moving mouth, so listening
 ## Context an agent can't derive from code
 - The ticket text predates cast v2. **Hachiware = `redpanda`** (the speaking Cast member that talks in sentences; WAVE-PLAN, CHY-14 STORY). Art = `prototype/talk/redpanda-closed.png`, `redpanda-half-m.png`, `redpanda-open-m.png` (600×720, same face, only the mouth differs). `panda-closed.png` in that folder is another character and is not used.
 - Port of `prototype/talk.js` (frame thresholds, smoothing, bob, crop) and the stage part of `prototype/step.js:44-52`.
-- Slow replay (0.5× with pitch kept) is played by CHY-16's `play(key, { slow })`; this component decides per tap whether `slow` is set (first tap false, then alternating).
+- Slow replay (0.5× with pitch kept) belongs to CHY-16's `play(key, { slow? })` (on main, `src/lib/audio/player.ts`): called with no `slow` it alternates 1×/0.5× per consecutive tap of the same key. This component just calls `play(clip)` per tap.
 - Lane L5 (WAVE-PLAN): `src/lib/components/TalkingCast.svelte` + test + the three frames. vitest runs only the node `server` project (vite.config.ts:51-59: `src/**/*.test.ts`, no jsdom), so the testable logic is a pure sibling module `talking-cast.ts`, and the component is checked by SSR render plus a live browser run.
 - M-5 listening steps (CHY-34) do not exist yet. WAVE-PLAN Q6 = A: the live proof runs on the `/dev/audio` route (L3 owns it) or a throwaway page; M-5 wires the component into steps.
 

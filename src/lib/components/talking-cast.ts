@@ -1,7 +1,7 @@
 export type Frame = 0 | 1 | 2;
 
 export type TalkingCastPlayer = {
-	play(key: string, opts: { slow: boolean }): Promise<void>;
+	play(key: string): Promise<unknown>;
 	url(key: string): string;
 	element(): HTMLAudioElement | null;
 };
@@ -40,14 +40,6 @@ export const isPlaying = (
 	clip: string,
 	el: HTMLAudioElement | null
 ): el is HTMLAudioElement => el !== null && el.src === clipSrc(player, clip);
-
-export function createTap(player: TalkingCastPlayer, clip: string) {
-	let taps = 0;
-	return () => {
-		taps = isPlaying(player, clip, player.element()) ? taps + 1 : 1;
-		player.play(clip, { slow: taps % 2 === 0 }).catch(() => {});
-	};
-}
 
 const envelopes = new Map<string, Promise<number[] | null>>();
 

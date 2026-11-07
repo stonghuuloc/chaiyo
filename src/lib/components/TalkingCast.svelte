@@ -5,7 +5,6 @@
 	import openArt from '#lib/assets/talk/redpanda-open.png';
 	import {
 		bob,
-		createTap,
 		frameFor,
 		isPlaying,
 		levelAt,
@@ -22,10 +21,9 @@
 	const arts = [closedArt, halfArt, openArt];
 	let frame = $state<Frame>(0);
 	let picture = $state<HTMLElement>();
-	const tap = $derived(createTap(player, clip));
 	let attach: (() => void) | undefined;
 	const onTap = () => {
-		tap();
+		player.play(clip).catch(() => {});
 		attach?.();
 	};
 

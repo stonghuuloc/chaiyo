@@ -66,7 +66,7 @@ In a listening step the red panda says the clip: her mouth swaps between three p
 | Decision | Why / source |
 |---|---|
 | Hachiware = `redpanda` | DISCUSSION.md Q1 · STORY.md |
-| Component owns per-tap `slow` (false, true, false, true), lib plays it | DISCUSSION.md · advisor r1 I2 |
+| Lib alternates 1×/0.5× itself; the component calls `play(clip)` per tap | DISCUSSION.md · `src/lib/audio/player.ts:8-10` |
 | Loudness from a decoded 20 ms envelope read at `currentTime` | DISCUSSION.md · `prototype/talk.js:10-22` |
 | Reduced motion = closed frame, no loop, no decode | DISCUSSION.md · SPEC AC4 |
 | Three `<img>` swapped by class, so SSR tests see the frame | DISCUSSION.md |
@@ -76,7 +76,7 @@ In a listening step the red panda says the clip: her mouth swaps between three p
 
 | Item | Home |
 |---|---|
-| Request to CHY-16: no double toggle, `url()`, `element()` non-null from mount | SPEC.md Open assumptions |
+| Shared default `play` gives no element: a step that wants the panda builds `createPlayer({ createAudio })` | DISCUSSION.md |
 | Cross-origin clips need R2 CORS for the decode | WAVE-PLAN Q4 |
 
 ## Plan
