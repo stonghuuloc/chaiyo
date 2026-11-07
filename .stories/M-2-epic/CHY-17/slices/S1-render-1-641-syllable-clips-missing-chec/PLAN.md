@@ -12,10 +12,10 @@ ACs: AC1, AC2  ·  Spec rev 1  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-17 
 
 ## Task 0 [CHORE] Probe: does the engine say the tone? (Mac, scratch, no commit; runs once CHY-14 S2's narrator profile exists, before CHY-15 S2 is planned; the Captain passes the winning form to CHY-15 S2's design)
 Files: scratch only, `~/.capy/work/chy17-probe/` (a `probe.py`, run with `uv run --with parselmouth --with numpy`)
-- Render 12 syllables (ba ma di xi yu lü zhi chi shu huo nian ang) × tones 1-4 twice with OmniVoice's narrator voice (the voice id/profile from CHY-14 S2's `content/cast.yaml` or ADR 0003): form A `bǎ`, form B `BA3`. Time the renders.
+- Render 12 syllables (ba ma di xi yu lü zhi chi shu huo nian ang) × tones 1-4 with OmniVoice's narrator voice in form C (frame `请读，BA3。`, language Chinese) and, for cells that have a common character, form D. Trim C to the syllable after the pause (ffmpeg silencedetect; the first voiced run after the gap). Time the renders. Pace: the clip goes through the same ffmpeg encode as production, including the voice map's `atempo` once CHY-14 S2 pins it.
 - F0 (parselmouth `to_pitch`, 75-400 Hz), voiced frames to semitones vs the clip median, thirds start/mid/end, classify per SPEC. Worked check: tone 2 thirds 180/200/230 Hz → +4.24 st rising ✓; tone 4 240/210/170 → 5.97 falling ✓; tone 1 215/220/218 → 0.24 level ✓; tone 3 190/160/185 → mid −2.97 vs start, −2.50 vs end, dip ✓.
 - Paste `probe.py` into VERIFY.md. Set the language to Chinese explicitly.
-- Verify: a 48-row table per form; the winner (B first on a tie) has ≥ 44 matches. Both < 44 → stop, report (DISCUSSION Q1). Winner B → message the CHY-15 lane (via the Captain) with `syllableText`: `bǎ → BA3`, `nǐ hǎo → NI3 HAO3`, `lǚ → LV3`/`LÜ3` per what the engine accepts (the probe's `lü` row decides). Seconds per clip × 1,641 = the render's wall time, written in VERIFY.md.
+- Verify: a 48-row table per form; the winner (B first on a tie) has ≥ 44 matches. Both < 44 → stop, report (DISCUSSION Q1). Winner C → message the CHY-15 lane (via the Captain) with the frame, the trim rule and the `lü` spelling the engine accepts (`LV3` or `LÜ3`; the probe's `lü` row decides). Winner D → the carrier table for L2 to read. Neither → stop. Seconds per clip × 1,641 = the render's wall time, written in VERIFY.md.
 
 ## Task 1 [AC1] [AC2] The check script
 File: `scripts/check-syllable-clips.ts` (new)
@@ -28,6 +28,11 @@ File: `scripts/check-syllable-clips.ts` (new)
 - Output per SPEC: summary line, `missing:` lines in manifest order, final `missing: <n>`; exit 0 / 1 / 2 (2 wins over 1 when both occur, since the missing count is not trustworthy).
 - Verify: the SPEC hermetic controls (exit codes and lines).
 
+## Task 1b [AC1] --tones scoring
+Files: `scripts/check-syllable-clips.ts`, `scripts/syllable-f0.py` (new)
+- Promote Task 0's `probe.py` classifier into `syllable-f0.py` (path in, contour out). With `--tones` the script GETs each cell clip to a temp dir, runs it via `uv run --with parselmouth --with numpy`, prints SPEC lines, exit 1 on any mismatch.
+- Verify: on the Task 0 clips, 44 or more match; a clip of `ba2` stored as `ba3` in the hermetic fixture → `tone: ba3 heard 2`, exit 1.
+
 ## Task 2 [CHORE] Wiring
 Files: `package.json:19`
 - Add `"check:syllable-clips": "tsx scripts/check-syllable-clips.ts"` after `import:content`. `.env.example` is L2's R2 public block: not edited here.
@@ -35,7 +40,7 @@ Files: `package.json:19`
 
 ## Task 3 [AC1] Render and check live (Mac, after CHY-15 S2)
 Files: none (run)
-- Precondition: if Task 0 picked B, the renderer on the base maps kind syllable to tone-number text (bǎ→BA3); if not, stop and ask the Captain. No render.
+- Precondition: if Task 0 picked C or D, the renderer on the base builds syllable text and trims as Task 0 found; if not, stop and ask the Captain. No render.
 - `pnpm import:content content --sink bundle --only lessons/hsk1`, then CHY-15's renderer on that manifest with the Task 0 text form; it is idempotent, so an interrupted run resumes.
 - Verify: `pnpm -s check:syllable-clips` → exit 0, `missing: 0`, 1641 clips. Spot-check 5 public URLs with `curl -sI`: 200, `audio/mpeg`.
 

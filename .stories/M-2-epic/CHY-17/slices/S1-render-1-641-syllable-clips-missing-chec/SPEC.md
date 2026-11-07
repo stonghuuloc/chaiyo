@@ -12,8 +12,9 @@ ACs: AC1, AC2  ·  Repo: stonghuuloc/chaiyo  ·  rev 1 (vs main fd2b67a)
 - [AC1] `R2_PUBLIC_URL` comes from the process or `.env` (`process.loadEnvFile`, process wins). Empty → `R2_PUBLIC_URL is missing or empty (set it in .env)`, exit 2, no request. No manifest → `no audio manifest: run pnpm import:content content --sink bundle --only lessons/hsk1`, exit 2.
 - [NFR] The only thing logged about the request is label, status and error text: never a header, never an env value.
 - [AC1] The 1,641 clips exist in the new R2 bucket after Loc's Mac runs CHY-15's renderer on the manifest.
-- [CHORE] Each clip must sound as its toned syllable (S2's AC3/AC4 depend on it); the probe gate below decides the text form before any full render.
-- [CHORE] Probe gate before the full render: 12 syllables (ba ma di xi yu lü zhi chi shu huo nian ang) × 4 tones, rendered the way the renderer will send them. F0 per clip in semitones relative to its median, three thirds (start, mid, end): tone 1 level (|end−start| < 2), tone 2 rising (end−start ≥ 3), tone 3 dip (mid ≤ start−1 and mid ≤ end−1), tone 4 falling (start−end ≥ 4). Pass = ≥ 44 of 48 clips match.
+- [AC1] `pnpm check:syllable-clips --tones` additionally downloads each of the 1,620 cell clips, scores its F0 contour with the thresholds below (`scripts/syllable-f0.py`, run through `uv run`), prints `tone: <label> heard <1-4|none>` per mismatch and `tone mismatches: <n>`, and exits 1 when n > 0. Without the flag no Python runs. Chips are not scored.
+- [CHORE] Each clip must sound as its toned syllable (S2's AC3/AC4 depend on it); the probe gate below decides the text form before any full render. Isolated forms are ruled out by CHY-14's probe (STORY context): the candidates are the in-sentence form and hanzi carriers (DISCUSSION Q1).
+- [CHORE] Probe gate before the full render: 12 syllables (ba ma di xi yu lü zhi chi shu huo nian ang) × 4 tones, rendered in the Q1 candidate forms (in-sentence C; hanzi carrier D where one exists), trimmed to the syllable. F0 per clip in semitones relative to its median, three thirds (start, mid, end): tone 1 level (|end−start| < 2), tone 2 rising (end−start ≥ 3), tone 3 dip (mid ≤ start−1 and mid ≤ end−1), tone 4 falling (start−end ≥ 4). Pass = ≥ 44 of 48 clips match.
 - [CHORE] `package.json` gains `"check:syllable-clips": "tsx scripts/check-syllable-clips.ts"`; `pnpm check`, `pnpm lint`, `pnpm test` stay green; a strict `tsc --noEmit` of the script exits 0.
 
 ## Not this slice
@@ -33,4 +34,4 @@ One CLI, `scripts/check-syllable-clips.ts`. It imports `audioKey`, `addTone` fro
 
 ## Open assumptions
 - [AC1] URL = `<R2_PUBLIC_URL>/<key>.mp3` and the variable is `R2_PUBLIC_URL` (DISCUSSION answered-here, 75%). If CHY-15 S2 picks another layout, the wrong guess costs a two-line change; the 1,641 HEADs would all read `missing` until fixed, which is loud.
-- [AC1] The renderer sends a syllable's text as in Q1 (B first). If neither form passes the probe, AC1's "has a clip" is met by file presence only; AC1 can still pass on file presence; the render does not run until the Captain rules.
+- [AC1] The renderer sends a syllable's text as in Q1 (C first). If no form passes the probe, AC1's "has a clip" is met by file presence only; AC1 can still pass on file presence; the render does not run until the Captain rules.

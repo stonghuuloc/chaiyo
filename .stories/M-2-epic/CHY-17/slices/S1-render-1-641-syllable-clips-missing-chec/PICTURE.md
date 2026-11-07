@@ -45,13 +45,13 @@ Every Pinyin syllable in each of the 4 tones gets a clip on R2, and a one-comman
 | Expected set = manifest entries of kind syllable: 1,620 cells + 21 chips | DISCUSSION answered-here 1; counted on main |
 | Presence by HEAD on the public URL, 404/empty = missing, other = unreachable | DISCUSSION 2; SPEC behaviour 3 |
 | Label `ba3`; last line `missing: <n>` | DISCUSSION 4 |
-| Probe 48 clips before the full render (F0 gate ≥ 44/48) | DISCUSSION Q1; SPEC probe gate |
+| Probe 48 clips in forms C/D before the full render (F0 gate ≥ 44/48); `--tones` scores every cell clip by F0 | DISCUSSION Q1, Q3; SPEC probe gate |
 | Hermetic fixture proves AC2, live delete on the dev bucket confirms it | DISCUSSION 5; PLAN Task 4 |
 
 ## Carried elsewhere
 | Item | Where |
 |---|---|
-| Syllable text the renderer sends (`BA3`) | Captain routes Task 0 result to CHY-15 S2 (DISCUSSION Routing) |
+| Syllable text the renderer sends: in-sentence form or hanzi carrier, isolated forms ruled out by CHY-14's probe | Captain routes Task 0 result to CHY-15 S2 (DISCUSSION Routing) |
 | `R2_PUBLIC_URL` name and object layout | CHY-15 S2; SPEC open assumption (2-line change) |
 
 ## Plan
@@ -59,6 +59,7 @@ Every Pinyin syllable in each of the 4 tones gets a clip on R2, and a one-comman
 |---|---|---|---|---|
 | 0 | Probe 12 syllables × 4 tones, two text forms, F0 contours (Mac, scratch) | CHORE | `audio.ts:5` | 48-row table, ≥ 44 match |
 | 1 | The check script | AC1, AC2 | `audio.ts:15`, `:29`, `bundle-sink.ts:44` | hermetic fixture controls |
+| 1b | `--tones` F0 scoring of all 1,620 cell clips | AC1 | `scripts/syllable-f0.py` (new) | wrong-tone clip → `tone: ba3 heard 2` |
 | 2 | Script wiring | CHORE | `package.json:19` | check, lint, test, strict tsc |
 | 3 | Render + live check on the Mac | AC1 | `bundle-sink.ts:12` | `missing: 0` on the real URL |
 | 4 | Delete one clip live, re-render | AC2 | `audio.ts:15` | `missing: ba3` then 0 |
