@@ -62,6 +62,16 @@ describe('lint:content CLI', () => {
 		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
 	});
 
+	it('--only selects the named root and drops the rest', { timeout: 20_000 }, () => {
+		const words = cli('src/lib/content/lint/fixtures/cli-three', '--only', 'words');
+		expect(words.status).toBe(1);
+		expect(words.out).toContain('words/你好.yaml');
+		const chars = cli('src/lib/content/lint/fixtures/cli-three', '--only', 'chars');
+		expect(chars.status).toBe(1);
+		expect(chars.out).toContain('chars/你.yaml');
+		expect(chars.out).not.toContain('words/你好.yaml');
+	});
+
 	it('rejects --only without a value', { timeout: 20_000 }, () => {
 		const { status, out, err } = cli('src/lib/content/lint/fixtures/clean', '--only');
 		expect(status).toBe(1);
@@ -88,6 +98,14 @@ describe('lint:content CLI', () => {
 		expect(out).toBe('');
 		expect(err.trimEnd().split('\n')).toHaveLength(1);
 		expect(err).toContain('no such root in src/lib/content/lint/fixtures/clean: ..');
+	});
+
+	it('rejects an --only root the loader cannot match', { timeout: 20_000 }, () => {
+		const { status, out, err } = cli('src/lib/content/lint/fixtures/clean', '--only', '.');
+		expect(status).toBe(1);
+		expect(out).toBe('');
+		expect(err.trimEnd().split('\n')).toHaveLength(1);
+		expect(err).toContain('no such root in src/lib/content/lint/fixtures/clean: .');
 	});
 
 	it.each(['nope', 'package.json'])(

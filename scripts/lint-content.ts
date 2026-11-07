@@ -32,19 +32,20 @@ const scope =
 			? PRODUCTION_ROOTS
 			: undefined;
 // A root that matches nothing is silently dropped by loadContentDir and scopeFor, so a typo
-// would lint only the shared files and pass: reject a root that does not exist under dir, or
-// that resolves outside it.
-for (const root of scope ?? []) {
+// would lint only the shared files and pass. Normalize each root to a directory-relative path
+// and reject one that is empty, outside dir, missing, or a no-op like `.`.
+const roots = (scope ?? []).map((root) => {
 	const path = root.replace(/\/$/, '');
 	const abs = resolve(dir, path);
-	const outside = relative(resolve(dir), abs).split(sep)[0] === '..';
-	if (!path || outside || !statSync(abs, { throwIfNoEntry: false })) {
+	const rel = relative(resolve(dir), abs);
+	if (!path || !rel || rel.split(sep)[0] === '..' || !statSync(abs, { throwIfNoEntry: false })) {
 		console.error(`lint-content: no such root in ${dir}: ${root}`);
 		process.exit(1);
 	}
-}
+	return rel;
+});
 if (scope) console.error(`lint-content: scope = ${scope.join(', ')}`);
-const { errors, notices } = lintDir(dir, scope ? { only: scopeFor(dir, scope) } : {});
+const { errors, notices } = lintDir(dir, scope ? { only: scopeFor(dir, roots) } : {});
 const oneLine = (s: string) => s.trimEnd().replace(/\r?\n/g, '\\n');
 for (const e of errors)
 	console.log(
