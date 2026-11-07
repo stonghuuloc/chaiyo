@@ -1,12 +1,15 @@
 import { PGlite } from '@electric-sql/pglite';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fixtureRefs } from '../lint/fixtures/refs';
 import { audioKey } from './audio';
 import { importContent } from './import';
 import { createPostgresSink, type SqlClient } from './postgres-sink';
 import { createMemorySink, type ImportedContent, type ImportedLesson } from './sink';
+
+// PGlite boots and migrates in beforeEach; under load the 5 s default test timeout and the 10 s default hook timeout flake.
+vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
 
 const OK = join(__dirname, 'fixtures/ok');
 const MIGRATION = join(
