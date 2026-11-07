@@ -30,7 +30,7 @@ The `cvdict_vi` aid the generator reads comes from `prototype/data/dict.json`, w
 ## Where CVDICT is better
 
 1. **It keeps CEDICT’s sense inventory, item by item** (occasionally two CEDICT senses are joined with `;`). In the sample it holds two senses the promoted entries folded away — `的`’s sentence-final emphasizer (`dùng cuối câu trần thuật để nhấn mạnh`) and `也`’s `both … and …` pattern (`vừa … vừa …`) — and it names classifiers for 人, 老师, 朋友 and 东西 (`個|个`, `位`, `件`). The Word schema has no classifier field, so those tags are lost today by design.
-2. **Because its items follow CEDICT’s order, it doubles as a coverage checklist.** A sense-by-sense audit can be made directly against the file. The current entries regroup senses by part of speech and learner need, and those merge decisions are visible only in the staging output (`src` / `dropped`), not in the promoted YAML.
+2. **Because its items follow CEDICT’s order, it doubles as a coverage checklist.** A sense-by-sense audit can be made directly against the file. The current entries regroup senses by part of speech and learner need; their mapping from each CEDICT sense to the output sense (the model’s `src` / `dropped` fields) is checked when the entry is generated but not persisted — the staged `src/<id>.json` holds the numbered CEDICT senses, not the mapping.
 3. **It covers far more headwords than `dict.json`’s 4,233 rows** (the HSK1–5 word list): the compounds and phrases beyond the HSK list, which is the raw material any Chuyên đề side-track vocabulary would need.
 
 ## Where CVDICT is worse
@@ -48,7 +48,7 @@ The `cvdict_vi` aid the generator reads comes from `prototype/data/dict.json`, w
    For 很 the generator prompt explicitly warns that CEDICT’s `quite` must be `rất`, not `khá`; CVDICT takes exactly the trap the editor avoids.
 
 2. **Grammar explanations instead of glosses.** For particles and function words CVDICT gives a description, not a Vietnamese equivalent: `了` `(trợ từ chỉ hành động đã hoàn thành)` vs current `đã, xong (đặt sau động từ)`; same shape for 呢, 的, 就. The learner-facing word is missing.
-3. **Structural noise that is not a meaning.** In this sample 5 of 131 CVDICT items are junk: 3 `LT:` classifier tags, 1 `cũng đọc là …` reading note, and 1 POS label item (`(phó từ mức độ)`). `build-dict.py` already drops `LT:` and `biến thể`, but `(hình thức kết hợp)`, reading notes and POS labels survive as if they were glosses.
+3. **Structural noise that is not a gloss.** In this sample 7 of 131 CVDICT items carry no learner gloss: 4 classifier pointers (3 `LT:` tags plus 东西’s `lượng từ: 個|个[ge4], 件[jian4]`), 2 POS labels (`(phó từ mức độ)` for 很, `(phó từ để nhấn mạnh)` for 是) and 1 `cũng đọc là …` reading note. `build-dict.py` drops the `LT:`-prefixed tags and `biến thể` rows, but the `lượng từ:` pointer, POS labels and reading notes survive as if they were glosses (the classifier data itself is worth keeping in a real field).
 4. **Over-splitting and no learner flags.** CVDICT splits synonyms the learner reads as one gloss (小 `nhỏ` / `bé` / `trẻ`, 东西 `đồ vật` / `thứ`) and carries no rare/common flag, no bound-form marker in the schema’s terms, and no “chỉ dùng trong …” compound list. Current entries label `rare: true` and name the compounds (水 → `药水, 香水, 墨水, 汗水`).
 5. **No examples.** CVDICT ships no example sentences; the generator needs one per sense (Tatoeba or AI supplies them regardless).
 
@@ -57,7 +57,7 @@ The `cvdict_vi` aid the generator reads comes from `prototype/data/dict.json`, w
 Observations only — this PR does not change content:
 
 - `好` repeats the same gloss twice (`tốt, khỏe, hay` and `tốt, hay, khỏe`, the second with pos and example). A generator or lint defect, not a CVDICT issue.
-- `的` has no sentence-final emphasizer and `也` folds `both … and …` into `cũng`. Whether those were dropped in staging with a reason or missed cannot be told from the promoted YAML, because `src` / `dropped` stay in `.cache/words/out/` and are not committed.
+- `的` has no sentence-final emphasizer and `也` folds `both … and …` into `cũng`. Whether those were dropped for a reason at generation time or missed cannot be told from the repository: the model’s `src` / `dropped` answer is validated by `scripts/gen-entries.py` but not persisted, and the staged `src/<id>.json` holds the numbered CEDICT senses, not the mapping.
 - `学生` adds `sinh viên` beyond CEDICT’s `student / schoolchild`; `没关系` adds `không liên quan` beyond CEDICT’s single sense. Both are defensible editor additions, but they are not traceable to the committed content.
 
 ## Recommendation for LOC-107
