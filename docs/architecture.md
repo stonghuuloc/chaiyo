@@ -15,7 +15,7 @@ Goal: few **deep** modules with small interfaces. Screens stay thin and call the
  └──────────────────────┘                 │ │ Speech.score() ──▶ /api/speech (server route) ──▶ Azure      │
  ┌──────────────────────┐                 │ └──────────────────────────────────────────────────────────────┘
  │ audio/ (Renderer)    │◀────────────────┘   Supabase Edge Function (pg_cron, 15 min)
- │  VoiceStudio → R2    │                     Study.rollover() per Learner ──▶ Notify.send() ──┬ Web Push
+ │  OmniVoice → R2      │                     Study.rollover() per Learner ──▶ Notify.send() ──┬ Web Push
  └──────────────────────┘                                                                      ├ Resend
                                                                                                └ Telegram
 ```
@@ -25,7 +25,7 @@ Goal: few **deep** modules with small interfaces. Screens stay thin and call the
 | Module | Interface (all a caller must know) | Hidden behind it | Seam / adapters |
 |---|---|---|---|
 | **Importer** `content/` (CLI) | `import(dir) → { sha } \| { errors: LintError[] }`. Never partial: any error writes nothing. Re-running the same files is a no-op. | Zod schemas, the 9 contract lint checks, sandhi → spoken pinyin, Hán Việt per word, `seg`, `taughtIn` + backlinks, audio keys, gate-pool coverage, `content_versions`. | **Sink**: Postgres rows + static JSON bundle (prod), in-memory (tests). Two real adapters. |
-| **Audio Renderer** `audio/` (CLI) | `render(manifest) → { uploaded, skipped }`. Idempotent by key `sha256(hanzi\|voice)`. | VoiceStudio calls, Cast → voice map, mp3 encode, R2 upload, skip existing keys. | **TTS**: VoiceStudio now; Azure TTS is the fallback if the spike fails. Second adapter only if that happens. |
+| **Audio Renderer** `audio/` (CLI) | `render(manifest) → { uploaded, skipped }`. Idempotent by key `sha256(hanzi\|voice)`. | OmniVoice calls, Cast → voice map, mp3 encode, R2 upload, skip existing keys. | **TTS**: OmniVoice (ADR 0003). One adapter. |
 | **Catalog** `lib/catalog` | `lesson(id)`, `word(id)`, `char(hanzi)`, `lookup(sentenceId, tapIndex)`, `entry(hanzi)` (exact-hanzi Dictionary lookup for X1 outside lesson text; no free-text search). Read-only; results served from a lesson bundle carry `contentSha?`, Dictionary rows carry none. Works offline for any lesson already opened. | Where content comes from (bundle vs rows), service-worker caching, the 122k Dictionary lookup, polyphone choice. | **Source**: JSON bundle served same-origin by Vercel, plus Supabase rows for Dictionary lookup; fixture source for tests. |
 | **Study** `lib/study` (pure TS, runs in browser and Edge Function) | `apply(state, attempt, now) → { state, events }` and `rollover(state, day, tz) → { state, events }`. Events: `CardScheduled`, `SectionDone`, `GatePassed`, `LessonUnlocked`, `DayCounted`, `FreezeEarned`, `FreezeSpent`, `StreakReset`, `BadgeEarned`. | ts-fsrs, review-card generation, the 80% Gate Test rule + best score, unlock order, Placement blocks + 20 new cards/day, Streak counting in the Learner's timezone, Freeze earn/spend/cap 2, the Badge list, Lexicon promotion from "tự thêm" to taught. | None. It has no I/O, so it needs none. Tested only through `apply`/`rollover` with Attempt sequences. |
 | **Ledger** `lib/ledger` | `record(attempt)` (append-only), `state()`, `subscribe(fn)`. Accepts writes offline; syncs when online; never loses or duplicates an Attempt. | IndexedDB outbox, idempotent upsert by Attempt id, replay of `Study.apply` over unsynced Attempts, merge with server state, RLS session. | **Store**: Supabase (online) + IndexedDB (offline outbox), plus an in-memory store for tests. Real, because offline SRS is a requirement. |
@@ -41,7 +41,7 @@ Screens (`routes/`) and the lesson runner (successor of `prototype/step.js`) onl
 2. **Progress is derived, Attempts are the truth.** The Ledger stores Attempts; Progress is `Study.apply` folded over them. A rule change can be replayed over history.
 3. **The client is trusted with its own Progress.** Learners could forge their own unlocks or Streak through the API. Accepted: there are no points, no currency and no prizes, and RLS still stops writes to anyone else's rows. Revisit if leaderboards ever matter.
 4. **No repository-per-table layer.** Supabase calls live inside Ledger and Catalog only. A thin wrapper per table fails the deletion test: deleting it moves complexity, it does not remove any.
-5. **Seams only where two adapters exist today.** Sink, Source, Store, Scorer, Channel qualify. TTS stays a direct call until the VoiceStudio spike decides whether Azure TTS is needed.
+5. **Seams only where two adapters exist today.** Sink, Source, Store, Scorer, Channel qualify. TTS is a direct call to OmniVoice (docs/adr/0003-tts-engine.md); no second adapter.
 
 ## Content delivery
 

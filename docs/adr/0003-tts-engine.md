@@ -1,0 +1,69 @@
+# 0003 — TTS engine: OmniVoice, voices pinned by reference clip
+
+Status: accepted (2026-11-08)
+
+## Context
+
+The Audio Renderer (CHY-15) turns every manifest entry (`sha256(hanzi|voice)`, voices `redpanda`, `takin`, `narrator`) into an mp3. The engine has to say the readings that break TTS (polyphones such as 行, 一 and 不 sandhi, 3-3 sandhi) and keep one stable voice per speaking Cast member (the ticket names them Hachiware and Momonga; the Cast ids are `redpanda` and `takin`).
+
+The spike (CHY-14) rendered a 30-item test set ([`spike/sentences.yaml`](../../spike/sentences.yaml)) with one engine, OmniVoice (`k2-fsa/OmniVoice`, local, Apple Silicon `mps`, float16). Loc ruled out Azure and CosyVoice before the spike, so the blind comparison is between two ways of pinning an OmniVoice voice, not between engines:
+
+- **design**: a text voice prompt ("female, teenager, moderate pitch") plus a fixed seed.
+- **refclip**: one reference clip per voice, rendered once from the prompt and reused as `ref_audio` for every item.
+
+Both arms went through one ffmpeg encode (loudnorm -16, mono, 24 kHz, 48 kbps). Loc listened to all 30 rows on a shuffled sheet.
+
+## Decision
+
+TTS is a direct call to **OmniVoice**. Every voice is pinned by a **reference clip**.
+
+`pnpm -s tts:spike tally spike/results.json` prints:
+
+```
+design 2 · refclip 28 · winner refclip · takin takin-3 · narrator narrator-1
+```
+
+Full picks and Loc's notes: [`spike/results.json`](../../spike/results.json).
+
+**How a voice is pinned.** A voice prompt alone gives a different speaker on every run, so a voice is defined by its audition clip:
+
+1. Render the audition line (`voices.audition` in `spike/sentences.yaml`) from the voice prompt with the voice's seed. For the same text, prompt, seed and model, OmniVoice gave bit-identical audio twice in one process and across two processes on `mps` (checked 2026-11-08).
+2. Use that wav as `ref_audio` (with the audition line as `ref_text`) for every item of that voice, with the voice's seed as the starting seed.
+
+`content/cast.yaml` holds the prompt, seed and pace of each voice, so a new machine regenerates the same reference clip. The renderer should also keep the three reference wavs next to the clips (R2), because a torch or model upgrade may change the bits a prompt and seed produce.
+
+**Base pace.** Output length cannot be controlled through OmniVoice: `speed` and `duration` gave erratic lengths (他在银行工作。 took 1.21 s at speed 0.85 and 2.29 s at 0.75, and speed 0.85 once appended an extra phrase). Clips are rendered at the default pace and slowed in the shared encode with ffmpeg `atempo` (pitch kept), the same trick as the client's 0.5× replay. Loc picked the factor per voice on a listening page: redpanda 0.85, takin 0.85, narrator 0.75. At default pace narrator and takin spoke at about 0.15 s per syllable and redpanda at 0.22, which Loc heard as too fast; natural Mandarin is about 0.2-0.25. The key stays `sha256(hanzi|voice)`; slow play is still the client at 0.5×.
+
+**Output gate.** A render is accepted only when it passes the checks in `scripts/tts-spike.ts`: at least 0.13 s of speech per syllable, no clipping, not mostly silence, and Whisper (`small`) hears the expected hanzi (digits read as hanzi; 您 compared as 你, which Whisper cannot tell apart). A clip that fails is re-rendered with seed + 1000, up to four attempts. The rushed clips Loc called "broken" (对不起！, 不客气。, 我去银行。, 他在睡觉。) were not garbled: Whisper read them correctly, but they came out at 0.11-0.12 s per syllable.
+
+**Forced readings (#28, #29, 行 as háng and xíng).** OmniVoice documents pinyin with tone digits in uppercase, inline (`打ZHE2出售`). Sent alone, every form of a single syllable was unreliable: a probe of 9 syllables × 5 forms (45 clips, F0 contour on the voiced span) matched the target tone for the documented uppercase form 4 of 9, lowercase digits 1 of 9, hanzi plus uppercase 1 of 9, toned marks 3 of 9, and the plain unambiguous hanzi 5 of 9 ([`spike/tone-probe/results.json`](../../spike/tone-probe/results.json)). Loc heard neither forced reading in rows 28 and 29 (`said: []`). Control used: #28 `HANG2`, #29 `XING2` (`spike/refclip/inputs.json`). CHY-15 should not rely on forcing a reading of an isolated syllable; force inside a sentence and check by ear.
+
+**Known gaps.** 您好 renders with the nǐ/ní onset instead of nín (Loc, row 8); F0 cannot separate them, so candidates (`NIN2好` and others) went to a listening page and the pick is not recorded here yet.
+
+### Licence
+
+| Engine | Weights licence | Commercial use | Source | Read |
+|---|---|---|---|---|
+| OmniVoice (`k2-fsa/OmniVoice`) | CC-BY-NC (the code is Apache 2.0) | **no** | [model card](https://huggingface.co/k2-fsa/OmniVoice) | 2026-11-08 |
+| Azure TTS | not spiked | n/a | n/a | n/a |
+| CosyVoice 3 | not spiked | n/a | n/a | n/a |
+
+Chaiyo is "me + friends, not commercial" today (NOTES.md:3). Charging money or showing ads means replacing the engine and re-rendering every clip.
+
+### Voice map
+
+| Voice | Ticket name | Voice id | Voice prompt | Seed | Base pace | Restore |
+|---|---|---|---|---|---|---|
+| `redpanda` | Hachiware | `redpanda-1` | female, teenager, moderate pitch | 1401 | 0.85 | render the audition line from the prompt and seed, reuse as reference |
+| `takin` | Momonga | `takin-3` | male, young adult, high pitch | 1402 | 0.85 | same |
+| `narrator` | none | `narrator-1` | male, middle-aged, moderate pitch | 1403 | 0.75 | same |
+
+The same ids are in [`content/cast.yaml`](../../content/cast.yaml) and `spike/sentences.yaml` (`voices.chosen`, `voices.pace`).
+
+## Consequences
+
+- The renderer runs on Loc's Mac only (Apple Silicon, `mps`); CI cannot render. Clips live on R2, so the app and CI only read them.
+- One adapter: `docs/architecture.md` adds no second TTS seam. A switch to Azure or CosyVoice is a new ADR.
+- The renderer needs the gate above, a retry with a new seed on failure, and the recorded seed per key.
+- Short clips are the weak spot: OmniVoice's docs warn that 1-2 second clips are unreliable without reference audio, and single syllables stayed unreliable with it. CHY-17's 1,641 syllable clips need their own probe.
+- Commercial use is a blocker (CC-BY-NC weights).

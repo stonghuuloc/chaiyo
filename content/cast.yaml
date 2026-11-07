@@ -1,1 +1,9 @@
-[]
+# Provider voice per manifest voice (docs/adr/0003-tts-engine.md). The Audio Renderer reads it; lint does not.
+# A voice is its reference clip: render `audition` from `instruct` and `seed`, then reuse that wav as ref_audio.
+engine: omnivoice
+model: k2-fsa/OmniVoice
+audition: "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？"
+voices:
+  redpanda: { id: redpanda-1, instruct: "female, teenager, moderate pitch", seed: 1401, pace: 0.85 }
+  takin: { id: takin-3, instruct: "male, young adult, high pitch", seed: 1402, pace: 0.85 }
+  narrator: { id: narrator-1, instruct: "male, middle-aged, moderate pitch", seed: 1403, pace: 0.75 }
