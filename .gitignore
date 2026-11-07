@@ -28,6 +28,8 @@ project.inlang/cache/
 # Generated art + audio live on R2 (CHY-1 S3), not git
 assets/**/*.png
 prototype/audio/
+spike/*/*.mp3
+spike/_wav/
 # Design scratch + run output
 .impeccable/review/
 .impeccable/mocks/

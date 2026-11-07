@@ -24,6 +24,7 @@ src/lib/styles/tokens.css
 # Tool-owned / generated
 /backlog/
 /.stories/
+/spike/
 /content/
 /project.inlang/.meta.json
 

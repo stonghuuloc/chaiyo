@@ -17,6 +17,7 @@
 		"test:coverage": "vitest --run --coverage",
 		"lint:content": "tsx scripts/lint-content.ts",
 		"import:content": "tsx scripts/import-content.ts",
+		"tts:spike": "tsx scripts/tts-spike.ts",
 		"tokens": "node scripts/build-tokens.mjs",
 		"icons": "node scripts/build-icons.mjs",
 		"brand": "scripts/build-brand.sh",

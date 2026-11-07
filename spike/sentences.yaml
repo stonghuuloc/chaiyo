@@ -1,0 +1,48 @@
+# CHY-14 S1: TTS spike test set (30 items) and the OmniVoice voice prompts.
+# Engine: OmniVoice (k2-fsa/OmniVoice, CC-BY-NC weights), local on Apple Silicon (mps, float16).
+voices:
+  engine: k2-fsa/OmniVoice
+  audition: "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？"
+  seeds: { redpanda: 1401, takin: 1402, narrator: 1403 }
+  candidates:
+    redpanda:
+      - { id: redpanda-1, instruct: "female, teenager, moderate pitch" }
+    takin:
+      - { id: takin-1, instruct: "male, young adult, moderate pitch" }
+      - { id: takin-2, instruct: "male, teenager, moderate pitch" }
+      - { id: takin-3, instruct: "male, young adult, high pitch" }
+    narrator:
+      - { id: narrator-1, instruct: "male, middle-aged, moderate pitch" }
+      - { id: narrator-2, instruct: "male, middle-aged, low pitch" }
+      - { id: narrator-3, instruct: "male, young adult, low pitch" }
+items:
+  - { n: 1, hanzi: "你好！", voice: redpanda, cases: [t33, redpanda], expected: "ní hǎo" }
+  - { n: 2, hanzi: "你好！", voice: takin, cases: [t33, takin], expected: "ní hǎo" }
+  - { n: 3, hanzi: "没关系。", voice: redpanda, cases: [redpanda], expected: "méi guānxi" }
+  - { n: 4, hanzi: "谢谢！", voice: redpanda, cases: [redpanda], expected: "xièxie" }
+  - { n: 5, hanzi: "对不起！", voice: takin, cases: [takin], expected: "duìbuqǐ" }
+  - { n: 6, hanzi: "不客气。", voice: takin, cases: [bu-t4, takin], expected: "bú kèqi" }
+  - { n: 7, hanzi: "再见！", voice: takin, cases: [takin], expected: "zàijiàn" }
+  - { n: 8, hanzi: "您好！", voice: narrator, cases: [], expected: "nín hǎo" }
+  - { n: 9, hanzi: "你们好！", voice: narrator, cases: [], expected: "nǐmen hǎo" }
+  - { n: 10, hanzi: "我去银行。", voice: narrator, cases: [hang], expected: "wǒ qù yín háng" }
+  - { n: 11, hanzi: "不行！", voice: redpanda, cases: [xing, redpanda], expected: "bù xíng" }
+  - { n: 12, hanzi: "他在银行工作。", voice: narrator, cases: [hang], expected: "tā zài yín háng gōngzuò" }
+  - { n: 13, hanzi: "他还没来。", voice: narrator, cases: [poly], expected: "tā hái méi lái" }
+  - { n: 14, hanzi: "我明天还你书。", voice: narrator, cases: [poly], expected: "wǒ míngtiān huán nǐ shū" }
+  - { n: 15, hanzi: "我觉得很好。", voice: narrator, cases: [poly, t33], expected: "wǒ juéde hén hǎo" }
+  - { n: 16, hanzi: "他在睡觉。", voice: narrator, cases: [poly], expected: "tā zài shuìjiào" }
+  - { n: 17, hanzi: "他长得很高。", voice: narrator, cases: [poly], expected: "tā zhǎng de hěn gāo" }
+  - { n: 18, hanzi: "这条路很长。", voice: narrator, cases: [poly], expected: "zhè tiáo lù hěn cháng" }
+  - { n: 19, hanzi: "今天是一月一号。", voice: narrator, cases: [yi], expected: "jīntiān shì yī yuè yī hào" }
+  - { n: 20, hanzi: "我有一个朋友。", voice: redpanda, cases: [yi, t33, redpanda], expected: "wó yǒu yí ge péngyou" }
+  - { n: 21, hanzi: "我学了一天。", voice: narrator, cases: [yi], expected: "wǒ xué le yì tiān" }
+  - { n: 22, hanzi: "他来了一年了。", voice: narrator, cases: [yi], expected: "tā lái le yì nián le" }
+  - { n: 23, hanzi: "我们一起去吧。", voice: narrator, cases: [yi], expected: "wǒmen yìqǐ qù ba" }
+  - { n: 24, hanzi: "我不去。", voice: takin, cases: [bu-t4, takin], expected: "wǒ bú qù" }
+  - { n: 25, hanzi: "我不喝茶。", voice: narrator, cases: [bu], expected: "wǒ bù hē chá" }
+  - { n: 26, hanzi: "天气很好。", voice: narrator, cases: [t33], expected: "tiānqì hén hǎo" }
+  - { n: 27, hanzi: "我想去。", voice: narrator, cases: [t33], expected: "wó xiǎng qù" }
+  - { n: 28, hanzi: "行", voice: narrator, cases: [force, hang], expected: "háng", force: "háng" }
+  - { n: 29, hanzi: "行", voice: narrator, cases: [force, xing], expected: "xíng", force: "xíng" }
+  - { n: 30, hanzi: "马", voice: narrator, cases: [syllable], expected: "mǎ, full dip" }

@@ -1,0 +1,51 @@
+[
+	{
+		"id": "redpanda-1",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1401,
+		"instruct": "female, teenager, moderate pitch"
+	},
+	{
+		"id": "takin-1",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1402,
+		"instruct": "male, young adult, moderate pitch"
+	},
+	{
+		"id": "takin-2",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1402,
+		"instruct": "male, teenager, moderate pitch"
+	},
+	{
+		"id": "takin-3",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1402,
+		"instruct": "male, young adult, high pitch"
+	},
+	{
+		"id": "narrator-1",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1403,
+		"instruct": "male, middle-aged, moderate pitch"
+	},
+	{
+		"id": "narrator-2",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1403,
+		"instruct": "male, middle-aged, low pitch"
+	},
+	{
+		"id": "narrator-3",
+		"text": "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？",
+		"control": "none",
+		"seed": 1403,
+		"instruct": "male, young adult, low pitch"
+	}
+]

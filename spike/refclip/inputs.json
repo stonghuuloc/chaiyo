@@ -1,0 +1,212 @@
+[
+	{
+		"id": "01",
+		"text": "你好！",
+		"control": "none",
+		"seed": 1401,
+		"ref": "redpanda-1"
+	},
+	{
+		"id": "02",
+		"text": "你好！",
+		"control": "none",
+		"seed": 1402,
+		"ref": "takin-1"
+	},
+	{
+		"id": "03",
+		"text": "没关系。",
+		"control": "none",
+		"seed": 1401,
+		"ref": "redpanda-1"
+	},
+	{
+		"id": "04",
+		"text": "谢谢！",
+		"control": "none",
+		"seed": 1401,
+		"ref": "redpanda-1"
+	},
+	{
+		"id": "05",
+		"text": "对不起！",
+		"control": "none",
+		"seed": 1402,
+		"ref": "takin-1"
+	},
+	{
+		"id": "06",
+		"text": "不客气。",
+		"control": "none",
+		"seed": 1402,
+		"ref": "takin-1"
+	},
+	{
+		"id": "07",
+		"text": "再见！",
+		"control": "none",
+		"seed": 1402,
+		"ref": "takin-1"
+	},
+	{
+		"id": "08",
+		"text": "您好！",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "09",
+		"text": "你们好！",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "10",
+		"text": "我去银行。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "11",
+		"text": "不行！",
+		"control": "none",
+		"seed": 1401,
+		"ref": "redpanda-1"
+	},
+	{
+		"id": "12",
+		"text": "他在银行工作。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "13",
+		"text": "他还没来。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "14",
+		"text": "我明天还你书。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "15",
+		"text": "我觉得很好。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "16",
+		"text": "他在睡觉。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "17",
+		"text": "他长得很高。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "18",
+		"text": "这条路很长。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "19",
+		"text": "今天是一月一号。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "20",
+		"text": "我有一个朋友。",
+		"control": "none",
+		"seed": 1401,
+		"ref": "redpanda-1"
+	},
+	{
+		"id": "21",
+		"text": "我学了一天。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "22",
+		"text": "他来了一年了。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "23",
+		"text": "我们一起去吧。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "24",
+		"text": "我不去。",
+		"control": "none",
+		"seed": 1402,
+		"ref": "takin-1"
+	},
+	{
+		"id": "25",
+		"text": "我不喝茶。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "26",
+		"text": "天气很好。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "27",
+		"text": "我想去。",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "28",
+		"text": "háng",
+		"control": "pinyin",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "29",
+		"text": "xíng",
+		"control": "pinyin",
+		"seed": 1403,
+		"ref": "narrator-1"
+	},
+	{
+		"id": "30",
+		"text": "马",
+		"control": "none",
+		"seed": 1403,
+		"ref": "narrator-1"
+	}
+]

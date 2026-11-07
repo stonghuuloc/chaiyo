@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>CHY-14 listening sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font:16px/1.4 system-ui,sans-serif;max-width:900px;margin:1.5rem auto;padding:0 1rem}
+h2{margin-top:2rem}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #ddd;padding:.4rem;vertical-align:top;text-align:left}
+.hanzi{font-size:1.4rem}.status{position:sticky;top:0;background:#fff;padding:.5rem 0;border-bottom:2px solid #333;font-weight:600}
+audio{width:200px;height:34px}label{margin-right:.6rem;white-space:nowrap}
+</style></head><body>
+<h1>CHY-14 listening sheet</h1>
+<div class="status" id="status"></div>
+<h2>1. Voices</h2>
+<p>Same line for every candidate. Pick one takin and one narrator. Red panda is fixed (female, teenager, moderate pitch).</p>
+<div id="voices"></div>
+<h2>2. 30 items: which clip is better?</h2>
+<p>A and B are two ways of pinning the same voice. Pick the clip with the right tones and the steadier voice. Rows 28 and 29 also ask which clip said the forced reading.</p>
+<table id="rows"></table>
+<h2>3. Result</h2>
+<div id="result"></div>
+<script>
+var DATA=__DATA__;
+var KEY='chy14-picks';
+var S=JSON.parse(localStorage.getItem(KEY)||'{"picks":{},"notes":{},"said":{},"voices":{}}');
+var NAMES={redpanda:'redpanda (Hachiware)',takin:'takin (Momonga)',narrator:'narrator'};
+var side={};DATA.order.forEach(function(o){side[o.n]={A:o.A,B:o.A==='design'?'refclip':'design'};});
+function pad(n){return String(n).padStart(2,'0');}
+function persist(){localStorage.setItem(KEY,JSON.stringify(S));}
+function save(){persist();render();}
+function radio(name,val,cur,label,fn){return '<label><input type="radio" name="'+name+'" value="'+val+'"'+(cur===val?' checked':'')+' onchange="'+fn+'">'+label+'</label>';}
+function setPick(n,v){S.picks[n]=v;save();}
+function setSaid(n,v){S.said[n]=v;save();}
+function setVoice(r,v){S.voices[r]=v;save();}
+function setNote(n,v){S.notes[n]=v;persist();}
+function setWinner(v){S.winner=v;save();}
+function engines(n,which){var s=side[n];if(which==='both')return [s.A,s.B];if(which==='neither')return [];return [s[which]];}
+function render(){
+ var done=Object.keys(S.picks).length;
+ var vOk=!!(S.voices.takin&&S.voices.narrator);
+ var sOk=['28','29'].every(function(n){return S.said[n];});
+ document.getElementById('status').textContent=done+'/30 marked'+(vOk?'':' · pick takin and narrator voices');
+ var vh='';
+ ['redpanda','takin','narrator'].forEach(function(r){
+  vh+='<h3>'+NAMES[r]+'</h3><table>';
+  DATA.candidates[r].forEach(function(c){
+   vh+='<tr><td>'+c.id+'</td><td>'+c.instruct+'</td><td><audio controls preload="none" src="voices/'+c.id+'.mp3"></audio></td><td>'+(r==='redpanda'?'fixed':radio('v-'+r,c.id,S.voices[r],'pick','setVoice(\''+r+'\',\''+c.id+'\')'))+'</td></tr>';
+  });
+  vh+='</table>';
+ });
+ document.getElementById('voices').innerHTML=vh;
+ var h='<tr><th>n</th><th>text</th><th>A</th><th>B</th><th>pick</th><th>note</th></tr>';
+ DATA.items.forEach(function(it){
+  var s=side[it.n];
+  h+='<tr><td>'+it.n+'</td><td><div class="hanzi">'+it.hanzi+'</div>'+NAMES[it.voice]+'<br>'+it.expected+'</td>'
+   +'<td><audio controls preload="none" src="'+s.A+'/'+pad(it.n)+'.mp3"></audio></td>'
+   +'<td><audio controls preload="none" src="'+s.B+'/'+pad(it.n)+'.mp3"></audio></td><td>'
+   +radio('p'+it.n,'A',S.picks[it.n],'A better','setPick('+it.n+',\'A\')')+radio('p'+it.n,'B',S.picks[it.n],'B better','setPick('+it.n+',\'B\')');
+  if(it.force)h+='<br>Which said '+it.force+'?<br>'+['A','B','both','neither'].map(function(v){return radio('s'+it.n,v,S.said[it.n],v,'setSaid('+it.n+',\''+v+'\')');}).join('');
+  h+='</td><td><input value="'+(S.notes[it.n]||'').replace(/"/g,'&quot;')+'" oninput="setNote('+it.n+',this.value)"></td></tr>';
+ });
+ document.getElementById('rows').innerHTML=h;
+ var res=document.getElementById('result');
+ if(done<30){res.textContent='Mark all 30 rows to see the result.';return;}
+ var t={design:0,refclip:0};
+ Object.keys(S.picks).forEach(function(n){t[engines(n,S.picks[n])[0]]++;});
+ res.innerHTML='<p>design '+t.design+' · refclip '+t.refclip+'</p><p>A = '+DATA.order.map(function(o){return o.n+':'+o.A;}).join(' ')+'</p>'
+  +'<p>Winner: '+radio('w','design',S.winner,'design (voice prompt + seed)','setWinner(\'design\')')+radio('w','refclip',S.winner,'refclip (one reference clip per voice)','setWinner(\'refclip\')')+'</p>'
+  +'<button '+(vOk&&sOk&&S.winner?'':'disabled')+' onclick="exportResults()">Export results.json</button>'+(vOk&&sOk?'':' <em>needs voices and rows 28/29 answered</em>');
+}
+function exportResults(){
+ var t={design:0,refclip:0};
+ var picks=DATA.items.map(function(it){
+  var p=S.picks[it.n],e=engines(it.n,p)[0];t[e]++;
+  var o={n:it.n,pick:p,engine:e};
+  if(S.notes[it.n])o.note=S.notes[it.n];
+  if(it.force)o.said=engines(it.n,S.said[it.n]);
+  return o;
+ });
+ var out={date:new Date().toISOString().slice(0,10),picks:picks,voices:{redpanda:'redpanda-1',takin:S.voices.takin,narrator:S.voices.narrator},tally:t,winner:S.winner};
+ var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));a.download='results.json';a.click();
+}
+render();
+</script></body></html>
