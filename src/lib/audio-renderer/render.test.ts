@@ -58,9 +58,10 @@ describe('render', () => {
 	it('keys on sha256 of text and voice, one object per key', async () => {
 		const bucket = fakeBucket();
 		const entries = [...three(), entry('谢谢', 'narrator')];
-		await render(entries, { engine: fakeEngine(), bucket });
+		const engine = fakeEngine();
+		expect(await render(entries, { engine, bucket })).toEqual({ uploaded: 3, skipped: 0 });
+		expect(engine.calls).toHaveLength(3);
 		expect([...bucket.objects.keys()].sort()).toEqual(names(three()));
-		expect(sha('你好！|redpanda')).not.toBe(sha('你好！|takin'));
 	});
 
 	it('keys a split Word on its id and speaks its reading', async () => {
@@ -94,15 +95,17 @@ describe('render', () => {
 	it('keeps going after an engine failure, then throws, and a re-run finishes', async () => {
 		const bucket = fakeBucket();
 		const broken = fakeEngine((req) => {
-			if (req.text === '谢谢') throw new Error('boom');
+			if (req.voice === 'takin') throw new Error('boom');
 			return new Uint8Array([1]);
 		});
 		const err = await render(three(), { engine: broken, bucket }).catch((e) => e);
 		expect(err).toBeInstanceOf(RenderError);
 		expect(err.uploaded).toBe(2);
+		expect(err.skipped).toBe(0);
 		expect(err.failures).toEqual([
-			{ key: sha('谢谢|narrator'), ref: '谢谢@narrator', message: 'boom' }
+			{ key: sha('你好！|takin'), ref: '你好！@takin', message: 'boom' }
 		]);
+		expect(bucket.objects.has(sha('谢谢|narrator') + '.mp3')).toBe(true);
 		expect(bucket.objects.size).toBe(2);
 		expect(await render(three(), { engine: fakeEngine(), bucket })).toEqual({
 			uploaded: 1,
