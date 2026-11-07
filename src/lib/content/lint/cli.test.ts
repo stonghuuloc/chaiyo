@@ -42,11 +42,14 @@ describe('lint:content CLI', () => {
 		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
 	});
 
-	it('lints the production scope when no directory is given', { timeout: 120_000 }, () => {
+	it('lints all content except the non-production lessons by default', { timeout: 120_000 }, () => {
 		const { status, out, err } = cli();
 		expect(status).toBe(0);
 		expect(out).toBe('');
-		expect(err).toContain('scope = lessons/hsk1');
+		expect(err).toContain(
+			'scope = everything except lessons/hsk2, lessons/hsk3, lessons/hsk4, lessons/hsk5'
+		);
+		expect(err).toMatch(/skipped \d+ errors in those lessons/);
 		expect(err.trimEnd().split('\n').at(-1)).toBe('0 errors');
 	});
 
