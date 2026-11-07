@@ -44,9 +44,10 @@ describe('play toggle', () => {
 		const { el, play } = setup();
 		await play('a', { slow: true });
 		await play('a');
+		await play('b');
 		await play('b', { slow: false });
 		await play('b');
-		expect(rates(el)).toEqual([0.5, 1, 1, 0.5]);
+		expect(rates(el)).toEqual([0.5, 1, 1, 1, 0.5]);
 	});
 
 	it('starts a different clip at 1x and forgets the old count', async () => {
@@ -55,13 +56,15 @@ describe('play toggle', () => {
 		expect(rates(el)).toEqual([1, 0.5, 1, 1]);
 	});
 
-	it('restarts a playing clip on one shared element', async () => {
+	it('restarts a still-pending clip on one shared element', async () => {
 		const { el, createAudio, play } = setup();
-		await play('11');
+		const first = play('11');
 		el.currentTime = 3;
-		await play('11');
+		const second = play('11');
 		expect(el.currentTime).toBe(0);
+		expect(el.play).toHaveBeenCalledTimes(2);
 		expect(createAudio).toHaveBeenCalledTimes(1);
+		await Promise.all([first, second]);
 	});
 });
 

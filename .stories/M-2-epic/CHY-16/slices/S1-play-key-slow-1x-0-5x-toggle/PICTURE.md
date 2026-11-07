@@ -50,8 +50,8 @@ flowchart LR
 | task | AC | file:line | test |
 |---|---|---|---|
 | 1 tests first | [AC1] | src/lib/audio/player.test.ts | vitest --project server |
-| 2 createPlayer | [AC2] | src/lib/audio/player.ts | same |
-| 3 barrel | [AC4] | src/lib/audio/index.ts | pnpm check, lint, coverage |
+| 2 createPlayer | [AC1][AC2][AC4] | src/lib/audio/player.ts | same |
+| 3 barrel | [CHORE] | src/lib/audio/index.ts | pnpm check, lint, coverage |
 | 4 browser proof | [AC1] | scratch page, not committed | Playwright, offline |
 
 ## Settled
