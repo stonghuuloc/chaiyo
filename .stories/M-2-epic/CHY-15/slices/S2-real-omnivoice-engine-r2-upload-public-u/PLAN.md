@@ -36,7 +36,7 @@ Files: `scripts/render-audio.ts` (new), `package.json:19`, `.env.example`
 - [AC5] Verify: `R2_AUDIO_BUCKET= pnpm render:audio x.json` → exit 2, message; `pnpm check && pnpm lint && pnpm test --maxWorkers=2`; strict `tsc --ignoreConfig --noEmit` on `scripts/render-audio.ts`.
 
 ## Task 5 [AC5] Live run on the Mac
-- [AC5] The SPEC live test lines: import, `--limit 5`, re-run (0 uploaded, no worker), `curl -sI`, `ffprobe`, CORS curl, all of Bài 1, browser play.
+- [AC5] The SPEC live test lines: import, `--limit 5`, re-run (0 uploaded, no worker), `curl -sI`, `ffprobe`, CORS curl, all of Bài 1 in two runs, browser play.
 
 ## Mutation paths covered
 - First render, re-render (no worker start), partial failure then re-run, gate retry then fail, pinned override, unknown voice, missing env, a 403 from R2.
