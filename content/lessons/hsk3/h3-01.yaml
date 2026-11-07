@@ -164,15 +164,15 @@ gate:
     - id: q-h3-01-x16
       type: order
       tests: {}
-      tiles: [ 下个星期, 就要, 考试, 了, 你, 复习得, 怎么样 ]
+      tiles: [ 考试, 你, 下个星期, 怎么样, 了, 复习得, 就要 ]
       answer: s-h3-01-01
     - id: q-h3-01-x17
       type: order
       tests: { words: [ 进步 ] }
-      tiles: [ 当然, 可以, 只有, 每天, 努力, 才, 会, 有, 进步 ]
+      tiles: [ 努力, 才, 当然, 进步, 只有, 可以, 每天, 会, 有 ]
       answer: s-h3-01-11
     - id: q-h3-01-x18
       type: order
       tests: { words: [ 保证, 成绩 ] }
-      tiles: [ 我, 保证, 我, 一定, 要, 考出, 好, 成绩 ]
+      tiles: [ 一定, 我, 好, 保证, 考出, 我, 要, 成绩 ]
       answer: s-h3-01-08

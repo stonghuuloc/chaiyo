@@ -131,10 +131,10 @@ gate:
     - id: q-h4-01-x11
       type: order
       tests: { words: [ 相处 ] }
-      tiles: [ 好朋友, 要, 互相, 了解, 你们, 平时, 怎么, 相处 ]
+      tiles: [ 了解, 你们, 好朋友, 怎么, 互相, 要, 相处, 平时 ]
       answer: s-h4-01-03
     - id: q-h4-01-x12
       type: order
       tests: { words: [ 轻易 ] }
-      tiles: [ 对, 好朋友, 不会, 轻易, 分开 ]
+      tiles: [ 轻易, 分开, 对, 不会, 好朋友 ]
       answer: s-h4-01-12
