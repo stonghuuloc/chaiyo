@@ -10,6 +10,8 @@ Give every Pinyin syllable in each of the 4 tones a real recorded clip on R2, an
 - Cast: `narrator` is the third voice (audio.ts:49); the backlog's Hachiware/Momonga do not appear in this story.
 - Loc's answers (2026-11-07): Q4 new R2 bucket + r2.dev public URL, CORS GET; Q5 A (bundle carries `audioKey`, a CHY-8 follow-up outside M-2); Q6 A (one dev-only `/dev/audio` route).
 
+- **Wave E gate (wording for WAVE-PLAN, which this story does not edit):** CHY-17 S2 starts after CHY-16 S2 (the `/dev/audio` route and its dev guard) is merged or stacked, not after CHY-16 S1 alone; CHY-16 S1 (`play`) is on main as of 6c0f661.
+
 ## Locked decisions (BA/Loc already ruled — never re-open)
 - Key `sha256(text|voice)`, normal speed only; slow = client replay at 0.5× (content-schema.md:331).
 - Clip voice = `narrator` (AC3 "in the narrator voice").

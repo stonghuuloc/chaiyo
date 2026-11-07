@@ -8,7 +8,7 @@ ACs: AC3, AC4  ·  Repo: stonghuuloc/chaiyo  ·  rev 1 (vs main fd2b67a; stacks 
 - [AC3] For `ba` tones 1-4 the browser requests exactly four distinct URLs `<R2_PUBLIC_URL>/<key>.mp3`, keys of `bā`, `bá`, `bǎ`, `bà`, narrator.
 - [AC3] The 405 × 4 keys are computed by the route's server `load` from the importer's `audioKey`/`addTone`; the browser never hashes.
 - [AC4] A "Random 20" button draws 20 distinct (syllable, tone) pairs from the 1,620 with a seeded PRNG (mulberry32). The seed is shown; `?seed=N` reproduces the draw. A draw with the same seed is identical; two seeds differ.
-- [AC4] The draw renders 20 rows: label (`ba3`), contour text, ▶ (plays that clip like AC3), "right", "wrong". Header: `played k/20 · right r · wrong w`. A row counts as played once its audio element fires `playing` (or `play` reports success); the 20 distinct 200 `audio/mpeg` requests stay the proof of "every one plays".
+- [AC4] The draw renders 20 rows: label (`ba3`), contour text, ▶ (plays that clip like AC3), "right", "wrong". Header: `played k/20 · right r · wrong w`. A row counts as played once `play(key)` resolves `true`; the 20 distinct 200 `audio/mpeg` requests stay the proof of "every one plays".
 - [AC4] When all 20 rows are marked right or wrong, the page shows `wrong: <labels>` (`wrong: none` when 0) as selectable text. Loc's verdicts are not stored.
 - [NFR] Nothing in this section runs outside dev: it lives under L3's guarded route; no nav link, no prerender.
 - [CHORE] New pure module `syllable-cells.ts` (`pickCells`, contour texts) and server module `syllable-cells.server.ts` (`loadSyllableCells`) have vitest files; `pnpm check`, `pnpm lint`, `pnpm test --maxWorkers=2` stay green.
@@ -29,5 +29,5 @@ ACs: AC3, AC4  ·  Repo: stonghuuloc/chaiyo  ·  rev 1 (vs main fd2b67a; stacks 
 - [CHORE] `pnpm check && pnpm lint && pnpm test --maxWorkers=2` green.
 
 ## Open assumptions
-- [AC3] CHY-16 exports `play(key, opts?)` from `$lib/audio` and it returns after playback starts, never throwing. A different signature costs one adapter line in `SyllableGrid.svelte`.
+- [AC3] CHY-16 S1 is on main: `play(key, { slow }): Promise<boolean>` from `$lib/audio` (player.ts:10), true when playback started, quiet failure otherwise. Its default `base` is `/audio`; S2 passes the `R2_PUBLIC_URL` base through `createPlayer({ base })` (one line).
 - [AC3] Hard gate: S2 executes only after CHY-16 S2 (`/dev/audio` + guard) is merged or stacked; the Captain amends WAVE-PLAN wave E (it names CHY-16 S1 only). Cost if ignored: no route to mount on.
