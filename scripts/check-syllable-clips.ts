@@ -44,9 +44,12 @@ const probe = async (e: AudioEntry): Promise<[Verdict, string]> => {
 	for (let attempt = 0; attempt < 4; attempt++) {
 		if (attempt) await new Promise((r) => setTimeout(r, 500 * 2 ** (attempt - 1)));
 		try {
-			const res = await fetch(`${base}/${e.key}.mp3`, { method: 'HEAD' });
+			const res = await fetch(`${base}/${e.key}.mp3`, {
+				method: 'HEAD',
+				signal: AbortSignal.timeout(10_000)
+			});
 			if (res.status === 200)
-				return [Number(res.headers.get('content-length')) > 0 ? 'present' : 'missing', ''];
+				return [res.headers.get('content-length') === '0' ? 'missing' : 'present', ''];
 			if (res.status === 404) return ['missing', ''];
 			why = String(res.status);
 		} catch (err) {
