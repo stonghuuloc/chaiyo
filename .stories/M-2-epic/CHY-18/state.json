@@ -1,0 +1,32 @@
+{
+  "story": "CHY-18",
+  "title": "Talking Cast component",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "frames by loudness, bob, replay, reduced motion",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "design READY (Opus r1+r2, Sonnet delta)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-18",
+  "log": [
+    "2026-11-07 init",
+    "2026-11-07 +S1 frames by loudness, bob, replay, reduced motion [AC1,AC2,AC3,AC4]",
+    "2026-11-07 S1 \u2192 picture"
+  ],
+  "updated": "2026-11-07T04:12:34+00:00"
+}
