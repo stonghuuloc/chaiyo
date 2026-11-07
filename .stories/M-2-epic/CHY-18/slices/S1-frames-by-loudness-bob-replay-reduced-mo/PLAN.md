@@ -19,7 +19,7 @@ Files: `src/lib/assets/talk/redpanda-closed.png`, `redpanda-half.png`, `redpanda
 
 ## Task 2 [AC1][AC2] Pure module
 File: `src/lib/components/talking-cast.ts` (new); test first in `src/lib/components/TalkingCast.test.ts` (new)
-- Exports: `Frame`, `frameFor(level)`, `smoothLevel(level, target)`, `envelope(samples, sampleRate)`, `levelAt(env, seconds)`, `bob(level, t)`, `TalkingCastPlayer` type (`play(key, opts: { slow: boolean }): Promise<void>`, `url(key): string`, `element(): HTMLAudioElement | null`).
+- Exports: `Frame`, `frameFor(level)`, `smoothLevel(level, target)`, `envelope(samples, sampleRate)`, `levelAt(env, seconds)`, `bob(level, t)`, `TalkingCastPlayer` type (`play(key): Promise<unknown>`, `url(key): string`, `element(): HTMLAudioElement | null`).
 - Test first, per SPEC Test contract (values in SPEC were walked by hand: 0.65^4 = .1785 < .18 so `closed` at step 4, 0.65^10 = .0135 and 0.65^11 = .0088 so rest at step 11).
 - Verify: `pnpm vitest --run src/lib/components/TalkingCast.test.ts --maxWorkers=2`.
 

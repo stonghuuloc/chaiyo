@@ -13,7 +13,7 @@ ACs: AC1, AC2, AC3, AC4  ·  Repo: stonghuuloc/chaiyo  ·  rev 1 (vs main fd2b67
 - [AC3] Tapping the picture or the ▶ button calls `player.play(clip)` once, with no `slow` option; CHY-16's lib then plays tap 1 at 1×, tap 2 at 0.5×, tap 3 at 1×, and restarts at 1× when another clip played in between.
 - [AC3] The ▶ button is a real `<button type="button">` with `aria-label={label}`; the picture is a click target hidden from assistive tech (the ▶ is the accessible control).
 - [AC3] A rejected or never-resolving `play()` leaves the component working: it neither throws nor sticks the mouth open.
-- [AC4] With `prefers-reduced-motion: reduce`, the stage shows the `closed` frame statically while the clip plays: no frame swap, no transform, no envelope decode, no animation loop. ▶ and picture taps still call `player.play(clip, { slow })`, alternating as in normal mode.
+- [AC4] With `prefers-reduced-motion: reduce`, the stage shows the `closed` frame statically while the clip plays: no frame swap, no transform, no envelope decode, no animation loop. ▶ and picture taps still call `player.play(clip)`, and the lib alternates as in normal mode.
 - [AC4] The reduced and normal modes use one DOM: switching the preference at runtime stops or starts the loop without remounting, and switching to reduced mid-clip resets the stage to `closed` with no transform.
 - [NFR] The three frames are copied as `src/lib/assets/talk/redpanda-{closed,half,open}.png` (`half-m`, `open-m` lose the `-m`), byte-identical to `prototype/talk/`.
 - [NFR] No audio is decoded until the clip first plays; a decode failure (offline, uncached) keeps the mouth closed and throws nothing.
