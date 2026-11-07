@@ -13,8 +13,8 @@ ACs: AC1, AC2  ·  Spec rev 1  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-17 
 ## Task 0 [CHORE] Probe: does the engine say the tone? (Mac, scratch, no commit; runs once CHY-14 S2's narrator profile exists, before CHY-15 S2 is planned; the Captain passes the winning form to CHY-15 S2's design)
 Files: scratch only, `~/.capy/work/chy17-probe/` (a `probe.py`, run with `uv run --with parselmouth --with numpy`)
 - Render 12 syllables (ba ma di xi yu lü zhi chi shu huo nian ang) × tones 1-4 with OmniVoice's narrator voice in form C (frame `请读，BA3。`, language Chinese) and, for cells that have a common character, form D. Trim C to the syllable after the pause (ffmpeg silencedetect; the first voiced run after the gap). Time the renders. Pace: the clip goes through the same ffmpeg encode as production, including the voice map's `atempo` once CHY-14 S2 pins it.
-- F0 (parselmouth `to_pitch`, 75-400 Hz), voiced frames to semitones vs the clip median, thirds start/mid/end, classify per SPEC. Worked check: tone 2 thirds 180/200/230 Hz → +4.24 st rising ✓; tone 4 240/210/170 → 5.97 falling ✓; tone 1 215/220/218 → 0.24 level ✓; tone 3 190/160/185 → mid −2.97 vs start, −2.50 vs end, dip ✓.
-- Paste `probe.py` into VERIFY.md. Set the language to Chinese explicitly.
+- Score with the classifier already on main, `spike/tone_probe.py:60-86` (Praat F0 at 10 ms, longest voiced run, first/last fifth of the contour against the clip median in semitones, tone 3 dip tested first). Reuse its voice setup (`spike/tone_probe.py:5-8`: narrator-1 reference clip, pinned seed) so the numbers compare with CHY-14's 45-clip table. Worked check from `spike/tone-probe/results.json`: XING2 start −2.3, end 2.2, minpos 0.12 → end−start 4.5 > 2.5 and min before 0.4 → tone 2 ✓.
+- Paste the wrapper you run into VERIFY.md. Set the language to Chinese explicitly.
 - Verify: a 48-row table per form; the winner (B first on a tie) has ≥ 44 matches. Both < 44 → stop, report (DISCUSSION Q1). Winner C → message the CHY-15 lane (via the Captain) with the frame, the trim rule and the `lü` spelling the engine accepts (`LV3` or `LÜ3`; the probe's `lü` row decides). Winner D → the carrier table for L2 to read. Neither → stop. Seconds per clip × 1,641 = the render's wall time, written in VERIFY.md.
 
 ## Task 1 [AC1] [AC2] The check script
@@ -30,7 +30,7 @@ File: `scripts/check-syllable-clips.ts` (new)
 
 ## Task 1b [AC1] --tones scoring
 Files: `scripts/check-syllable-clips.ts`, `scripts/syllable-f0.py` (new)
-- Promote Task 0's `probe.py` classifier into `syllable-f0.py` (path in, contour out). With `--tones` the script GETs each cell clip to a temp dir, runs it via `uv run --with parselmouth --with numpy`, prints SPEC lines, exit 1 on any mismatch.
+- Lift the `spike/tone_probe.py` classifier into `syllable-f0.py` (path in, contour out; the render gate's Whisper and seed-retry stay in L2's renderer, not here). With `--tones` the script GETs each cell clip to a temp dir, runs it via `uv run --with parselmouth --with numpy`, prints SPEC lines, exit 1 on any mismatch.
 - Verify: on the Task 0 clips, 44 or more match; a clip of `ba2` stored as `ba3` in the hermetic fixture → `tone: ba3 heard 2`, exit 1.
 
 ## Task 2 [CHORE] Wiring
