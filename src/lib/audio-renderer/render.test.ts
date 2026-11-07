@@ -123,4 +123,16 @@ describe('render', () => {
 		expect(err.failures[0].message).toBe('engine returned 0 bytes');
 		expect(bucket.objects.size).toBe(0);
 	});
+
+	it('records a non-Error throw as a failure and keeps going', async () => {
+		const bucket = fakeBucket();
+		const engine = fakeEngine((req) => {
+			if (req.voice === 'takin') throw 'plain string';
+			return new Uint8Array([1]);
+		});
+		const err = await render(three(), { engine, bucket }).catch((e) => e);
+		expect(err).toBeInstanceOf(RenderError);
+		expect(err.failures[0].message).toBe('plain string');
+		expect(err.uploaded).toBe(2);
+	});
 });

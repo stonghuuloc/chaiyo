@@ -33,7 +33,11 @@ export async function render(
 			await bucket.put(name, body, 'audio/mpeg');
 			uploaded++;
 		} catch (err) {
-			failures.push({ key: e.key, ref: e.ref, message: (err as Error).message });
+			failures.push({
+				key: e.key,
+				ref: e.ref,
+				message: err instanceof Error ? err.message : String(err)
+			});
 		}
 	}
 	if (failures.length) throw new RenderError(uploaded, skipped, failures);
