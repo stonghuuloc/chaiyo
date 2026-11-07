@@ -1,0 +1,41 @@
+import { audioKey, type AudioEntry } from '../content/import/audio';
+import {
+	RenderError,
+	type Bucket,
+	type Engine,
+	type RenderFailure,
+	type RenderResult
+} from './types';
+
+export async function render(
+	entries: AudioEntry[],
+	{ engine, bucket }: { engine: Engine; bucket: Bucket }
+): Promise<RenderResult> {
+	for (const e of entries)
+		if (e.key !== audioKey(e.split ? e.ref : e.hanzi, e.voice))
+			throw new Error(`key mismatch: ${e.ref}`);
+
+	let uploaded = 0;
+	let skipped = 0;
+	const failures: RenderFailure[] = [];
+	const seen = new Set<string>();
+	for (const e of entries) {
+		if (seen.has(e.key)) continue;
+		seen.add(e.key);
+		const name = `${e.key}.mp3`;
+		try {
+			if (await bucket.has(name)) {
+				skipped++;
+				continue;
+			}
+			const body = await engine.synthesize({ text: e.reading ?? e.hanzi, voice: e.voice });
+			if (!body.byteLength) throw new Error('engine returned 0 bytes');
+			await bucket.put(name, body, 'audio/mpeg');
+			uploaded++;
+		} catch (err) {
+			failures.push({ key: e.key, ref: e.ref, message: (err as Error).message });
+		}
+	}
+	if (failures.length) throw new RenderError(uploaded, skipped, failures);
+	return { uploaded, skipped };
+}

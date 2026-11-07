@@ -1,0 +1,123 @@
+import { createHash } from 'node:crypto';
+import { describe, expect, it } from 'vitest';
+import type { AudioEntry } from '../content/import/audio';
+import { fakeBucket, fakeEngine } from './fakes';
+import { render } from './render';
+import { RenderError } from './types';
+
+const sha = (s: string) => createHash('sha256').update(s).digest('hex');
+const entry = (hanzi: string, voice: string): AudioEntry => ({
+	key: sha(hanzi + '|' + voice),
+	kind: 'sentence',
+	ref: `${hanzi}@${voice}`,
+	voice,
+	hanzi
+});
+const three = () => [
+	entry('你好！', 'redpanda'),
+	entry('你好！', 'takin'),
+	entry('谢谢', 'narrator')
+];
+const names = (entries: AudioEntry[]) => entries.map((e) => e.key + '.mp3').sort();
+
+describe('render', () => {
+	it('uploads every clip on a first run', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		expect(await render(three(), { engine, bucket })).toEqual({ uploaded: 3, skipped: 0 });
+		expect([...bucket.objects.keys()].sort()).toEqual(names(three()));
+		for (const o of bucket.objects.values()) expect(o.contentType).toBe('audio/mpeg');
+		expect(engine.calls).toEqual([
+			{ text: '你好！', voice: 'redpanda' },
+			{ text: '你好！', voice: 'takin' },
+			{ text: '谢谢', voice: 'narrator' }
+		]);
+	});
+
+	it('uploads nothing on a re-run', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		await render(three(), { engine, bucket });
+		engine.calls.length = 0;
+		expect(await render(three(), { engine, bucket })).toEqual({ uploaded: 0, skipped: 3 });
+		expect(engine.calls).toHaveLength(0);
+	});
+
+	it('renders only the new entry', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		await render(three(), { engine, bucket });
+		engine.calls.length = 0;
+		expect(await render([...three(), entry('再见', 'narrator')], { engine, bucket })).toEqual({
+			uploaded: 1,
+			skipped: 3
+		});
+		expect(engine.calls).toEqual([{ text: '再见', voice: 'narrator' }]);
+	});
+
+	it('keys on sha256 of text and voice, one object per key', async () => {
+		const bucket = fakeBucket();
+		const entries = [...three(), entry('谢谢', 'narrator')];
+		await render(entries, { engine: fakeEngine(), bucket });
+		expect([...bucket.objects.keys()].sort()).toEqual(names(three()));
+		expect(sha('你好！|redpanda')).not.toBe(sha('你好！|takin'));
+	});
+
+	it('keys a split Word on its id and speaks its reading', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		const split: AudioEntry = {
+			key: sha('打-da2|narrator'),
+			kind: 'word',
+			ref: '打-da2',
+			voice: 'narrator',
+			hanzi: '打',
+			reading: 'dá',
+			split: true
+		};
+		await render([split], { engine, bucket });
+		expect([...bucket.objects.keys()]).toEqual([sha('打-da2|narrator') + '.mp3']);
+		expect(engine.calls).toEqual([{ text: 'dá', voice: 'narrator' }]);
+	});
+
+	it('rejects a tampered key before any engine call', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		const bad = { ...entry('谢谢', 'narrator'), key: sha('x') };
+		await expect(render([entry('你好！', 'takin'), bad], { engine, bucket })).rejects.toThrow(
+			'key mismatch: 谢谢@narrator'
+		);
+		expect(engine.calls).toHaveLength(0);
+		expect(bucket.objects.size).toBe(0);
+	});
+
+	it('keeps going after an engine failure, then throws, and a re-run finishes', async () => {
+		const bucket = fakeBucket();
+		const broken = fakeEngine((req) => {
+			if (req.text === '谢谢') throw new Error('boom');
+			return new Uint8Array([1]);
+		});
+		const err = await render(three(), { engine: broken, bucket }).catch((e) => e);
+		expect(err).toBeInstanceOf(RenderError);
+		expect(err.uploaded).toBe(2);
+		expect(err.failures).toEqual([
+			{ key: sha('谢谢|narrator'), ref: '谢谢@narrator', message: 'boom' }
+		]);
+		expect(bucket.objects.size).toBe(2);
+		expect(await render(three(), { engine: fakeEngine(), bucket })).toEqual({
+			uploaded: 1,
+			skipped: 2
+		});
+	});
+
+	it('treats 0 bytes as a failure and puts nothing', async () => {
+		const bucket = fakeBucket();
+		const err = await render([entry('谢谢', 'narrator')], {
+			engine: fakeEngine(() => new Uint8Array()),
+			bucket
+		}).catch((e) => e);
+		expect(err).toBeInstanceOf(RenderError);
+		expect(err.failures[0].message).toBe('engine returned 0 bytes');
+		expect(bucket.objects.size).toBe(0);
+	});
+});

@@ -1,0 +1,44 @@
+{
+  "story": "CHY-15",
+  "title": "Audio Renderer CLI \u2192 R2",
+  "stage": "slicing",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "render(manifest) core with fake engine and fake bucket",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "real OmniVoice engine, R2 upload, public URL",
+      "acs": [
+        "AC5"
+      ],
+      "repo": "",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-15",
+  "log": [
+    "2026-11-07 init",
+    "2026-11-07 +S1 render(manifest) core with fake engine and fake bucket [AC1,AC2,AC3,AC4]",
+    "2026-11-07 +S2 real OmniVoice engine, R2 upload, public URL [AC5]"
+  ],
+  "updated": "2026-11-07T04:06:36+00:00"
+}

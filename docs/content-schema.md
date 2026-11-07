@@ -26,7 +26,7 @@ How lesson content is written, checked and loaded. Screens that read it: `docs/s
        │ topic, order              │ every Chinese line
        ▼                           ▼
  ┌───────────┐              ┌────────────┐ derived ┌────────────────────────────┐
- │  Topic    │              │  Sentence  │────────▶│ audio key sha256(text|voice|rate)
+ │  Topic    │              │  Sentence  │────────▶│ audio key sha256(text|voice)
  │  Level    │              │ s-h1-01-07 │         │ segmentation → tap lookup  │
  └───────────┘              └─────┬──────┘         └────────────────────────────┘
                                   │ stem / options
