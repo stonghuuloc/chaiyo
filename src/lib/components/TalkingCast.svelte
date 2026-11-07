@@ -47,10 +47,11 @@
 			const ours = isPlaying(player, clip, el);
 			const live = ours && !el.paused && !el.ended;
 			if (live && decoding !== el.src) {
-				decoding = el.src;
+				const src = el.src;
+				decoding = src;
 				env = null;
-				void loadEnvelope(el.src).then((e) => {
-					if (decoding === el.src) env = e;
+				void loadEnvelope(src).then((e) => {
+					if (decoding === src) env = e;
 				});
 			}
 			level = smoothLevel(level, live && env ? levelAt(env, el.currentTime) : 0);
