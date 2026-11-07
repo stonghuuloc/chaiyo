@@ -54,18 +54,23 @@ export type EngineDeps = {
 	faults?: (file: string, hanzi?: number) => string[];
 };
 
+const Reply = z.object({ text: z.string().optional(), error: z.string().optional() });
+
 const MAX_ATTEMPTS = 4;
 
 export function pythonWorker(python: string): Worker {
 	const script = join(dirname(fileURLToPath(import.meta.url)), 'omnivoice_worker.py');
 	const child = spawn(python, [script], { stdio: ['pipe', 'pipe', 'inherit'] });
 	const lines = createInterface({ input: child.stdout })[Symbol.asyncIterator]();
-	const spawnFailed = new Promise<never>((_, reject) => child.once('error', reject));
+	const spawnFailed = new Promise<never>((_, reject) => {
+		child.once('error', reject);
+		child.stdin.on('error', reject);
+	});
 	const ask = async (request: object) => {
 		child.stdin.write(JSON.stringify(request) + '\n');
 		const next = await Promise.race([lines.next(), spawnFailed]);
 		if (next.done) throw new Error('OmniVoice worker exited');
-		const reply = JSON.parse(next.value) as { text?: string; error?: string };
+		const reply = Reply.parse(JSON.parse(next.value));
 		if (reply.error) throw new Error(reply.error);
 		return reply;
 	};
@@ -94,7 +99,10 @@ export function omniVoiceEngine(cast: Cast, deps: EngineDeps): Engine & { close(
 		if (!voice) return Promise.reject(new Error(`unknown voice: ${name}`));
 		let ref = refs.get(name);
 		if (ref) return ref;
-		const hash = createHash('sha256').update(voice.instruct).digest('hex').slice(0, 8);
+		const hash = createHash('sha256')
+			.update(voice.instruct + '\n' + cast.audition)
+			.digest('hex')
+			.slice(0, 8);
 		const wav = join(deps.cacheDir, 'voices', `${voice.id}-${voice.seed}-${hash}.wav`);
 		ref = (async () => {
 			if (existsSync(wav)) return wav;

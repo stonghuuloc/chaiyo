@@ -182,4 +182,16 @@ overrides:
 		expect(first.jobs.filter((j) => j.instruct)).toHaveLength(1);
 		expect(second.jobs.filter((j) => j.instruct)).toMatchObject([{ instruct: 'female, bright' }]);
 	});
+
+	it('misses the reference cache when the audition text changes', async () => {
+		const cacheDir = mkdtempSync(join(tmpdir(), 'chaiyo-cache-'));
+		const first = setup({ cacheDir });
+		await first.engine.synthesize(req('谢谢', 'redpanda'));
+		const edited = parseCast(
+			'audition: 新试音\nvoices:\n  redpanda: { id: redpanda-1, instruct: "female", seed: 1401, pace: 0.85 }\n'
+		);
+		const second = setup({ cacheDir, cast: edited });
+		await second.engine.synthesize(req('谢谢', 'redpanda'));
+		expect(second.jobs.filter((j) => j.instruct)).toMatchObject([{ text: '新试音' }]);
+	});
 });

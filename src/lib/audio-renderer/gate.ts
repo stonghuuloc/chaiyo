@@ -3,6 +3,15 @@ import { spawnSync } from 'node:child_process';
 const MIN_SECONDS_PER_SYLLABLE = 0.13;
 const DIGITS = '零一二三四五六七八九';
 
+function assertStarted(r: ReturnType<typeof spawnSync>) {
+	if (!r.error) return;
+	throw new Error(
+		(r.error as NodeJS.ErrnoException).code === 'ENOENT'
+			? 'ffmpeg is not installed or not on PATH'
+			: `ffmpeg could not start: ${r.error.message}`
+	);
+}
+
 export const countHanzi = (text: string) => (text.match(/[\u4e00-\u9fff]/g) ?? []).length;
 
 export const heard = (text: string) =>
@@ -26,6 +35,7 @@ export function audioFaults(file: string, hanzi?: number): string[] {
 		],
 		{ encoding: 'utf8' }
 	);
+	assertStarted(r);
 	const log = r.stderr;
 	const dur = log
 		.match(/time=(\d+):(\d+):([\d.]+)/g)
@@ -70,5 +80,6 @@ export function encodeMp3(wav: string, out: string, tempo: number) {
 		],
 		{ encoding: 'utf8' }
 	);
+	assertStarted(r);
 	if (r.status !== 0) throw new Error(`ffmpeg failed: ${r.stderr.trim()}`);
 }

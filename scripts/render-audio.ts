@@ -18,10 +18,21 @@ const flag = (name: string) => {
 	return value;
 };
 const kinds = flag('kind')?.split(',');
+const KINDS = ['sentence', 'word', 'syllable'];
+const badKind = kinds?.find((k) => !KINDS.includes(k));
+if (badKind !== undefined) {
+	console.error(`render-audio: unknown --kind "${badKind}" (use ${KINDS.join(', ')})`);
+	process.exit(1);
+}
 const refPrefix = flag('ref-prefix');
 const limit = flag('limit');
 if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
 	console.error('render-audio: --limit needs a positive integer');
+	process.exit(1);
+}
+const unknown = args.find((a) => a.startsWith('--'));
+if (unknown) {
+	console.error(`render-audio: unknown option ${unknown}`);
 	process.exit(1);
 }
 const [manifestPath] = args;
