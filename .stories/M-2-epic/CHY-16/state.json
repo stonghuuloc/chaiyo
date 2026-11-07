@@ -1,0 +1,50 @@
+{
+  "story": "CHY-16",
+  "title": "Audio player lib",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "play(key,{slow}) 1x/0.5x toggle",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC4"
+      ],
+      "repo": "",
+      "stage": "execute",
+      "reviews": 1,
+      "note": "design READY (Opus r1)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "offline from SW cache, /dev/audio, iOS proof",
+      "acs": [
+        "AC3",
+        "AC5"
+      ],
+      "repo": "",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "design READY (Opus r1)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-16",
+  "log": [
+    "2026-11-07 init",
+    "2026-11-07 +S1 play(key,{slow}) 1x/0.5x toggle [AC1,AC2,AC4]",
+    "2026-11-07 +S2 offline from SW cache, /dev/audio, iOS proof [AC3,AC5]",
+    "2026-11-07 S1 \u2192 plan",
+    "2026-11-07 S2 \u2192 plan",
+    "2026-11-07 S1 \u2192 plan",
+    "2026-11-07 S2 \u2192 plan",
+    "2026-11-07 S1 \u2192 execute",
+    "2026-11-07 S2 \u2192 picture"
+  ],
+  "updated": "2026-11-07T04:14:35+00:00"
+}
