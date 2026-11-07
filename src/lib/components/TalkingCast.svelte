@@ -23,6 +23,11 @@
 	let frame = $state<Frame>(0);
 	let picture = $state<HTMLElement>();
 	const tap = $derived(createTap(player, clip));
+	let attach: (() => void) | undefined;
+	const onTap = () => {
+		tap();
+		attach?.();
+	};
 
 	$effect(() => {
 		if (prefersReducedMotion.current || !picture) return;
@@ -65,12 +70,21 @@
 		const start = () => {
 			if (!raf) raf = requestAnimationFrame(tick);
 		};
-		const el = player.element();
-		el?.addEventListener('play', start);
-		if (el && !el.paused) start();
+		let bound: HTMLAudioElement | null = null;
+		attach = () => {
+			const el = player.element();
+			if (el !== bound) {
+				bound?.removeEventListener('play', start);
+				el?.addEventListener('play', start);
+				bound = el;
+			}
+			if (el && !el.paused) start();
+		};
+		attach();
 
 		return () => {
-			el?.removeEventListener('play', start);
+			attach = undefined;
+			bound?.removeEventListener('play', start);
 			cancelAnimationFrame(raf);
 			rest();
 		};
@@ -85,7 +99,7 @@
 			tabindex="-1"
 			aria-hidden="true"
 			class="absolute inset-0 block size-full cursor-pointer border-0 bg-transparent p-0"
-			onclick={() => tap()}
+			onclick={onTap}
 		>
 			{#each arts as art, i (i)}
 				<img
@@ -101,7 +115,7 @@
 		type="button"
 		aria-label={label}
 		class="absolute right-2 bottom-2 grid size-11 cursor-pointer place-items-center rounded-full bg-lantern-red text-white shadow-lift"
-		onclick={() => tap()}
+		onclick={onTap}
 	>
 		<svg class="size-6 fill-current" aria-hidden="true"><use href="#i-fill-speaker-high" /></svg>
 	</button>

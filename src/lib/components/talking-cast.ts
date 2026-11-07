@@ -62,6 +62,7 @@ export function loadEnvelope(url: string): Promise<number[] | null> {
 			);
 			return envelope(decoded.getChannelData(0), decoded.sampleRate);
 		} catch {
+			envelopes.delete(url);
 			return null;
 		}
 	})();
