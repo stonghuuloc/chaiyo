@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { AudioEntry } from '../src/lib/content/import/audio';
+import { recordedOnly } from '../src/lib/audio-renderer/recorded';
 import { omniVoiceEngine, parseCast, pythonWorker } from '../src/lib/audio-renderer/omnivoice';
 import { r2Bucket } from '../src/lib/audio-renderer/r2';
 import { render } from '../src/lib/audio-renderer/render';
@@ -27,6 +28,10 @@ if (badKind !== undefined) {
 const refPrefix = flag('ref-prefix');
 const fromDir = flag('from-dir');
 const prefix = flag('prefix');
+if (!fromDir && kinds?.includes('syllable')) {
+	console.error('render-audio: syllable clips are recorded, pass --from-dir <staged dir>');
+	process.exit(1);
+}
 const keyPrefix = prefix ? `${prefix.replace(/\/+$/, '')}/` : '';
 const limit = flag('limit');
 if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
@@ -65,9 +70,9 @@ for (const name of [
 
 const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
 const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
-const picked = entries
+const picked = recordedOnly(entries, fromDir ? (key) => existsSync(stagedFile(key)) : undefined)
 	.filter((e) => !kinds || kinds.includes(e.kind))
-	.filter((e) => !fromDir || existsSync(stagedFile(e.key)))
+
 	.filter((e) => !refPrefix || e.ref.startsWith(refPrefix))
 	.slice(0, limit ? Number(limit) : undefined);
 

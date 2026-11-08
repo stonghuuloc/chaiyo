@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { noClipReason, toneNumber } from './recorded';
+import type { AudioEntry } from '../content/import/audio';
+import { noClipReason, recordedOnly, toneNumber } from './recorded';
 
 describe('toneNumber', () => {
 	it('maps a marked syllable to the Tone Perfect name', () => {
@@ -30,5 +31,24 @@ describe('noClipReason', () => {
 		expect(noClipReason('ba3')).toBeUndefined();
 		expect(noClipReason('biao3')).toBeUndefined();
 		expect(noClipReason('bi3')).toBeUndefined();
+	});
+});
+
+describe('recordedOnly', () => {
+	const e = (kind: AudioEntry['kind'], key: string): AudioEntry => ({
+		key,
+		kind,
+		ref: key,
+		voice: 'narrator',
+		hanzi: key
+	});
+	const all = [e('sentence', 's'), e('word', 'w'), e('syllable', 'a'), e('syllable', 'b')];
+
+	it('keeps syllable entries away from the engine without a staged directory', () => {
+		expect(recordedOnly(all).map((x) => x.key)).toEqual(['s', 'w']);
+	});
+
+	it('keeps only entries that have a staged file when a directory is given', () => {
+		expect(recordedOnly(all, (key) => key === 'a').map((x) => x.key)).toEqual(['a']);
 	});
 });

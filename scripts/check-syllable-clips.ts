@@ -19,7 +19,11 @@ if (!URL.canParse(base)) fail('R2_PUBLIC_URL is not a valid URL');
 const argv = process.argv.slice(2);
 const tones = argv.includes('--tones');
 const prefixAt = argv.indexOf('--prefix');
-const prefix = prefixAt >= 0 ? `${(argv.splice(prefixAt, 2)[1] ?? '').replace(/\/+$/, '')}/` : '';
+const prefixValue = prefixAt >= 0 ? argv.splice(prefixAt, 2)[1] : undefined;
+if (prefixAt >= 0 && (!prefixValue || prefixValue.startsWith('--'))) fail('--prefix needs a value');
+const prefix = prefixValue ? `${prefixValue.replace(/\/+$/, '')}/` : '';
+const unknownFlag = argv.find((a) => a.startsWith('--') && a !== '--tones');
+if (unknownFlag) fail(`unknown option ${unknownFlag}`);
 let manifestPath = argv.find((a) => !a.startsWith('--'));
 if (!manifestPath) {
 	const { sha } = existsSync('static/content/current.json')
@@ -117,6 +121,7 @@ if (unreachable.length) {
 	process.exitCode = missing.length || lost.length ? 1 : 0;
 	if (tones && !process.exitCode) {
 		const dir = mkdtempSync(join(tmpdir(), 'chaiyo-tones-'));
+		process.on('exit', () => rmSync(dir, { recursive: true, force: true }));
 		const cellEntries = entries.filter((e) => labelOf.has(e.key));
 		let at = 0;
 		await Promise.all(
@@ -126,6 +131,7 @@ if (unreachable.length) {
 					const res = await retry(() =>
 						fetch(`${base}/${prefix}${e.key}.mp3`, { signal: AbortSignal.timeout(30_000) })
 					);
+					if (!res.ok) fail(`tone check: ${e.key} answered ${res.status}`);
 					writeFileSync(join(dir, `${e.key}.mp3`), new Uint8Array(await res.arrayBuffer()));
 				}
 			})
@@ -145,7 +151,6 @@ if (unreachable.length) {
 			],
 			{ encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }
 		);
-		rmSync(dir, { recursive: true, force: true });
 		if (run.status !== 0) fail(`tone scoring failed: ${run.error?.message ?? run.stderr.trim()}`);
 		const heard = new Map(
 			run.stdout
