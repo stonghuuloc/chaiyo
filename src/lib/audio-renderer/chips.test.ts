@@ -52,6 +52,10 @@ describe('chipSsml', () => {
 			'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN"><voice name="zh-CN-YunxiNeural"><prosody rate="-10%">一起</prosody></voice></speak>'
 		);
 	});
+
+	it('escapes XML special characters in the phrase', () => {
+		expect(chipSsml('a & b <c>')).toContain('>a &amp; b &lt;c&gt;</prosody>');
+	});
 });
 
 describe('chipWaveform', () => {

@@ -40,9 +40,10 @@ export const chipEntries = (entries: AudioEntry[]): AudioEntry[] =>
 	entries.filter((e) => e.kind === 'syllable' && e.hanzi.includes(' '));
 
 export function chipSsml(phrase: string): string {
+	const text = phrase.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 	return (
 		'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">' +
-		`<voice name="${CHIP_VOICE}"><prosody rate="${CHIP_RATE}">${phrase}</prosody></voice></speak>`
+		`<voice name="${CHIP_VOICE}"><prosody rate="${CHIP_RATE}">${text}</prosody></voice></speak>`
 	);
 }
 

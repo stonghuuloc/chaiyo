@@ -1,4 +1,12 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+	existsSync,
+	mkdirSync,
+	mkdtempSync,
+	readFileSync,
+	renameSync,
+	rmSync,
+	writeFileSync
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -67,8 +75,14 @@ for (const chip of chips) {
 	}
 	const wav = join(tmp, `${chip.key}.wav`);
 	writeFileSync(wav, await chipWaveform({ key: KEY, region: REGION }, CHIP_HANZI[chip.hanzi]));
-	encodeChipMp3(wav, out);
-	rmSync(wav);
+	const part = `${out}.part`;
+	try {
+		encodeChipMp3(wav, part);
+		renameSync(part, out);
+	} finally {
+		rmSync(wav);
+		rmSync(part, { force: true });
+	}
 	rendered++;
 }
 
