@@ -14,6 +14,18 @@ describe('precache', () => {
 		expect(await precache(['a'])).toEqual({ ok: 0, failed: 1 });
 	});
 
+	it('gives up after 10 s when the worker never replies', async () => {
+		vi.useFakeTimers();
+		vi.stubGlobal('navigator', {
+			serviceWorker: { getRegistration: async () => ({ active: { postMessage: () => {} } }) }
+		});
+		vi.stubGlobal('location', { href: 'https://app.test/' });
+		const pending = precache(['a', 'b']);
+		await vi.advanceTimersByTimeAsync(10_000);
+		expect(await pending).toEqual({ ok: 0, failed: 2 });
+		vi.useRealTimers();
+	});
+
 	it('posts absolute urls over a channel and resolves with the reply', async () => {
 		const post = vi.fn((_msg: unknown, ports: MessagePort[]) =>
 			ports[0].postMessage({ type: 'audio-precached', ok: 1, failed: 0 })

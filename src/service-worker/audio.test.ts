@@ -44,6 +44,9 @@ describe('range', () => {
 		expect(res.headers.get('Content-Range')).toBe('bytes 10-199/200');
 		expect((await res.arrayBuffer()).byteLength).toBe(190);
 	});
+	it('ignores a reversed range', () => {
+		expect(range(bytes, 'bytes=50-10').status).toBe(200);
+	});
 	it('answers 416 past the end and 200 without a header', async () => {
 		expect(range(bytes, 'bytes=500-').status).toBe(416);
 		const full = range(bytes, null);
@@ -74,6 +77,15 @@ describe('serveAudio', () => {
 		const res = await serveAudio(req('x'), cache, async () => new Response('no', { status: 404 }));
 		expect(cache.put).not.toHaveBeenCalled();
 		expect(res.type).toBe('error');
+	});
+	it('falls back to a plain fetch when the cors fetch throws', async () => {
+		const fetchFn = vi
+			.fn()
+			.mockRejectedValueOnce(new TypeError('cors'))
+			.mockResolvedValueOnce(new Response(bytes.slice(0)));
+		const res = await serveAudio(req('a'), fakeCache(), fetchFn);
+		expect(res.status).toBe(200);
+		expect(fetchFn).toHaveBeenCalledTimes(2);
 	});
 	it('rejects when offline and uncached', async () => {
 		const failing = vi.fn(async () => {

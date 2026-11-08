@@ -18,7 +18,8 @@ export function range(buf: ArrayBuffer, header: string | null): Response {
 	if (!m) return new Response(buf, { headers });
 	const start = Number(m[1]);
 	const end = m[2] ? Math.min(Number(m[2]), buf.byteLength - 1) : buf.byteLength - 1;
-	if (start >= buf.byteLength || start > end) {
+	if (end < start && start < buf.byteLength) return new Response(buf, { headers });
+	if (start >= buf.byteLength) {
 		return new Response(null, {
 			status: 416,
 			headers: { 'Content-Range': 'bytes */' + buf.byteLength }
@@ -48,7 +49,12 @@ export async function serveAudio(
 	cache: Store,
 	fetchFn: Fetcher
 ): Promise<Response> {
-	const res = await load(request.url, cache, fetchFn);
+	let res: Response | undefined;
+	try {
+		res = await load(request.url, cache, fetchFn);
+	} catch {
+		return fetchFn(request.url, { headers: request.headers });
+	}
 	if (!res) return Response.error();
 	return range(await res.arrayBuffer(), request.headers.get('range'));
 }

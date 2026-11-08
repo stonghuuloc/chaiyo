@@ -52,9 +52,23 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('message', (event) => {
 	event.waitUntil(
-		caches.open(AUDIO_CACHE).then(async (cache) => {
-			const reply = await audioMessage(event.data, AUDIO_BASE, self.location.origin, cache, fetch);
-			if (reply) event.ports[0]?.postMessage(reply);
-		})
+		(async () => {
+			const urls = event.data?.urls;
+			try {
+				const cache = await caches.open(AUDIO_CACHE);
+				const reply = await audioMessage(
+					event.data,
+					AUDIO_BASE,
+					self.location.origin,
+					cache,
+					fetch
+				);
+				if (reply) event.ports[0]?.postMessage(reply);
+			} catch {
+				if (Array.isArray(urls)) {
+					event.ports[0]?.postMessage({ type: 'audio-precached', ok: 0, failed: urls.length });
+				}
+			}
+		})()
 	);
 });
