@@ -50,6 +50,17 @@ for (const { syllable } of rows)
 for (const label of lost) console.log(`not in manifest: ${label}`);
 const entries = syllables.filter((e) => !noClip.has(e.key));
 
+const retry = async <T>(run: () => Promise<T>): Promise<T> => {
+	for (let attempt = 0; ; attempt++) {
+		try {
+			return await run();
+		} catch (err) {
+			if (attempt === 3) throw err;
+			await new Promise((r) => setTimeout(r, 500 * 2 ** attempt));
+		}
+	}
+};
+
 type Verdict = 'present' | 'missing' | 'unreachable';
 const probe = async (e: AudioEntry): Promise<[Verdict, string]> => {
 	let why = '';
@@ -112,9 +123,9 @@ if (unreachable.length) {
 			Array.from({ length: 8 }, async () => {
 				while (at < cellEntries.length) {
 					const e = cellEntries[at++];
-					const res = await fetch(`${base}/${prefix}${e.key}.mp3`, {
-						signal: AbortSignal.timeout(30_000)
-					});
+					const res = await retry(() =>
+						fetch(`${base}/${prefix}${e.key}.mp3`, { signal: AbortSignal.timeout(30_000) })
+					);
 					writeFileSync(join(dir, `${e.key}.mp3`), new Uint8Array(await res.arrayBuffer()));
 				}
 			})
@@ -125,7 +136,7 @@ if (unreachable.length) {
 			[
 				'run',
 				'--with',
-				'parselmouth',
+				'praat-parselmouth',
 				'--with',
 				'numpy',
 				'python',
