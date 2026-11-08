@@ -61,19 +61,23 @@ export function audioFaults(file: string, hanzi?: number): string[] {
 const TRIM_SILENCE =
 	'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse';
 
-export function encodeMp3(
-	wav: string,
-	out: string,
-	tempo: number,
-	opts: { trimSilence?: boolean } = {}
-) {
-	const filter = [
+export function mp3Filter(tempo: number, opts: { trimSilence?: boolean } = {}): string {
+	return [
 		opts.trimSilence ? TRIM_SILENCE : '',
 		tempo === 1 ? '' : `atempo=${tempo}`,
 		'loudnorm=I=-16:TP=-1.5:LRA=11'
 	]
 		.filter(Boolean)
 		.join(',');
+}
+
+export function encodeMp3(
+	wav: string,
+	out: string,
+	tempo: number,
+	opts: { trimSilence?: boolean } = {}
+) {
+	const filter = mp3Filter(tempo, opts);
 	const r = spawnSync(
 		'ffmpeg',
 		[

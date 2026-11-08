@@ -1,6 +1,6 @@
 # Primer chip clips (Azure Yunxi)
 
-The 21 multi-syllable Primer chips (`nǐ hǎo`, `mā ma`, `duì bu qǐ`, …) are not part of the Tone Perfect corpus, and a toneless syllable on its own is what OmniVoice cannot say ([ADR 0003](adr/0003-tts-engine.md#syllable-clips-are-recorded-not-rendered)). They are Azure Speech renders of the real phrase.
+The 21 multi-syllable Primer chips (`nǐ hǎo`, `mā ma`, `duì bu qǐ`, …) are not part of the Tone Perfect corpus, and a toneless syllable on its own is what OmniVoice cannot say ([ADR 0003](adr/0003-tts-engine.md)). They are Azure Speech renders of the real phrase.
 
 `scripts/render-chip-clips.ts` rebuilds the 21 clips into a staged directory. It does not upload: `render:audio --from-dir` uploads the staged files, exactly like the recorded syllable clips.
 
@@ -23,6 +23,8 @@ pnpm render:audio static/content/<sha>/audio-manifest.json --kind syllable --fro
 ```
 
 `<sha>` is the folder `pnpm import:content` printed. Without a positional manifest argument, the script reads `static/content/current.json`, the same default as `check:syllable-clips`.
+
+`render:audio` loads `.env` and still requires `OMNIVOICE_PYTHON` to be non-empty, even with `--from-dir`, although the engine is never started on that path; keep the variable in `.env` (any non-empty value works for the chip upload).
 
 The 21 clips already on R2 came from the scratch script in the Captain Drive; do not re-render or re-upload them without a reason. The script skips a chip whose `<audioKey>.mp3` is already in the output directory, so a re-run only fills gaps.
 

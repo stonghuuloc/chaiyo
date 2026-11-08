@@ -7,6 +7,7 @@ import {
 	chipWaveform,
 	encodeChipMp3
 } from '../src/lib/audio-renderer/chips';
+import { parseArgs } from '../src/lib/audio-renderer/args';
 import { audioKey, type AudioEntry } from '../src/lib/content/import/audio';
 
 function fail(message: string): never {
@@ -14,14 +15,16 @@ function fail(message: string): never {
 	process.exit(2);
 }
 
-const argv = process.argv.slice(2);
-const outAt = argv.indexOf('--out');
-const outDir: string | undefined = outAt >= 0 ? argv.splice(outAt, 2)[1] : undefined;
-if (outAt >= 0 && (!outDir || outDir.startsWith('--')))
-	fail('--out needs a value (the directory that render:audio --from-dir reads)');
-const unknown = argv.find((a) => a.startsWith('--'));
-if (unknown) fail(`unknown option ${unknown}`);
-let [manifestPath] = argv;
+let flags: Record<string, string>;
+let positional: string[];
+try {
+	({ flags, positional } = parseArgs(process.argv.slice(2), ['out']));
+} catch (err) {
+	fail((err as Error).message);
+}
+if (positional.length > 1) fail(`expected one manifest path, got ${positional.length}`);
+const outDir = flags.out;
+let manifestPath = positional[0];
 if (!manifestPath) {
 	const { sha } = existsSync('static/content/current.json')
 		? (JSON.parse(readFileSync('static/content/current.json', 'utf8')) as { sha: string })
