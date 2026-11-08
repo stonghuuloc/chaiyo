@@ -1,7 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { precache } from './precache';
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+	vi.unstubAllGlobals();
+	vi.useRealTimers();
+});
 
 describe('precache', () => {
 	it('reports every key failed without a service worker', async () => {
@@ -11,6 +14,15 @@ describe('precache', () => {
 
 	it('reports every key failed when no worker is registered', async () => {
 		vi.stubGlobal('navigator', { serviceWorker: { getRegistration: async () => undefined } });
+		expect(await precache(['a'])).toEqual({ ok: 0, failed: 1 });
+	});
+
+	it('treats a malformed reply as all failed', async () => {
+		const post = vi.fn((_msg: unknown, ports: MessagePort[]) => ports[0].postMessage({ nope: 1 }));
+		vi.stubGlobal('navigator', {
+			serviceWorker: { getRegistration: async () => ({ active: { postMessage: post } }) }
+		});
+		vi.stubGlobal('location', { href: 'https://app.test/' });
 		expect(await precache(['a'])).toEqual({ ok: 0, failed: 1 });
 	});
 

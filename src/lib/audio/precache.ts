@@ -10,11 +10,16 @@ export async function precache(
 	if (!worker) return none;
 	const urls = keys.map((key) => new URL(`${base}/${key}.mp3`, location.href).href);
 	return new Promise((resolve) => {
-		const timer = setTimeout(() => resolve(none), 10_000);
 		const channel = new MessageChannel();
+		const timer = setTimeout(() => {
+			channel.port1.close();
+			resolve(none);
+		}, 10_000);
 		channel.port1.onmessage = (e) => {
 			clearTimeout(timer);
-			resolve({ ok: e.data.ok, failed: e.data.failed });
+			channel.port1.close();
+			const { ok, failed } = e.data ?? {};
+			resolve(typeof ok === 'number' && typeof failed === 'number' ? { ok, failed } : none);
 		};
 		worker.postMessage({ type: 'audio-precache', urls }, [channel.port2]);
 	});
