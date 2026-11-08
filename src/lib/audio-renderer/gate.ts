@@ -20,7 +20,7 @@ export const heard = (text: string) =>
 		.filter((c) => /[一-鿿]/.test(c))
 		.join('');
 
-export function audioFaults(file: string, hanzi?: number): string[] {
+export function audioFaults(file: string, hanzi?: number, minSeconds = 0.3): string[] {
 	const r = spawnSync(
 		'ffmpeg',
 		[
@@ -48,7 +48,7 @@ export function audioFaults(file: string, hanzi?: number): string[] {
 	const speech = total - silent;
 	const peak = +(log.match(/max_volume: (-?[\d.]+) dB/)?.[1] ?? -99);
 	const faults: string[] = [];
-	if (total < 0.3) faults.push(`too short (${total.toFixed(2)} s)`);
+	if (total < minSeconds) faults.push(`too short (${total.toFixed(2)} s)`);
 	if (total > 0 && silent / total > 0.8) faults.push('mostly silence');
 	if (peak > -0.1) faults.push(`clipping (peak ${peak} dB)`);
 	if (hanzi && speech / hanzi < MIN_SECONDS_PER_SYLLABLE)

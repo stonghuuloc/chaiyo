@@ -1,16 +1,26 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { closeSync, existsSync, mkdirSync, openSync, readFileSync, rmSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { AudioEntry } from '../src/lib/content/import/audio';
+import { AUDIO_VERSION } from '../src/lib/audio/version';
 import { parseArgs } from '../src/lib/audio-renderer/args';
+import { azureEngine, azureRequest, billable, parseCast } from '../src/lib/audio-renderer/azure';
 import { recordedOnly } from '../src/lib/audio-renderer/recorded';
-import { omniVoiceEngine, parseCast, pythonWorker } from '../src/lib/audio-renderer/omnivoice';
 import { r2Bucket } from '../src/lib/audio-renderer/r2';
 import { render } from '../src/lib/audio-renderer/render';
 import { RenderError } from '../src/lib/audio-renderer/types';
 
 let parsed: ReturnType<typeof parseArgs>;
 try {
-	parsed = parseArgs(process.argv.slice(2), ['kind', 'ref-prefix', 'from-dir', 'prefix', 'limit']);
+	parsed = parseArgs(process.argv.slice(2), [
+		'kind',
+		'ref-prefix',
+		'from-dir',
+		'prefix',
+		'limit',
+		'state',
+		'count'
+	]);
 } catch (err) {
 	console.error(`render-audio: ${(err as Error).message}`);
 	process.exit(1);
@@ -25,23 +35,42 @@ if (badKind !== undefined) {
 }
 const refPrefix = flags['ref-prefix'];
 const fromDir = flags['from-dir'];
-const prefix = flags.prefix;
-if (!fromDir && kinds?.includes('syllable')) {
-	console.error('render-audio: syllable clips are recorded, pass --from-dir <staged dir>');
-	process.exit(1);
-}
-const keyPrefix = prefix ? `${prefix.replace(/\/+$/, '')}/` : '';
+const keyPrefix = `${(flags.prefix ?? AUDIO_VERSION).replace(/\/+$/, '')}/`;
 const limit = flags.limit;
 if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
 	console.error('render-audio: --limit needs a positive integer');
 	process.exit(1);
 }
+if (flags.count !== undefined && flags.count !== 'only') {
+	console.error('render-audio: use --count only');
+	process.exit(1);
+}
 const [manifestPath] = positional;
 if (!manifestPath) {
 	console.error(
-		'usage: render-audio <audio-manifest.json> [--kind sentence,word,syllable] [--ref-prefix <p>] [--limit N] [--from-dir <dir>] [--prefix <p>]'
+		'usage: render-audio <audio-manifest.json> [--kind sentence,word,syllable] [--ref-prefix <p>] [--limit N] [--prefix <p>] [--state <dir>] [--count only] [--from-dir <dir>]'
 	);
 	process.exit(1);
+}
+
+const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
+const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
+const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
+const requestOf = (e: AudioEntry) => azureRequest(cast, { ...e, text: e.reading ?? e.hanzi });
+const renderable = fromDir
+	? recordedOnly(entries, (key) => existsSync(stagedFile(key)))
+	: entries.filter((e) => requestOf(e) !== undefined);
+const picked = renderable
+	.filter((e) => !kinds || kinds.includes(e.kind))
+	.filter((e) => !refPrefix || e.ref.startsWith(refPrefix))
+	.slice(0, limit ? Number(limit) : undefined);
+
+if (flags.count) {
+	const chars = fromDir ? 0 : picked.reduce((n, e) => n + billable(requestOf(e)!.body), 0);
+	console.log(
+		`${picked.length} clips, ${chars} billable characters, ${entries.length - renderable.length} without a carrier`
+	);
+	process.exit(0);
 }
 
 if (existsSync('.env')) process.loadEnvFile('.env');
@@ -52,7 +81,7 @@ for (const name of [
 	'R2_AUDIO_ACCESS_KEY_ID',
 	'R2_AUDIO_SECRET_ACCESS_KEY',
 	'R2_PUBLIC_URL',
-	'OMNIVOICE_PYTHON'
+	...(fromDir ? [] : ['AZURE_SPEECH_KEY', 'AZURE_SPEECH_REGION'])
 ]) {
 	env[name] = process.env[name] ?? '';
 	if (!env[name]) {
@@ -61,17 +90,21 @@ for (const name of [
 	}
 }
 
-const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
-const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
-const picked = recordedOnly(entries, fromDir ? (key) => existsSync(stagedFile(key)) : undefined)
-	.filter((e) => !kinds || kinds.includes(e.kind))
+const state = flags.state ?? join(homedir(), '.capy', 'work', 'chaiyo-audio');
+mkdirSync(state, { recursive: true });
+const lock = join(state, 'render.lock');
+try {
+	closeSync(openSync(lock, 'wx'));
+} catch {
+	console.error(`render-audio: another render holds ${lock} (delete it if no render is running)`);
+	process.exit(1);
+}
+process.on('exit', () => rmSync(lock, { force: true }));
 
-	.filter((e) => !refPrefix || e.ref.startsWith(refPrefix))
-	.slice(0, limit ? Number(limit) : undefined);
-
-const engine = omniVoiceEngine(parseCast(readFileSync('content/cast.yaml', 'utf8')), {
-	startWorker: () => pythonWorker(env.OMNIVOICE_PYTHON),
-	cacheDir: join('node_modules', '.cache', 'chaiyo-audio')
+const engine = azureEngine(cast, {
+	key: env.AZURE_SPEECH_KEY,
+	region: env.AZURE_SPEECH_REGION,
+	cacheDir: join(state, 'clips')
 });
 const bucket = r2Bucket({
 	accountId: env.R2_ACCOUNT_ID,

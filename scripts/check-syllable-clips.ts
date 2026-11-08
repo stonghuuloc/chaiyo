@@ -3,7 +3,8 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'no
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parse } from 'yaml';
-import { noClipReason } from '../src/lib/audio-renderer/recorded';
+import { AUDIO_VERSION } from '../src/lib/audio/version';
+import { noClipReason } from '../src/lib/audio-renderer/carriers';
 import { addTone, audioKey, type AudioEntry } from '../src/lib/content/import/audio';
 
 const fail = (message: string): never => {
@@ -18,11 +19,12 @@ if (!URL.canParse(base)) fail('R2_PUBLIC_URL is not a valid URL');
 
 const argv = process.argv.slice(2);
 const tones = argv.includes('--tones');
+const all = argv.includes('--all');
 const prefixAt = argv.indexOf('--prefix');
 const prefixValue = prefixAt >= 0 ? argv.splice(prefixAt, 2)[1] : undefined;
 if (prefixAt >= 0 && (!prefixValue || prefixValue.startsWith('--'))) fail('--prefix needs a value');
-const prefix = prefixValue ? `${prefixValue.replace(/\/+$/, '')}/` : '';
-const unknownFlag = argv.find((a) => a.startsWith('--') && a !== '--tones');
+const prefix = `${(prefixValue ?? AUDIO_VERSION).replace(/\/+$/, '')}/`;
+const unknownFlag = argv.find((a) => a.startsWith('--') && a !== '--tones' && a !== '--all');
 if (unknownFlag) fail(`unknown option ${unknownFlag}`);
 let manifestPath = argv.find((a) => !a.startsWith('--'));
 if (!manifestPath) {
@@ -34,9 +36,8 @@ if (!manifestPath) {
 if (!existsSync(manifestPath))
 	fail('no audio manifest: run pnpm import:content content --sink bundle --only lessons/hsk1');
 
-const syllables = (JSON.parse(readFileSync(manifestPath, 'utf8')).entries as AudioEntry[]).filter(
-	(e) => e.kind === 'syllable'
-);
+const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')).entries as AudioEntry[];
+const syllables = manifest.filter((e) => e.kind === 'syllable');
 const rows = parse(readFileSync('content/syllables.yaml', 'utf8')) as { syllable: string }[];
 
 const labelOf = new Map<string, string>();
@@ -52,7 +53,7 @@ for (const { syllable } of rows)
 		if (!manifestKeys.has(key)) lost.push(`${syllable}${tone}`);
 	}
 for (const label of lost) console.log(`not in manifest: ${label}`);
-const entries = syllables.filter((e) => !noClip.has(e.key));
+const entries = (all ? manifest : syllables).filter((e) => !noClip.has(e.key));
 
 const retry = async <T>(run: () => Promise<T>): Promise<T> => {
 	for (let attempt = 0; ; attempt++) {
@@ -100,7 +101,8 @@ await Promise.all(
 	})
 );
 
-const label = (e: AudioEntry) => labelOf.get(e.key) ?? e.hanzi;
+const label = (e: AudioEntry) =>
+	labelOf.get(e.key) ?? (e.kind === 'syllable' ? e.hanzi : `${e.ref} ${e.hanzi} (${e.voice})`);
 const unreachable = entries.flatMap((e, i) => (verdicts[i]?.[0] === 'unreachable' ? [i] : []));
 if (unreachable.length) {
 	for (const i of unreachable) console.log(`unreachable: ${label(entries[i])} ${verdicts[i][1]}`);
@@ -109,12 +111,15 @@ if (unreachable.length) {
 } else {
 	const missing = entries.filter((_, i) => verdicts[i][0] === 'missing');
 	const cells = entries.filter((e) => labelOf.has(e.key)).length;
+	const chips = entries.filter((e) => e.kind === 'syllable').length - cells;
 	console.log(
-		`syllable clips: ${entries.length} (${cells} cells, ${entries.length - cells} chips)`
+		all
+			? `manifest clips: ${entries.length} (${cells} cells, ${chips} chips, ${entries.length - cells - chips} words and sentences)`
+			: `syllable clips: ${entries.length} (${cells} cells, ${chips} chips)`
 	);
 	if (noClip.size)
 		console.log(
-			`no clip (allow-list, not a standard Mandarin syllable): ${noClip.size} ${[...noClip.values()].join(' ')}`
+			`no clip (no hanzi or word carries the syllable): ${noClip.size} ${[...noClip.values()].join(' ')}`
 		);
 	for (const e of missing) console.log(`missing: ${label(e)}`);
 	console.log(`missing: ${missing.length}`);

@@ -1,13 +1,9 @@
-# Provider voice per manifest voice (docs/adr/0003-tts-engine.md). The Audio Renderer reads it; lint does not.
-# A voice is its reference clip: render `audition` from `instruct` and `seed`, then reuse that wav as ref_audio.
-engine: omnivoice
-model: k2-fsa/OmniVoice
-audition: "你好！今天天气很好，我们一起去学校吧。你吃饭了吗？"
+# Azure voice per manifest voice (docs/adr/0004-azure-single-tts-source.md). The Audio Renderer reads it; lint does not.
+# One Dragon HD Flash voice per Cast member, plain (no style, no phoneme tag), slowed inside the voice by `rate`. No atempo.
+# narrator is an alias of redpanda, so audio keys sha256(text|narrator) stay unchanged.
+engine: azure
+rate: "-20%"
 voices:
-  redpanda: { id: redpanda-1, instruct: "female, teenager, moderate pitch", seed: 1401, pace: 0.85 }
-  takin: { id: takin-3, instruct: "male, young adult, high pitch", seed: 1402, pace: 0.85 }
-  narrator: { id: narrator-1, instruct: "male, middle-aged, moderate pitch", seed: 1403, pace: 0.75 }
-# Per-item overrides, keyed by the audio key sha256(hanzi|voice). `say` is the text sent to the engine; `seed` is chosen by ear and never retried. `file` is a prerecorded clip (path from the repo root) loudness-normalised at its own pace (no voice atempo) instead of a render; it excludes say and seed.
-overrides:
-  a6e439d151e1e667908d4eda7a5b0108e8e0ad069a8730dd73ad729ea60772dd: { hanzi: "您好！", voice: narrator, file: assets/audio-overrides/nin-hao.mp3 }
-  9c00a67ec74b48b766d053a35371bb12e0623b67fdca378ce49453d9658250ef: { hanzi: "您", voice: narrator, file: assets/audio-overrides/nin.mp3 }
+  redpanda: &main zh-CN-Xiaoke:DragonHDFlashLatestNeural
+  takin: zh-CN-Yunfeng:DragonHDFlashLatestNeural
+  narrator: *main

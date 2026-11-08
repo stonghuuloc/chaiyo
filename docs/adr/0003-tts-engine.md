@@ -1,6 +1,6 @@
 # 0003 — TTS engine: OmniVoice, voices pinned by reference clip
 
-Status: accepted (2026-11-08)
+Status: superseded by [0004](0004-azure-single-tts-source.md) (2026-11-09)
 
 ## Context
 
