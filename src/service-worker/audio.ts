@@ -1,7 +1,7 @@
 export const AUDIO_CACHE = 'audio-v1';
 
 type Store = Pick<Cache, 'match' | 'put'>;
-type Fetcher = (url: string, init: RequestInit) => Promise<Response>;
+type Fetcher = (input: string | Request, init?: RequestInit) => Promise<Response>;
 
 export function isAudio(url: URL, base: string, origin: string): boolean {
 	const root = new URL(base, origin);
@@ -53,7 +53,7 @@ export async function serveAudio(
 	try {
 		res = await load(request.url, cache, fetchFn);
 	} catch {
-		return fetchFn(request.url, { headers: request.headers });
+		return fetchFn(request);
 	}
 	if (!res) return Response.error();
 	return range(await res.arrayBuffer(), request.headers.get('range'));

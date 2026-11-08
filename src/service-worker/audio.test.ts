@@ -86,6 +86,7 @@ describe('serveAudio', () => {
 		const res = await serveAudio(req('a'), fakeCache(), fetchFn);
 		expect(res.status).toBe(200);
 		expect(fetchFn).toHaveBeenCalledTimes(2);
+		expect(fetchFn.mock.calls[1][0]).toBeInstanceOf(Request);
 	});
 	it('rejects when offline and uncached', async () => {
 		const failing = vi.fn(async () => {
