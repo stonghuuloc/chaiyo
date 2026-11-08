@@ -71,6 +71,66 @@ describe('omniVoiceEngine', () => {
 		expect(clips()).toMatchObject([{ text: 'NIN2HAO3！', seed: 7, ref_text: '试音' }]);
 	});
 
+	it('encodes a prerecorded override file at the voice pace without starting the worker', async () => {
+		const file = join(mkdtempSync(join(tmpdir(), 'chaiyo-rec-')), 'nin-hao.mp3');
+		writeFileSync(file, 'src');
+		const encoded: [string, number][] = [];
+		const startWorker = vi.fn();
+		const engine = omniVoiceEngine(
+			parseCast(`
+audition: 试音
+voices:
+  narrator: { id: narrator-1, instruct: "male", seed: 1403, pace: 0.75 }
+overrides:
+  ${key('您好！', 'narrator')}: { hanzi: "您好！", voice: narrator, file: ${JSON.stringify(file)} }
+`),
+			{
+				startWorker,
+				cacheDir: mkdtempSync(join(tmpdir(), 'chaiyo-test-')),
+				encode: (src, mp3, tempo) => {
+					encoded.push([src, tempo]);
+					writeFileSync(mp3, 'mp3');
+				},
+				faults: () => []
+			}
+		);
+		const mp3 = await engine.synthesize(req('您好！'));
+		expect(encoded).toEqual([[file, 0.75]]);
+		expect(new TextDecoder().decode(mp3)).toBe('mp3');
+		expect(startWorker).not.toHaveBeenCalled();
+	});
+
+	it('fails a prerecorded override whose file is missing or fails the gate', async () => {
+		const mk = (file: string, faults: string[]) =>
+			omniVoiceEngine(
+				parseCast(`
+audition: 试音
+voices:
+  narrator: { id: narrator-1, instruct: "male", seed: 1403, pace: 0.75 }
+overrides:
+  ${key('您好！', 'narrator')}: { hanzi: "您好！", voice: narrator, file: ${JSON.stringify(file)} }
+`),
+				{
+					startWorker: vi.fn(),
+					cacheDir: mkdtempSync(join(tmpdir(), 'chaiyo-test-')),
+					encode: (_src, mp3) => writeFileSync(mp3, 'mp3'),
+					faults: () => faults
+				}
+			);
+		await expect(mk('/nope/x.mp3', []).synthesize(req('您好！'))).rejects.toThrow('missing file');
+		const file = join(mkdtempSync(join(tmpdir(), 'chaiyo-rec-')), 'a.mp3');
+		writeFileSync(file, 'src');
+		await expect(mk(file, ['rushed']).synthesize(req('您好！'))).rejects.toThrow('rushed');
+	});
+
+	it('rejects an override that sets file together with say or seed', () => {
+		expect(() =>
+			parseCast(
+				'audition: x\nvoices: {}\noverrides:\n  k: { hanzi: a, voice: narrator, file: a.mp3, seed: 3 }\n'
+			)
+		).toThrow('cannot also set say or seed');
+	});
+
 	it('uses the cast seed and the entry text without an override', async () => {
 		const { engine, clips } = setup();
 		const mp3 = await engine.synthesize(req('谢谢', 'redpanda'));

@@ -7,6 +7,7 @@ voices:
   redpanda: { id: redpanda-1, instruct: "female, teenager, moderate pitch", seed: 1401, pace: 0.85 }
   takin: { id: takin-3, instruct: "male, young adult, high pitch", seed: 1402, pace: 0.85 }
   narrator: { id: narrator-1, instruct: "male, middle-aged, moderate pitch", seed: 1403, pace: 0.75 }
-# Per-item overrides, keyed by the audio key sha256(hanzi|voice). `say` is the text sent to the engine; `seed` is chosen by ear and never retried.
+# Per-item overrides, keyed by the audio key sha256(hanzi|voice). `say` is the text sent to the engine; `seed` is chosen by ear and never retried. `file` is a prerecorded clip (path from the repo root) encoded at the voice pace instead of a render; it excludes say and seed.
 overrides:
-  a6e439d151e1e667908d4eda7a5b0108e8e0ad069a8730dd73ad729ea60772dd: { hanzi: "您好！", voice: narrator, say: "NIN2HAO3！", seed: 7 }
+  a6e439d151e1e667908d4eda7a5b0108e8e0ad069a8730dd73ad729ea60772dd: { hanzi: "您好！", voice: narrator, file: assets/audio-overrides/nin-hao.mp3 }
+  9c00a67ec74b48b766d053a35371bb12e0623b67fdca378ce49453d9658250ef: { hanzi: "您", voice: narrator, file: assets/audio-overrides/nin.mp3 }
