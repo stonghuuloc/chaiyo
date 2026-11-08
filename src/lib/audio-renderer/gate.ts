@@ -58,8 +58,22 @@ export function audioFaults(file: string, hanzi?: number): string[] {
 	return faults;
 }
 
-export function encodeMp3(wav: string, out: string, tempo: number) {
-	const filter = (tempo === 1 ? '' : `atempo=${tempo},`) + 'loudnorm=I=-16:TP=-1.5:LRA=11';
+const TRIM_SILENCE =
+	'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse';
+
+export function encodeMp3(
+	wav: string,
+	out: string,
+	tempo: number,
+	opts: { trimSilence?: boolean } = {}
+) {
+	const filter = [
+		opts.trimSilence ? TRIM_SILENCE : '',
+		tempo === 1 ? '' : `atempo=${tempo}`,
+		'loudnorm=I=-16:TP=-1.5:LRA=11'
+	]
+		.filter(Boolean)
+		.join(',');
 	const r = spawnSync(
 		'ffmpeg',
 		[

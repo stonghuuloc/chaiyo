@@ -18,6 +18,7 @@
 		"lint:content": "tsx scripts/lint-content.ts",
 		"import:content": "tsx scripts/import-content.ts",
 		"render:audio": "tsx scripts/render-audio.ts",
+		"render:chips": "tsx scripts/render-chip-clips.ts",
 		"tts:spike": "tsx scripts/tts-spike.ts",
 		"check:syllable-clips": "tsx scripts/check-syllable-clips.ts",
 		"tokens": "node scripts/build-tokens.mjs",
