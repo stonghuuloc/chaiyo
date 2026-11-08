@@ -1,3 +1,5 @@
+import type { AudioEntry } from '../content/import/audio';
+
 const MARKS: Record<string, [string, number]> = {};
 for (const [base, marks] of Object.entries({
 	a: 'āáǎà',
@@ -33,3 +35,6 @@ export const NO_CLIP: Record<string, string> = Object.fromEntries(
 export function noClipReason(label: string): string | undefined {
 	return NO_CLIP[label.replace(/[1-4]$/, '')];
 }
+
+export const recordedOnly = (entries: AudioEntry[], staged?: (key: string) => boolean) =>
+	entries.filter((e) => (staged ? staged(e.key) : e.kind !== 'syllable'));
