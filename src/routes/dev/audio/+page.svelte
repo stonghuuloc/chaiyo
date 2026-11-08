@@ -2,6 +2,9 @@
 	import { createPlayer, precache } from '#lib/audio/index.js';
 	import { AUDIO_BASE } from '#lib/audio/base.js';
 	import { clips } from './clips';
+	import SyllableGrid from './SyllableGrid.svelte';
+
+	let { data } = $props();
 
 	let element: HTMLAudioElement | undefined;
 	const player = createPlayer({ createAudio: () => (element = new Audio()) });
@@ -42,4 +45,5 @@
 			</li>
 		{/each}
 	</ul>
+	<SyllableGrid cells={data.cells} chips={data.chips} />
 </main>
