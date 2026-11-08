@@ -18,3 +18,9 @@ rec: **A**, and the fetch handler also caches every clip it fetches (so B comes 
 
 ## Q-block D4 — who can open `/dev/audio`?
 Outside `(app)`, so no login. `+page.ts` throws `error(404)` when `VERCEL_ENV` is `production`, Loc's phone uses the https Vercel preview (a LAN http dev server has no service worker, so it proves taps only). `prerender = false`; no nav link.
+
+## Answered during execute (all [AC3] / [AC5], each at ≥80%)
+- D5 [AC5] Fixture clips: /dev/audio lists the 25 real Bài 1 clips (15 sentences + 10 words, keys from the HSK1 manifest, CHY-15 S2), not the three prototype mp3s: they exist on R2 now and exercise the real URL and CORS path. The device checklist "clips 1, 2, 3" is the first three rows.
+- D6 [AC5] Production 404 is client-side: the SPA has ssr = false, so the shell answers 200 and the page renders 404. The gate fails closed: only the dev server or VERCEL_ENV=preview opens it (production and a local build without VERCEL_ENV give 404). The route chunk still ships; it holds only public clip keys.
+- D7 [AC3] If the cors fetch throws (bucket CORS missing), the worker falls back to a plain fetch of the request, uncached, so playback online never depends on CORS. Offline behaviour is unchanged.
+- D8 [AC3] precache gives up after 10 s (resolves all failed) and the worker always replies, so a stale worker from before this deploy (no message listener, no skipWaiting) cannot hang a caller.

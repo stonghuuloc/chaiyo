@@ -1,6 +1,8 @@
+import { AUDIO_BASE } from './base';
+
 type Options = { base?: string; createAudio?: () => HTMLAudioElement };
 
-export function createPlayer({ base = '/audio', createAudio = () => new Audio() }: Options = {}) {
+export function createPlayer({ base = AUDIO_BASE, createAudio = () => new Audio() }: Options = {}) {
 	let audio: HTMLAudioElement | undefined;
 	let last: string | null = null;
 	let plays = 0;
