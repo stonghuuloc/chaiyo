@@ -1,7 +1,7 @@
 """Pick the text Azure reads for each syllable cell. usage: build-syllable-carriers.py <cedict_ts.u8> <Unihan.zip> <out.json>
 Carriers are standard hanzi (Unihan kTGHZ2013). Best: the hanzi has that toned syllable as its only standard reading. Next: it is the default reading
 (kMandarin) and at least 90% of the hanzi's corpus uses (kHanyuPinlu). More corpus uses, then kFrequency, then HSK words rank first.
-Multi-syllable chips (pinyin to hanzi) are written by hand in the same file and kept. No such hanzi: the most common two-hanzi CC-CEDICT word whose first hanzi has that standard reading is sent and cut to its first syllable. Neither: no clip."""
+Multi-syllable chips (pinyin to hanzi) are written by hand in the same file and kept. No such hanzi: the most common two-hanzi CC-CEDICT word (no erhua) whose first hanzi has that standard reading is sent and cut to its first syllable. Neither: no clip."""
 import collections
 import glob
 import json
@@ -68,7 +68,7 @@ for line in open(cedict, encoding="utf8"):
     syllables = pinyin.lower().replace("u:", "v").split()
     if len(syllables) == 2 and len(simp) == 2 and all(c in standard for c in simp) and "surname" not in gloss:
         first = standard[simp[0]]
-        if syllables[0] not in first["readings"]:
+        if syllables[0] not in first["readings"] or simp[1] == "儿":
             continue
         words[syllables[0]].append(((-first["pinlu"].get(syllables[0], 0), first["freq"] + standard[simp[1]]["freq"], simp), simp))
 
