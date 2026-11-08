@@ -19,12 +19,17 @@ const Cast = z.object({
 	overrides: z
 		.record(
 			z.string(),
-			z.object({
-				hanzi: z.string(),
-				voice: z.string(),
-				say: z.string().optional(),
-				seed: z.number().optional()
-			})
+			z
+				.object({
+					hanzi: z.string(),
+					voice: z.string(),
+					say: z.string().optional(),
+					seed: z.number().optional(),
+					file: z.string().optional()
+				})
+				.refine((o) => o.file === undefined || (o.say === undefined && o.seed === undefined), {
+					message: 'an override with file cannot also set say or seed'
+				})
 		)
 		.default({})
 });
@@ -128,8 +133,17 @@ export function omniVoiceEngine(cast: Cast, deps: EngineDeps): Engine & { close(
 		async synthesize(req) {
 			const voice = cast.voices[req.voice];
 			if (!voice) throw new Error(`unknown voice: ${req.voice}`);
-			const ref = await refWav(req.voice);
 			const override = cast.overrides[req.key];
+			if (override?.file !== undefined) {
+				if (!existsSync(override.file))
+					throw new Error(`${req.hanzi}: missing file ${override.file}`);
+				const out = join(work, `${clip++}.mp3`);
+				encode(override.file, out, 1);
+				const faults = faultsOf(out, countHanzi(req.hanzi));
+				if (faults.length) throw new Error(`${req.hanzi}: ${faults.join('; ')}`);
+				return readFileSync(out);
+			}
+			const ref = await refWav(req.voice);
 			const pinned = override?.seed !== undefined || override?.say !== undefined;
 			const text = override?.say ?? req.text;
 			let seed = override?.seed ?? voice.seed;
