@@ -66,5 +66,5 @@ export async function chipWaveform(
 }
 
 /** Encode a chip wav: trim both silences and loudnorm, mono 24 kHz 48 kbps, no atempo. */
-export const encodeChipMp3 = (wav: string, out: string) =>
-	encodeMp3(wav, out, 1, { trimSilence: true });
+export const encodeChipMp3 = (wav: string, out: string, encode = encodeMp3) =>
+	encode(wav, out, 1, { trimSilence: true });

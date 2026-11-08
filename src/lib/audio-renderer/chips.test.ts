@@ -3,7 +3,8 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { createMemorySink, importContent, type ImportedContent } from '../content/import';
 import { PRODUCTION_ROOTS, scopeFor } from '../content/import/scope';
 import { loadRefs } from '../content/lint/refs';
-import { CHIP_HANZI, chipEntries, chipSsml, chipWaveform } from './chips';
+import { CHIP_HANZI, chipEntries, chipSsml, chipWaveform, encodeChipMp3 } from './chips';
+import type { encodeMp3 } from './gate';
 
 const ROOT = join(__dirname, '..', '..', '..');
 const CONTENT = join(ROOT, 'content');
@@ -78,5 +79,17 @@ describe('chipWaveform', () => {
 		await expect(
 			chipWaveform({ key: 'secret-key', region: 'westus2' }, '一起', fake)
 		).rejects.toThrow('Azure Speech answered 401');
+	});
+});
+
+describe('encodeChipMp3', () => {
+	it('encodes at tempo 1 with both silences trimmed', () => {
+		const calls: unknown[][] = [];
+		const fake = ((...args: unknown[]) => {
+			calls.push(args);
+		}) as typeof encodeMp3;
+
+		encodeChipMp3('chip.wav', 'chip.mp3', fake);
+		expect(calls).toEqual([['chip.wav', 'chip.mp3', 1, { trimSilence: true }]]);
 	});
 });
