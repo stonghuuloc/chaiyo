@@ -99,8 +99,10 @@ describe('serveAudio', () => {
 describe('precache', () => {
 	it('counts ok and failed and skips cached urls', async () => {
 		const cache = fakeCache();
-		const fetchFn = vi.fn(async (u: string) =>
-			u.endsWith('bad.mp3') ? new Response('no', { status: 404 }) : new Response(bytes.slice(0))
+		const fetchFn = vi.fn(async (u: string | Request) =>
+			String(u).endsWith('bad.mp3')
+				? new Response('no', { status: 404 })
+				: new Response(bytes.slice(0))
 		);
 		await precacheAudio([url('a')], cache, fetchFn);
 		const r = await precacheAudio([url('a'), url('b'), url('bad')], cache, fetchFn);
