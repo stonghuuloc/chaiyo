@@ -71,7 +71,7 @@ describe('omniVoiceEngine', () => {
 		expect(clips()).toMatchObject([{ text: 'NIN2HAO3！', seed: 7, ref_text: '试音' }]);
 	});
 
-	it('encodes a prerecorded override file at the voice pace without starting the worker', async () => {
+	it('encodes a prerecorded override file at tempo 1 without starting the worker', async () => {
 		const file = join(mkdtempSync(join(tmpdir(), 'chaiyo-rec-')), 'nin-hao.mp3');
 		writeFileSync(file, 'src');
 		const encoded: [string, number][] = [];
@@ -95,7 +95,7 @@ overrides:
 			}
 		);
 		const mp3 = await engine.synthesize(req('您好！'));
-		expect(encoded).toEqual([[file, 0.75]]);
+		expect(encoded).toEqual([[file, 1]]);
 		expect(new TextDecoder().decode(mp3)).toBe('mp3');
 		expect(startWorker).not.toHaveBeenCalled();
 	});

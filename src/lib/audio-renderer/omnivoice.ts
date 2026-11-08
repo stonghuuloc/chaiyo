@@ -138,7 +138,7 @@ export function omniVoiceEngine(cast: Cast, deps: EngineDeps): Engine & { close(
 				if (!existsSync(override.file))
 					throw new Error(`${req.hanzi}: missing file ${override.file}`);
 				const out = join(work, `${clip++}.mp3`);
-				encode(override.file, out, voice.pace);
+				encode(override.file, out, 1);
 				const faults = faultsOf(out, countHanzi(req.hanzi));
 				if (faults.length) throw new Error(`${req.hanzi}: ${faults.join('; ')}`);
 				return readFileSync(out);
