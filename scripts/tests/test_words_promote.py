@@ -655,3 +655,59 @@ def test_a_doubled_bound_note_is_sent_back(word):
     ('工人们在打地基。', 'Gōngrén men zài dǎ dìjī.', 'Gōngrénmen zài dǎ dìjī.')])
 def test_vocabulary_after_a_demonstrative_stays_whole_and_men_attaches(gen, hz, py, want):
     assert gen.normalize_py(hz, py) == want
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('学生', 'xué sheng', 'xuésheng'),
+    ('大学生', 'dà xué shēng', 'dàxuéshēng'),
+    ('电话', 'diàn huà', 'diànhuà'),
+    ('中国', 'Zhōng guó', 'Zhōngguó'),
+    ('女儿', 'nǚ ér', "nǚ'ér"),
+    ('不客气', 'bù kè qi', 'bù kèqi'),
+    ('有一些', 'yǒu yī xiē', 'yǒu yīxiē'),
+    ('请坐', 'qǐng zuò', 'qǐng zuò'),
+    ('哪儿', 'nǎ r', 'nǎr'),
+    ('这儿', 'zhè r', 'zhèr'),
+    ('一点儿', 'yī diǎn r', 'yīdiǎnr'),
+    ('面条儿', 'miàn tiáo r', 'miàntiáor'),
+    ('日本', 'Rì běn', 'Rìběn'),
+    ('一般', 'yībān', 'yībān')])
+def test_headword_pinyin_groups_by_word_and_joins_erhua(gen, hz, py, want):
+    assert gen.normalize_py(hz, py, capital=py[:1].isupper(), override=gen.OVERRIDE) == want
+
+
+@pytest.mark.parametrize('hz,py,want', [
+    ('第二', 'dì èr', 'dì-èr'),
+    ('打电话', 'dǎ diàn huà', 'dǎ diànhuà'),
+    ('干什么', 'gàn shén me', 'gàn shénme'),
+    ('没什么', 'méi shén me', 'méi shénme'),
+    ('开玩笑', 'kāi wán xiào', 'kāi wánxiào'),
+    ('下雨', 'xià yǔ', 'xià yǔ'),
+    ('上车', 'shàng chē', 'shàng chē'),
+    ('下车', 'xià chē', 'xià chē'),
+    ('没关系', 'méi guān xi', 'méi guānxi'),
+    ('星期天', 'Xīng qī tiān', 'xīngqītiān'),
+    ('星期日', 'Xīng qī rì', 'xīngqīrì'),
+    ('星期三', 'Xīng qī sān', 'xīngqīsān'),
+    ('你好', 'nǐ hǎo', 'nǐ hǎo'),
+    ('星期', 'xīng qī', 'xīngqī')])
+def test_headword_pinyin_phrase_overrides_and_lower_case_weekdays(gen, hz, py, want):
+    assert gen.normalize_py(hz, py, capital=py[:1].isupper(), override=gen.OVERRIDE) == want
+
+
+def test_headword_override_matches_whole_headword_only(gen):
+    assert gen.normalize_py('没关系。', 'Méi guān xi.', override=gen.OVERRIDE) == 'Méiguānxi.'
+    assert gen.normalize_py('学生', 'xué sheng', capital=False) == 'xuésheng'
+    assert gen.normalize_py('学生', 'xué sheng') == 'Xuésheng'
+
+
+def test_every_staged_headword_is_a_fixed_point_of_normalize_py(gen):
+    out = gen.ROOT / '.cache/words/out'
+    if not out.exists():
+        pytest.skip('no staged corpus')
+    moved = []
+    for f in sorted((out / 'words').glob('*.yaml')):
+        w = yaml.safe_load(f.read_text(encoding='utf-8'))
+        py = gen.normalize_py(w['hanzi'], w['pinyin'], capital=w['pinyin'][:1].isupper(), override=gen.OVERRIDE)
+        if py != w['pinyin']:
+            moved.append((w['id'], w['pinyin'], py))
+    assert moved == []

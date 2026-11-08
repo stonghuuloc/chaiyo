@@ -354,12 +354,25 @@ def taught(hz, compounds, sentences=()):
             for w, f in saved.items():
                 set_freq(w, f or 0)
 
-def normalize_py(hz, py, classifiers=()):
+OVERRIDE = {  # the standard's spelling for headwords the general cut gets wrong; whole-headword match only
+    '第二': 'dì-èr', '打电话': 'dǎ diànhuà', '干什么': 'gàn shénme', '没什么': 'méi shénme',
+    '开玩笑': 'kāi wánxiào', '下雨': 'xià yǔ', '上车': 'shàng chē', '下车': 'xià chē',
+    '没关系': 'méi guānxi', '你好': 'nǐ hǎo', '星期天': 'xīngqītiān', '星期日': 'xīngqīrì',
+    **{'星期' + d: 'xīngqī' + y for d, y in zip('一二三四五六', ['yī', 'èr', 'sān', 'sì', 'wǔ', 'liù'])},
+}
+
+def flat_py(py):
+    return re.sub(r"[\s'’-]", '', py.lower())
+
+def normalize_py(hz, py, classifiers=(), capital=True, override=None):
+    if override and hz in override:
+        return override[hz]
+    py = re.sub(r'\s+r\b', 'r', py)  # the source writes the erhua tail as its own syllable: nǎ r -> nǎr
     units = {m.group(0) for m in NUMERAL_UNIT.finditer(hz)}  # 六十分 must not cut as 六 + 十分, for this sentence only
     with JIEBA_LOCK:
         saved = {w: set_freq(w) for w in units}
         try:
-            return cut_py(hz, py, classifiers)
+            return cut_py(hz, py, classifiers, capital)
         finally:
             for w, f in saved.items():
                 set_freq(w, f or 0)
@@ -376,7 +389,7 @@ def drop_false_apostrophes(py):
         out += chunk
     return out
 
-def cut_py(hz, py, classifiers):
+def cut_py(hz, py, classifiers, capital=True):
     py = drop_false_apostrophes(py)
     """Citation pinyin (the importer derives sandhi): 一/不 un-sandhied, syllables joined per word as jieba cuts the hanzi, punctuation ASCII. Unchanged when syllables and hanzi do not line up. classifiers: the entry's own headword when it is a measure word, so 一出戏 is yīchū xì."""
     chars = CJK.findall(hz)
@@ -467,7 +480,7 @@ def cut_py(hz, py, classifiers):
                     opened = True
                 else:
                     out += PUNCT.get(c, c)
-    return out[:1].upper() + out[1:]
+    return (out[:1].upper() + out[1:]) if capital else out
 
 HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
 
@@ -694,7 +707,7 @@ def to_yaml(hz, e):
         wid = hz if main else hz + '-' + ''.join(s if s[-1].isdigit() else s + '5' for s in nums[py].split())
         variants = [r['pinyin'] for r in e['cedict'] if r['pinyin'].lower() == py]
         proper = variants[0] if variants and all(v[:1].isupper() for v in variants) else py
-        w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': proper,
+        w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': normalize_py(hz, proper, capital=proper[:1].isupper(), override=OVERRIDE),
                                    'hanviet': hanviet(hz, row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3])),
                                    'level': 1, 'pos': [], 'senses': [], 'examples': []})
         for g in r['groups']:
@@ -761,7 +774,7 @@ def write_out(results):
                 w = {**w, **{k: old[k] for k in ('image', 'parts', 'components', 'spoken', 'collocations', 'hanviet') if k in old},
                      'senses': merged, 'examples': (hand_ex + [x for x in w['examples'] if x not in hand_ex])[:3]}
             dump(out / 'words' / f'{wid}.yaml', {k: w[k] for k in WORD_FIELDS if k in w})
-            same = [r for r in e['cedict'] if r['pinyin'].lower() == w['pinyin'].lower()]
+            same = [r for r in e['cedict'] if flat_py(r['pinyin']) == flat_py(w['pinyin'])]
             base = next((r for r in same if not r['pinyin'][:1].isupper()), same[0])
             nums = {**base, 'senses': {k: v for r in same for k, v in r['senses'].items()}, 'core': e.get('core', [])}
             (out / 'src').mkdir(parents=True, exist_ok=True)
@@ -785,8 +798,9 @@ def restage():
         w = yaml.safe_load(f.read_text(encoding='utf-8'))
         hz, py = w['hanzi'], w['pinyin'].lower()
         readings, _ = source(hz)
-        same = [r for r in readings if r['pinyin'].lower() == py]
+        same = [r for r in readings if flat_py(r['pinyin']) == flat_py(py)]
         proper = same[0]['pinyin'] if same and all(r['pinyin'][:1].isupper() for r in same) else py
+        proper = normalize_py(hz, proper, capital=proper[:1].isupper(), override=OVERRIDE)
         if proper != w['pinyin']:
             w['pinyin'] = proper
             changed['headers'] += 1

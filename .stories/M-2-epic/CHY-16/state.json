@@ -26,9 +26,9 @@
         "AC5"
       ],
       "repo": "",
-      "stage": "picture",
+      "stage": "execute",
       "reviews": 1,
-      "note": "design READY (Opus r1)",
+      "note": "built; offline proof local, iOS device pending",
       "jira": ""
     }
   ],
@@ -44,7 +44,8 @@
     "2026-11-07 S1 \u2192 plan",
     "2026-11-07 S2 \u2192 plan",
     "2026-11-07 S1 \u2192 execute",
-    "2026-11-07 S2 \u2192 picture"
+    "2026-11-07 S2 \u2192 picture",
+    "2026-11-08 S2 \u2192 execute"
   ],
-  "updated": "2026-11-07T04:14:35+00:00"
+  "updated": "2026-11-08T10:40:45+00:00"
 }
