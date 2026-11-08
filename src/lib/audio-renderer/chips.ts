@@ -66,6 +66,9 @@ export async function chipWaveform(
 	return new Uint8Array(await res.arrayBuffer());
 }
 
+/** FFmpeg infers the container from the last extension, so the temp name still ends in `.mp3`. */
+export const chipPartPath = (out: string): string => out.replace(/\.mp3$/, '.part.mp3');
+
 /** Encode a chip wav: trim both silences and loudnorm, mono 24 kHz 48 kbps, no atempo. */
 export const encodeChipMp3 = (wav: string, out: string, encode = encodeMp3) =>
 	encode(wav, out, 1, { trimSilence: true });

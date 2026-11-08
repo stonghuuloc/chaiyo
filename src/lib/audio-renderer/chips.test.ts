@@ -3,7 +3,14 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { createMemorySink, importContent, type ImportedContent } from '../content/import';
 import { PRODUCTION_ROOTS, scopeFor } from '../content/import/scope';
 import { loadRefs } from '../content/lint/refs';
-import { CHIP_HANZI, chipEntries, chipSsml, chipWaveform, encodeChipMp3 } from './chips';
+import {
+	CHIP_HANZI,
+	chipEntries,
+	chipPartPath,
+	chipSsml,
+	chipWaveform,
+	encodeChipMp3
+} from './chips';
 import type { encodeMp3 } from './gate';
 
 const ROOT = join(__dirname, '..', '..', '..');
@@ -95,5 +102,11 @@ describe('encodeChipMp3', () => {
 
 		encodeChipMp3('chip.wav', 'chip.mp3', fake);
 		expect(calls).toEqual([['chip.wav', 'chip.mp3', 1, { trimSilence: true }]]);
+	});
+});
+
+describe('chipPartPath', () => {
+	it('keeps .mp3 as the last extension so ffmpeg can pick the container', () => {
+		expect(chipPartPath('/chips/deadbeef.mp3')).toBe('/chips/deadbeef.part.mp3');
 	});
 });

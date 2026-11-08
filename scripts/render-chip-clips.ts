@@ -12,6 +12,7 @@ import { join } from 'node:path';
 import {
 	CHIP_HANZI,
 	chipEntries,
+	chipPartPath,
 	chipWaveform,
 	encodeChipMp3
 } from '../src/lib/audio-renderer/chips';
@@ -75,7 +76,7 @@ for (const chip of chips) {
 	}
 	const wav = join(tmp, `${chip.key}.wav`);
 	writeFileSync(wav, await chipWaveform({ key: KEY, region: REGION }, CHIP_HANZI[chip.hanzi]));
-	const part = `${out}.part`;
+	const part = chipPartPath(out);
 	try {
 		encodeChipMp3(wav, part);
 		renameSync(part, out);
