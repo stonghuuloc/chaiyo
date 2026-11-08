@@ -1,21 +1,24 @@
 import { describe, expect, it } from 'vitest';
-import { takeFlag } from './args';
+import { parseArgs } from './args';
 
-describe('takeFlag', () => {
-	it('removes the flag and its value from the arguments', () => {
-		const args = ['m.json', '--prefix', 'mv1', '--kind', 'word'];
-		expect(takeFlag(args, 'prefix')).toBe('mv1');
-		expect(args).toEqual(['m.json', '--kind', 'word']);
-	});
+const NAMES = ['kind', 'prefix'];
 
-	it('returns undefined when the flag is absent', () => {
-		expect(takeFlag(['m.json'], 'prefix')).toBeUndefined();
+describe('parseArgs', () => {
+	it('reads flags and positionals in one pass, in any order', () => {
+		expect(parseArgs(['--prefix', 'mv1', 'm.json', '--kind', 'word'], NAMES)).toEqual({
+			flags: { prefix: 'mv1', kind: 'word' },
+			positional: ['m.json']
+		});
 	});
 
 	it('rejects a missing value or a following flag', () => {
-		expect(() => takeFlag(['--prefix'], 'prefix')).toThrow('--prefix needs a value');
-		expect(() => takeFlag(['--from-dir', '--prefix', 'mv1'], 'from-dir')).toThrow(
-			'--from-dir needs a value'
+		expect(() => parseArgs(['--prefix'], NAMES)).toThrow('--prefix needs a value');
+		expect(() => parseArgs(['--prefix', '--kind', 'word', 'mv1'], NAMES)).toThrow(
+			'--prefix needs a value'
 		);
+	});
+
+	it('rejects an unknown option', () => {
+		expect(() => parseArgs(['m.json', '--limt', '3'], NAMES)).toThrow('unknown option --limt');
 	});
 });
