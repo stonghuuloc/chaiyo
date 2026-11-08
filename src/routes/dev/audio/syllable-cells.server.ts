@@ -10,9 +10,12 @@ export type ChipClip = { text: string; key: string };
 const chipTexts = (node: unknown, out: Set<string>) => {
 	if (!node || typeof node !== 'object') return;
 	const { syllables, pairs } = node as { syllables?: unknown; pairs?: unknown };
-	const say = (c: unknown) => (typeof c === 'string' ? c : (c as { say: string }).say);
-	for (const c of Array.isArray(syllables) ? syllables : []) out.add(say(c));
-	for (const pair of Array.isArray(pairs) ? pairs : []) for (const c of pair) out.add(say(c));
+	const add = (c: unknown) => {
+		const say = typeof c === 'string' ? c : (c as { say?: unknown } | null)?.say;
+		if (typeof say === 'string') out.add(say);
+	};
+	for (const c of Array.isArray(syllables) ? syllables : []) add(c);
+	for (const pair of Array.isArray(pairs) ? pairs : []) if (Array.isArray(pair)) pair.forEach(add);
 	for (const v of Object.values(node)) chipTexts(v, out);
 };
 

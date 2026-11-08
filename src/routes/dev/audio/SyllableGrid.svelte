@@ -15,11 +15,11 @@
 	let selected = $state<string>();
 	let readout = $state('tap a cell');
 	const current = $derived(cells.find((c) => c.syllable === selected));
-	const groups = $derived(
-		Map.groupBy(cells, (c) => c.initial || '∅')
-			.entries()
-			.toArray()
-	);
+	const groups = $derived.by(() => {
+		const byInitial: Record<string, SyllableCell[]> = {};
+		for (const c of cells) (byInitial[c.initial || '∅'] ??= []).push(c);
+		return Object.entries(byInitial);
+	});
 
 	function tap(label: string, key: string) {
 		readout = `${label} · ${speaker}`;
@@ -40,7 +40,7 @@
 	</div>
 	<p data-testid="syllable-readout">{readout}</p>
 	{#if current}
-		<div class="my-2 flex gap-2" aria-label={`Tones of ${current.syllable}`}>
+		<div class="my-2 flex gap-2" role="group" aria-label={`Tones of ${current.syllable}`}>
 			{#each current.clips as clip, i (clip.label)}
 				<button
 					class="rounded border px-3 py-2"
