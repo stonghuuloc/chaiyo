@@ -688,6 +688,7 @@ def test_headword_pinyin_groups_by_word_and_joins_erhua(gen, hz, py, want):
     ('星期天', 'Xīng qī tiān', 'xīngqītiān'),
     ('星期日', 'Xīng qī rì', 'xīngqīrì'),
     ('星期三', 'Xīng qī sān', 'xīngqīsān'),
+    ('你好', 'nǐ hǎo', 'nǐ hǎo'),
     ('星期', 'xīng qī', 'xīngqī')])
 def test_headword_pinyin_phrase_overrides_and_lower_case_weekdays(gen, hz, py, want):
     assert gen.normalize_py(hz, py, capital=py[:1].isupper(), override=gen.OVERRIDE) == want

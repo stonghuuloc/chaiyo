@@ -357,7 +357,7 @@ def taught(hz, compounds, sentences=()):
 OVERRIDE = {  # the standard's spelling for headwords the general cut gets wrong; whole-headword match only
     '第二': 'dì-èr', '打电话': 'dǎ diànhuà', '干什么': 'gàn shénme', '没什么': 'méi shénme',
     '开玩笑': 'kāi wánxiào', '下雨': 'xià yǔ', '上车': 'shàng chē', '下车': 'xià chē',
-    '没关系': 'méi guānxi', '星期天': 'xīngqītiān', '星期日': 'xīngqīrì',
+    '没关系': 'méi guānxi', '你好': 'nǐ hǎo', '星期天': 'xīngqītiān', '星期日': 'xīngqīrì',
     **{'星期' + d: 'xīngqī' + y for d, y in zip('一二三四五六', ['yī', 'èr', 'sān', 'sì', 'wǔ', 'liù'])},
 }
 
