@@ -1,5 +1,9 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { parse } from 'yaml';
+import { noClipReason } from '../src/lib/audio-renderer/recorded';
 import { addTone, audioKey, type AudioEntry } from '../src/lib/content/import/audio';
 
 const fail = (message: string): never => {
@@ -12,7 +16,11 @@ const base = (process.env.R2_PUBLIC_URL ?? '').replace(/\/+$/, '');
 if (!base) fail('R2_PUBLIC_URL is missing or empty (set it in .env)');
 if (!URL.canParse(base)) fail('R2_PUBLIC_URL is not a valid URL');
 
-let manifestPath = process.argv[2];
+const argv = process.argv.slice(2);
+const tones = argv.includes('--tones');
+const prefixAt = argv.indexOf('--prefix');
+const prefix = prefixAt >= 0 ? `${(argv.splice(prefixAt, 2)[1] ?? '').replace(/\/+$/, '')}/` : '';
+let manifestPath = argv.find((a) => !a.startsWith('--'));
 if (!manifestPath) {
 	const { sha } = existsSync('static/content/current.json')
 		? JSON.parse(readFileSync('static/content/current.json', 'utf8'))
@@ -22,21 +30,25 @@ if (!manifestPath) {
 if (!existsSync(manifestPath))
 	fail('no audio manifest: run pnpm import:content content --sink bundle --only lessons/hsk1');
 
-const entries = (JSON.parse(readFileSync(manifestPath, 'utf8')).entries as AudioEntry[]).filter(
+const syllables = (JSON.parse(readFileSync(manifestPath, 'utf8')).entries as AudioEntry[]).filter(
 	(e) => e.kind === 'syllable'
 );
 const rows = parse(readFileSync('content/syllables.yaml', 'utf8')) as { syllable: string }[];
 
 const labelOf = new Map<string, string>();
 const lost: string[] = [];
-const manifestKeys = new Set(entries.map((e) => e.key));
+const manifestKeys = new Set(syllables.map((e) => e.key));
+const noClip = new Map<string, string>();
 for (const { syllable } of rows)
 	for (const tone of [1, 2, 3, 4]) {
 		const key = audioKey(addTone(syllable, tone), 'narrator');
+		const reason = noClipReason(`${syllable}${tone}`);
+		if (reason) noClip.set(key, `${syllable}${tone}`);
 		labelOf.set(key, `${syllable}${tone}`);
 		if (!manifestKeys.has(key)) lost.push(`${syllable}${tone}`);
 	}
 for (const label of lost) console.log(`not in manifest: ${label}`);
+const entries = syllables.filter((e) => !noClip.has(e.key));
 
 type Verdict = 'present' | 'missing' | 'unreachable';
 const probe = async (e: AudioEntry): Promise<[Verdict, string]> => {
@@ -44,7 +56,7 @@ const probe = async (e: AudioEntry): Promise<[Verdict, string]> => {
 	for (let attempt = 0; attempt < 4; attempt++) {
 		if (attempt) await new Promise((r) => setTimeout(r, 500 * 2 ** (attempt - 1)));
 		try {
-			const res = await fetch(`${base}/${e.key}.mp3`, {
+			const res = await fetch(`${base}/${prefix}${e.key}.mp3`, {
 				method: 'HEAD',
 				signal: AbortSignal.timeout(10_000)
 			});
@@ -85,7 +97,60 @@ if (unreachable.length) {
 	console.log(
 		`syllable clips: ${entries.length} (${cells} cells, ${entries.length - cells} chips)`
 	);
+	if (noClip.size)
+		console.log(
+			`no clip (allow-list, not a standard Mandarin syllable): ${noClip.size} ${[...noClip.values()].join(' ')}`
+		);
 	for (const e of missing) console.log(`missing: ${label(e)}`);
 	console.log(`missing: ${missing.length}`);
 	process.exitCode = missing.length || lost.length ? 1 : 0;
+	if (tones && !process.exitCode) {
+		const dir = mkdtempSync(join(tmpdir(), 'chaiyo-tones-'));
+		const cellEntries = entries.filter((e) => labelOf.has(e.key));
+		let at = 0;
+		await Promise.all(
+			Array.from({ length: 8 }, async () => {
+				while (at < cellEntries.length) {
+					const e = cellEntries[at++];
+					const res = await fetch(`${base}/${prefix}${e.key}.mp3`, {
+						signal: AbortSignal.timeout(30_000)
+					});
+					writeFileSync(join(dir, `${e.key}.mp3`), new Uint8Array(await res.arrayBuffer()));
+				}
+			})
+		);
+		const files = cellEntries.map((e) => join(dir, `${e.key}.mp3`));
+		const run = spawnSync(
+			'uv',
+			[
+				'run',
+				'--with',
+				'parselmouth',
+				'--with',
+				'numpy',
+				'python',
+				'scripts/syllable-f0.py',
+				...files
+			],
+			{ encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }
+		);
+		rmSync(dir, { recursive: true, force: true });
+		if (run.status !== 0) fail(`tone scoring failed: ${run.error?.message ?? run.stderr.trim()}`);
+		const heard = new Map(
+			run.stdout
+				.trim()
+				.split('\n')
+				.map((l) => l.split('\t') as [string, string])
+		);
+		let mismatches = 0;
+		for (const e of cellEntries) {
+			const want = labelOf.get(e.key)!.slice(-1);
+			const got = heard.get(e.key);
+			if (got === want) continue;
+			mismatches++;
+			console.log(`tone: ${labelOf.get(e.key)} heard ${got}`);
+		}
+		console.log(`tone mismatches: ${mismatches}`);
+		process.exitCode = mismatches ? 1 : 0;
+	}
 }

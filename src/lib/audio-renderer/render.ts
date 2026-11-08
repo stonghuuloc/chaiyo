@@ -1,5 +1,6 @@
 import { audioKey, type AudioEntry } from '../content/import/audio';
 import {
+	type Bytes,
 	RenderError,
 	type Bucket,
 	type Engine,
@@ -9,7 +10,17 @@ import {
 
 export async function render(
 	entries: AudioEntry[],
-	{ engine, bucket }: { engine: Engine; bucket: Bucket }
+	{
+		engine,
+		bucket,
+		recorded,
+		prefix = ''
+	}: {
+		engine: Engine;
+		bucket: Bucket;
+		recorded?: (key: string) => Bytes | undefined;
+		prefix?: string;
+	}
 ): Promise<RenderResult> {
 	for (const e of entries)
 		if (e.key !== audioKey(e.split ? e.ref : e.hanzi, e.voice))
@@ -22,19 +33,21 @@ export async function render(
 	for (const e of entries) {
 		if (seen.has(e.key)) continue;
 		seen.add(e.key);
-		const name = `${e.key}.mp3`;
+		const name = `${prefix}${e.key}.mp3`;
 		try {
 			if (await bucket.has(name)) {
 				skipped++;
 				continue;
 			}
-			const body = await engine.synthesize({
-				text: e.reading ?? e.hanzi,
-				voice: e.voice,
-				key: e.key,
-				kind: e.kind,
-				hanzi: e.hanzi
-			});
+			const body =
+				recorded?.(e.key) ??
+				(await engine.synthesize({
+					text: e.reading ?? e.hanzi,
+					voice: e.voice,
+					key: e.key,
+					kind: e.kind,
+					hanzi: e.hanzi
+				}));
 			if (!body.byteLength) throw new Error('engine returned 0 bytes');
 			await bucket.put(name, body, 'audio/mpeg');
 			uploaded++;

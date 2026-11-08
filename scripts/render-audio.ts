@@ -25,6 +25,9 @@ if (badKind !== undefined) {
 	process.exit(1);
 }
 const refPrefix = flag('ref-prefix');
+const fromDir = flag('from-dir');
+const prefix = flag('prefix');
+const keyPrefix = prefix ? `${prefix.replace(/\/+$/, '')}/` : '';
 const limit = flag('limit');
 if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
 	console.error('render-audio: --limit needs a positive integer');
@@ -38,7 +41,7 @@ if (unknown) {
 const [manifestPath] = args;
 if (!manifestPath) {
 	console.error(
-		'usage: render-audio <audio-manifest.json> [--kind sentence,word,syllable] [--ref-prefix <p>] [--limit N]'
+		'usage: render-audio <audio-manifest.json> [--kind sentence,word,syllable] [--ref-prefix <p>] [--limit N] [--from-dir <dir>] [--prefix <p>]'
 	);
 	process.exit(1);
 }
@@ -61,8 +64,10 @@ for (const name of [
 }
 
 const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
+const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
 const picked = entries
 	.filter((e) => !kinds || kinds.includes(e.kind))
+	.filter((e) => !fromDir || existsSync(stagedFile(e.key)))
 	.filter((e) => !refPrefix || e.ref.startsWith(refPrefix))
 	.slice(0, limit ? Number(limit) : undefined);
 
@@ -78,9 +83,18 @@ const bucket = r2Bucket({
 });
 
 try {
-	const { uploaded, skipped } = await render(picked, { engine, bucket });
+	const recorded = fromDir
+		? (key: string) => new Uint8Array(readFileSync(stagedFile(key)))
+		: undefined;
+	const { uploaded, skipped } = await render(picked, {
+		engine,
+		bucket,
+		recorded,
+		prefix: keyPrefix
+	});
 	console.log(`${uploaded} uploaded, ${skipped} skipped`);
-	if (picked[0]) console.log(`e.g. ${env.R2_PUBLIC_URL.replace(/\/$/, '')}/${picked[0].key}.mp3`);
+	if (picked[0])
+		console.log(`e.g. ${env.R2_PUBLIC_URL.replace(/\/$/, '')}/${keyPrefix}${picked[0].key}.mp3`);
 } catch (e) {
 	if (!(e instanceof RenderError || (e instanceof Error && e.message.startsWith('key mismatch'))))
 		throw e;

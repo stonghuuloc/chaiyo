@@ -163,4 +163,35 @@ describe('render', () => {
 		]);
 		expect(bucket.objects.size).toBe(2);
 	});
+
+	it('uploads a recorded clip without calling the engine, and renders the rest', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		const clip = new TextEncoder().encode('human') as Bytes;
+		const [a, b] = [entry('谢谢', 'narrator'), entry('再见', 'narrator')];
+		const result = await render([a, b], {
+			engine,
+			bucket,
+			recorded: (key) => (key === a.key ? clip : undefined)
+		});
+		expect(result).toEqual({ uploaded: 2, skipped: 0 });
+		expect(engine.calls.map((c) => c.hanzi)).toEqual(['再见']);
+		expect(bucket.objects.get(a.key + '.mp3')?.body).toEqual(clip);
+	});
+
+	it('skips a recorded clip already in the bucket', async () => {
+		const engine = fakeEngine();
+		const bucket = fakeBucket();
+		const a = entry('谢谢', 'narrator');
+		const recorded = () => new Uint8Array([1]) as Bytes;
+		await render([a], { engine, bucket, recorded });
+		expect(await render([a], { engine, bucket, recorded })).toEqual({ uploaded: 0, skipped: 1 });
+	});
+
+	it('stores each clip under the prefix', async () => {
+		const bucket = fakeBucket();
+		const a = entry('谢谢', 'narrator');
+		await render([a], { engine: fakeEngine(), bucket, prefix: 'mv1/' });
+		expect([...bucket.objects.keys()]).toEqual([`mv1/${a.key}.mp3`]);
+	});
 });
