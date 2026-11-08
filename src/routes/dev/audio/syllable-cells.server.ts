@@ -1,4 +1,3 @@
-import { readFileSync, readdirSync } from 'node:fs';
 import { parse } from 'yaml';
 import { audioKey, addTone } from '#lib/content/import/audio.js';
 import { noClipReason } from '#lib/audio-renderer/recorded.js';
@@ -19,8 +18,27 @@ const chipTexts = (node: unknown, out: Set<string>) => {
 	for (const v of Object.values(node)) chipTexts(v, out);
 };
 
-export function loadSyllableClips(root = 'content') {
-	const rows = parse(readFileSync(`${root}/syllables.yaml`, 'utf8')) as {
+export type ContentSource = { syllables: string; lessons: string[] };
+
+const lessonFiles = import.meta.glob('/content/lessons/**/*.yaml', {
+	query: '?raw',
+	import: 'default',
+	eager: true
+}) as Record<string, string>;
+
+export const bundledSource: ContentSource = {
+	syllables: (
+		import.meta.glob('/content/syllables.yaml', {
+			query: '?raw',
+			import: 'default',
+			eager: true
+		}) as Record<string, string>
+	)['/content/syllables.yaml'],
+	lessons: Object.values(lessonFiles)
+};
+
+export function loadSyllableClips(source: ContentSource = bundledSource) {
+	const rows = parse(source.syllables) as {
 		syllable: string;
 		initial: string;
 	}[];
@@ -35,11 +53,10 @@ export function loadSyllableClips(root = 'content') {
 	}));
 
 	const texts = new Set<string>();
-	for (const dir of readdirSync(`${root}/lessons`))
-		for (const file of readdirSync(`${root}/lessons/${dir}`)) {
-			const lesson = parse(readFileSync(`${root}/lessons/${dir}/${file}`, 'utf8'));
-			if (lesson?.kind === 'primer') chipTexts(lesson.sections, texts);
-		}
+	for (const raw of source.lessons) {
+		const lesson = parse(raw);
+		if (lesson?.kind === 'primer') chipTexts(lesson.sections, texts);
+	}
 	const chips: ChipClip[] = [...texts]
 		.filter((t) => t.includes(' '))
 		.map((text) => ({ text, key: audioKey(text, 'narrator') }));

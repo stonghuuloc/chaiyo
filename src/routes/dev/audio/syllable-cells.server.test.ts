@@ -1,10 +1,25 @@
+import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { audioKey } from '#lib/content/import/audio.js';
-import { loadSyllableClips } from './syllable-cells.server';
+import { bundledSource, loadSyllableClips } from './syllable-cells.server';
 
 const { cells, chips } = loadSyllableClips();
 
+const diskSource = {
+	syllables: readFileSync('content/syllables.yaml', 'utf8'),
+	lessons: readdirSync('content/lessons', { recursive: true })
+		.map(String)
+		.filter((f) => f.endsWith('.yaml'))
+		.map((f) => readFileSync(`content/lessons/${f}`, 'utf8'))
+};
+
 describe('loadSyllableClips', () => {
+	it('bundled source (import.meta.glob) matches the files on disk', () => {
+		expect(bundledSource.lessons.length).toBeGreaterThan(0);
+		expect([...bundledSource.lessons].sort()).toEqual([...diskSource.lessons].sort());
+		expect(loadSyllableClips(diskSource)).toEqual({ cells, chips });
+	});
+
 	it('has 405 cells with four distinct keys each', () => {
 		expect(cells).toHaveLength(405);
 		expect(new Set(cells.flatMap((c) => c.clips.map((k) => k.key))).size).toBe(1620);
