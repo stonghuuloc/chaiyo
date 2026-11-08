@@ -3,7 +3,6 @@ import { describe, expect, it, vi } from 'vitest';
 import { createPlayer } from '#lib/audio/player.js';
 import SyllableGrid from './SyllableGrid.svelte';
 import { loadSyllableClips } from './syllable-cells.server';
-import { clipKey } from './syllable-grid';
 
 const { cells, chips } = loadSyllableClips();
 const BASE = 'https://clips.test';
@@ -23,12 +22,11 @@ const sample = cells
 describe('tap resolves the clip URL and plays it', () => {
 	it('samples 20 cells', () => expect(sample).toHaveLength(20));
 
-	it.each(['FV2', 'MV1'] as const)('20 cells, %s', async (speaker) => {
+	it('20 cells', async () => {
 		const { el, play } = setup();
 		for (const clip of sample) {
-			await play(clipKey(clip.key, speaker));
-			const path = speaker === 'MV1' ? `mv1/${clip.key}` : clip.key;
-			expect(el.src).toBe(`${BASE}/${path}.mp3`);
+			await play(clip.key);
+			expect(el.src).toBe(`${BASE}/${clip.key}.mp3`);
 		}
 		expect(el.play).toHaveBeenCalledTimes(20);
 	});
@@ -53,9 +51,9 @@ describe('SyllableGrid', () => {
 		expect(html).not.toMatch(/<button[^>]*disabled[^>]*>ba</);
 	});
 
-	it('shows the speaker toggle with FV2 pressed and a chip per word', () => {
-		expect(html).toMatch(/aria-pressed="true"[^>]*>FV2/);
-		expect(html).toContain('>MV1<');
+	it('shows no speaker toggle and a chip per word', () => {
+		expect(html).not.toContain('aria-label="Speaker"');
+		expect(html).not.toContain('>MV1<');
 		expect(html).toContain('data-clip="nǐ hǎo"');
 		expect(html.match(/data-clip="[^"]* [^"]*"/g)).toHaveLength(chips.length);
 	});

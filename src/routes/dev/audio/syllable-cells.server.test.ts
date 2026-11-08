@@ -1,6 +1,8 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { audioKey } from '#lib/content/import/audio.js';
+import { carrierOf } from '#lib/audio-renderer/carriers.js';
+import carriers from '#lib/audio-renderer/syllable-carriers.json';
 import { bundledSource, loadSyllableClips } from './syllable-cells.server';
 
 const { cells, chips } = loadSyllableClips();
@@ -35,11 +37,20 @@ describe('loadSyllableClips', () => {
 		expect(cells.find((c) => c.syllable === 'lü')!.clips[0].key).toBe(audioKey('lǖ', 'narrator'));
 	});
 
-	it('disables exactly bia, fiao and tei', () => {
-		const off = cells.flatMap((c) => c.clips).filter((c) => c.disabled);
-		expect(off.map((c) => c.label)).toEqual(
-			['bia', 'fiao', 'tei'].flatMap((s) => [1, 2, 3, 4].map((t) => `${s}${t}`))
-		);
+	it('disables exactly the cells no hanzi or word carries', () => {
+		const off = cells
+			.flatMap((c) => c.clips)
+			.filter((c) => c.disabled)
+			.map((c) => c.label);
+		expect(off).toHaveLength(1620 - Object.keys(carriers.cells).length);
+		for (const s of ['bia', 'fiao', 'tei'])
+			for (const t of [1, 2, 3, 4]) expect(off).toContain(s + t);
+		expect(off).not.toContain('ba3');
+		expect(off).not.toContain('lü3');
+	});
+
+	it('gives every chip an Azure carrier', () => {
+		for (const chip of chips) expect(carrierOf(chip.text), chip.text).toBeDefined();
 	});
 
 	it('lists multi-syllable chips with manifest keys', () => {

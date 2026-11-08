@@ -1,6 +1,6 @@
 import { parse } from 'yaml';
 import { audioKey, addTone } from '#lib/content/import/audio.js';
-import { noClipReason } from '#lib/audio-renderer/recorded.js';
+import { noClipReason } from '#lib/audio-renderer/carriers.js';
 
 export type Clip = { label: string; text: string; key: string; disabled?: string };
 export type SyllableCell = { syllable: string; initial: string; clips: Clip[] };

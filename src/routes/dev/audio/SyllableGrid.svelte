@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { play } from '#lib/audio/index.js';
 	import type { ChipClip, SyllableCell } from './syllable-cells.server';
-	import { clipKey, SPEAKERS, TONE_CONTOURS, type Speaker } from './syllable-grid';
+	import { TONE_CONTOURS } from './syllable-grid';
 
 	type Props = {
 		cells: SyllableCell[];
 		chips: ChipClip[];
-		speaker?: Speaker;
 		player?: (key: string) => Promise<boolean>;
 	};
 
-	let { cells, chips, speaker = 'FV2', player = play }: Props = $props();
+	let { cells, chips, player = play }: Props = $props();
 
 	let selected = $state<string>();
 	let readout = $state('tap a cell');
@@ -22,22 +21,13 @@
 	});
 
 	function tap(label: string, key: string) {
-		readout = `${label} · ${speaker}`;
-		player(clipKey(key, speaker)).catch(() => {});
+		readout = label;
+		player(key).catch(() => {});
 	}
 </script>
 
 <section aria-label="Syllables">
 	<h2 class="text-lg mt-4">Syllables</h2>
-	<div role="group" aria-label="Speaker" class="my-2 flex gap-2">
-		{#each SPEAKERS as s (s)}
-			<button
-				class="rounded border px-3 py-1"
-				aria-pressed={speaker === s}
-				onclick={() => (speaker = s)}>{s}</button
-			>
-		{/each}
-	</div>
 	<p data-testid="syllable-readout">{readout}</p>
 	{#if current}
 		<div class="my-2 flex gap-2" role="group" aria-label={`Tones of ${current.syllable}`}>
