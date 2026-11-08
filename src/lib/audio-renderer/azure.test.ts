@@ -128,6 +128,14 @@ describe('azureEngine', () => {
 		expect(faultsOf.mock.calls.map((c) => c[2])).toEqual([0.15, undefined]);
 	});
 
+	it('refuses a word whose reading is not its hanzi without calling Azure', async () => {
+		const { engine, fetchImpl } = setup([]);
+		await expect(engine.synthesize({ ...req('行', 'word'), text: 'háng' })).rejects.toThrow(
+			'Azure takes hanzi'
+		);
+		expect(fetchImpl).not.toHaveBeenCalled();
+	});
+
 	it('refuses a cell with no carrier without calling Azure', async () => {
 		const { engine, fetchImpl } = setup([]);
 		await expect(engine.synthesize(req('biā', 'syllable'))).rejects.toThrow('no carrier');

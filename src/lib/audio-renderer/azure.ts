@@ -39,14 +39,11 @@ export const billable = (body: string) =>
 		0
 	);
 
-export function azureRequest(
-	cast: Cast,
-	req: Pick<EngineRequest, 'kind' | 'voice' | 'hanzi' | 'text'>
-) {
+export function azureRequest(cast: Cast, req: Pick<EngineRequest, 'kind' | 'voice' | 'hanzi'>) {
 	const voice = cast.voices[req.voice];
 	if (!voice) throw new Error(`unknown voice: ${req.voice}`);
 	const carrier: Carrier | undefined =
-		req.kind === 'syllable' ? carrierOf(req.hanzi) : { say: req.text };
+		req.kind === 'syllable' ? carrierOf(req.hanzi) : { say: req.hanzi };
 	if (!carrier) return undefined;
 	return { body: ssml(cast, voice, carrier.say), cut: carrier.cut === true };
 }
@@ -151,6 +148,8 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 
 	return {
 		async synthesize(req) {
+			if (req.kind !== 'syllable' && req.text !== req.hanzi)
+				throw new Error(`${req.hanzi}: Azure takes hanzi, not the reading ${req.text}`);
 			const request = azureRequest(cast, req);
 			if (!request) throw new Error(`${req.hanzi}: no carrier`);
 			const hash = createHash('sha256')

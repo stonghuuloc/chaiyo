@@ -56,7 +56,7 @@ if (!manifestPath) {
 const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
 const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
 const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
-const requestOf = (e: AudioEntry) => azureRequest(cast, { ...e, text: e.reading ?? e.hanzi });
+const requestOf = (e: AudioEntry) => azureRequest(cast, e);
 const renderable = fromDir
 	? recordedOnly(entries, (key) => existsSync(stagedFile(key)))
 	: entries.filter((e) => requestOf(e) !== undefined);
@@ -100,6 +100,7 @@ try {
 	process.exit(1);
 }
 process.on('exit', () => rmSync(lock, { force: true }));
+for (const signal of ['SIGINT', 'SIGTERM'] as const) process.on(signal, () => process.exit(130));
 
 const engine = azureEngine(cast, {
 	key: env.AZURE_SPEECH_KEY,
