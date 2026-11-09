@@ -42,12 +42,12 @@ describe('tap resolves the clip URL and plays it', () => {
 describe('SyllableGrid', () => {
 	const html = render(SyllableGrid, { props: { cells, chips } }).body;
 
-	it('renders a cell per syllable under initial headings, disables no-clip cells', () => {
+	it('renders a cell per syllable under initial headings, without the non-standard cells', () => {
 		expect(
 			html.match(/aria-pressed="false"[^>]*>\s*[a-zü]+\s*<\/button>/g)?.length
 		).toBeGreaterThan(300);
-		for (const s of ['bia', 'fiao', 'tei'])
-			expect(html).toMatch(new RegExp(`<button[^>]*disabled[^>]*>${s}</button>`));
+		for (const s of ['bia', 'fiao', 'tei']) expect(html).not.toMatch(new RegExp(`>${s}</button>`));
+		expect(html).toMatch(/<button[^>]*disabled[^>]*>ei</);
 		expect(html).not.toMatch(/<button[^>]*disabled[^>]*>ba</);
 	});
 

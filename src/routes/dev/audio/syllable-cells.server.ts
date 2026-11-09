@@ -1,6 +1,7 @@
 import { parse } from 'yaml';
 import { audioKey, addTone } from '#lib/content/import/audio.js';
 import { noClipReason } from '#lib/audio-renderer/carriers.js';
+import { NO_CLIP } from '#lib/audio-renderer/recorded.js';
 
 export type Clip = { label: string; text: string; key: string; disabled?: string };
 export type SyllableCell = { syllable: string; initial: string; clips: Clip[] };
@@ -42,15 +43,18 @@ export function loadSyllableClips(source: ContentSource = bundledSource) {
 		syllable: string;
 		initial: string;
 	}[];
-	const cells: SyllableCell[] = rows.map(({ syllable, initial }) => ({
-		syllable,
-		initial,
-		clips: [1, 2, 3, 4].map((tone) => {
-			const text = addTone(syllable, tone);
-			const label = `${syllable}${tone}`;
-			return { label, text, key: audioKey(text, 'redpanda'), disabled: noClipReason(label) };
-		})
-	}));
+	// bia, fiao and tei are not standard Mandarin syllables, so they get no grid cell.
+	const cells: SyllableCell[] = rows
+		.filter(({ syllable }) => !NO_CLIP[syllable])
+		.map(({ syllable, initial }) => ({
+			syllable,
+			initial,
+			clips: [1, 2, 3, 4].map((tone) => {
+				const text = addTone(syllable, tone);
+				const label = `${syllable}${tone}`;
+				return { label, text, key: audioKey(text, 'redpanda'), disabled: noClipReason(label) };
+			})
+		}));
 
 	const texts = new Set<string>();
 	for (const raw of source.lessons) {
