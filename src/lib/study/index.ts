@@ -1,2 +1,3 @@
 export { apply, initialState } from './apply';
-export type { Attempt, Card, Skill, State, StudyEvent } from './types';
+export { minutes, session } from './session';
+export type { Attempt, Card, SessionCard, Skill, State, StudyEvent, WordSaved } from './types';

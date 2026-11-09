@@ -92,7 +92,9 @@ describe('apply', () => {
 
 	it('a malformed stored card is rejected, not scheduled as NaN', () => {
 		const broken: State = {
-			lexicon: { 你: { cards: { the: { due: '2026-11-09T02:00:00.000Z', fsrs: { reps: 1 } } } } }
+			lexicon: {
+				你: { saved: false, cards: { the: { due: '2026-11-09T02:00:00.000Z', fsrs: { reps: 1 } } } }
+			}
 		};
 		const before = JSON.stringify(broken);
 		expect(() => apply(broken, attempt('你', 'the', true), T)).toThrow();
