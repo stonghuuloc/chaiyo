@@ -5,8 +5,8 @@ import { AUDIO_VERSION } from './version';
 
 describe('audio base', () => {
 	it('reads clips under the versioned prefix and caches them under its own name', () => {
-		expect(AUDIO_VERSION).toBe('az2');
-		expect(AUDIO_BASE.endsWith('/az2')).toBe(true);
-		expect(AUDIO_CACHE).toBe('audio-az2');
+		expect(AUDIO_VERSION).toBe('az4');
+		expect(AUDIO_BASE.endsWith('/az4')).toBe(true);
+		expect(AUDIO_CACHE).toBe('audio-az4');
 	});
 });
