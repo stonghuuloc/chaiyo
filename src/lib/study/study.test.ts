@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { apply, type Attempt, type Skill } from '#lib/study/index.js';
+import { apply, type Attempt, type Skill, type State } from '#lib/study/index.js';
 import { T, bai1 } from '#lib/study/fixtures/bai1.js';
 
 const DAY = 86_400_000;
@@ -88,6 +88,15 @@ describe('apply', () => {
 		const { state, events } = apply(bai1(), attempt('constructor', 'the', true), T);
 		expect(events).toHaveLength(1);
 		expect(Object.hasOwn(state.lexicon, 'constructor')).toBe(true);
+	});
+
+	it('a malformed stored card is rejected, not scheduled as NaN', () => {
+		const broken: State = {
+			lexicon: { 你: { cards: { the: { due: '2026-11-09T02:00:00.000Z', fsrs: { reps: 1 } } } } }
+		};
+		const before = JSON.stringify(broken);
+		expect(() => apply(broken, attempt('你', 'the', true), T)).toThrow();
+		expect(JSON.stringify(broken)).toBe(before);
 	});
 
 	it('state survives JSON', () => {
