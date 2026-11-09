@@ -157,13 +157,15 @@ describe('azureEngine', () => {
 		expect(bad.fetchImpl).toHaveBeenCalledTimes(3);
 	});
 
-	it('asks again when the take is cut off at the end, before encoding it', async () => {
+	it('asks again when the take is cut off at the end, before encoding it, eight takes at most', async () => {
 		const { engine, fetchImpl, faultsOf } = setup([], [], { takes: [cut] });
 		await engine.synthesize(req('好'));
 		expect(fetchImpl).toHaveBeenCalledTimes(2);
 		expect(faultsOf).toHaveBeenCalledTimes(1);
-		const bad = setup([], [], { takes: [cut, cut, cut] });
+		const bad = setup([], [], { takes: new Array(8).fill(cut) });
 		await expect(bad.engine.synthesize(req('好'))).rejects.toThrow('好: cut off at the end');
+		expect(bad.fetchImpl).toHaveBeenCalledTimes(8);
+		expect(bad.faultsOf).not.toHaveBeenCalled();
 	});
 
 	it('keeps the accepted raw take and encodes it again without calling Azure', async () => {
@@ -177,7 +179,7 @@ describe('azureEngine', () => {
 		expect(again.faultsOf).toHaveBeenCalledTimes(1);
 	});
 
-	it('replaces a kept raw take that fails, with three fresh takes left', async () => {
+	it('replaces a kept raw take that is cut off with a fresh take', async () => {
 		const rawDir = mkdtempSync(join(tmpdir(), 'azure-raw-'));
 		await setup([], [], { rawDir }).engine.synthesize(req('好'));
 		const [name] = readdirSync(rawDir);

@@ -61,9 +61,10 @@ export type AzureDeps = {
 };
 
 const MAX_ATTEMPTS = 3;
+const MAX_TAKES = 8;
 const MAX_TRIES = 6;
 const MIN_SYLLABLE_SECONDS = 0.15;
-const MAX_END_DB = -50;
+const MAX_END_DB = -40;
 const TRIM = 'silenceremove=start_periods=1:start_threshold=-70dB:start_silence=0.1:detection=peak';
 export const FILTER = `adelay=delays=100:all=1,apad=pad_dur=0.1,${TRIM},areverse,${TRIM},areverse,loudnorm=I=-16:TP=-1.5:LRA=11`;
 
@@ -198,8 +199,10 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 			const mp3 = join(work, `${clip++}.mp3`);
 			let lastFault = '';
 			let kept = !!raw && existsSync(raw);
-			for (let attempt = 0; attempt < MAX_ATTEMPTS; kept = false) {
-				if (!kept) attempt++;
+			let takes = 0;
+			let failed = 0;
+			for (; takes < MAX_TAKES && failed < MAX_ATTEMPTS; kept = false) {
+				if (!kept) takes++;
 				const take = kept && raw ? new Uint8Array(readFileSync(raw)) : await speak(request.body);
 				writeFileSync(wav, take);
 				const end = endLevel(take);
@@ -211,6 +214,7 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 						countHanzi(req.hanzi),
 						req.kind === 'syllable' ? MIN_SYLLABLE_SECONDS : undefined
 					);
+					if (faults.length && !kept) failed++;
 				}
 				if (!faults.length) {
 					if (raw && !kept) writeFileSync(raw, take);
