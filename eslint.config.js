@@ -38,5 +38,29 @@ export default defineConfig(
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
 		rules: {}
+	},
+	{
+		files: ['src/lib/study/**/*.test.ts', 'src/lib/study/fixtures/**'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['ts-fsrs', 'ts-fsrs/*'],
+							message: 'Study tests use #lib/study/index.js only (CHY-19 AC7)'
+						},
+						{
+							regex: '^\\.{1,2}/(?!fixtures/)',
+							message: 'Study tests use #lib/study/index.js only (CHY-19 AC7)'
+						},
+						{
+							regex: '^#lib/study/(?!fixtures/|index\\.js$)',
+							message: 'Study tests use #lib/study/index.js only (CHY-19 AC7)'
+						}
+					]
+				}
+			]
+		}
 	}
 );
