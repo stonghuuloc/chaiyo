@@ -12,13 +12,24 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 		!(meta.testOut || meta.sections.every((section) => L.done.includes(section)))
 	)
 		return ignore;
-	const run = Object.hasOwn(s.runs, step.run) ? s.runs[step.run] : { answers: {} };
+	const run = Object.hasOwn(s.runs, step.run) ? s.runs[step.run] : { step, answers: {} };
+	const first = run.step;
+	if (
+		first.kind !== step.kind ||
+		first.lesson !== step.lesson ||
+		first.of !== step.of ||
+		(first.kind === 'section' && step.kind === 'section' && first.section !== step.section)
+	)
+		return ignore;
 	if (run.closed || Object.hasOwn(run.answers, a.questionId)) return ignore;
 	const answers = { ...run.answers, [a.questionId]: a.correct === true };
 	if (Object.keys(answers).length < step.of)
-		return { state: { ...s, runs: { ...s.runs, [step.run]: { answers } } }, events: [] };
+		return {
+			state: { ...s, runs: { ...s.runs, [step.run]: { step: run.step, answers } } },
+			events: []
+		};
 
-	const runs = { ...s.runs, [step.run]: { answers, closed: true as const } };
+	const runs = { ...s.runs, [step.run]: { step: run.step, answers, closed: true as const } };
 	const events: StudyEvent[] = [];
 	const lessons = { ...s.lessons };
 	let lexicon = s.lexicon;

@@ -140,6 +140,41 @@ describe('step.of', () => {
 	});
 });
 
+describe('run metadata', () => {
+	const at = new Date(T.getTime() + 10 * H);
+	it('a later attempt with a different run size is ignored', () => {
+		const [first] = gateRun('h1-01', 'm', 1, at);
+		const shrunk = {
+			...gateRun('h1-01', 'm', 1, at)[1],
+			step: { ...first.step!, of: 1 } as Attempt['step']
+		};
+		const r = run(ready(), [first, shrunk as Attempt]);
+		expect(r.events.flat()).toEqual([]);
+		expect(r.state.lessons['h1-01'].best).toBeUndefined();
+		expect(r.state.runs['m'].closed).toBeUndefined();
+		const full = run(ready(), gateRun('h1-01', 'm', 10, at));
+		expect(full.last).toHaveLength(3);
+	});
+	it('a different lesson or section on the same run id is ignored', () => {
+		const list = sectionRun('h1-01', 'words', 'm2', at);
+		const other = {
+			...list[9],
+			id: 'x',
+			questionId: 'qx',
+			step: { ...list[9].step!, section: 'grammar' } as Attempt['step']
+		};
+		const lesson = {
+			...list[9],
+			id: 'y',
+			questionId: 'qy',
+			step: { ...list[9].step!, lesson: 'h1-02' } as Attempt['step']
+		};
+		const r = run(ready(), [...list.slice(0, 9), other as Attempt, lesson as Attempt]);
+		expect(r.events.flat()).toEqual([]);
+		expect(Object.keys(r.state.runs['m2'].answers)).toHaveLength(9);
+	});
+});
+
 describe('run ids', () => {
 	it('an id like constructor or __proto__ is an ordinary run', () => {
 		for (const id of ['constructor', '__proto__']) {

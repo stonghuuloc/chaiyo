@@ -30,7 +30,7 @@ export type State = {
 	lexicon: Record<string, { saved: boolean; cards: Partial<Record<Skill, Card>> }>;
 	curriculum: Curriculum;
 	lessons: Record<string, LessonProgress>;
-	runs: Record<string, { answers: Record<string, boolean>; closed?: true }>;
+	runs: Record<string, { step: Step; answers: Record<string, boolean>; closed?: true }>;
 };
 
 export type StudyEvent =
