@@ -50,6 +50,6 @@ The Azure terms for storing and redistributing synthesized audio were not checke
 
 - One source, one adapter: `src/lib/audio-renderer/azure.ts`. The OmniVoice engine and the Tone Perfect staging script stay in the repo, unused by `render:audio` except `--from-dir`.
 - Rendering needs `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION`, ffmpeg, and uv for the word cut. CI never renders.
-- A voice, rate or carrier change needs a new prefix (`az2`) and a full upload, because published URLs are immutable. The local cache keeps unchanged clips, so only the changed voice is billed again.
+- A voice, rate or carrier change needs a new prefix (`az2`, then `az4`) and a full upload, because published URLs are immutable. The local cache keeps unchanged clips, so only the changed voice is billed again.
 - 388 cells have no clip. A cell gains one only when a carrier exists.
 - Loc rejected Azure syllables once as not accurate enough; this ADR ships them because one source was his call, and the grid is the place to hear the risk.
