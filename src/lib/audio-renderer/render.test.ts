@@ -16,7 +16,7 @@ const entry = (hanzi: string, voice: string): AudioEntry => ({
 const three = () => [
 	entry('你好！', 'redpanda'),
 	entry('你好！', 'takin'),
-	entry('谢谢', 'narrator')
+	entry('谢谢', 'redpanda')
 ];
 const call = (hanzi: string, voice: string) => ({
 	text: hanzi,
@@ -37,7 +37,7 @@ describe('render', () => {
 		expect(engine.calls).toEqual([
 			call('你好！', 'redpanda'),
 			call('你好！', 'takin'),
-			call('谢谢', 'narrator')
+			call('谢谢', 'redpanda')
 		]);
 	});
 
@@ -55,16 +55,16 @@ describe('render', () => {
 		const bucket = fakeBucket();
 		await render(three(), { engine, bucket });
 		engine.calls.length = 0;
-		expect(await render([...three(), entry('再见', 'narrator')], { engine, bucket })).toEqual({
+		expect(await render([...three(), entry('再见', 'redpanda')], { engine, bucket })).toEqual({
 			uploaded: 1,
 			skipped: 3
 		});
-		expect(engine.calls).toEqual([call('再见', 'narrator')]);
+		expect(engine.calls).toEqual([call('再见', 'redpanda')]);
 	});
 
 	it('keys on sha256 of text and voice, one object per key', async () => {
 		const bucket = fakeBucket();
-		const entries = [...three(), entry('谢谢', 'narrator')];
+		const entries = [...three(), entry('谢谢', 'redpanda')];
 		const engine = fakeEngine();
 		expect(await render(entries, { engine, bucket })).toEqual({ uploaded: 3, skipped: 0 });
 		expect(engine.calls).toHaveLength(3);
@@ -75,27 +75,27 @@ describe('render', () => {
 		const engine = fakeEngine();
 		const bucket = fakeBucket();
 		const split: AudioEntry = {
-			key: sha('打-da2|narrator'),
+			key: sha('打-da2|redpanda'),
 			kind: 'word',
 			ref: '打-da2',
-			voice: 'narrator',
+			voice: 'redpanda',
 			hanzi: '打',
 			reading: 'dá',
 			split: true
 		};
 		await render([split], { engine, bucket });
-		expect([...bucket.objects.keys()]).toEqual([sha('打-da2|narrator') + '.mp3']);
+		expect([...bucket.objects.keys()]).toEqual([sha('打-da2|redpanda') + '.mp3']);
 		expect(engine.calls).toEqual([
-			{ text: 'dá', voice: 'narrator', key: split.key, kind: 'word', hanzi: '打' }
+			{ text: 'dá', voice: 'redpanda', key: split.key, kind: 'word', hanzi: '打' }
 		]);
 	});
 
 	it('rejects a tampered key before any engine call', async () => {
 		const engine = fakeEngine();
 		const bucket = fakeBucket();
-		const bad = { ...entry('谢谢', 'narrator'), key: sha('x') };
+		const bad = { ...entry('谢谢', 'redpanda'), key: sha('x') };
 		await expect(render([entry('你好！', 'takin'), bad], { engine, bucket })).rejects.toThrow(
-			'key mismatch: 谢谢@narrator'
+			'key mismatch: 谢谢@redpanda'
 		);
 		expect(engine.calls).toHaveLength(0);
 		expect(bucket.objects.size).toBe(0);
@@ -114,7 +114,7 @@ describe('render', () => {
 		expect(err.failures).toEqual([
 			{ key: sha('你好！|takin'), ref: '你好！@takin', message: 'boom' }
 		]);
-		expect(bucket.objects.has(sha('谢谢|narrator') + '.mp3')).toBe(true);
+		expect(bucket.objects.has(sha('谢谢|redpanda') + '.mp3')).toBe(true);
 		expect(bucket.objects.size).toBe(2);
 		expect(await render(three(), { engine: fakeEngine(), bucket })).toEqual({
 			uploaded: 1,
@@ -124,7 +124,7 @@ describe('render', () => {
 
 	it('treats 0 bytes as a failure and puts nothing', async () => {
 		const bucket = fakeBucket();
-		const err = await render([entry('谢谢', 'narrator')], {
+		const err = await render([entry('谢谢', 'redpanda')], {
 			engine: fakeEngine(() => new Uint8Array()),
 			bucket
 		}).catch((e) => e);
@@ -168,7 +168,7 @@ describe('render', () => {
 		const engine = fakeEngine();
 		const bucket = fakeBucket();
 		const clip = new TextEncoder().encode('human') as Bytes;
-		const [a, b] = [entry('谢谢', 'narrator'), entry('再见', 'narrator')];
+		const [a, b] = [entry('谢谢', 'redpanda'), entry('再见', 'redpanda')];
 		const result = await render([a, b], {
 			engine,
 			bucket,
@@ -182,7 +182,7 @@ describe('render', () => {
 	it('skips a recorded clip already in the bucket', async () => {
 		const engine = fakeEngine();
 		const bucket = fakeBucket();
-		const a = entry('谢谢', 'narrator');
+		const a = entry('谢谢', 'redpanda');
 		const recorded = () => new Uint8Array([1]) as Bytes;
 		await render([a], { engine, bucket, recorded });
 		expect(await render([a], { engine, bucket, recorded })).toEqual({ uploaded: 0, skipped: 1 });
@@ -190,7 +190,7 @@ describe('render', () => {
 
 	it('stores each clip under the prefix', async () => {
 		const bucket = fakeBucket();
-		const a = entry('谢谢', 'narrator');
+		const a = entry('谢谢', 'redpanda');
 		await render([a], { engine: fakeEngine(), bucket, prefix: 'mv1/' });
 		expect([...bucket.objects.keys()]).toEqual([`mv1/${a.key}.mp3`]);
 	});

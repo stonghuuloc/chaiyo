@@ -87,7 +87,7 @@ describe('createPostgresSink', () => {
 		}[];
 		for (const s of c.sentences)
 			expect(rows.find((r) => r.id === s.id)?.audio_key).toBe(
-				audioKey(s.hanzi, s.speaker ?? 'narrator')
+				audioKey(s.hanzi, s.speaker ?? 'redpanda')
 			);
 		const key = (id: string) => rows.find((r) => r.id === id)!.audio_key;
 		expect(key('s-h1-01-11')).toBe(key('s-h1-01-10'));

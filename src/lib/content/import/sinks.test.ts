@@ -78,7 +78,7 @@ describe('the same content in every sink', () => {
 					id: s.id,
 					spoken: s.spoken,
 					seg: s.seg,
-					audio_key: audioKey(s.hanzi, s.speaker ?? 'narrator'),
+					audio_key: audioKey(s.hanzi, s.speaker ?? 'redpanda'),
 					lessonId: s.lessonId ?? null
 				}))
 			);

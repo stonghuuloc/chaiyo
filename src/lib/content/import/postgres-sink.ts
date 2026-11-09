@@ -154,7 +154,7 @@ export function createPostgresSink(sql: SqlClient): Sink {
 						spoken,
 						vi,
 						seg,
-						audio_key: audioKey(hanzi, data.speaker ?? 'narrator'),
+						audio_key: audioKey(hanzi, data.speaker ?? 'redpanda'),
 						data
 					}))
 				);

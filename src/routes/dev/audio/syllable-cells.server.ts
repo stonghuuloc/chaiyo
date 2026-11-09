@@ -48,7 +48,7 @@ export function loadSyllableClips(source: ContentSource = bundledSource) {
 		clips: [1, 2, 3, 4].map((tone) => {
 			const text = addTone(syllable, tone);
 			const label = `${syllable}${tone}`;
-			return { label, text, key: audioKey(text, 'narrator'), disabled: noClipReason(label) };
+			return { label, text, key: audioKey(text, 'redpanda'), disabled: noClipReason(label) };
 		})
 	}));
 
@@ -59,6 +59,6 @@ export function loadSyllableClips(source: ContentSource = bundledSource) {
 	}
 	const chips: ChipClip[] = [...texts]
 		.filter((t) => t.includes(' '))
-		.map((text) => ({ text, key: audioKey(text, 'narrator') }));
+		.map((text) => ({ text, key: audioKey(text, 'redpanda') }));
 	return { cells, chips };
 }

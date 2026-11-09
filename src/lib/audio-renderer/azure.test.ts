@@ -8,7 +8,7 @@ const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
 const req = (
 	hanzi: string,
 	kind: 'sentence' | 'word' | 'syllable' = 'sentence',
-	voice = 'narrator'
+	voice = 'redpanda'
 ) => ({
 	key: `k-${hanzi}-${voice}`,
 	kind,
@@ -18,9 +18,9 @@ const req = (
 });
 
 describe('cast', () => {
-	it('narrator follows redpanda, takin has its own voice, plain at -20%', () => {
+	it('two voices, takin differs from redpanda, plain at -20%', () => {
 		expect(cast.rate).toBe('-20%');
-		expect(cast.voices.narrator).toBe(cast.voices.redpanda);
+		expect(Object.keys(cast.voices)).toEqual(['redpanda', 'takin']);
 		expect(cast.voices.redpanda).toBe('zh-CN-Xiaoke:DragonHDFlashLatestNeural');
 		expect(cast.voices.takin).not.toBe(cast.voices.redpanda);
 	});

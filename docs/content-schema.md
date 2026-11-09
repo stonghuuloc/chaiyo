@@ -149,7 +149,7 @@ type Prompt =
   | { kind: 'audio'; ref: SentenceId | string }
   | { kind: 'image'; ref: string }                       // word id → its picture
   | { kind: 'vi'; text: string }
-  | { kind: 'syllable'; text: string; spoken?: string };                   // pinyin syllable(s) with tone marks; audio = narrator voice
+  | { kind: 'syllable'; text: string; spoken?: string };                   // pinyin syllable(s) with tone marks; audio = redpanda voice
 
 type Question = {
   id: string;                       // 'q-h1-01-g03'
@@ -318,7 +318,7 @@ interface PrimerSection {
 ```
 
 - Nothing in the Primer enters the Lexicon or makes review cards. Its drill Attempts feed only the per-tone accuracy in Learner Stats.
-- Audio key per syllable: `sha256(syllable|narrator)`. The Pinyin Table needs every syllable in `syllables.yaml` × 4 tones ≈ 1,600 clips, rendered once.
+- Audio key per syllable: `sha256(syllable|redpanda)`. The Pinyin Table needs every syllable in `syllables.yaml` × 4 tones ≈ 1,600 clips, rendered once.
 - Lint: checks 1–7 and the word-count part of 8 skip `kind: primer`; every `syllables` / `pairs` entry (string chips as is, object chips through `say`), after dropping tone marks (ü kept) and splitting on spaces, must be a `syllable` row of `syllables.yaml`; each section has ≥ 1 drill; gate pool ≥ 2 × draw and covers all 5 sections (pool questions carry `section`).
 
 ## Derived at import
@@ -328,7 +328,7 @@ interface PrimerSection {
 | Spoken pinyin | `pinyin` + sandhi | 3-3 → 2-3 · 不 before tone 4 → bú · 一 by next tone; `spoken` overrides |
 | Hán Việt per word | `Char.readings` matched to word pinyin | polyphones pick the reading whose pinyin matches |
 | `Word.taughtIn`, Word Page backlinks | `sections.words.ids` + every sentence's `seg` | first lesson that lists it in `words` |
-| Audio key | `sha256(hanzi\|voice)` per Sentence and Word, normal speed only | voice = speaker's Cast voice, else default narrator; a Word whose id differs from its hanzi keys on `id\|voice`; voice = the CastId, the Audio Renderer maps it to a provider voice; slow play is the client replaying at 0.5× |
+| Audio key | `sha256(hanzi\|voice)` per Sentence and Word, normal speed only | voice = speaker's Cast voice, else default redpanda; a Word whose id differs from its hanzi keys on `id\|voice`; voice = the CastId, the Audio Renderer maps it to a provider voice; slow play is the client replaying at 0.5× |
 | `seg` | longest match against Dictionary, preferring lesson words | author override wins |
 | Warm-up set | due Lexicon cards + previous lesson's words | runtime, not import |
 | Gate draw | `gate.pool` | `draw` random items, covering every `words` id at least once across pool |

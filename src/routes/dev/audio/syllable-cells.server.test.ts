@@ -27,14 +27,14 @@ describe('loadSyllableClips', () => {
 		expect(new Set(cells.flatMap((c) => c.clips.map((k) => k.key))).size).toBe(1620);
 	});
 
-	it('keys are audioKey of the marked syllable, narrator', () => {
+	it('keys are audioKey of the marked syllable, redpanda', () => {
 		const ba = cells.find((c) => c.syllable === 'ba')!;
 		expect(ba.clips[2]).toMatchObject({
 			label: 'ba3',
 			text: 'bǎ',
-			key: audioKey('bǎ', 'narrator')
+			key: audioKey('bǎ', 'redpanda')
 		});
-		expect(cells.find((c) => c.syllable === 'lü')!.clips[0].key).toBe(audioKey('lǖ', 'narrator'));
+		expect(cells.find((c) => c.syllable === 'lü')!.clips[0].key).toBe(audioKey('lǖ', 'redpanda'));
 	});
 
 	it('disables exactly the cells no hanzi or word carries', () => {
@@ -55,7 +55,7 @@ describe('loadSyllableClips', () => {
 
 	it('lists multi-syllable chips with manifest keys', () => {
 		expect(chips.length).toBeGreaterThanOrEqual(20);
-		expect(chips.find((c) => c.text === 'nǐ hǎo')?.key).toBe(audioKey('nǐ hǎo', 'narrator'));
+		expect(chips.find((c) => c.text === 'nǐ hǎo')?.key).toBe(audioKey('nǐ hǎo', 'redpanda'));
 		expect(chips.find((c) => c.text === 'duì bu qǐ')).toBeTruthy();
 	});
 });
