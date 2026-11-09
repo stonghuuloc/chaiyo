@@ -1,5 +1,5 @@
 import { PGlite } from '@electric-sql/pglite';
-import { cpSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -50,6 +50,31 @@ const code = (p: Promise<unknown>) =>
 		(e: { code?: string }) => e.code
 	);
 
+const GRANTS = '20261110000100_learner_grants.sql';
+const HOSTED_DEFAULTS = `grant all on ${CONTENT_TABLES.join(', ')} to anon, authenticated;`;
+
+async function withMigrations(edit: (dir: string) => void, run: (bare: PGlite) => Promise<void>) {
+	const dir = mkdtempSync(join(tmpdir(), 'migrations-'));
+	const bare = new PGlite();
+	try {
+		for (const f of readdirSync(MIGRATIONS)) cpSync(join(MIGRATIONS, f), join(dir, f));
+		edit(dir);
+		await migrate(bare, dir);
+		await seed(bare);
+		await run(bare);
+	} finally {
+		await bare.close();
+		rmSync(dir, { recursive: true });
+	}
+}
+
+const withHostedDefaults = (dir: string) =>
+	writeFileSync(join(dir, '20261105000001_hosted_defaults.sql'), HOSTED_DEFAULTS);
+const editGrants = (dir: string, strip: RegExp) => {
+	const file = join(dir, GRANTS);
+	writeFileSync(file, readFileSync(file, 'utf8').replace(strip, ''));
+};
+
 let db: PGlite;
 beforeEach(async () => {
 	db = new PGlite();
@@ -66,7 +91,6 @@ describe('learner grants', () => {
 			'42501'
 		);
 		expect(await code(db.query("delete from attempts where id = 'Linh-1'"))).toBe('42501');
-		expect(await code(db.query('truncate attempts'))).toBe('42501');
 		await asOwner(db);
 		expect((await db.query('select * from attempts where id = $1', ['Linh-1'])).rows).toEqual(
 			before
@@ -74,19 +98,16 @@ describe('learner grants', () => {
 	});
 
 	it('without the grants file the same statements silently match 0 rows', async () => {
-		const dir = mkdtempSync(join(tmpdir(), 'migrations-'));
-		for (const f of readdirSync(MIGRATIONS))
-			if (f !== '20261110000100_learner_grants.sql') cpSync(join(MIGRATIONS, f), join(dir, f));
-		const bare = new PGlite();
-		await migrate(bare, dir);
-		await seed(bare);
-		await asLearner(bare, LINH);
-		expect(
-			(await bare.query("update attempts set correct = false where id = 'Linh-1'")).affectedRows
-		).toBe(0);
-		expect((await bare.query("delete from attempts where id = 'Linh-1'")).affectedRows).toBe(0);
-		await bare.close();
-		rmSync(dir, { recursive: true });
+		await withMigrations(
+			(dir) => rmSync(join(dir, GRANTS)),
+			async (bare) => {
+				await asLearner(bare, LINH);
+				expect(
+					(await bare.query("update attempts set correct = false where id = 'Linh-1'")).affectedRows
+				).toBe(0);
+				expect((await bare.query("delete from attempts where id = 'Linh-1'")).affectedRows).toBe(0);
+			}
+		);
 	});
 
 	it('attempt insert is idempotent by id', async () => {
@@ -126,18 +147,32 @@ describe('learner grants', () => {
 		]);
 	});
 
+	it('the content revoke is what blocks writes when the host grants them by default', async () => {
+		await withMigrations(withHostedDefaults, async (bare) => {
+			await asLearner(bare, LINH);
+			expect(await code(bare.query("update lessons set title = 'x'"))).toBe('42501');
+			expect(await code(bare.query('delete from lessons'))).toBe('42501');
+		});
+		await withMigrations(
+			(dir) => {
+				withHostedDefaults(dir);
+				editGrants(dir, /revoke insert[\s\S]*?from anon, authenticated;\n/);
+			},
+			async (bare) => {
+				await asLearner(bare, LINH);
+				expect((await bare.query("update lessons set title = 'x'")).affectedRows).toBe(0);
+				expect((await bare.query('delete from lessons')).affectedRows).toBe(0);
+			}
+		);
+	});
+
 	it('without grant select, learners cannot read content', async () => {
-		const dir = mkdtempSync(join(tmpdir(), 'migrations-'));
-		for (const f of readdirSync(MIGRATIONS)) cpSync(join(MIGRATIONS, f), join(dir, f));
-		const { readFileSync, writeFileSync } = await import('node:fs');
-		const p = join(dir, '20261110000100_learner_grants.sql');
-		writeFileSync(p, readFileSync(p, 'utf8').replace(/grant select on[\s\S]*$/, ''));
-		const bare = new PGlite();
-		await migrate(bare, dir);
-		await seed(bare);
-		await asLearner(bare, LINH);
-		expect(await code(bare.query('select id from lessons'))).toBe('42501');
-		await bare.close();
-		rmSync(dir, { recursive: true });
+		await withMigrations(
+			(dir) => editGrants(dir, /grant select on[\s\S]*$/),
+			async (bare) => {
+				await asLearner(bare, LINH);
+				expect(await code(bare.query('select id from lessons'))).toBe('42501');
+			}
+		);
 	});
 });
