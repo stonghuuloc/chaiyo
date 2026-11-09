@@ -1,5 +1,5 @@
 import { PGlite } from '@electric-sql/pglite';
-import { cpSync, mkdtempSync, readdirSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -71,6 +71,7 @@ describe('learner tables', () => {
 		const bad = new PGlite();
 		await expect(migrate(bad, dir)).rejects.toThrow('zz_bad.sql');
 		await bad.close();
+		rmSync(dir, { recursive: true });
 	});
 
 	it('a learner reads only her own rows', async () => {
@@ -116,6 +117,20 @@ describe('learner tables', () => {
 		);
 		await asOwner(db);
 		expect(await snapshot()).toEqual(before);
+	});
+
+	it('follows are private to the follower and settings and profiles cannot be deleted', async () => {
+		await asLearner(db, NAM);
+		await db.query('insert into follows (followee_id) values ($1)', [LINH]);
+		await asLearner(db, LINH);
+		expect((await db.query('select * from follows')).rows).toHaveLength(0);
+		expect((await db.query('delete from follows')).affectedRows).toBe(0);
+		expect((await db.query('delete from settings')).affectedRows).toBe(0);
+		expect((await db.query('delete from profiles')).affectedRows).toBe(0);
+		await asOwner(db);
+		expect((await db.query('select * from follows')).rows).toHaveLength(1);
+		expect((await db.query('select * from settings')).rows).toHaveLength(2);
+		expect((await db.query('select * from profiles')).rows).toHaveLength(2);
 	});
 
 	it('attempts record which content they answered', async () => {
