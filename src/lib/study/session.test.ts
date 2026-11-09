@@ -152,6 +152,7 @@ describe('interleave word adjacency', () => {
 		] as const)
 			s = apply(s, attempt(w, k, true), T).state;
 		s = {
+			...s,
 			lexicon: Object.fromEntries(
 				Object.entries(s.lexicon).map(([w, e]) => [
 					w,
