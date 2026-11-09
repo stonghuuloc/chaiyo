@@ -1,9 +1,8 @@
 import { parse } from 'yaml';
 import { audioKey, addTone } from '#lib/content/import/audio.js';
-import { noClipReason } from '#lib/audio-renderer/carriers.js';
 import { NO_CLIP } from '#lib/audio-renderer/recorded.js';
 
-export type Clip = { label: string; text: string; key: string; disabled?: string };
+export type Clip = { label: string; text: string; key: string };
 export type SyllableCell = { syllable: string; initial: string; clips: Clip[] };
 export type ChipClip = { text: string; key: string };
 
@@ -52,7 +51,7 @@ export function loadSyllableClips(source: ContentSource = bundledSource) {
 			clips: [1, 2, 3, 4].map((tone) => {
 				const text = addTone(syllable, tone);
 				const label = `${syllable}${tone}`;
-				return { label, text, key: audioKey(text, 'redpanda'), disabled: noClipReason(label) };
+				return { label, text, key: audioKey(text, 'redpanda') };
 			})
 		}));
 
