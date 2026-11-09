@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { apply, minutes, session, type Attempt, type Skill } from '#lib/study/index.js';
+import {
+	apply,
+	initialState,
+	minutes,
+	session,
+	type Attempt,
+	type Skill
+} from '#lib/study/index.js';
 import { T, bai1 } from '#lib/study/fixtures/bai1.js';
 
 const tz = 'Asia/Ho_Chi_Minh';
@@ -90,9 +97,33 @@ describe('session', () => {
 		const s = bai1();
 		expect(session(s, { now: new Date('2026-11-09T16:59:59Z'), tz })).toHaveLength(10);
 		const later = session(s, { now: new Date('2026-11-11T17:00:00Z'), tz });
-		expect(later.length).toBeGreaterThan(10);
-		expect(later).toContainEqual(c('你们', 'the'));
-		expect(later).toContainEqual(c('谢谢', 'the'));
+		expect(later).toEqual([
+			c('你', 'the'),
+			c('谢谢', 'nghe'),
+			c('你', 'viet'),
+			c('好', 'the'),
+			c('再见', 'nghe'),
+			c('好', 'viet'),
+			c('您', 'the'),
+			c('没关系', 'nghe'),
+			c('你们', 'viet'),
+			c('对不起', 'the'),
+			c('不客气', 'nghe'),
+			c('谢谢', 'the'),
+			c('对不起', 'nghe'),
+			c('再见', 'the'),
+			c('你好', 'nghe'),
+			c('没关系', 'the'),
+			c('熊猫', 'the'),
+			c('你们', 'the'),
+			c('不客气', 'the'),
+			c('奶茶', 'the')
+		]);
+		expect(s.lexicon['你好'].cards.the!.due).toBe('2026-11-18T03:52:52.121Z');
+		const before = session(s, { now: new Date('2026-11-17T16:59:59Z'), tz, only: ['the'] });
+		const after = session(s, { now: new Date('2026-11-17T17:00:00Z'), tz, only: ['the'] });
+		expect(before).not.toContainEqual(c('你好', 'the'));
+		expect(after).toContainEqual(c('你好', 'the'));
 	});
 
 	it('single-skill filter', () => {
@@ -108,5 +139,31 @@ describe('session', () => {
 		expect(session(s, { now: T, tz, only: ['the'] })).toEqual(
 			expected.filter((x) => x.skill === 'the')
 		);
+	});
+});
+
+describe('interleave word adjacency', () => {
+	it('skips a card whose word was just taken', () => {
+		let s = initialState();
+		for (const [w, k] of [
+			['你', 'the'],
+			['你', 'viet'],
+			['好', 'viet']
+		] as const)
+			s = apply(s, attempt(w, k, true), T).state;
+		s = {
+			lexicon: Object.fromEntries(
+				Object.entries(s.lexicon).map(([w, e]) => [
+					w,
+					{
+						...e,
+						cards: Object.fromEntries(
+							Object.entries(e.cards).map(([k, card]) => [k, { ...card!, due: T.toISOString() }])
+						)
+					}
+				])
+			)
+		};
+		expect(session(s, { now: T, tz })).toEqual([c('你', 'the'), c('好', 'viet'), c('你', 'viet')]);
 	});
 });

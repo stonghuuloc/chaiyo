@@ -3,28 +3,25 @@ import type { SessionCard, Skill, State } from './types';
 const ORDER: Skill[] = ['the', 'nghe', 'viet'];
 const SECONDS: Record<Skill, number> = { the: 10, nghe: 15, viet: 35 };
 
-const localDate = (d: Date, tz: string) => {
-	const p = Object.fromEntries(
-		new Intl.DateTimeFormat('en-US', {
-			timeZone: tz,
-			year: 'numeric',
-			month: '2-digit',
-			day: '2-digit'
-		})
-			.formatToParts(d)
-			.map((x) => [x.type, x.value])
-	);
+const localDate = (fmt: Intl.DateTimeFormat, d: Date) => {
+	const p = Object.fromEntries(fmt.formatToParts(d).map((x) => [x.type, x.value]));
 	return `${p.year}-${p.month}-${p.day}`;
 };
 
 export function session(state: State, o: { now: Date; tz: string; only?: Skill[] }): SessionCard[] {
-	const today = localDate(o.now, o.tz);
+	const fmt = new Intl.DateTimeFormat('en-US', {
+		timeZone: o.tz,
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit'
+	});
+	const today = localDate(fmt, o.now);
 	const words = Object.keys(state.lexicon);
 	const lanes = ORDER.filter((s) => !o.only || o.only.includes(s)).map((skill) => {
 		const due = words
 			.filter((w) => {
 				const c = state.lexicon[w].cards[skill];
-				return c && localDate(new Date(c.due), o.tz) <= today;
+				return c && localDate(fmt, new Date(c.due)) <= today;
 			})
 			.sort(
 				(a, b) =>
