@@ -11,8 +11,8 @@ describe('audio base', () => {
 	});
 
 	it('reads syllable clips (Tone Perfect FV3 recordings) under their own prefix', () => {
-		expect(SYLLABLE_VERSION).toBe('az3');
-		expect(SYLLABLE_BASE.endsWith('/az3')).toBe(true);
+		expect(SYLLABLE_VERSION).toBe('az5');
+		expect(SYLLABLE_BASE.endsWith('/az5')).toBe(true);
 		expect(SYLLABLE_BASE.slice(0, -3)).toBe(AUDIO_BASE.slice(0, -3));
 	});
 });
