@@ -1,4 +1,4 @@
-import subprocess, sys
+import struct, subprocess, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -10,7 +10,8 @@ def noisy_png(path, size):
 
 
 def dims(path):
-    return subprocess.run([*ic.IM, 'identify', '-format', '%wx%h', str(path)], capture_output=True, text=True, check=True).stdout
+    w, h = struct.unpack('>II', Path(path).read_bytes()[16:24])
+    return f'{w}x{h}'
 
 
 def test_compress_caps_long_edge_and_shrinks(tmp_path):
