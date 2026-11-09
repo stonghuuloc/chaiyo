@@ -1,5 +1,5 @@
 import { render } from 'svelte/server';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import TalkingCast from './TalkingCast.svelte';
 import {
 	bob,
@@ -185,5 +185,47 @@ describe('TalkingCast', () => {
 		expect(labelled).toHaveLength(1);
 		expect(labelled[0]).toContain('type="button"');
 		expect(out).toMatch(/<button[^>]*aria-hidden="true"/);
+	});
+});
+
+class SharedAudio {
+	#src = '';
+	playbackRate = 1;
+	defaultPlaybackRate = 1;
+	preservesPitch = false;
+	currentTime = 5;
+	play = vi.fn(() => Promise.resolve());
+	get src() {
+		return this.#src;
+	}
+	set src(value: string) {
+		this.#src = new URL(value, 'https://app.test/lesson').href;
+	}
+}
+
+describe('TalkingCast driven by the shared player', () => {
+	afterEach(() => vi.unstubAllGlobals());
+
+	it('Given_SharedPlayer_When_TwoTaps_Then_OneElementAt1xThen0.5xOnTheClipUrl', async () => {
+		// Arrange
+		vi.resetModules();
+		vi.stubGlobal('location', { href: 'https://app.test/lesson' });
+		vi.stubGlobal('Audio', SharedAudio);
+		const { player } = await import('#lib/audio/index.js');
+		// Act
+		const out = render(TalkingCast, { props: { clip: '11', player, label: 'Nghe lại' } }).body;
+		expect(player.element()).toBe(null);
+		await player.play('11');
+		const el = player.element();
+		expect(el).toBeInstanceOf(SharedAudio);
+		expect(el?.playbackRate).toBe(1);
+		await player.play('11');
+		// Assert
+		expect(out.match(/<img[^>]*>/g) ?? []).toHaveLength(3);
+		expect(out).toContain('aria-label="Nghe lại"');
+		expect(player.element()).toBe(el);
+		expect(el?.playbackRate).toBe(0.5);
+		expect(isPlaying(player, '11', el)).toBe(true);
+		expect(el?.src).toBe(new URL(player.url('11'), 'https://app.test/lesson').href);
 	});
 });
