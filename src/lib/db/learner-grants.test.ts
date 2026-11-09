@@ -91,6 +91,7 @@ describe('learner grants', () => {
 			'42501'
 		);
 		expect(await code(db.query("delete from attempts where id = 'Linh-1'"))).toBe('42501');
+		expect(await code(db.query('truncate attempts'))).toBe('42501');
 		await asOwner(db);
 		expect((await db.query('select * from attempts where id = $1', ['Linh-1'])).rows).toEqual(
 			before
