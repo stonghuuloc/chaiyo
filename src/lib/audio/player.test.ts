@@ -1,4 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { AUDIO_BASE } from './base';
 import { createPlayer } from './player';
 
 type Seen = { rate: number; pitch: boolean; src: string };
@@ -19,11 +20,12 @@ class FakeAudio {
 function setup(base?: string) {
 	const el = new FakeAudio();
 	const createAudio = vi.fn(() => el as unknown as HTMLAudioElement);
-	const { play } = createPlayer({ base, createAudio });
-	return { el, createAudio, play };
+	return { el, createAudio, ...createPlayer({ base, createAudio }) };
 }
 
 const rates = (el: FakeAudio) => el.seen.map((s) => s.rate);
+
+afterEach(() => vi.unstubAllGlobals());
 
 describe('play toggle', () => {
 	it('alternates 1x and 0.5x on the same key, pitch kept', async () => {
@@ -99,6 +101,59 @@ describe('one player across prefixes', () => {
 			['/az2/chip.mp3', 1],
 			['/az2/chip.mp3', 0.5]
 		]);
+	});
+});
+
+describe('url accessor', () => {
+	it('builds the clip url under the player base', () => {
+		const { url } = setup('/az2');
+		expect(url('chip')).toBe('/az2/chip.mp3');
+	});
+
+	it('takes the per-call base for the other prefix', () => {
+		const { url } = setup('/az2');
+		expect(url('cell', '/az3')).toBe('/az3/cell.mp3');
+	});
+
+	it('names the src that play loads for the same key and base', async () => {
+		const { el, url, play } = setup('/az2');
+		await play('cell', { base: '/az3' });
+		expect(el.src).toBe(url('cell', '/az3'));
+	});
+});
+
+describe('element accessor', () => {
+	it('is null until the first play, then the one shared element', async () => {
+		const { el, createAudio, element, play } = setup();
+		expect(element()).toBe(null);
+		await play('11');
+		expect(element()).toBe(el);
+		await play('12', { base: '/az3' });
+		expect(element()).toBe(el);
+		expect(createAudio).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('shared player', () => {
+	it('exposes the url and the one element its play uses', async () => {
+		const made: FakeAudio[] = [];
+		class AudioStub extends FakeAudio {
+			constructor() {
+				super();
+				made.push(this);
+			}
+		}
+		vi.stubGlobal('Audio', AudioStub);
+		vi.resetModules();
+		const shared = await import('./player');
+		expect(shared.player.element()).toBe(null);
+		expect(shared.player.url('11')).toBe(`${AUDIO_BASE}/11.mp3`);
+		await shared.player.play('11');
+		expect(shared.player.element()).toBe(made[0]);
+		await shared.player.play('11');
+		expect(shared.player.element()).toBe(made[0]);
+		expect(made).toHaveLength(1);
+		expect(shared.player.play).toBe(shared.play);
 	});
 });
 

@@ -1,2 +1,2 @@
-export { play, createPlayer } from './player';
+export { play, player, createPlayer } from './player';
 export { precache } from './precache';
