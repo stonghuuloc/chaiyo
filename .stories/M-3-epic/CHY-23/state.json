@@ -1,0 +1,48 @@
+{
+  "story": "CHY-23",
+  "title": "Postgres: learner tables + RLS",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "learner tables and RLS isolation",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC6"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 2,
+      "note": "design READY (Opus r1+r2, Sonnet delta); picture next (lead)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "append-only attempts, idempotent insert, read-only content",
+      "acs": [
+        "AC4",
+        "AC5",
+        "AC7"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 2,
+      "note": "design READY (Opus r1+r2, Sonnet delta); picture next (lead)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-23",
+  "log": [
+    "2026-11-09 init",
+    "2026-11-09 +S1 learner tables and RLS isolation [AC1,AC2,AC3,AC6]",
+    "2026-11-09 +S2 append-only attempts, idempotent insert, read-only content [AC4,AC5,AC7]",
+    "2026-11-09 S1 \u2192 plan",
+    "2026-11-09 S2 \u2192 plan"
+  ],
+  "updated": "2026-11-09T14:42:31+07:00"
+}
