@@ -1,0 +1,150 @@
+import { IDBFactory } from 'fake-indexeddb';
+import { describe, expect, it, vi } from 'vitest';
+import { apply, initialState, type Attempt } from '#lib/study/index.js';
+import { att, outbox, server, T } from './fixtures';
+import { memoryStore, openLedger } from './index';
+
+const fold = (inputs: Attempt[]) =>
+	inputs.reduce((s, i) => apply(s, i, new Date(i.at)).state, initialState());
+
+describe('ledger', () => {
+	it('duplicate replays never create duplicate Attempts', async () => {
+		const store = memoryStore();
+		const a001 = att('a-001', T, '你', 'the', true);
+		await store.push([a001]);
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		await ledger.record(a001);
+		expect(ledger.pending()).toBe(1);
+		await ledger.sync();
+		expect(store.rows().filter((r) => 'id' in r && r.id === 'a-001')).toHaveLength(1);
+		expect(ledger.pending()).toBe(0);
+		await ledger.record(a001);
+		expect(ledger.pending()).toBe(0);
+		await ledger.sync();
+		await ledger.sync();
+		expect(store.rows()).toHaveLength(1);
+		expect(store.pushes).toBe(2);
+	});
+
+	it('state() is Study.apply folded in time order', async () => {
+		const store = memoryStore();
+		await store.push(server);
+		store.pushes = 0;
+		const idb = new IDBFactory();
+		const ledger = await openLedger({ initial: initialState(), store, idb });
+		await ledger.sync();
+		expect(ledger.pending()).toBe(0);
+		store.online = false;
+		for (const o of outbox) await ledger.record(o);
+		expect(ledger.pending()).toBe(3);
+		const [s1, s2, s3, s4, s5] = server;
+		const [o1, o2, o3] = outbox;
+		expect(ledger.state()).toEqual(fold([s1, o1, s2, s3, s4, s5, o2, o3]));
+
+		const reopened = await openLedger({ initial: initialState(), store, idb });
+		expect(reopened.state()).toEqual(ledger.state());
+		expect(reopened.pending()).toBe(3);
+	});
+
+	it('orders a saved word before an attempt at the same time', async () => {
+		const ledger = await openLedger({
+			initial: initialState(),
+			store: memoryStore(),
+			idb: new IDBFactory()
+		});
+		const nghe = att('n1', T, '你', 'nghe', true);
+		await ledger.record(nghe);
+		await ledger.record({ kind: 'saved', word: '你', at: nghe.at });
+		expect(ledger.state().lexicon['你'].cards.nghe).toBeUndefined();
+	});
+
+	it('rejects sync without marking anything, then retries', async () => {
+		const store = memoryStore();
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		await ledger.record(outbox[0]);
+		store.online = false;
+		await expect(ledger.sync()).rejects.toThrow('offline');
+		expect(ledger.pending()).toBe(1);
+		store.online = true;
+		await ledger.sync();
+		expect(ledger.pending()).toBe(0);
+		expect(store.rows()).toHaveLength(1);
+	});
+
+	it('shares one in-flight sync and pulls unknown inputs', async () => {
+		const store = memoryStore();
+		await store.push([server[0]]);
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		const a = ledger.sync();
+		expect(ledger.sync()).toBe(a);
+		await a;
+		expect(ledger.state()).toEqual(fold([server[0]]));
+		expect(ledger.pending()).toBe(0);
+	});
+
+	it('subscribe notifies on every change', async () => {
+		const ledger = await openLedger({
+			initial: initialState(),
+			store: memoryStore(),
+			idb: new IDBFactory()
+		});
+		const fn = vi.fn();
+		const unsubscribe = ledger.subscribe(fn);
+		const a100 = att('a100', T, '你', 'the', true);
+		await ledger.record(a100);
+		expect(fn).toHaveBeenCalledTimes(1);
+		expect(fn).toHaveBeenCalledWith(ledger.state());
+		await ledger.record(a100);
+		expect(fn).toHaveBeenCalledTimes(1);
+		unsubscribe();
+		await ledger.record(att('a101', T + 1000, '你', 'the', true));
+		expect(fn).toHaveBeenCalledTimes(1);
+	});
+
+	it('notifies when sync pulls new inputs', async () => {
+		const store = memoryStore();
+		await store.push([server[0]]);
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		const fn = vi.fn();
+		ledger.subscribe(fn);
+		await ledger.sync();
+		expect(fn).toHaveBeenCalledTimes(1);
+		await ledger.sync();
+		expect(fn).toHaveBeenCalledTimes(1);
+	});
+
+	it('a record racing a pull of the same key keeps memory and IndexedDB equal', async () => {
+		const store = memoryStore();
+		const saved = {
+			kind: 'saved' as const,
+			word: '你',
+			at: new Date(T - 8 * 86_400_000).toISOString()
+		};
+		await store.push([saved]);
+		const idb = new IDBFactory();
+		const ledger = await openLedger({ initial: initialState(), store, idb });
+		const syncing = ledger.sync();
+		await Promise.resolve();
+		const recording = ledger.record({ ...saved, at: new Date(T).toISOString() });
+		await Promise.all([syncing, recording]);
+		const reopened = await openLedger({ initial: initialState(), store, idb });
+		expect(reopened.pending()).toBe(ledger.pending());
+		expect(reopened.state()).toEqual(ledger.state());
+	});
+
+	it('pull marks a row recorded during an in-flight push as synced', async () => {
+		const store = memoryStore();
+		const idb = new IDBFactory();
+		const ledger = await openLedger({ initial: initialState(), store, idb });
+		await ledger.record(outbox[0]);
+		const push = store.push.bind(store);
+		store.push = async (inputs) => {
+			await push(inputs);
+			await ledger.record(outbox[1]);
+			await push([outbox[1]]);
+		};
+		await ledger.sync();
+		expect(ledger.pending()).toBe(0);
+		expect((await openLedger({ initial: initialState(), store, idb })).pending()).toBe(0);
+	});
+});
