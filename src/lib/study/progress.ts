@@ -12,7 +12,7 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 		!(meta.testOut || meta.sections.every((section) => L.done.includes(section)))
 	)
 		return ignore;
-	const run = s.runs[step.run] ?? { answers: {} };
+	const run = Object.hasOwn(s.runs, step.run) ? s.runs[step.run] : { answers: {} };
 	if (run.closed || Object.hasOwn(run.answers, a.questionId)) return ignore;
 	const answers = { ...run.answers, [a.questionId]: a.correct === true };
 	if (Object.keys(answers).length < step.of)

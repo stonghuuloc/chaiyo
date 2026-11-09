@@ -140,6 +140,15 @@ describe('step.of', () => {
 	});
 });
 
+describe('run ids', () => {
+	it('an id like constructor or __proto__ is an ordinary run', () => {
+		for (const id of ['constructor', '__proto__']) {
+			const r = run(ready(), gateRun('h1-01', id, 9, new Date(T.getTime() + 10 * H)));
+			expect(r.last).toHaveLength(3);
+		}
+	});
+});
+
 describe('Lexicon promotion', () => {
 	it('a saved word is promoted when its lesson teaches it', () => {
 		const saved: WordSaved = {
