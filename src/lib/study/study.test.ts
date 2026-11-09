@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { apply, type Attempt, type Skill, type State } from '#lib/study/index.js';
+import {
+	apply,
+	initialState,
+	type Attempt,
+	type Skill,
+	type State,
+	type StudyEvent
+} from '#lib/study/index.js';
 import { T, bai1 } from '#lib/study/fixtures/bai1.js';
 
 const DAY = 86_400_000;
+const scheduled = (events: StudyEvent[]) => events.filter((e) => e.type === 'CardScheduled');
 const attempt = (word: string, skill: Skill, correct: boolean | null): Attempt => ({
 	id: `a:${word}:${skill}`,
 	at: T.toISOString(),
@@ -48,9 +56,9 @@ describe('apply', () => {
 	it('remembering pushes the card further than forgetting', () => {
 		const s = bai1();
 		const right = apply(s, attempt('你', 'the', true), T);
-		expect(right.events[0].due).toBe('2026-12-05T14:51:41.809Z');
+		expect(scheduled(right.events)[0].due).toBe('2026-12-05T14:51:41.809Z');
 		const wrong = apply(right.state, attempt('好', 'the', false), T);
-		expect(wrong.events[0].due).toBe('2026-11-09T02:10:00.000Z');
+		expect(scheduled(wrong.events)[0].due).toBe('2026-11-09T02:10:00.000Z');
 		const dueOf = (w: string) => new Date(wrong.state.lexicon[w].cards.the!.due).getTime();
 		expect(dueOf('你')).toBeGreaterThan(dueOf('好'));
 		expect(dueOf('好') - T.getTime()).toBeLessThanOrEqual(DAY);
@@ -68,13 +76,13 @@ describe('apply', () => {
 			state = r.state;
 			events.push(...r.events);
 		}
-		expect(new Set(events.map((e) => e.skill)).size).toBe(3);
-		expect(events.map((e) => e.due)).toEqual([
+		expect(new Set(scheduled(events).map((e) => e.skill)).size).toBe(3);
+		expect(scheduled(events).map((e) => e.due)).toEqual([
 			'2026-12-05T14:51:41.809Z',
 			'2026-11-09T02:01:00.000Z',
 			'2026-12-07T04:28:23.574Z'
 		]);
-		for (const e of events) expect(state.lexicon['你'].cards[e.skill]!.due).toBe(e.due);
+		for (const e of scheduled(events)) expect(state.lexicon['你'].cards[e.skill]!.due).toBe(e.due);
 	});
 
 	it('an Attempt dated before the last review does not throw', () => {
@@ -92,6 +100,7 @@ describe('apply', () => {
 
 	it('a malformed stored card is rejected, not scheduled as NaN', () => {
 		const broken: State = {
+			...initialState(),
 			lexicon: {
 				你: { saved: false, cards: { the: { due: '2026-11-09T02:00:00.000Z', fsrs: { reps: 1 } } } }
 			}
