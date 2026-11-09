@@ -10,7 +10,7 @@ export function apply(
 ): { state: State; events: StudyEvent[] } {
 	if (!input.card || input.correct === null) return { state, events: [] };
 	const { word, skill } = input.card;
-	const entry = state.lexicon[word] ?? { cards: {} };
+	const entry = Object.hasOwn(state.lexicon, word) ? state.lexicon[word] : { cards: {} };
 	const card = review(entry.cards[skill]?.fsrs, `${word}:${skill}`, input.correct, now);
 	const lexicon = {
 		...state.lexicon,

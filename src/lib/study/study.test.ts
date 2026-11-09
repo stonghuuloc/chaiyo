@@ -77,6 +77,19 @@ describe('apply', () => {
 		for (const e of events) expect(state.lexicon['你'].cards[e.skill]!.due).toBe(e.due);
 	});
 
+	it('an Attempt dated before the last review does not throw', () => {
+		const s = bai1();
+		const early = new Date(T.getTime() - 30 * DAY);
+		const { events } = apply(s, attempt('你好', 'the', true), early);
+		expect(events).toHaveLength(1);
+	});
+
+	it('words named like Object.prototype keys are ordinary words', () => {
+		const { state, events } = apply(bai1(), attempt('constructor', 'the', true), T);
+		expect(events).toHaveLength(1);
+		expect(Object.hasOwn(state.lexicon, 'constructor')).toBe(true);
+	});
+
 	it('state survives JSON', () => {
 		const s = bai1();
 		const a = apply(s, attempt('你', 'the', true), T);

@@ -6,7 +6,9 @@ type Stored = Record<string, unknown>;
 
 const toDate = (v: unknown) => (v == null ? null : new Date(v as string));
 
-export function review(stored: Stored | undefined, cardId: string, right: boolean, now: Date) {
+export function review(stored: Stored | undefined, cardId: string, right: boolean, at: Date) {
+	const last = toDate(stored?.lastReviewAt);
+	const now = last && last > at ? last : at;
 	const card = stored
 		? ({
 				...stored,
