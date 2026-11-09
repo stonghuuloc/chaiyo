@@ -1,5 +1,7 @@
 import type { Input } from './types';
 
+export const key = (i: Input) => ('kind' in i ? `s:${i.word}` : `a:${i.id}`);
+
 export type Row = { key: string; input: Input; synced: boolean };
 
 const done = <T>(req: IDBRequest<T>) =>

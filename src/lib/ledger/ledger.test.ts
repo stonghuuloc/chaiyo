@@ -112,4 +112,39 @@ describe('ledger', () => {
 		await ledger.sync();
 		expect(fn).toHaveBeenCalledTimes(1);
 	});
+
+	it('a record racing a pull of the same key keeps memory and IndexedDB equal', async () => {
+		const store = memoryStore();
+		const saved = {
+			kind: 'saved' as const,
+			word: '你',
+			at: new Date(T - 8 * 86_400_000).toISOString()
+		};
+		await store.push([saved]);
+		const idb = new IDBFactory();
+		const ledger = await openLedger({ initial: initialState(), store, idb });
+		const syncing = ledger.sync();
+		await Promise.resolve();
+		const recording = ledger.record({ ...saved, at: new Date(T).toISOString() });
+		await Promise.all([syncing, recording]);
+		const reopened = await openLedger({ initial: initialState(), store, idb });
+		expect(reopened.pending()).toBe(ledger.pending());
+		expect(reopened.state()).toEqual(ledger.state());
+	});
+
+	it('pull marks a row recorded during an in-flight push as synced', async () => {
+		const store = memoryStore();
+		const idb = new IDBFactory();
+		const ledger = await openLedger({ initial: initialState(), store, idb });
+		await ledger.record(outbox[0]);
+		const push = store.push.bind(store);
+		store.push = async (inputs) => {
+			await push(inputs);
+			await ledger.record(outbox[1]);
+			await push([outbox[1]]);
+		};
+		await ledger.sync();
+		expect(ledger.pending()).toBe(0);
+		expect((await openLedger({ initial: initialState(), store, idb })).pending()).toBe(0);
+	});
 });

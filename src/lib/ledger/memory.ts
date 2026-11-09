@@ -1,8 +1,7 @@
+import { key } from './idb';
 import type { Input, Store } from './types';
 
 export type MemoryStore = Store & { rows(): Input[]; online: boolean; pushes: number };
-
-const key = (i: Input) => ('kind' in i ? `s:${i.word}` : `a:${i.id}`);
 
 export function memoryStore(): MemoryStore {
 	const held = new Map<string, Input>();
