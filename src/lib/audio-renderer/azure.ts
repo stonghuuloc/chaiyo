@@ -30,7 +30,7 @@ const escape = (text: string) =>
 	text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export function ssml(cast: Cast, voice: string, text: string) {
-	return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN"><voice name="${voice}"><prosody rate="${cast.rate}">${escape(text)}</prosody></voice></speak>`;
+	return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN"><voice name="${voice}"><prosody rate="${cast.rate}">${escape(text)}<break time="250ms"/></prosody></voice></speak>`;
 }
 
 export const billable = (body: string) =>
@@ -52,6 +52,7 @@ export type AzureDeps = {
 	key: string;
 	region: string;
 	cacheDir: string;
+	rawDir?: string;
 	fetchImpl?: typeof fetch;
 	encode?: (wav: string, mp3: string, cut: boolean) => void;
 	faults?: (file: string, hanzi?: number, minSeconds?: number) => string[];
@@ -60,9 +61,38 @@ export type AzureDeps = {
 };
 
 const MAX_ATTEMPTS = 3;
+const MAX_TAKES = 8;
 const MAX_TRIES = 6;
 const MIN_SYLLABLE_SECONDS = 0.15;
-const TRIM = 'silenceremove=start_periods=1:start_threshold=-45dB';
+const MAX_END_DB = -40;
+const TRIM = 'silenceremove=start_periods=1:start_threshold=-70dB:start_silence=0.1:detection=peak';
+export const FILTER = `adelay=delays=100:all=1,apad=pad_dur=0.1,${TRIM},areverse,${TRIM},areverse,loudnorm=I=-16:TP=-1.5:LRA=11`;
+
+export function endLevel(wav: Uint8Array) {
+	const view = new DataView(wav.buffer, wav.byteOffset, wav.byteLength);
+	let rate = 24000;
+	let at = 12;
+	while (at + 8 <= wav.byteLength) {
+		const id = String.fromCharCode(...wav.subarray(at, at + 4));
+		const size = view.getUint32(at + 4, true);
+		if (id === 'fmt ') rate = view.getUint32(at + 12, true);
+		if (id === 'data') {
+			const start = at + 8;
+			const n = rate / 100;
+			const frames = Math.floor((Math.min(start + size, wav.byteLength) - start) / 2 / n);
+			const level = (f: number) => {
+				let sum = 0;
+				for (let i = 0; i < n; i++) sum += view.getInt16(start + (f * n + i) * 2, true) ** 2;
+				return 10 * Math.log10(sum / n + 1e-9);
+			};
+			let peak = -Infinity;
+			for (let f = 0; f < frames; f++) peak = Math.max(peak, level(f));
+			return frames ? level(frames - 1) - peak : 0;
+		}
+		at += 8 + size + (size % 2);
+	}
+	return 0;
+}
 
 export function encodeTrimmed(wav: string, mp3: string, cut: boolean) {
 	let source = wav;
@@ -95,7 +125,7 @@ export function encodeTrimmed(wav: string, mp3: string, cut: boolean) {
 			'-i',
 			source,
 			'-af',
-			`${TRIM},areverse,${TRIM},areverse,loudnorm=I=-16:TP=-1.5:LRA=11`,
+			FILTER,
 			'-ac',
 			'1',
 			'-ar',
@@ -118,6 +148,7 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 	const minInterval = deps.minIntervalMs ?? 3100;
 	const work = mkdtempSync(join(tmpdir(), 'chaiyo-azure-'));
 	mkdirSync(deps.cacheDir, { recursive: true });
+	if (deps.rawDir) mkdirSync(deps.rawDir, { recursive: true });
 	let last = -Infinity;
 	let clip = 0;
 
@@ -153,23 +184,40 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 			const request = azureRequest(cast, req);
 			if (!request) throw new Error(`${req.hanzi}: no carrier`);
 			const hash = createHash('sha256')
-				.update(`${request.body}|${request.cut}`)
+				.update(`${request.body}|${request.cut}|${FILTER}`)
 				.digest('hex')
 				.slice(0, 12);
 			const cached = join(deps.cacheDir, `${req.key}-${hash}.mp3`);
 			if (existsSync(cached)) return readFileSync(cached);
+			const raw =
+				deps.rawDir &&
+				join(
+					deps.rawDir,
+					`${req.key}-${createHash('sha256').update(request.body).digest('hex').slice(0, 12)}.wav`
+				);
 			const wav = join(work, `${clip}.wav`);
 			const mp3 = join(work, `${clip++}.mp3`);
 			let lastFault = '';
-			for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-				writeFileSync(wav, await speak(request.body));
-				encode(wav, mp3, request.cut);
-				const faults = faultsOf(
-					mp3,
-					countHanzi(req.hanzi),
-					req.kind === 'syllable' ? MIN_SYLLABLE_SECONDS : undefined
-				);
+			let kept = !!raw && existsSync(raw);
+			let takes = 0;
+			let failed = 0;
+			for (; takes < MAX_TAKES && failed < MAX_ATTEMPTS; kept = false) {
+				if (!kept) takes++;
+				const take = kept && raw ? new Uint8Array(readFileSync(raw)) : await speak(request.body);
+				writeFileSync(wav, take);
+				const end = endLevel(take);
+				let faults = [`cut off at the end (${end.toFixed(1)} dB)`];
+				if (end <= MAX_END_DB) {
+					encode(wav, mp3, request.cut);
+					faults = faultsOf(
+						mp3,
+						countHanzi(req.hanzi),
+						req.kind === 'syllable' ? MIN_SYLLABLE_SECONDS : undefined
+					);
+					if (faults.length && !kept) failed++;
+				}
 				if (!faults.length) {
+					if (raw && !kept) writeFileSync(raw, take);
 					renameSync(mp3, cached);
 					return readFileSync(cached);
 				}
