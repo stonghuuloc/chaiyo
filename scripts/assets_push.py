@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Upload the git-ignored art + audio to the private R2 bucket (key = repo-relative path).
 Usage: python3 scripts/assets_push.py [--delete]
+Every png is compressed first (scripts/img_compress.py: long edge <= 860 px, 256-colour palette) into a temp stage,
+the local file is left alone, and the push fails when a compressed png is still above the 400 KB budget.
 Reads R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET from .env (a variable set in the
 process environment wins, even when blank). Bucket keys under assets/ + prototype/audio/ with no local file
 are listed as orphans and removed only with --delete. Keys outside those two prefixes are never touched."""
@@ -8,9 +10,12 @@ import hashlib, json, os, shutil, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from img_compress import BUDGET, check_budget, compress_png
+
 ROOT = Path(__file__).resolve().parent.parent
 NEED = ('R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET')
 PREFIXES = ('assets/', 'prototype/audio/')
+CACHE_CONTROL = 'public, max-age=86400'
 CHUNK = 100    # files per aws process: amortises the ~1 s CLI startup, aws itself runs 10 transfers inside
 WORKERS = 4    # aws processes in parallel (=> up to 40 concurrent transfers)
 
@@ -85,23 +90,36 @@ def list_bucket(cfg):
     return got
 
 
+def stage_local(keys, stage):
+    """Map key -> file to upload: pngs are compressed into stage, everything else is the repo file."""
+    def one(k):
+        if not k.endswith('.png'):
+            return ROOT / k
+        dst = Path(stage) / k
+        compress_png(ROOT / k, dst)
+        return dst
+    with ThreadPoolExecutor(8) as ex:
+        return dict(zip(keys, ex.map(one, keys)))
+
+
 def md5(path):
     h = hashlib.md5()
-    with open(ROOT / path, 'rb') as f:
+    with open(path, 'rb') as f:
         for b in iter(lambda: f.read(1 << 20), b''):
             h.update(b)
     return h.hexdigest()
 
 
-def upload(cfg, keys):
-    """One `aws s3 cp --recursive` over a symlink stage holding just these keys (stage lives in /tmp)."""
+def upload(cfg, files):
+    """One `aws s3 cp --recursive` over a symlink stage holding just these {key: file} pairs (stage lives in /tmp)."""
     stage = tempfile.mkdtemp(prefix='assets-push-')
     try:
-        for k in keys:
+        for k, src in files.items():
             dst = os.path.join(stage, k)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
-            os.symlink(ROOT / k, dst)
-        aws(cfg, 's3', 'cp', '--recursive', '--only-show-errors', stage, f"s3://{cfg['R2_BUCKET']}/")
+            os.symlink(src, dst)
+        aws(cfg, 's3', 'cp', '--recursive', '--only-show-errors', '--cache-control', CACHE_CONTROL,
+            stage, f"s3://{cfg['R2_BUCKET']}/")
     finally:
         shutil.rmtree(stage, ignore_errors=True)
 
@@ -120,10 +138,21 @@ def main():
     cfg = load_cfg()
     local = local_set()
     remote = list_bucket(cfg)
-    with ThreadPoolExecutor(8) as ex:
-        sums = list(ex.map(md5, local))
-    todo = [k for k, s in zip(local, sums) if remote.get(k) != s]
-    par(lambda ks: upload(cfg, ks), chunks(todo))
+    stage = tempfile.mkdtemp(prefix='assets-compressed-')
+    try:
+        files = stage_local(local, stage)
+        over = check_budget([p for k, p in files.items() if k.endswith('.png')])
+        if over:
+            print('png over the %d byte budget after compression:' % BUDGET, file=sys.stderr)
+            for p, s in over:
+                print(f'  {p} {s}', file=sys.stderr)
+            sys.exit(1)
+        with ThreadPoolExecutor(8) as ex:
+            sums = list(ex.map(md5, [files[k] for k in local]))
+        todo = [k for k, s in zip(local, sums) if remote.get(k) != s]
+        par(lambda ks: upload(cfg, {k: files[k] for k in ks}), chunks(todo))
+    finally:
+        shutil.rmtree(stage, ignore_errors=True)
     orphans = sorted(set(remote) - set(local))
     print(f'orphans: {len(orphans)}')
     for k in orphans:
