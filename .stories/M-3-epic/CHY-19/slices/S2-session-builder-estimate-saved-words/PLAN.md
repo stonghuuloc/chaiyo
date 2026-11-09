@@ -19,7 +19,7 @@ Files: `src/lib/study/types.ts`, `src/lib/study/apply.ts`, `src/lib/study/index.
 
 ## Task 2 [AC5] `session` and `minutes`
 File: `src/lib/study/session.ts` (new); `index.ts` re-exports
-- Change: `localDate(iso, tz)` via `new Intl.DateTimeFormat('en-CA', { timeZone: tz })` (YYYY-MM-DD strings compare as dates). Lanes per SPEC; interleave port of lexicon.js:60-71; `minutes` per lexicon.js:72 with `SECONDS = { the: 10, nghe: 15, viet: 35 }`.
+- Change: `localDate(d: Date, tz)` = `year-month-day` from `new Intl.DateTimeFormat('en-US', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(d)` (YYYY-MM-DD strings compare as dates; not `en-CA` `.format()`, whose output is CLDR data that CLDR 42 changed; CHY-21 S1 moves it to `dates.ts`). Lanes per SPEC; interleave port of lexicon.js:60-71; `minutes` per lexicon.js:72 with `SECONDS = { the: 10, nghe: 15, viet: 35 }`.
 - Test first: `session.test.ts` "today's session interleaves skills" — exact list, the neighbour rules, `minutes` = 3; "due cut" at 23:59:59 and 00:00 local (SPEC [AC5]).
 - Verify: `pnpm vitest run src/lib/study -t "interleaves"` → pass. Negative control: replace the round-robin with lane concatenation → the neighbour assertion fails; revert.
 
@@ -41,7 +41,10 @@ File: `docs/architecture.md:30`
 // src/lib/study/session.ts
 const ORDER: Skill[] = ['the', 'nghe', 'viet'];
 const SECONDS: Record<Skill, number> = { the: 10, nghe: 15, viet: 35 };
-const localDate = (d: Date, tz: string) => new Intl.DateTimeFormat('en-CA', { timeZone: tz }).format(d);
+const localDate = (d: Date, tz: string) => {
+	const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(d).map((x) => [x.type, x.value]));
+	return `${p.year}-${p.month}-${p.day}`;
+};
 export function session(state: State, o: { now: Date; tz: string; only?: Skill[] }): SessionCard[] {
 	const today = localDate(o.now, o.tz);
 	const words = Object.keys(state.lexicon);

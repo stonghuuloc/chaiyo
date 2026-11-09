@@ -1,0 +1,49 @@
+{
+  "story": "CHY-20",
+  "title": "Study: sections, Gate Test, unlocks, placement",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "sections, Gate 80 %, retry, best score, quit",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 0,
+      "note": "design written (CHAA-110); advisor next",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "placement, 20 new cards a day, no demotion",
+      "acs": [
+        "AC6",
+        "AC7",
+        "AC8"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 0,
+      "note": "design written (CHAA-110); advisor next",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-20",
+  "log": [
+    "2026-11-09 init",
+    "2026-11-09 +S1 sections, Gate 80 %, retry, best score, quit [AC1,AC2,AC3,AC4,AC5]",
+    "2026-11-09 +S2 placement, 20 new cards a day, no demotion [AC6,AC7,AC8]",
+    "2026-11-09 S1 \u2192 plan",
+    "2026-11-09 S2 \u2192 plan"
+  ],
+  "updated": "2026-11-09T15:52:30+07:00"
+}

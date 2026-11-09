@@ -8,7 +8,7 @@ ACs: AC1, AC2, AC3, AC7  ·  Repo: stonghuuloc/chaiyo  ·  rev 1 (vs main 7e52b9
 - [AC1] An Attempt without `card`, or with `correct: null`, emits no event and returns State deep-equal to the input.
 - [AC2] On the same due card at the same `now`, a right Attempt sets a later due than a wrong one; a wrong Attempt sets due ≤ `now` + 1 day (10 min on a review card, 1 min on a new one, ts-fsrs 6.0.0 defaults).
 - [AC3] Three Attempts for one word with skills `the`, `nghe`, `viet` emit three CardScheduled events, one per skill, and leave three cards under that word, each holding the due of its own event.
-- [AC7] Every test in `src/lib/study` builds State only through `initialState()` and `apply()`, and asserts on returned events and State. `pnpm lint` fails when a file matching `src/lib/study/**/*.test.ts` or `src/lib/study/fixtures/**` imports `ts-fsrs` or `ts-fsrs/*`, a relative path other than `./fixtures/*` / `../fixtures/*`, or a `$lib/study/*` path other than `$lib/study/fixtures/*`.
+- [AC7] Every test in `src/lib/study` builds State only through `initialState()` and `apply()`, and asserts on returned events and State. `pnpm lint` fails when a file matching `src/lib/study/**/*.test.ts` or `src/lib/study/fixtures/**` imports `ts-fsrs` or `ts-fsrs/*`, a relative path other than `./fixtures/*` / `../fixtures/*`, or a `#lib/study/*` path other than `#lib/study/index.js` and `#lib/study/fixtures/*`. (SvelteKit 3 removed `$lib`; the repo imports `#lib/<path>.js` through package.json `imports`.)
 - [NFR] State is plain JSON: `apply(JSON.parse(JSON.stringify(s)), a, now)` returns the same events as `apply(s, a, now)`.
 - [CHORE] `ts-fsrs` 6.0.0 joins `dependencies`. `pnpm check`, `pnpm lint`, `pnpm test` and `pnpm build` stay green.
 

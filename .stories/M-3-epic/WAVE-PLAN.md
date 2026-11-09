@@ -1,7 +1,7 @@
 # M-3 Study core + Ledger — wave plan
-Design lead CHAA-103 · 2026-11-09 · base main 7e52b9f · issues LOC-57..LOC-62 (parent LOC-42)
+Design lead CHAA-103 (wave 1: plan, CHY-19, CHY-23) and CHAA-110 (wave 2: CHY-20, 21, 22, 24) · 2026-11-09 · base main 7e52b9f / 90fbe31 · issues LOC-57..LOC-62 (parent LOC-42)
 
-M-3 builds the one deep rules module (`src/lib/study`: FSRS per skill, sections, Gate Test, unlocks, placement, Streak, Freeze, Badges), the learner tables with RLS, and the Ledger that keeps Attempts offline and syncs them. Six stories, thirteen proposed slices. **CHY-19 and CHY-23 run first and in parallel**: neither has an open dependency, every other M-3 story waits on one of them, and they share no file.
+M-3 builds the one deep rules module (`src/lib/study`: FSRS per skill, sections, Gate Test, unlocks, placement, Streak, Freeze, Badges), the learner tables with RLS, and the Ledger that keeps Attempts offline and syncs them. Six stories, twelve proposed slices. **CHY-19 and CHY-23 run first and in parallel**: neither has an open dependency, every other M-3 story waits on one of them, and they share no file.
 
 ## Stories and proposed slices
 | Story | Slice | ACs | Needs first | Kind |
@@ -10,16 +10,16 @@ M-3 builds the one deep rules module (`src/lib/study`: FSRS per skill, sections,
 | CHY-19 | S2 session builder, estimate, saved words | AC4-AC6 | CHY-19 S1 | build, pure TS |
 | CHY-23 Postgres learner tables | S1 learner tables + RLS isolation | AC1-AC3, AC6 | none (content tables on main) | build, SQL + PGlite tests |
 | CHY-23 | S2 append-only Attempts, idempotent insert, read-only content | AC4, AC5, AC7 | CHY-23 S1 | build, SQL grants |
-| CHY-20 Study: sections, Gate, unlocks, placement | S1 SectionDone, Gate 80 %, retry, best score, quit | AC1-AC5 | CHY-19 S2; curriculum input (D1) | build |
-| CHY-20 | S2 placement, 20 new cards a day, no demotion | AC6-AC8 | CHY-20 S1 | build |
-| CHY-21 Study: Streak + Freeze | S1 day counting in the learner's timezone | AC1-AC3, AC8 | CHY-20 S1 (SectionDone); Q3, Q5 | build |
-| CHY-21 | S2 Freeze earn/spend/cap, reset, DST | AC4-AC7, AC9 | CHY-21 S1; Q4 | build |
-| CHY-22 Study: Badges | S1 badge list, once only, replay, survives reset, Exam only | AC1-AC5 | CHY-21 S2, CHY-20 S1; Q9 | build |
-| CHY-24 Ledger | S1 `record`/`state`/`subscribe` over an in-memory store + IndexedDB outbox | AC3, AC4, AC6 | CHY-19 S2, CHY-23 S2; Q6 | build |
-| CHY-24 | S2 Supabase store: sync once, merge other device, keep on 500 | AC2, AC5, AC7 | CHY-24 S1; Q7 | build, local Supabase |
-| CHY-24 | S3 offline reopen proof | AC1 | CHY-24 S2, CHY-20 S1, CHY-21 S1; Q8 | device proof |
+| CHY-20 Study: sections, Gate, unlocks, placement | S1 SectionDone, Gate 80 %, retry, best score, quit | AC1-AC5 | CHY-19 S2 (D1 decided below) | build |
+| CHY-20 | S2 placement, 20 new cards a day, no demotion | AC6-AC8 | CHY-20 S1; Q11 (assumed A) | build |
+| CHY-21 Study: Streak + Freeze | S1 day counting in the learner's timezone | AC1-AC3, AC8 | CHY-20 S2 (lane order; SectionDone is CHY-20 S1) | build |
+| CHY-21 | S2 Freeze earn/spend/cap, reset, DST | AC4-AC7, AC9 | CHY-21 S1 | build |
+| CHY-22 Study: Badges | S1 badge list, once only, replay, survives reset, Exam only | AC1-AC5 | CHY-21 S2 (which sits on CHY-20 S1-S2); Q12 (assumed A) | build |
+| CHY-24 Ledger | S1 `record`/`state`/`subscribe` over IndexedDB + a memory store; `lexicon_saves` + `attempts.step` migration | AC3, AC4, AC6 | CHY-19 S2, CHY-23 S2 | build, SQL + PGlite |
+| CHY-24 | S2 Supabase store: sync once, merge other device, keep on 500 | AC2, AC5, AC7 | CHY-24 S1, CHY-20 S1 (`Attempt.step` type) | build, local Supabase |
+| CHY-24 | S3 offline reopen proof on `/dev/ledger` | AC1 | CHY-24 S2, CHY-20 S1, CHY-21 S1 | device proof (Loc: iPhone) |
 
-Only CHY-19 and CHY-23 are designed in this wave (STORY + SPEC + PLAN + DISCUSSION per slice). The other rows are frame-level proposals; each story's own design run confirms its split.
+Every story is now designed (STORY + SPEC + PLAN + DISCUSSION per slice): CHY-19 and CHY-23 in wave 1 (PR #83), CHY-20, CHY-21, CHY-22 and CHY-24 in wave 2, on the split above. Q1-Q10 are decided (all A, 2026-11-09).
 
 ## What M-3 gets from M-0..M-2 (checked on main 7e52b9f, not from backlog text)
 | Need | On main? | Evidence | Used by |
@@ -46,6 +46,7 @@ Only CHY-19 and CHY-23 are designed in this wave (STORY + SPEC + PLAN + DISCUSSI
                                           │     ▲ Q3 Q5      ▲ Q4          ▲ Q9              │
                                           └──────────────────────────────────────────────────┘
 ```
+- Wave 2 adds two edges the drawing above lacks: CHY-20 S1 ──▶ CHY-24 S2 (the `Attempt.step` type) and CHY-21 S1 ──▶ CHY-24 S3 (`streak.last`). Q3-Q9 are decided, so their arrows no longer gate anything.
 - **C-M3-1 Attempt shape** (frozen by CHY-19 S1 and CHY-23 S1 together; both SPECs quote it). TS `Attempt` ↔ table `attempts`:
 
 | TS field (src/lib/study) | Column (attempts) | Rule |
@@ -59,30 +60,32 @@ Only CHY-19 and CHY-23 are designed in this wave (STORY + SPEC + PLAN + DISCUSSI
 | `correct: boolean \| null` | `correct boolean` | null only for answers graded later (speaking) |
 | `ms: number` | `ms int not null` ≥ 0 | time to answer |
 | `answer?: unknown` | `answer jsonb` | what the learner answered |
+| `step?: Step` (CHY-20 S1, CHY-21 S1, CHY-22) | `step jsonb` (added by CHY-24 S1's migration) | the run the Attempt belongs to: `{ kind: 'section', lesson, section, run, of }`, `{ kind: 'gate', lesson, run, of }`, `{ kind: 'placement', level, run, of }`, `{ kind: 'practice', run, of }`, or a Mock Test result `{ kind: 'mock', level, mode: 'exam' \| 'practice' }` with `correct` = passed (Q9 A), exactly one per sitting; the sitting's per-question Attempts never carry `kind: 'mock'` |
 - Attempt write (CHY-23 S2): `insert … on conflict (learner_id, id) do nothing` (supabase-js `upsert(…, { onConflict: 'learner_id,id', ignoreDuplicates: true })`); learners cannot update or delete Attempts.
 - **C-M3-2 Fold rule** (CHY-24 uses it): `state()` = `apply` folded over Attempts and WordSaved inputs sorted by `at` (ties: Attempt `id`; a WordSaved sorts before an Attempt at the same `at`), with `now = new Date(input.at)`. Study schedules at `now` and never reads a clock.
-- **C-M3-3 Test platform**: CHY-23 S1 ships `src/lib/db/migrate.ts` (Supabase roles and an `auth` stub, no default grants, then every `supabase/migrations/*.sql` in name order on PGlite). CHY-24 S2 reuses it for its Postgres-side tests.
+- **C-M3-3 Test platform**: CHY-23 S1 ships `src/lib/db/migrate.ts` (Supabase roles and an `auth` stub, no default grants, then every `supabase/migrations/*.sql` in name order on PGlite). CHY-24 S1 reuses it for `ledger-migration.test.ts`; CHY-24 S2's server proof runs on local Supabase (Q7 A).
 - **C-M3-4 Explicit grants**: Supabase stopped granting new `public` tables to `anon`/`authenticated`/`service_role` (changelog 45329: default for new projects from 2026-05-30, applied to all existing projects on 2026-10-30; existing tables keep their grants). The Mac's CLI 2.101.0 still grants them locally. Every M-3 migration therefore grants what it needs explicitly; CHY-23 S2 also grants `select` on the 10 content tables to `authenticated`, because the content migration relied on the old default.
-- **D1 (design item for CHY-20, not a question for Loc):** Study is pure and has no Catalog, but SectionDone needs each section's question count and LessonUnlocked needs the lesson order. CHY-20's design run picks how that reaches `apply`: a curriculum value in State built from the lesson bundles, or fields on the Attempt. Catalog (CHY-25 S1) is not on main; CHY-20 must not wait on it without saying so.
+- **D1 (decided in CHY-20 S1 DISCUSSION):** Study gets a `Curriculum` (`{ lessons: { id, level, sections, words, testOut? }[] }`, Roadmap order) once through `initialState({ curriculum, tz, badges })` and keeps it in State; each Attempt names its run and run size in `step` (row above). `apply(state, input, now)` and C-M3-2 stay as they are. Catalog (CHY-25) builds the real curriculum from the bundles; until then tests use `src/lib/study/fixtures/curriculum.ts` and `/dev/ledger` a two-lesson literal.
+- **C-M3-5 Study surface after wave 2** (L1 keeps it): `initialState({ curriculum?, tz? = 'Asia/Ho_Chi_Minh', badges? })`, `apply`, `rollover(state, day)` (`tz` lives in State, so the architecture's `rollover(state, day, tz)` loses its third argument in CHY-21 S1), `session`, `minutes`, `BADGES`. Events inside one call, in order: `CardScheduled`, `SectionDone`, `GatePassed`, `LessonUnlocked`, `FreezeSpent` / `StreakReset`, `DayCounted`, `FreezeEarned`, `BadgeEarned`. Each story's tests filter events to the types that story owns.
 
 ## Waves
 | Wave | Runs together | Starts when |
 |---|---|---|
 | A | CHY-19 S1 (L1), CHY-23 S1 (L2) | Loc approves this plan (Q10) |
 | B | CHY-19 S2 (L1), CHY-23 S2 (L2) | each lane's S1 merged |
-| C | CHY-20 S1 (L1), CHY-24 S1 (L3) | CHY-19 S2 + CHY-23 S2 merged; CHY-20 designed; Q6 |
-| D | CHY-20 S2 (L1), CHY-24 S2 (L3) | wave C merged; Q7 |
-| E | CHY-21 S1 (L1), CHY-24 S3 (L3) | CHY-20 S2 merged (L1 is serial); Q3, Q5, Q8 |
-| F | CHY-21 S2 (L1) | CHY-21 S1 merged; Q4 |
-| G | CHY-22 S1 (L1) | CHY-21 S2 merged; Q9 |
+| C | CHY-20 S1 (L1), CHY-24 S1 (L3) | CHY-19 S2 + CHY-23 S2 merged |
+| D | CHY-20 S2 (L1), CHY-24 S2 (L3) | wave C merged (CHY-24 S2 needs CHY-20 S1's `Attempt.step`) |
+| E | CHY-21 S1 (L1) | CHY-20 S2 merged (L1 is serial) |
+| F | CHY-21 S2 (L1), CHY-24 S3 (L3) | CHY-21 S1 merged (CHY-24 S3 reads `streak.last` from it, so it moved here from wave E) |
+| G | CHY-22 S1 (L1) | CHY-21 S2 merged |
 Critical path: the Study lane, 7 slices (19 S1 → 19 S2 → 20 S1 → 20 S2 → 21 S1 → 21 S2 → 22 S1). The Study stories are serial because they share `src/lib/study/{index,types,apply}.ts`, not only because of AC dependencies. One slice at a time (project rule) is 12.
 
 ## Lanes and file ownership (no two lanes write one file)
 | Lane | Slices | Owns (writes) |
 |---|---|---|
-| L1 Study | CHY-19 S1-S2, then CHY-20, 21, 22 | `src/lib/study/**` (new); `package.json` dependencies +1 (`ts-fsrs`) and `pnpm-lock.yaml`; `eslint.config.js` +1 block (study tests import only `$lib/study`); `docs/architecture.md:30` (Study row) |
+| L1 Study | CHY-19 S1-S2, then CHY-20, 21, 22 | `src/lib/study/**` (new); `package.json` dependencies +1 (`ts-fsrs`) and `pnpm-lock.yaml`; `eslint.config.js` +1 block (study tests import only `#lib/study/index.js`); `docs/architecture.md:30` (Study row: CHY-19 S2, CHY-20 S1, CHY-21 S1, CHY-22 S1); `CONTEXT.md:65` ("Streak" sentence, CHY-21 S1, Q5 A) |
 | L2 DB | CHY-23 S1-S2 | `supabase/migrations/20261110000000_learner_tables.sql`, `supabase/migrations/20261110000100_learner_grants.sql` (both new); `src/lib/db/**` (new) |
-| L3 Ledger | CHY-24 S1-S3 | `src/lib/ledger/**` (new); one new migration if Q6 = A; `package.json` devDependencies +1 (`fake-indexeddb`, if S1 picks it); `docs/architecture.md:31` (Ledger row) after L1 has merged its row; S3 a dev route under `src/routes/dev/` (Q8) |
+| L3 Ledger | CHY-24 S1-S3 | `src/lib/ledger/**` (new); `supabase/migrations/20261111000000_ledger.sql` (S1: `lexicon_saves`, `attempts.step`); `package.json` devDependencies +1 (`fake-indexeddb` ^6.2.8, S1); `docs/architecture.md:31` (Ledger row, S2 in wave D, when L1 leaves the file alone); `src/routes/dev/ledger/**` (S3) |
 - Shared one-line additions: `package.json` (L1 dependencies, L3 devDependencies, different waves) and `pnpm-lock.yaml`; the lane that rebases second regenerates the lock with `pnpm install` (M-1 rule).
 - Not touched by any M-3 lane: `supabase/migrations/20261105000000_content_tables.sql` (content lane; CHY-23 S2 revokes writes in its own new file), `src/lib/content/**`, `content/**`, `src/lib/audio*/**`, `src/service-worker/**`.
 - Within L1, CHY-20/21/22 must not start while the previous Study slice is open: `index.ts`, `types.ts` and `apply.ts` are shared by every Study story.
@@ -95,6 +98,7 @@ Critical path: the Study lane, 7 slices (19 S1 → 19 S2 → 20 S1 → 20 S2 →
 - Placement: blocks of 10, 80 % per block, about 20 new cards a day, never demoted (CONTEXT.md "Placement Test").
 
 ## Questions for Loc
+Q1-Q10: **decided 2026-11-09, every one on option A** (the Captain relayed Loc's pick); kept below for the record. Q11 and Q12 are new in wave 2; each SPEC assumes the recommendation and does not block on it.
 ### Q1 [CHY-19] Which FSRS model and parameters does Study use?
 ts-fsrs 6.0.0 is current (MIT). Its `DefaultScheduler()` uses FSRS-7 with these defaults. Measured on the Mac with fuzz off, start 2026-11-09 09:00 Asia/Ho_Chi_Minh:
 | | A — FSRS-7 library defaults, fuzz off | B — FSRS-6 (`version: 'FSRS-6'`) | C — A with fuzz on |
@@ -128,12 +132,12 @@ rec: **A**. Revisit after a month of real Attempts.
 rec: **A**. The Streak and "due today" then use one boundary on the phone and on the server.
 
 ### Q4 [CHY-21] When is a Freeze earned if a frozen day sits inside the run?
-CONTEXT.md says "one for every 7 consecutive counted days". Example: Streak 6 on Monday; Tuesday missed (1 Freeze spent, Streak stays 6); Wednesday counted.
+CONTEXT.md says "one for every 7 consecutive counted days". Example: Streak 13 with 1 Freeze on Monday; Tuesday missed (the Freeze is spent, Streak stays 13); Wednesday counted.
 | | A — when the Streak reaches a multiple of 7 (7, 14, 21) | B — after 7 counted days with no frozen day between |
 |---|---|---|
-| Wednesday | Streak 7 → **FreezeEarned** | Streak 7, no Freeze (run restarted Wednesday) |
-| next Freeze | at Streak 14 | 6 days after Wednesday at the earliest |
-| CHY-21 AC6 (6 → 7) and AC7 (13 → 14 with 2 held) | pass | pass |
+| Wednesday | Streak 14 → **FreezeEarned** | Streak 14, no Freeze (run restarted Wednesday) |
+| next Freeze | at Streak 21 | 6 days after Wednesday at the earliest |
+| CHY-21 AC6 (6 → 7) and AC7 (20 → 21 with 2 held, P9) | pass | pass |
 rec: **A**, as the prototype does it (prototype/streak.js:16, `n % 7 === 0`).
 
 ### Q5 [CHY-21] Which practice counts a day for the Streak?
@@ -184,6 +188,24 @@ rec: **A**; the shape goes into C-M3-1 when CHY-22 is designed.
 | crew threads in wave A | 2 implementers + 1 tester + 1 reviewer | 1 + 1 + 1 |
 rec: **A**. The lanes share no file (map above).
 
+### Q11 [CHY-20] Which skills give a placed word new cards?
+A learner placed into HSK 2 has about 505 HSK 1 words with no card (505 level-1 words in content/words, CHY-12 S2; the test fixture uses 250). Today only thẻ từ takes new cards (prototype/data/lexicon.js:56-57); nghe and viết chữ cards appear only after an Attempt in that skill.
+| | A — thẻ từ only (prototype) | B — all three skills, one shared cap of 20 |
+|---|---|---|
+| days to introduce HSK 1's ~505 words | **26** | 76 (1,515 cards ÷ 20) |
+| HSK 1 words practised by ear / by hand | only if the learner opens those lessons | all ~505 |
+| code in CHY-20 S2 | the thẻ từ lane rule | new nghe / viết chữ lanes + an order across skills |
+rec: **A**. It matches the prototype and keeps the placed learner moving; listening and writing for skipped words is a Practice call for CHY-42.
+
+### Q12 [CHY-22] Do words100 / words300 count Lexicon words that were never reviewed?
+The AC says "the Lexicon reaches 100 words"; CONTEXT.md "Badge" says "words known"; the prototype says "Học và lưu 100 từ". A Badge is permanent.
+| | A — every Lexicon entry (AC literal) | B — entries with at least one card |
+|---|---|---|
+| placed into HSK 2, placement day | words100 fires | nothing |
+| same learner, 20 new cards a day | — | words100 on day **5** |
+| 100 saved words, none reviewed | words100 fires | nothing |
+rec: **A**. The AC is explicit, and your rule puts the AC over the design doc.
+
 ## Parked (not M-3 work; recorded so nobody rediscovers them)
 | # | Finding | Evidence | Owner |
 |---|---|---|---|
@@ -192,3 +214,7 @@ rec: **A**. The lanes share no file (map above).
 | P3 | ts-fsrs 6 declares `engines.node >= 24` and .npmrc sets `engine-strict=true`, so an install on Node < 24 fails; CI runs Node 24 (.github/workflows/ci.yml); the Vercel project's Node version is not in the repo | ts-fsrs package.json, .npmrc | CHY-19 S1 Task 6 reads the Vercel build log |
 | P4 | With C-M3-4, `service_role` gets no grant on the learner tables; the nightly rollover / Reminder job (CHY-47) will need one | Supabase changelog 45329 | CHY-47 design |
 | P5 | If the content migration reached the hosted project after its 2026-10-30 switch, `authenticated` cannot select content rows there today; CHY-23 S2's `grant select` fixes it on the next push. Not checked against the hosted project (no DB URL in this thread) | changelog 45329; 20261105000000_content_tables.sql has no `grant` | Captain: check before CHY-25 relies on Supabase reads |
+| P6 | SvelteKit 3 removed `$lib` (3.1.0 installed) (node_modules/@sveltejs/kit/src/messages/build-errors.js:521); the repo imports `#lib/<path>.js` (package.json `imports`). Wave 1's CHY-19 S1 SPEC/PLAN/DISCUSSION said `$lib/study`; wave 2 changed them to `#lib/study/index.js`, ESLint rule included | CHY-19 S1 files on this branch | fixed here; the CHY-19 S1 implementer reads the new text |
+| P7 | CHY-19 S2's `session(state, { now, tz, only })` takes `tz`, while State holds `tz` from CHY-21 S1 on; callers pass `state.tz`. Dropping the argument is a clean-up for whoever next edits `session` | CHY-19 S2 SPEC.md:7; CHY-21 S1 SPEC | CHY-41 when it calls `session` |
+| P8 | CHY-22 AC3 seeds a replay with earned badges (`initialState({ badges })`), but the Ledger refolds from `initialState` without a badge seed, so a rule change could drop a badge from `state()` | CHY-22 S1 DISCUSSION | CHY-52 (Public Profile shows badges) or a CHY-24 follow-up |
+| P9 | CHY-21 AC7's Given "Streak 13 with 2 Freezes" cannot be reached from Attempts under Q4 A (the 2nd Freeze comes at 14; a reset needs 0 Freezes); the test uses 20 → 21 | CHY-21 S2 DISCUSSION | Loc: the AC text, if he wants it to match |

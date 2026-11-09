@@ -1,0 +1,33 @@
+{
+  "story": "CHY-22",
+  "title": "Study: Badges",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "badge list, once only, replay, survives reset, Exam only",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 0,
+      "note": "design written (CHAA-110); advisor next",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-22",
+  "log": [
+    "2026-11-09 init",
+    "2026-11-09 +S1 badge list, once only, replay, survives reset, Exam only [AC1,AC2,AC3,AC4,AC5]",
+    "2026-11-09 S1 \u2192 plan"
+  ],
+  "updated": "2026-11-09T15:52:31+07:00"
+}

@@ -21,7 +21,7 @@ Files: `src/lib/study/types.ts`, `src/lib/study/fsrs.ts`, `src/lib/study/apply.t
 - `fsrs.ts`: the only ts-fsrs import. Top-level `const scheduler = await DefaultScheduler({ enableFuzz: false })`. `review(stored, cardId, right, now)` revives `dueAt` / `lastReviewAt` to `Date`, or makes `newCard({ now, cardId })`; returns `{ due, fsrs }` with dates as ISO strings.
 - `apply.ts`: `initialState()`, `apply(state, input, now)` per SPEC; copies only the touched entry.
 - `index.ts`: re-exports `apply`, `initialState` and the types; nothing from `fsrs.ts`.
-- Test first: `src/lib/study/fixtures/bai1.ts` (SPEC fixture table, built with `$lib/study` only) and `src/lib/study/study.test.ts` → `describe('apply')`: "one Attempt schedules only its own skill's card" (SPEC [AC1] lines), the `skill: 'the'` negative control, "a drill Attempt changes nothing".
+- Test first: `src/lib/study/fixtures/bai1.ts` (SPEC fixture table, built with `#lib/study/index.js` only) and `src/lib/study/study.test.ts` → `describe('apply')`: "one Attempt schedules only its own skill's card" (SPEC [AC1] lines), the `skill: 'the'` negative control, "a drill Attempt changes nothing".
 - Verify: `pnpm vitest run src/lib/study` → the AC1 tests pass; the AC1 test fails if `apply` re-reviews every card of the word (negative control: temporarily loop over all skills, see it fail, revert).
 
 ## Task 2 [AC2] Right beats wrong
@@ -34,10 +34,10 @@ File: `src/lib/study/study.test.ts`
 - Test: "same word, three skills, three cards" (SPEC [AC3]); `new Set(events.map(e => e.skill))` has size 3; each card's `due` equals its event's `due`.
 - Verify: `pnpm vitest run src/lib/study -t "three cards"` → pass.
 
-## Task 4 [AC7] Tests reach Study only through `$lib/study`
+## Task 4 [AC7] Tests reach Study only through `#lib/study/index.js`
 File: `eslint.config.js:37-41` (new object after the last one)
-- Change: `files: ['src/lib/study/**/*.test.ts', 'src/lib/study/fixtures/**']`, rule `no-restricted-imports` with patterns: group `['ts-fsrs', 'ts-fsrs/*']`; regex `^\.{1,2}/(?!fixtures/)`; regex `^\$lib/study/(?!fixtures/)`; message "Study tests use $lib/study only (CHY-19 AC7)".
-- Verify: `pnpm lint` → exit 0. Negative controls (SPEC [AC7]): the `ts-fsrs` import and the `./fsrs` import each → exit 1 naming `no-restricted-imports`; revert. If ESLint 10 rejects `regex` in `patterns`, use `group` globs `['./*', '../*', '!./fixtures/*', '!../fixtures/*', '$lib/study/*', '!$lib/study/fixtures/*']` and rerun both controls.
+- Change: `files: ['src/lib/study/**/*.test.ts', 'src/lib/study/fixtures/**']`, rule `no-restricted-imports` with patterns: group `['ts-fsrs', 'ts-fsrs/*']`; regex `^\.{1,2}/(?!fixtures/)`; regex `^#lib/study/(?!index\.js$|fixtures/)`; message "Study tests use #lib/study/index.js only (CHY-19 AC7)". SvelteKit 3 removed `$lib` (3.1.0 installed) (node_modules/@sveltejs/kit/src/messages/build-errors.js:521); imports are `#lib/<path>.js` (package.json `imports`, e.g. src/hooks.server.ts:6).
+- Verify: `pnpm lint` → exit 0. Negative controls (SPEC [AC7]): the `ts-fsrs` import and the `./fsrs` import each → exit 1 naming `no-restricted-imports`; revert. If ESLint 10 rejects `regex` in `patterns`, use `group` globs `['./*', '../*', '!./fixtures/*', '!../fixtures/*', '#lib/study/*', '!#lib/study/index.js', '!#lib/study/fixtures/*']` and rerun both controls.
 
 ## Task 5 [NFR] JSON-safe and pure
 File: `src/lib/study/study.test.ts`
