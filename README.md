@@ -22,7 +22,7 @@ pnpm test         # vitest
 pnpm build        # Vercel adapter output
 ```
 
-Node 22+ and pnpm. Local Supabase (Docker required):
+Node 24+ and pnpm. Local Supabase (Docker required):
 
 1. Install the CLI: `brew install supabase/tap/supabase`
 2. Start Docker.
