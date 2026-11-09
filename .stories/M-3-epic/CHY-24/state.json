@@ -15,7 +15,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "design written (CHAA-110); advisor next",
+      "note": "design READY (CHAA-110): Opus advisor r1 FIX applied, Sonnet delta READY; awaiting Loc approval",
       "jira": ""
     },
     {
@@ -29,7 +29,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "design written (CHAA-110); advisor next",
+      "note": "design READY (CHAA-110): Opus advisor r1 FIX applied, Sonnet delta READY; awaiting Loc approval",
       "jira": ""
     },
     {
@@ -41,7 +41,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "design written (CHAA-110); advisor next",
+      "note": "design READY (CHAA-110): Opus advisor r1 FIX applied, Sonnet delta READY; awaiting Loc approval",
       "jira": ""
     }
   ],
@@ -55,7 +55,10 @@
     "2026-11-09 +S3 offline reopen proof on dev ledger route [AC1]",
     "2026-11-09 S1 \u2192 plan",
     "2026-11-09 S2 \u2192 plan",
+    "2026-11-09 S3 \u2192 plan",
+    "2026-11-09 S1 \u2192 plan",
+    "2026-11-09 S2 \u2192 plan",
     "2026-11-09 S3 \u2192 plan"
   ],
-  "updated": "2026-11-09T15:52:31+07:00"
+  "updated": "2026-11-09T16:07:47+07:00"
 }
