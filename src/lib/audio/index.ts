@@ -1,2 +1,2 @@
-export { play, playSyllable, createPlayer } from './player';
+export { play, createPlayer } from './player';
 export { precache } from './precache';
