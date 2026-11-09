@@ -177,6 +177,17 @@ describe('azureEngine', () => {
 		expect(again.faultsOf).toHaveBeenCalledTimes(1);
 	});
 
+	it('replaces a kept raw take that fails, with three fresh takes left', async () => {
+		const rawDir = mkdtempSync(join(tmpdir(), 'azure-raw-'));
+		await setup([], [], { rawDir }).engine.synthesize(req('好'));
+		const [name] = readdirSync(rawDir);
+		writeFileSync(join(rawDir, name), cut);
+		const again = setup([], [], { takes: [cut, cut], rawDir });
+		await again.engine.synthesize(req('好'));
+		expect(again.fetchImpl).toHaveBeenCalledTimes(3);
+		expect(readFileSync(join(rawDir, name))).toEqual(Buffer.from(ended));
+	});
+
 	it('lets a syllable clip be shorter than a word', async () => {
 		const { engine, faultsOf } = setup([]);
 		await engine.synthesize(req('bā', 'syllable'));

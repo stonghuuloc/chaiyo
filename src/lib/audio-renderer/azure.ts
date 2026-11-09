@@ -197,9 +197,10 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 			const wav = join(work, `${clip}.wav`);
 			const mp3 = join(work, `${clip++}.mp3`);
 			let lastFault = '';
-			for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-				const kept = attempt === 0 && !!raw && existsSync(raw);
-				const take = kept ? new Uint8Array(readFileSync(raw)) : await speak(request.body);
+			let kept = !!raw && existsSync(raw);
+			for (let attempt = 0; attempt < MAX_ATTEMPTS; kept = false) {
+				if (!kept) attempt++;
+				const take = kept && raw ? new Uint8Array(readFileSync(raw)) : await speak(request.body);
 				writeFileSync(wav, take);
 				const end = endLevel(take);
 				let faults = [`cut off at the end (${end.toFixed(1)} dB)`];
