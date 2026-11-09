@@ -39,7 +39,7 @@ describe('recordedOnly', () => {
 		key,
 		kind,
 		ref: key,
-		voice: 'narrator',
+		voice: 'redpanda',
 		hanzi: key
 	});
 	const all = [e('sentence', 's'), e('word', 'w'), e('syllable', 'a'), e('syllable', 'b')];

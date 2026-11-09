@@ -53,7 +53,7 @@ const primer = (cards: { syllables: unknown[]; pairs?: unknown[] }[]) =>
 describe('audioKey', () => {
 	it('is sha256(text|voice)', () => {
 		expect(audioKey('你好！', 'redpanda')).toMatch(/^2499c461/);
-		expect(audioKey('你好', 'narrator')).toMatch(/^a8c34d15/);
+		expect(audioKey('你好', 'redpanda')).toMatch(/^5c3d5b26/);
 	});
 });
 
@@ -72,7 +72,7 @@ describe('addTone', () => {
 });
 
 describe('audioManifest', () => {
-	it('keys a sentence by its speaker, narrator when none', () => {
+	it('keys a sentence by its speaker, redpanda when none', () => {
 		const m = audioManifest({
 			...empty,
 			sentences: [sentence('a', '你好！', 'redpanda'), sentence('b', '谢谢')]
@@ -84,23 +84,23 @@ describe('audioManifest', () => {
 			voice: 'redpanda',
 			hanzi: '你好！'
 		});
-		expect(m.find((e) => e.ref === 'b')?.voice).toBe('narrator');
+		expect(m.find((e) => e.ref === 'b')?.voice).toBe('redpanda');
 	});
 
-	it('keys a word on narrator and splits a word whose id differs from its hanzi', () => {
+	it('keys a word on redpanda and splits a word whose id differs from its hanzi', () => {
 		const m = audioManifest({
 			...empty,
 			words: [word('你好', '你好'), word('打', '打'), word('打-da2', '打', 'dá')]
 		});
 		const byRef = Object.fromEntries(m.map((e) => [e.ref, e]));
-		expect(byRef['你好'].key).toMatch(/^a8c34d15/);
-		expect(byRef['打'].key).toBe(audioKey('打', 'narrator'));
+		expect(byRef['你好'].key).toMatch(/^5c3d5b26/);
+		expect(byRef['打'].key).toBe(audioKey('打', 'redpanda'));
 		expect(byRef['打'].split).toBeUndefined();
 		expect(byRef['打-da2']).toEqual({
-			key: audioKey('打-da2', 'narrator'),
+			key: audioKey('打-da2', 'redpanda'),
 			kind: 'word',
 			ref: '打-da2',
-			voice: 'narrator',
+			voice: 'redpanda',
 			hanzi: '打',
 			reading: 'dá',
 			split: true
@@ -135,9 +135,9 @@ describe('audioManifest', () => {
 		const syl = m.filter((e) => e.kind === 'syllable').map((e) => e.ref);
 		expect(syl.sort()).toEqual(['ma', 'mà', 'má', 'mā', 'mǎ', 'ā'].sort());
 		for (const e of m.filter((e) => e.kind === 'syllable')) {
-			expect(e.key).toBe(audioKey(e.ref, 'narrator'));
+			expect(e.key).toBe(audioKey(e.ref, 'redpanda'));
 			expect(e.hanzi).toBe(e.ref);
-			expect(e.voice).toBe('narrator');
+			expect(e.voice).toBe('redpanda');
 		}
 	});
 
@@ -152,7 +152,7 @@ describe('audioManifest', () => {
 			],
 			words: [word('谢谢', '谢谢')]
 		});
-		expect(m.filter((e) => e.key === audioKey('你好！', 'narrator'))).toEqual([
+		expect(m.filter((e) => e.key === audioKey('你好！', 'redpanda'))).toEqual([
 			expect.objectContaining({ ref: 's-h1-01-10', kind: 'sentence' })
 		]);
 		expect(m.filter((e) => e.hanzi === '谢谢')).toEqual([

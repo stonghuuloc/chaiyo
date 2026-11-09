@@ -1,9 +1,8 @@
 # Azure voice per manifest voice (docs/adr/0004-azure-single-tts-source.md). The Audio Renderer reads it; lint does not.
 # One Dragon HD Flash voice per Cast member, plain (no style, no phoneme tag), slowed inside the voice by `rate`. No atempo.
-# narrator is an alias of redpanda, so audio keys sha256(text|narrator) stay unchanged.
+# Two voices only. A sentence with no speaker, every word, syllable and chip use redpanda.
 engine: azure
 rate: "-20%"
 voices:
-  redpanda: &main zh-CN-Xiaoke:DragonHDFlashLatestNeural
+  redpanda: zh-CN-Xiaoke:DragonHDFlashLatestNeural
   takin: zh-CN-Yunfeng:DragonHDFlashLatestNeural
-  narrator: *main

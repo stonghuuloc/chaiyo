@@ -1,8 +1,8 @@
 export const clips = [
 	{
-		key: '0c434bfd7a01f3a5a1618c17e2d345ddd431e78b62f3abaf8d9425b040fc52e7',
+		key: '38b59abb14c4f2f4e7e0d5786716b7cb61b28c85cdb966a68d466a0eea9ed53b',
 		hanzi: '不客气。',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
 		key: '2499c461b5cd51b61a71ae7094db723c6a7138498aa2cedd71880a31872f6b56',
@@ -10,19 +10,14 @@ export const clips = [
 		voice: 'redpanda'
 	},
 	{
-		key: '6d7a4e14164fea4b294880e386be2fcf0892bb1dacfa0beb6689e01b5e264430',
-		hanzi: '你好！',
-		voice: 'narrator'
-	},
-	{
-		key: '70151620a9bd3df7bf751ee7537c6cdac36717c5b4babd8bfb98f0bb7cdab670',
+		key: 'cc958174dc6858a21837828ebbf423944aa7d1298cdccaea27afab9ef2a127a8',
 		hanzi: '谢谢！',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '710080456af7b0e31558f43d092d93cfe916bdf8a47778066c93b6b0aef1fde7',
+		key: 'f9dcd805b8e95bb4667e6e06e8ee37eb0074461a8afbd87ae2e7632af5591892',
 		hanzi: '对不起！',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
 		key: '73d1691ea3f925e37a67c61635df1358f859a98103d7550fdf6272bae4c624b4',
@@ -30,19 +25,14 @@ export const clips = [
 		voice: 'redpanda'
 	},
 	{
-		key: '75c2dbcc813ffb4e3f21729e6acbf6094cab6eafdb37a65302f3aaff56ae488d',
-		hanzi: '没关系。',
-		voice: 'narrator'
-	},
-	{
 		key: '95de4b37e7e62d3830195222ac8af27467917fdf94d6cc1c35b12054b815bc7e',
 		hanzi: '不客气。',
 		voice: 'takin'
 	},
 	{
-		key: 'a6e439d151e1e667908d4eda7a5b0108e8e0ad069a8730dd73ad729ea60772dd',
+		key: 'e42401d75443cd9742b337a1fa61b051ba8003dfc887798de895b872c50254d8',
 		hanzi: '您好！',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
 		key: 'bed2d736723b71d64f74a0b12b4deffff4c33f4d95b729b8c08a2c222960b459',
@@ -55,13 +45,8 @@ export const clips = [
 		voice: 'takin'
 	},
 	{
-		key: 'c8314bc3854f2286174e4f31d9db6725db91d7eb8bd9b547c827e353c42fb4b3',
+		key: '8f6ec7a6bd38eb49d8dec48826d6b8d36c653bdef92323137519552a5cd885ad',
 		hanzi: '你们好！',
-		voice: 'narrator'
-	},
-	{
-		key: 'cc958174dc6858a21837828ebbf423944aa7d1298cdccaea27afab9ef2a127a8',
-		hanzi: '谢谢！',
 		voice: 'redpanda'
 	},
 	{
@@ -70,58 +55,58 @@ export const clips = [
 		voice: 'takin'
 	},
 	{
-		key: 'f9ae790e742d938bca6d9a564fab9254979cfa0264892f56159be523ce755689',
+		key: '7fb9cd84b45928d9d327c93017ea1e977d19651599ab1222e56d53bbfdb810ed',
 		hanzi: '再见！',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '1b1907b64d2368e096a3ac21cf03fb4f4a33ae22dc4c7848f644538a455cd275',
+		key: 'd1e36b891657cc3763764f6baa553364a0eff4179d8027891954ea546c61caf8',
 		hanzi: '你们',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '5f111f7d50cd4dcd77d8734ce3642c52ddc540eee8aea700d874e4ffd30746d1',
+		key: '53cfb9034191bc2fae90c2da8b6a10d10dcb7e09318ae8a256af43041de7edfb',
 		hanzi: '对不起',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '6031aa7e85014ffb9539613eef77fe46749303a1eec310cdc7868889f4f026d9',
+		key: 'a6921fca0088f3ac09d565341600eb079e5e83d4b41bcc77ff22dc97cb485467',
 		hanzi: '再见',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '74cf9eae8d10f0597850d1445433f17555422e0436c3dbf025375469a41a2441',
+		key: '3cb399adbe251147c13c277de1206b09792fc5a331a0e110af281dd1d17bf26e',
 		hanzi: '好',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '7626c2690c8fbc5edc6bb81dc04b5f3977f2547e38b959a9b28c52c39ad75842',
+		key: '0b31241355dd0c6850d6805c1a3622896ac229685e8db4bd9c6d9cbf9e712514',
 		hanzi: '没关系',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '9b04a0d8d9fa42a8fb576ffe53cc55da0eba8167706249c0c8726d03f8f04c72',
+		key: '310278429b1727694f5d640d538d068f58a7f34aad9ec178099e51f7820e2a0c',
 		hanzi: '谢谢',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: '9c00a67ec74b48b766d053a35371bb12e0623b67fdca378ce49453d9658250ef',
+		key: '4a37f5fb88ae770b813987155727e965d1f48975ec691417f40aea9cae4536a1',
 		hanzi: '您',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: 'a8c34d15e4ae3cbd0fc938eb439d359b42944ed8dda1a9b80dbcdab58a077e89',
+		key: '5c3d5b26372305bfd34de4ddaeb025bcca9ab9887459c5ade0c108e34c925c2a',
 		hanzi: '你好',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: 'b04a76fc9b57bf8f1bfd3957eb6aa02925f1d39ed9d7e3e409a6c5e8e216527c',
+		key: 'aad65e40960ef17c2f736647fec2f9994b46c752be1b99897997f4fbda8471cd',
 		hanzi: '不客气',
-		voice: 'narrator'
+		voice: 'redpanda'
 	},
 	{
-		key: 'd6988e67fdfef7b6c1a4f44d82e00ccf6e2cf38f59b6bcddfad66e3cdd8ca508',
+		key: 'b1ff2d0aa7260b39c9119405e9c7dc86b1d45594753b2b290eff5eda02da9bf8',
 		hanzi: '你',
-		voice: 'narrator'
+		voice: 'redpanda'
 	}
 ];

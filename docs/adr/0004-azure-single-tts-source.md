@@ -16,9 +16,8 @@ Every clip in the audio manifest (sentences, words, the 1,620 syllable cells, th
 |---|---|---|
 | `redpanda` | `zh-CN-Xiaoke:DragonHDFlashLatestNeural` | main voice, female |
 | `takin` | `zh-CN-Yunfeng:DragonHDFlashLatestNeural` | male |
-| `narrator` | alias of `redpanda` (YAML anchor) | kept only so audio keys `sha256(text\|narrator)` stay unchanged |
 
-A voice is a single config value, so a swap is an edit of one line (see Consequences for the cache).
+There are two cast voices. The default speaker (a sentence with no speaker, every word, syllable cell and chip) is `redpanda`, so audio keys are `sha256(text|redpanda)`. A `narrator` alias existed in the first Azure render so that keys `sha256(text|narrator)` stayed unchanged; it is gone, and the clips moved to `az2` under the new keys (below). A voice is a single config value, so a swap is an edit of one line (see Consequences for the cache).
 
 **Plain and slowed inside the voice.** No `mstts:express-as` style and no phoneme tag. The speech is slowed by SSML `<prosody rate="-20%">`, not by ffmpeg `atempo`: Loc hears time-stretching as unnatural. -20% took 没关系。 from 0.65 s to 0.90 s raw (Xiaoke), and kept every probed reading. The encode is the one shared step: silence trimmed at both ends (-45 dB), loudnorm -16 LUFS, mono, 24 kHz, 48 kbps mp3. The client's 0.5× replay is unchanged.
 
@@ -34,7 +33,7 @@ The 21 chips (`nǐ hǎo`, `duì bu qǐ`) send their hanzi from the hand-written 
 
 **Gate.** The 0003 gate stays (`audioFaults`: not mostly silence, no clipping, at least 0.13 s of speech per hanzi), with a 0.15 s minimum length for syllable clips instead of 0.3 s. A failing clip is requested again, three takes at most; HD output differs per request. The Whisper check is dropped: it ran in the OmniVoice worker and compared 您 as 你.
 
-**Cache and URL.** R2 serves clips with `Cache-Control: public, max-age=31536000, immutable` and the service worker caches by URL, so overwriting a key never reaches a learner. Clips go under a versioned prefix, `az1/<key>.mp3`; `AUDIO_VERSION` in `src/lib/audio/version.ts` is the one constant the app and the scripts read, and `PUBLIC_AUDIO_BASE_URL` stays the origin. Old objects stay in place.
+**Cache and URL.** R2 serves clips with `Cache-Control: public, max-age=31536000, immutable` and the service worker caches by URL, so overwriting a key never reaches a learner. Clips go under a versioned prefix, `az2/<key>.mp3`; `AUDIO_VERSION` in `src/lib/audio/version.ts` is the one constant the app and the scripts read, and `PUBLIC_AUDIO_BASE_URL` stays the origin. Old objects stay in place. `az2` was filled by a server-side copy of the approved `az1` objects, not a re-render (Azure output varies per request): each `az1/sha256(text|narrator).mp3` was copied to `az2/sha256(text|redpanda).mp3`, and objects already keyed `redpanda` or `takin` were copied under the same key. `az1` stays in place.
 
 **Renderer.** `pnpm render:audio <manifest>` renders and uploads every entry that has text for Azure; `--count only` prints the clip count and billable characters without calling anything. It skips keys already on R2, keeps every clip in a local cache (`~/.capy/work/chaiyo-audio/clips`, keyed by audio key and SSML) so a rerun or a new prefix does not bill Azure again, holds a lock file so one render runs at a time, and sends at most one request per 3.1 s (the F0 limit is 20 per minute) with `Retry-After` on 429. The first full render was 2,609 clips and 102,933 billable characters (a hanzi counts twice, and the prosody tag is billed).
 

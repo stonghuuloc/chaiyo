@@ -20,7 +20,7 @@ export const LESSON = {
     s01: { hz: '你几点起床？', py: 'nǐ jǐ diǎn qǐchuáng?', spoken: 'ní jǐ diǎn qǐchuáng?', vi: 'Bạn mấy giờ dậy?', speaker: 'redpanda' },
   },
   dialogue: [{ title: 'Buổi sáng', lines: ['s01', 's02'] }],   // 1–2 parts
-  reading: { title: '…', lines: ['s10', 's11'] },             // HSK 3+ only (narrator, no speaker)
+  reading: { title: '…', lines: ['s10', 's11'] },             // HSK 3+ only (default voice, no speaker)
   grammar: [{ id: 'h2-g01', std: [44], title: 'Hỏi giờ: 几点', pattern: ['主语', '几点', '动词'],
     explain: '…', examples: ['s01', 's05'], wrong: ['你起床几点？', '你几点起床？'] }],
   writing: ['起', '床', '点'],

@@ -46,7 +46,7 @@ const promptTexts = (q: Question): string[] =>
 export function audioManifest(content: Omit<ImportedContent, 'sha' | 'audio'>): AudioEntry[] {
 	const entries: AudioEntry[] = [];
 	for (const s of content.sentences) {
-		const voice = s.speaker ?? 'narrator';
+		const voice = s.speaker ?? 'redpanda';
 		entries.push({
 			key: audioKey(s.hanzi, voice),
 			kind: 'sentence',
@@ -58,10 +58,10 @@ export function audioManifest(content: Omit<ImportedContent, 'sha' | 'audio'>): 
 	for (const w of content.words) {
 		const split = w.id !== w.hanzi;
 		const entry: AudioEntry = {
-			key: audioKey(split ? w.id : w.hanzi, 'narrator'),
+			key: audioKey(split ? w.id : w.hanzi, 'redpanda'),
 			kind: 'word',
 			ref: w.id,
-			voice: 'narrator',
+			voice: 'redpanda',
 			hanzi: w.hanzi
 		};
 		if (split) Object.assign(entry, { reading: w.spoken, split: true });
@@ -81,10 +81,10 @@ export function audioManifest(content: Omit<ImportedContent, 'sha' | 'audio'>): 
 	for (const q of content.questions) for (const t of promptTexts(q.body)) syllables.add(t);
 	for (const text of syllables)
 		entries.push({
-			key: audioKey(text, 'narrator'),
+			key: audioKey(text, 'redpanda'),
 			kind: 'syllable',
 			ref: text,
-			voice: 'narrator',
+			voice: 'redpanda',
 			hanzi: text
 		});
 

@@ -46,7 +46,7 @@ const manifestKeys = new Set(syllables.map((e) => e.key));
 const noClip = new Map<string, string>();
 for (const { syllable } of rows)
 	for (const tone of [1, 2, 3, 4]) {
-		const key = audioKey(addTone(syllable, tone), 'narrator');
+		const key = audioKey(addTone(syllable, tone), 'redpanda');
 		const reason = noClipReason(`${syllable}${tone}`);
 		if (reason) noClip.set(key, `${syllable}${tone}`);
 		labelOf.set(key, `${syllable}${tone}`);
