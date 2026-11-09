@@ -18,7 +18,9 @@ function run(state: State, list: Attempt[]) {
 	let s = state;
 	const out: StudyEvent[][] = [];
 	for (const a of list) {
+		const before = JSON.stringify(s);
 		const r = apply(s, a, new Date(a.at));
+		expect(JSON.stringify(s)).toBe(before);
 		s = r.state;
 		out.push(own(r.events));
 	}
@@ -126,6 +128,15 @@ describe('Gate Test', () => {
 	it('null counts as answered, not right', () => {
 		const list = gate('n', 10, 10).map((a, i) => (i === 9 ? { ...a, correct: null } : a));
 		expect(run(ready(), list).state.lessons['h1-01'].best).toBe(90);
+	});
+});
+
+describe('step.of', () => {
+	it('a run size below 1 is ignored', () => {
+		const list = gateRun('h1-01', 'z', 0, new Date(T.getTime() + 10 * H), 1, 0);
+		const r = run(ready(), list);
+		expect(r.events.flat()).toEqual([]);
+		expect(r.state.lessons['h1-01'].best).toBeUndefined();
 	});
 });
 

@@ -2,6 +2,7 @@ import type { Attempt, State, Step, StudyEvent } from './types';
 
 export function progress(s: State, step: Step, a: Attempt): { state: State; events: StudyEvent[] } {
 	const ignore = { state: s, events: [] };
+	if (!Number.isInteger(step.of) || step.of < 1) return ignore;
 	const index = s.curriculum.lessons.findIndex((l) => l.id === step.lesson);
 	if (index < 0) return ignore;
 	const meta = s.curriculum.lessons[index];
