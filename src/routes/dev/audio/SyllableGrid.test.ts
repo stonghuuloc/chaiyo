@@ -15,7 +15,6 @@ const setup = () => {
 
 const sample = cells
 	.flatMap((c) => c.clips)
-	.filter((c) => !c.disabled)
 	.filter((_, i, all) => i % Math.floor(all.length / 20) === 0)
 	.slice(0, 20);
 
@@ -47,8 +46,8 @@ describe('SyllableGrid', () => {
 			html.match(/aria-pressed="false"[^>]*>\s*[a-zü]+\s*<\/button>/g)?.length
 		).toBeGreaterThan(300);
 		for (const s of ['bia', 'fiao', 'tei']) expect(html).not.toMatch(new RegExp(`>${s}</button>`));
-		expect(html).toMatch(/<button[^>]*disabled[^>]*>ei</);
-		expect(html).not.toMatch(/<button[^>]*disabled[^>]*>ba</);
+		expect(html).toMatch(/<button[^>]*>ei</);
+		expect(html).not.toMatch(/<button[^>]*disabled/);
 	});
 
 	it('shows no speaker toggle and a chip per word', () => {

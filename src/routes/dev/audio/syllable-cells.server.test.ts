@@ -42,15 +42,12 @@ describe('loadSyllableClips', () => {
 		for (const s of ['bia', 'fiao', 'tei']) expect(syllables).not.toContain(s);
 	});
 
-	it('disables exactly the cells no hanzi or word carries', () => {
-		const off = cells
-			.flatMap((c) => c.clips)
-			.filter((c) => c.disabled)
-			.map((c) => c.label);
-		expect(off).toHaveLength(1608 - Object.keys(carriers.cells).length);
-		for (const s of ['ei', 'zhei']) for (const t of [1, 2, 3, 4]) expect(off).toContain(s + t);
-		expect(off).not.toContain('ba3');
-		expect(off).not.toContain('lü3');
+	it('enables every cell, including the ones Azure had no carrier for', () => {
+		const labels = cells.flatMap((c) => c.clips.map((k) => k.label));
+		expect(labels).toHaveLength(1608);
+		for (const s of ['ei', 'zhei']) for (const t of [1, 2, 3, 4]) expect(labels).toContain(s + t);
+		expect(Object.keys(carriers.cells).length).toBeLessThan(labels.length);
+		expect(cells.flatMap((c) => c.clips).every((k) => !('disabled' in k))).toBe(true);
 	});
 
 	it('gives every chip an Azure carrier', () => {

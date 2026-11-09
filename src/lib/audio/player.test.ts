@@ -68,6 +68,40 @@ describe('play toggle', () => {
 	});
 });
 
+describe('one player across prefixes', () => {
+	it('tone then chip: one element, the later clip replaces the earlier at 1x', async () => {
+		const { el, createAudio, play } = setup('/az2');
+		await play('cell', { base: '/az3' });
+		await play('cell', { base: '/az3' });
+		await play('chip');
+		await play('cell', { base: '/az3' });
+		expect(createAudio).toHaveBeenCalledTimes(1);
+		expect(el.seen.map((s) => [s.src, s.rate])).toEqual([
+			['/az3/cell.mp3', 1],
+			['/az3/cell.mp3', 0.5],
+			['/az2/chip.mp3', 1],
+			['/az3/cell.mp3', 1]
+		]);
+	});
+
+	it('chip then tone: repeat count restarts and flips per clip', async () => {
+		const { el, createAudio, play } = setup('/az2');
+		await play('chip');
+		await play('cell', { base: '/az3' });
+		await play('cell', { base: '/az3' });
+		await play('chip');
+		await play('chip');
+		expect(createAudio).toHaveBeenCalledTimes(1);
+		expect(el.seen.map((s) => [s.src, s.rate])).toEqual([
+			['/az2/chip.mp3', 1],
+			['/az3/cell.mp3', 1],
+			['/az3/cell.mp3', 0.5],
+			['/az2/chip.mp3', 1],
+			['/az2/chip.mp3', 0.5]
+		]);
+	});
+});
+
 describe('quiet failure', () => {
 	it('resolves false without an unhandled rejection and retries at 1x', async () => {
 		const onUnhandled = vi.fn();

@@ -1,0 +1,13 @@
+{
+  "epic": "M-3",
+  "title": "Study core + Ledger",
+  "order": [
+    "CHY-19",
+    "CHY-23",
+    "CHY-20",
+    "CHY-24",
+    "CHY-21",
+    "CHY-22"
+  ],
+  "note": "Backlog milestone m-3; wave plan in WAVE-PLAN.md"
+}
