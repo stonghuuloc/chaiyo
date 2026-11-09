@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { play } from '#lib/audio/index.js';
+	import { play, playSyllable } from '#lib/audio/index.js';
 	import type { ChipClip, SyllableCell } from './syllable-cells.server';
 	import { TONE_CONTOURS } from './syllable-grid';
 
@@ -7,9 +7,10 @@
 		cells: SyllableCell[];
 		chips: ChipClip[];
 		player?: (key: string) => Promise<boolean>;
+		syllablePlayer?: (key: string) => Promise<boolean>;
 	};
 
-	let { cells, chips, player = play }: Props = $props();
+	let { cells, chips, player = play, syllablePlayer = playSyllable }: Props = $props();
 
 	let selected = $state<string>();
 	let readout = $state('tap a cell');
@@ -20,9 +21,9 @@
 		return Object.entries(byInitial);
 	});
 
-	function tap(label: string, key: string) {
+	function tap(label: string, key: string, say = player) {
 		readout = label;
-		player(key).catch(() => {});
+		say(key).catch(() => {});
 	}
 </script>
 
@@ -35,9 +36,8 @@
 				<button
 					class="rounded border px-3 py-2"
 					data-clip={clip.label}
-					title={clip.disabled ?? TONE_CONTOURS[i]}
-					disabled={!!clip.disabled}
-					onclick={() => tap(clip.label, clip.key)}
+					title={TONE_CONTOURS[i]}
+					onclick={() => tap(clip.label, clip.key, syllablePlayer)}
 				>
 					{i + 1}
 					<span class="text-sm opacity-60">{TONE_CONTOURS[i]}</span>
@@ -52,8 +52,6 @@
 				<button
 					class="rounded border px-2 py-1"
 					aria-pressed={selected === cell.syllable}
-					disabled={cell.clips.every((c) => c.disabled)}
-					title={cell.clips[0].disabled}
 					onclick={() => (selected = cell.syllable)}>{cell.syllable}</button
 				>
 			{/each}

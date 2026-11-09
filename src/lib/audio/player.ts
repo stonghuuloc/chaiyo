@@ -1,4 +1,4 @@
-import { AUDIO_BASE } from './base';
+import { AUDIO_BASE, SYLLABLE_BASE } from './base';
 
 type Options = { base?: string; createAudio?: () => HTMLAudioElement };
 
@@ -37,3 +37,4 @@ export function createPlayer({ base = AUDIO_BASE, createAudio = () => new Audio(
 }
 
 export const { play } = createPlayer();
+export const { play: playSyllable } = createPlayer({ base: SYLLABLE_BASE });

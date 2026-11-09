@@ -5,7 +5,7 @@ import { immutable, assets, prerendered } from '$app/manifest';
 import { version } from '$app/env';
 import { networkFirst } from './network';
 import { AUDIO_CACHE, audioMessage, isAudio, serveAudio } from './audio';
-import { AUDIO_BASE } from '../lib/audio/base';
+import { AUDIO_BASE, SYLLABLE_BASE } from '../lib/audio/base';
 
 const CACHE = `shell-${version}`;
 const SHELL = [...immutable, ...assets, ...prerendered].map(
@@ -30,7 +30,10 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
 	const url = new URL(event.request.url);
-	if (event.request.method === 'GET' && isAudio(url, AUDIO_BASE, self.location.origin)) {
+	if (
+		event.request.method === 'GET' &&
+		[AUDIO_BASE, SYLLABLE_BASE].some((base) => isAudio(url, base, self.location.origin))
+	) {
 		event.respondWith(
 			caches.open(AUDIO_CACHE).then((cache) => serveAudio(event.request, cache, fetch))
 		);
