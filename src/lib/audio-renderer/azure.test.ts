@@ -2,7 +2,7 @@ import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } fro
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import { azureEngine, azureRequest, billable, endLevel, parseCast, ssml } from './azure';
+import { azureEngine, azureRequest, billable, parseCast, ssml, tailFall } from './azure';
 
 const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
 const wav = (samples: number[]) => {
@@ -20,8 +20,9 @@ const wav = (samples: number[]) => {
 const tone = (ms: number) =>
 	Array.from({ length: ms * 24 }, (_, i) => Math.round(8000 * Math.sin(i / 3)));
 const silence = (ms: number) => new Array<number>(ms * 24).fill(0);
-const ended = wav([...tone(200), ...silence(100)]);
-const cut = wav(tone(200));
+const decay = (ms: number) => tone(ms).map((s, i) => Math.round(s * 10 ** (-(6 * i) / 240 / 20)));
+const ended = wav([...tone(200), ...decay(200), ...silence(100)]);
+const cut = wav([...tone(200), ...silence(100)]);
 const req = (
 	hanzi: string,
 	kind: 'sentence' | 'word' | 'syllable' = 'sentence',
@@ -84,10 +85,11 @@ describe('azureRequest', () => {
 	});
 });
 
-describe('endLevel', () => {
-	it('reads the last 10 ms against the loudest 10 ms', () => {
-		expect(endLevel(ended)).toBeLessThan(-100);
-		expect(endLevel(cut)).toBeGreaterThan(-1);
+describe('tailFall', () => {
+	it('reads the fall in the 20 ms after the last frame within 20 dB of the peak', () => {
+		expect(tailFall(ended)).toBeLessThan(50);
+		expect(tailFall(cut)).toBeGreaterThan(50);
+		expect(tailFall(wav(tone(200)))).toBe(Infinity);
 	});
 });
 
@@ -97,8 +99,9 @@ describe('azureEngine', () => {
 		faults: string[][] = [],
 		{
 			takes = [] as Uint8Array<ArrayBuffer>[],
-			rawDir
-		}: { takes?: Uint8Array<ArrayBuffer>[]; rawDir?: string } = {}
+			rawDir,
+			missing = [] as number[]
+		}: { takes?: Uint8Array<ArrayBuffer>[]; rawDir?: string; missing?: number[] } = {}
 	) => {
 		const cacheDir = mkdtempSync(join(tmpdir(), 'azure-test-'));
 		const fetchImpl = vi.fn(async () => {
@@ -112,6 +115,9 @@ describe('azureEngine', () => {
 		const faultsOf = vi.fn<(file: string, hanzi?: number, min?: number) => string[]>(
 			() => faults.shift() ?? []
 		);
+		const hear = vi.fn<(wav: string, text: string) => Promise<number>>(
+			async () => missing.shift() ?? 0
+		);
 		const engine = azureEngine(cast, {
 			key: 'k',
 			region: 'r',
@@ -119,17 +125,19 @@ describe('azureEngine', () => {
 			rawDir,
 			fetchImpl: fetchImpl as unknown as typeof fetch,
 			encode: (wav, mp3, cut) => writeFileSync(mp3, `mp3:${readFileSync(wav).length}:${cut}`),
+			encodeClip: (wav, mp3) => writeFileSync(mp3, `plain:${readFileSync(wav).length}`),
 			faults: faultsOf,
+			hear,
 			sleep,
 			minIntervalMs: 0
 		});
-		return { engine, fetchImpl, sleep, faultsOf, cacheDir };
+		return { engine, fetchImpl, sleep, faultsOf, hear, cacheDir };
 	};
 
 	it('posts SSML to the region endpoint and caches the clip by key and request', async () => {
 		const { engine, fetchImpl, cacheDir } = setup([]);
 		const body = await engine.synthesize(req('你好！'));
-		expect(new TextDecoder().decode(body)).toBe(`mp3:${ended.length}:false`);
+		expect(new TextDecoder().decode(body)).toBe(`plain:${ended.length}`);
 		expect(fetchImpl).toHaveBeenCalledWith(
 			'https://r.tts.speech.microsoft.com/cognitiveservices/v1',
 			expect.objectContaining({ method: 'POST' })
@@ -157,14 +165,14 @@ describe('azureEngine', () => {
 		expect(bad.fetchImpl).toHaveBeenCalledTimes(3);
 	});
 
-	it('asks again when the take is cut off at the end, before encoding it, eight takes at most', async () => {
+	it('asks again when the take is cut off at the end, before encoding it, sixteen takes at most', async () => {
 		const { engine, fetchImpl, faultsOf } = setup([], [], { takes: [cut] });
 		await engine.synthesize(req('好'));
 		expect(fetchImpl).toHaveBeenCalledTimes(2);
 		expect(faultsOf).toHaveBeenCalledTimes(1);
-		const bad = setup([], [], { takes: new Array(8).fill(cut) });
+		const bad = setup([], [], { takes: new Array(16).fill(cut) });
 		await expect(bad.engine.synthesize(req('好'))).rejects.toThrow('好: cut off at the end');
-		expect(bad.fetchImpl).toHaveBeenCalledTimes(8);
+		expect(bad.fetchImpl).toHaveBeenCalledTimes(16);
 		expect(bad.faultsOf).not.toHaveBeenCalled();
 	});
 
@@ -188,6 +196,54 @@ describe('azureEngine', () => {
 		await again.engine.synthesize(req('好'));
 		expect(again.fetchImpl).toHaveBeenCalledTimes(3);
 		expect(readFileSync(join(rawDir, name))).toEqual(Buffer.from(ended));
+	});
+
+	it('keeps the trimmed encode for syllable cells and stores other clips as Azure returned them', async () => {
+		const { engine } = setup([]);
+		const text = async (r: ReturnType<typeof req>) =>
+			new TextDecoder().decode(await engine.synthesize(r));
+		expect(await text(req('bā', 'syllable'))).toBe(`mp3:${ended.length}:false`);
+		expect(await text(req('nǐ hǎo', 'syllable'))).toBe(`plain:${ended.length}`);
+		expect(await text(req('您', 'word'))).toBe(`plain:${ended.length}`);
+	});
+
+	it('asks again when Whisper misses a syllable and keeps the first take it hears in full', async () => {
+		const { engine, fetchImpl, hear } = setup([], [], { missing: [1, 0] });
+		await engine.synthesize(req('它现在起作用了。'));
+		expect(fetchImpl).toHaveBeenCalledTimes(2);
+		expect(hear).toHaveBeenLastCalledWith(expect.stringMatching(/\.wav$/), '它现在起作用了。');
+	});
+
+	it('keeps the take with the fewest missed syllables after six misheard takes', async () => {
+		const takes = [1, 2, 3, 4, 5, 6].map((n) => wav([...tone(200 + n * 10), ...decay(200)]));
+		const rawDir = mkdtempSync(join(tmpdir(), 'azure-raw-'));
+		const { engine, fetchImpl } = setup([], [], {
+			takes: [...takes],
+			missing: [3, 2, 1, 2, 3, 2],
+			rawDir
+		});
+		const body = await engine.synthesize(req('家父今年六十岁。'));
+		expect(fetchImpl).toHaveBeenCalledTimes(6);
+		expect(new TextDecoder().decode(body)).toBe(`plain:${takes[2].length}`);
+		expect(readFileSync(join(rawDir, readdirSync(rawDir)[0]))).toEqual(Buffer.from(takes[2]));
+	});
+
+	it('replaces a kept raw take that Whisper mishears with a fresh take', async () => {
+		const rawDir = mkdtempSync(join(tmpdir(), 'azure-raw-'));
+		const fresh = wav([...tone(300), ...decay(200)]);
+		await setup([], [], { rawDir }).engine.synthesize(req('好'));
+		const again = setup([], [], { takes: [fresh], missing: [1, 0], rawDir });
+		await again.engine.synthesize(req('好'));
+		expect(again.fetchImpl).toHaveBeenCalledTimes(1);
+		expect(readFileSync(join(rawDir, readdirSync(rawDir)[0]))).toEqual(Buffer.from(fresh));
+	});
+
+	it('does not ask Whisper about a syllable cell', async () => {
+		const { engine, hear } = setup([]);
+		await engine.synthesize(req('bā', 'syllable'));
+		expect(hear).not.toHaveBeenCalled();
+		await engine.synthesize(req('nǐ hǎo', 'syllable'));
+		expect(hear).toHaveBeenCalledWith(expect.any(String), '你好');
 	});
 
 	it('lets a syllable clip be shorter than a word', async () => {

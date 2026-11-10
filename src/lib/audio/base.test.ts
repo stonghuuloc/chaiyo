@@ -5,9 +5,9 @@ import { AUDIO_VERSION, SYLLABLE_VERSION } from './version';
 
 describe('audio base', () => {
 	it('reads clips under the versioned prefix and caches them under its own name', () => {
-		expect(AUDIO_VERSION).toBe('az4');
-		expect(AUDIO_BASE.endsWith('/az4')).toBe(true);
-		expect(AUDIO_CACHE).toBe('audio-az4');
+		expect(AUDIO_VERSION).toBe('az6');
+		expect(AUDIO_BASE.endsWith('/az6')).toBe(true);
+		expect(AUDIO_CACHE).toBe('audio-az6');
 	});
 
 	it('reads syllable clips (Tone Perfect FV3 recordings) under their own prefix', () => {

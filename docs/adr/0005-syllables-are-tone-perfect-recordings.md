@@ -16,7 +16,7 @@ The 402 syllables of the `/dev/audio` grid (1,608 cells) play the human **Tone P
 - `key = sha256(marked syllable|redpanda)`, the same key the grid already used.
 - The clips were staged with `scripts/stage-recorded-clips.ts <corpus> FV3 <manifest> <dir>` and uploaded with `render-audio --from-dir <dir> --kind syllable --prefix az3`; nothing is rendered by Azure. The Azure syllable objects in `az2/` stay in place and unused by the grid.
 
-**Prefix history.** The FV3 set was first uploaded to `az3/`. The o cells were then re-cut, and immutable caching means az3 cannot be overwritten, so the whole set lives at `az5/` (a server-side copy of az3 with o1 to o4 replaced). `az4/` belongs to the words, sentences and chips render. `az3/` stays in place and unused.
+**Prefix history.** The FV3 set was first uploaded to `az3/`. The o cells were then re-cut, and immutable caching means az3 cannot be overwritten, so the whole set lives at `az5/` (a server-side copy of az3 with o1 to o4 replaced). `az4/` and then `az6/` belong to the words, sentences and chips render. `az3/` stays in place and unused.
 
 **The o cut.** The corpus `o` clips end in a closing glide toward u, so ō sounded like ōu. Measured on FV3, F1 falls 180 to 270 Hz from the vowel nucleus to the end of o1 to o4, like ou1 to ou3 (165 to 266 Hz). The o cells are cut to the front of the clip with a 15 ms fade-in and a 60 ms fade-out, then loudnorm like every other clip. Each cut keeps the tone readable by the F0 classifier. Cut ends in seconds on the original files, which start at 0.03: o1 0.45 (of 0.72), o2 0.71 (of 0.85), o3 0.60 (of 1.06), o4 0.40 (of 0.51). The glide is gone in tones 1 and 2 (F1 change -53 and -12 Hz) and reduced in tones 3 and 4 (-112 and -127 Hz): cutting further would remove the part of the contour that carries those tones. ou is unchanged.
 
@@ -33,4 +33,4 @@ Tone Perfect is CC BY-NC-SA. Loc said to ignore licensing for now; Chaiyo stays 
 ## Consequences
 
 - The grid is the only place where recordings and Azure voices mix. Syllables sound like the FV3 speaker, the rest like Xiaoke.
-- A change to syllable audio needs another prefix (`az4`), for the same cache reason as 0004.
+- A change to syllable audio needs another prefix (not `az4` or `az6`, which the words use), for the same cache reason as 0004.
