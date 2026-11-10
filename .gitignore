@@ -42,3 +42,6 @@ __pycache__/
 .cache/
 static/content/
 static/fonts/lessons/
+
+# Linked git worktrees
+/.worktrees/
