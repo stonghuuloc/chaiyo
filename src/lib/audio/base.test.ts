@@ -12,6 +12,6 @@ describe('audio base', () => {
 
 	it('reads syllable clips (Yoyo Chinese recordings) under their own prefix', () => {
 		expect(SYLLABLE_VERSION).toBe('pinyin-chart');
-		expect(SYLLABLE_BASE).toBe(AUDIO_BASE.replace(/\/az4$/, '/pinyin-chart'));
+		expect(SYLLABLE_BASE).toBe(`${AUDIO_BASE.slice(0, -AUDIO_VERSION.length)}pinyin-chart`);
 	});
 });
