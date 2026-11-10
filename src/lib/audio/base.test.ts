@@ -11,8 +11,7 @@ describe('audio base', () => {
 	});
 
 	it('reads syllable clips (Yoyo Chinese recordings) under their own prefix', () => {
-		expect(SYLLABLE_VERSION).toBe('az7');
-		expect(SYLLABLE_BASE.endsWith('/az7')).toBe(true);
-		expect(SYLLABLE_BASE.slice(0, -3)).toBe(AUDIO_BASE.slice(0, -3));
+		expect(SYLLABLE_VERSION).toBe('pinyin-chart');
+		expect(SYLLABLE_BASE).toBe(AUDIO_BASE.replace(/\/az4$/, '/pinyin-chart'));
 	});
 });

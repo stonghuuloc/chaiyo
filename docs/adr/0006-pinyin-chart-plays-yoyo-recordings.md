@@ -12,11 +12,11 @@ The 1,608 toned-syllable cells (402 syllables × 4 tones) play the Yoyo Chinese 
 
 **Source.** The chart page's script `pinyin-table.*.mjs` lists each clip as `https://cdn.yoyochinese.com/audio/pychart/<syllable><tone>.mp3`; 1,612 files, 403 syllables. ü is written `v` (`lv3`, `lve2`), except nüe, which Yoyo spells `nue`.
 
-**Staging.** `scripts/stage-recorded-clips.ts <dir> '{cell}.mp3' <audio-manifest.json> <out> --alias nve=nue`. The script now takes a file template instead of a Tone Perfect speaker, and keeps a clip already in `<out>` when the corpus has none. Each clip is encoded once as before: loudnorm -16 LUFS, 24 kHz mono, 48 kbps mp3, no atempo. Upload: `render:audio <manifest> --from-dir <out> --kind syllable --prefix az7`.
+**Staging.** `scripts/stage-recorded-clips.ts <dir> '{cell}.mp3' <audio-manifest.json> <out> --alias nve=nue`. The script now takes a file template instead of a Tone Perfect speaker, and keeps a clip already in `<out>` when the corpus has none. Each clip is encoded once as before: loudnorm -16 LUFS, 24 kHz mono, 48 kbps mp3, no atempo. Upload: `render:audio <manifest> --from-dir <out> --kind syllable --prefix pinyin-chart`.
 
 **Gaps.** Yoyo has no nou (4 cells). Those keep the Tone Perfect FV3 clip, copied from `az5/` into the staging directory before staging. bia, fiao and tei stay on `NO_CLIP`: neither source has them.
 
-**URL.** `az6/` is taken by the Azure raw-takes render (PR #96), so the cells move to `az7/`. `SYLLABLE_VERSION = 'az7'`. `az5/` stays in place and unused.
+**URL.** The cells move to `pinyin-chart/`, named for what it holds rather than the `azN` series (which began as Azure and stopped meaning it at az3). `SYLLABLE_VERSION = 'pinyin-chart'`. The set was first uploaded to `az7/` and copied server-side; `az5/` and `az7/` stay in place and unused. A change to any chart clip needs a new prefix (`pinyin-chart-2`), because clips are served `immutable`.
 
 ### Licence
 
