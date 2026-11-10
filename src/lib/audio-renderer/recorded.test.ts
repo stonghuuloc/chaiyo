@@ -3,7 +3,7 @@ import type { AudioEntry } from '../content/import/audio';
 import { noClipReason, recordedOnly, toneNumber } from './recorded';
 
 describe('toneNumber', () => {
-	it('maps a marked syllable to the Tone Perfect name', () => {
+	it('maps a marked syllable to the recording file name', () => {
 		expect(toneNumber('bǎ')).toBe('ba3');
 		expect(toneNumber('lǚ')).toBe('lv3');
 		expect(toneNumber('lüè')).toBe('lve4');

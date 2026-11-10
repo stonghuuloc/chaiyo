@@ -28,7 +28,7 @@ const entries = (JSON.parse(readFileSync(manifestPath, 'utf8')).entries as Audio
 	(e) => e.kind === 'syllable'
 );
 let staged = 0;
-let kept = 0;
+const kept: string[] = [];
 let skipped = 0;
 const absent: string[] = [];
 for (const e of entries) {
@@ -45,7 +45,7 @@ for (const e of entries) {
 		template.replace('{cell}', (alias[syllable] ?? syllable) + cell.slice(-1))
 	);
 	if (!existsSync(src)) {
-		if (existsSync(dest)) kept++;
+		if (existsSync(dest)) kept.push(cell);
 		else absent.push(cell);
 		continue;
 	}
@@ -53,7 +53,8 @@ for (const e of entries) {
 	staged++;
 }
 console.log(
-	`staged ${staged}, kept ${kept} already in ${out}, allow-listed ${skipped}, no recording ${absent.length}`
+	`staged ${staged}, kept ${kept.length} already in ${out}, allow-listed ${skipped}, no recording ${absent.length}`
 );
+for (const cell of kept) console.log(`kept: ${cell}`);
 for (const cell of absent) console.log(`no recording: ${cell}`);
 process.exitCode = absent.length ? 1 : 0;
