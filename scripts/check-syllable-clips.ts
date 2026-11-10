@@ -120,9 +120,7 @@ if (unreachable.length) {
 			: `syllable clips: ${entries.length} (${cells} cells, ${chips} chips)`
 	);
 	if (noClip.size)
-		console.log(
-			`no clip (not in the Tone Perfect corpus): ${noClip.size} ${[...noClip.values()].join(' ')}`
-		);
+		console.log(`no clip (no recording): ${noClip.size} ${[...noClip.values()].join(' ')}`);
 	for (const e of missing) console.log(`missing: ${label(e)}`);
 	console.log(`missing: ${missing.length}`);
 

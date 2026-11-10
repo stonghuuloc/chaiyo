@@ -1,6 +1,6 @@
 # 0005 — Syllables are Tone Perfect recordings, not Azure
 
-Status: accepted (2026-11-09). Amends [0004](0004-azure-single-tts-source.md) for the syllable grid only.
+Status: superseded by [0006](0006-pinyin-chart-plays-yoyo-recordings.md) (2026-11-10). Amended [0004](0004-azure-single-tts-source.md) for the syllable grid only.
 
 ## Context
 

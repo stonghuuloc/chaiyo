@@ -1,6 +1,6 @@
 # 0007 — Lesson audio is raw Azure, Xiaoxiao and Yunfeng, one style per clip
 
-Status: accepted (2026-11-10). Supersedes [0004](0004-azure-single-tts-source.md) for lesson clips (words, sentences, chips). The pinyin-chart cells are not Azure (0005, and 0006 once merged).
+Status: accepted (2026-11-10). Supersedes [0004](0004-azure-single-tts-source.md) for lesson clips (words, sentences, chips). The pinyin-chart cells are not Azure ([0006](0006-pinyin-chart-plays-yoyo-recordings.md)).
 
 ## Context
 
