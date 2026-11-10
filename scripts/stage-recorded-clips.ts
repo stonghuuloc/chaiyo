@@ -5,10 +5,20 @@ import { encodeMp3 } from '../src/lib/audio-renderer/gate';
 import { noClipReason, toneNumber } from '../src/lib/audio-renderer/recorded';
 
 const args = process.argv.slice(2);
-const [corpus, speaker, manifestPath, out] = args;
-if (!out) {
+const alias: Record<string, string> = {};
+for (let at = args.indexOf('--alias'); at >= 0; at = args.indexOf('--alias')) {
+	const [from, to] = (args.splice(at, 2)[1] ?? '').split('=');
+	if (!from || !to) {
+		console.error('--alias needs <syllable>=<file syllable>, e.g. nve=nue');
+		process.exit(1);
+	}
+	alias[from] = to;
+}
+const [corpus, template, manifestPath, out] = args;
+if (!out || !template.includes('{cell}')) {
 	console.error(
-		'usage: stage-recorded-clips <tone-perfect-mp3-dir> <speaker> <audio-manifest.json> <out-dir>'
+		'usage: stage-recorded-clips <mp3-dir> <file-template> <audio-manifest.json> <out-dir> [--alias nve=nue]...\n' +
+			'  file-template names a recording by its cell, e.g. {cell}_FV3_MP3.mp3 or {cell}.mp3'
 	);
 	process.exit(1);
 }
@@ -18,6 +28,7 @@ const entries = (JSON.parse(readFileSync(manifestPath, 'utf8')).entries as Audio
 	(e) => e.kind === 'syllable'
 );
 let staged = 0;
+const kept: string[] = [];
 let skipped = 0;
 const absent: string[] = [];
 for (const e of entries) {
@@ -27,14 +38,23 @@ for (const e of entries) {
 		skipped++;
 		continue;
 	}
-	const src = join(corpus, `${cell}_${speaker}_MP3.mp3`);
+	const dest = join(out, `${e.key}.mp3`);
+	const syllable = cell.slice(0, -1);
+	const src = join(
+		corpus,
+		template.replace('{cell}', (alias[syllable] ?? syllable) + cell.slice(-1))
+	);
 	if (!existsSync(src)) {
-		absent.push(cell);
+		if (existsSync(dest)) kept.push(cell);
+		else absent.push(cell);
 		continue;
 	}
-	encodeMp3(src, join(out, `${e.key}.mp3`), 1);
+	encodeMp3(src, dest, 1);
 	staged++;
 }
-console.log(`staged ${staged}, allow-listed ${skipped}, no recording ${absent.length}`);
+console.log(
+	`staged ${staged}, kept ${kept.length} already in ${out}, allow-listed ${skipped}, no recording ${absent.length}`
+);
+for (const cell of kept) console.log(`kept: ${cell}`);
 for (const cell of absent) console.log(`no recording: ${cell}`);
 process.exitCode = absent.length ? 1 : 0;
