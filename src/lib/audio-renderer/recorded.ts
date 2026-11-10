@@ -28,7 +28,7 @@ export function toneNumber(text: string): string | undefined {
 export const NO_CLIP: Record<string, string> = Object.fromEntries(
 	['bia', 'fiao', 'tei'].map((s) => [
 		s,
-		'not a standard Mandarin syllable: Tone Perfect has no recording'
+		'not a standard Mandarin syllable: no recording'
 	])
 );
 

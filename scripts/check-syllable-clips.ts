@@ -121,7 +121,7 @@ if (unreachable.length) {
 	);
 	if (noClip.size)
 		console.log(
-			`no clip (not in the Tone Perfect corpus): ${noClip.size} ${[...noClip.values()].join(' ')}`
+			`no clip (no recording): ${noClip.size} ${[...noClip.values()].join(' ')}`
 		);
 	for (const e of missing) console.log(`missing: ${label(e)}`);
 	console.log(`missing: ${missing.length}`);

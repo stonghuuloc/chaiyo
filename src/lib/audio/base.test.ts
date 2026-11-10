@@ -10,9 +10,9 @@ describe('audio base', () => {
 		expect(AUDIO_CACHE).toBe('audio-az4');
 	});
 
-	it('reads syllable clips (Tone Perfect FV3 recordings) under their own prefix', () => {
-		expect(SYLLABLE_VERSION).toBe('az5');
-		expect(SYLLABLE_BASE.endsWith('/az5')).toBe(true);
+	it('reads syllable clips (Yoyo Chinese recordings) under their own prefix', () => {
+		expect(SYLLABLE_VERSION).toBe('az7');
+		expect(SYLLABLE_BASE.endsWith('/az7')).toBe(true);
 		expect(SYLLABLE_BASE.slice(0, -3)).toBe(AUDIO_BASE.slice(0, -3));
 	});
 });
