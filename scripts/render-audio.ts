@@ -135,6 +135,4 @@ try {
 		console.log(`${e.uploaded} uploaded, ${e.skipped} skipped, ${e.failures.length} failed`);
 	} else console.error(e.message);
 	process.exitCode = 1;
-} finally {
-	engine.close();
 }

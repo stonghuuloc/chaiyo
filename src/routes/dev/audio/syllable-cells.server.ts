@@ -1,5 +1,5 @@
 import { parse } from 'yaml';
-import { audioKey, addTone } from '#lib/content/import/audio.js';
+import { audioKey, addTone, CHIP_STYLE } from '#lib/content/import/audio.js';
 import { NO_CLIP } from '#lib/audio-renderer/recorded.js';
 
 export type Clip = { label: string; text: string; key: string };
@@ -62,6 +62,6 @@ export function loadSyllableClips(source: ContentSource = bundledSource) {
 	}
 	const chips: ChipClip[] = [...texts]
 		.filter((t) => t.includes(' '))
-		.map((text) => ({ text, key: audioKey(text, 'redpanda') }));
+		.map((text) => ({ text, key: audioKey(text, 'redpanda', CHIP_STYLE) }));
 	return { cells, chips };
 }

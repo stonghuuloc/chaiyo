@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { audioKey } from '#lib/content/import/audio.js';
+import { audioKey, audioManifest } from '#lib/content/import/audio.js';
 import { carrierOf } from '#lib/audio-renderer/carriers.js';
 import carriers from '#lib/audio-renderer/syllable-carriers.json';
 import { bundledSource, loadSyllableClips } from './syllable-cells.server';
@@ -56,7 +56,22 @@ describe('loadSyllableClips', () => {
 
 	it('lists multi-syllable chips with manifest keys', () => {
 		expect(chips.length).toBeGreaterThanOrEqual(20);
-		expect(chips.find((c) => c.text === 'nǐ hǎo')?.key).toBe(audioKey('nǐ hǎo', 'redpanda'));
+		const manifestKey = audioManifest({
+			lessons: [
+				{
+					kind: 'primer',
+					sections: { tones: { cards: [{ syllables: ['nǐ hǎo'] }], drills: [] } }
+				}
+			],
+			words: [],
+			sentences: [],
+			chars: [],
+			grammar: [],
+			questions: [],
+			syllables: []
+		} as unknown as Parameters<typeof audioManifest>[0]).find((e) => e.ref === 'nǐ hǎo')?.key;
+		expect(chips.find((c) => c.text === 'nǐ hǎo')?.key).toBe(manifestKey);
+		expect(manifestKey).not.toBe(audioKey('nǐ hǎo', 'redpanda'));
 		expect(chips.find((c) => c.text === 'duì bu qǐ')).toBeTruthy();
 	});
 });

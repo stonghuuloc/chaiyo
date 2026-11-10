@@ -25,7 +25,7 @@ export function ssml(cast: Cast, voice: string, style: string, text: string) {
 
 export const billable = (body: string) =>
 	[...body.replace(/<\/?(speak|voice)\b[^>]*>/g, '')].reduce(
-		(n, c) => n + (/[㐀-鿿]/.test(c) ? 2 : 1),
+		(n, c) => n + (/[\u3400-\u9fff]/.test(c) ? 2 : 1),
 		0
 	);
 
@@ -51,7 +51,7 @@ export type AzureDeps = {
 
 const MAX_TRIES = 6;
 
-export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): void } {
+export function azureEngine(cast: Cast, deps: AzureDeps): Engine {
 	const fetchImpl = deps.fetchImpl ?? fetch;
 	const sleep = deps.sleep ?? ((ms: number) => new Promise((r) => setTimeout(r, ms)));
 	const minInterval = deps.minIntervalMs ?? 3100;
@@ -98,7 +98,6 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine & { close(): vo
 			const clip = await speak(request.body);
 			writeFileSync(cached, clip);
 			return clip;
-		},
-		close() {}
+		}
 	};
 }
