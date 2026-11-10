@@ -3,10 +3,11 @@ import type { Attempt, State, Step, StudyEvent } from './types';
 export function progress(s: State, step: Step, a: Attempt): { state: State; events: StudyEvent[] } {
 	const ignore = { state: s, events: [] };
 	if (!Number.isInteger(step.of) || step.of < 1) return ignore;
-	const index = s.curriculum.lessons.findIndex((l) => l.id === step.lesson);
-	if (index < 0) return ignore;
+	const index =
+		step.kind === 'placement' ? -1 : s.curriculum.lessons.findIndex((l) => l.id === step.lesson);
+	if (step.kind !== 'placement' && index < 0) return ignore;
 	const meta = s.curriculum.lessons[index];
-	const L = s.lessons[step.lesson];
+	const L = meta && s.lessons[meta.id];
 	if (
 		step.kind === 'gate' &&
 		!(meta.testOut || meta.sections.every((section) => L.done.includes(section)))
@@ -16,8 +17,9 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 	const first = run.step;
 	if (
 		first.kind !== step.kind ||
-		first.lesson !== step.lesson ||
 		first.of !== step.of ||
+		(first.kind === 'placement' && step.kind === 'placement' && first.level !== step.level) ||
+		(first.kind !== 'placement' && step.kind !== 'placement' && first.lesson !== step.lesson) ||
 		(first.kind === 'section' && step.kind === 'section' && first.section !== step.section)
 	)
 		return ignore;
@@ -33,6 +35,26 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 	const events: StudyEvent[] = [];
 	const lessons = { ...s.lessons };
 	let lexicon = s.lexicon;
+
+	if (step.kind === 'placement') {
+		const right = Object.values(answers).filter(Boolean).length;
+		if (right * 100 < 80 * step.of || step.level !== s.placed + 1)
+			return { state: { ...s, runs }, events };
+		lexicon = { ...lexicon };
+		for (const l of s.curriculum.lessons.filter((l) => l.level <= step.level)) {
+			lessons[l.id] = { ...lessons[l.id], passed: true, unlocked: true };
+			for (const word of l.words)
+				lexicon[word] = Object.hasOwn(lexicon, word)
+					? { ...lexicon[word], saved: false }
+					: { saved: false, cards: {} };
+		}
+		const next = s.curriculum.lessons.find((l) => l.level === step.level + 1);
+		if (next && !lessons[next.id].unlocked) {
+			lessons[next.id] = { ...lessons[next.id], unlocked: true };
+			events.push({ type: 'LessonUnlocked', lesson: next.id });
+		}
+		return { state: { ...s, placed: step.level, lessons, lexicon, runs }, events };
+	}
 
 	if (step.kind === 'section') {
 		const done = L.done.includes(step.section) ? L.done : [...L.done, step.section];

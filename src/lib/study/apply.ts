@@ -10,6 +10,7 @@ export const initialState = (o: { curriculum?: Curriculum } = {}): State => {
 		lessons: Object.fromEntries(
 			curriculum.lessons.map((l, i) => [l.id, { unlocked: i === 0, passed: false, done: [] }])
 		),
+		placed: 0,
 		runs: {}
 	};
 };
@@ -21,7 +22,11 @@ function schedule(state: State, input: Attempt, now: Date): { state: State; even
 		? state.lexicon[word]
 		: { saved: false, cards: {} };
 	if (skill === 'nghe' && entry.saved) return { state, events: [] };
-	const card = review(entry.cards[skill]?.fsrs, `${word}:${skill}`, input.correct, now);
+	const old = entry.cards[skill];
+	const card = {
+		...review(old?.fsrs, `${word}:${skill}`, input.correct, now),
+		first: old?.first ?? now.toISOString()
+	};
 	const lexicon = {
 		...state.lexicon,
 		[word]: { ...entry, cards: { ...entry.cards, [skill]: card } }
