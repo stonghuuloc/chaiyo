@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { AudioEntry } from '../content/import/audio';
 import { fakeBucket, fakeEngine } from './fakes';
 import { render } from './render';
-import { RenderError, type Bytes } from './types';
+import { RenderError, type Bytes, type Engine } from './types';
 
 const sha = (s: string) => createHash('sha256').update(s).digest('hex');
 const entry = (hanzi: string, voice: string): AudioEntry => ({
@@ -193,5 +193,25 @@ describe('render', () => {
 		const a = entry('谢谢', 'redpanda');
 		await render([a], { engine: fakeEngine(), bucket, prefix: 'mv1/' });
 		expect([...bucket.objects.keys()]).toEqual([`mv1/${a.key}.mp3`]);
+	});
+	it('renders up to `concurrency` clips at once, each key once', async () => {
+		let running = 0;
+		let peak = 0;
+		const engine: Engine = {
+			async synthesize(req) {
+				peak = Math.max(peak, ++running);
+				await new Promise((r) => setTimeout(r, 5));
+				running--;
+				return new TextEncoder().encode(req.key);
+			}
+		};
+		const bucket = fakeBucket();
+		const many = [...Array(10)].map((_, n) => entry(`句${n}`, 'redpanda'));
+		expect(await render([...many, many[0]], { engine, bucket, concurrency: 4 })).toEqual({
+			uploaded: 10,
+			skipped: 0
+		});
+		expect(peak).toBe(4);
+		expect([...bucket.objects.keys()].sort()).toEqual(names(many));
 	});
 });

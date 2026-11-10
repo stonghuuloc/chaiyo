@@ -74,7 +74,7 @@ describe('azureRequest', () => {
 });
 
 describe('azureEngine', () => {
-	const setup = (statuses: number[]) => {
+	const setup = (statuses: number[], minIntervalMs = 0) => {
 		const cacheDir = mkdtempSync(join(tmpdir(), 'azure-test-'));
 		const fetchImpl = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(async () => {
 			const status = statuses.shift() ?? 200;
@@ -83,14 +83,14 @@ describe('azureEngine', () => {
 				headers: status === 429 ? { 'retry-after': '1' } : {}
 			});
 		});
-		const sleep = vi.fn(async () => {});
+		const sleep = vi.fn<(ms: number) => Promise<void>>(async () => {});
 		const engine = azureEngine(cast, {
 			key: 'k',
 			region: 'r',
 			cacheDir,
 			fetchImpl: fetchImpl as unknown as typeof fetch,
 			sleep,
-			minIntervalMs: 0
+			minIntervalMs
 		});
 		return { engine, fetchImpl, sleep };
 	};
@@ -134,5 +134,15 @@ describe('azureEngine', () => {
 			engine.synthesize(req('bā', { kind: 'syllable', style: undefined }))
 		).rejects.toThrow('not an Azure clip');
 		expect(fetchImpl).not.toHaveBeenCalled();
+	});
+	it('spaces concurrent requests by the interval instead of firing them together', async () => {
+		vi.useFakeTimers({ now: 0 });
+		try {
+			const { engine, sleep } = setup([], 100);
+			await Promise.all(['一', '二', '三'].map((h) => engine.synthesize(req(h))));
+			expect(sleep.mock.calls.map(([ms]) => ms)).toEqual([100, 200]);
+		} finally {
+			vi.useRealTimers();
+		}
 	});
 });

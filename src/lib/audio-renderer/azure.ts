@@ -56,13 +56,14 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine {
 	const sleep = deps.sleep ?? ((ms: number) => new Promise((r) => setTimeout(r, ms)));
 	const minInterval = deps.minIntervalMs ?? 3100;
 	mkdirSync(deps.cacheDir, { recursive: true });
-	let last = -Infinity;
+	let nextSlot = 0;
 
 	const speak = async (body: string) => {
 		for (let tries = 1; ; tries++) {
-			const wait = last + minInterval - Date.now();
-			if (wait > 0) await sleep(wait);
-			last = Date.now();
+			const now = Date.now();
+			const slot = Math.max(now, nextSlot);
+			nextSlot = slot + minInterval;
+			if (slot > now) await sleep(slot - now);
 			const res = await fetchImpl(
 				`https://${deps.region}.tts.speech.microsoft.com/cognitiveservices/v1`,
 				{

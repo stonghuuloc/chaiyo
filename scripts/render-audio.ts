@@ -19,7 +19,9 @@ try {
 		'prefix',
 		'limit',
 		'state',
-		'count'
+		'count',
+		'concurrency',
+		'interval'
 	]);
 } catch (err) {
 	console.error(`render-audio: ${(err as Error).message}`);
@@ -41,6 +43,18 @@ if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
 	console.error('render-audio: --limit needs a positive integer');
 	process.exit(1);
 }
+const intFlag = (name: string, fallback: number, min: number) => {
+	const v = flags[name];
+	if (v === undefined) return fallback;
+	if (!/^\d+$/.test(v) || Number(v) < min) {
+		console.error(`render-audio: --${name} needs an integer >= ${min}`);
+		process.exit(1);
+	}
+	return Number(v);
+};
+// F0 allows 20 requests a minute; S0 allows 30 a second.
+const concurrency = intFlag('concurrency', 1, 1);
+const interval = intFlag('interval', 3100, 0);
 if (flags.count !== undefined && flags.count !== 'only') {
 	console.error('render-audio: use --count only');
 	process.exit(1);
@@ -48,7 +62,7 @@ if (flags.count !== undefined && flags.count !== 'only') {
 const [manifestPath] = positional;
 if (!manifestPath) {
 	console.error(
-		'usage: render-audio <audio-manifest.json> [--kind sentence,word,syllable] [--ref-prefix <p>] [--limit N] [--prefix <p>] [--state <dir>] [--count only] [--from-dir <dir>]'
+		'usage: render-audio <audio-manifest.json> [--kind sentence,word,syllable] [--ref-prefix <p>] [--limit N] [--prefix <p>] [--state <dir>] [--count only] [--from-dir <dir>] [--concurrency N] [--interval ms]'
 	);
 	process.exit(1);
 }
@@ -105,7 +119,8 @@ for (const signal of ['SIGINT', 'SIGTERM'] as const) process.on(signal, () => pr
 const engine = azureEngine(cast, {
 	key: env.AZURE_SPEECH_KEY,
 	region: env.AZURE_SPEECH_REGION,
-	cacheDir: join(state, 'clips')
+	cacheDir: join(state, 'clips'),
+	minIntervalMs: interval
 });
 const bucket = r2Bucket({
 	accountId: env.R2_ACCOUNT_ID,
@@ -122,7 +137,8 @@ try {
 		engine,
 		bucket,
 		recorded,
-		prefix: keyPrefix
+		prefix: keyPrefix,
+		concurrency
 	});
 	console.log(`${uploaded} uploaded, ${skipped} skipped`);
 	if (picked[0])
