@@ -1,4 +1,4 @@
-import { SPEAKERS } from '../types';
+import { SPEAKERS, VOICE_STYLES } from '../types';
 import type { ContentSet, LintError } from '../types';
 import { issue, pathOf } from '../util';
 
@@ -22,6 +22,21 @@ export const audio = (set: ContentSet): LintError[] => {
 						file,
 						pathOf(['sentences', i, 'speaker']),
 						`Speaker ${s.speaker} is not a speaking voice (${SPEAKERS.join(', ')})`
+					)
+				);
+			if (s.style === undefined) return;
+			const styles = s.speaker === undefined ? undefined : VOICE_STYLES[s.speaker];
+			if (!styles)
+				errors.push(
+					issue(9, file, pathOf(['sentences', i, 'style']), 'A style needs a speaking voice')
+				);
+			else if (!styles.includes(s.style))
+				errors.push(
+					issue(
+						9,
+						file,
+						pathOf(['sentences', i, 'style']),
+						`Style ${s.style} is not a style of ${s.speaker} (${styles.join(', ')})`
 					)
 				);
 		});

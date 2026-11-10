@@ -83,6 +83,7 @@ export const Sentence = z.strictObject({
 	spoken: z.string().optional(),
 	vi: z.string(),
 	speaker: z.string().optional(),
+	style: z.string().optional(),
 	seg: z.array(z.string()).optional(),
 	source: z.union([z.literal('ai'), z.string().regex(/^tatoeba:\d+$/)]).optional(),
 	unknown: z.array(Gloss).optional()

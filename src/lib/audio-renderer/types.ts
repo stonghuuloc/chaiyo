@@ -1,6 +1,8 @@
 import type { AudioEntry } from '../content/import/audio';
 
-export type EngineRequest = Pick<AudioEntry, 'key' | 'kind' | 'voice' | 'hanzi'> & { text: string };
+export type EngineRequest = Pick<AudioEntry, 'key' | 'kind' | 'voice' | 'style' | 'hanzi'> & {
+	text: string;
+};
 
 export type Bytes = Uint8Array<ArrayBuffer>;
 

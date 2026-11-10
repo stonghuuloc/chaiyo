@@ -319,6 +319,27 @@ describe('check 9 Audio', () => {
 			'sections.dialogue.parts[1]'
 		));
 	it('allows back-to-back lines from one voice', () => expect(run(() => {})).toEqual([]));
+	it('allows a style the speaking voice has', () =>
+		expect(
+			run((s) => {
+				lesson(s).sentences[0].style = 'cheerful';
+				lesson(s).sentences[1].style = 'serious';
+			})
+		).toEqual([]));
+	it('flags a style the speaking voice does not have', () =>
+		only(
+			run((s) => (lesson(s).sentences[1].style = 'chat-casual')),
+			9,
+			F,
+			'sentences[1].style'
+		));
+	it('flags a style on a line with no speaker', () =>
+		only(
+			run((s) => (lesson(s).sentences[7].style = 'cheerful')),
+			9,
+			F,
+			'sentences[7].style'
+		));
 	it('ignores a reading line without a speaker', () =>
 		expect(
 			run((s) => (lesson(s).sections.reading = { title: 'Đọc', lines: ['s-h1-01-08'] }))

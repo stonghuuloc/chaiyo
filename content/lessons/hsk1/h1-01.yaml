@@ -11,13 +11,13 @@ scene:
   cast: [ panda, fawn ]
   prompt: The panda and the fawn meeting on a path by a calm lake, waving hello
 sentences:
-  - { id: s-h1-01-01, hanzi: 你好！, pinyin: nǐ hǎo, spoken: ní hǎo, vi: Chào bạn!, speaker: redpanda }
-  - { id: s-h1-01-02, hanzi: 你好！, pinyin: nǐ hǎo, spoken: ní hǎo, vi: Chào bạn!, speaker: takin }
+  - { id: s-h1-01-01, hanzi: 你好！, pinyin: nǐ hǎo, spoken: ní hǎo, vi: Chào bạn!, speaker: redpanda, style: cheerful }
+  - { id: s-h1-01-02, hanzi: 你好！, pinyin: nǐ hǎo, spoken: ní hǎo, vi: Chào bạn!, speaker: takin, style: cheerful }
   - { id: s-h1-01-03, hanzi: 对不起！, pinyin: duìbuqǐ, vi: Xin lỗi!, speaker: takin }
-  - { id: s-h1-01-04, hanzi: 没关系。, pinyin: méi guānxi, vi: Không sao., speaker: redpanda }
-  - { id: s-h1-01-05, hanzi: 谢谢！, pinyin: xièxie, vi: Cảm ơn!, speaker: redpanda }
-  - { id: s-h1-01-06, hanzi: 不客气。, pinyin: bù kèqi, spoken: bú kèqi, vi: Không có gì., speaker: takin }
-  - { id: s-h1-01-07, hanzi: 再见！, pinyin: zàijiàn, vi: Tạm biệt!, speaker: takin }
+  - { id: s-h1-01-04, hanzi: 没关系。, pinyin: méi guānxi, vi: Không sao., speaker: redpanda, style: gentle }
+  - { id: s-h1-01-05, hanzi: 谢谢！, pinyin: xièxie, vi: Cảm ơn!, speaker: redpanda, style: cheerful }
+  - { id: s-h1-01-06, hanzi: 不客气。, pinyin: bù kèqi, spoken: bú kèqi, vi: Không có gì., speaker: takin, style: cheerful }
+  - { id: s-h1-01-07, hanzi: 再见！, pinyin: zàijiàn, vi: Tạm biệt!, speaker: takin, style: cheerful }
   - { id: s-h1-01-08, hanzi: 您好！, pinyin: nín hǎo, vi: Chào ông/bà! (lịch sự) }
   - { id: s-h1-01-09, hanzi: 你们好！, pinyin: nǐmen hǎo, vi: Chào các bạn! }
   - { id: s-h1-01-10, hanzi: 你好！, pinyin: nǐ hǎo, vi: Chào bạn! }

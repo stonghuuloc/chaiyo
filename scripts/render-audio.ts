@@ -105,8 +105,7 @@ for (const signal of ['SIGINT', 'SIGTERM'] as const) process.on(signal, () => pr
 const engine = azureEngine(cast, {
 	key: env.AZURE_SPEECH_KEY,
 	region: env.AZURE_SPEECH_REGION,
-	cacheDir: join(state, 'clips'),
-	rawDir: join(homedir(), '.capy', 'work', 'azure-raw')
+	cacheDir: join(state, 'clips')
 });
 const bucket = r2Bucket({
 	accountId: env.R2_ACCOUNT_ID,

@@ -46,3 +46,30 @@ export const CHECK_NAMES = [
 export const CAST = ['panda', 'redpanda', 'fawn', 'takin'];
 
 export const SPEAKERS = ['redpanda', 'takin'];
+
+export const VOICE_STYLES: Record<string, readonly string[]> = {
+	redpanda: [
+		'default',
+		'assistant',
+		'chat',
+		'chat-casual',
+		'customerservice',
+		'newscast',
+		'affectionate',
+		'angry',
+		'calm',
+		'cheerful',
+		'disgruntled',
+		'excited',
+		'fearful',
+		'friendly',
+		'gentle',
+		'lyrical',
+		'poetry-reading',
+		'sad',
+		'serious',
+		'sorry',
+		'whispering'
+	],
+	takin: ['default', 'angry', 'cheerful', 'depressed', 'disgruntled', 'fearful', 'sad', 'serious']
+};
