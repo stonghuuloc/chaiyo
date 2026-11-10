@@ -14,36 +14,37 @@ export async function render(
 		engine,
 		bucket,
 		recorded,
-		prefix = ''
+		prefix = '',
+		concurrency = 1
 	}: {
 		engine: Engine;
 		bucket: Bucket;
 		recorded?: (key: string) => Bytes | undefined;
 		prefix?: string;
+		concurrency?: number;
 	}
 ): Promise<RenderResult> {
 	for (const e of entries)
-		if (e.key !== audioKey(e.split ? e.ref : e.hanzi, e.voice))
+		if (e.key !== audioKey(e.split ? e.ref : e.hanzi, e.voice, e.style))
 			throw new Error(`key mismatch: ${e.ref}`);
 
 	let uploaded = 0;
 	let skipped = 0;
 	const failures: RenderFailure[] = [];
-	const seen = new Set<string>();
-	for (const e of entries) {
-		if (seen.has(e.key)) continue;
-		seen.add(e.key);
+	const unique = [...new Map(entries.map((e) => [e.key, e])).values()];
+	const one = async (e: AudioEntry) => {
 		const name = `${prefix}${e.key}.mp3`;
 		try {
 			if (await bucket.has(name)) {
 				skipped++;
-				continue;
+				return;
 			}
 			const body =
 				recorded?.(e.key) ??
 				(await engine.synthesize({
 					text: e.reading ?? e.hanzi,
 					voice: e.voice,
+					style: e.style,
 					key: e.key,
 					kind: e.kind,
 					hanzi: e.hanzi
@@ -58,7 +59,12 @@ export async function render(
 				message: err instanceof Error ? err.message : String(err)
 			});
 		}
-	}
+	};
+	let next = 0;
+	const worker = async () => {
+		while (next < unique.length) await one(unique[next++]);
+	};
+	await Promise.all(Array.from({ length: Math.max(1, concurrency) }, worker));
 	if (failures.length) throw new RenderError(uploaded, skipped, failures);
 	return { uploaded, skipped };
 }

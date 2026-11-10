@@ -1,6 +1,6 @@
 # 0006 — The pinyin chart plays Yoyo Chinese recordings
 
-Status: accepted (2026-11-10). Supersedes [0005](0005-syllables-are-tone-perfect-recordings.md) for the syllable cells. [0004](0004-azure-single-tts-source.md) still holds for everything else.
+Status: accepted (2026-11-10). Supersedes [0005](0005-syllables-are-tone-perfect-recordings.md) for the syllable cells. Lesson clips (words, sentences, chips) follow [0007](0007-lesson-voices-raw-azure-styles.md).
 
 ## Context
 

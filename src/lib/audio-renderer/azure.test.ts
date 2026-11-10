@@ -1,143 +1,115 @@
-import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import { azureEngine, azureRequest, billable, endLevel, parseCast, ssml } from './azure';
+import { azureEngine, azureRequest, billable, parseCast, ssml } from './azure';
 
 const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
-const wav = (samples: number[]) => {
-	const out = new Uint8Array(44 + samples.length * 2);
-	const view = new DataView(out.buffer);
-	out.set(new TextEncoder().encode('RIFF'), 0);
-	out.set(new TextEncoder().encode('WAVEfmt '), 8);
-	view.setUint32(16, 16, true);
-	view.setUint32(24, 24000, true);
-	out.set(new TextEncoder().encode('data'), 36);
-	view.setUint32(40, samples.length * 2, true);
-	samples.forEach((s, i) => view.setInt16(44 + i * 2, s, true));
-	return out;
+const clip = new Uint8Array([0xff, 0xf3, 1, 2, 3]);
+type Opts = { kind?: 'sentence' | 'word' | 'syllable'; voice?: string; style?: string };
+const req = (hanzi: string, o: Opts = {}) => {
+	const style = 'style' in o ? o.style : 'newscast';
+	const voice = o.voice ?? 'redpanda';
+	return {
+		key: `k-${hanzi}-${voice}-${style}`,
+		kind: o.kind ?? 'sentence',
+		voice,
+		style,
+		hanzi,
+		text: hanzi
+	};
 };
-const tone = (ms: number) =>
-	Array.from({ length: ms * 24 }, (_, i) => Math.round(8000 * Math.sin(i / 3)));
-const silence = (ms: number) => new Array<number>(ms * 24).fill(0);
-const ended = wav([...tone(200), ...silence(100)]);
-const cut = wav(tone(200));
-const req = (
-	hanzi: string,
-	kind: 'sentence' | 'word' | 'syllable' = 'sentence',
-	voice = 'redpanda'
-) => ({
-	key: `k-${hanzi}-${voice}`,
-	kind,
-	voice,
-	hanzi,
-	text: hanzi
-});
 
 describe('cast', () => {
-	it('two voices, takin differs from redpanda, plain at -20%', () => {
+	it('Xiaoxiao and Yunfeng standard voices at -20%, 48 kHz mp3', () => {
 		expect(cast.rate).toBe('-20%');
-		expect(Object.keys(cast.voices)).toEqual(['redpanda', 'takin']);
-		expect(cast.voices.redpanda).toBe('zh-CN-Xiaoke:DragonHDFlashLatestNeural');
-		expect(cast.voices.takin).not.toBe(cast.voices.redpanda);
+		expect(cast.format).toBe('audio-48khz-192kbitrate-mono-mp3');
+		expect(cast.voices).toEqual({
+			redpanda: 'zh-CN-XiaoxiaoNeural',
+			takin: 'zh-CN-YunfengNeural'
+		});
 	});
 
-	it('rejects an OmniVoice cast', () => {
-		expect(() => parseCast('engine: omnivoice\nrate: "-20%"\nvoices: {}')).toThrow();
+	it('rejects a cast without an mp3 format', () => {
+		expect(() =>
+			parseCast('engine: azure\nrate: "-20%"\nformat: riff-24khz-16bit-mono-pcm\nvoices: {}')
+		).toThrow();
 	});
 });
 
 describe('ssml', () => {
-	it('slows plain text inside the voice and escapes markup', () => {
-		const body = ssml(cast, 'v', 'a<b&c');
-		expect(body).toContain(
-			'<voice name="v"><prosody rate="-20%">a&lt;b&amp;c<break time="250ms"/></prosody></voice>'
+	it('wraps the text in Loc’s template: style, rate, empty <s /> on both sides, escaped', () => {
+		expect(ssml(cast, 'v', 'chat-casual', 'a<b&c')).toBe(
+			'<speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="zh-CN"><voice name="v"><s /><mstts:express-as style="chat-casual"><prosody rate="-20%"> a&lt;b&amp;c </prosody></mstts:express-as><s /></voice></speak>'
 		);
-		expect(body).not.toContain('express-as');
-		expect(body).not.toContain('phoneme');
 	});
 
-	it('bills hanzi twice and the prosody tag, not speak or voice', () => {
-		expect(billable(ssml(cast, 'v', '您好'))).toBe(
-			4 + '<prosody rate="-20%"><break time="250ms"/></prosody>'.length
-		);
+	it('bills hanzi twice and every other character inside the voice once', () => {
+		const inner =
+			'<s /><mstts:express-as style="newscast"><prosody rate="-20%">  </prosody></mstts:express-as><s />';
+		expect(billable(ssml(cast, 'v', 'newscast', '您好'))).toBe(4 + inner.length);
 	});
 });
 
 describe('azureRequest', () => {
-	it('sends the carrier hanzi for a syllable cell and the hanzi for a chip', () => {
-		expect(azureRequest(cast, req('bā', 'syllable'))!.body).toContain('>八<break');
-		expect(azureRequest(cast, req('nǐ hǎo', 'syllable'))!.body).toContain('>你好<break');
+	it('sends a sentence as written, in its speaker’s voice and style', () => {
+		const body = azureRequest(cast, req('对不起！', { voice: 'takin', style: 'serious' }))!.body;
+		expect(body).toContain('<voice name="zh-CN-YunfengNeural">');
+		expect(body).toContain('style="serious"');
+		expect(body).toContain('> 对不起！ <');
+		expect(() => azureRequest(cast, req('x', { voice: 'nobody' }))).toThrow('unknown voice');
 	});
 
-	it('marks a word carrier for the cut and skips a cell with no carrier', () => {
-		expect(azureRequest(cast, req('biè', 'syllable'))!.cut).toBe(true);
-		expect(azureRequest(cast, req('bā', 'syllable'))!.cut).toBe(false);
-		expect(azureRequest(cast, req('biā', 'syllable'))).toBeUndefined();
+	it('sends the hanzi of a Primer chip', () => {
+		const body = azureRequest(
+			cast,
+			req('nǐ hǎo', { kind: 'syllable', style: 'poetry-reading' })
+		)!.body;
+		expect(body).toContain('> 你好 <');
 	});
 
-	it('sends a sentence as written, in the voice of its speaker', () => {
-		const body = azureRequest(cast, req('对不起！', 'sentence', 'takin'))!.body;
-		expect(body).toContain(`<voice name="${cast.voices.takin}">`);
-		expect(body).toContain('>对不起！<break');
-		expect(() => azureRequest(cast, req('x', 'sentence', 'nobody'))).toThrow('unknown voice');
-	});
-});
-
-describe('endLevel', () => {
-	it('reads the last 10 ms against the loudest 10 ms', () => {
-		expect(endLevel(ended)).toBeLessThan(-100);
-		expect(endLevel(cut)).toBeGreaterThan(-1);
+	it('never sends a pinyin-chart cell: it has no style', () => {
+		expect(azureRequest(cast, req('bā', { kind: 'syllable', style: undefined }))).toBeUndefined();
 	});
 });
 
 describe('azureEngine', () => {
-	const setup = (
-		statuses: number[],
-		faults: string[][] = [],
-		{
-			takes = [] as Uint8Array<ArrayBuffer>[],
-			rawDir
-		}: { takes?: Uint8Array<ArrayBuffer>[]; rawDir?: string } = {}
-	) => {
+	const setup = (statuses: number[], minIntervalMs = 0) => {
 		const cacheDir = mkdtempSync(join(tmpdir(), 'azure-test-'));
-		const fetchImpl = vi.fn(async () => {
+		const fetchImpl = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(async () => {
 			const status = statuses.shift() ?? 200;
-			return new Response(status === 200 ? (takes.shift() ?? ended) : null, {
+			return new Response(status === 200 ? clip : null, {
 				status,
 				headers: status === 429 ? { 'retry-after': '1' } : {}
 			});
 		});
-		const sleep = vi.fn(async () => {});
-		const faultsOf = vi.fn<(file: string, hanzi?: number, min?: number) => string[]>(
-			() => faults.shift() ?? []
-		);
+		const sleep = vi.fn<(ms: number) => Promise<void>>(async () => {});
 		const engine = azureEngine(cast, {
 			key: 'k',
 			region: 'r',
 			cacheDir,
-			rawDir,
 			fetchImpl: fetchImpl as unknown as typeof fetch,
-			encode: (wav, mp3, cut) => writeFileSync(mp3, `mp3:${readFileSync(wav).length}:${cut}`),
-			faults: faultsOf,
 			sleep,
-			minIntervalMs: 0
+			minIntervalMs
 		});
-		return { engine, fetchImpl, sleep, faultsOf, cacheDir };
+		return { engine, fetchImpl, sleep };
 	};
 
-	it('posts SSML to the region endpoint and caches the clip by key and request', async () => {
-		const { engine, fetchImpl, cacheDir } = setup([]);
-		const body = await engine.synthesize(req('你好！'));
-		expect(new TextDecoder().decode(body)).toBe(`mp3:${ended.length}:false`);
-		expect(fetchImpl).toHaveBeenCalledWith(
-			'https://r.tts.speech.microsoft.com/cognitiveservices/v1',
-			expect.objectContaining({ method: 'POST' })
+	it('returns Azure’s bytes unchanged and asks for the cast format', async () => {
+		const { engine, fetchImpl } = setup([]);
+		expect(await engine.synthesize(req('你好！'))).toEqual(clip);
+		const [url, init] = fetchImpl.mock.calls[0];
+		expect(url).toBe('https://r.tts.speech.microsoft.com/cognitiveservices/v1');
+		expect((init.headers as Record<string, string>)['X-Microsoft-OutputFormat']).toBe(
+			'audio-48khz-192kbitrate-mono-mp3'
 		);
-		await engine.synthesize(req('你好！'));
+	});
+
+	it('caches a clip by key and request, so a second render does not call Azure', async () => {
+		const { engine, fetchImpl } = setup([]);
+		await engine.synthesize(req('好'));
+		expect(await engine.synthesize(req('好'))).toEqual(clip);
 		expect(fetchImpl).toHaveBeenCalledTimes(1);
-		expect(existsSync(cacheDir)).toBe(true);
-		engine.close();
 	});
 
 	it('waits out a 429 and gives up on a 400', async () => {
@@ -148,66 +120,29 @@ describe('azureEngine', () => {
 		await expect(b.engine.synthesize(req('好'))).rejects.toThrow('Azure answered 400');
 	});
 
-	it('asks again when the gate fails, three takes at most', async () => {
-		const ok = setup([], [['too short (0.10 s)']]);
-		await ok.engine.synthesize(req('好'));
-		expect(ok.fetchImpl).toHaveBeenCalledTimes(2);
-		const bad = setup([], [['a'], ['b'], ['c']]);
-		await expect(bad.engine.synthesize(req('好'))).rejects.toThrow('好: c');
-		expect(bad.fetchImpl).toHaveBeenCalledTimes(3);
-	});
-
-	it('asks again when the take is cut off at the end, before encoding it, eight takes at most', async () => {
-		const { engine, fetchImpl, faultsOf } = setup([], [], { takes: [cut] });
-		await engine.synthesize(req('好'));
-		expect(fetchImpl).toHaveBeenCalledTimes(2);
-		expect(faultsOf).toHaveBeenCalledTimes(1);
-		const bad = setup([], [], { takes: new Array(8).fill(cut) });
-		await expect(bad.engine.synthesize(req('好'))).rejects.toThrow('好: cut off at the end');
-		expect(bad.fetchImpl).toHaveBeenCalledTimes(8);
-		expect(bad.faultsOf).not.toHaveBeenCalled();
-	});
-
-	it('keeps the accepted raw take and encodes it again without calling Azure', async () => {
-		const rawDir = mkdtempSync(join(tmpdir(), 'azure-raw-'));
-		const first = setup([], [], { takes: [cut], rawDir });
-		await first.engine.synthesize(req('好'));
-		expect(readdirSync(rawDir)).toHaveLength(1);
-		const again = setup([], [], { rawDir });
-		await again.engine.synthesize(req('好'));
-		expect(again.fetchImpl).not.toHaveBeenCalled();
-		expect(again.faultsOf).toHaveBeenCalledTimes(1);
-	});
-
-	it('replaces a kept raw take that is cut off with a fresh take', async () => {
-		const rawDir = mkdtempSync(join(tmpdir(), 'azure-raw-'));
-		await setup([], [], { rawDir }).engine.synthesize(req('好'));
-		const [name] = readdirSync(rawDir);
-		writeFileSync(join(rawDir, name), cut);
-		const again = setup([], [], { takes: [cut, cut], rawDir });
-		await again.engine.synthesize(req('好'));
-		expect(again.fetchImpl).toHaveBeenCalledTimes(3);
-		expect(readFileSync(join(rawDir, name))).toEqual(Buffer.from(ended));
-	});
-
-	it('lets a syllable clip be shorter than a word', async () => {
-		const { engine, faultsOf } = setup([]);
-		await engine.synthesize(req('bā', 'syllable'));
-		await engine.synthesize(req('您', 'word'));
-		expect(faultsOf.mock.calls.map((c) => c[2])).toEqual([0.15, undefined]);
-	});
-
 	it('refuses a word whose reading is not its hanzi without calling Azure', async () => {
 		const { engine, fetchImpl } = setup([]);
-		await expect(engine.synthesize({ ...req('行', 'word'), text: 'háng' })).rejects.toThrow(
-			'Azure takes hanzi'
-		);
+		await expect(
+			engine.synthesize({ ...req('行', { kind: 'word', style: 'poetry-reading' }), text: 'háng' })
+		).rejects.toThrow('Azure takes hanzi');
 		expect(fetchImpl).not.toHaveBeenCalled();
 	});
 
-	it('refuses a cell with no carrier without calling Azure', async () => {
+	it('refuses a pinyin-chart cell without calling Azure', async () => {
 		const { engine, fetchImpl } = setup([]);
-		await expect(engine.synthesize(req('biā', 'syllable'))).rejects.toThrow('no carrier');
+		await expect(
+			engine.synthesize(req('bā', { kind: 'syllable', style: undefined }))
+		).rejects.toThrow('not an Azure clip');
 		expect(fetchImpl).not.toHaveBeenCalled();
+	});
+	it('spaces concurrent requests by the interval instead of firing them together', async () => {
+		vi.useFakeTimers({ now: 0 });
+		try {
+			const { engine, sleep } = setup([], 100);
+			await Promise.all(['一', '二', '三'].map((h) => engine.synthesize(req(h))));
+			expect(sleep.mock.calls.map(([ms]) => ms)).toEqual([100, 200]);
+		} finally {
+			vi.useRealTimers();
+		}
 	});
 });

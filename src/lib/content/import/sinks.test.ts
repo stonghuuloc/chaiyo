@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { fixtureRefs } from '../lint/fixtures/refs';
-import { audioKey } from './audio';
+import { audioKey, sentenceVoice } from './audio';
 import { buildBundle } from './bundle';
 import { createBundleSink } from './bundle-sink';
 import { importContent } from './import';
@@ -78,7 +78,7 @@ describe('the same content in every sink', () => {
 					id: s.id,
 					spoken: s.spoken,
 					seg: s.seg,
-					audio_key: audioKey(s.hanzi, s.speaker ?? 'redpanda'),
+					audio_key: audioKey(s.hanzi, sentenceVoice(s).voice, sentenceVoice(s).style),
 					lessonId: s.lessonId ?? null
 				}))
 			);

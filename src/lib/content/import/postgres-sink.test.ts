@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fixtureRefs } from '../lint/fixtures/refs';
-import { audioKey } from './audio';
+import { audioKey, sentenceVoice } from './audio';
 import { importContent } from './import';
 import { createPostgresSink, type SqlClient } from './postgres-sink';
 import { createMemorySink, type ImportedContent, type ImportedLesson } from './sink';
@@ -77,7 +77,7 @@ describe('createPostgresSink', () => {
 		expect(await ids('content_versions', 'sha')).toEqual([c.sha]);
 	});
 
-	it('sets audio_key per sentence from its speaker', async () => {
+	it('sets audio_key per sentence from its speaker and style', async () => {
 		const c = await loadOk();
 		await sink.write(c);
 		const rows = (await db.query('select id, hanzi, audio_key from sentences')).rows as {
@@ -87,7 +87,7 @@ describe('createPostgresSink', () => {
 		}[];
 		for (const s of c.sentences)
 			expect(rows.find((r) => r.id === s.id)?.audio_key).toBe(
-				audioKey(s.hanzi, s.speaker ?? 'redpanda')
+				audioKey(s.hanzi, sentenceVoice(s).voice, sentenceVoice(s).style)
 			);
 		const key = (id: string) => rows.find((r) => r.id === id)!.audio_key;
 		expect(key('s-h1-01-11')).toBe(key('s-h1-01-10'));

@@ -1,5 +1,5 @@
 import type { Question } from '../schemas';
-import { audioKey } from './audio';
+import { audioKey, sentenceVoice } from './audio';
 import type { ImportedContent, ImportedLesson, Sink } from './sink';
 
 type Query = (sql: string, params?: unknown[]) => Promise<{ rows: unknown[] }>;
@@ -146,17 +146,20 @@ export function createPostgresSink(sql: SqlClient): Sink {
 					'sentences',
 					'id',
 					['lesson_id', 'hanzi', 'pinyin', 'spoken', 'vi', 'seg', 'audio_key', 'data'],
-					content.sentences.map(({ id, lessonId, hanzi, pinyin, spoken, vi, seg, ...data }) => ({
-						id,
-						lesson_id: lessonId ?? null,
-						hanzi,
-						pinyin,
-						spoken,
-						vi,
-						seg,
-						audio_key: audioKey(hanzi, data.speaker ?? 'redpanda'),
-						data
-					}))
+					content.sentences.map(({ id, lessonId, hanzi, pinyin, spoken, vi, seg, ...data }) => {
+						const { voice, style } = sentenceVoice(data);
+						return {
+							id,
+							lesson_id: lessonId ?? null,
+							hanzi,
+							pinyin,
+							spoken,
+							vi,
+							seg,
+							audio_key: audioKey(hanzi, voice, style),
+							data
+						};
+					})
 				);
 				await prune(
 					q,

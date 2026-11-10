@@ -32,5 +32,5 @@ Tone Perfect is CC BY-NC-SA. Loc said to ignore licensing for now; Chaiyo stays 
 
 ## Consequences
 
-- The grid is the only place where recordings and Azure voices mix. Syllables sound like the FV3 speaker, the rest like Xiaoke.
+- The grid is the only place where recordings and Azure voices mix. Syllables sound like the FV3 speaker, the rest like the lesson voices (Xiaoke at the time; Xiaoxiao and Yunfeng since [0007](0007-lesson-voices-raw-azure-styles.md)).
 - A change to syllable audio needs another prefix (`az4`), for the same cache reason as 0004.

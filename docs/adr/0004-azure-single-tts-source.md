@@ -1,6 +1,6 @@
 # 0004 — TTS: Azure Speech is the single audio source
 
-Status: accepted (2026-11-09). Supersedes [0003](0003-tts-engine.md). The syllable grid plays recordings instead: see [0005](0005-syllables-are-tone-perfect-recordings.md) and [0006](0006-pinyin-chart-plays-yoyo-recordings.md).
+Status: superseded by [0007](0007-lesson-voices-raw-azure-styles.md) for lesson clips (2026-11-10). Superseded [0003](0003-tts-engine.md). The syllable grid plays recordings instead: see [0005](0005-syllables-are-tone-perfect-recordings.md) and [0006](0006-pinyin-chart-plays-yoyo-recordings.md).
 
 ## Context
 

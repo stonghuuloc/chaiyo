@@ -1,8 +1,10 @@
-# Azure voice per manifest voice (docs/adr/0004-azure-single-tts-source.md). The Audio Renderer reads it; lint does not.
-# One Dragon HD Flash voice per Cast member, plain (no style, no phoneme tag), slowed inside the voice by `rate`. No atempo.
-# Two voices only. A sentence with no speaker, every word, syllable and chip use redpanda.
+# Azure voice per manifest voice (docs/adr/0007-lesson-voices-raw-azure-styles.md). The Audio Renderer reads it.
+# Standard neural voices, one per Cast member, each clip in the style its manifest entry names, slowed by `rate`.
+# The clip is stored exactly as Azure returns it in `format`: no trim, no padding, no loudnorm, no retakes.
+# Styles per voice live in src/lib/content/lint/types.ts (VOICE_STYLES); defaults in src/lib/content/import/audio.ts.
 engine: azure
 rate: "-20%"
+format: audio-48khz-192kbitrate-mono-mp3
 voices:
-  redpanda: zh-CN-Xiaoke:DragonHDFlashLatestNeural
-  takin: zh-CN-Yunfeng:DragonHDFlashLatestNeural
+  redpanda: zh-CN-XiaoxiaoNeural
+  takin: zh-CN-YunfengNeural
