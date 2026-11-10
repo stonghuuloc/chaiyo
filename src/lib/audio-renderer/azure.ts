@@ -212,7 +212,11 @@ export function whisperWorker() {
 		{ stdio: ['pipe', 'pipe', 'inherit'] }
 	);
 	const lines = createInterface({ input: child.stdout })[Symbol.asyncIterator]();
-	const spawnFailed = new Promise<never>((_, reject) => child.once('error', reject));
+	const spawnFailed = new Promise<never>((_, reject) => {
+		child.once('error', reject);
+		child.stdin.on('error', reject);
+	});
+	spawnFailed.catch(() => {});
 	return {
 		async hear(wav: string, text: string) {
 			child.stdin.write(JSON.stringify({ wav, text }) + '\n');
