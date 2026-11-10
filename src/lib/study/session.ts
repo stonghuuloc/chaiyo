@@ -17,6 +17,13 @@ export function session(state: State, o: { now: Date; tz: string; only?: Skill[]
 	});
 	const today = localDate(fmt, o.now);
 	const words = Object.keys(state.lexicon);
+	const taken = words.filter((w) => {
+		const first = state.lexicon[w].cards.the?.first;
+		return first && localDate(fmt, new Date(first)) === today;
+	}).length;
+	const placedWords = new Set(
+		state.curriculum.lessons.filter((l) => l.level <= state.placed).flatMap((l) => l.words)
+	);
 	const lanes = ORDER.filter((s) => !o.only || o.only.includes(s)).map((skill) => {
 		const due = words
 			.filter((w) => {
@@ -28,16 +35,12 @@ export function session(state: State, o: { now: Date; tz: string; only?: Skill[]
 					Date.parse(state.lexicon[a].cards[skill]!.due) -
 					Date.parse(state.lexicon[b].cards[skill]!.due)
 			);
-		const taken = words.filter((w) => {
-			const first = state.lexicon[w].cards.the?.first;
-			return first && localDate(fmt, new Date(first)) === today;
-		}).length;
 		const fresh =
 			skill === 'the'
 				? words
 						.filter((w) => {
 							const e = state.lexicon[w];
-							return !e.cards.the && (e.saved || Object.keys(e.cards).length === 0);
+							return !e.cards.the && (e.saved || placedWords.has(w));
 						})
 						.slice(0, Math.max(0, 20 - taken))
 				: [];

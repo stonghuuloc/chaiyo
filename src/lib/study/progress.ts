@@ -7,7 +7,7 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 		step.kind === 'placement' ? -1 : s.curriculum.lessons.findIndex((l) => l.id === step.lesson);
 	if (step.kind !== 'placement' && index < 0) return ignore;
 	const meta = s.curriculum.lessons[index];
-	const L = s.lessons[meta?.id];
+	const L = meta && s.lessons[meta.id];
 	if (
 		step.kind === 'gate' &&
 		!(meta.testOut || meta.sections.every((section) => L.done.includes(section)))

@@ -136,8 +136,7 @@ describe('20 new cards a day', () => {
 					ms: 1,
 					card: c
 				}));
-				const mid = batch.slice(0, 20);
-				s = feed(s, mid);
+				s = feed(s, batch);
 				const again = session(s, { now: new Date(later.getTime() + H), tz, only: ['the'] });
 				expect(again.filter((c) => !s.lexicon[c.word].cards.the)).toEqual([]);
 				continue;
@@ -180,6 +179,24 @@ describe('20 new cards a day', () => {
 		expect(fresh).toHaveLength(15);
 		expect(fresh[0].word).toBe('对不起');
 		expect(fresh.at(-1)!.word).toBe('h1-02-w10');
+	});
+
+	it('a word taught by another skill still gets a new thẻ từ card after placement', () => {
+		let s = feed(blank(), [
+			{
+				id: 'v1',
+				at: T.toISOString(),
+				questionId: 'qv',
+				contentSha: 'x',
+				correct: true,
+				ms: 1,
+				card: { word: '你', skill: 'viet' }
+			}
+		]);
+		const now = new Date(T.getTime() + 20 * 60_000);
+		expect(session(s, { now, tz, only: ['the'] })).toEqual([]);
+		s = feed(s, placementBlock(1, 'p1', 9, T));
+		expect(session(s, { now, tz, only: ['the'] })[0]).toEqual({ word: '你', skill: 'the' });
 	});
 
 	it('keeps first on later reviews', () => {
