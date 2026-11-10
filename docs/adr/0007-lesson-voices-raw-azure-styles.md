@@ -33,9 +33,20 @@ Output format `audio-48khz-192kbitrate-mono-mp3` (`content/cast.yaml`). No ffmpe
 
 **Dynamic style.** A sentence with a speaker may carry `style:` in the lesson YAML. Lint check 9 rejects a style on a line with no speaker and a style the voice does not have. The lists (`VOICE_STYLES`, `src/lib/content/lint/types.ts`) are Azure's `StyleList` for each voice from `voices/list`, plus `default`. Yunfeng has 7 styles (angry, cheerful, depressed, disgruntled, fearful, sad, serious); it has no chat style, so its dialogue default is `default`.
 
-**Key.** The style is part of the clip: `key = sha256(text|voice/style)`. Without it, `你好！` as a dialogue line and as an example sentence (both redpanda) would share one clip. Pinyin-chart cells have no style, so their keys do not change. `audio_key` in Postgres uses the same rule (`sentenceVoice` in `src/lib/content/import/audio.ts`).
+**Key.** The style is part of the clip, and the key starts with the clip's folder: `key = <folder>/sha256(text|voice/style)`. Without the style, `你好！` as a dialogue line and as an example sentence (both redpanda) would share one clip. Pinyin-chart cells have no style and no folder, so their keys do not change. `audio_key` in Postgres uses the same rule (`sentenceVoice` in `src/lib/content/import/audio.ts`).
 
-**URL.** `AUDIO_VERSION = 'lessons-1'`. `az4/` and `az6/` stay in place and unused. A change to any lesson clip's request (voice, style, rate, format, text) gives it a new key; a change to the template or the cast needs a new prefix (`lessons-2`), because clips are served `immutable`.
+**Folders.** One folder per kind of clip, so the bucket can be read by eye (Loc, 2026-11-11):
+
+| Folder | Clips |
+|---|---|
+| `words/` | words |
+| `chips/` | Primer chips |
+| `examples/` | sentences with no speaker: the word example corpus (`content/sentences/`) and lesson reading lines |
+| `dialogue/` | sentences with a speaker |
+
+The player fetches `<AUDIO_BASE>/<key>.mp3`, so the folder needs no client change.
+
+**URL.** `AUDIO_VERSION = 'lessons-2'`. `lessons-1/` held the same clips without folders; `lessons-2/` was filled by a server-side copy (`lessons-1/<hash>.mp3` → `lessons-2/<folder>/<hash>.mp3`, same bytes). A change to any lesson clip's request (voice, style, rate, format, text) gives it a new key; a change to the template or the cast needs a new prefix (`lessons-3`), because clips are served `immutable`.
 
 PR #96 (az6) is closed unmerged.
 

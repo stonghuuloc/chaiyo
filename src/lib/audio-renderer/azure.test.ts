@@ -112,6 +112,14 @@ describe('azureEngine', () => {
 		expect(fetchImpl).toHaveBeenCalledTimes(1);
 	});
 
+	it('caches a key that carries its folder', async () => {
+		const { engine, fetchImpl } = setup([]);
+		const words = { ...req('好'), key: 'words/abc' };
+		await engine.synthesize(words);
+		expect(await engine.synthesize(words)).toEqual(clip);
+		expect(fetchImpl).toHaveBeenCalledTimes(1);
+	});
+
 	it('waits out a 429 and gives up on a 400', async () => {
 		const a = setup([429, 200]);
 		await a.engine.synthesize(req('好'));

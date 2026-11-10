@@ -56,22 +56,38 @@ describe('audioKey', () => {
 		expect(audioKey('你好', 'redpanda')).toMatch(/^5c3d5b26/);
 		expect(audioKey('你好', 'redpanda', 'newscast')).toBe(audioKey('你好', 'redpanda/newscast'));
 	});
+
+	it('puts the clip folder in front of the hash, so the URL is <prefix>/<folder>/<hash>.mp3', () => {
+		expect(audioKey('你好', 'redpanda', 'poetry-reading', 'words')).toBe(
+			'words/' + audioKey('你好', 'redpanda', 'poetry-reading')
+		);
+	});
 });
 
 describe('sentenceVoice', () => {
 	it('reads a line with no speaker as newscast on redpanda', () =>
-		expect(sentenceVoice({})).toEqual({ voice: 'redpanda', style: 'newscast' }));
+		expect(sentenceVoice({})).toEqual({
+			voice: 'redpanda',
+			style: 'newscast',
+			folder: 'examples'
+		}));
 	it('gives each speaker its default dialogue style', () => {
 		expect(sentenceVoice({ speaker: 'redpanda' })).toEqual({
 			voice: 'redpanda',
-			style: 'chat-casual'
+			style: 'chat-casual',
+			folder: 'dialogue'
 		});
-		expect(sentenceVoice({ speaker: 'takin' })).toEqual({ voice: 'takin', style: 'default' });
+		expect(sentenceVoice({ speaker: 'takin' })).toEqual({
+			voice: 'takin',
+			style: 'default',
+			folder: 'dialogue'
+		});
 	});
 	it('uses the style written on the line', () =>
 		expect(sentenceVoice({ speaker: 'takin', style: 'cheerful' })).toEqual({
 			voice: 'takin',
-			style: 'cheerful'
+			style: 'cheerful',
+			folder: 'dialogue'
 		}));
 });
 
@@ -96,17 +112,19 @@ describe('audioManifest', () => {
 			sentences: [sentence('a', '你好！', 'redpanda'), sentence('b', '你好！')]
 		});
 		expect(m.find((e) => e.ref === 'a')).toEqual({
-			key: audioKey('你好！', 'redpanda', 'chat-casual'),
+			key: audioKey('你好！', 'redpanda', 'chat-casual', 'dialogue'),
 			kind: 'sentence',
 			ref: 'a',
 			voice: 'redpanda',
 			style: 'chat-casual',
+			folder: 'dialogue',
 			hanzi: '你好！'
 		});
 		expect(m.find((e) => e.ref === 'b')).toMatchObject({
-			key: audioKey('你好！', 'redpanda', 'newscast'),
+			key: audioKey('你好！', 'redpanda', 'newscast', 'examples'),
 			voice: 'redpanda',
-			style: 'newscast'
+			style: 'newscast',
+			folder: 'examples'
 		});
 	});
 
@@ -116,15 +134,16 @@ describe('audioManifest', () => {
 			words: [word('你好', '你好'), word('打', '打'), word('打-da2', '打', 'dá')]
 		});
 		const byRef = Object.fromEntries(m.map((e) => [e.ref, e]));
-		expect(byRef['你好'].key).toBe(audioKey('你好', 'redpanda', 'poetry-reading'));
-		expect(byRef['打'].key).toBe(audioKey('打', 'redpanda', 'poetry-reading'));
+		expect(byRef['你好'].key).toBe(audioKey('你好', 'redpanda', 'poetry-reading', 'words'));
+		expect(byRef['打'].key).toBe(audioKey('打', 'redpanda', 'poetry-reading', 'words'));
 		expect(byRef['打'].split).toBeUndefined();
 		expect(byRef['打-da2']).toEqual({
-			key: audioKey('打-da2', 'redpanda', 'poetry-reading'),
+			key: audioKey('打-da2', 'redpanda', 'poetry-reading', 'words'),
 			kind: 'word',
 			ref: '打-da2',
 			voice: 'redpanda',
 			style: 'poetry-reading',
+			folder: 'words',
 			hanzi: '打',
 			reading: 'dá',
 			split: true
@@ -161,6 +180,7 @@ describe('audioManifest', () => {
 		for (const e of m.filter((e) => e.kind === 'syllable')) {
 			expect(e.key).toBe(audioKey(e.ref, 'redpanda'));
 			expect(e.style).toBeUndefined();
+			expect(e.folder).toBeUndefined();
 			expect(e.hanzi).toBe(e.ref);
 			expect(e.voice).toBe('redpanda');
 		}
@@ -169,8 +189,9 @@ describe('audioManifest', () => {
 	it('reads a multi-syllable Primer chip in poetry-reading, a single syllable with no style', () => {
 		const m = audioManifest({ ...empty, lessons: [primer([{ syllables: ['nǐ hǎo', 'mā'] }])] });
 		expect(m.find((e) => e.ref === 'nǐ hǎo')).toMatchObject({
-			key: audioKey('nǐ hǎo', 'redpanda', 'poetry-reading'),
-			style: 'poetry-reading'
+			key: audioKey('nǐ hǎo', 'redpanda', 'poetry-reading', 'chips'),
+			style: 'poetry-reading',
+			folder: 'chips'
 		});
 		expect(m.find((e) => e.ref === 'mā')).toMatchObject({ key: audioKey('mā', 'redpanda') });
 		expect(m.find((e) => e.ref === 'mā')?.style).toBeUndefined();
@@ -187,9 +208,9 @@ describe('audioManifest', () => {
 			],
 			words: [word('谢谢', '谢谢')]
 		});
-		expect(m.filter((e) => e.key === audioKey('你好！', 'redpanda', 'newscast'))).toEqual([
-			expect.objectContaining({ ref: 's-h1-01-10', kind: 'sentence' })
-		]);
+		expect(
+			m.filter((e) => e.key === audioKey('你好！', 'redpanda', 'newscast', 'examples'))
+		).toEqual([expect.objectContaining({ ref: 's-h1-01-10', kind: 'sentence' })]);
 		expect(m.filter((e) => e.hanzi === '谢谢').map((e) => [e.kind, e.style])).toEqual(
 			expect.arrayContaining([
 				['sentence', 'newscast'],

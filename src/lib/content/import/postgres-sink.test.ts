@@ -87,8 +87,13 @@ describe('createPostgresSink', () => {
 		}[];
 		for (const s of c.sentences)
 			expect(rows.find((r) => r.id === s.id)?.audio_key).toBe(
-				audioKey(s.hanzi, sentenceVoice(s).voice, sentenceVoice(s).style)
+				audioKey(s.hanzi, sentenceVoice(s).voice, sentenceVoice(s).style, sentenceVoice(s).folder)
 			);
+		const manifest = new Set(c.audio.map((e) => e.key));
+		for (const r of rows) {
+			expect(r.audio_key).toMatch(/^(examples|dialogue)\/[0-9a-f]{64}$/);
+			expect(manifest.has(r.audio_key)).toBe(true);
+		}
 		const key = (id: string) => rows.find((r) => r.id === id)!.audio_key;
 		expect(key('s-h1-01-11')).toBe(key('s-h1-01-10'));
 		expect(key('s-w-1')).toBe(key('s-h1-01-10'));

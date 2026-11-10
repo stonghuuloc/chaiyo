@@ -147,7 +147,7 @@ export function createPostgresSink(sql: SqlClient): Sink {
 					'id',
 					['lesson_id', 'hanzi', 'pinyin', 'spoken', 'vi', 'seg', 'audio_key', 'data'],
 					content.sentences.map(({ id, lessonId, hanzi, pinyin, spoken, vi, seg, ...data }) => {
-						const { voice, style } = sentenceVoice(data);
+						const { voice, style, folder } = sentenceVoice(data);
 						return {
 							id,
 							lesson_id: lessonId ?? null,
@@ -156,7 +156,7 @@ export function createPostgresSink(sql: SqlClient): Sink {
 							spoken,
 							vi,
 							seg,
-							audio_key: audioKey(hanzi, voice, style),
+							audio_key: audioKey(hanzi, voice, style, folder),
 							data
 						};
 					})

@@ -94,7 +94,7 @@ export function azureEngine(cast: Cast, deps: AzureDeps): Engine {
 				.update(`${request.body}|${cast.format}`)
 				.digest('hex')
 				.slice(0, 12);
-			const cached = join(deps.cacheDir, `${req.key}-${hash}.mp3`);
+			const cached = join(deps.cacheDir, `${req.key.replace(/\//g, '_')}-${hash}.mp3`);
 			if (existsSync(cached)) return new Uint8Array(readFileSync(cached));
 			const clip = await speak(request.body);
 			writeFileSync(cached, clip);

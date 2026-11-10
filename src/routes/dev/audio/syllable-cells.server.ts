@@ -62,6 +62,6 @@ export function loadSyllableClips(source: ContentSource = bundledSource) {
 	}
 	const chips: ChipClip[] = [...texts]
 		.filter((t) => t.includes(' '))
-		.map((text) => ({ text, key: audioKey(text, 'redpanda', CHIP_STYLE) }));
+		.map((text) => ({ text, key: audioKey(text, 'redpanda', CHIP_STYLE, 'chips') }));
 	return { cells, chips };
 }
