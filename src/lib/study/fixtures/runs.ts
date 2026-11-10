@@ -69,3 +69,23 @@ export const ready = (): State =>
 			feed(s, sectionRun('h1-01', section, `s${i}`, new Date(T.getTime() + i * 60_000))),
 		bai0()
 	);
+
+export const placementBlock = (level: number, run: string, right: number, at: Date): Attempt[] =>
+	Array.from({ length: 10 }, (_, i) => {
+		const n = String(i + 1).padStart(2, '0');
+		return {
+			id: `a:${run}:${n}`,
+			at: new Date(at.getTime() + i * 1000).toISOString(),
+			questionId: `q-pl-${level}-${n}`,
+			contentSha: 'fixture',
+			correct: i < right,
+			ms: 1000,
+			step: { kind: 'placement', level, run, of: 10 }
+		};
+	});
+
+export const placed2 = (): State =>
+	feed(
+		feed(initialState({ curriculum: CURRICULUM }), placementBlock(1, 'p1', 9, T)),
+		placementBlock(2, 'p2', 5, new Date(T.getTime() + 600_000))
+	);
