@@ -30,3 +30,31 @@ Local proof (tester, Mac, `supabase start`, `pnpm dev --host 127.0.0.1`, Playwri
 
 ## Open assumptions
 - None.
+
+## Desktop rows (docs/responsive.md, prototype/desktop/d-welcome.html)
+- [AC1] [AC2] [AC4] `/welcome` declares `shell: { template: 'focus' }` in its own `+page.ts`. The page is one DOM inside FocusFrame (narrow: 560px column from 768px, 430px below), no nav at any width. The three time presets stay 3 columns at every width.
+- Enter = "Tiếp" through `use:keys` (Enter in the name field submits the form). A step change moves focus to the new h2. `Kbd` Enter shows only under hover and fine pointer.
+- Targets are 44px or more (switches, camera, back, "Học từ đầu"). Copy has no "Chạm" or "Vuốt". The offer art is 3:2 and reuses `/onboard/start-b0.webp`; the 1280w art (`start-b0-1280.webp`) is S2's.
+
+## RESPONSIVE
+```
+RESPONSIVE (docs/adr/0008)
+[ ] Picture/prototype at 390x844, 1024x768, 1280x800 and 1440x900 (768x1024 too if the layout differs there).
+[ ] Containers come from tokens (--container-column/medium/main/aside/narrow/form/sheet). Check: the diff adds no
+    430px and no max-w-[<n>px] / width:<n>px for layout.
+[ ] One DOM per screen. Breakpoints in CSS only; no {#if desktop} component swap. matchMedia only for the ADR 0008 §1 exceptions.
+[ ] Each new route under (app) declares shell: { template, section } in its own load, returned as `shell` (ADR 0008 §4); nav per its table: tab root = tab bar <1024 / sidebar >=1024; pushed browse screen = sidebar >=1024
+    with the table's tab active; focus flow = no nav at any width (top bar + centred column + sticky action bar); public page = no nav.
+[ ] Overlays use Sheet/Dialog from src/lib/ui (Sheet turns into a centred dialog >=1024). No custom sheets.
+[ ] Keyboard: Tab order = visual order (exception: the tab bar below 1024 comes before main, ADR 0008 §6), focus ring visible, focus moves to the new step heading when a step changes.
+    Focus flows use the keys action from src/lib/ui (event.code digits, Enter, Space, Esc). No letter shortcuts, none on tab roots.
+[ ] Key hints (kbd) only under (hover: hover) and (pointer: fine).
+[ ] Hover is feedback only. Check: every hand-written :hover in the diff sits inside @media (hover: hover). Clickable rows have cursor: pointer.
+[ ] Targets >= 44px at every width. Body text measure <= 70ch. Full-height layouts use dvh/svh, never vh.
+[ ] Copy says "Bấm" (click and tap); never "Chạm" or "Vuốt". Every swipe has a button. (Grep the screen's prototype for "Chạm" at SPEC time.)
+[ ] Art wider than 430 CSS px ships a 1280w WebP and keeps 3:2 (aspect-ratio); no text in images.
+[ ] Auto-playing audio catches play() rejection; the play button stays ready (proof: reload on that step, no console error).
+[ ] Floating UI never covers content at any width (tab-bar bottom padding only below 1024).
+[ ] Proof rows: Playwright at the four sizes above with a screenshot each; one live resize 1440 -> 390 -> 1440 mid-flow with no
+    state lost and no horizontal scroll at 320. Chrome + Safari on the Mac for the desktop rows (say Tab or Option+Tab in Safari).
+```
