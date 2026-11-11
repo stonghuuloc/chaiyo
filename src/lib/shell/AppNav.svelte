@@ -174,6 +174,7 @@
 			display: flex;
 			align-items: center;
 			gap: 10px;
+			min-height: 44px;
 			padding: 0 12px;
 			font-family: var(--font-serif);
 			font-size: 20px;
