@@ -1,4 +1,5 @@
 import { loadContentDir } from '#lib/content/lint/load.js';
+import type { Lesson, Primer } from '#lib/content/schemas.js';
 import type { Curriculum } from '#lib/study/index.js';
 
 export type CurriculumLesson = Curriculum['lessons'][number] & {
@@ -7,7 +8,7 @@ export type CurriculumLesson = Curriculum['lessons'][number] & {
 	titleHanzi: string;
 };
 
-const ORDER = [
+const ORDER: (keyof Lesson['sections'] | keyof Primer['sections'])[] = [
 	'tones',
 	'finals',
 	'initials',
@@ -24,7 +25,9 @@ const ORDER = [
 export function buildCurriculum(contentDir: string): CurriculumLesson[] {
 	const { set, errors } = loadContentDir(contentDir, { only: ['lessons'] });
 	if (errors.length > 0)
-		throw new Error(`curriculum: ${errors.map((e) => `${e.file} ${e.message}`).join('; ')}`);
+		throw new Error(
+			`curriculum: ${errors.map((e) => `${e.file} ${e.path}: ${e.message}`).join('; ')}`
+		);
 	if (set.lessons.length === 0) throw new Error(`curriculum: no lessons in ${contentDir}/lessons`);
 	return set.lessons
 		.map((l) => l.value)
