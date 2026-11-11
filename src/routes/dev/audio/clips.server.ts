@@ -11,6 +11,12 @@ const sample: [string, string, string | undefined, ClipFolder][] = [
 		(t): [string, string, string, ClipFolder] => [t, 'redpanda', READING_STYLE, 'examples']
 	),
 	['对不起！', 'takin', DIALOGUE_STYLE.takin, 'dialogue'],
+	...['不客气。', '你好！', '再见！'].map((t): [string, string, string, ClipFolder] => [
+		t,
+		'takin',
+		'cheerful',
+		'dialogue'
+	]),
 	...['你们', '对不起', '再见', '好', '没关系', '谢谢', '您', '你好', '不客气', '你'].map(
 		(t): [string, string, string, ClipFolder] => [t, 'redpanda', WORD_STYLE, 'words']
 	)
