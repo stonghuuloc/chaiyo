@@ -62,6 +62,7 @@
 		type="button"
 		class="mb-4 -ml-2 grid size-11 cursor-pointer place-items-center rounded-full text-ink"
 		aria-label={m.login_back()}
+		disabled={sending}
 		onclick={() => (view = to)}
 	>
 		<svg class="size-[22px] rotate-180 fill-current" aria-hidden="true"
@@ -70,7 +71,7 @@
 	</button>
 {/snippet}
 
-<main class="mx-auto flex min-h-dvh max-w-[480px] flex-col px-5 pb-8">
+<main class="mx-auto flex min-h-dvh max-w-column flex-col px-5 pb-8">
 	{#if view === 'start'}
 		<div class="-mx-5 aspect-square overflow-hidden mask-b-from-70%">
 			<img src="/onboard/welcome.webp" alt="" class="size-full object-cover object-[50%_60%]" />
@@ -155,6 +156,7 @@
 			<button
 				type="button"
 				class="h-12 cursor-pointer text-title text-ink"
+				disabled={sending}
 				onclick={() => (view = 'email')}>{m.login_change_email()}</button
 			>
 		</div>
