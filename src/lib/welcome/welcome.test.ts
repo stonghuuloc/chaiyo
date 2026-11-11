@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { CURRICULUM } from '#lib/curriculum/index.js';
+import { initialState } from '#lib/study/index.js';
 import { canNext, fromUser, initials, noChannel, pickCustom, pickPreset, pressed } from './welcome';
 
 const base = fromUser(undefined);
@@ -80,4 +82,17 @@ describe('noChannel', () => {
 	it.each(all)('%j', (c) => expect(noChannel(c)).toBe(!c.push && !c.emailOn && !c.telegram));
 	it('is true only for all off', () =>
 		expect(all.filter(noChannel)).toEqual([{ push: false, emailOn: false, telegram: false }]));
+});
+
+describe('Study state for a learner with no placement', () => {
+	it('has only the first lesson unlocked', () => {
+		const s = initialState({ curriculum: CURRICULUM });
+		expect(s.placed).toBe(0);
+		expect(s.lessons['h0-00'].unlocked).toBe(true);
+		expect(
+			Object.entries(s.lessons)
+				.filter(([, l]) => l.unlocked)
+				.map(([id]) => id)
+		).toEqual(['h0-00']);
+	});
 });

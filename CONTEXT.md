@@ -76,7 +76,7 @@ A saved day that keeps a [[Streak]] alive when the [[Learner]] misses a day. A L
 
 ## Reminder
 
-A once-a-day nudge to study, sent at the time the [[Learner]] picks (default 20:00 their local time) by push notification, email, Telegram, or any mix — the Learner turns each channel on or off. It is not sent if that day already counts toward the [[Streak]].
+A once-a-day nudge to study, sent at the time the [[Learner]] picks (default 21:00 their local time) by push notification, email, Telegram, or any mix — the Learner turns each channel on or off. It is not sent if that day already counts toward the [[Streak]].
 
 - **Not**: a progress report or marketing message.
 - **Related**: [[Streak]], [[Learner]]

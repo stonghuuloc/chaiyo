@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import sprite from '#lib/assets/icons.svg?raw';
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
 	import Kbd from '#lib/ui/Kbd.svelte';
+	import Toast from '#lib/ui/Toast.svelte';
 	import { keys } from '#lib/ui/keys.js';
 	import {
 		TIMES,
@@ -17,6 +18,9 @@
 		pickPreset,
 		pressed
 	} from '#lib/welcome/welcome.js';
+	import { saveWelcome } from '#lib/welcome/save.js';
+	import { avatarDataUrl } from '#lib/welcome/photo.js';
+	import { supabase } from '#lib/supabase.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { PageProps } from './$types';
 
@@ -24,10 +28,14 @@
 
 	// svelte-ignore state_referenced_locally
 	let s = $state(fromUser(data.session?.user));
-	let preview = $state<string | null>(null);
 	let picker = $state<HTMLInputElement>();
+	let saving = $state(false);
+	let toast = $state('');
 
-	const shown = $derived(preview ?? s.photo);
+	onMount(() => {
+		s.pushDenied = 'Notification' in window && Notification.permission === 'denied';
+	});
+
 	const none = $derived(s.step === 1 && noChannel(s));
 	const next = () => {
 		if (canNext(s) && s.step < 2) s.step += 1;
@@ -36,17 +44,56 @@
 		if (s.step > 0) s.step -= 1;
 	};
 
-	function choose(e: Event) {
+	async function choose(e: Event) {
 		const file = (e.currentTarget as HTMLInputElement).files?.[0];
 		if (!file) return;
-		if (preview) URL.revokeObjectURL(preview);
-		preview = URL.createObjectURL(file);
+		try {
+			s.photo = await avatarDataUrl(file);
+		} catch {
+			toast = m.welcome_photo_error();
+		}
 	}
 
-	onDestroy(() => preview && URL.revokeObjectURL(preview));
+	async function toggle(key: 'push' | 'emailOn' | 'telegram') {
+		if (key !== 'push' || s.push) {
+			s[key] = !s[key];
+			return;
+		}
+		const granted =
+			'Notification' in window &&
+			(await Notification.requestPermission().then(
+				(p) => p === 'granted',
+				() => false
+			));
+		s.push = granted;
+		s.pushDenied = !granted;
+	}
+
+	async function finish(to: '/(app)/(tabs)/today' | '/(onboard)/placement') {
+		saving = true;
+		try {
+			if (!data.session) throw new Error('no session');
+			await saveWelcome(s, {
+				client: supabase,
+				learnerId: data.session.user.id,
+				now: new Date(),
+				tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+			});
+			await goto(resolve(to));
+		} catch {
+			toast = m.welcome_save_error();
+		} finally {
+			saving = false;
+		}
+	}
 
 	const channels = $derived([
-		{ key: 'push', label: m.welcome_push(), sub: m.welcome_push_sub(), icon: 'fill-bell' },
+		{
+			key: 'push',
+			label: m.welcome_push(),
+			sub: s.pushDenied ? m.welcome_push_blocked() : m.welcome_push_sub(),
+			icon: 'fill-bell'
+		},
 		{ key: 'emailOn', label: m.welcome_email(), sub: s.email, icon: 'fill-letter' },
 		{
 			key: 'telegram',
@@ -98,9 +145,9 @@
 				<p class="mt-2 text-pencil">{m.welcome_profile_lead()}</p>
 				<div class="mt-6 grid justify-items-center">
 					<div class="relative size-28">
-						{#if shown}
+						{#if s.photo}
 							<img
-								src={shown}
+								src={s.photo}
 								alt=""
 								referrerpolicy="no-referrer"
 								class="size-full rounded-full object-cover"
@@ -184,15 +231,20 @@
 						</span>
 						<span class="min-w-0">
 							<b class="block font-semibold">{c.label}</b>
-							<small class="block truncate text-label text-pencil">{c.sub}</small>
+							<small
+								class="block text-label text-pencil {c.key === 'push' && s.pushDenied
+									? ''
+									: 'truncate'}">{c.sub}</small
+							>
 						</span>
 						<button
 							type="button"
 							role="switch"
 							aria-checked={s[c.key]}
 							aria-label={c.label}
-							class="group grid h-11 w-[52px] place-items-center"
-							onclick={() => (s[c.key] = !s[c.key])}
+							disabled={c.key === 'push' && s.pushDenied}
+							class="group grid h-11 w-[52px] place-items-center disabled:opacity-50"
+							onclick={() => toggle(c.key)}
 						>
 							<span
 								class="relative block h-8 w-[52px] rounded-full bg-ruled-line transition-colors group-aria-checked:bg-ink motion-reduce:transition-none"
@@ -233,11 +285,14 @@
 					<p class="mt-3 text-center text-label text-pencil">{m.welcome_no_channel()}</p>
 				{/if}
 			{:else}
-				<Button disabled>{m.welcome_offer_cta()}</Button>
+				<Button disabled={saving} onclick={() => finish('/(onboard)/placement')}
+					>{m.welcome_offer_cta()}</Button
+				>
 				<button
 					type="button"
-					class="mt-3 h-11 w-full text-center text-title text-pencil underline"
-					onclick={() => goto(resolve('/(app)/(tabs)/today'))}
+					disabled={saving}
+					class="mt-3 h-11 w-full text-center text-title text-pencil underline disabled:opacity-50"
+					onclick={() => finish('/(app)/(tabs)/today')}
 				>
 					{m.welcome_skip()}
 				</button>
@@ -245,3 +300,5 @@
 		{/snippet}
 	</FocusFrame>
 </main>
+
+<Toast open={toast !== ''} message={toast} onclose={() => (toast = '')} />
