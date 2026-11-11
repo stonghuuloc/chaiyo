@@ -13,7 +13,7 @@ export const initialState = (o: { curriculum?: Curriculum; tz?: string } = {}): 
 		),
 		placed: 0,
 		tz: o.tz ?? 'Asia/Ho_Chi_Minh',
-		streak: { count: 0 },
+		streak: { count: 0, freezes: 0 },
 		runs: {}
 	};
 };

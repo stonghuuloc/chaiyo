@@ -30,7 +30,12 @@ const closing = (iso: string) => new Date(Date.parse(iso) - 9000);
 
 describe('streak counting', () => {
 	it('has the background streak', () => {
-		expect(bg().streak).toEqual({ count: 12, last: '2026-11-12' });
+		expect(bg().streak).toEqual({
+			count: 12,
+			last: '2026-11-12',
+			freezes: 1,
+			through: '2026-11-12'
+		});
 	});
 
 	it('finishing a section counts today', () => {

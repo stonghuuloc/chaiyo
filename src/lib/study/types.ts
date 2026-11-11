@@ -34,7 +34,7 @@ export type State = {
 	lessons: Record<string, LessonProgress>;
 	placed: number;
 	tz: string;
-	streak: { count: number; last?: string };
+	streak: { count: number; last?: string; freezes: number; through?: string };
 	runs: Record<string, { step: Step; answers: Record<string, boolean>; closed?: true }>;
 };
 
@@ -43,6 +43,9 @@ export type StudyEvent =
 	| { type: 'SectionDone'; lesson: string; section: string }
 	| { type: 'GatePassed'; lesson: string; score: number }
 	| { type: 'LessonUnlocked'; lesson: string }
-	| { type: 'DayCounted'; day: string; streak: number };
+	| { type: 'DayCounted'; day: string; streak: number }
+	| { type: 'FreezeEarned'; freezes: number }
+	| { type: 'FreezeSpent'; day: string; freezes: number }
+	| { type: 'StreakReset'; day: string };
 
 export type SessionCard = { word: string; skill: Skill };
