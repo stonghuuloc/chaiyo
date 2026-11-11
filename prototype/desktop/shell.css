@@ -55,6 +55,7 @@ kbd { display: none; min-width: 22px; height: 22px; padding: 0 6px; place-items:
 .nav .icw .f.n-brain { color: var(--vermilion); --duo: .42; }
 .nav a[aria-current="page"] .f { opacity: 1; } .nav a[aria-current="page"] .l { opacity: 0; }
 .nav.hide-compact { display: none; }
+body.focus .nav, body.public .nav { display: none !important; }
 
 @media (min-width: 1024px) {
   .nav, .nav.hide-compact { display: flex; flex-direction: column; gap: var(--s6); left: 0; top: 0; bottom: 0; transform: none; width: var(--sidebar); height: auto;
@@ -66,7 +67,6 @@ kbd { display: none; min-width: 22px; height: 22px; padding: 0 6px; place-items:
   .nav a { display: flex; justify-items: start; align-items: center; gap: 12px; padding: 0 14px; font-size: 15px; }
   .frame { padding-left: var(--sidebar); }
   body.app { --nav-inset: var(--sidebar); }
-  body.focus .nav, body.public .nav { display: none; }
 }
 @media (hover: hover) and (min-width: 1024px) { .nav a:not([aria-current="page"]):hover { background: var(--paper-2); color: var(--ink-1); } }
 

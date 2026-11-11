@@ -23,7 +23,7 @@
     const f = d ? map.digit && ((ev) => map.digit(+d, ev)) : map[k];
     if (!f) return;
     if (k === 'Space' && t.matches?.('button, a')) return;
-    if (k === 'Enter' && t.matches?.('button:not(.opt):not(.idk), a') && !typing) return;
+    if (k === 'Enter' && t.matches?.('button, a') && !typing) return;
     if (f(e) !== false) e.preventDefault();
   });
 })();
