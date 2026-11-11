@@ -1,11 +1,17 @@
+import { award } from './badges';
+import type { BadgeId } from './badges';
 import { review } from './fsrs';
 import { progress } from './progress';
 import { countDay } from './streak';
 import type { Attempt, Curriculum, State, StudyEvent, WordSaved } from './types';
 
-export const initialState = (o: { curriculum?: Curriculum; tz?: string } = {}): State => {
+export const initialState = (
+	o: { curriculum?: Curriculum; tz?: string; badges?: Partial<Record<BadgeId, string>> } = {}
+): State => {
 	const curriculum = o.curriculum ?? { lessons: [] };
 	return {
+		badges: { ...o.badges },
+		written: 0,
 		lexicon: {},
 		curriculum,
 		lessons: Object.fromEntries(
@@ -35,12 +41,16 @@ function schedule(state: State, input: Attempt, now: Date): { state: State; even
 		[word]: { ...entry, cards: { ...entry.cards, [skill]: card } }
 	};
 	return {
-		state: { ...state, lexicon },
+		state: {
+			...state,
+			lexicon,
+			written: state.written + (skill === 'viet' && input.correct ? [...word].length : 0)
+		},
 		events: [{ type: 'CardScheduled', word, skill, due: card.due }]
 	};
 }
 
-export function apply(
+function step(
 	state: State,
 	input: Attempt | WordSaved,
 	now: Date
@@ -53,7 +63,7 @@ export function apply(
 		};
 	}
 	const scheduled = schedule(state, input, now);
-	if (!input.step) return scheduled;
+	if (!input.step || input.step.kind === 'mock') return scheduled;
 	const stepped = progress(scheduled.state, input.step, input);
 	const counted = stepped.counts
 		? countDay(stepped.state, now)
@@ -62,4 +72,14 @@ export function apply(
 		state: counted.state,
 		events: [...scheduled.events, ...stepped.events, ...counted.events]
 	};
+}
+
+export function apply(
+	state: State,
+	input: Attempt | WordSaved,
+	now: Date
+): { state: State; events: StudyEvent[] } {
+	const stepped = step(state, input, now);
+	const awarded = award(stepped.state, input, now);
+	return { state: awarded.state, events: [...stepped.events, ...awarded.events] };
 }
