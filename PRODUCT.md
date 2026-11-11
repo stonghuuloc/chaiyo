@@ -24,7 +24,7 @@ Vietnamese-first, with Hán Việt as the bridge to every character — EN-first
 
 ## Operating Context
 
-- Phone-first, installable PWA; also usable on desktop. Mobile data, sometimes offline (SRS reviews must work offline).
+- Phone and desktop are both first-class (ADR 0008): one installable PWA, phone layout below 1024px, sidebar layout from 1024px; long lesson sessions at home often run on a laptop with keyboard and mouse. Mobile data, sometimes offline (SRS reviews must work offline).
 - Login required everywhere; the only public page is the Landing Page.
 - A lesson runs: warm-up review → 8–15 new words → grammar → dialogue → listening/speaking → writing → Gate Test.
 - Every hanzi in any text is tappable for lookup (Lexicon first, else Dictionary), except inside a Mock Test in Exam mode.

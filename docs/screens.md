@@ -6,7 +6,7 @@ Decisions this file rests on:
 - A lesson is a **hub of 7 resumable sections**; each section is a full-screen step flow that saves on exit.
 - Practice is **per skill** (Thẻ từ, Nghe, Viết chữ): each word has a review state per skill; the app grades each answer and maps it to an FSRS rating. One mixed daily session (K1) clears every skill's due cards; K2 covers the skills outside the mix.
 - The **Lexicon is a pushed list** (Từ của tôi, T3a) reached from Luyện tập; the Dictionary is a lookup source (X1), no search screen.
-- Phone-first PWA, one column ≤430px. Tab bar (Hôm nay · Lộ trình · Luyện tập · Tôi) shows on tab roots only; it is hidden inside lessons, practice, tests and every pushed screen.
+- One responsive PWA, phone and desktop both first-class (ADR 0008, `docs/responsive.md`). Below 1024px: one column, tab bar (Hôm nay · Lộ trình · Luyện tập · Tôi) on tab roots only, hidden inside lessons, practice, tests and every pushed screen. From 1024px: the same four items in a left sidebar, shown on tab roots and pushed browse screens, hidden in focus flows (lessons, practice, tests, onboarding). Desktop prototypes: `prototype/desktop/`.
 
 ## Inventory
 

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chào mừng · desktop prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<script src="nav.js"></script>
+<style>
+  :root { --col: var(--container-column); }
+  @media (min-width: 768px) { :root { --col: 560px; } }
+  .me { margin-top: var(--s6); display: grid; justify-items: center; }
+  .av { position: relative; width: 112px; height: 112px; }
+  .av span { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; background: var(--vermilion-wash); color: var(--vermilion-text); font: 600 40px var(--font-display); }
+  .av button { position: absolute; right: -2px; bottom: -2px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ink-1); color: var(--paper); font-size: 20px; border: 3px solid var(--paper); }
+  .me small { margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .label { margin-top: var(--s6); font-size: var(--t-meta); font-weight: 600; color: var(--ink-3); }
+  .times { margin-top: var(--s2); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+  .times button { height: 64px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.4); display: grid; align-content: center; gap: 2px; }
+  .times b { font: 600 19px var(--font-display); } .times small { font-size: 12.5px; color: var(--ink-3); }
+  .times button[aria-pressed="true"] { border: 2px solid var(--ink-1); background: #fff; }
+  @media (hover: hover) { .times button:not([aria-pressed="true"]):hover { background: #fff; } }
+  .chans { list-style: none; margin-top: var(--s2); border-top: 1px solid var(--ink-5); }
+  .chans li { display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--ink-5); }
+  .chans .ci { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); font-size: 22px; --duo: .3; }
+  .chans b { display: block; font-weight: 600; } .chans small { display: block; font-size: var(--t-meta); color: var(--ink-3); }
+  .sw { position: relative; width: 52px; height: 32px; border-radius: 16px; background: var(--ink-5); transition: background .15s; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .15s; }
+  .sw[aria-checked="true"] { background: var(--ink-1); } .sw[aria-checked="true"]::after { transform: translateX(20px); }
+  .ticks { list-style: none; margin-top: var(--s4); display: grid; gap: var(--s2); }
+  .ticks li { display: grid; grid-template-columns: 22px 1fr; gap: var(--s2); color: var(--ink-2); }
+  .ticks .ic { font-size: 18px; color: var(--vermilion-text); margin-top: 3px; }
+  .offer .pic { margin-top: var(--s4); }
+  .top-back svg { transform: rotate(180deg); }
+  .top-back[hidden] { display: grid; visibility: hidden; }
+</style>
+</head>
+<body class="focus">
+<header class="topbar"><div class="in">
+  <button class="x top-back" id="back" aria-label="Quay lại"><svg class="ic"><use href="../icons.svg#i-regular-caret-right"/></svg></button>
+  <div class="seg" id="seg" style="--n:3"><i></i><i></i><i></i></div>
+  <span class="count" id="count"></span>
+</div></header>
+<div class="col">
+  <main id="main"></main>
+  <div class="actbar"><button class="cta" id="cta"></button><p class="hint" id="hint"></p></div>
+</div>
+<script>
+const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+const st = { name: 'Tống Lộc', time: '21:00', push: false, email: true, telegram: false };
+const ini = (n) => n.trim().split(/\s+/).map((w) => w[0]).slice(-2).join('').toUpperCase() || '?';
+const cta = (label, { disabled = false, hint = '', onClick } = {}) => { const b = $('#cta'); b.disabled = disabled; b.innerHTML = label + ic('regular-caret-right', 'ic go') + '<kbd>Enter</kbd>'; b.onclick = onClick; $('#hint').innerHTML = hint; };
+function profile() {
+  $('#main').innerHTML = '<div class="step"><h2 class="big">Chào bạn!</h2><p class="lead">Đây là tên và ảnh bạn bè sẽ thấy. Lấy từ tài khoản Google, sửa được.</p>' +
+    '<div class="me"><div class="av"><span id="avi">' + ini(st.name) + '</span><button aria-label="Đổi ảnh">' + ic('fill-camera') + '</button></div><small>tong.loc@gmail.com</small></div>' +
+    '<label class="field"><span>Tên hiển thị</span><input id="nm" type="text" autocomplete="name" maxlength="30" value="' + st.name + '"></label></div>';
+  $('#nm').oninput = (e) => { st.name = e.target.value; $('#avi').textContent = ini(st.name); $('#cta').disabled = !st.name.trim(); };
+  cta('Tiếp', { disabled: !st.name.trim(), onClick: () => step(1) });
+}
+const TIMES = [['07:00', 'Sáng'], ['12:30', 'Trưa'], ['21:00', 'Tối']];
+function reminder() {
+  const sw = (k, l, sub, icon) => '<li><span class="ci">' + ic(icon) + '</span><span><b>' + l + '</b><small>' + sub + '</small></span><button class="sw" data-k="' + k + '" role="switch" aria-checked="' + st[k] + '" aria-label="' + l + '"></button></li>';
+  $('#main').innerHTML = '<div class="step"><h2 class="big">Nhắc học mỗi ngày</h2><p class="lead">Mỗi ngày một lời nhắc, đúng giờ bạn chọn.</p><p class="label">Giờ nhắc</p>' +
+    '<div class="times" role="group" aria-label="Giờ nhắc">' + TIMES.map(([t, l]) => '<button data-t="' + t + '" aria-pressed="' + (st.time === t) + '"><b>' + t + '</b><small>' + l + '</small></button>').join('') + '</div>' +
+    '<p class="label">Nhắc qua</p><ul class="chans">' + sw('push', 'Thông báo', 'Trên máy này', 'fill-bell') + sw('email', 'Email', 'tong.loc@gmail.com', 'fill-letter') + sw('telegram', 'Telegram', 'Mở @ChaiyoBot để kết nối', 'fill-plain') + '</ul>' +
+    '<p class="meta">Đổi lúc nào cũng được ở Tôi → Cài đặt.</p></div>';
+  $$('.times button').forEach((b) => (b.onclick = () => { st.time = b.dataset.t; reminder(); }));
+  $$('.sw').forEach((b) => (b.onclick = () => { st[b.dataset.k] = !st[b.dataset.k]; reminder(); }));
+  const none = !st.push && !st.email && !st.telegram;
+  cta('Tiếp', { onClick: () => step(2), hint: none ? 'Không chọn kênh nào: sẽ không có lời nhắc' : '' });
+}
+function offer() {
+  $('#main').innerHTML = '<div class="step offer"><div class="pic"><img src="../../assets/onboard/start-b0.png" alt=""></div><h2 class="big">Bạn đã biết tiếng Trung chưa?</h2><p class="lead">Làm bài kiểm tra để bỏ qua phần đã biết.</p>' +
+    '<ul class="ticks"><li>' + ic('bold-check') + '<span>Chỉ đọc và nghe.</span></li><li>' + ic('bold-check') + '<span>Câu khó dần. Không biết thì bấm “Không biết”.</span></li><li>' + ic('bold-check') + '<span>Bài tự dừng khi tới trình độ của bạn.</span></li></ul></div>';
+  cta('Kiểm tra trình độ', { onClick: () => go('d-placement.html'), hint: '<a class="link" href="#" onclick="event.preventDefault();go(\'d-today.html\')">Học từ đầu</a>' });
+}
+const STEPS = [profile, reminder, offer];
+let at = 0;
+function step(i) {
+  at = i; $$('#seg i').forEach((el, j) => el.classList.toggle('on', j <= i)); $('#count').textContent = (i + 1) + '/3';
+  $('#back').hidden = i === 0; STEPS[i](); scrollTo(0, 0);
+  const h = $('#main h2'); h.tabIndex = -1; if (i > 0) h.focus({ preventScroll: true });
+}
+$('#back').onclick = () => at > 0 && step(at - 1);
+onKeys({ Enter: () => { const b = $('#cta'); if (!b.disabled) b.click(); } });
+step(Math.min(+new URLSearchParams(location.search).get('at') || 0, 2));
+</script>
+</body>
+</html>
