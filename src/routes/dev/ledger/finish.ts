@@ -1,6 +1,8 @@
 import { localDate, type Attempt, type State } from '#lib/study/index.js';
 import { DEV_CURRICULUM } from './curriculum';
 
+export const ledgerDb = (uid?: string) => (uid ? `chaiyo-ledger-dev-${uid}` : 'chaiyo-ledger-dev');
+
 export const finish = (now: Date, uuid: () => string): Attempt[] => {
 	const run = uuid();
 	return DEV_CURRICULUM.lessons[1].words.map((word, i) => ({
