@@ -10,6 +10,8 @@ ACs: AC1, AC2, AC4 · design lead CHAA (M-4 design wave) · 2026-11-11
 - [AC2] Q: the AC says 21:00 is selected; CONTEXT.md says the default is 20:00. A: the AC wins (Loc's rule); S2 syncs CONTEXT.md:79. Confidence 90%.
 - [AC4] Q: why does "Học từ đầu" already navigate in S1? A: AC4 says "I can still continue", so "Tiếp" reaches the offer step and "Học từ đầu" leads to /today. "Kiểm tra trình độ" is wired in S2 because /placement exists only after CHY-28 S2 (Kit 3.1 `resolve` typing). Confidence 85%.
 - [AC2] Q: Telegram subtitle when switched on? A: always "Mở @ChaiyoBot để kết nối": nothing connects the bot in M-4 (CHY-48), so the prototype's "Đã kết nối @ChaiyoBot" would be false. Confidence 80%.
+- [AC4] Q: the offer CTA "Kiểm tra trình độ" in S1? A: rendered disabled (no dead enabled button); S2 wires /placement. Confidence 85%.
+- [AC1] Q: Enter on the name field? A: the step-0 form submits on Enter (keys skips text fields by design). Confidence 90%.
 
 ## Open — needs an answer before execute
 None.
