@@ -2,7 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { buildCurriculum } from './build';
 import { CURRICULUM, LESSONS } from './index';
 
-const by = (id: string) => LESSONS.find((l) => l.id === id)!;
+const by = (id: string) => {
+	const lesson = LESSONS.find((l) => l.id === id);
+	if (!lesson) throw new Error(`no lesson ${id}`);
+	return lesson;
+};
 
 describe('curriculum', () => {
 	it('matches what content/ builds (run pnpm curriculum)', () => {

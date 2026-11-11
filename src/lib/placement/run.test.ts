@@ -16,6 +16,8 @@ const play = (script: string[]): Run => {
 	});
 	return run;
 };
+const runIds = (run: Run) =>
+	run.attempts.map((a) => (a.step?.kind === 'placement' ? a.step.run : ''));
 const seq = (s: string) => s.replace(/ /g, '').split('');
 
 describe('placement run', () => {
@@ -42,7 +44,7 @@ describe('placement run', () => {
 		const run = play(seq('RWRWRW'));
 		expect(run).toMatchObject({ done: true, cleared: 0, miss: 3 });
 		expect(run.attempts).toHaveLength(6);
-		expect(new Set(run.attempts.map((a) => (a.step as { run: string }).run)).size).toBe(1);
+		expect(new Set(runIds(run)).size).toBe(1);
 		for (const a of run.attempts)
 			expect(a.step).toMatchObject({ kind: 'placement', level: 1, of: 10 });
 	});
@@ -65,13 +67,23 @@ describe('placement run', () => {
 		const run = play(seq('RRRRRRRRRR WWRRRRRRRR RWRWW'));
 		expect(run).toMatchObject({ done: true, cleared: 2 });
 		expect(run.attempts).toHaveLength(25);
-		expect(new Set(run.attempts.map((a) => (a.step as { run: string }).run)).size).toBe(3);
+		expect(new Set(runIds(run)).size).toBe(3);
 	});
 
 	it('clears all five levels', () => {
 		const run = play(Array<string>(50).fill('R'));
 		expect(run).toMatchObject({ done: true, cleared: 5 });
 		expect(run.attempts).toHaveLength(50);
+	});
+
+	it('ignores answers after the run is done', () => {
+		const u = counter();
+		const done = play(seq('RWRWRW'));
+		const after = answer(done, { ok: true, ms: 1, at: 'x' }, u);
+		expect(after).toEqual(done);
+		expect(after.attempts).toHaveLength(6);
+		const full = play(Array<string>(50).fill('R'));
+		expect(answer(full, { ok: true, ms: 1, at: 'x' }, u).attempts).toHaveLength(50);
 	});
 
 	it('returns new objects', () => {

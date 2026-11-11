@@ -8,7 +8,7 @@ describe('placement clips', () => {
 		const hanzis = BLOCKS.flatMap((b) => b.listen.map(([h]) => h));
 		expect(hanzis).toHaveLength(20);
 		for (const h of hanzis)
-			expect((clips as Record<string, string>)[h]).toBe(
+			expect(new Map(Object.entries(clips)).get(h)).toBe(
 				audioKey(h, 'redpanda', WORD_STYLE, 'words')
 			);
 		expect(Object.keys(clips)).toHaveLength(20);

@@ -28,6 +28,7 @@ export function answer(
 	a: { ok: boolean; pick?: string; ms: number; at: string },
 	uuid: () => string
 ): Run {
+	if (r.done) return { ...r };
 	const item = items(r.level)[r.index];
 	const attempt: Attempt = {
 		id: uuid(),
