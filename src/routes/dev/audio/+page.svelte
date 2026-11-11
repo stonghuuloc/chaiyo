@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createPlayer, precache } from '#lib/audio/index.js';
 	import { AUDIO_BASE } from '#lib/audio/base.js';
-	import { clips } from './clips';
 	import SyllableGrid from './SyllableGrid.svelte';
 
 	let { data } = $props();
@@ -19,7 +18,7 @@
 	}
 
 	async function cacheLesson() {
-		const { ok, failed } = await precache(clips.map((c) => c.key));
+		const { ok, failed } = await precache(data.clips.map((c) => c.key));
 		cached = `cached ${ok}, failed ${failed}`;
 	}
 </script>
@@ -33,7 +32,7 @@
 	<p data-testid="cached">{cached}</p>
 	<p data-testid="readout">{readout}</p>
 	<ul>
-		{#each clips as clip (clip.key)}
+		{#each data.clips as clip (clip.key)}
 			<li class="flex items-center gap-3 py-1">
 				<button
 					class="rounded border px-3 py-2"
