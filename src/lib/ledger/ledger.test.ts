@@ -82,6 +82,46 @@ describe('ledger', () => {
 		expect(ledger.pending()).toBe(0);
 	});
 
+	it('syncs a record made while a sync runs', async () => {
+		const store = memoryStore();
+		await store.push([server[0]]);
+		store.pushes = 0;
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		const pull = store.pull.bind(store);
+		let release!: () => void;
+		const gate = new Promise<void>((r) => (release = r));
+		store.pull = async () => {
+			await gate;
+			return pull();
+		};
+		const a = ledger.sync();
+		await ledger.record(outbox[0]);
+		expect(ledger.sync()).toBe(a);
+		release();
+		await a;
+		expect(ledger.pending()).toBe(0);
+		expect(store.rows().some((r) => 'id' in r && r.id === 'o1')).toBe(true);
+		expect(store.pushes).toBe(1);
+	});
+
+	it('syncs a record that lands late in the run once the caller syncs again', async () => {
+		const store = memoryStore();
+		await store.push([server[0]]);
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		let late: Promise<void> | undefined;
+		ledger.subscribe(() => {
+			late ??= ledger.record(outbox[0]);
+		});
+		const a = ledger.sync();
+		await a;
+		await late;
+		const b = ledger.sync();
+		expect(b).not.toBe(a);
+		await b;
+		expect(ledger.pending()).toBe(0);
+		expect(store.rows().some((r) => 'id' in r && r.id === 'o1')).toBe(true);
+	});
+
 	it('subscribe notifies on every change', async () => {
 		const ledger = await openLedger({
 			initial: initialState(),

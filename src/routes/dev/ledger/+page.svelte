@@ -4,12 +4,13 @@
 	import { initialState } from '#lib/study/index.js';
 	import { supabase } from '#lib/supabase.js';
 	import { DEV_CURRICULUM } from './curriculum';
-	import { finish, lines } from './finish';
+	import { finish, ledgerDb, lines } from './finish';
 
 	const initial = initialState({ curriculum: DEV_CURRICULUM, tz: 'Asia/Ho_Chi_Minh' });
 	let ledger: Ledger | undefined;
 	let failure = $state('');
 	let view = $state(lines(initial, new Date(), 0));
+	let who = $state('');
 
 	const refresh = () => ledger && (view = lines(ledger.state(), new Date(), ledger.pending()));
 
@@ -17,16 +18,26 @@
 		let cancelled = false;
 		let stop = () => {};
 		let unsubscribe = () => {};
-		openLedger({ initial, store: supabaseStore(supabase), db: 'chaiyo-ledger-dev' }).then(
-			(l) => {
-				if (cancelled) return;
-				ledger = l;
-				unsubscribe = l.subscribe(refresh);
-				stop = syncWhenOnline(l);
-				refresh();
-			},
-			(e) => (failure = String(e))
-		);
+		supabase.auth
+			.getSession()
+			.then(({ data: { session } }) => {
+				who = session ? `Tài khoản: ${session.user.email}` : 'Chưa đăng nhập';
+				return openLedger({
+					initial,
+					store: supabaseStore(supabase),
+					db: ledgerDb(session?.user.id)
+				});
+			})
+			.then(
+				(l) => {
+					if (cancelled) return;
+					ledger = l;
+					unsubscribe = l.subscribe(refresh);
+					stop = syncWhenOnline({ ...l, sync: () => l.sync().finally(refresh) });
+					refresh();
+				},
+				(e) => (failure = String(e))
+			);
 		return () => {
 			cancelled = true;
 			stop();
@@ -38,6 +49,10 @@
 		if (!ledger) return;
 		for (const a of finish(new Date(), () => crypto.randomUUID())) await ledger.record(a);
 		refresh();
+		void ledger
+			.sync()
+			.finally(refresh)
+			.catch(() => undefined);
 	}
 </script>
 
@@ -47,5 +62,6 @@
 	<p data-testid="tu-moi">{view.tuMoi}</p>
 	<p data-testid="streak">{view.streak}</p>
 	<p data-testid="pending">{view.pending}</p>
+	<p data-testid="who">{who}</p>
 	{#if failure}<p data-testid="failure">{failure}</p>{/if}
 </main>

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { initialState } from '#lib/study/index.js';
 import { memoryStore, openLedger } from '#lib/ledger/index.js';
 import { DEV_CURRICULUM } from './curriculum';
-import { finish, lines } from './finish';
+import { finish, ledgerDb, lines } from './finish';
 
 const tz = 'Asia/Ho_Chi_Minh';
 const initial = () => initialState({ curriculum: DEV_CURRICULUM, tz });
@@ -21,6 +21,11 @@ async function run(count: number, idb: IDBFactory, now: Date) {
 }
 
 describe('/dev/ledger', () => {
+	it('opens one database per learner', () => {
+		expect(ledgerDb('0b6c')).toBe('chaiyo-ledger-dev-0b6c');
+		expect(ledgerDb(undefined)).toBe('chaiyo-ledger-dev');
+	});
+
 	it('10 Attempts finish Từ mới, count today, stay pending, and survive reopen', async () => {
 		const now = new Date();
 		const idb = new IDBFactory();

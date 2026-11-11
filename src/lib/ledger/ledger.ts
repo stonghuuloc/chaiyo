@@ -18,6 +18,7 @@ export async function openLedger(o: {
 	const listeners = new Set<(s: State) => void>();
 	let cache: State | undefined;
 	let running: Promise<void> | undefined;
+	let again = false;
 	let chain: Promise<unknown> = Promise.resolve();
 	const serial = <T>(f: () => Promise<T>) => {
 		const p = chain.then(f);
@@ -43,31 +44,34 @@ export async function openLedger(o: {
 			.sort(order);
 
 	async function run() {
-		const out = unsynced();
-		if (out.length > 0) {
-			await o.store.push(out);
-			await serial(async () => {
-				const marked = out.map((i) => ({ key: key(i), input: i, synced: true }));
-				await put(db, marked);
-				for (const r of marked) rows.set(r.key, r);
-			});
-		}
-		const pulled = await o.store.pull();
-		await serial(async () => {
-			const fresh: Row[] = [];
-			let added = false;
-			for (const input of pulled) {
-				const k = key(input);
-				const known = rows.get(k);
-				if (known?.synced) continue;
-				if (!known) added = true;
-				fresh.push({ key: k, input: known?.input ?? input, synced: true });
+		do {
+			again = false;
+			const out = unsynced();
+			if (out.length > 0) {
+				await o.store.push(out);
+				await serial(async () => {
+					const marked = out.map((i) => ({ key: key(i), input: i, synced: true }));
+					await put(db, marked);
+					for (const r of marked) rows.set(r.key, r);
+				});
 			}
-			if (fresh.length === 0) return;
-			await put(db, fresh);
-			for (const r of fresh) rows.set(r.key, r);
-			if (added) changed();
-		});
+			const pulled = await o.store.pull();
+			await serial(async () => {
+				const fresh: Row[] = [];
+				let added = false;
+				for (const input of pulled) {
+					const k = key(input);
+					const known = rows.get(k);
+					if (known?.synced) continue;
+					if (!known) added = true;
+					fresh.push({ key: k, input: known?.input ?? input, synced: true });
+				}
+				if (fresh.length === 0) return;
+				await put(db, fresh);
+				for (const r of fresh) rows.set(r.key, r);
+				if (added) changed();
+			});
+		} while (again);
 	}
 
 	return {
@@ -84,6 +88,7 @@ export async function openLedger(o: {
 				const row = { key: k, input, synced: false };
 				await put(db, [row]);
 				rows.set(k, row);
+				if (running) again = true;
 				changed();
 			});
 		},
