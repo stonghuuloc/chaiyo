@@ -78,7 +78,12 @@ describe('the same content in every sink', () => {
 					id: s.id,
 					spoken: s.spoken,
 					seg: s.seg,
-					audio_key: audioKey(s.hanzi, sentenceVoice(s).voice, sentenceVoice(s).style),
+					audio_key: audioKey(
+						s.hanzi,
+						sentenceVoice(s).voice,
+						sentenceVoice(s).style,
+						sentenceVoice(s).folder
+					),
 					lessonId: s.lessonId ?? null
 				}))
 			);

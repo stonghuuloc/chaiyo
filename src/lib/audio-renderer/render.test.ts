@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import type { AudioEntry } from '../content/import/audio';
+import { audioManifest, type AudioEntry } from '../content/import/audio';
 import { fakeBucket, fakeEngine } from './fakes';
 import { render } from './render';
 import { RenderError, type Bytes, type Engine } from './types';
@@ -213,5 +213,23 @@ describe('render', () => {
 		});
 		expect(peak).toBe(4);
 		expect([...bucket.objects.keys()].sort()).toEqual(names(many));
+	});
+	it('uploads a foldered clip under its folder', async () => {
+		const words = audioManifest({
+			lessons: [],
+			sentences: [],
+			chars: [],
+			grammar: [],
+			questions: [],
+			syllables: [],
+			words: [{ id: '好', hanzi: '好' } as Parameters<typeof audioManifest>[0]['words'][number]]
+		});
+		const bucket = fakeBucket();
+		expect(await render(words, { engine: fakeEngine(), bucket, prefix: 'v/' })).toEqual({
+			uploaded: 1,
+			skipped: 0
+		});
+		expect([...bucket.objects.keys()]).toEqual([`v/${words[0].key}.mp3`]);
+		expect(words[0].key).toMatch(/^words\/[0-9a-f]{64}$/);
 	});
 });

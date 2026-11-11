@@ -25,7 +25,7 @@ export async function render(
 	}
 ): Promise<RenderResult> {
 	for (const e of entries)
-		if (e.key !== audioKey(e.split ? e.ref : e.hanzi, e.voice, e.style))
+		if (e.key !== audioKey(e.split ? e.ref : e.hanzi, e.voice, e.style, e.folder))
 			throw new Error(`key mismatch: ${e.ref}`);
 
 	let uploaded = 0;

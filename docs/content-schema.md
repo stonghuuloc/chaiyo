@@ -39,7 +39,6 @@ How lesson content is written, checked and loaded. Screens that read it: `docs/s
 
 ```
 content/
-  cast.yaml                 Cast members + fixed voice ids
   chars/你.yaml             one file per character (generated from vault, then hand-fixed)
   words/你好.yaml           one file per word; polyphones split: words/行-xing.yaml, words/行-hang.yaml
   grammar/h1-g01.yaml       one file per grammar point

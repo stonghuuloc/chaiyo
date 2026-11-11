@@ -20,7 +20,7 @@ Each clip is one request in Loc's template, stored byte for byte:
 <speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="zh-CN"><voice name="{voice}"><s /><mstts:express-as style="{style}"><prosody rate="-20%"> {hanzi} </prosody></mstts:express-as><s /></voice></speak>
 ```
 
-Output format `audio-48khz-192kbitrate-mono-mp3` (`content/cast.yaml`). No ffmpeg, no padding, no trim, no loudnorm, no retakes; clips are not volume-matched.
+Output format `audio-48khz-192kbitrate-mono-mp3`. Voices, rate and format live in `src/lib/audio/cast.ts` (`CAST`). No ffmpeg, no padding, no trim, no loudnorm, no retakes; clips are not volume-matched.
 
 | Clip | Voice | Style |
 |---|---|---|
@@ -33,9 +33,18 @@ Output format `audio-48khz-192kbitrate-mono-mp3` (`content/cast.yaml`). No ffmpe
 
 **Dynamic style.** A sentence with a speaker may carry `style:` in the lesson YAML. Lint check 9 rejects a style on a line with no speaker and a style the voice does not have. The lists (`VOICE_STYLES`, `src/lib/content/lint/types.ts`) are Azure's `StyleList` for each voice from `voices/list`, plus `default`. Yunfeng has 7 styles (angry, cheerful, depressed, disgruntled, fearful, sad, serious); it has no chat style, so its dialogue default is `default`.
 
-**Key.** The style is part of the clip: `key = sha256(text|voice/style)`. Without it, `你好！` as a dialogue line and as an example sentence (both redpanda) would share one clip. Pinyin-chart cells have no style, so their keys do not change. `audio_key` in Postgres uses the same rule (`sentenceVoice` in `src/lib/content/import/audio.ts`).
+**Key.** A lesson clip's key is its folder plus the hash of its whole Azure request: `key = <folder>/sha256(text|<Azure voice>/<style>|<rate>|<format>)`. With the style in it, `你好！` as a dialogue line and as an example sentence get two clips. With voice, rate and format in it, any change to `CAST` gives every clip a new key and URL, so `immutable` caching never serves an old clip and no version prefix is needed. Pinyin-chart cells are recordings: their key stays `sha256(text|redpanda)`. `audio_key` in Postgres uses the same rule (`sentenceVoice` in `src/lib/content/import/audio.ts`).
 
-**URL.** `AUDIO_VERSION = 'lessons-1'`. `az4/` and `az6/` stay in place and unused. A change to any lesson clip's request (voice, style, rate, format, text) gives it a new key; a change to the template or the cast needs a new prefix (`lessons-2`), because clips are served `immutable`.
+**Folders.** One folder per kind of clip at the bucket root, so the bucket can be read by eye (Loc, 2026-11-11):
+
+| Folder | Clips |
+|---|---|
+| `words/` | words |
+| `chips/` | Primer chips |
+| `examples/` | sentences with no speaker: the word example corpus (`content/sentences/`) and lesson reading lines |
+| `dialogue/` | sentences with a speaker |
+
+**URL.** `AUDIO_BASE` is the bucket root; the player fetches `<AUDIO_BASE>/<key>.mp3`, so the folder needs no client change. The clips were moved from `lessons-1/` by a server-side copy (same bytes, no re-render); `lessons-1/` and `lessons-2/` are unused.
 
 PR #96 (az6) is closed unmerged.
 

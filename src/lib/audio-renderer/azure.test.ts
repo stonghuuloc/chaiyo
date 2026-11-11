@@ -1,10 +1,10 @@
-import { mkdtempSync, readFileSync } from 'node:fs';
+import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import { azureEngine, azureRequest, billable, parseCast, ssml } from './azure';
+import { CAST as cast } from '../audio/cast';
+import { azureEngine, azureRequest, billable, ssml } from './azure';
 
-const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
 const clip = new Uint8Array([0xff, 0xf3, 1, 2, 3]);
 type Opts = { kind?: 'sentence' | 'word' | 'syllable'; voice?: string; style?: string };
 const req = (hanzi: string, o: Opts = {}) => {
@@ -28,12 +28,6 @@ describe('cast', () => {
 			redpanda: 'zh-CN-XiaoxiaoNeural',
 			takin: 'zh-CN-YunfengNeural'
 		});
-	});
-
-	it('rejects a cast without an mp3 format', () => {
-		expect(() =>
-			parseCast('engine: azure\nrate: "-20%"\nformat: riff-24khz-16bit-mono-pcm\nvoices: {}')
-		).toThrow();
 	});
 });
 
@@ -109,6 +103,14 @@ describe('azureEngine', () => {
 		const { engine, fetchImpl } = setup([]);
 		await engine.synthesize(req('好'));
 		expect(await engine.synthesize(req('好'))).toEqual(clip);
+		expect(fetchImpl).toHaveBeenCalledTimes(1);
+	});
+
+	it('caches a key that carries its folder', async () => {
+		const { engine, fetchImpl } = setup([]);
+		const words = { ...req('好'), key: 'words/abc' };
+		await engine.synthesize(words);
+		expect(await engine.synthesize(words)).toEqual(clip);
 		expect(fetchImpl).toHaveBeenCalledTimes(1);
 	});
 
