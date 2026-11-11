@@ -10,6 +10,7 @@
 	let email = $state('');
 	let bad = $state(false);
 	let failed = $state(false);
+	let sending = $state(false);
 	let sentAt = $state(0);
 	let now = $state(Date.now());
 	let field = $state<HTMLInputElement>();
@@ -29,15 +30,22 @@
 
 	async function send() {
 		const v = email.trim();
+		if (sending || !v) return;
 		if (!okEmail(v)) {
 			bad = true;
 			field?.focus();
 			return;
 		}
-		const { error } = await supabase.auth.signInWithOtp({
-			email: v,
-			options: { emailRedirectTo: location.origin + CALLBACK }
-		});
+		sending = true;
+		let error;
+		try {
+			({ error } = await supabase.auth.signInWithOtp({
+				email: v,
+				options: { emailRedirectTo: location.origin + CALLBACK }
+			}));
+		} finally {
+			sending = false;
+		}
 		failed = !!error;
 		if (error) return;
 		email = v;
@@ -64,7 +72,7 @@
 
 <main class="mx-auto flex min-h-dvh max-w-[480px] flex-col px-5 pb-8">
 	{#if view === 'start'}
-		<div class="-mx-5 aspect-square overflow-hidden mask-[linear-gradient(#000_70%,transparent)]">
+		<div class="-mx-5 aspect-square overflow-hidden mask-b-from-70%">
 			<img src="/onboard/welcome.webp" alt="" class="size-full object-cover object-[50%_60%]" />
 		</div>
 		<div class="text-center">
@@ -122,7 +130,7 @@
 				</p>{/if}
 		</div>
 		<div class="mt-auto pt-8">
-			<Button disabled={!email.trim()} onclick={send}>{m.login_send()}</Button>
+			<Button disabled={!email.trim() || sending} onclick={send}>{m.login_send()}</Button>
 		</div>
 	{:else}
 		<div class="mt-16 text-center">
@@ -141,7 +149,9 @@
 				</p>{/if}
 		</div>
 		<div class="mt-auto flex flex-col gap-3 pt-8">
-			<Button variant="outline" disabled={resend.disabled} onclick={send}>{resend.text}</Button>
+			<Button variant="outline" disabled={resend.disabled || sending} onclick={send}
+				>{resend.text}</Button
+			>
 			<button
 				type="button"
 				class="h-12 cursor-pointer text-title text-ink"
