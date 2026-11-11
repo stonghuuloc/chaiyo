@@ -22,9 +22,10 @@ export function callbackOutcome(href: string): 'ok' | 'error' | 'expired' {
 export const daysLeft = (deleteAt: string, now: number) =>
 	Math.ceil((Date.parse(deleteAt) - now) / 86_400_000);
 
-type Row = { onboarded_at: string | null; delete_at: string | null } | null;
-
-export const landing = (row: Row, now: number) => {
+export const landing = (
+	row: { onboarded_at: string | null; delete_at: string | null } | null,
+	now: number
+) => {
 	if (row?.delete_at && Date.parse(row.delete_at) > now) return 'restore' as const;
 	return row?.onboarded_at ? ('/(app)/(tabs)/today' as const) : ('/(onboard)/welcome' as const);
 };

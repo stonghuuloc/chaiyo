@@ -50,20 +50,30 @@
 	async function enter(s: string | null) {
 		if (s === 'expired') {
 			expired = true;
-			email = localStorage.getItem(LAST_EMAIL) ?? '';
+			try {
+				email = localStorage.getItem(LAST_EMAIL) ?? '';
+			} catch {
+				email = '';
+			}
 			view = 'email';
 			return;
 		}
 		if (s !== 'restore') return;
+		view = 'start';
+		code = '';
+		codeBad = false;
 		const { data } = await supabase.auth.getSession();
 		if (!data.session) return;
-		const { data: row } = await supabase
+		const { data: row, error } = await supabase
 			.from('settings')
-			.select('delete_at')
+			.select('onboarded_at, delete_at')
 			.eq('learner_id', data.session.user.id)
 			.maybeSingle();
 		const at = Date.now();
-		if (!row?.delete_at || Date.parse(row.delete_at) <= at) return;
+		if (error || !row?.delete_at || Date.parse(row.delete_at) <= at) {
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
+			return goto(hrefFor(error ? '/(app)/(tabs)/today' : landing(row, at)), { replace: true });
+		}
 		restoreFailed = false;
 		restore = { email: data.session.user.email ?? '', days: daysLeft(row.delete_at, at) };
 	}
@@ -90,6 +100,7 @@
 	}
 
 	async function later() {
+		if (restoring) return;
 		restore = null;
 		view = 'start';
 		await supabase.auth.signOut();
@@ -129,6 +140,8 @@
 			// storage can be blocked; the prefill is a convenience
 		}
 		expired = false;
+		code = '';
+		codeBad = false;
 		sentAt = now = Date.now();
 		view = 'sent';
 	}
@@ -165,9 +178,17 @@
 	</button>
 {/snippet}
 
-<main class="pub" data-view={view}>
-	<div class="art">
+<main
+	class="mx-auto flex min-h-dvh max-w-[calc(var(--container-column)+--spacing(10))] flex-col px-5 pb-8 md:max-w-[calc(var(--container-sheet)+--spacing(10))] lg:max-w-[calc(var(--container-narrow)+var(--container-form)+--spacing(40))] lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:p-10"
+>
+	<div
+		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block lg:flex-[0_1_var(--container-narrow)] {view ===
+		'start'
+			? ''
+			: 'hidden'}"
+	>
 		<img
+			class="block size-full object-cover object-[50%_60%]"
 			src="/onboard/welcome.webp"
 			srcset="/onboard/welcome.webp 860w, /onboard/welcome-1280.webp 1280w"
 			sizes="(min-width: 1024px) 560px, (min-width: 768px) 480px, 100vw"
@@ -176,9 +197,9 @@
 			height="573"
 		/>
 	</div>
-	<div class="col">
+	<div class="flex flex-1 flex-col lg:min-h-120 lg:flex-none lg:basis-form lg:justify-center">
 		{#if view === 'start'}
-			<div class="body text-center">
+			<div class="flex-1 text-center lg:flex-none">
 				<img
 					src="/brand/logo-224.webp"
 					alt=""
@@ -189,7 +210,7 @@
 				<h1 class="sr-only">{m.login_name()}</h1>
 				<p class="mt-3 text-title text-graphite">{m.login_tagline()}</p>
 			</div>
-			<div class="foot flex flex-col gap-3">
+			<div class="flex flex-col gap-3 pt-8 lg:pt-6">
 				<Button variant="primary" onclick={google}>
 					<span class="grid size-[30px] flex-none place-items-center rounded-full bg-white">
 						<img src="/brand/google-g.svg" alt="" class="size-[18px]" />
@@ -203,7 +224,7 @@
 				>
 			</div>
 		{:else if view === 'email'}
-			<div class="body pt-5 lg:pt-0">
+			<div class="flex-1 pt-5 lg:flex-none lg:pt-0">
 				{@render back('start')}
 				<h1 class="text-headline">{m.login_email_title()}</h1>
 				<p class="mt-1 text-muted">{m.login_email_lead()}</p>
@@ -243,11 +264,11 @@
 						{m.login_send_failed()}
 					</p>{/if}
 			</div>
-			<div class="foot">
+			<div class="pt-8 lg:pt-6">
 				<Button disabled={!email.trim() || sending} onclick={send}>{m.login_send()}</Button>
 			</div>
 		{:else}
-			<div class="body mt-16 text-center lg:mt-0">
+			<div class="mt-16 flex-1 text-center lg:mt-0 lg:flex-none">
 				<div class="mx-auto grid size-[72px] place-items-center rounded-full bg-shaded-paper">
 					<svg class="size-9 fill-current text-ink" aria-hidden="true"
 						><use href="#i-fill-letter" /></svg
@@ -283,7 +304,7 @@
 					>
 				</div>
 			</div>
-			<div class="foot flex flex-col gap-3">
+			<div class="flex flex-col gap-3 pt-8 lg:pt-6">
 				<Button variant="outline" disabled={resend.disabled || sending} onclick={send}
 					>{resend.text}</Button
 				>
@@ -291,7 +312,8 @@
 					type="button"
 					class="h-12 cursor-pointer text-title text-ink"
 					disabled={sending}
-					onclick={() => (view = 'email')}>{m.login_change_email()}</button
+					onclick={() => ((view = 'email'), (code = ''), (codeBad = false))}
+					>{m.login_change_email()}</button
 				>
 			</div>
 		{/if}
@@ -310,98 +332,12 @@
 			</p>{/if}
 		<div class="mt-5 flex flex-col gap-2">
 			<Button disabled={restoring} onclick={restoreAccount}>{m.login_restore_do()}</Button>
-			<button type="button" class="h-12 cursor-pointer text-title text-ink" onclick={later}
-				>{m.login_restore_later()}</button
+			<button
+				type="button"
+				class="h-12 cursor-pointer text-title text-ink"
+				disabled={restoring}
+				onclick={later}>{m.login_restore_later()}</button
 			>
 		</div>
 	{/if}
 </Sheet>
-
-<style>
-	.pub {
-		display: flex;
-		min-height: 100dvh;
-		flex-direction: column;
-		margin-inline: auto;
-		max-width: calc(var(--container-column) + 40px);
-		padding: 0 20px 32px;
-	}
-
-	.art {
-		margin-inline: -20px;
-		aspect-ratio: 1 / 1;
-		overflow: hidden;
-		mask-image: linear-gradient(black 70%, transparent);
-	}
-
-	.art img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: 50% 60%;
-	}
-
-	.col {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-	}
-
-	.body {
-		flex: 1;
-	}
-
-	.foot {
-		padding-top: 32px;
-	}
-
-	.pub:is([data-view='email'], [data-view='sent']) .art {
-		display: none;
-	}
-
-	@media (min-width: 48rem) {
-		.pub {
-			max-width: calc(480px + 40px);
-		}
-
-		.art {
-			margin: 24px 0 0;
-			aspect-ratio: 3 / 2;
-			border-radius: 24px;
-			mask-image: none;
-		}
-	}
-
-	@media (min-width: 64rem) {
-		.pub {
-			max-width: 1120px;
-			flex-direction: row;
-			align-items: center;
-			justify-content: center;
-			gap: 80px;
-			padding: 40px;
-		}
-
-		.pub:is([data-view='email'], [data-view='sent']) .art,
-		.art {
-			display: block;
-			flex: 0 1 560px;
-			margin: 0;
-		}
-
-		.col {
-			flex: 0 0 var(--container-form);
-			justify-content: center;
-			min-height: 480px;
-		}
-
-		.body {
-			flex: 0 0 auto;
-		}
-
-		.foot {
-			padding-top: 24px;
-		}
-	}
-</style>
