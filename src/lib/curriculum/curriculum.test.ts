@@ -14,6 +14,10 @@ describe('curriculum', () => {
 		expect(CURRICULUM.lessons).toBe(LESSONS);
 	});
 
+	it('throws when the content folder holds no lessons', () => {
+		expect(() => buildCurriculum('src/lib/curriculum')).toThrow(/no lessons/);
+	});
+
 	it('numbers lessons and counts words', () => {
 		expect(LESSONS.map((l) => [l.id, l.n])).toEqual([
 			['h0-00', 0],

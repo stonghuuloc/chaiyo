@@ -25,6 +25,7 @@ export function buildCurriculum(contentDir: string): CurriculumLesson[] {
 	const { set, errors } = loadContentDir(contentDir, { only: ['lessons'] });
 	if (errors.length > 0)
 		throw new Error(`curriculum: ${errors.map((e) => `${e.file} ${e.message}`).join('; ')}`);
+	if (set.lessons.length === 0) throw new Error(`curriculum: no lessons in ${contentDir}/lessons`);
 	return set.lessons
 		.map((l) => l.value)
 		.sort((a, b) => a.level - b.level || a.order - b.order)
