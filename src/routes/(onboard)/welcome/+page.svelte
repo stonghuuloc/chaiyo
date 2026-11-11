@@ -10,12 +10,14 @@
 	import { keys } from '#lib/ui/keys.js';
 	import {
 		TIMES,
+		askPush,
 		canNext,
 		fromUser,
 		initials,
 		noChannel,
 		pickCustom,
 		pickPreset,
+		pushBlocked,
 		pressed
 	} from '#lib/welcome/welcome.js';
 	import { saveWelcome } from '#lib/welcome/save.js';
@@ -33,7 +35,7 @@
 	let toast = $state('');
 
 	onMount(() => {
-		s.pushDenied = 'Notification' in window && Notification.permission === 'denied';
+		s.pushDenied = pushBlocked(window);
 	});
 
 	const none = $derived(s.step === 1 && noChannel(s));
@@ -59,12 +61,7 @@
 			s[key] = !s[key];
 			return;
 		}
-		const granted =
-			'Notification' in window &&
-			(await Notification.requestPermission().then(
-				(p) => p === 'granted',
-				() => false
-			));
+		const granted = await askPush(window);
 		s.push = granted;
 		s.pushDenied = !granted;
 	}

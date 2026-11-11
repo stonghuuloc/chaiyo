@@ -56,3 +56,16 @@ export const pressed = (s: Pick<Welcome, 'time'>) =>
 
 export const noChannel = (s: Pick<Welcome, 'push' | 'emailOn' | 'telegram'>) =>
 	!s.push && !s.emailOn && !s.telegram;
+
+export const pushBlocked = (env: { Notification?: { permission: string } }) =>
+	env.Notification?.permission === 'denied';
+
+export const askPush = async (env: {
+	Notification?: { requestPermission: () => Promise<string> };
+}) => {
+	if (!env.Notification) return false;
+	return env.Notification.requestPermission().then(
+		(p) => p === 'granted',
+		() => false
+	);
+};

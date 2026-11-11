@@ -1,7 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { initialState } from '#lib/study/index.js';
-import { canNext, fromUser, initials, noChannel, pickCustom, pickPreset, pressed } from './welcome';
+import {
+	askPush,
+	canNext,
+	fromUser,
+	initials,
+	noChannel,
+	pickCustom,
+	pickPreset,
+	pressed,
+	pushBlocked
+} from './welcome';
 
 const base = fromUser(undefined);
 
@@ -94,5 +104,23 @@ describe('Study state for a learner with no placement', () => {
 				.filter(([, l]) => l.unlocked)
 				.map(([id]) => id)
 		).toEqual(['h0-00']);
+	});
+});
+
+describe('push permission', () => {
+	const ask = (answer: () => Promise<string>) =>
+		askPush({ Notification: { requestPermission: answer } });
+	it('granted turns push on', async () => expect(await ask(async () => 'granted')).toBe(true));
+	it('denied and default stay off', async () => {
+		expect(await ask(async () => 'denied')).toBe(false);
+		expect(await ask(async () => 'default')).toBe(false);
+	});
+	it('a thrown error stays off', async () =>
+		expect(await ask(() => Promise.reject(new Error('x')))).toBe(false));
+	it('no Notification API is denied', async () => expect(await askPush({})).toBe(false));
+	it('blocked only when the permission is denied', () => {
+		expect(pushBlocked({ Notification: { permission: 'denied' } })).toBe(true);
+		expect(pushBlocked({ Notification: { permission: 'default' } })).toBe(false);
+		expect(pushBlocked({})).toBe(false);
 	});
 });
