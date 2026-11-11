@@ -8,22 +8,27 @@
 
 	const initial = initialState({ curriculum: DEV_CURRICULUM, tz: 'Asia/Ho_Chi_Minh' });
 	let ledger: Ledger | undefined;
+	let failure = $state('');
 	let view = $state(lines(initial, new Date(), 0));
 
 	const refresh = () => ledger && (view = lines(ledger.state(), new Date(), ledger.pending()));
 
 	onMount(() => {
+		let cancelled = false;
 		let stop = () => {};
 		let unsubscribe = () => {};
-		void openLedger({ initial, store: supabaseStore(supabase), db: 'chaiyo-ledger-dev' }).then(
+		openLedger({ initial, store: supabaseStore(supabase), db: 'chaiyo-ledger-dev' }).then(
 			(l) => {
+				if (cancelled) return;
 				ledger = l;
 				unsubscribe = l.subscribe(refresh);
 				stop = syncWhenOnline(l);
 				refresh();
-			}
+			},
+			(e) => (failure = String(e))
 		);
 		return () => {
+			cancelled = true;
 			stop();
 			unsubscribe();
 		};
@@ -42,4 +47,5 @@
 	<p data-testid="tu-moi">{view.tuMoi}</p>
 	<p data-testid="streak">{view.streak}</p>
 	<p data-testid="pending">{view.pending}</p>
+	{#if failure}<p data-testid="failure">{failure}</p>{/if}
 </main>

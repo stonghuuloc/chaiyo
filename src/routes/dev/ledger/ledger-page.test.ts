@@ -16,7 +16,7 @@ async function run(count: number, idb: IDBFactory, now: Date) {
 		idb,
 		db: 'chaiyo-ledger-dev'
 	});
-	for (const a of finish(now, () => `u${n++}`, count)) await ledger.record(a);
+	for (const a of finish(now, () => `u${n++}`).slice(0, count)) await ledger.record(a);
 	return ledger;
 }
 

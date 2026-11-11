@@ -1,9 +1,9 @@
-import type { Attempt, State } from '#lib/study/index.js';
+import { localDate, type Attempt, type State } from '#lib/study/index.js';
 import { DEV_CURRICULUM } from './curriculum';
 
-export const finish = (now: Date, uuid: () => string, count = 10): Attempt[] => {
+export const finish = (now: Date, uuid: () => string): Attempt[] => {
 	const run = uuid();
-	return DEV_CURRICULUM.lessons[1].words.slice(0, count).map((word, i) => ({
+	return DEV_CURRICULUM.lessons[1].words.map((word, i) => ({
 		id: uuid(),
 		at: new Date(now.getTime() + i).toISOString(),
 		questionId: `q-h1-01-words-${word}`,
@@ -16,7 +16,7 @@ export const finish = (now: Date, uuid: () => string, count = 10): Attempt[] => 
 };
 
 export function lines(state: State, now: Date, pending: number) {
-	const today = now.toLocaleDateString('en-CA', { timeZone: state.tz });
+	const today = localDate(now, state.tz);
 	return {
 		tuMoi: state.lessons['h1-01'].done.includes('words') ? 'Từ mới: xong' : 'Từ mới: chưa xong',
 		streak:

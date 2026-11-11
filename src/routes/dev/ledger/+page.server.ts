@@ -3,6 +3,7 @@ import { dev } from '$app/env';
 import { VERCEL_ENV } from '$app/env/public';
 
 export const prerender = false;
+export const ssr = true;
 
 export function load() {
 	if (!dev && VERCEL_ENV !== 'preview') error(404);
