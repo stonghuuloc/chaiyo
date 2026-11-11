@@ -12,6 +12,7 @@ ACs: AC1, AC2, AC4 · design lead CHAA (M-4 design wave) · 2026-11-11
 - [AC2] Q: Telegram subtitle when switched on? A: always "Mở @ChaiyoBot để kết nối": nothing connects the bot in M-4 (CHY-48), so the prototype's "Đã kết nối @ChaiyoBot" would be false. Confidence 80%.
 - [AC4] Q: the offer CTA "Kiểm tra trình độ" in S1? A: rendered disabled (no dead enabled button); S2 wires /placement. Confidence 85%.
 - [AC1] Q: Enter on the name field? A: the step-0 form submits on Enter (keys skips text fields by design). Confidence 90%.
+- [AC2] Q: "Giờ khác" empty while a preset is pressed (prototype)? A: kept the field showing the current time; Svelte 5 caches the written value, so an empty expression leaves a stale time (reviewer CHAA-206). Confidence 85%.
 
 ## Open — needs an answer before execute
 None.

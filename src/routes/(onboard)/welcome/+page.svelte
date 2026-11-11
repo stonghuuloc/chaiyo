@@ -163,7 +163,7 @@
 				<span class="text-label font-semibold text-pencil">{m.welcome_time_other()}</span>
 				<input
 					type="time"
-					value={pressed(s).length ? '' : s.time}
+					value={s.time}
 					oninput={(e) => (s = pickCustom(s, e.currentTarget.value))}
 					class="h-11 rounded-cell border border-ruled-line bg-white/50 px-3 text-title text-ink"
 				/>
@@ -195,7 +195,7 @@
 								class="relative block h-8 w-[52px] rounded-full bg-ruled-line transition-colors group-aria-checked:bg-ink motion-reduce:transition-none"
 							>
 								<span
-									class="shadow-sm absolute top-[3px] left-[3px] size-[26px] rounded-full bg-white transition-transform group-aria-checked:translate-x-5 motion-reduce:transition-none"
+									class=" absolute top-[3px] left-[3px] size-[26px] rounded-full bg-white transition-transform group-aria-checked:translate-x-5 motion-reduce:transition-none"
 								></span>
 							</span>
 						</button>
