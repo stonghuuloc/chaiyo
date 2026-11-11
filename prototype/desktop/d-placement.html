@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kiểm tra trình độ · desktop prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<script src="nav.js"></script>
+<style>
+  .card { margin-top: var(--s5); padding: var(--s6) 0; border-top: 1px solid var(--ink-5); border-bottom: 1px solid var(--ink-5); text-align: center; }
+  .card .hz { font-size: 64px; line-height: 1.1; }
+  @media (min-width: 1024px) { .card .hz { font-size: 80px; } }
+  .stage { margin-top: var(--s5); height: 168px; border-radius: var(--r-cta); background: var(--paper-2); display: grid; place-items: center; position: relative; }
+  .play { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--vermilion); font-size: 32px; box-shadow: 0 6px 18px rgba(45,25,10,.12); }
+  .play.on { animation: pulse .9s ease-in-out 2; }
+  @keyframes pulse { 50% { transform: scale(1.08); } }
+  .stage kbd { position: absolute; right: 12px; bottom: 12px; }
+  /* result: art 3:2 left, text right from 1024 */
+  .col.result { --col: var(--container-column); }
+  @media (min-width: 768px) { .col.result { --col: var(--container-medium); } }
+  @media (min-width: 1024px) {
+    .col.result { --col: 1040px; }
+    .res { display: grid; grid-template-columns: minmax(0, 520px) minmax(0, 1fr); column-gap: 56px; align-items: center; padding-top: var(--s6); }
+    .res .pic { grid-row: 1 / span 9; }
+    .res > :not(.pic) { grid-column: 2; }
+    .col.result .actbar { margin-left: calc(520px + 56px); max-width: 460px; }
+  }
+  .eyebrow { margin-top: var(--s5); font-size: var(--t-meta); font-weight: 600; color: var(--vermilion-text); text-transform: uppercase; letter-spacing: .06em; }
+  .res h1 { margin-top: var(--s1); font: 700 34px/1.15 var(--font-display); }
+  dl { margin-top: var(--s5); border-top: 1px solid var(--ink-5); }
+  dl div { display: grid; grid-template-columns: 96px 1fr; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--ink-5); }
+  dt { font-size: var(--t-meta); color: var(--ink-3); padding-top: 2px; } dd { font-weight: 600; line-height: 1.4; } dd small { display: block; font-weight: 400; font-size: var(--t-meta); color: var(--ink-3); }
+  @media (min-width: 1024px) { .res .eyebrow { margin-top: 0; } }
+</style>
+</head>
+<body class="focus">
+<header class="topbar"><div class="in">
+  <button class="x" id="exit" aria-label="Thoát bài kiểm tra"><svg class="ic"><use href="../icons.svg#i-regular-x"/></svg><kbd>Esc</kbd></button>
+  <span class="t" id="title">Kiểm tra trình độ</span><span></span>
+</div></header>
+<div class="col" id="col">
+  <main id="main"></main>
+  <div class="actbar"><button class="cta" id="cta"></button><p class="hint" id="hint"></p></div>
+</div>
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h2 id="sh-t">Thoát bài kiểm tra?</h2><p>Kết quả sẽ không được lưu.</p>
+    <div class="row"><button class="cta" id="keep">Làm tiếp</button><button class="ghost" id="leave">Thoát</button></div>
+  </div>
+</div>
+<script>
+const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+const Q = [
+  { t: 'read', hz: '你好', opts: ['Xin chào', 'Cảm ơn', 'Tạm biệt', 'Xin lỗi'] },
+  { t: 'listen', opts: ['谢谢', '再见', '你好', '学生'] },
+  { t: 'read', hz: '学生', opts: ['Giáo viên', 'Học sinh', 'Bạn bè', 'Bác sĩ'] },
+  { t: 'listen', opts: ['喝茶', '吃饭', '看书', '睡觉'] },
+];
+let i = 0, pick = null;
+const cta = (disabled) => { const b = $('#cta'); b.disabled = disabled; b.innerHTML = 'Câu tiếp' + ic('regular-caret-right', 'ic go') + '<kbd>Enter</kbd>'; b.onclick = next; };
+function show() {
+  const q = Q[i]; pick = null;
+  const prompt = q.t === 'read' ? '<div class="card"><div class="hz">' + q.hz + '</div></div>'
+    : '<div class="stage"><button class="play" id="play" aria-label="Nghe lại">' + ic('fill-speaker-high') + '</button><kbd>Space</kbd></div>';
+  $('#main').innerHTML = '<div class="step"><p class="ask">' + (q.t === 'read' ? 'Chọn nghĩa' : 'Nghe và chọn chữ') + '</p><h2>' + (q.t === 'read' ? 'Từ này nghĩa là gì?' : 'Bạn nghe được từ nào?') + '</h2>' + prompt +
+    '<div class="opts ' + (q.t === 'read' ? 'text' : 'hz') + '">' + q.opts.map((o, j) => '<button class="opt' + (q.t === 'read' ? '' : ' hz') + '" aria-pressed="false"><kbd>' + (j + 1) + '</kbd><span>' + o + '</span></button>').join('') + '</div>' +
+    '<button class="idk" aria-pressed="false">Không biết <kbd>5</kbd></button></div>';
+  $$('.opt, .idk').forEach((b, j) => (b.onclick = () => choose(j)));
+  if ($('#play')) { $('#play').onclick = play; setTimeout(play, 300); }
+  cta(true); scrollTo(0, 0);
+  const h = $('#main h2'); h.tabIndex = -1; if (i > 0) h.focus({ preventScroll: true });
+}
+// real build: audio.play().catch(() => {}) — autoplay may be blocked after a reload; the button stays ready
+function play() { const p = $('#play'); if (!p) return false; p.classList.remove('on'); void p.offsetWidth; p.classList.add('on'); }
+function choose(j) { pick = j; $$('.opt, .idk').forEach((b, k) => b.setAttribute('aria-pressed', k === j)); $('#cta').disabled = false; }
+function next() { if (pick === null) return; if (++i < Q.length) show(); else result(); }
+function result() {
+  $('#col').className = 'col result'; $('#title').textContent = 'Kết quả xếp lớp'; $('#exit').onclick = () => go('d-today.html');
+  $('#exit').setAttribute('aria-label', 'Về Hôm nay');
+  $('#main').innerHTML = '<div class="step res"><div class="pic"><img src="../../assets/onboard/placed.png" alt=""></div>' +
+    '<p class="eyebrow">Bạn bắt đầu ở</p><h1>HSK 2 · Bài 41</h1><p class="lead">Bạn đang làm gì? <span class="hz">你在做什么</span></p>' +
+    '<dl><div><dt>Đã mở</dt><dd>HSK 1 · Bài 0–40<small>Đánh dấu “qua bằng kiểm tra” trong lộ trình, học lại được</small></dd></div>' +
+    '<div><dt>Từ của tôi</dt><dd>+300 từ, chưa ôn<small>Có trong Luyện tập → Từ của tôi</small></dd></div>' +
+    '<div><dt>Ôn dần</dt><dd>~20 từ mỗi ngày<small>Xen với bài mới, không dồn ôn hết trong hôm nay</small></dd></div></dl></div>';
+  const b = $('#cta'); b.disabled = false; b.innerHTML = 'Bắt đầu Bài 41' + ic('regular-caret-right', 'ic go') + '<kbd>Enter</kbd>'; b.onclick = () => go('d-roadmap.html');
+  $('#hint').innerHTML = '<a class="link" href="#">Làm lại bài kiểm tra</a>';
+  scrollTo(0, 0);
+}
+const scrim = $('#scrim'), inResult = () => $('#col').classList.contains('result');
+$('#exit').onclick = () => { scrim.hidden = false; $('#keep').focus(); };
+$('#keep').onclick = () => (scrim.hidden = true);
+$('#leave').onclick = () => go('d-today.html');
+scrim.onclick = (e) => { if (e.target === scrim) scrim.hidden = true; };
+onKeys({
+  digit: (n) => (!inResult() && scrim.hidden && n <= 5 ? choose(n - 1) : false),
+  Enter: () => { if (!scrim.hidden) return false; const b = $('#cta'); if (!b.disabled) b.click(); },
+  Space: () => (inResult() ? false : play()),
+  Escape: () => { if (!scrim.hidden) scrim.hidden = true; else $('#exit').click(); },
+});
+if (new URLSearchParams(location.search).get('s') === 'result') result(); else show();
+</script>
+</body>
+</html>

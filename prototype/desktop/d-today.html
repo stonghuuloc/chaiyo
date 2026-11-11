@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hôm nay · desktop prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<script src="nav.js"></script>
+<style>
+  /* T1 hero: compact = full-bleed art with the title over it and the CTA overlapping; wide = split, art 3:2 right */
+  .hero { display: grid; margin: 0 calc(-1 * var(--gutter)); }
+  .hero .art { grid-area: 1 / 1; position: relative; height: 400px; overflow: hidden; }
+  .hero .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .hero .art::before { content: ""; position: absolute; inset: 0 0 auto; height: 150px; background: linear-gradient(rgba(28,16,8,.5), rgba(28,16,8,0)); z-index: 1; }
+  .hero .art::after { content: ""; position: absolute; inset: auto 0 0; height: 120px; background: linear-gradient(rgba(247,243,234,0), var(--paper) 92%); z-index: 1; }
+  .hero .chips { position: absolute; z-index: 2; top: calc(env(safe-area-inset-top, 0px) + 50px); right: var(--gutter); }
+  .hero .intro { display: contents; }
+  .hero h1 { grid-area: 1 / 1; align-self: start; z-index: 2; padding: calc(env(safe-area-inset-top, 0px) + 54px) var(--gutter) 0; font-size: var(--t-hero); line-height: 1; letter-spacing: -.01em; color: #fff; text-shadow: 0 1px 12px rgba(20,10,4,.35); }
+  .hero .lede { display: none; }
+  .hero .act { z-index: 3; margin: -56px var(--gutter) 0; }
+  .hero .act p { text-align: center; margin-top: var(--s2); font-size: var(--t-meta); color: var(--ink-3); }
+  .practice { margin-top: var(--s4); display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: var(--s3); min-height: 64px; padding: var(--s3) var(--s4); border-radius: 18px; background: #fff; box-shadow: 0 1px 0 rgba(45,25,10,.04), 0 6px 18px rgba(45,25,10,.06); text-align: left; }
+  .practice .pi { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--paper-2); font-size: 24px; }
+  .practice b { display: block; font-weight: 600; } .practice small { display: block; font-size: 13px; color: var(--ink-3); } .practice .go { color: var(--ink-4); }
+  @media (hover: hover) { .practice:hover { background: #fffdf8; } }
+  @media (min-width: 768px) {
+    .hero { margin: var(--s6) 0 0; }
+    .hero .art { height: clamp(280px, 42svh, 380px); border-radius: var(--r-cta); }
+    .hero .art::after { display: none; }
+    .hero h1 { padding: 28px 28px 0; }
+    .hero .chips { top: 22px; right: 22px; }
+    .hero .act { margin: -40px 28px 0; }
+  }
+  @media (min-width: 1280px) {
+    .hero { margin: 40px 0 0; grid-template-columns: minmax(0, 1fr) 520px; column-gap: 48px; align-items: center; }
+    .hero .art { grid-area: 1 / 2; height: auto; aspect-ratio: 3 / 2; }
+    .hero .art::before { display: none; }
+    .hero .chips { top: 16px; right: 16px; }
+    .hero .intro { display: block; grid-area: 1 / 1; }
+    .hero h1 { padding: 0; color: var(--ink-1); text-shadow: none; font-size: 44px; }
+    .hero .lede { display: block; margin-top: var(--s3); font-size: 17px; color: var(--ink-2); }
+    .hero .act { margin: var(--s6) 0 0; max-width: 400px; }
+    .hero .act p { text-align: left; }
+  }
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .day { display: grid; justify-items: center; gap: var(--s2); padding: var(--s2) 0 10px; border-radius: var(--r-cell); border: 1px solid var(--ink-5); background: rgba(255,255,255,.35); }
+  .day span { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .day .m { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; }
+  .day.ok .m { background: var(--vermilion); color: #fff; } .day.frozen .m { color: var(--freeze); font-size: 21px; }
+  .day.today { border-color: var(--vermilion); background: var(--vermilion-wash); } .day.today span { color: var(--ink-1); font-weight: 700; }
+  .day.today .m { border: 2px solid var(--vermilion); } .day.later .m { border: 1.5px solid var(--ink-4); }
+  .streak-line { margin-top: var(--s3); font-size: var(--t-meta); color: var(--ink-3); }
+  .friends { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+  .friend { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+  .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 600 17px var(--font-display); flex: none; }
+  .friend b { display: block; font-size: 15px; } .friend small { display: flex; align-items: center; gap: 3px; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+  .friend small .ic { color: var(--vermilion); --duo: 1; --duo-c: #f2cfc6; }
+  @media (min-width: 1280px) {
+    .aside section.blk:first-child { margin-top: 0; border-top: 0; padding-top: 0; }
+    .aside { padding-top: var(--s5); }
+    .main > section.blk:first-child { margin-top: var(--s5); }
+    .friends { grid-template-columns: 1fr; gap: var(--s3); }
+    .friend small { display: inline-flex; margin-right: 8px; }
+  }
+</style>
+</head>
+<body class="app">
+<a class="skip" href="#main">Bỏ qua tới nội dung</a>
+<nav class="nav" id="nav"></nav>
+<div class="frame">
+<main class="root" id="main">
+  <header class="hero span">
+    <div class="art"><img src="../../assets/home/reviews-due.png" alt="Gấu Đỏ ngồi bên bàn gỗ, giơ một tấm thẻ ôn tập">
+      <button class="chip chips" aria-label="Chuỗi 6 ngày, còn 2 lượt đóng băng"><svg class="ic fire"><use href="../icons.svg#i-fill-fire"/></svg><span>6 ngày</span><span class="sep"></span><svg class="ic freeze"><use href="../icons.svg#i-regular-snowflake"/></svg><span>2</span></button></div>
+    <div class="intro">
+      <h1>Hôm nay</h1>
+      <p class="lede">Ôn 18 thẻ rồi học tiếp Bài 1 · Xin chào <span class="hz">你好</span>.</p>
+      <div class="act">
+        <button class="cta" onclick="go('d-shell.html?view=focus')"><svg class="ic"><use href="../icons.svg#i-regular-play"/></svg>Tiếp tục Bài 1<svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg></button>
+        <p>Xin chào <span class="hz">你好</span> · phần Từ mới</p>
+        <a class="practice" href="#"><span class="pi"><svg class="ic"><use href="../icons.svg#i-fill-brain"/></svg></span><span><b>Luyện hôm nay · khoảng 6 phút</b><small>12 thẻ · 4 nghe · 2 viết</small></span><svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <section class="blk">
+      <div class="head"><h2>Lộ trình</h2><a class="more" href="d-roadmap.html" onclick="event.preventDefault();go('d-roadmap.html')">Xem tất cả<svg class="ic"><use href="../icons.svg#i-regular-caret-right"/></svg></a></div>
+      <ol class="path">
+        <li class="done" role="link" tabindex="0"><span class="mark"><svg class="ic"><use href="../icons.svg#i-bold-check"/></svg></span><div><b>Bài 0 <span>· Nhập môn <span class="hz">拼音</span></span></b><small>Đã xong · pinyin và thanh điệu</small></div><svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg></li>
+        <li class="now" role="link" tabindex="0"><span class="mark"><i></i></span><div><b>Bài 1 <span>· Xin chào <span class="hz">你好</span></span></b><small>Đang học · phần Từ mới</small></div><svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg></li>
+        <li class="locked" role="link" tabindex="0"><span class="mark"><svg class="ic"><use href="../icons.svg#i-fill-lock-simple"/></svg></span><div><b>Bài 2 <span>· Bạn tên gì?</span></b><small>Mở khi qua Bài 1</small></div><svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg></li>
+        <li class="locked" role="link" tabindex="0"><span class="mark"><svg class="ic"><use href="../icons.svg#i-fill-lock-simple"/></svg></span><div><b>Bài 3 <span>· Gia đình</span></b><small>Mở khi qua Bài 2</small></div><svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg></li>
+      </ol>
+    </section>
+  </div>
+
+  <aside class="aside" aria-label="Tuần này và bạn bè">
+    <section class="blk">
+      <div class="head"><h2>Tuần này</h2><button class="more">Đóng băng là gì?<svg class="ic"><use href="../icons.svg#i-regular-caret-right"/></svg></button></div>
+      <div class="week" id="week"></div>
+      <p class="streak-line">Học xong một phần bài hôm nay là chuỗi lên 7.</p>
+    </section>
+    <section class="blk">
+      <div class="head"><h2>Bạn bè</h2><a class="more" href="#">Xem tất cả<svg class="ic"><use href="../icons.svg#i-regular-caret-right"/></svg></a></div>
+      <div class="friends">
+        <div class="friend"><span class="av" style="background:#e9dcc6;color:#6a4b25">M</span><div><b>Minh</b><small><svg class="ic"><use href="../icons.svg#i-fill-fire"/></svg>30 ngày</small><small>Bài 14</small></div></div>
+        <div class="friend"><span class="av" style="background:#efd6cf;color:#8a3324">L</span><div><b>Lan</b><small><svg class="ic"><use href="../icons.svg#i-fill-fire"/></svg>4 ngày</small><small>Bài 6</small></div></div>
+        <div class="friend"><span class="av" style="background:#fff3d6;color:#594001">H</span><div><b>Huy</b><small><svg class="ic"><use href="../icons.svg#i-fill-fire"/></svg>9 ngày</small><small>Bài 9</small></div></div>
+      </div>
+    </section>
+  </aside>
+</main>
+</div>
+<script>
+renderNav(document.getElementById('nav'), 0);
+const W = [['T2','ok'],['T3','ok'],['T4','frozen'],['T5','ok'],['T6','ok'],['T7','today'],['CN','later']];
+document.getElementById('week').innerHTML = W.map(([d, s]) => '<div class="day ' + s + '"><span>' + d + '</span><i class="m">' + (s === 'ok' ? ic('bold-check') : s === 'frozen' ? ic('regular-snowflake') : '') + '</i></div>').join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shell · desktop prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<script src="nav.js"></script>
+<style>
+  .views { margin-top: var(--s4); display: inline-grid; grid-auto-flow: column; padding: 3px; border-radius: var(--r-pill); background: var(--paper-2); }
+  .views button { height: 36px; padding: 0 14px; border-radius: var(--r-pill); font-size: 14px; font-weight: 600; color: var(--ink-3); }
+  .views button[aria-pressed="true"] { background: #fff; color: var(--ink-1); box-shadow: 0 1px 4px rgba(45,25,10,.12); }
+  .ph { height: 14px; border-radius: 7px; background: var(--paper-2); margin-top: 12px; }
+  .ph.w6 { width: 60%; } .ph.w8 { width: 80%; } .ph.w4 { width: 40%; }
+  .zone { position: relative; }
+  body.grid .zone { outline: 1.5px dashed rgba(198,48,29,.55); outline-offset: 6px; }
+  body.grid .zone::after { content: attr(data-z); position: absolute; top: 4px; right: 4px; font: 600 11px var(--font-ui); color: var(--vermilion-text); background: var(--vermilion-wash); padding: 2px 8px; border-radius: 6px; }
+  body.grid .nav { outline: 1.5px dashed rgba(63,115,176,.6); }
+  .wlabel { position: fixed; z-index: 30; right: 12px; top: 12px; padding: 4px 10px; border-radius: var(--r-pill); background: var(--ink-1); color: var(--paper); font: 600 12px var(--font-ui); }
+  .wlabel::after { content: "compact < 768 · tab bar"; }
+  @media (min-width: 768px) { .wlabel::after { content: "medium 768–1023 · tab bar"; } }
+  @media (min-width: 1024px) { .wlabel::after { content: "expanded 1024–1279 · sidebar + main"; } }
+  @media (min-width: 1280px) { .wlabel::after { content: "wide ≥ 1280 · sidebar + main 640 + aside 280"; } }
+  .backlink { display: none; align-items: center; gap: 4px; margin-top: 40px; font-weight: 600; color: var(--ink-2); }
+  .backlink svg { transform: rotate(180deg); }
+  body.pushed .backlink { display: inline-flex; }
+  body.pushed .page-head { padding-top: var(--s3); }
+  .focusdemo { display: none; }
+  body.focus .tabview { display: none; }
+  body.focus .focusdemo { display: block; }
+  .opts.text .opt span { font-weight: 500; }
+</style>
+</head>
+<body class="app grid">
+<a class="skip" href="#main">Bỏ qua tới nội dung</a>
+<span class="wlabel" aria-hidden="true"></span>
+<nav class="nav" id="nav"></nav>
+
+<div class="frame tabview">
+<main class="root" id="main">
+  <div class="span">
+    <a class="backlink" href="#"><svg class="ic"><use href="../icons.svg#i-regular-caret-right"/></svg>Lộ trình</a>
+    <header class="page-head"><h1 id="h1">Luyện tập</h1></header>
+    <div class="views" role="group" aria-label="Loại màn hình">
+      <button data-v="root" aria-pressed="true">Tab root</button><button data-v="pushed" aria-pressed="false">Màn con (L1, W1…)</button><button data-v="focus" aria-pressed="false">Luồng tập trung</button>
+    </div>
+    <label style="margin-left:12px;font-size:14px;color:var(--ink-3)"><input type="checkbox" id="gridt" checked> Hiện lưới</label>
+  </div>
+  <div class="main zone" data-z="main · 640 (430 / 600 dưới 1024)">
+    <section class="blk"><div class="head"><h2>Nội dung chính</h2></div><div class="ph w8"></div><div class="ph"></div><div class="ph w6"></div><div class="ph w8"></div><div class="ph w4"></div></section>
+    <section class="blk"><div class="head"><h2>Mục khác</h2></div><div class="ph"></div><div class="ph w6"></div><div class="ph w8"></div></section>
+  </div>
+  <aside class="aside zone" data-z="aside · 280 (≥ 1280), dưới đó xếp sau main">
+    <section class="blk"><div class="head"><h2>Bên cạnh</h2></div><div class="ph w8"></div><div class="ph w6"></div><div class="ph w4"></div></section>
+  </aside>
+</main>
+</div>
+
+<div class="focusdemo">
+  <header class="topbar"><div class="in">
+    <button class="x" aria-label="Thoát" onclick="setView('root')"><svg class="ic"><use href="../icons.svg#i-regular-x"/></svg><kbd>Esc</kbd></button>
+    <div class="seg" style="--n:8"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div><span class="count">4/8</span>
+  </div></header>
+  <div class="col zone" data-z="column · 640, không có điều hướng">
+    <main><div class="step"><p class="ask">Bài 1 · Từ mới</p><h2>Từ này nghĩa là gì?</h2>
+      <div class="opts text"><button class="opt" aria-pressed="false"><kbd>1</kbd><span>Xin chào</span></button><button class="opt" aria-pressed="true"><kbd>2</kbd><span>Cảm ơn</span></button><button class="opt" aria-pressed="false"><kbd>3</kbd><span>Tạm biệt</span></button><button class="opt" aria-pressed="false"><kbd>4</kbd><span>Xin lỗi</span></button></div></div></main>
+    <div class="actbar"><button class="cta">Kiểm tra<svg class="ic go"><use href="../icons.svg#i-regular-caret-right"/></svg><kbd>Enter</kbd></button><p class="hint">Thanh hành động dính dưới nội dung ngắn, dính đáy màn hình khi nội dung dài.</p></div>
+  </div>
+</div>
+<script>
+const P = new URLSearchParams(location.search);
+const tab = +(P.get('tab') ?? 2);
+const NAMES = ['Hôm nay', 'Lộ trình', 'Luyện tập', 'Tôi'];
+const nav = document.getElementById('nav');
+function setView(v) {
+  document.body.classList.toggle('pushed', v === 'pushed');
+  document.body.classList.toggle('focus', v === 'focus');
+  document.querySelectorAll('.views button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === v));
+  // pushed screen: sidebar >= 1024 with its owning tab active; no tab bar below 1024
+  nav.classList.toggle('hide-compact', v === 'pushed');
+  renderNav(nav, v === 'pushed' ? 1 : tab);
+  document.getElementById('h1').textContent = v === 'pushed' ? 'Bài 1 · Xin chào' : NAMES[tab];
+}
+document.querySelectorAll('.views button').forEach((b) => (b.onclick = () => setView(b.dataset.v)));
+document.getElementById('gridt').onchange = (e) => document.body.classList.toggle('grid', e.target.checked);
+onKeys({ Escape: () => (document.body.classList.contains('focus') ? setView('root') : false) });
+setView(P.get('view') || 'root');
+</script>
+</body>
+</html>

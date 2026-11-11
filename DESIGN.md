@@ -91,6 +91,11 @@ components:
     rounded: "{rounded.pill}"
     height: "66px"
     padding: "5px"
+  sidebar-item:
+    textColor: "{colors.graphite}"
+    rounded: "{rounded.pill}"
+    height: "48px"
+    width: "200px"
   tab-item:
     textColor: "{colors.graphite}"
     typography: "{typography.tab}"
@@ -184,7 +189,9 @@ Two colours on a warm paper-and-ink neutral range: Lantern Red and Sunflower, th
 
 ## Layout
 
-Single phone column, max 430px wide, centred on larger screens. Page gutters are 20px. Sections stack with 24px top padding and are separated by a 1px Ruled Line with 20px above it. Spacing follows a 4px base (4, 8, 12, 16, 20, 24, 32). The home screen opens with a full-bleed 400px hero image; the primary action overlaps the hero's bottom edge by 56px. Content keeps 120px clear at the bottom so the floating tab bar never covers the last row. Grids are used for fixed sets only: 7 equal day cells (6px gap), 3 friend columns (8px gap). Safe-area insets are respected at top and bottom.
+One responsive app; phone and desktop are both first-class (ADR 0008). Four window classes by viewport width: **compact** < 768px (one 430px column, 20px gutters), **medium** 768–1023px (600px column, 32px gutters), **expanded** 1024–1279px (232px sidebar + 640px main column, 40px gutters), **wide** ≥ 1280px (sidebar + 640px main + 280px aside, 48px gap). Tab-root content never grows past 968px; on very wide screens it centres in the space right of the sidebar. Focus flows (lesson steps, practice, tests, Welcome, Placement) use one centred column (430 / 600 / 640px; form steps 560px) with no navigation; Results turn into art 3:2 left and result right from 1024px. Public pages (Landing, Login) turn into two columns from 1024px: art 3:2 left, a 400px column right, max 1120px (Q3 rec A, pending Loc). Layout follows width only, never input type, and the DOM is the same at every width. The checklist for every UI slice is in `docs/responsive.md`.
+
+On compact screens: page gutters are 20px. Sections stack with 24px top padding and are separated by a 1px Ruled Line with 20px above it. Spacing follows a 4px base (4, 8, 12, 16, 20, 24, 32). On compact screens the home screen opens with a full-bleed 400px hero image; the primary action overlaps the hero's bottom edge by 56px. On wide screens the hero splits: title, status chips and the primary action on paper at the left, the art at 3:2 (520×347) at the right (Q2 rec A, pending Loc). Content keeps 120px clear at the bottom so the floating tab bar never covers the last row. Grids are used for fixed sets only: 7 equal day cells (6px gap), 3 friend columns (8px gap). Safe-area insets are respected at top and bottom.
 
 ## Elevation & Depth
 
@@ -208,7 +215,8 @@ Gently rounded, never sharp and never bubbly. Day cells 12px, the primary action
 ### Buttons
 - **Shape:** softly rounded rectangle (18px), full width, 62px tall.
 - **Primary:** Lantern Red fill, white Literata label with a Solar icon left and a caret right. One per screen: the next thing to do.
-- **Pressed:** Lantern Red Press, scale to 0.985 over 120ms. No hover-only affordances; this is a touch-first app.
+- **Pressed:** Lantern Red Press, scale to 0.985 over 120ms.
+- **Hover** (only under `(hover: hover)`): Lantern Red Press, no scale. Hover is feedback only; nothing is revealed only on hover.
 - **Focus:** 2.5px Lantern Red outline, 3px offset.
 
 ### Chips (frost)
@@ -225,7 +233,8 @@ Gently rounded, never sharp and never bubbly. Day cells 12px, the primary action
 - **States:** studied = Lantern Red disc with a white check; frozen = Freeze Blue snowflake; today = Lantern Red Wash fill, red border, Ink bold label, empty red ring; future = empty Faint Pencil ring.
 
 ### Navigation (tab bar)
-- **Style:** a floating 66px frosted pill, `position: fixed` 14px above the bottom safe area, max 402px wide. Same frost as the chips. Four tabs: Hôm nay, Lộ trình, Từ điển, Tôi. Hidden inside lessons.
+- **Style:** a floating 66px frosted pill, `position: fixed` 14px above the bottom safe area, max 402px wide. Same frost as the chips. Four tabs: Hôm nay, Lộ trình, Luyện tập, Tôi. Hidden inside lessons.
+- **Desktop:** from 1024px the same four items move into a 232px sidebar on the left: flat Notebook Paper (not frost, because it sits beside the page), 1px Ruled Line on its right edge, the logo (32px tile + "Chaiyo!" in Literata 600 20px) at the top, then 48px rows: 24px icon left of a 15px/600 label. Active row: the milky selection pill at rest, bold-duotone red icon, Ink label. Hover: Shaded Paper fill. The sidebar also shows on pushed browse screens (hub, list, detail, settings) with the owning tab active; focus flows hide it.
 - **Items:** Solar line-duotone icon (24px) over a Tab label in Graphite. The active tab swaps to bold-duotone: the silhouette is Lantern Red (`--duo-c` at `--duo: 1`) and the inner detail is Lantern Red Wash, with an Ink label. Line and bold icons are stacked and crossfade by opacity only; there is no icon scale.
 
 ### Selection pill
@@ -243,6 +252,8 @@ Gently rounded, never sharp and never bubbly. Day cells 12px, the primary action
 - **Do** give each clip one play button only: tapping the same clip again plays it at 0.5× (pitch kept), and the next tap plays normal speed again. No separate slow button.
 - **Do** let the cast art be the only rich image on a screen, cropped 3:2, with no text inside it.
 - **Do** check scrolling and floating UI on a real iPhone; desktop hides jank.
+- **Do** check every screen at 1024×768, 1280×800 and 1440×900 in Chrome and Safari, and drag the window from 1440 to 390 and back mid-flow: nothing may reset.
+- **Do** show key hints (`1`–`4`, Enter) as small Shaded Paper `kbd` badges, only when the pointer is a mouse.
 
 ### Don't:
 - **Don't** put emoji anywhere in the interface.
@@ -251,4 +262,6 @@ Gently rounded, never sharp and never bubbly. Day cells 12px, the primary action
 - **Don't** make the selected tab a red pill; the pill is milky white and only the icon is red.
 - **Don't** bring back WebGL/refractive glass for anything that floats over scrolling content.
 - **Don't** add another hue. Red and Sunflower are the palette; Freeze Blue is only for the Streak Freeze (The Two Colours Rule).
+- **Don't** add letter-key shortcuts; they fire by accident while reading. Digits (matched by `event.code`), Enter, Space and Esc only, and only in focus flows.
+- **Don't** stretch the 3:2 art into a panorama band on wide screens; give it a column instead.
 - **Don't** build toy-like UI: no bouncy cartoon buttons, no rainbow gradients, no busy multi-colour dashboards.
