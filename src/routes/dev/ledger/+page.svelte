@@ -20,12 +20,12 @@
 		let unsubscribe = () => {};
 		supabase.auth
 			.getSession()
-			.then(({ data }) => {
-				who = data.session?.user.email ? `Tài khoản: ${data.session.user.email}` : 'Chưa đăng nhập';
+			.then(({ data: { session } }) => {
+				who = session ? `Tài khoản: ${session.user.email}` : 'Chưa đăng nhập';
 				return openLedger({
 					initial,
 					store: supabaseStore(supabase),
-					db: ledgerDb(data.session?.user.id)
+					db: ledgerDb(session?.user.id)
 				});
 			})
 			.then(
@@ -49,7 +49,10 @@
 		if (!ledger) return;
 		for (const a of finish(new Date(), () => crypto.randomUUID())) await ledger.record(a);
 		refresh();
-		void ledger.sync().then(refresh, () => undefined);
+		void ledger
+			.sync()
+			.finally(refresh)
+			.catch(() => undefined);
 	}
 </script>
 
