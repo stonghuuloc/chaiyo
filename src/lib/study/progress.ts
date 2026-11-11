@@ -2,7 +2,7 @@ import type { Attempt, State, Step, StudyEvent } from './types';
 
 export function progress(
 	s: State,
-	step: Step,
+	step: Exclude<Step, { kind: 'mock' }>,
 	a: Attempt
 ): { state: State; events: StudyEvent[]; counts: boolean } {
 	const ignore = { state: s, events: [], counts: false };

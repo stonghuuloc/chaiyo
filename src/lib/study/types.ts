@@ -1,3 +1,5 @@
+import type { BadgeId } from './badges';
+
 export type Skill = 'the' | 'nghe' | 'viet';
 
 export type Curriculum = {
@@ -8,7 +10,8 @@ export type Step =
 	| { kind: 'section'; lesson: string; section: string; run: string; of: number }
 	| { kind: 'gate'; lesson: string; run: string; of: number }
 	| { kind: 'placement'; level: number; run: string; of: number }
-	| { kind: 'practice'; run: string; of: number };
+	| { kind: 'practice'; run: string; of: number }
+	| { kind: 'mock'; level: number; mode: 'exam' | 'practice' };
 
 export type Attempt = {
 	id: string;
@@ -29,6 +32,8 @@ export type Card = { due: string; first: string; fsrs: Record<string, unknown> }
 export type LessonProgress = { unlocked: boolean; passed: boolean; done: string[]; best?: number };
 
 export type State = {
+	badges: Partial<Record<BadgeId, string>>;
+	written: number;
 	lexicon: Record<string, { saved: boolean; cards: Partial<Record<Skill, Card>> }>;
 	curriculum: Curriculum;
 	lessons: Record<string, LessonProgress>;
@@ -46,6 +51,7 @@ export type StudyEvent =
 	| { type: 'DayCounted'; day: string; streak: number }
 	| { type: 'FreezeEarned'; freezes: number }
 	| { type: 'FreezeSpent'; day: string; freezes: number }
-	| { type: 'StreakReset'; day: string };
+	| { type: 'StreakReset'; day: string }
+	| { type: 'BadgeEarned'; badge: BadgeId; title: string };
 
 export type SessionCard = { word: string; skill: Skill };
