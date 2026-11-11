@@ -15,6 +15,37 @@ describe('generated motion tokens', () => {
 	});
 });
 
+describe('layout width tokens (ADR 0008)', () => {
+	const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');
+
+	it.each([
+		['--container-column', '430px'],
+		['--container-dialog', '340px'],
+		['--container-medium', '600px'],
+		['--container-main', '640px'],
+		['--container-aside', '280px'],
+		['--container-narrow', '560px'],
+		['--container-form', '400px'],
+		['--container-sheet', '480px'],
+		['--sidebar', '232px']
+	])('Given_Tokens_Then_%s_Is_%s', (name, px) => {
+		// Arrange
+		// Act
+		const match = css.match(new RegExp(`^\\t${name}: (.+);$`, 'm'));
+		// Assert
+		expect(match?.[1]).toBe(px);
+	});
+
+	it('Given_WideAside_Then_SidebarMainAndAsideFillTheContentAreaAt1280', () => {
+		// Arrange
+		const px = (name: string) => Number(css.match(new RegExp(`\\t${name}: (\\d+)px;`))?.[1]);
+		// Act
+		const area = 1280 - px('--sidebar') - 2 * 40;
+		// Assert
+		expect(area).toBe(px('--container-main') + 48 + px('--container-aside'));
+	});
+});
+
 describe('generated tokens.css', () => {
 	const root = fileURLToPath(new URL('../../../', import.meta.url));
 	const committed = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');

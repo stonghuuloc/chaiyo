@@ -4,7 +4,9 @@ declare global {
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
-		// interface PageData {}
+		interface PageData {
+			shell?: import('#lib/shell/template.js').Shell;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

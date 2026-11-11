@@ -30,5 +30,6 @@
 	"login_sent_spam": "Không thấy? Xem mục Spam.",
 	"login_change_email": "Đổi email",
 	"login_signing_in": "Đang đăng nhập…",
-	"welcome_title": "Chào bạn!"
+	"welcome_title": "Chào bạn!",
+	"shell_skip": "Bỏ qua tới nội dung"
 }

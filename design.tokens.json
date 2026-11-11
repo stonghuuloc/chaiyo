@@ -674,6 +674,54 @@
         "unit": "px"
       },
       "$description": "Dialog max width, locked (max-w-dialog)"
+    },
+    "medium": {
+      "$type": "dimension",
+      "$value": {
+        "value": 600,
+        "unit": "px"
+      },
+      "$description": "Tab-root and flow column from 768px (max-w-medium)"
+    },
+    "main": {
+      "$type": "dimension",
+      "$value": {
+        "value": 640,
+        "unit": "px"
+      },
+      "$description": "Main column from 1024px (max-w-main)"
+    },
+    "aside": {
+      "$type": "dimension",
+      "$value": {
+        "value": 280,
+        "unit": "px"
+      },
+      "$description": "Aside beside main from 1280px (max-w-aside)"
+    },
+    "narrow": {
+      "$type": "dimension",
+      "$value": {
+        "value": 560,
+        "unit": "px"
+      },
+      "$description": "Form-step column from 768px (max-w-narrow)"
+    },
+    "form": {
+      "$type": "dimension",
+      "$value": {
+        "value": 400,
+        "unit": "px"
+      },
+      "$description": "Public-page sign-in column from 1024px (max-w-form)"
+    },
+    "sheet": {
+      "$type": "dimension",
+      "$value": {
+        "value": 480,
+        "unit": "px"
+      },
+      "$description": "Sheet as a centred dialog from 1024px (max-w-sheet)"
     }
   },
   "frost": {
@@ -790,5 +838,13 @@
         "card shadows on scrolling content"
       ]
     }
+  },
+  "sidebar": {
+    "$type": "dimension",
+    "$value": {
+      "value": 232,
+      "unit": "px"
+    },
+    "$description": "Sidebar width from 1024px (--sidebar); --nav-inset is the runtime twin in layout.css"
   }
 }
