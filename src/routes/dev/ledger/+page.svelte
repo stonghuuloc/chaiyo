@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { openLedger, supabaseStore, syncWhenOnline, type Ledger } from '#lib/ledger/index.js';
 	import { initialState } from '#lib/study/index.js';
-	import { supabase } from '#lib/supabase';
+	import { supabase } from '#lib/supabase.js';
 	import { DEV_CURRICULUM } from './curriculum';
 	import { finish, lines } from './finish';
 
