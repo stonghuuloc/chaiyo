@@ -9,7 +9,7 @@ import {
 } from '#lib/study/index.js';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { countDays, practice } from '#lib/study/fixtures/streak.js';
-import { gateRun, sectionRun } from '#lib/study/fixtures/runs.js';
+import { gateRun, placementBlock, sectionRun } from '#lib/study/fixtures/runs.js';
 
 const days = (events: StudyEvent[]) =>
 	events.flatMap((e) => (e.type === 'DayCounted' ? [{ day: e.day, streak: e.streak }] : []));
@@ -36,6 +36,7 @@ describe('streak counting', () => {
 	it('finishing a section counts today', () => {
 		const r = fold(bg(), sectionRun('h1-01', 'words', 'w1', closing('2026-11-13T14:00:09Z')));
 		expect(days(r.events)).toEqual([{ day: '2026-11-13', streak: 13 }]);
+		expect(r.events.slice(-2).map((e) => e.type)).toEqual(['SectionDone', 'DayCounted']);
 		const roll = rollover(r.state, '2026-11-13');
 		expect(roll.events).toEqual([]);
 		expect(roll.state.streak.count).toBe(13);
@@ -44,6 +45,12 @@ describe('streak counting', () => {
 	it('a Gate run counts even when failed', () => {
 		const r = fold(bg(), gateRun('h0-00', 'g0', 3, closing('2026-11-14T05:00:09Z')));
 		expect(days(r.events)).toEqual([{ day: '2026-11-14', streak: 13 }]);
+	});
+
+	it('a closed placement block does not count', () => {
+		const r = fold(bg(), placementBlock(1, 'p1', 9, new Date('2026-11-13T14:00:00Z')));
+		expect(days(r.events)).toEqual([]);
+		expect(r.state.streak.count).toBe(12);
 	});
 
 	it('an unfinished run does not count', () => {
