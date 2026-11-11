@@ -129,7 +129,10 @@
 							onchange={choose}
 						/>
 					</div>
-					{#if s.email}<small class="mt-2 text-label text-pencil">{s.email}</small>{/if}
+					{#if s.email}<small
+							class="mt-2 max-w-full text-center text-label wrap-anywhere text-pencil"
+							>{s.email}</small
+						>{/if}
 				</div>
 				<label class="mt-6 block">
 					<span class="text-label font-semibold text-pencil">{m.welcome_name_label()}</span>
