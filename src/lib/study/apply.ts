@@ -1,8 +1,9 @@
 import { review } from './fsrs';
 import { progress } from './progress';
+import { countDay } from './streak';
 import type { Attempt, Curriculum, State, StudyEvent, WordSaved } from './types';
 
-export const initialState = (o: { curriculum?: Curriculum } = {}): State => {
+export const initialState = (o: { curriculum?: Curriculum; tz?: string } = {}): State => {
 	const curriculum = o.curriculum ?? { lessons: [] };
 	return {
 		lexicon: {},
@@ -11,6 +12,8 @@ export const initialState = (o: { curriculum?: Curriculum } = {}): State => {
 			curriculum.lessons.map((l, i) => [l.id, { unlocked: i === 0, passed: false, done: [] }])
 		),
 		placed: 0,
+		tz: o.tz ?? 'Asia/Ho_Chi_Minh',
+		streak: { count: 0 },
 		runs: {}
 	};
 };
@@ -52,5 +55,11 @@ export function apply(
 	const scheduled = schedule(state, input, now);
 	if (!input.step) return scheduled;
 	const stepped = progress(scheduled.state, input.step, input);
-	return { state: stepped.state, events: [...scheduled.events, ...stepped.events] };
+	const counted = stepped.counts
+		? countDay(stepped.state, now)
+		: { state: stepped.state, events: [] };
+	return {
+		state: counted.state,
+		events: [...scheduled.events, ...stepped.events, ...counted.events]
+	};
 }

@@ -62,7 +62,7 @@ A full practice exam for one HSK level, matching the official HSK 3.0 format (se
 
 ## Streak
 
-The number of consecutive days on which a [[Learner]] did real study. A day counts when, before midnight in the Learner's own timezone, they cleared every skill's due [[Practice]] that day or finished at least one lesson section (warm-up, new words, grammar, dialogue, listening/speaking, writing, or gate test).
+The number of consecutive days on which a [[Learner]] did real study. A day counts when, before midnight in the Learner's own timezone, they finished at least one [[Practice]] session (every card in it answered) or at least one lesson section (warm-up, new words, grammar, dialogue, listening/speaking, writing, or gate test).
 
 - **Not**: days the app was opened; not a count of [[Attempt]]s.
 - **Related**: [[Streak Freeze]], [[Learner Stats]], [[Progress]]

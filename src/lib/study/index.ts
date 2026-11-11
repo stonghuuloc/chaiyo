@@ -1,4 +1,5 @@
 export { apply, initialState } from './apply';
+export { rollover } from './streak';
 export { minutes, session } from './session';
 export type {
 	Attempt,
