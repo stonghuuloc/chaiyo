@@ -5,6 +5,8 @@ import { describe, expect, it } from 'vitest';
 import Button from './Button.svelte';
 import Chip from './Chip.svelte';
 import Dialog from './Dialog.svelte';
+import FocusFrame from './FocusFrame.svelte';
+import Kbd from './Kbd.svelte';
 import Section from './Section.svelte';
 import Sheet from './Sheet.svelte';
 import Toast from './Toast.svelte';
@@ -129,6 +131,78 @@ describe('Sheet', () => {
 		expect(out).toContain('rounded-t-action');
 		expect(out).toContain('env(safe-area-inset-bottom');
 		expect(out).toContain('overflow-y-auto');
+	});
+});
+
+describe('Sheet desktop', () => {
+	it('Given_Open_When_Render_Then_CentredDialogFrom1024', () => {
+		// Arrange
+		// Act
+		const out = html(Sheet, { open: true, title: 'T', onclose: noop, children: text('x') });
+		// Assert
+		expect(classOf(out, 'div')).toContain('lg:items-center');
+		expect(out).toContain('lg:max-w-sheet');
+		expect(out).toContain('lg:rounded-[24px]');
+		expect(out).toContain('lg:shadow-overlay');
+	});
+
+	it('Given_SheetSource_Then_EnterPickedByMediaQuery', () => {
+		// Arrange
+		const src = source('Sheet.svelte');
+		// Act
+		// Assert
+		expect(src).toContain('transition:panelEnter');
+		expect(src).not.toContain('sheetSlide');
+	});
+});
+
+describe('Kbd', () => {
+	it('Given_Hint_When_Render_Then_HiddenUnlessHoverAndFinePointer', () => {
+		// Arrange
+		// Act
+		const out = html(Kbd, { children: text('Enter') });
+		const src = source('Kbd.svelte');
+		// Assert
+		expect(out).toContain('<kbd');
+		expect(out).toContain('aria-hidden="true"');
+		expect(src).toMatch(/kbd \{\s*display: none;/);
+		expect(src).toMatch(
+			/@media \(hover: hover\) and \(pointer: fine\) \{\s*kbd \{\s*display: inline-grid;/
+		);
+	});
+});
+
+describe('FocusFrame', () => {
+	it('Given_AllSlots_When_Render_Then_TopColumnAndActionBar', () => {
+		// Arrange
+		const top = createRawSnippet(() => ({ render: () => '<b>top</b>' }));
+		const actions = createRawSnippet(() => ({ render: () => '<b>go</b>' }));
+		// Act
+		const out = html(FocusFrame, { top, actions, children: text('body') });
+		// Assert
+		expect(out).toMatch(/<header[^>]*>[\s\S]*top[\s\S]*<\/header>/);
+		expect(out).toContain('body');
+		expect(out).toMatch(/class="actions[^"]*"[^>]*>[\s\S]*go/);
+	});
+
+	it('Given_NoSlots_When_Render_Then_NoHeaderNoActionBar', () => {
+		// Arrange
+		// Act
+		const out = html(FocusFrame, { children: text('body') });
+		// Assert
+		expect(out).not.toContain('<header');
+		expect(out).not.toContain('actions');
+	});
+
+	it('Given_FocusFrameCss_Then_ColumnsFromTokensAndActionBarSticky', () => {
+		// Arrange
+		const src = source('FocusFrame.svelte');
+		// Act
+		// Assert
+		expect(src).toContain('var(--container-main)');
+		expect(src).toContain('var(--container-narrow)');
+		expect(src).toMatch(/\.actions \{[^}]*position: sticky;[^}]*bottom: 0/);
+		expect(src).not.toMatch(/\d+px\)? *;? *\n *max-width/);
 	});
 });
 
@@ -260,6 +334,14 @@ describe('Toast', () => {
 		);
 		// Assert
 		expect(tracked).toEqual([true, true, true, true]);
+	});
+
+	it('Given_Open_When_Render_Then_CentredOnContentArea', () => {
+		// Arrange
+		// Act
+		const out = html(Toast, { open: true, message: 'Done' });
+		// Assert
+		expect(out).toContain('ps-(--nav-inset,0px)');
 	});
 
 	it('Given_OpenWithoutAction_When_Render_Then_NoButton', () => {

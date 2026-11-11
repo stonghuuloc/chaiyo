@@ -11,13 +11,19 @@ export function wrapFocus<T>(items: T[], active: T | null, back: boolean): T | n
 	return i === -1 || i === items.length - 1 ? items[0] : null;
 }
 
+// True from an overlay's mount until its action is destroyed (its outro included).
+export const hasOpenModal = () => stack.length > 0;
+
 export function modal(node: HTMLElement, onclose: () => void) {
 	const opener = document.activeElement as HTMLElement | null;
 	stack.push(node);
 	node.focus();
 	const onKey = (e: KeyboardEvent) => {
 		if (stack.at(-1) !== node) return;
-		if (e.key === 'Escape') return onclose();
+		if (e.key === 'Escape') {
+			e.preventDefault();
+			return onclose();
+		}
 		if (e.key !== 'Tab') return;
 		const items = [...node.querySelectorAll<HTMLElement>(FOCUSABLE)];
 		const active = document.activeElement as HTMLElement | null;

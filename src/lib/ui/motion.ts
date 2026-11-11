@@ -43,6 +43,12 @@ export function dialogPop(_node: Element, { reduced }: Params): TransitionConfig
 	};
 }
 
+// Sheet picks its enter/exit at intro: slide below 64rem, centred pop from 64rem (ADR 0008 §1).
+export function panelEnter(node: Element, params: Params): TransitionConfig {
+	const desktop = typeof matchMedia === 'function' && matchMedia('(min-width: 64rem)').matches;
+	return desktop ? dialogPop(node, params) : sheetSlide(node, params);
+}
+
 export function toastRise(_node: Element, { reduced }: Params): TransitionConfig {
 	if (reduced) return fadeOnly();
 	return {

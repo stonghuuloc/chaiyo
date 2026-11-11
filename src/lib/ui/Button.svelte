@@ -27,10 +27,10 @@
 		'flex w-full items-center justify-center gap-3 rounded-action font-display leading-none no-underline cursor-pointer transition-[scale,background-color,opacity] duration-(--motion-press) disabled:cursor-default disabled:bg-shaded-paper disabled:shadow-none disabled:inset-shadow-none motion-reduce:transition-[background-color,opacity] motion-reduce:duration-(--motion-fade-reduced)';
 	const variants = {
 		primary:
-			'h-[62px] bg-lantern-red text-action text-white shadow-lift inset-shadow-lift active:not-disabled:bg-lantern-red-press motion-safe:active:not-disabled:scale-[.985] disabled:text-pencil',
-		ink: 'h-[62px] bg-ink text-action text-notebook-paper active:not-disabled:bg-graphite motion-safe:active:not-disabled:scale-[.985] disabled:text-pencil',
+			'h-[62px] bg-lantern-red text-action text-white shadow-lift inset-shadow-lift hover:not-disabled:bg-lantern-red-press active:not-disabled:bg-lantern-red-press motion-safe:active:not-disabled:scale-[.985] disabled:text-pencil',
+		ink: 'h-[62px] bg-ink text-action text-notebook-paper hover:not-disabled:bg-graphite active:not-disabled:bg-graphite motion-safe:active:not-disabled:scale-[.985] disabled:text-pencil',
 		outline:
-			'h-[56px] border border-ruled-line bg-white/50 text-title text-ink active:not-disabled:bg-shaded-paper disabled:text-faint-pencil'
+			'h-[56px] border border-ruled-line bg-white/50 text-title text-ink hover:not-disabled:bg-shaded-paper active:not-disabled:bg-shaded-paper disabled:text-faint-pencil'
 	};
 	const cls = $derived(`${base} ${variants[variant]}`);
 </script>

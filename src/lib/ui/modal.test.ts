@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { modal, wrapFocus } from './modal';
+import { hasOpenModal, modal, wrapFocus } from './modal';
 
 type Listener = (e: Partial<KeyboardEvent>) => void;
 
@@ -57,6 +57,29 @@ describe('modal', () => {
 		// Assert
 		expect(closeDialog).toHaveBeenCalledTimes(1);
 		expect(closeSheet).toHaveBeenCalledTimes(1);
+	});
+
+	it('Given_OverlayLifecycle_Then_HasOpenModalFromMountToDestroy', () => {
+		// Arrange
+		stubDom();
+		const before = hasOpenModal();
+		// Act
+		const panel = modal(fakeNode(), vi.fn());
+		const open = hasOpenModal();
+		panel.destroy();
+		// Assert
+		expect([before, open, hasOpenModal()]).toEqual([false, true, false]);
+	});
+
+	it('Given_Escape_When_ModalOpen_Then_KeyDefaultPrevented', () => {
+		// Arrange
+		const press = stubDom();
+		const panel = modal(fakeNode(), vi.fn());
+		// Act
+		const e = press('Escape');
+		panel.destroy();
+		// Assert
+		expect(e.preventDefault).toHaveBeenCalled();
 	});
 
 	it('Given_DialogOverSheet_When_SheetDestroyedFirst_Then_SheetOpenerNotFocused', () => {
