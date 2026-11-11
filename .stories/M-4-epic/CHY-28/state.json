@@ -1,0 +1,60 @@
+{
+  "story": "CHY-28",
+  "title": "Placement Test (O2/O3)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "bank, curriculum and run rules",
+      "acs": [
+        "AC1",
+        "AC2"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "placement screen and exit confirm",
+      "acs": [
+        "AC1",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    },
+    {
+      "id": "S3",
+      "name": "result screen and study placement",
+      "acs": [
+        "AC4",
+        "AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-28",
+  "log": [
+    "2026-11-11 init",
+    "2026-11-11 +S1 bank, curriculum and run rules [AC1,AC2]",
+    "2026-11-11 +S2 placement screen and exit confirm [AC1,AC3]",
+    "2026-11-11 +S3 result screen and study placement [AC4,AC5]",
+    "2026-11-11 S1 \u2192 plan",
+    "2026-11-11 S2 \u2192 plan",
+    "2026-11-11 S3 \u2192 plan"
+  ],
+  "updated": "2026-11-11T13:38:26+07:00"
+}

@@ -1,0 +1,47 @@
+{
+  "story": "CHY-27",
+  "title": "Welcome first run (O1)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "name, photo and reminder steps",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC4"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "push permission, save profile, placement offer",
+      "acs": [
+        "AC3",
+        "AC5",
+        "AC6"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-27",
+  "log": [
+    "2026-11-11 init",
+    "2026-11-11 +S1 name, photo and reminder steps [AC1,AC2,AC4]",
+    "2026-11-11 +S2 push permission, save profile, placement offer [AC3,AC5,AC6]",
+    "2026-11-11 S1 \u2192 plan",
+    "2026-11-11 S2 \u2192 plan"
+  ],
+  "updated": "2026-11-11T13:38:25+07:00"
+}

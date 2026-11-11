@@ -1,0 +1,31 @@
+{
+  "story": "CHY-29",
+  "title": "Landing page (P1)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "landing copy, cta and lighthouse",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-29",
+  "log": [
+    "2026-11-11 init",
+    "2026-11-11 +S1 landing copy, cta and lighthouse [AC1,AC2,AC3]",
+    "2026-11-11 S1 \u2192 plan"
+  ],
+  "updated": "2026-11-11T13:38:26+07:00"
+}
