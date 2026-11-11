@@ -29,15 +29,15 @@
 				});
 			})
 			.then(
-			(l) => {
-				if (cancelled) return;
-				ledger = l;
-				unsubscribe = l.subscribe(refresh);
-				stop = syncWhenOnline({ ...l, sync: () => l.sync().finally(refresh) });
-				refresh();
-			},
-			(e) => (failure = String(e))
-		);
+				(l) => {
+					if (cancelled) return;
+					ledger = l;
+					unsubscribe = l.subscribe(refresh);
+					stop = syncWhenOnline({ ...l, sync: () => l.sync().finally(refresh) });
+					refresh();
+				},
+				(e) => (failure = String(e))
+			);
 		return () => {
 			cancelled = true;
 			stop();
