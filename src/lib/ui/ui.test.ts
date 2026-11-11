@@ -161,11 +161,14 @@ describe('Kbd', () => {
 		// Arrange
 		// Act
 		const out = html(Kbd, { children: text('Enter') });
+		const src = source('Kbd.svelte');
 		// Assert
 		expect(out).toContain('<kbd');
 		expect(out).toContain('aria-hidden="true"');
-		expect(classOf(out, 'kbd').split(' ')).toContain('hidden');
-		expect(out).toContain('[@media(hover:hover)_and_(pointer:fine)]:inline-grid');
+		expect(src).toMatch(/kbd \{\s*display: none;/);
+		expect(src).toMatch(
+			/@media \(hover: hover\) and \(pointer: fine\) \{\s*kbd \{\s*display: inline-grid;/
+		);
 	});
 });
 

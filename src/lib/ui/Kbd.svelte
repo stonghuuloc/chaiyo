@@ -4,9 +4,26 @@
 	let { children }: { children: Snippet } = $props();
 </script>
 
-<kbd
-	class="hidden h-[22px] min-w-[22px] place-items-center rounded-[6px] border border-b-2 border-ruled-line bg-shaded-paper px-1.5 font-sans text-[12px] leading-none font-semibold text-pencil [@media(hover:hover)_and_(pointer:fine)]:inline-grid"
-	aria-hidden="true"
->
-	{@render children()}
-</kbd>
+<kbd aria-hidden="true">{@render children()}</kbd>
+
+<style>
+	kbd {
+		display: none;
+		height: 22px;
+		min-width: 22px;
+		place-items: center;
+		padding: 0 6px;
+		border: 1px solid var(--color-ruled-line);
+		border-bottom-width: 2px;
+		border-radius: 6px;
+		background: var(--color-shaded-paper);
+		color: var(--color-pencil);
+		font: 600 12px/1 var(--font-sans);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		kbd {
+			display: inline-grid;
+		}
+	}
+</style>
