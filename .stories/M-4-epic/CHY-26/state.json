@@ -1,0 +1,62 @@
+{
+  "story": "CHY-26",
+  "title": "Login (P2)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "login screen, magic link, callback routing",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC6"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "expired banner, restore sheet, email code",
+      "acs": [
+        "AC4",
+        "AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    },
+    {
+      "id": "S3",
+      "name": "signed-in ledger sync proof",
+      "acs": [
+        "CHY-24:AC2",
+        "CHY-24:AC5"
+      ],
+      "repo": "stonghuuloc/chaiyo",
+      "stage": "plan",
+      "reviews": 1,
+      "note": "design READY: Opus r1 + Sonnet deltas (handoffs/M-4/advisor)",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-26",
+  "log": [
+    "2026-11-11 init",
+    "2026-11-11 +S1 login screen, magic link, callback routing [AC1,AC2,AC3,AC6]",
+    "2026-11-11 +S2 expired banner, restore sheet, email code [AC4,AC5]",
+    "2026-11-11 +S3 signed-in ledger sync proof [CHY-24:AC2,CHY-24:AC5]",
+    "2026-11-11 S1 \u2192 plan",
+    "2026-11-11 S2 \u2192 plan",
+    "2026-11-11 S3 \u2192 plan"
+  ],
+  "updated": "2026-11-11T13:38:25+07:00"
+}

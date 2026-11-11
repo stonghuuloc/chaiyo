@@ -1,0 +1,11 @@
+{
+  "epic": "M-4",
+  "title": "Login + onboarding",
+  "order": [
+    "CHY-26",
+    "CHY-28",
+    "CHY-27",
+    "CHY-29"
+  ],
+  "note": "Backlog milestone m-4; wave plan in WAVE-PLAN.md"
+}
