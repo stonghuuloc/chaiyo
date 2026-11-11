@@ -63,7 +63,7 @@ describe('route shell declarations', () => {
 			(page) =>
 				!declared.some((d) =>
 					d.endsWith('+layout.ts')
-						? dirname(page).startsWith(dirname(d) + sep)
+						? dirname(page) === dirname(d) || dirname(page).startsWith(dirname(d) + sep)
 						: dirname(page) === dirname(d)
 				)
 		);
