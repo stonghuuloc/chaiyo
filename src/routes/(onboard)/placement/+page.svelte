@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import sprite from '#lib/assets/icons.svg?raw';
-	import { play } from '#lib/audio/index.js';
+	import { play, player } from '#lib/audio/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { answer, HANDOFF, items, startRun } from '#lib/placement/index.js';
 	import { shuffle } from '#lib/placement/shuffle.js';
@@ -26,6 +26,7 @@
 		pick = null;
 		shown = performance.now();
 		if (item.kind === 'listen') void play(item.clip);
+		return () => player.element()?.pause();
 	});
 
 	function submit(chosen: string | null) {
