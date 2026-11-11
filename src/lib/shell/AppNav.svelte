@@ -1,17 +1,19 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import { m } from '#lib/paraglide/messages.js';
 	import { barSlide } from './motion';
 	import { TABS } from './tabs';
-	import { navFor } from './template';
+	import type { Nav } from './template';
 
-	const nav = $derived(navFor(page.data.shell, page.url.pathname));
+	let { nav }: { nav: Nav | null } = $props();
+	// ADR 0008 §1 exception: below 1024px a pushed screen has no bar, so it must not move the selection
+	const wide = new MediaQuery('min-width: 64rem');
 	// the slide-out keeps the last selection, so the icon does not fade back to line mid-slide
 	let shown = $state(0);
 	$effect.pre(() => {
-		if (nav?.active != null) shown = nav.active;
+		if (nav?.active != null && (nav.mode === 'tab-bar' || wide.current)) shown = nav.active;
 	});
 </script>
 
@@ -43,6 +45,7 @@
 <style>
 	.bar {
 		--nav-mode: tab-bar;
+		transition: transform var(--motion-fade) cubic-bezier(0.215, 0.61, 0.355, 1);
 		position: fixed;
 		inset: auto 0 0 0;
 		z-index: 10;
@@ -61,7 +64,7 @@
 		transform: translateY(100%);
 		visibility: hidden;
 		transition:
-			transform var(--motion-fade) ease,
+			transform var(--motion-fade) cubic-bezier(0.215, 0.61, 0.355, 1),
 			visibility 0s var(--motion-fade);
 	}
 
@@ -168,6 +171,7 @@
 			pointer-events: auto;
 			transform: none;
 			visibility: visible;
+			transition: none;
 		}
 
 		.brand {
@@ -235,6 +239,7 @@
 	@media (prefers-reduced-motion: reduce) {
 		.tab,
 		.ic,
+		.bar,
 		.bar.side-only {
 			transition-duration: var(--motion-fade-reduced);
 		}

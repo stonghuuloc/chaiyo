@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
@@ -10,6 +10,19 @@ const walk = (dir: string): string[] =>
 		const path = join(dir, name);
 		return statSync(path).isDirectory() ? walk(path) : [path];
 	});
+
+// walks outwards from idx through each enclosing { block and reads the text that opens it
+function insideHoverMedia(code: string, idx: number) {
+	let depth = 0;
+	for (let i = idx - 1; i >= 0; i--) {
+		if (code[i] === '}') depth++;
+		if (code[i] !== '{') continue;
+		if (depth-- > 0) continue;
+		const head = code.slice(Math.max(code.lastIndexOf('}', i), code.lastIndexOf(';', i), 0), i);
+		if (head.includes('@media') && head.includes('hover: hover')) return true;
+	}
+	return false;
+}
 
 describe('route shell declarations', () => {
 	it.each([
@@ -47,7 +60,12 @@ describe('route shell declarations', () => {
 		);
 		// Act
 		const missing = pages.filter(
-			(page) => !declared.some((d) => page.startsWith(join(d, '..')) || page === d)
+			(page) =>
+				!declared.some((d) =>
+					d.endsWith('+layout.ts')
+						? dirname(page).startsWith(dirname(d) + sep)
+						: dirname(page) === dirname(d)
+				)
 		);
 		// Assert
 		expect(missing.map((f) => f.replace(app, ''))).toEqual([]);
@@ -85,11 +103,7 @@ describe('layout rules', () => {
 		const bad = files.flatMap((file) => {
 			const code = readFileSync(file, 'utf8');
 			return [...code.matchAll(/:hover/g)]
-				.filter((hit) => {
-					const before = code.slice(0, hit.index);
-					const query = before.lastIndexOf('@media');
-					return query === -1 || !before.slice(query).split('{')[0].includes('hover: hover');
-				})
+				.filter((hit) => !insideHoverMedia(code, hit.index))
 				.map(() => file.replace(src, ''));
 		});
 		// Assert

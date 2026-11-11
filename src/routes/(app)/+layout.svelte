@@ -20,7 +20,7 @@
 {@html sprite}
 <div class="shell" data-nav={nav?.mode}>
 	<a class="skip" href="#main" onclick={skip}>{m.shell_skip()}</a>
-	<AppNav />
+	<AppNav {nav} />
 	<main id="main" class="page-col" tabindex="-1" bind:this={main}>
 		{@render children()}
 	</main>

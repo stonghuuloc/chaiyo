@@ -15,7 +15,7 @@ RESPONSIVE (docs/adr/0008)
 [ ] Each new route under (app) declares shell: { template, section } in its own load, returned as `shell` (ADR 0008 §4); nav per its table: tab root = tab bar <1024 / sidebar >=1024; pushed browse screen = sidebar >=1024
     with the table's tab active; focus flow = no nav at any width (top bar + centred column + sticky action bar); public page = no nav.
 [ ] Overlays use Sheet/Dialog from src/lib/ui (Sheet turns into a centred dialog >=1024). No custom sheets.
-[ ] Keyboard: Tab order = visual order, focus ring visible, focus moves to the new step heading when a step changes.
+[ ] Keyboard: Tab order = visual order (exception: the tab bar below 1024 comes before main, ADR 0008 §6), focus ring visible, focus moves to the new step heading when a step changes.
     Focus flows use the keys action from src/lib/ui (event.code digits, Enter, Space, Esc). No letter shortcuts, none on tab roots.
 [ ] Key hints (kbd) only under (hover: hover) and (pointer: fine).
 [ ] Hover is feedback only. Check: every hand-written :hover in the diff sits inside @media (hover: hover). Clickable rows have cursor: pointer.
