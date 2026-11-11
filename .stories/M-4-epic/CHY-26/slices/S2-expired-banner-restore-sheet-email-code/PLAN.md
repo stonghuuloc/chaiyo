@@ -31,6 +31,35 @@ File: `src/routes/login/+page.svelte`
 - Change: code field + button per SPEC; `verifyOtp` → `afterSignIn`.
 - Verify: tester's local code rows.
 
+## Task 4b [DESKTOP] login layout
+Files: `src/routes/login/+page.svelte`, `static/onboard/welcome-1280.webp` (new)
+- Change: art + column wrapper, CSS-only breakpoints at 48rem and 64rem per SPEC "Desktop rows".
+- Verify: tester's Playwright rows at 390 / 1024 / 1280 / 1440.
+
+## RESPONSIVE checklist (docs/responsive.md)
+```
+RESPONSIVE (docs/adr/0008)
+[ ] Picture/prototype at 390x844, 1024x768, 1280x800 and 1440x900 (768x1024 too if the layout differs there).
+[ ] Containers come from tokens (--container-column/medium/main/aside/narrow/form/sheet). Check: the diff adds no
+    430px and no max-w-[<n>px] / width:<n>px for layout.
+[ ] One DOM per screen. Breakpoints in CSS only; no {#if desktop} component swap. matchMedia only for the ADR 0008 §1 exceptions.
+[ ] Each new route under (app) declares shell: { template, section } in its own load, returned as `shell` (ADR 0008 §4); nav per its table: tab root = tab bar <1024 / sidebar >=1024; pushed browse screen = sidebar >=1024
+    with the table's tab active; focus flow = no nav at any width (top bar + centred column + sticky action bar); public page = no nav.
+[ ] Overlays use Sheet/Dialog from src/lib/ui (Sheet turns into a centred dialog >=1024). No custom sheets.
+[ ] Keyboard: Tab order = visual order (exception: the tab bar below 1024 comes before main, ADR 0008 §6), focus ring visible, focus moves to the new step heading when a step changes.
+    Focus flows use the keys action from src/lib/ui (event.code digits, Enter, Space, Esc). No letter shortcuts, none on tab roots.
+[ ] Key hints (kbd) only under (hover: hover) and (pointer: fine).
+[ ] Hover is feedback only. Check: every hand-written :hover in the diff sits inside @media (hover: hover). Clickable rows have cursor: pointer.
+[ ] Targets >= 44px at every width. Body text measure <= 70ch. Full-height layouts use dvh/svh, never vh.
+[ ] Copy says "Bấm" (click and tap); never "Chạm" or "Vuốt". Every swipe has a button. (Grep the screen's prototype for "Chạm" at SPEC time.)
+[ ] Art wider than 430 CSS px ships a 1280w WebP and keeps 3:2 (aspect-ratio); no text in images.
+[ ] Auto-playing audio catches play() rejection; the play button stays ready (proof: reload on that step, no console error).
+[ ] Floating UI never covers content at any width (tab-bar bottom padding only below 1024).
+[ ] Proof rows: Playwright at the four sizes above with a screenshot each; one live resize 1440 -> 390 -> 1440 mid-flow with no
+    state lost and no horizontal scroll at 320. Chrome + Safari on the Mac for the desktop rows (say Tab or Option+Tab in Safari).
+```
+Desktop rows that apply: public template, Sheet from R2, Enter submits, no new max-w px, one DOM, art 1280w WebP at 3:2, targets >= 44px, dvh.
+
 ## Task 5 [CHORE] gates
 - `pnpm check`, `pnpm lint`, `pnpm test:coverage`, `pnpm build` exit 0 on the final tree.
 

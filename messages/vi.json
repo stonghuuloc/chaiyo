@@ -30,6 +30,17 @@
 	"login_sent_spam": "Không thấy? Xem mục Spam.",
 	"login_change_email": "Đổi email",
 	"login_signing_in": "Đang đăng nhập…",
+	"login_expired": "Link đã hết hạn. Gửi link mới nhé.",
+	"login_restore_title": "Khôi phục tài khoản?",
+	"login_restore_mid": " sẽ bị xoá sau ",
+	"login_restore_days": "{days} ngày",
+	"login_restore_end": ". Khôi phục để giữ bài học và từ vựng.",
+	"login_restore_do": "Khôi phục",
+	"login_restore_later": "Để sau",
+	"login_restore_failed": "Chưa khôi phục được. Thử lại nhé.",
+	"login_code_label": "Mã 6 số",
+	"login_code_go": "Đăng nhập bằng mã",
+	"login_code_bad": "Mã chưa đúng hoặc đã hết hạn.",
 	"welcome_title": "Chào bạn!",
 	"shell_skip": "Bỏ qua tới nội dung"
 }
