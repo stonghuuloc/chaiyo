@@ -1,8 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import { onMount, untrack } from 'svelte';
 	import sprite from '#lib/assets/icons.svg?raw';
 	import Button from '#lib/ui/Button.svelte';
-	import { CALLBACK, okEmail, resendLabel } from '#lib/auth/login.js';
+	import Sheet from '#lib/ui/Sheet.svelte';
+	import { afterSignIn, hrefFor } from '#lib/auth/after-sign-in.js';
+	import {
+		CALLBACK,
+		LAST_EMAIL,
+		daysLeft,
+		landing,
+		okEmail,
+		resendLabel
+	} from '#lib/auth/login.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { supabase } from '#lib/supabase.js';
 
@@ -14,13 +26,86 @@
 	let sentAt = $state(0);
 	let now = $state(Date.now());
 	let field = $state<HTMLInputElement>();
+	let expired = $state(false);
+	let code = $state('');
+	let codeBad = $state(false);
+	let verifying = $state(false);
+	let restore = $state<{ email: string; days: number } | null>(null);
+	let restoring = $state(false);
+	let restoreFailed = $state(false);
 
 	const resend = $derived(resendLabel(sentAt, now));
+	const codeReady = $derived(/^\d{6}$/.test(code));
 
 	onMount(() => {
 		const id = setInterval(() => (now = Date.now()), 1000);
 		return () => clearInterval(id);
 	});
+
+	$effect(() => {
+		const s = page.url.searchParams.get('s');
+		untrack(() => void enter(s));
+	});
+
+	async function enter(s: string | null) {
+		if (s === 'expired') {
+			expired = true;
+			try {
+				email = localStorage.getItem(LAST_EMAIL) ?? '';
+			} catch {
+				email = '';
+			}
+			view = 'email';
+			return;
+		}
+		if (s !== 'restore') return;
+		view = 'start';
+		code = '';
+		codeBad = false;
+		const { data } = await supabase.auth.getSession();
+		if (!data.session) return;
+		const { data: row, error } = await supabase
+			.from('settings')
+			.select('onboarded_at, delete_at')
+			.eq('learner_id', data.session.user.id)
+			.maybeSingle();
+		const at = Date.now();
+		if (error || !row?.delete_at || Date.parse(row.delete_at) <= at) {
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
+			return goto(hrefFor(error ? '/(app)/(tabs)/today' : landing(row, at)), { replace: true });
+		}
+		restoreFailed = false;
+		restore = { email: data.session.user.email ?? '', days: daysLeft(row.delete_at, at) };
+	}
+
+	async function restoreAccount() {
+		const { data } = await supabase.auth.getSession();
+		if (!data.session || restoring) return;
+		restoring = true;
+		restoreFailed = false;
+		const { data: row, error } = await supabase
+			.from('settings')
+			.update({ delete_at: null })
+			.eq('learner_id', data.session.user.id)
+			.select('onboarded_at, delete_at')
+			.single();
+		restoring = false;
+		if (error) {
+			restoreFailed = true;
+			return;
+		}
+		restore = null;
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
+		return goto(hrefFor(landing(row, Date.now())), { replace: true });
+	}
+
+	async function later() {
+		if (restoring) return;
+		restore = null;
+		view = 'start';
+		await supabase.auth.signOut();
+		return goto(resolve('/login'), { replace: true });
+	}
 
 	const google = () =>
 		supabase.auth.signInWithOAuth({
@@ -49,8 +134,30 @@
 		failed = !!error;
 		if (error) return;
 		email = v;
+		try {
+			localStorage.setItem(LAST_EMAIL, v);
+		} catch {
+			// storage can be blocked; the prefill is a convenience
+		}
+		expired = false;
+		code = '';
+		codeBad = false;
 		sentAt = now = Date.now();
 		view = 'sent';
+	}
+
+	async function verify() {
+		if (!codeReady || verifying) return;
+		verifying = true;
+		codeBad = false;
+		const { data, error } = await supabase.auth.verifyOtp({ email, token: code, type: 'email' });
+		verifying = false;
+		if (error || !data.session) {
+			codeBad = true;
+			return;
+		}
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
+		return goto(hrefFor(await afterSignIn(data.session, Date.now())), { replace: true });
 	}
 </script>
 
@@ -60,7 +167,7 @@
 {#snippet back(to: 'start' | 'email')}
 	<button
 		type="button"
-		class="mb-4 -ml-2 grid size-11 cursor-pointer place-items-center rounded-full text-ink"
+		class="mb-4 -ml-2 grid size-11 cursor-pointer place-items-center rounded-full text-ink lg:mt-0"
 		aria-label={m.login_back()}
 		disabled={sending}
 		onclick={() => (view = to)}
@@ -71,94 +178,166 @@
 	</button>
 {/snippet}
 
-<main class="mx-auto flex min-h-dvh max-w-column flex-col px-5 pb-8">
-	{#if view === 'start'}
-		<div class="-mx-5 aspect-square overflow-hidden mask-b-from-70%">
-			<img src="/onboard/welcome.webp" alt="" class="size-full object-cover object-[50%_60%]" />
-		</div>
-		<div class="text-center">
-			<img
-				src="/brand/logo-224.webp"
-				alt=""
-				width="112"
-				height="112"
-				class="relative mx-auto -mt-14 size-28"
-			/>
-			<h1 class="sr-only">{m.login_name()}</h1>
-			<p class="mt-3 text-title text-graphite">{m.login_tagline()}</p>
-		</div>
-		<div class="mt-auto flex flex-col gap-3 pt-8">
-			<Button variant="primary" onclick={google}>
-				<span class="grid size-[30px] flex-none place-items-center rounded-full bg-white">
-					<img src="/brand/google-g.svg" alt="" class="size-[18px]" />
-				</span>
-				{m.login_google()}
-			</Button>
-			<button
-				type="button"
-				class="h-12 cursor-pointer text-title text-ink"
-				onclick={() => (view = 'email')}>{m.login_use_email()}</button
-			>
-		</div>
-	{:else if view === 'email'}
-		<div class="pt-5">
-			{@render back('start')}
-			<h1 class="text-headline">{m.login_email_title()}</h1>
-			<p class="mt-1 text-muted">{m.login_email_lead()}</p>
-			<label class="mt-6 block">
-				<span class="text-label text-muted">{m.login_email_label()}</span>
-				<!-- svelte-ignore a11y_autofocus -->
-				<input
-					bind:this={field}
-					bind:value={email}
-					oninput={() => ((bad = false), (failed = false))}
-					onkeydown={(e) => e.key === 'Enter' && send()}
-					type="email"
-					inputmode="email"
-					autocomplete="email"
-					autocapitalize="off"
-					spellcheck="false"
-					autofocus
-					placeholder={m.login_email_placeholder()}
-					class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4 text-body text-ink"
+<main
+	class="mx-auto flex min-h-dvh max-w-[calc(var(--container-column)+--spacing(10))] flex-col px-5 pb-8 md:max-w-[calc(var(--container-sheet)+--spacing(10))] lg:max-w-[calc(var(--container-narrow)+var(--container-form)+--spacing(40))] lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:p-10"
+>
+	<div
+		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block lg:flex-[0_1_var(--container-narrow)] {view ===
+		'start'
+			? ''
+			: 'hidden'}"
+	>
+		<img
+			class="block size-full object-cover object-[50%_60%]"
+			src="/onboard/welcome.webp"
+			srcset="/onboard/welcome.webp 860w, /onboard/welcome-1280.webp 1280w"
+			sizes="(min-width: 1024px) 560px, (min-width: 768px) 480px, 100vw"
+			alt=""
+			width="860"
+			height="573"
+		/>
+	</div>
+	<div class="flex flex-1 flex-col lg:min-h-120 lg:flex-none lg:basis-form lg:justify-center">
+		{#if view === 'start'}
+			<div class="flex-1 text-center lg:flex-none">
+				<img
+					src="/brand/logo-224.webp"
+					alt=""
+					width="112"
+					height="112"
+					class="relative mx-auto -mt-14 size-28 lg:mt-0 lg:size-24"
 				/>
-			</label>
-			{#if bad}<p class="mt-2 text-label text-lantern-red-text" role="alert">
-					{m.login_email_bad()}
-				</p>{/if}
-			{#if failed}<p class="mt-2 text-label text-lantern-red-text" role="alert">
-					{m.login_send_failed()}
-				</p>{/if}
-		</div>
-		<div class="mt-auto pt-8">
-			<Button disabled={!email.trim() || sending} onclick={send}>{m.login_send()}</Button>
-		</div>
-	{:else}
-		<div class="mt-16 text-center">
-			<div class="mx-auto grid size-[72px] place-items-center rounded-full bg-shaded-paper">
-				<svg class="size-9 fill-current text-ink" aria-hidden="true"
-					><use href="#i-fill-letter" /></svg
+				<h1 class="sr-only">{m.login_name()}</h1>
+				<p class="mt-3 text-title text-graphite">{m.login_tagline()}</p>
+			</div>
+			<div class="flex flex-col gap-3 pt-8 lg:pt-6">
+				<Button variant="primary" onclick={google}>
+					<span class="grid size-[30px] flex-none place-items-center rounded-full bg-white">
+						<img src="/brand/google-g.svg" alt="" class="size-[18px]" />
+					</span>
+					{m.login_google()}
+				</Button>
+				<button
+					type="button"
+					class="h-12 cursor-pointer text-title text-ink"
+					onclick={() => (view = 'email')}>{m.login_use_email()}</button
 				>
 			</div>
-			<h1 class="mt-5 text-headline">{m.login_sent_title()}</h1>
-			<p class="mt-2 text-graphite">
-				{m.login_sent_to()} <b class="[overflow-wrap:anywhere] text-ink">{email}</b>
-			</p>
-			<p class="mt-2 text-label text-muted">{m.login_sent_spam()}</p>
-			{#if failed}<p class="mt-3 text-label text-lantern-red-text" role="alert">
-					{m.login_send_failed()}
-				</p>{/if}
-		</div>
-		<div class="mt-auto flex flex-col gap-3 pt-8">
-			<Button variant="outline" disabled={resend.disabled || sending} onclick={send}
-				>{resend.text}</Button
-			>
+		{:else if view === 'email'}
+			<div class="flex-1 pt-5 lg:flex-none lg:pt-0">
+				{@render back('start')}
+				<h1 class="text-headline">{m.login_email_title()}</h1>
+				<p class="mt-1 text-muted">{m.login_email_lead()}</p>
+				{#if expired}
+					<div
+						class="mt-4 flex items-center gap-3 rounded-action bg-shaded-paper px-4 py-3 text-graphite"
+						role="status"
+					>
+						<svg class="size-5 flex-none fill-current" aria-hidden="true"
+							><use href="#i-fill-clock" /></svg
+						>
+						<span>{m.login_expired()}</span>
+					</div>
+				{/if}
+				<label class="mt-6 block">
+					<span class="text-label text-muted">{m.login_email_label()}</span>
+					<!-- svelte-ignore a11y_autofocus -->
+					<input
+						bind:this={field}
+						bind:value={email}
+						oninput={() => ((bad = false), (failed = false))}
+						onkeydown={(e) => e.key === 'Enter' && !e.isComposing && send()}
+						type="email"
+						inputmode="email"
+						autocomplete="email"
+						autocapitalize="off"
+						spellcheck="false"
+						autofocus={!expired}
+						placeholder={m.login_email_placeholder()}
+						class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4 text-body text-ink"
+					/>
+				</label>
+				{#if bad}<p class="mt-2 text-label text-lantern-red-text" role="alert">
+						{m.login_email_bad()}
+					</p>{/if}
+				{#if failed}<p class="mt-2 text-label text-lantern-red-text" role="alert">
+						{m.login_send_failed()}
+					</p>{/if}
+			</div>
+			<div class="pt-8 lg:pt-6">
+				<Button disabled={!email.trim() || sending} onclick={send}>{m.login_send()}</Button>
+			</div>
+		{:else}
+			<div class="mt-16 flex-1 text-center lg:mt-0 lg:flex-none">
+				<div class="mx-auto grid size-[72px] place-items-center rounded-full bg-shaded-paper">
+					<svg class="size-9 fill-current text-ink" aria-hidden="true"
+						><use href="#i-fill-letter" /></svg
+					>
+				</div>
+				<h1 class="mt-5 text-headline">{m.login_sent_title()}</h1>
+				<p class="mt-2 text-graphite">
+					{m.login_sent_to()} <b class="[overflow-wrap:anywhere] text-ink">{email}</b>
+				</p>
+				<p class="mt-2 text-label text-muted">{m.login_sent_spam()}</p>
+				{#if failed}<p class="mt-3 text-label text-lantern-red-text" role="alert">
+						{m.login_send_failed()}
+					</p>{/if}
+				<label class="mt-6 block text-left">
+					<span class="text-label text-muted">{m.login_code_label()}</span>
+					<input
+						bind:value={code}
+						oninput={() => ((code = code.replace(/\D/g, '').slice(0, 6)), (codeBad = false))}
+						onkeydown={(e) => e.key === 'Enter' && !e.isComposing && verify()}
+						type="text"
+						inputmode="numeric"
+						autocomplete="one-time-code"
+						maxlength="6"
+						class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4 text-body tracking-[0.3em] text-ink"
+					/>
+				</label>
+				{#if codeBad}<p class="mt-2 text-left text-label text-lantern-red-text" role="alert">
+						{m.login_code_bad()}
+					</p>{/if}
+				<div class="mt-3">
+					<Button variant="ink" disabled={!codeReady || verifying} onclick={verify}
+						>{m.login_code_go()}</Button
+					>
+				</div>
+			</div>
+			<div class="flex flex-col gap-3 pt-8 lg:pt-6">
+				<Button variant="outline" disabled={resend.disabled || sending} onclick={send}
+					>{resend.text}</Button
+				>
+				<button
+					type="button"
+					class="h-12 cursor-pointer text-title text-ink"
+					disabled={sending}
+					onclick={() => ((view = 'email'), (code = ''), (codeBad = false))}
+					>{m.login_change_email()}</button
+				>
+			</div>
+		{/if}
+	</div>
+</main>
+
+<Sheet open={!!restore} title={m.login_restore_title()} onclose={later}>
+	{#if restore}
+		<p class="mt-2 text-graphite">
+			<b class="[overflow-wrap:anywhere] text-ink">{restore.email}</b>{m.login_restore_mid()}<b
+				class="text-ink">{m.login_restore_days({ days: restore.days })}</b
+			>{m.login_restore_end()}
+		</p>
+		{#if restoreFailed}<p class="mt-2 text-label text-lantern-red-text" role="alert">
+				{m.login_restore_failed()}
+			</p>{/if}
+		<div class="mt-5 flex flex-col gap-2">
+			<Button disabled={restoring} onclick={restoreAccount}>{m.login_restore_do()}</Button>
 			<button
 				type="button"
 				class="h-12 cursor-pointer text-title text-ink"
-				disabled={sending}
-				onclick={() => (view = 'email')}>{m.login_change_email()}</button
+				disabled={restoring}
+				onclick={later}>{m.login_restore_later()}</button
 			>
 		</div>
 	{/if}
-</main>
+</Sheet>

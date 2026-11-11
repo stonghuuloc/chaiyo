@@ -13,6 +13,10 @@ ACs: AC4, AC5 · design lead CHAA (M-4 design wave) · 2026-11-11
 - [AC5] Q: a `delete_at` already in the past? A: normal landing; the erase job (CHY-53) deletes the auth user, which cascades (learner_tables.sql:2). Confidence 80%.
 - [AC5] Q: after restore, Home or the landing rule? A: the landing rule, which is Home for anyone who could request deletion (Settings sits behind onboarding). Confidence 85%.
 - [AC4] Q: why move the post-sign-in routine into `afterSignIn`? A: the code field (Task 4) and the callback must land the same way; one function keeps one rule. Confidence 90%.
+- [DESKTOP] Q: the code field on desktop? A: it sits in the right column under the "sent" text, above the resend button, so a 1024px tall window keeps resend visible. Confidence 85%.
+- [DESKTOP] Q: how does the 1024px art shrink? A: `flex: 0 1 560px`, so it narrows to 464 at 1024 (944 of room - 80 gap - 400) and is 560 from 1200; the 3:2 ratio is kept. Confidence 85%.
+- [LOCK] Q: link or code first on the sent view? A: the AC2 texts and resend countdown stay as built; the code field and its button sit between them and the resend button. Confidence 85%.
+- Loc 2026-11-11: Q1 = A (code field), Q2 = A, Q3 = A.
 
 ## Open — needs an answer before execute
 None: WAVE-PLAN Q1 is assumed A.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { callbackOutcome, landing, okEmail, resendLabel } from './login';
+import { callbackOutcome, daysLeft, landing, okEmail, resendLabel } from './login';
 
 describe('okEmail', () => {
 	it.each([
@@ -26,17 +26,39 @@ describe('callbackOutcome', () => {
 		[`${base}#access_token=a&refresh_token=b&type=magiclink`, 'ok'],
 		[
 			`${base}#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired`,
-			'error'
+			'expired'
 		],
+		[`${base}?error=access_denied&error_code=otp_expired`, 'expired'],
+		[`${base}#error=access_denied&error_code=bad_oauth_state`, 'error'],
 		[`${base}?error=access_denied&error_code=bad_oauth_state`, 'error'],
 		[base, 'ok']
 	])('%s -> %s', (href, out) => expect(callbackOutcome(href)).toBe(out));
 });
 
+describe('daysLeft', () => {
+	const now = Date.parse('2026-11-11T03:00:00Z');
+	it.each([
+		['2026-11-16T02:00:00Z', 5],
+		['2026-11-16T03:00:00Z', 5],
+		['2026-11-16T03:00:00.001Z', 6],
+		['2026-11-11T03:00:00.001Z', 1]
+	])('%s -> %i', (at, days) => expect(daysLeft(at, now)).toBe(days));
+});
+
 describe('landing', () => {
-	it('sends a new learner to Welcome and an onboarded one to Today', () => {
-		expect(landing(null)).toBe('/(onboard)/welcome');
-		expect(landing({ onboarded_at: null })).toBe('/(onboard)/welcome');
-		expect(landing({ onboarded_at: '2026-11-10T02:00:00Z' })).toBe('/(app)/(tabs)/today');
+	const now = Date.parse('2026-11-11T03:00:00Z');
+	const done = '2026-11-01T00:00:00Z';
+	it('offers restore while deletion is pending', () => {
+		expect(landing({ onboarded_at: done, delete_at: '2026-11-16T02:00:00Z' }, now)).toBe('restore');
+	});
+	it('sends an onboarded learner to Today, a past or empty delete_at included', () => {
+		expect(landing({ onboarded_at: done, delete_at: null }, now)).toBe('/(app)/(tabs)/today');
+		expect(landing({ onboarded_at: done, delete_at: '2026-11-11T02:00:00Z' }, now)).toBe(
+			'/(app)/(tabs)/today'
+		);
+	});
+	it('sends a new learner to Welcome', () => {
+		expect(landing({ onboarded_at: null, delete_at: null }, now)).toBe('/(onboard)/welcome');
+		expect(landing(null, now)).toBe('/(onboard)/welcome');
 	});
 });

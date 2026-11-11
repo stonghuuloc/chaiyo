@@ -13,6 +13,11 @@ ACs: AC4, AC5  ·  Repo: stonghuuloc/chaiyo  ·  rev 1 (vs main 18af4bb; **build
 - [LOCK] Code entry (CHY-2 S2 Q2-C; WAVE-PLAN Q1 assumed A): the sent view gains a field "Mã 6 số" (`inputmode=numeric`, `autocomplete=one-time-code`, `maxlength=6`) and a button "Đăng nhập bằng mã", enabled at exactly 6 digits. It calls `supabase.auth.verifyOtp({ email, token, type: 'email' })`; a session → `goto(hrefFor(await afterSignIn(session, Date.now())), { replace: true })`; an error → "Mã chưa đúng hoặc đã hết hạn.". The AC2 texts and countdown stay as S1 built them.
 - [CHORE] New copy in messages/vi.json (`login_*`). `pnpm check`, `pnpm lint`, `pnpm test:coverage`, `pnpm build` exit 0.
 
+## Desktop rows (Loc Q2 = A, Q3 = A; docs/responsive.md; prototype/desktop/d-login.html)
+- [DESKTOP] Public-page template on `/login`: one DOM. Below 768 the art sits on top with the fade mask (start view only; the email and sent views hide it); 768-1023 a 480 column with the art as a 3:2 rounded block; from 1024 the art (3:2, up to 560 wide) is on the left and a 400px sign-in column (`--container-form`) on the right, max 1120, gap 80. The email form, the "link sent" view and the code field swap only the right column; the art stays. Start-view art ships `static/onboard/welcome-1280.webp` (1280 x 853) as a `srcset` candidate.
+- [DESKTOP] Enter submits the email form and the code field. The restore sheet is the R2 `Sheet` (centred 480 dialog from 1024; Escape and scrim close it). No letter shortcuts.
+- Copy: no "Chạm" or "Vuốt" on this screen.
+
 ## Not this slice
 - AC1-AC3, AC6 → S1. Ledger proof → S3. Requesting deletion (CHY-53), the erase job, keeping a pending learner out of `(app)` (no AC).
 
@@ -29,6 +34,7 @@ Local proof (tester, Mac, as S1):
 - [AC4] send a link to tong.loc@gmail.com, open it (lands signed in), open the same link again (session left in place; `callbackOutcome` runs first) → `/login?s=expired`, field "tong.loc@gmail.com", banner text visible, the field not focused.
 - [AC5] onboarded user (settings row from S1's seed); psql `update settings set delete_at = now() + interval '5 days' - interval '1 hour' where learner_id = …`; sign in by link (it stands in for Google: both end on `/auth/callback` → `afterSignIn`; Google is Loc's hosted tap) → sheet with "tong.loc@gmail.com sẽ bị xoá sau 5 ngày"; "Khôi phục" → `/today`, psql shows `delete_at` null. Set it again, sign in, "Để sau" → start view on `/login`, `localStorage` has no `sb-127-auth-token` key, psql shows `delete_at` unchanged.
 - [LOCK] code: read the 6 digits from the Mailpit message, type them → lands like the link; "000000" → "Mã chưa đúng hoặc đã hết hạn.".
+Desktop proof (Playwright, `channel: 'chromium'`): rows at 390, 1024, 1280 and 1440 px with a screenshot each and `scrollWidth <= innerWidth`; at 1024+ the art's right edge is left of the column and the column is 400 wide; the restore sheet is a bottom sheet at 390 and a 480 dialog centred at 1440; a live resize 1440 -> 390 -> 1440 -> 320 keeps the typed email.
 Hosted (Loc, optional): AC5 with Google after the Captain runs `update settings set delete_at = now() + interval '5 days' where learner_id = …` in the hosted SQL editor (his row exists from S1's hosted step).
 
 ## Open assumptions
