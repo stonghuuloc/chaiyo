@@ -1,11 +1,15 @@
 import type { Attempt, State, Step, StudyEvent } from './types';
 
-export function progress(s: State, step: Step, a: Attempt): { state: State; events: StudyEvent[] } {
-	const ignore = { state: s, events: [] };
+export function progress(
+	s: State,
+	step: Step,
+	a: Attempt
+): { state: State; events: StudyEvent[]; counts: boolean } {
+	const ignore = { state: s, events: [], counts: false };
 	if (!Number.isInteger(step.of) || step.of < 1) return ignore;
-	const index =
-		step.kind === 'placement' ? -1 : s.curriculum.lessons.findIndex((l) => l.id === step.lesson);
-	if (step.kind !== 'placement' && index < 0) return ignore;
+	const lessonless = step.kind === 'placement' || step.kind === 'practice';
+	const index = lessonless ? -1 : s.curriculum.lessons.findIndex((l) => l.id === step.lesson);
+	if (!lessonless && index < 0) return ignore;
 	const meta = s.curriculum.lessons[index];
 	const L = meta && s.lessons[meta.id];
 	if (
@@ -19,7 +23,11 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 		first.kind !== step.kind ||
 		first.of !== step.of ||
 		(first.kind === 'placement' && step.kind === 'placement' && first.level !== step.level) ||
-		(first.kind !== 'placement' && step.kind !== 'placement' && first.lesson !== step.lesson) ||
+		(first.kind !== 'placement' &&
+			first.kind !== 'practice' &&
+			step.kind !== 'placement' &&
+			step.kind !== 'practice' &&
+			first.lesson !== step.lesson) ||
 		(first.kind === 'section' && step.kind === 'section' && first.section !== step.section)
 	)
 		return ignore;
@@ -28,18 +36,20 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 	if (Object.keys(answers).length < step.of)
 		return {
 			state: { ...s, runs: { ...s.runs, [step.run]: { step: run.step, answers } } },
-			events: []
+			events: [],
+			counts: false
 		};
 
 	const runs = { ...s.runs, [step.run]: { step: run.step, answers, closed: true as const } };
 	const events: StudyEvent[] = [];
+	if (step.kind === 'practice') return { state: { ...s, runs }, events, counts: true };
 	const lessons = { ...s.lessons };
 	let lexicon = s.lexicon;
 
 	if (step.kind === 'placement') {
 		const right = Object.values(answers).filter(Boolean).length;
 		if (right * 100 < 80 * step.of || step.level !== s.placed + 1)
-			return { state: { ...s, runs }, events };
+			return { state: { ...s, runs }, events, counts: false };
 		lexicon = { ...lexicon };
 		for (const l of s.curriculum.lessons.filter((l) => l.level <= step.level)) {
 			lessons[l.id] = { ...lessons[l.id], passed: true, unlocked: true };
@@ -53,7 +63,7 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 			lessons[next.id] = { ...lessons[next.id], unlocked: true };
 			events.push({ type: 'LessonUnlocked', lesson: next.id });
 		}
-		return { state: { ...s, placed: step.level, lessons, lexicon, runs }, events };
+		return { state: { ...s, placed: step.level, lessons, lexicon, runs }, events, counts: false };
 	}
 
 	if (step.kind === 'section') {
@@ -66,7 +76,7 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 				if (Object.hasOwn(lexicon, word) && lexicon[word].saved)
 					lexicon[word] = { ...lexicon[word], saved: false };
 		}
-		return { state: { ...s, lessons, lexicon, runs }, events };
+		return { state: { ...s, lessons, lexicon, runs }, events, counts: true };
 	}
 
 	const right = Object.values(answers).filter(Boolean).length;
@@ -84,5 +94,5 @@ export function progress(s: State, step: Step, a: Attempt): { state: State; even
 			}
 		}
 	}
-	return { state: { ...s, lessons, runs }, events };
+	return { state: { ...s, lessons, runs }, events, counts: true };
 }
