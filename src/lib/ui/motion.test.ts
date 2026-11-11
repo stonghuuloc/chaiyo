@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { cssMs, dialogPop, scrimFade, sheetSlide, toastRise } from './motion';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cssMs, dialogPop, panelEnter, scrimFade, sheetSlide, toastRise } from './motion';
 
 const node = {} as Element;
 
@@ -51,5 +51,31 @@ describe('ui motion', () => {
 		// Assert
 		expect(cfg.duration).toBe(150);
 		expect(cfg.css?.(0.25, 0.75)).toBe('opacity: 0.25');
+	});
+});
+
+describe('panelEnter', () => {
+	afterEach(() => vi.unstubAllGlobals());
+
+	it.each([
+		['below 1024px', false, 'translateY(0%)'],
+		['from 1024px', true, 'scale(1)']
+	])('Given_Viewport_%s_When_PanelEnter_Then_PicksByMediaQuery', (_n, matches, rest) => {
+		// Arrange
+		const query = vi.fn(() => ({ matches }));
+		vi.stubGlobal('matchMedia', query);
+		// Act
+		const css = panelEnter(node, { reduced: false }).css?.(1, 0) ?? '';
+		// Assert
+		expect(query).toHaveBeenCalledWith('(min-width: 64rem)');
+		expect(css).toContain(rest);
+	});
+
+	it('Given_NoMatchMedia_When_PanelEnter_Then_SlidesLikeAPhone', () => {
+		// Arrange
+		// Act
+		const css = panelEnter(node, { reduced: false }).css?.(1, 0) ?? '';
+		// Assert
+		expect(css).toContain('translateY(0%)');
 	});
 });
