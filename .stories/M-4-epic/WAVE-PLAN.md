@@ -13,7 +13,7 @@ M-4 gives the app its front door: Login (P2) with Google and an email link, Welc
 | CHY-27 | S2 push permission, save profile, placement offer | AC3, AC5, AC6 | CHY-27 S1, CHY-28 S1-S2; Q2 (assumed A) | build + SQL |
 | CHY-28 Placement | S1 bank, curriculum and run rules | AC1 (data), AC2 | main; Q3 (assumed A) | build, pure TS + clip render |
 | CHY-28 | S2 placement screen and exit confirm | AC1 (screen), AC3 | CHY-28 S1, CHY-26 S1 | build |
-| CHY-28 | S3 result screen and Study placement | AC4, AC5 | CHY-28 S2 | build |
+| CHY-28 | S3 result screen and Study placement | AC4, AC5 | CHY-28 S2, CHY-26 S3 | build |
 | CHY-29 Landing | S1 landing copy, CTA and Lighthouse | AC1-AC3 | CHY-26 S1 | build |
 
 ## What M-4 gets from M-0..M-3 (checked on main 18af4bb, not from backlog text)
@@ -46,7 +46,7 @@ M-4 gives the app its front door: Login (P2) with Google and an email link, Welc
   └──▶ CHY-28 S1 (Q3) ───────────▶ CHY-28 S2 ──▶ CHY-28 S3  │
             └─────────── CURRICULUM ─────────────────────────┘
 ```
-CHY-27 S2 needs `/placement` (CHY-28 S2) for its "Kiểm tra trình độ" row and `CURRICULUM` (CHY-28 S1) for its AC6 Study check.
+CHY-28 S3 needs CHY-26 S3 (`CHY-26 S3 ──▶ CHY-28 S3`: sync after a record in `src/lib/ledger/ledger.ts`). CHY-27 S2 needs `/placement` (CHY-28 S2) for its "Kiểm tra trình độ" row and `CURRICULUM` (CHY-28 S1) for its AC6 Study check.
 
 ## Contracts
 - **C-M4-1 Account state lives on `settings`** (owner-only, learner_tables.sql:46-51; `profiles` is readable by every learner, :65-66): `onboarded_at timestamptz` (CHY-26 S1, 20261112000000), `delete_at timestamptz` (CHY-26 S2, 20261112000100), `reminder_time time default '21:00'`, `remind_push / remind_email / remind_telegram boolean` (CHY-27 S2, 20261113000000). No trigger creates a settings row; CHY-27 S2's upsert is the first writer, and readers treat "no row" as "not onboarded". New columns ride the existing table grant (learner_tables.sql:72-73); a new table would grant explicitly (CREW.md).
@@ -69,12 +69,12 @@ Critical path: 3 waves (CHY-26 S1 → CHY-28 S2 → CHY-27 S2, or CHY-28 S1 → 
 | Lane | Slices | Owns (writes) |
 |---|---|---|
 | L1 Auth | CHY-26 S1, S2 | `src/lib/auth/**` (new); `src/routes/login/**`, `src/routes/auth/callback/**`, `src/routes/(onboard)/+layout.ts` and the `/welcome` stub (S1, handed to L2 after wave A); `static/onboard/{welcome,start-b0,placed}.webp`, `static/brand/logo-224.webp` (S1); `supabase/migrations/20261112000000_onboarded.sql`, `20261112000100_pending_deletion.sql`; `src/lib/db/{onboarded,pending-deletion}.test.ts`; `supabase/config.toml:158` (S1) |
-| L1b Ledger proof | CHY-26 S3 | `src/routes/dev/ledger/{+page.svelte,finish.ts,ledger-page.test.ts}` |
+| L1b Ledger proof | CHY-26 S3 | `src/routes/dev/ledger/{+page.svelte,finish.ts,ledger-page.test.ts}`; `src/lib/ledger/{ledger.ts,ledger.test.ts}` (sync after a record, needed by CHY-28 S3) |
 | L2 Welcome | CHY-27 S1, S2 | `src/routes/(onboard)/welcome/**` (from wave B), `src/lib/welcome/**` (new); `supabase/migrations/20261113000000_reminders.sql`, `src/lib/db/reminders.test.ts` (S2); `CONTEXT.md:79` (S2) |
 | L3 Placement | CHY-28 S1-S3 | `src/lib/placement/**`, `src/lib/curriculum/**`, `src/lib/learner/**` (S3), `src/lib/ui/celebrate.ts` (S3, new file), `src/routes/(onboard)/placement/**`, `scripts/{build-curriculum,placement-clips}.ts`; `package.json` scripts +2 (S1) |
 | L4 Landing | CHY-29 S1 | `src/routes/+page.svelte`, `src/routes/+page.ts`, `src/routes/landing.test.ts`, `static/onboard/avatars/*.webp` |
 - Shared file: `messages/vi.json`. Each story adds keys under its own prefix (`login_*`, `welcome_*`, `placement_*`, `landing_*`; only L4 changes existing values, `landing_title` and `landing_lede`). It is append-only JSON, so the lane that merges second rebases and keeps both blocks (the M-1/M-3 `package.json` rule). `messages/en.json` is untouched (it holds no keys today).
-- Not touched by any M-4 lane: `src/lib/study/**`, `src/lib/ledger/**` (a defect found by CHY-26 S3 is a fix wave), `src/lib/content/**`, `src/service-worker/**`, earlier migrations.
+- Not touched by any M-4 lane: `src/lib/study/**`, `src/lib/ledger/**` apart from L1b's two files (any other defect found by CHY-26 S3 is a fix wave), `src/lib/content/**`, `src/service-worker/**`, earlier migrations.
 
 ## Locked facts (no question needed; sources)
 - No password, no Guest; only the Landing Page is public (CONTEXT.md "Learner", "Landing Page").

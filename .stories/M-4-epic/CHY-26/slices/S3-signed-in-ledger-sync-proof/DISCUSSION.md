@@ -10,6 +10,8 @@ ACs: CHY-24:AC2, CHY-24:AC5 · design lead CHAA (M-4 design wave) · 2026-11-11
 - [CHY-24:AC5] Q: what counts as "another device"? A: a Playwright context with fresh storage (its own IndexedDB and session), as CHY-24 S2 used two `db` names. Loc's iPhone run adds a real second device. Confidence 85%.
 - [CHY-24:AC2] Q: does `setOffline(false)` fire `online`? A: Playwright's Chromium network emulation updates `navigator.onLine` and dispatches the event; the row waits on the text, not on the event, and fails clearly if no sync runs. Confidence 80%.
 
+- [CHY-24:AC2] Q: where does the sync after a record live (PR #107 review)? A: in `src/lib/ledger/ledger.ts`, the file that decides it. A page-only `sync()` call is not enough: during the startup sync, `sync()` returns that run, which computed its push list before the record. The run therefore loops once more when a record lands during it, and pages call `sync()` after recording. CHY-28 S3 relies on this, so it ships in wave B. Confidence 85%.
+
 ## Open — needs an answer before execute
 None.
 

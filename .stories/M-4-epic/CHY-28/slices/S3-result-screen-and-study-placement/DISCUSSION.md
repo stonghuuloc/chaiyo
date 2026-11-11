@@ -13,6 +13,8 @@ ACs: AC4, AC5 · design lead CHAA (M-4 design wave) · 2026-11-11
 - [AC4] Q: a confetti library? A: no: the prototype's 75 lines port as is, and no dependency is added. Confidence 85%.
 - [AC4] Q: 0 cleared, "no shame copy"? A: the prototype's Bài 0 copy, plus a test that the view holds none of "trượt", "chưa đạt", "tiếc". Confidence 85%.
 
+- [AC5] Q: how do the 25 Attempts reach the server while the learner stays online (PR #107 review)? A: the page calls `ledger.sync()` after recording. CHY-26 S3 makes a sync already in flight push the records that land during it. Without both, the Attempts stay pending until a network change, and a second device never sees the placement. Confidence 85%.
+
 ## Open — needs an answer before execute
 None: WAVE-PLAN Q3 is assumed A.
 

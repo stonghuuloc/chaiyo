@@ -2,7 +2,7 @@
 ACs: AC4, AC5  ·  Spec rev 1  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-28  ·  Lane L3 Placement
 
 ## Depends on (execution order)
-- CHY-28 S2 merged (handoff written); CHY-28 S1 (`CURRICULUM`, `LESSONS`, run rules); CHY-26 S1 (session).
+- CHY-28 S2 merged (handoff written); CHY-28 S1 (`CURRICULUM`, `LESSONS`, run rules); CHY-26 S1 (session); CHY-26 S3 (sync after a record, `src/lib/ledger/ledger.ts`).
 
 ## Anchors (verified 2026-11-11 on main 18af4bb)
 - `src/lib/study/progress.ts:49-66` placement rule; `src/lib/study/apply.ts:8-26` `initialState` (only the first lesson unlocked).
