@@ -1,4 +1,4 @@
-import { apply, initialState, type Attempt, type State } from '#lib/study/index.js';
+import { apply, type Attempt, type State } from '#lib/study/index.js';
 
 const DAY = 86_400_000;
 

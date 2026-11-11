@@ -11,6 +11,7 @@ export function countDay(s: State, now: Date): { state: State; events: StudyEven
 	};
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const rollover = (state: State, _day: string): { state: State; events: StudyEvent[] } => ({
 	state,
 	events: []
