@@ -1,8 +1,12 @@
+import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
+import { CAST } from '../../audio/cast';
 import { addTone, audioKey, audioManifest, sentenceVoice } from './audio';
 import type { ImportedContent } from './sink';
 
 type Input = Omit<ImportedContent, 'sha' | 'audio'>;
+
+const sha = (s: string) => createHash('sha256').update(s).digest('hex');
 
 const sentence = (id: string, hanzi: string, speaker?: string) => ({
 	id,
@@ -51,13 +55,33 @@ const primer = (cards: { syllables: unknown[]; pairs?: unknown[] }[]) =>
 	}) as unknown as Input['lessons'][number];
 
 describe('audioKey', () => {
-	it('is sha256(text|voice), with /style appended when there is one', () => {
+	it('keys a recorded cell by sha256(text|voice), unchanged', () => {
 		expect(audioKey('你好！', 'redpanda')).toMatch(/^2499c461/);
 		expect(audioKey('你好', 'redpanda')).toMatch(/^5c3d5b26/);
-		expect(audioKey('你好', 'redpanda', 'newscast')).toBe(audioKey('你好', 'redpanda/newscast'));
 	});
 
-	it('puts the clip folder in front of the hash, so the URL is <prefix>/<folder>/<hash>.mp3', () => {
+	it('hashes the whole Azure request of a styled clip: voice name, style, rate, format', () => {
+		expect(audioKey('你好', 'redpanda', 'newscast')).toBe(
+			sha('你好|zh-CN-XiaoxiaoNeural/newscast|-20%|audio-48khz-192kbitrate-mono-mp3')
+		);
+		expect(audioKey('你好', 'takin', 'sad')).toBe(
+			sha('你好|zh-CN-YunfengNeural/sad|-20%|audio-48khz-192kbitrate-mono-mp3')
+		);
+	});
+
+	it('changes every styled key when the cast changes', () => {
+		const before = audioKey('你好', 'redpanda', 'newscast');
+		const rate = CAST.rate;
+		CAST.rate = '-10%';
+		try {
+			expect(audioKey('你好', 'redpanda', 'newscast')).not.toBe(before);
+			expect(audioKey('你好', 'redpanda')).toMatch(/^5c3d5b26/);
+		} finally {
+			CAST.rate = rate;
+		}
+	});
+
+	it('puts the clip folder in front of the hash, so the URL is <base>/<folder>/<hash>.mp3', () => {
 		expect(audioKey('你好', 'redpanda', 'poetry-reading', 'words')).toBe(
 			'words/' + audioKey('你好', 'redpanda', 'poetry-reading')
 		);

@@ -8,7 +8,6 @@ const content = (p: string) => resolve(process.cwd(), 'content', p);
 describe('content layout', () => {
 	it('content tree has every path from content-schema Files', () => {
 		const paths = [
-			'cast.yaml',
 			'chars',
 			'words',
 			'grammar',

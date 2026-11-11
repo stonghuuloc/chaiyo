@@ -2,9 +2,9 @@ import { closeSync, existsSync, mkdirSync, openSync, readFileSync, rmSync } from
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { AudioEntry } from '../src/lib/content/import/audio';
-import { AUDIO_VERSION } from '../src/lib/audio/version';
 import { parseArgs } from '../src/lib/audio-renderer/args';
-import { azureEngine, azureRequest, billable, parseCast } from '../src/lib/audio-renderer/azure';
+import { CAST } from '../src/lib/audio/cast';
+import { azureEngine, azureRequest, billable } from '../src/lib/audio-renderer/azure';
 import { recordedOnly } from '../src/lib/audio-renderer/recorded';
 import { r2Bucket } from '../src/lib/audio-renderer/r2';
 import { render } from '../src/lib/audio-renderer/render';
@@ -37,7 +37,7 @@ if (badKind !== undefined) {
 }
 const refPrefix = flags['ref-prefix'];
 const fromDir = flags['from-dir'];
-const keyPrefix = `${(flags.prefix ?? AUDIO_VERSION).replace(/\/+$/, '')}/`;
+const keyPrefix = flags.prefix ? `${flags.prefix.replace(/\/+$/, '')}/` : '';
 const limit = flags.limit;
 if (limit !== undefined && !/^[1-9]\d*$/.test(limit)) {
 	console.error('render-audio: --limit needs a positive integer');
@@ -67,7 +67,7 @@ if (!manifestPath) {
 	process.exit(1);
 }
 
-const cast = parseCast(readFileSync('content/cast.yaml', 'utf8'));
+const cast = CAST;
 const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
 const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
 const requestOf = (e: AudioEntry) => azureRequest(cast, e);

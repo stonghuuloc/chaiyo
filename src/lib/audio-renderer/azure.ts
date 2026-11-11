@@ -1,20 +1,9 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { parse } from 'yaml';
-import { z } from 'zod';
+import type { Cast } from '../audio/cast';
 import { carrierOf } from './carriers';
 import type { Engine, EngineRequest } from './types';
-
-const Cast = z.object({
-	engine: z.literal('azure'),
-	rate: z.string().regex(/^[+-]\d+%$/),
-	format: z.string().regex(/-mp3$/),
-	voices: z.record(z.string(), z.string().min(1))
-});
-export type Cast = z.infer<typeof Cast>;
-
-export const parseCast = (yamlText: string): Cast => Cast.parse(parse(yamlText));
 
 const escape = (text: string) =>
 	text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

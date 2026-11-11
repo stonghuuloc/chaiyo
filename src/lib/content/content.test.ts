@@ -6,7 +6,7 @@ import { parseContent } from './parse';
 import type { ContentType } from './schemas';
 
 const root = resolve(process.cwd(), 'content');
-const skipped = ['cast.yaml', 'levels/', 'mock/'];
+const skipped = ['levels/', 'mock/'];
 const folders: [string, ContentType][] = [
 	['words/', 'Word'],
 	['grammar/', 'GrammarPoint'],

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { CAST } from '../../audio/cast';
 import type { Question } from '../schemas';
 import type { ImportedContent } from './sink';
 
@@ -16,6 +17,7 @@ export type AudioEntry = {
 
 export type ClipFolder = 'words' | 'chips' | 'examples' | 'dialogue';
 
+// Styled (Azure) clips hash the whole request; recorded pinyin-chart cells hash text|voice.
 export const audioKey = (
 	text: string,
 	voice: string,
@@ -24,7 +26,11 @@ export const audioKey = (
 ): string =>
 	(folder ? folder + '/' : '') +
 	createHash('sha256')
-		.update(text + '|' + voice + (style ? '/' + style : ''))
+		.update(
+			text +
+				'|' +
+				(style ? `${CAST.voices[voice] ?? voice}/${style}|${CAST.rate}|${CAST.format}` : voice)
+		)
 		.digest('hex');
 
 export const WORD_STYLE = 'poetry-reading';

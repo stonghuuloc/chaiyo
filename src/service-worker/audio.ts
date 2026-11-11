@@ -1,6 +1,4 @@
-import { AUDIO_VERSION } from '../lib/audio/version';
-
-export const AUDIO_CACHE = `audio-${AUDIO_VERSION}`;
+export const AUDIO_CACHE = 'audio';
 
 type Store = Pick<Cache, 'match' | 'put'>;
 type Fetcher = (input: string | Request, init?: RequestInit) => Promise<Response>;

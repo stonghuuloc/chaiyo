@@ -3,7 +3,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'no
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parse } from 'yaml';
-import { AUDIO_VERSION, SYLLABLE_VERSION } from '../src/lib/audio/version';
+import { SYLLABLE_VERSION } from '../src/lib/audio/version';
 import { noClipReason } from '../src/lib/audio-renderer/recorded';
 import { addTone, audioKey, type AudioEntry } from '../src/lib/content/import/audio';
 
@@ -42,7 +42,7 @@ const rows = parse(readFileSync('content/syllables.yaml', 'utf8')) as { syllable
 
 const labelOf = new Map<string, string>();
 const prefixOf = (e: AudioEntry) =>
-	prefixValue ? tidy(prefixValue) : tidy(labelOf.has(e.key) ? SYLLABLE_VERSION : AUDIO_VERSION);
+	prefixValue ? tidy(prefixValue) : labelOf.has(e.key) ? tidy(SYLLABLE_VERSION) : '';
 const lost: string[] = [];
 const manifestKeys = new Set(syllables.map((e) => e.key));
 const noClip = new Map<string, string>();
