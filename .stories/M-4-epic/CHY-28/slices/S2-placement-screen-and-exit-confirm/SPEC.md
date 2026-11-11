@@ -25,5 +25,34 @@ Local proof (tester, Mac, `supabase start`, `pnpm dev --host 127.0.0.1`, an onbo
 - [AC1] A listen item: `page.waitForRequest` sees a GET ending in `/<clip>.mp3` for that item's `clip` when it shows (the player's `Audio` is not in the DOM, src/lib/audio/player.ts:12, :22).
 - [AC3] after 3 answers tap ✕ → sheet texts; "Làm tiếp" → sheet gone, same item; ✕ → "Thoát" → URL `/today`, `sessionStorage` has no `chaiyo.placement`, and IndexedDB has no `chaiyo-ledger-*` input with `step.kind = 'placement'`; ✕ → tap the scrim → sheet gone, same item; ✕ → Escape → sheet gone, same item.
 
+## Desktop rows (docs/responsive.md, prototype/desktop/d-placement.html)
+- FocusFrame (top bar, centred column, sticky action bar); column 430 / 600 from 768 / 640 from 1024.
+- Text options 1 column below 768px and 2 x 2 from 768px; listen options 2 x 2 at every width. Key hints (`Kbd`) under (hover: hover) and (pointer: fine): 1-4 pick, 5 = "Không biết" (answers at once), Space replays the clip, Enter = "Câu tiếp", Esc opens the exit dialog (R2 `keys`; with the dialog open `keys` is inert and Esc closes only the dialog).
+- Exit = R2 Sheet (centred 480px dialog from 1024px). The listen clip plays on show; `play()` swallows autoplay rejection and the replay button stays ready.
+- Copy says "Bấm"-neutral: no "Chạm"/"Vuốt" on this screen.
+
+### RESPONSIVE (docs/adr/0008) checklist applied
+```
+RESPONSIVE (docs/adr/0008)
+[ ] Picture/prototype at 390x844, 1024x768, 1280x800 and 1440x900 (768x1024 too if the layout differs there).
+[ ] Containers come from tokens (--container-column/medium/main/aside/narrow/form/sheet). Check: the diff adds no
+    430px and no max-w-[<n>px] / width:<n>px for layout.
+[ ] One DOM per screen. Breakpoints in CSS only; no {#if desktop} component swap. matchMedia only for the ADR 0008 §1 exceptions.
+[ ] Each new route under (app) declares shell: { template, section } in its own load, returned as `shell` (ADR 0008 §4); nav per its table: tab root = tab bar <1024 / sidebar >=1024; pushed browse screen = sidebar >=1024
+    with the table's tab active; focus flow = no nav at any width (top bar + centred column + sticky action bar); public page = no nav.
+[ ] Overlays use Sheet/Dialog from src/lib/ui (Sheet turns into a centred dialog >=1024). No custom sheets.
+[ ] Keyboard: Tab order = visual order (exception: the tab bar below 1024 comes before main, ADR 0008 §6), focus ring visible, focus moves to the new step heading when a step changes.
+    Focus flows use the keys action from src/lib/ui (event.code digits, Enter, Space, Esc). No letter shortcuts, none on tab roots.
+[ ] Key hints (kbd) only under (hover: hover) and (pointer: fine).
+[ ] Hover is feedback only. Check: every hand-written :hover in the diff sits inside @media (hover: hover). Clickable rows have cursor: pointer.
+[ ] Targets >= 44px at every width. Body text measure <= 70ch. Full-height layouts use dvh/svh, never vh.
+[ ] Copy says "Bấm" (click and tap); never "Chạm" or "Vuốt". Every swipe has a button. (Grep the screen's prototype for "Chạm" at SPEC time.)
+[ ] Art wider than 430 CSS px ships a 1280w WebP and keeps 3:2 (aspect-ratio); no text in images.
+[ ] Auto-playing audio catches play() rejection; the play button stays ready (proof: reload on that step, no console error).
+[ ] Floating UI never covers content at any width (tab-bar bottom padding only below 1024).
+[ ] Proof rows: Playwright at the four sizes above with a screenshot each; one live resize 1440 -> 390 -> 1440 mid-flow with no
+    state lost and no horizontal scroll at 320. Chrome + Safari on the Mac for the desktop rows (say Tab or Option+Tab in Safari).
+
+
 ## Open assumptions
 - None.

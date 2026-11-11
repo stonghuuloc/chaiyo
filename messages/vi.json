@@ -66,5 +66,18 @@
 	"welcome_offer_2": "Câu khó dần. Không biết thì bấm “Không biết”.",
 	"welcome_offer_3": "Bài tự dừng khi tới trình độ của bạn.",
 	"welcome_offer_cta": "Kiểm tra trình độ",
-	"welcome_skip": "Học từ đầu"
+	"welcome_skip": "Học từ đầu",
+	"placement_title": "Kiểm tra trình độ",
+	"placement_exit_label": "Thoát bài kiểm tra",
+	"placement_read_eyebrow": "Chọn nghĩa",
+	"placement_read_title": "Từ này nghĩa là gì?",
+	"placement_listen_eyebrow": "Nghe và chọn chữ",
+	"placement_listen_title": "Bạn nghe được từ nào?",
+	"placement_replay": "Nghe lại",
+	"placement_unknown": "Không biết",
+	"placement_next": "Câu tiếp",
+	"placement_exit_title": "Thoát bài kiểm tra?",
+	"placement_exit_body": "Kết quả sẽ không được lưu.",
+	"placement_keep": "Làm tiếp",
+	"placement_leave": "Thoát"
 }
