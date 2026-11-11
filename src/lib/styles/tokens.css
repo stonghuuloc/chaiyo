@@ -93,6 +93,12 @@
 	--blur-frost: 24px;
 	--container-column: 430px;
 	--container-dialog: 340px;
+	--container-medium: 600px;
+	--container-main: 640px;
+	--container-aside: 280px;
+	--container-narrow: 560px;
+	--container-form: 400px;
+	--container-sheet: 480px;
 }
 :root {
 	--motion-fade: 260ms;
@@ -105,4 +111,5 @@
 	--frost-saturate: 1.75;
 	--icon-duo: 0.5;
 	--icon-duo-c: #f2cfc6;
+	--sidebar: 232px;
 }

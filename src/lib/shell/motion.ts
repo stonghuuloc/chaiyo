@@ -12,9 +12,11 @@ export function slideParams(reduced: boolean) {
  * `params.reduced` sets the duration to 0ms instead of 260ms.
  * Slides by transform only: opacity < 1 on the bar would blank its backdrop-filter mid-slide.
  */
-export function barSlide(_node: Element, params: { reduced: boolean }): TransitionConfig {
+export function barSlide(node: Element, params: { reduced: boolean }): TransitionConfig {
+	// the sidebar (CSS sets --nav-mode: sidebar from 1024px) does not slide
+	const sidebar = getComputedStyle(node).getPropertyValue('--nav-mode').trim() === 'sidebar';
 	return {
-		...slideParams(params.reduced),
+		...slideParams(params.reduced || sidebar),
 		easing: cubicOut,
 		css: (_t, u) => `transform: translateY(${u * 100}%)`
 	};

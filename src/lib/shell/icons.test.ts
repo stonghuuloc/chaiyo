@@ -117,7 +117,7 @@ describe('icon sprite duotone', () => {
 
 describe('sprite mount', () => {
 	const layout = read('../../routes/(app)/+layout.svelte');
-	const tabBar = read('./TabBar.svelte');
+	const tabBar = read('./AppNav.svelte');
 
 	it('Given_AppLayout_Then_MountsSpriteOnceBeforeChildren', () => {
 		// Arrange
