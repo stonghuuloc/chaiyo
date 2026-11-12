@@ -64,8 +64,9 @@ export const askPush = async (env: {
 	Notification?: { requestPermission: () => Promise<string> };
 }) => {
 	if (!env.Notification) return false;
-	return env.Notification.requestPermission().then(
-		(p) => p === 'granted',
-		() => false
-	);
+	try {
+		return (await env.Notification.requestPermission()) === 'granted';
+	} catch {
+		return false;
+	}
 };

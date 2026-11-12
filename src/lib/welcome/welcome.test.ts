@@ -117,6 +117,14 @@ describe('push permission', () => {
 	});
 	it('a thrown error stays off', async () =>
 		expect(await ask(() => Promise.reject(new Error('x')))).toBe(false));
+	it('a synchronous throw and an undefined answer stay off', async () => {
+		expect(
+			await ask(() => {
+				throw new Error('x');
+			})
+		).toBe(false);
+		expect(await ask(async () => undefined as never)).toBe(false);
+	});
 	it('no Notification API is denied', async () => expect(await askPush({})).toBe(false));
 	it('blocked only when the permission is denied', () => {
 		expect(pushBlocked({ Notification: { permission: 'denied' } })).toBe(true);

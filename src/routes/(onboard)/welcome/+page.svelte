@@ -6,7 +6,6 @@
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
 	import Kbd from '#lib/ui/Kbd.svelte';
-	import Toast from '#lib/ui/Toast.svelte';
 	import { keys } from '#lib/ui/keys.js';
 	import {
 		TIMES,
@@ -32,7 +31,8 @@
 	let s = $state(fromUser(data.session?.user));
 	let picker = $state<HTMLInputElement>();
 	let saving = $state(false);
-	let toast = $state('');
+	let asking = $state(false);
+	let error = $state('');
 
 	onMount(() => {
 		s.pushDenied = pushBlocked(window);
@@ -41,18 +41,24 @@
 	const none = $derived(s.step === 1 && noChannel(s));
 	const next = () => {
 		if (canNext(s) && s.step < 2) s.step += 1;
+		error = '';
 	};
 	const back = () => {
 		if (s.step > 0) s.step -= 1;
+		error = '';
 	};
 
 	async function choose(e: Event) {
-		const file = (e.currentTarget as HTMLInputElement).files?.[0];
+		const input = e.currentTarget as HTMLInputElement;
+		const file = input.files?.[0];
+		input.value = '';
 		if (!file) return;
+		error = '';
 		try {
-			s.photo = await avatarDataUrl(file);
+			const photo = await avatarDataUrl(file);
+			if (!saving) s.photo = photo;
 		} catch {
-			toast = m.welcome_photo_error();
+			error = m.welcome_photo_error();
 		}
 	}
 
@@ -61,13 +67,17 @@
 			s[key] = !s[key];
 			return;
 		}
+		if (asking) return;
+		asking = true;
 		const granted = await askPush(window);
+		asking = false;
 		s.push = granted;
 		s.pushDenied = !granted;
 	}
 
 	async function finish(to: '/(app)/(tabs)/today' | '/(onboard)/placement') {
 		saving = true;
+		error = '';
 		try {
 			if (!data.session) throw new Error('no session');
 			await saveWelcome(s, {
@@ -76,12 +86,13 @@
 				now: new Date(),
 				tz: Intl.DateTimeFormat().resolvedOptions().timeZone
 			});
-			await goto(resolve(to));
 		} catch {
-			toast = m.welcome_save_error();
-		} finally {
+			error = m.welcome_save_error();
 			saving = false;
+			return;
 		}
+		await goto(resolve(to));
+		saving = false;
 	}
 
 	const channels = $derived([
@@ -274,6 +285,9 @@
 		{/if}
 
 		{#snippet actions()}
+			{#if error}
+				<p role="alert" class="mb-3 text-center text-label text-lantern-red-text">{error}</p>
+			{/if}
 			{#if s.step < 2}
 				<Button caret disabled={!canNext(s)} onclick={next}>
 					{m.welcome_next()}<Kbd>Enter</Kbd>
@@ -297,5 +311,3 @@
 		{/snippet}
 	</FocusFrame>
 </main>
-
-<Toast open={toast !== ''} message={toast} onclose={() => (toast = '')} />

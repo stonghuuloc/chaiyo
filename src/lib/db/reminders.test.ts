@@ -58,6 +58,12 @@ describe('settings reminder columns', () => {
 		});
 	});
 
+	it("cannot read another learner's settings", async () => {
+		await asLearner(db, LINH);
+		const r = await db.query('select * from settings where learner_id = $1', [NAM]);
+		expect(r.rows).toHaveLength(0);
+	});
+
 	it("cannot change another learner's settings", async () => {
 		await asLearner(db, LINH);
 		const r = await db.query('update settings set remind_push = true where learner_id = $1', [NAM]);
