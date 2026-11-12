@@ -11,3 +11,4 @@ senses:
   example: s-w-1112831
 examples:
 - s-w-1112831
+image: { file: words/zoulu.png, prompt: "Only the red panda. The red panda walking along a tree-lined path with small steps, a backpack on, sunny morning" }

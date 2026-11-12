@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-9415393
 - s-w-ai-bf661572
+image: { file: words/laoren.png, prompt: "Only the panda and an old panda. An old grown-up panda with a little grey fur, round glasses and a walking stick, sitting on a park bench, the little panda sitting next to him sharing a snack. The old panda is part of this scene even though he is not in the lineup" }

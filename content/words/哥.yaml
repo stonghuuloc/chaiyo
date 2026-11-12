@@ -11,3 +11,4 @@ senses:
   example: s-w-2025450
 examples:
 - s-w-2025450
+image: { file: words/gege.png, prompt: "Only the panda and its big brother, a slightly bigger young panda with the same panda colours and face. The big brother holds the little panda's paw and walks it along a village path, both smiling. The big brother is part of this scene even though he is not in the lineup." }

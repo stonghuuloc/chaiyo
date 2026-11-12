@@ -22,3 +22,4 @@ examples:
 - s-w-389804
 - s-w-13052744
 - s-w-ai-c396d720
+image: { file: words/shengqi.png, prompt: "Only the takin. The takin with an angry face, puffed cheeks and a red face, stomping one foot, a small angry cloud above its head" }

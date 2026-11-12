@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-333482
 - s-w-ai-5b3ebabc
+image: { file: words/zhongxuesheng.png, prompt: "Only the takin. The takin as a middle school student in a school uniform, looking a bit older and taller, holding a stack of textbooks" }

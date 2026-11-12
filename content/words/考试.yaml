@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-5581609
 - s-w-6451949
+image: { file: words/kaoshi.png, prompt: "Only the panda and the takin. The panda and the takin sitting at desks in a quiet exam room writing answers on test papers, a clock on the wall (no numbers)" }

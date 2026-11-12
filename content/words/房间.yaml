@@ -11,3 +11,4 @@ senses:
   example: s-w-704999
 examples:
 - s-w-704999
+image: { file: words/fangjian.png, prompt: "Only the panda. A cozy bedroom with a bed, a desk, a window with curtains and toys on a shelf, the panda sitting on the rug in the middle of the room" }

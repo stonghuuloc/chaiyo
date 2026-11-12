@@ -11,3 +11,4 @@ senses:
   example: s-w-8883976
 examples:
 - s-w-8883976
+image: { file: words/feiji.png, prompt: "Only the red panda. A big white airplane flying through a blue sky with fluffy clouds, the red panda waving from a round window of the plane" }

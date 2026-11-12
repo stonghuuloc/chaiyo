@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-2298602
 - s-w-ai-02791fa1
+image: { file: words/xiake.png, prompt: "Only the panda and the fawn. The panda and the fawn running out of the classroom door joyfully with their arms up, a bell ringing in the hallway" }

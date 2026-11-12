@@ -38,3 +38,4 @@ examples:
 - s-w-7772052
 - s-w-ai-35c655b0
 - s-w-ai-085d727d
+image: { file: words/bangmang.png, prompt: "Only the panda and the fawn. The fawn helping the panda carry a big heavy box together, both smiling" }

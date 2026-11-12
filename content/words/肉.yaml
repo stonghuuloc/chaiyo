@@ -29,3 +29,4 @@ examples:
 - s-w-843486
 - s-w-ai-fd3620d0
 - s-w-ai-240b0ca1
+image: { file: words/rou.png, prompt: "Only the panda. The panda grilling cooked meat skewers on a small round barbecue grill in a sunny garden, smoke curling up, a plate of golden grilled skewers and sliced roast pork beside it, happy face. Only cooked food, no raw meat." }

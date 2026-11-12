@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-3976893
 - s-w-ai-9cdbd300
+image: { file: words/guan.png, prompt: "Only the takin. The takin closing a door, pushing it shut with both paws" }

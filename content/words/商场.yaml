@@ -19,3 +19,4 @@ examples:
 - s-w-5556118
 - s-w-ai-06cef198
 - s-w-ai-db9af0e7
+image: { file: words/shangchang.png, prompt: "Only the takin and the fawn. The takin and the fawn inside a huge shopping mall with several floors, escalators and many shop windows, carrying shopping bags" }

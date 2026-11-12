@@ -11,3 +11,4 @@ senses:
   example: s-w-859469
 examples:
 - s-w-859469
+image: { file: words/kanbing.png, prompt: "Only the panda and the red panda. The panda sitting in a doctor's office while the red panda, in a white coat, looks in its mouth with a little light" }

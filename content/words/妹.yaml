@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-545d95a6
 examples:
 - s-w-ai-545d95a6
+image: { file: words/meimei.png, prompt: "Only the takin and its little sister, a much smaller takin calf that looks exactly like the takin shrunk down: the same pale cream-yellow fluffy fur, the same small dark curved horns, the same grey-brown muzzle and hooves, no spots, NOT a deer or fawn. She is clearly a little girl: a pink flower clip and a small pink bow on her head, and a tiny pink schoolbag. The takin (a boy, no flower or bow) gives his little sister a piggyback in a flower garden, both laughing. The little sister is part of this scene even though she is not in the lineup. No signature, no watermark." }

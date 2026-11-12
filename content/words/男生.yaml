@@ -19,3 +19,4 @@ examples:
 - s-w-332709
 - s-w-8888007
 - s-w-464776
+image: { file: words/nansheng.png, prompt: "Only the takin. The takin as a schoolboy with a cap and school uniform shorts, raising his paw to answer in class" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-9415187
 examples:
 - s-w-9415187
+image: { file: words/he.png, prompt: "Only the fawn. The fawn drinking juice through a straw from a tall glass, eyes closed in delight" }

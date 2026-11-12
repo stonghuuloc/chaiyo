@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1408054
 - s-w-334028
+image: { file: words/chezhan.png, prompt: "Only the fawn. A train station platform with a train arriving, a big round station clock (no numbers) hanging from the roof, the fawn waiting with a small suitcase" }

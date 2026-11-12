@@ -11,3 +11,4 @@ senses:
   example: s-w-2999597
 examples:
 - s-w-2999597
+image: { file: words/fei.png, prompt: "Only the panda. The panda on a hill throwing a paper airplane that flies high up into the blue sky" }

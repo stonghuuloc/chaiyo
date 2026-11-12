@@ -27,3 +27,4 @@ examples:
 - s-w-348105
 - s-w-ai-0199df20
 - s-w-ai-70625cc4
+image: { file: words/jin.png, prompt: "Only the fawn. The fawn stepping in through an open doorway into a bright room" }

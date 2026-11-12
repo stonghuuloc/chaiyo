@@ -19,3 +19,4 @@ examples:
 - s-w-1411677
 - s-w-ai-cf9f8911
 - s-w-ai-c134ed12
+image: { file: words/qiu.png, prompt: "Only the takin. The takin holding up a round football with both paws, ready to kick it, grassy field" }

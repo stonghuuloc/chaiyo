@@ -11,3 +11,4 @@ senses:
   example: s-w-2158924
 examples:
 - s-w-2158924
+image: { file: words/nanhair.png, prompt: "Only the takin. The takin as a boy in a blue cap and shorts, kicking a football, sunny park" }

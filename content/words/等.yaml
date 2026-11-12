@@ -28,3 +28,4 @@ examples:
 - s-w-1227093
 - s-w-ai-33c914a3
 - s-w-6130934
+image: { file: words/deng.png, prompt: "Only the fawn. The fawn waiting at a bus stop looking at its watch, tapping its foot, an empty road" }

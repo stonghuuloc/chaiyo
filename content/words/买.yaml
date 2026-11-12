@@ -11,3 +11,4 @@ senses:
   example: s-w-11508980
 examples:
 - s-w-11508980
+image: { file: words/mai.png, prompt: "Only the red panda. The red panda paying at a shop counter, handing over money and receiving a shopping bag of things" }

@@ -32,3 +32,4 @@ examples:
 - s-w-8888006
 - s-w-ai-cd624789
 - s-w-ai-89514000
+image: { file: words/shui.png, prompt: "Only the fawn. The fawn drinking a big glass of clear water, a clear water jug beside it, droplets on the glass, sunny kitchen" }

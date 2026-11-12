@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-794232
 - s-w-ai-f5d9cf1c
+image: { file: words/jichang.png, prompt: "Only the panda and the takin. Inside a bright airport terminal with big windows showing planes outside, the panda and the takin pulling small suitcases" }

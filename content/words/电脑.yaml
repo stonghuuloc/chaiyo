@@ -11,3 +11,4 @@ senses:
   example: s-w-2346872
 examples:
 - s-w-2346872
+image: { file: words/diannao.png, prompt: "Only the panda. The panda sitting at a desk typing on a laptop computer with a blank glowing screen, a mouse beside it, study room" }

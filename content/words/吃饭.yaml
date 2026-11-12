@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1163518
 - s-w-ai-93434e73
+image: { file: words/chi.png, prompt: "Only the takin. The takin eating happily with chopsticks from a bowl of rice and dishes, cheeks full" }

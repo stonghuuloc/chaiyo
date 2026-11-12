@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-0dd355b5
 examples:
 - s-w-ai-0dd355b5
+image: { file: words/daqiu.png, prompt: "Only the takin and the fawn. The takin and the fawn playing basketball on an outdoor court, the takin jumping to shoot the ball at the hoop" }

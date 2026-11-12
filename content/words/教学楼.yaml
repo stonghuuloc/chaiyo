@@ -11,3 +11,4 @@ senses:
   example: s-w-10260791
 examples:
 - s-w-10260791
+image: { file: words/jiaoxuelou.png, prompt: "Only the red panda. A big school teaching building with many classroom windows, the red panda walking up the front steps with books" }

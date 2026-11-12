@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-5580848
 - s-w-5581063
+image: { file: words/shuijiao.png, prompt: "Only the panda. The panda sleeping in bed under a quilt, a soft \"zzz\" cloud shape above its head (no letters), moon outside the window" }

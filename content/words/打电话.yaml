@@ -11,3 +11,4 @@ senses:
   example: s-w-10695961
 examples:
 - s-w-10695961
+image: { file: words/dadianhua.png, prompt: "Only the fawn. The fawn talking on a smartphone held to its ear, waving its other paw excitedly while talking" }

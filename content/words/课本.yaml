@@ -11,3 +11,4 @@ senses:
   example: s-w-475474
 examples:
 - s-w-475474
+image: { file: words/keben.png, prompt: "Only the panda. The panda holding up an open school textbook with blank pages and simple pictures of flowers and mountains, standing in a classroom. The character stands on the floor next to the table, its whole body and feet visible; nobody sits or stands on the table or counter." }

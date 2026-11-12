@@ -11,3 +11,4 @@ senses:
   example: s-w-844551
 examples:
 - s-w-844551
+image: { file: words/shengri.png, prompt: "Only the red panda, the panda and the takin. A birthday party: the red panda in a party hat about to blow out the candles on a big cake, the panda and the takin clapping, balloons" }

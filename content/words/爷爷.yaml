@@ -11,3 +11,4 @@ senses:
   example: s-w-1147872
 examples:
 - s-w-1147872
+image: { file: words/yeye.png, prompt: "Only the fawn and its grandfather, an old grown-up sika deer with the same colours, small antlers, round glasses and a walking stick. The grandfather and the little fawn walk together in a park at sunset. The grandfather is part of this scene even though he is not in the lineup" }

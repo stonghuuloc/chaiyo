@@ -24,3 +24,4 @@ examples:
 - s-w-6822547
 - s-w-ai-26a96f96
 - s-w-ai-6db9d4e3
+image: { file: words/chepiao.png, prompt: "Only the fawn. The fawn holding up a small train ticket with a little train drawn on it (no text), standing on a station platform with a train behind it" }

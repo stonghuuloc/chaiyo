@@ -11,3 +11,4 @@ senses:
   example: s-w-335369
 examples:
 - s-w-335369
+image: { file: words/ditu.png, prompt: "Only the takin and the fawn. The takin and the fawn unfolding a big paper map with drawn rivers, mountains and roads (no text), standing on a hiking path, the fawn pointing at the map" }

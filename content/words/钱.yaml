@@ -17,3 +17,4 @@ senses:
 examples:
 - s-w-687042
 - s-w-ai-0ed4d306
+image: { file: words/qian.png, prompt: "Only the takin. The takin standing on the floor with a big happy grin, proudly holding up a thick wad of green paper banknotes in one paw, a round pink piggy bank and a small pile of gold coins on the floor at its feet; the money is clearly cash (rectangular banknotes), NOT playing cards. No text or numbers on the money." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-457644
 examples:
 - s-w-457644
+image: { file: words/menpiao.png, prompt: "Only the takin. The takin handing a ticket with a little star drawn on it (no text) to a ticket window at the gate of an amusement park, a Ferris wheel behind" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-5072292
 examples:
 - s-w-5072292
+image: { file: words/yiyuan.png, prompt: "Only the red panda. A big white hospital building with a red cross sign (no text) and an ambulance parked in front, the red panda in a white coat waving at the entrance" }

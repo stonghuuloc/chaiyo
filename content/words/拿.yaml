@@ -24,3 +24,4 @@ examples:
 - s-w-11524931
 - s-w-1325218
 - s-w-ai-b733cf65
+image: { file: words/na.png, prompt: "Only the fawn. The fawn picking up a red apple from a table with its paw" }

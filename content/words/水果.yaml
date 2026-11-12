@@ -11,3 +11,4 @@ senses:
   example: s-w-4105310
 examples:
 - s-w-4105310
+image: { file: words/shuiguo.png, prompt: "Only the red panda. The red panda holding a big wicker basket full of fruit: red apples, bananas, oranges, a bunch of grapes and a watermelon slice, fruit stand" }

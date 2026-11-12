@@ -11,3 +11,4 @@ senses:
   example: s-w-9432392
 examples:
 - s-w-9432392
+image: { file: words/tushuguan.png, prompt: "Only the panda and the red panda. A quiet library with tall bookshelves and long reading tables, the panda and the red panda reading books at a table, a library lamp" }

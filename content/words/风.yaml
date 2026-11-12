@@ -22,3 +22,4 @@ examples:
 - s-w-1216057
 - s-w-ai-6e4b2ece
 - s-w-ai-2fc77101
+image: { file: words/feng.png, prompt: "Only the fawn. A strong wind blowing autumn leaves through the air, the fawn holding onto its little hat with both paws, trees bending, a kite flying. The fawn has short, small, rounded deer ears (NOT long rabbit ears)." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-8881120
 examples:
 - s-w-8881120
+image: { file: words/gongren.png, prompt: "Only the takin. The takin wearing a yellow hard hat and a work vest, carrying a brick and a spirit level at a small construction site" }

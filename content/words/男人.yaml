@@ -11,3 +11,4 @@ senses:
   example: s-w-9961508
 examples:
 - s-w-9961508
+image: { file: words/nanren.png, prompt: "Only the takin and a grown-up takin. A tall grown-up takin man with the same pale cream-yellow fur and bigger curved horns, wearing a shirt and necktie and carrying a briefcase, the little takin looking up at him. The grown-up is part of this scene even though he is not in the lineup" }

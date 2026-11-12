@@ -11,3 +11,4 @@ senses:
   example: s-w-747591
 examples:
 - s-w-747591
+image: { file: words/nvren.png, prompt: "Only the red panda and a grown-up red panda. A tall grown-up red panda woman with the same red panda colours, wearing a dress and carrying a handbag, the little red panda looking up at her admiringly. The grown-up is part of this scene even though she is not in the lineup" }

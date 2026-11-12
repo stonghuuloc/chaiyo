@@ -11,3 +11,4 @@ senses:
   example: s-w-10340680
 examples:
 - s-w-10340680
+image: { file: words/nainai.png, prompt: "Only the panda and its grandmother, an old grown-up panda with the same panda colours and face, a little grey on the head, round glasses and a knitted shawl. The grandmother knits a scarf in a rocking chair while the little panda sits at her feet. The grandmother is part of this scene even though she is not in the lineup" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-346836
 examples:
 - s-w-346836
+image: { file: words/xiayu.png, prompt: "Only the fawn. Heavy rain pouring down from dark clouds, the fawn standing at a window indoors watching raindrops run down the glass" }

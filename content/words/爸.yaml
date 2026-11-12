@@ -11,3 +11,4 @@ senses:
   example: s-w-349911
 examples:
 - s-w-349911
+image: { file: words/baba.png, prompt: "Only the red panda and its father, a bigger grown-up red panda with the same red panda colours and face, taller than the red panda and wearing a small necktie. The father lifts the little red panda up high, both laughing, cozy living room. The father is part of this scene even though he is not in the lineup." }

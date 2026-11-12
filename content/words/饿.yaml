@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-7768272
 - s-w-ai-b7fb1706
+image: { file: words/e.png, prompt: "Only the panda. The panda standing in a cozy kitchen holding its rumbling empty tummy with both paws, a sad hungry face with drool at the corner of its mouth, and a big round thought bubble above its head showing a steaming bowl of noodles and dumplings. An empty bowl on the counter." }

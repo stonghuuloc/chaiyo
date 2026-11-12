@@ -11,3 +11,4 @@ senses:
   example: s-w-780291
 examples:
 - s-w-780291
+image: { file: words/shengbing.png, prompt: "Only the takin. The takin sick in bed under a quilt, looking miserable and weak: droopy half-closed eyes, eyebrows raised in misery, flushed red cheeks, a small sad frown, a thermometer in its mouth and a cold towel on its forehead, tissues and a glass of water on the bedside table. NOT smug, NOT smirking, NOT smiling." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-2e5091d3
 examples:
 - s-w-ai-2e5091d3
+image: { file: words/lukou.png, prompt: "Only the fawn. A street crossroads where two roads meet, traffic lights showing green, the fawn standing at the corner looking both ways" }

@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-782343
 - s-w-430153
+image: { file: words/qiche.png, prompt: "Only the fawn. A small round red car parked on a street, the fawn waving happily from the open driver's window" }

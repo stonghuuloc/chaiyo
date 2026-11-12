@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-791618
 - s-w-ai-9ecb93c9
+image: { file: words/lou.png, prompt: "Only the fawn. A tall apartment building with many floors and balconies, the fawn waving from a balcony near the top" }

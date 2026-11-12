@@ -17,3 +17,4 @@ senses:
 examples:
 - s-w-487605
 - s-w-ai-e57f9226
+image: { file: words/niunai.png, prompt: "Only the takin. The takin holding a tall glass of white milk with a milk moustache on its muzzle, a milk carton with a simple cow-spot pattern beside it (no text)" }

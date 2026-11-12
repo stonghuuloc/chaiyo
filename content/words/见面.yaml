@@ -11,3 +11,4 @@ senses:
   example: s-w-501522
 examples:
 - s-w-501522
+image: { file: words/jianmian.png, prompt: "Only the panda and the takin. The panda and the takin meeting in a park, running toward each other with arms open and big smiles" }

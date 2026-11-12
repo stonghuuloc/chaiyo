@@ -25,3 +25,4 @@ examples:
 - s-w-8905124
 - s-w-1899677
 - s-w-784104
+image: { file: words/fang.png, prompt: "Only the panda. The panda putting a book on a shelf, sliding it in among the other books" }

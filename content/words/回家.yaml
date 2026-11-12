@@ -11,3 +11,4 @@ senses:
   example: s-w-6055181
 examples:
 - s-w-6055181
+image: { file: words/huijia.png, prompt: "Only the takin. The takin walking up to the front door of a cozy house in the evening, lights on inside, happy to be home" }

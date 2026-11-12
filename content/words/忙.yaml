@@ -21,3 +21,4 @@ examples:
 - s-w-819333
 - s-w-ai-8a4f8a7a
 - s-w-ai-9d35a728
+image: { file: words/mang.png, prompt: "Only the takin. The takin juggling many things at once: answering a phone, typing on a laptop and holding papers, busy desk" }

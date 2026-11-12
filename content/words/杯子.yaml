@@ -11,3 +11,4 @@ senses:
   example: s-w-2040505
 examples:
 - s-w-2040505
+image: { file: words/beizi.png, prompt: "Only the takin. The takin holding up an empty plain white mug in one paw and a clear glass cup in the other, a shelf of cups and mugs behind it, kitchen" }

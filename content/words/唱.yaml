@@ -21,3 +21,4 @@ examples:
 - s-w-499612
 - s-w-ai-d1bdeff0
 - s-w-ai-5701d499
+image: { file: words/changge.png, prompt: "Only the fawn. The fawn singing into a microphone on a little stage, musical notes floating in the air, spotlights" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-6452012
 examples:
 - s-w-6452012
+image: { file: words/zhongxue.png, prompt: "Only the takin and the red panda. A big middle school building with many windows and a running track in front, the takin and the red panda in school uniforms with backpacks, looking a bit older and taller than usual" }

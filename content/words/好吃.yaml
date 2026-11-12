@@ -11,3 +11,4 @@ senses:
   example: s-w-2062924
 examples:
 - s-w-2062924
+image: { file: words/haochi.png, prompt: "Only the takin. The takin tasting a spoonful of dumpling soup, eyes shining and cheeks glowing with delight" }

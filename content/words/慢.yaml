@@ -11,3 +11,4 @@ senses:
   example: s-w-10042058
 examples:
 - s-w-10042058
+image: { file: words/man.png, prompt: "Only the panda and the fawn. Rear view from behind the panda: the panda in the foreground seen from the back, walking slowly and panting, reaching one paw out helplessly; far ahead down the garden path the fawn runs upright on two legs, small in the distance, leaving the panda behind. A little snail crawls on the path beside the panda." }

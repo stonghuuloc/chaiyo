@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-1188449
 - s-w-10283157
+image: { file: words/xiuxi.png, prompt: "Only the red panda. The red panda relaxing in a hammock under a tree with her eyes half closed, a cup of tea on a small table" }

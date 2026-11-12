@@ -11,3 +11,4 @@ senses:
   example: s-w-7768011
 examples:
 - s-w-7768011
+image: { file: words/shangche.png, prompt: "Only the panda. Side view at a city bus stop: the panda walking upright through the open front door of a parked bus, one foot on the low first step and the other on the curb, one paw on the door handrail, a bus stop sign next to the door. It steps in like a passenger, NOT climbing or hanging." }

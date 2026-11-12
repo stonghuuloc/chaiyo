@@ -16,3 +16,4 @@ examples:
 - s-w-1361951
 - s-w-ai-dbed7875
 - s-w-ai-27f76fb1
+image: { file: words/gao.png, prompt: "Only the fawn. The fawn standing at the foot of a very tall red-and-white lighthouse, looking way up to the top" }

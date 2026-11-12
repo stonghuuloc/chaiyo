@@ -23,3 +23,4 @@ examples:
 - s-w-10484388
 - s-w-512107
 - s-w-ai-9d1bb221
+image: { file: words/guan.png, prompt: "Only the takin. The takin closing a door, pushing it shut with both paws" }

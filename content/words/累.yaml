@@ -20,3 +20,4 @@ examples:
 - s-w-397734
 - s-w-ai-e35a3404
 - s-w-ai-24bce613
+image: { file: words/lei.png, prompt: "Only the red panda. After a long jog on a park path, the red panda sitting slumped on the ground, utterly exhausted: panting with mouth open, droopy eyes, big sweat drops flying off its face, a small towel around its neck and a water bottle beside it. It looks worn out, NOT relaxed or happy." }

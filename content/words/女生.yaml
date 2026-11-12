@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-784478
 - s-w-332523
+image: { file: words/nvsheng.png, prompt: "Only the red panda. The red panda as a schoolgirl with a hair bow and a school uniform skirt, raising her paw to answer in class" }

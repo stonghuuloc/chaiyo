@@ -11,3 +11,4 @@ senses:
   example: s-w-332792
 examples:
 - s-w-332792
+image: { file: words/xiache.png, prompt: "Only the red panda. The red panda stepping down off a city bus onto the sidewalk, the bus door open" }

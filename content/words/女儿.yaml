@@ -11,3 +11,4 @@ senses:
   example: s-w-1428124
 examples:
 - s-w-1428124
+image: { file: words/nuer.png, prompt: "Only the red panda and her mother, a bigger grown-up red panda with the same red panda colours and face, wearing a small apron. The mother braids a ribbon into the little red panda's (her daughter's) head fur, both smiling. The mother is part of this scene even though she is not in the lineup" }
