@@ -33,7 +33,8 @@ export const hanviet = (set: ContentSet) => {
 		return chars.flatMap((c, i) => {
 			const s = syls.find((x) => x.charIndex === i);
 			if (!s) return [];
-			const { syl, tone } = s;
+			const { tone } = s;
+			const syl = s.erhua ? s.syl.replace(/r$/i, '') : s.syl;
 			const key = (p: string) => (tone === 0 ? toneless(p) : p.normalize('NFC').toLowerCase());
 			const same = readings.get(c)?.filter((r) => key(r.pinyin) === key(syl));
 			if (!same?.length || same.some((r) => r.hanviet === parts[i] || blank(r.hanviet))) return [];

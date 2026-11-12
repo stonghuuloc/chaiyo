@@ -47,6 +47,21 @@ describe('check 1 Hán Việt', () => {
 			'words/你好.yaml',
 			'hanviet'
 		));
+	it('checks the char that carries an erhua syllable', () => {
+		const errors = run((s) => {
+			const base = char(s, '你');
+			s.chars.push({
+				file: 'chars/这.yaml',
+				value: { ...base.value, hanzi: '这', readings: [{ pinyin: 'zhè', hanviet: 'giá' }] }
+			});
+			const w = word(s, '你好');
+			s.words.push({
+				file: 'words/这儿.yaml',
+				value: { ...w.value, id: '这儿', hanzi: '这儿', pinyin: 'zhèr', hanviet: 'chá nhi' }
+			});
+		}).filter((e) => e.check === 1);
+		only(errors, 1, 'words/这儿.yaml', 'hanviet');
+	});
 	it('matches the char reading by tone, not just letters', () =>
 		only(
 			run((s) => (word(s, '你好').value.hanviet = 'nhĩ hiếu')),

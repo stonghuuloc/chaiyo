@@ -138,12 +138,18 @@ const rows: Record<string, Row> = {
 	八: { readings: [r('bā', 'bát')], radical: '八', ids: '八', strokes: 2, kind: 'etymology' },
 	九: { readings: [r('jiǔ', 'cửu')], radical: '乙', ids: '九', strokes: 2, kind: 'etymology' },
 	十: { readings: [r('shí', 'thập')], radical: '十', ids: '十', strokes: 2, kind: 'etymology' },
-	几: { readings: [r('jǐ', 'kỷ')], radical: '几', ids: '几', strokes: 2, kind: 'etymology' },
+	几: {
+		readings: [r('jǐ', 'kỷ'), r('jī', 'cơ', true)],
+		radical: '几',
+		ids: '几',
+		strokes: 2,
+		kind: 'etymology'
+	},
 	岁: { readings: [r('suì', 'tuế')], radical: '山', ids: '⿱山夕', strokes: 6, kind: 'invented' },
 	吗: { readings: [r('ma', 'ma')], radical: '口', ids: '⿰口马', strokes: 6, kind: 'invented' },
 	呢: { readings: [r('ne', 'ni')], radical: '口', ids: '⿰口尼', strokes: 8, kind: 'invented' },
 	的: {
-		readings: [r('de', 'đích'), r('dí', 'đích'), r('dì', 'đích')],
+		readings: [r('de', 'đích'), r('dí', 'đích'), r('dì', 'đích'), r('dī', 'đích', true)],
 		radical: '白',
 		ids: '⿰白勺',
 		strokes: 8,

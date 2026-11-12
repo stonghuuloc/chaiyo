@@ -2,6 +2,9 @@ hanzi: 几
 readings:
   - pinyin: jǐ
     hanviet: kỷ
+  - pinyin: jī
+    hanviet: cơ
+    rare: true
 radical: 几
 ids: 几
 strokes: 2
