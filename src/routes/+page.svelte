@@ -6,12 +6,13 @@
 	const points = [
 		{ avatar: asset('onboard/avatars/redpanda.webp'), text: m.landing_point_han_viet() },
 		{ avatar: asset('onboard/avatars/takin.webp'), text: m.landing_point_voices() },
-		{ avatar: asset('onboard/avatars/panda.webp'), text: m.landing_point_path() }
+		{ avatar: asset('onboard/avatars/panda.webp'), text: m.landing_point_path() },
+		{ avatar: asset('onboard/avatars/fawn.webp'), text: m.landing_point_daily() }
 	];
 </script>
 
 <svelte:head>
-	<title>Chaiyo! {m.landing_title()}</title>
+	<title>Chaiyo! {m.landing_title().replace(/\.$/, '')}</title>
 	<meta name="description" content={m.landing_lede()} />
 </svelte:head>
 
@@ -106,6 +107,7 @@
 		margin-top: 12px;
 		font-size: var(--text-display);
 		line-height: 1.1;
+		text-wrap: balance;
 	}
 
 	.lede {
