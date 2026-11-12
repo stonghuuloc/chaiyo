@@ -32,12 +32,12 @@ describe('placement result in Study', () => {
 		for (const a of list) await ledger.record(a);
 		const s = ledger.state();
 		expect(s.placed).toBe(2);
-		for (const id of ['h0-00', 'h1-01', 'h2-01'])
+		for (const id of ['h0-00', 'h1-01', 'h1-05', 'h2-01'])
 			expect(s.lessons[id]).toMatchObject({ passed: true, unlocked: true });
 		expect(s.lessons['h3-01']).toMatchObject({ unlocked: true, passed: false });
 		expect(s.lessons['h4-01'].unlocked).toBe(false);
 		const words = Object.values(s.lexicon);
-		expect(words).toHaveLength(22);
+		expect(words).toHaveLength(63);
 		for (const w of words) expect(w).toEqual({ saved: false, cards: {} });
 		expect(list.every((a) => a.step?.kind === 'placement')).toBe(true);
 	});
@@ -57,6 +57,6 @@ describe('placement result in Study', () => {
 		for (const a of attempts('RRRRRRRRRR WWRRRRRR')) await ledger.record(a);
 		const s = ledger.state();
 		expect(s.placed).toBe(1);
-		expect(Object.keys(s.lexicon)).toHaveLength(10);
+		expect(Object.keys(s.lexicon)).toHaveLength(51);
 	});
 });
