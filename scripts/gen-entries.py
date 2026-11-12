@@ -9,8 +9,9 @@ Sources (the LLM edits, it does not invent meanings):
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
 Output (staging, never content/): .cache/words/out/words/<id>.yaml (Word) + sentences/hsk1.yaml (Sentence[]) + src/<id>.json (numbered CC-CEDICT senses).
 Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [--level N] [words]   (no words = all HSK 3.0 level N words in dict.json; sources download into .cache/words)
-     GEN_PROVIDER=anthropic ANTHROPIC_API_KEY=… uv run scripts/gen-entries.py …   (Claude Haiku instead of opencode)"""
-import argparse, bz2, functools, hashlib, threading, unicodedata, json, os, random, re, shutil, sys, urllib.request, uuid
+     GEN_PROVIDER=anthropic ANTHROPIC_API_KEY=… uv run scripts/gen-entries.py …   (Claude Haiku instead of opencode)
+     GEN_PROVIDER=claude-cli uv run scripts/gen-entries.py …   (Claude Haiku via `claude -p` on the logged-in subscription)"""
+import argparse, bz2, functools, hashlib, threading, unicodedata, json, os, random, re, shutil, subprocess, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from pathlib import Path
@@ -107,9 +108,30 @@ def ask_claude(prompt):
         raise RuntimeError(f'claude stopped: {res.stop_reason}')
     return parse_json(''.join(b.text for b in res.content if b.type == 'text'))
 
+# Claude Code headless on the logged-in subscription; no tools, MCP, settings or skills keeps the context under 1k tokens
+CLAUDE_CLI = ['claude', '-p', '--model', 'haiku', '--system-prompt', 'You answer with JSON only.', '--tools', '',
+              '--no-session-persistence', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}',
+              '--setting-sources', '', '--disable-slash-commands', '--output-format', 'json']
+
+def ask_claude_cli(prompt):
+    run = subprocess.run(CLAUDE_CLI, input=prompt, capture_output=True, text=True, timeout=600)
+    try:
+        res = json.loads(run.stdout)
+    except json.JSONDecodeError:
+        raise RuntimeError(f'claude -p exit {run.returncode}: {(run.stderr or run.stdout)[:300]}') from None
+    if run.returncode or res.get('is_error'):
+        raise RuntimeError(f'claude -p {res.get("subtype")}: {str(res.get("result"))[:300]}')
+    USAGE['calls'] += 1
+    USAGE['input'] += res['usage']['input_tokens'] + res['usage'].get('cache_read_input_tokens', 0) + res['usage'].get('cache_creation_input_tokens', 0)
+    USAGE['output'] += res['usage']['output_tokens']
+    return parse_json(res['result'])
+
 def ask(prompt):
-    if os.environ.get('GEN_PROVIDER') == 'anthropic':
+    provider = os.environ.get('GEN_PROVIDER')
+    if provider == 'anthropic':
         return ask_claude(prompt)
+    if provider == 'claude-cli':
+        return ask_claude_cli(prompt)
     key = os.environ['OPENCODE_API_KEY']
     body = {'model': 'gpt-6-luna', 'input': [{'role': 'user', 'content': [{'type': 'input_text', 'text': prompt}]}], 'store': False}
     req = urllib.request.Request('https://opencode.ai/inference/go/v1/responses', data=json.dumps(body).encode(),
@@ -948,8 +970,8 @@ def main(argv, llm=ask):
         HINTS.update(json.loads(Path(os.environ['GEN_HINTS']).read_text(encoding='utf-8')))
     if llm is ask and os.environ.get('GEN_OFFLINE_DIR'):
         llm = ask_files
-    need = 'ANTHROPIC_API_KEY' if os.environ.get('GEN_PROVIDER') == 'anthropic' else 'OPENCODE_API_KEY'
-    if llm is ask and not os.environ.get(need):
+    need = {'anthropic': 'ANTHROPIC_API_KEY', 'claude-cli': None}.get(os.environ.get('GEN_PROVIDER'), 'OPENCODE_API_KEY')
+    if llm is ask and need and not os.environ.get(need):
         print(f'{need} is not set', file=sys.stderr)
         sys.exit(2)
     for name in SOURCES:

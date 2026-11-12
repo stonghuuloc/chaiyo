@@ -69,6 +69,44 @@ def test_anthropic_provider_raises_on_cut_off_answer(gen, monkeypatch, stop):
         gen.ask('hỏi')
 
 
+def test_claude_cli_provider_needs_no_key_and_parses_result(gen, monkeypatch):
+    # Arrange
+    import json, subprocess
+    from types import SimpleNamespace as NS
+    sent = {}
+
+    def run(cmd, **kw):
+        sent.update(cmd=cmd, input=kw['input'])
+        out = {'is_error': False, 'subtype': 'success', 'result': '```json\n{"a": 1}\n```',
+               'usage': {'input_tokens': 5, 'cache_read_input_tokens': 900, 'cache_creation_input_tokens': 0, 'output_tokens': 3}}
+        return NS(returncode=0, stdout=json.dumps(out), stderr='')
+    monkeypatch.setenv('GEN_PROVIDER', 'claude-cli')
+    monkeypatch.setattr(subprocess, 'run', run)
+    monkeypatch.setattr(gen, 'USAGE', {'calls': 0, 'input': 0, 'output': 0})
+    # Act
+    out = gen.ask('hỏi')
+    # Assert
+    assert out == {'a': 1}
+    assert sent['input'] == 'hỏi'
+    assert sent['cmd'][:4] == ['claude', '-p', '--model', 'haiku']
+    assert gen.USAGE == {'calls': 1, 'input': 905, 'output': 3}
+
+
+@pytest.mark.parametrize('rc, stdout, msg', [
+    (1, 'Not logged in', 'exit 1'),
+    (0, '{"is_error": true, "subtype": "error_max_turns", "result": "x"}', 'error_max_turns'),
+])
+def test_claude_cli_provider_raises_on_failure(gen, monkeypatch, rc, stdout, msg):
+    # Arrange
+    import subprocess
+    from types import SimpleNamespace as NS
+    monkeypatch.setenv('GEN_PROVIDER', 'claude-cli')
+    monkeypatch.setattr(subprocess, 'run', lambda cmd, **kw: NS(returncode=rc, stdout=stdout, stderr=''))
+    # Act / Assert
+    with pytest.raises(RuntimeError, match=msg):
+        gen.ask('hỏi')
+
+
 def test_cache_hit_skips_download(gen, seeded, monkeypatch, capsys):
     def boom(*a, **k):
         raise AssertionError('network used')
