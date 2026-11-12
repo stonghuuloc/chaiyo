@@ -229,7 +229,7 @@ def check(e, cands, hz, readings):
     return errs
 
 MAIN_OVERRIDE = {  # dict.json's first reading is a rare or unmarked one for these
-    '着': 'zhe', '起来': 'qǐ lai', '雨': 'yǔ', '看': 'kàn', '和': 'hé', '行': 'xíng', '差': 'chà', '累': 'lèi', '吧': 'ba',
+    '着': 'zhe', '起来': 'qǐ lai', '雨': 'yǔ', '看': 'kàn', '和': 'hé', '行': 'xíng', '差': 'chà', '累': 'lèi', '吧': 'ba', '吗': 'ma',
     '地方': 'dì fang', '页': 'yè', '几': 'jǐ', '中': 'zhōng'}
 
 def main_reading(hz, readings):

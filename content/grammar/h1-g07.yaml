@@ -1,0 +1,13 @@
+# content/grammar/h1-g07.yaml
+id: h1-g07
+level: 1
+std: [ 36 ]
+title: "Câu chữ 是: A 是 B"
+pattern: A + 是 + B
+explain: |-
+  是 (thị, shì) là “là”: nối hai vế chỉ cùng một người. 他是老师 = Anh ấy là giáo viên.
+
+  Người trong nhà thì nói thẳng 我妈妈 (mẹ tôi), 我哥哥 (anh tôi).
+examples: [ s-h1-03-13, s-h1-03-11 ]
+pitfalls:
+  - { wrong: 这我妈妈。, right: 这是我妈妈。, why: "Tiếng Việt nói chuyện hay bỏ “là” (Đây mẹ tớ); tiếng Trung phải có 是." }

@@ -1,0 +1,289 @@
+# content/lessons/hsk1/h1-03.yaml
+id: h1-03
+level: 1
+topic: Gia đình
+order: 3
+title: Đây là ai?
+titleHanzi: 这是谁
+goal: Giới thiệu người trong nhà và bạn bè, hỏi ai là ai
+scene:
+  file: lessons/h1-03.png
+  cast: [ redpanda, takin ]
+  prompt: Only the red panda and the takin. The red panda and the takin sit on a sofa looking at a family photo album; the red panda points at a photo while the takin leans in, curious.
+sentences:
+  - { id: s-h1-03-01, hanzi: 这是谁？, pinyin: zhè shì shéi?, vi: Đây là ai?, speaker: takin }
+  - { id: s-h1-03-02, hanzi: 这是我妈妈。, pinyin: zhè shì wǒ māma., vi: Đây là mẹ tớ., speaker: redpanda, style: cheerful }
+  - { id: s-h1-03-03, hanzi: 那是谁？, pinyin: nà shì shéi?, vi: Kia là ai?, speaker: takin }
+  - { id: s-h1-03-04, hanzi: 那是我爸爸。, pinyin: nà shì wǒ bàba., vi: Kia là bố tớ., speaker: redpanda }
+  - { id: s-h1-03-05, hanzi: 他是谁？, pinyin: tā shì shéi?, vi: Cậu ấy là ai?, speaker: takin }
+  - { id: s-h1-03-06, hanzi: 他是我哥哥。他叫小白。, pinyin: tā shì wǒ gēge. tā jiào Xiǎo Bái., vi: Đó là anh tớ. Anh ấy tên là Tiểu Bạch., speaker: redpanda, unknown: [ { hanzi: 小白, pinyin: Xiǎo Bái, vi: Tiểu Bạch (tên) } ] }
+  - { id: s-h1-03-07, hanzi: 她是谁？, pinyin: tā shì shéi?, vi: Còn cô ấy là ai?, speaker: takin }
+  - { id: s-h1-03-08, hanzi: 她是我朋友小花。, pinyin: tā shì wǒ péngyou Xiǎo Huā., vi: "Đó là bạn tớ, Tiểu Hoa.", speaker: redpanda, style: cheerful, unknown: [ { hanzi: 小花, pinyin: Xiǎo Huā, vi: Tiểu Hoa (tên) } ] }
+  - { id: s-h1-03-09, hanzi: 谁是老师？, pinyin: shéi shì lǎoshī?, vi: Ai là giáo viên?, speaker: takin }
+  - { id: s-h1-03-10, hanzi: 我妈妈是老师！, pinyin: wǒ māma shì lǎoshī!, vi: Mẹ tớ là giáo viên!, speaker: redpanda, style: cheerful }
+  - { id: s-h1-03-11, hanzi: 这是我姐姐。, pinyin: zhè shì wǒ jiějie., spoken: zhè shì wó jiějie., vi: Đây là chị tôi. }
+  - { id: s-h1-03-12, hanzi: 那是我朋友。, pinyin: nà shì wǒ péngyou., vi: Kia là bạn tôi. }
+  - { id: s-h1-03-13, hanzi: 他是老师。, pinyin: tā shì lǎoshī., vi: Anh ấy là giáo viên. }
+  - { id: s-h1-03-14, hanzi: 这是我哥哥。, pinyin: zhè shì wǒ gēge., vi: Đây là anh tôi. }
+sections:
+  warmup: {}
+  words:
+    ids: [ 这, 那, 是, 谁, 爸爸, 妈妈, 哥哥, 姐姐, 朋友, 老师 ]
+  grammar:
+    ids: [ h1-g06, h1-g07, h1-g08 ]
+    drills:
+      - id: q-h1-03-g01
+        type: choice
+        tests: { grammar: [ h1-g06 ], words: [ 这 ] }
+        prompt: { kind: vi, text: Đây là mẹ tôi. }
+        optionKind: hanzi
+        options: [ 这是我妈妈, 那是我妈妈, 我是这妈妈 ]
+        answer: 0
+      - id: q-h1-03-g02
+        type: choice
+        tests: { grammar: [ h1-g06 ], words: [ 那 ] }
+        prompt: { kind: vi, text: Kia là bố tôi. }
+        optionKind: hanzi
+        options: [ 那是我爸爸, 这是我爸爸, 那我是爸爸 ]
+        answer: 0
+      - id: q-h1-03-g03
+        type: trueFalse
+        tests: { grammar: [ h1-g06 ], words: [ 这 ] }
+        prompt: { kind: vi, text: Anh trai đứng ở xa. Bạn chỉ tay về phía anh ấy và nói câu này. Đúng không? }
+        statement: 这是我哥哥。
+        answer: false
+      - id: q-h1-03-g04
+        type: order
+        tests: { grammar: [ h1-g07 ], words: [ 是, 老师 ] }
+        tiles: [ 是, 他, 老师 ]
+        answer: s-h1-03-13
+      - id: q-h1-03-g05
+        type: choice
+        tests: { grammar: [ h1-g07 ], words: [ 姐姐 ] }
+        prompt: { kind: vi, text: Đây là chị tôi. }
+        optionKind: hanzi
+        options: [ 这是我姐姐, 这我姐姐, 是这我姐姐 ]
+        answer: 0
+      - id: q-h1-03-g06
+        type: trueFalse
+        tests: { grammar: [ h1-g07 ], words: [ 是 ] }
+        prompt: { kind: vi, text: Câu này đúng không? }
+        statement: 这我妈妈。
+        answer: false
+      - id: q-h1-03-g07
+        type: order
+        tests: { grammar: [ h1-g08 ], words: [ 谁 ] }
+        tiles: [ 谁, 这, 是 ]
+        answer: s-h1-03-01
+      - id: q-h1-03-g08
+        type: choice
+        tests: { grammar: [ h1-g08 ], words: [ 老师 ] }
+        prompt: { kind: vi, text: Ai là giáo viên? }
+        optionKind: hanzi
+        options: [ 谁是老师, 老师谁是, 是谁老师 ]
+        answer: 0
+      - id: q-h1-03-g09
+        type: choice
+        ask: Chọn câu đáp
+        tests: { grammar: [ h1-g08 ], words: [ 爸爸 ] }
+        prompt: { kind: audio, ref: s-h1-03-03 }
+        optionKind: hanzi
+        options: [ 那是我爸爸。, 那是谁？, 谢谢！ ]
+        answer: 0
+  dialogue:
+    parts:
+      - title: Xem ảnh
+        lines: [ s-h1-03-01, s-h1-03-02, s-h1-03-03, s-h1-03-04 ]
+      - title: Ai đây?
+        lines: [ s-h1-03-05, s-h1-03-06, s-h1-03-07, s-h1-03-08, s-h1-03-09, s-h1-03-10 ]
+    questions:
+      - id: q-h1-03-d01
+        type: choice
+        ask: Tấm ảnh đầu tiên là ai?
+        tests: { words: [ 妈妈 ], grammar: [ h1-g06 ] }
+        prompt: { kind: audio, ref: s-h1-03-02 }
+        optionKind: vi
+        options: [ mẹ của Tiểu Hồng, bố của Tiểu Hồng, cô giáo ]
+        answer: 0
+      - id: q-h1-03-d02
+        type: choice
+        ask: Ai là giáo viên?
+        tests: { words: [ 老师 ], grammar: [ h1-g07, h1-g08 ] }
+        prompt: { kind: audio, ref: s-h1-03-10 }
+        optionKind: vi
+        options: [ mẹ của Tiểu Hồng, anh của Tiểu Hồng, Tiểu Hoa ]
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-03-l01
+        type: tone
+        tests: { words: [ 是 ], tone: true }
+        prompt: { kind: audio, ref: 是 }
+        syllable: 0
+        answer: 4
+      - id: q-h1-03-l02
+        type: choice
+        tests: { words: [ 哥哥 ] }
+        prompt: { kind: audio, ref: 哥哥 }
+        optionKind: hanzi
+        options: [ 哥哥, 姐姐, 爸爸 ]
+        answer: 0
+      - id: q-h1-03-l03
+        type: choice
+        tests: { words: [ 朋友 ] }
+        prompt: { kind: audio, ref: 朋友 }
+        optionKind: vi
+        options: [ bạn, bố, mẹ ]
+        answer: 0
+      - id: q-h1-03-s01
+        type: readAloud
+        tests: { words: [ 谁 ], grammar: [ h1-g08 ], tone: true }
+        sentence: s-h1-03-01
+      - id: q-h1-03-f01
+        type: freeAnswer
+        tests: { words: [ 这 ], grammar: [ h1-g06, h1-g07 ] }
+        prompt: { kind: vi, text: Chỉ vào ảnh một người trong nhà bạn và giới thiệu người đó. }
+        rubric: [ Dùng 这是 hoặc 那是 + người (我妈妈, 我哥哥…) ]
+      - id: q-h1-03-f02
+        type: freeAnswer
+        tests: { words: [ 谁 ], grammar: [ h1-g08 ] }
+        prompt: { kind: vi, text: Bạn thấy một người lạ trong ảnh. Hỏi bạn mình người đó là ai. }
+        rubric: [ Hỏi bằng 这是谁？ hoặc 那是谁？ ]
+  writing:
+    chars: [ 这, 那, 是 ]
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-03-x01
+      type: typePinyin
+      tests: { words: [ 这 ] }
+      prompt: { kind: hanzi, ref: 这 }
+      answer: zhè
+    - id: q-h1-03-x02
+      type: choice
+      tests: { words: [ 那 ] }
+      prompt: { kind: hanzi, ref: 那 }
+      optionKind: vi
+      options: [ kia, đây, ai, là ]
+      answer: 0
+    - id: q-h1-03-x03
+      type: choice
+      tests: { words: [ 是 ] }
+      prompt: { kind: hanzi, ref: 是 }
+      optionKind: vi
+      options: [ là, ai, đây, tên là ]
+      answer: 0
+    - id: q-h1-03-x04
+      type: typePinyin
+      tests: { words: [ 谁 ] }
+      prompt: { kind: hanzi, ref: 谁 }
+      answer: shéi
+    - id: q-h1-03-x05
+      type: choice
+      tests: { words: [ 谁 ] }
+      prompt: { kind: vi, text: ai }
+      optionKind: hanzi
+      options: [ 谁, 什么, 是, 那 ]
+      answer: 0
+    - id: q-h1-03-x06
+      type: choice
+      tests: { words: [ 爸爸 ] }
+      prompt: { kind: audio, ref: 爸爸 }
+      optionKind: hanzi
+      options: [ 爸爸, 妈妈, 哥哥, 姐姐 ]
+      answer: 0
+    - id: q-h1-03-x07
+      type: choice
+      tests: { words: [ 妈妈 ] }
+      prompt: { kind: hanzi, ref: 妈妈 }
+      optionKind: vi
+      options: [ mẹ, bố, chị gái, anh trai ]
+      answer: 0
+    - id: q-h1-03-x08
+      type: choice
+      tests: { words: [ 哥哥 ] }
+      prompt: { kind: vi, text: anh trai }
+      optionKind: hanzi
+      options: [ 哥哥, 姐姐, 爸爸, 朋友 ]
+      answer: 0
+    - id: q-h1-03-x09
+      type: choice
+      tests: { words: [ 姐姐 ] }
+      prompt: { kind: hanzi, ref: 姐姐 }
+      optionKind: vi
+      options: [ chị gái, anh trai, mẹ, bạn ]
+      answer: 0
+    - id: q-h1-03-x10
+      type: typePinyin
+      tests: { words: [ 朋友 ] }
+      prompt: { kind: hanzi, ref: 朋友 }
+      answer: péngyou
+    - id: q-h1-03-x11
+      type: choice
+      tests: { words: [ 老师 ] }
+      prompt: { kind: vi, text: giáo viên }
+      optionKind: hanzi
+      options: [ 老师, 朋友, 哥哥, 名字 ]
+      answer: 0
+    - id: q-h1-03-x12
+      type: typePinyin
+      tests: { words: [ 老师 ] }
+      prompt: { kind: hanzi, ref: 老师 }
+      answer: lǎoshī
+    - id: q-h1-03-x13
+      type: choice
+      tests: { words: [ 那, 朋友 ], grammar: [ h1-g06 ] }
+      prompt: { kind: vi, text: Kia là bạn tôi. }
+      optionKind: hanzi
+      options: [ 那是我朋友, 这是我朋友, 那我是朋友 ]
+      answer: 0
+    - id: q-h1-03-x14
+      type: order
+      tests: { words: [ 哥哥 ], grammar: [ h1-g06, h1-g07 ] }
+      tiles: [ 是, 这, 我, 哥哥 ]
+      answer: s-h1-03-14
+    - id: q-h1-03-x15
+      type: trueFalse
+      tests: { words: [ 是 ], grammar: [ h1-g07 ] }
+      prompt: { kind: vi, text: Câu này đúng không? }
+      statement: 那我爸爸。
+      answer: false
+    - id: q-h1-03-x16
+      type: order
+      tests: { words: [ 谁 ], grammar: [ h1-g08 ] }
+      tiles: [ 谁, 那, 是 ]
+      answer: s-h1-03-03
+    - id: q-h1-03-x17
+      type: choice
+      ask: Chọn câu đáp
+      tests: { words: [ 妈妈 ], grammar: [ h1-g08 ] }
+      prompt: { kind: audio, ref: s-h1-03-01 }
+      optionKind: hanzi
+      options: [ 这是我妈妈。, 这是谁？, 谢谢！ ]
+      answer: 0
+    - id: q-h1-03-x18
+      type: tone
+      tests: { words: [ 那 ], tone: true }
+      prompt: { kind: audio, ref: 那 }
+      syllable: 0
+      answer: 4
+    - id: q-h1-03-x19
+      type: trueFalse
+      tests: { words: [ 姐姐 ] }
+      prompt: { kind: hanzi, ref: 姐姐 }
+      statement: 姐姐 nghĩa là em gái.
+      answer: false
+    - id: q-h1-03-x20
+      type: choice
+      tests: { words: [ 是 ] }
+      prompt: { kind: audio, ref: 是 }
+      optionKind: hanzi
+      options: [ 是, 谁, 这, 那 ]
+      answer: 0
+    - id: q-h1-03-x21
+      type: choice
+      tests: { words: [ 朋友 ], grammar: [ h1-g07 ] }
+      prompt: { kind: vi, text: Cô ấy là bạn tôi. }
+      optionKind: hanzi
+      options: [ 她是我朋友, 她我是朋友, 是她我朋友 ]
+      answer: 0

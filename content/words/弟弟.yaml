@@ -11,3 +11,4 @@ senses:
   example: s-w-771449
 examples:
 - s-w-771449
+image: { file: words/didi.png, prompt: "Only the red panda and the panda. The red panda walking the panda to school, the panda carrying a small schoolbag and holding the red panda's paw, morning village lane" }

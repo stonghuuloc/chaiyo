@@ -1,0 +1,13 @@
+hanzi: 么
+readings:
+  - pinyin: me
+    hanviet: ma
+radical: 丿
+ids: ⿱丿厶
+strokes: 3
+mnemonic:
+  hinh: như sợi chỉ (幺) xoắn nhỏ xíu, đứng lẻ loi không mang nghĩa riêng → chỉ làm "cái đuôi" gắn sau chữ khác.
+  am: 'Hán-Việt **ma** (phồn thể 麼) — cùng âm HV với 吗 (麼/嗎 đều "ma"), nên 什么 và 吗 dùng chung một mảnh âm. Lưu ý 么 còn là dạng viết tắt của 幺 (âm HV **yêu**, nghĩa "nhỏ, số 1 khi đọc số"): 幺洞幺 = 101.'
+  doiThat: 怎么, 这么, 那么, 多么 — xuất hiện trong hầu hết câu hỏi/cảm thán hằng ngày, tin nhắn, phụ đề.
+  tuongPhan: 么 luôn đọc thanh nhẹ, khác 幺 (yāo, thanh 1) — 幺 còn dùng đọc số "1" khi đọc số điện thoại/mã số (幺洞幺 = 101).
+  kind: invented

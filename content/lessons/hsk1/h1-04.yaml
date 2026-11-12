@@ -1,0 +1,264 @@
+# content/lessons/hsk1/h1-04.yaml
+id: h1-04
+level: 1
+topic: Gia đình
+order: 4
+title: Gia đình
+titleHanzi: 我的家
+goal: Nói người và vật là của ai, nói mình cũng giống người khác
+scene:
+  file: lessons/h1-04.png
+  cast: [ redpanda, takin, panda ]
+  prompt: Only the red panda, the takin and the baby panda. The red panda welcomes the takin at the door of a cozy little house; inside, the baby panda waves from a small desk with a schoolbag.
+sentences:
+  - { id: s-h1-04-01, hanzi: 这是我的家。, pinyin: zhè shì wǒ de jiā., vi: Đây là nhà tớ., speaker: redpanda, style: cheerful }
+  - { id: s-h1-04-02, hanzi: 那是谁？, pinyin: nà shì shéi?, vi: Kia là ai?, speaker: takin }
+  - { id: s-h1-04-03, hanzi: 那是我弟弟。他是学生。, pinyin: nà shì wǒ dìdi. tā shì xuésheng., vi: Đó là em trai tớ. Em ấy là học sinh., speaker: redpanda }
+  - { id: s-h1-04-04, hanzi: 我也是学生！, pinyin: wǒ yě shì xuésheng!, spoken: wó yě shì xuésheng!, vi: Tớ cũng là học sinh!, speaker: takin, style: cheerful }
+  - { id: s-h1-04-05, hanzi: 我的妹妹也是学生。, pinyin: wǒ de mèimei yě shì xuésheng., vi: Em gái tớ cũng là học sinh., speaker: takin }
+  - { id: s-h1-04-06, hanzi: 你妹妹是我的同学！, pinyin: nǐ mèimei shì wǒ de tóngxué!, vi: Em gái cậu là bạn cùng lớp của tớ!, speaker: redpanda, style: cheerful }
+  - { id: s-h1-04-07, hanzi: 我爸爸是医生。, pinyin: wǒ bàba shì yīshēng., vi: Bố tớ là bác sĩ., speaker: takin }
+  - { id: s-h1-04-08, hanzi: 我爸爸也是医生！, pinyin: wǒ bàba yě shì yīshēng!, vi: Bố tớ cũng là bác sĩ!, speaker: redpanda, style: cheerful }
+  - { id: s-h1-04-09, hanzi: 我妈妈也是老师。, pinyin: wǒ māma yě shì lǎoshī., vi: Mẹ tôi cũng là giáo viên. }
+  - { id: s-h1-04-10, hanzi: 这是我的名字。, pinyin: zhè shì wǒ de míngzi., vi: Đây là tên của tôi. }
+  - { id: s-h1-04-11, hanzi: 他也是我的同学。, pinyin: tā yě shì wǒ de tóngxué., vi: Cậu ấy cũng là bạn cùng lớp của tôi. }
+  - { id: s-h1-04-12, hanzi: 我的朋友叫阿牛。, pinyin: wǒ de péngyou jiào Ā Niú., vi: Bạn của tôi tên là A Ngưu., unknown: [ { hanzi: 阿牛, pinyin: Ā Niú, vi: A Ngưu (tên) } ] }
+sections:
+  warmup: {}
+  words:
+    ids: [ 的, 也, 家, 弟弟, 妹妹, 同学, 学生, 医生 ]
+  grammar:
+    ids: [ h1-g09, h1-g10 ]
+    drills:
+      - id: q-h1-04-g01
+        type: choice
+        tests: { grammar: [ h1-g09 ], words: [ 的 ] }
+        prompt: { kind: vi, text: tên của tôi }
+        optionKind: hanzi
+        options: [ 我的名字, 名字的我, 我名字的 ]
+        answer: 0
+      - id: q-h1-04-g02
+        type: order
+        tests: { grammar: [ h1-g09 ], words: [ 家 ] }
+        tiles: [ 的, 我, 是, 这, 家 ]
+        answer: s-h1-04-01
+      - id: q-h1-04-g03
+        type: choice
+        tests: { grammar: [ h1-g09 ], words: [ 的 ] }
+        prompt: { kind: vi, text: Bạn của tôi tên là A Ngưu. }
+        optionKind: hanzi
+        options: [ 我的朋友叫阿牛, 朋友的我叫阿牛, 我朋友的叫阿牛 ]
+        answer: 0
+      - id: q-h1-04-g04
+        type: order
+        tests: { grammar: [ h1-g10 ], words: [ 也, 学生 ] }
+        tiles: [ 是, 也, 我, 学生 ]
+        answer: s-h1-04-04
+      - id: q-h1-04-g05
+        type: choice
+        tests: { grammar: [ h1-g10 ], words: [ 医生 ] }
+        prompt: { kind: vi, text: Bố tôi cũng là bác sĩ. }
+        optionKind: hanzi
+        options: [ 我爸爸也是医生, 也我爸爸是医生, 我爸爸是也医生 ]
+        answer: 0
+      - id: q-h1-04-g06
+        type: trueFalse
+        tests: { grammar: [ h1-g10 ], words: [ 同学 ] }
+        prompt: { kind: vi, text: Câu này đúng không? }
+        statement: 也他是我的同学。
+        answer: false
+  dialogue:
+    parts:
+      - title: Nhà của Tiểu Hồng
+        lines: [ s-h1-04-01, s-h1-04-02, s-h1-04-03, s-h1-04-04 ]
+      - title: Cũng vậy!
+        lines: [ s-h1-04-05, s-h1-04-06, s-h1-04-07, s-h1-04-08 ]
+    questions:
+      - id: q-h1-04-d01
+        type: choice
+        ask: Ai là học sinh?
+        tests: { words: [ 弟弟 ], grammar: [ h1-g09 ] }
+        prompt: { kind: audio, ref: s-h1-04-03 }
+        optionKind: vi
+        options: [ em trai của Tiểu Hồng, bố của Tiểu Hồng, mẹ của Tiểu Hồng ]
+        answer: 0
+      - id: q-h1-04-d02
+        type: choice
+        ask: Câu này nghĩa là gì?
+        tests: { words: [ 也 ], grammar: [ h1-g10 ] }
+        prompt: { kind: audio, ref: s-h1-04-08 }
+        optionKind: vi
+        options: [ Bố tớ cũng là bác sĩ!, Bố tớ là bác sĩ!, Bố tớ cũng là giáo viên! ]
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-04-l01
+        type: tone
+        tests: { words: [ 也 ], tone: true }
+        prompt: { kind: audio, ref: 也 }
+        syllable: 0
+        answer: 3
+      - id: q-h1-04-l02
+        type: choice
+        tests: { words: [ 妹妹 ] }
+        prompt: { kind: audio, ref: 妹妹 }
+        optionKind: hanzi
+        options: [ 妹妹, 弟弟, 姐姐 ]
+        answer: 0
+      - id: q-h1-04-l03
+        type: choice
+        tests: { words: [ 同学 ] }
+        prompt: { kind: audio, ref: 同学 }
+        optionKind: vi
+        options: [ bạn cùng lớp, học sinh, bác sĩ ]
+        answer: 0
+      - id: q-h1-04-s01
+        type: readAloud
+        tests: { words: [ 家 ], grammar: [ h1-g09 ], tone: true }
+        sentence: s-h1-04-01
+      - id: q-h1-04-f01
+        type: freeAnswer
+        tests: { words: [ 的 ], grammar: [ h1-g09 ] }
+        prompt: { kind: vi, text: Giới thiệu một người trong nhà bạn và tên của người đó. }
+        rubric: [ Dùng 我的… hoặc 我… + 叫 / 是 ]
+      - id: q-h1-04-f02
+        type: freeAnswer
+        tests: { words: [ 也 ], grammar: [ h1-g10 ] }
+        prompt: { kind: vi, text: Bạn của bạn nói 我是学生。 Bạn cũng vậy. Bạn nói gì? }
+        rubric: [ Nói 我也是学生 ]
+  writing:
+    chars: [ 的, 也, 家 ]
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-04-x01
+      type: choice
+      tests: { words: [ 的 ] }
+      prompt: { kind: hanzi, ref: 的 }
+      optionKind: vi
+      options: [ của, cũng, là, ai ]
+      answer: 0
+    - id: q-h1-04-x02
+      type: typePinyin
+      tests: { words: [ 也 ] }
+      prompt: { kind: hanzi, ref: 也 }
+      answer: yě
+    - id: q-h1-04-x03
+      type: choice
+      tests: { words: [ 也 ] }
+      prompt: { kind: vi, text: cũng }
+      optionKind: hanzi
+      options: [ 也, 的, 是, 家 ]
+      answer: 0
+    - id: q-h1-04-x04
+      type: choice
+      tests: { words: [ 家 ] }
+      prompt: { kind: hanzi, ref: 家 }
+      optionKind: vi
+      options: [ nhà, bạn, tên, anh trai ]
+      answer: 0
+    - id: q-h1-04-x05
+      type: typePinyin
+      tests: { words: [ 家 ] }
+      prompt: { kind: hanzi, ref: 家 }
+      answer: jiā
+    - id: q-h1-04-x06
+      type: choice
+      tests: { words: [ 弟弟 ] }
+      prompt: { kind: vi, text: em trai }
+      optionKind: hanzi
+      options: [ 弟弟, 妹妹, 哥哥, 姐姐 ]
+      answer: 0
+    - id: q-h1-04-x07
+      type: choice
+      tests: { words: [ 妹妹 ] }
+      prompt: { kind: hanzi, ref: 妹妹 }
+      optionKind: vi
+      options: [ em gái, em trai, chị gái, mẹ ]
+      answer: 0
+    - id: q-h1-04-x08
+      type: typePinyin
+      tests: { words: [ 同学 ] }
+      prompt: { kind: hanzi, ref: 同学 }
+      answer: tóngxué
+    - id: q-h1-04-x09
+      type: choice
+      tests: { words: [ 学生 ] }
+      prompt: { kind: hanzi, ref: 学生 }
+      optionKind: vi
+      options: [ học sinh, giáo viên, bạn cùng lớp, bác sĩ ]
+      answer: 0
+    - id: q-h1-04-x10
+      type: choice
+      tests: { words: [ 医生 ] }
+      prompt: { kind: vi, text: bác sĩ }
+      optionKind: hanzi
+      options: [ 医生, 学生, 老师, 同学 ]
+      answer: 0
+    - id: q-h1-04-x11
+      type: typePinyin
+      tests: { words: [ 医生 ] }
+      prompt: { kind: hanzi, ref: 医生 }
+      answer: yīshēng
+    - id: q-h1-04-x12
+      type: choice
+      tests: { words: [ 家 ], grammar: [ h1-g09 ] }
+      prompt: { kind: vi, text: nhà của tôi }
+      optionKind: hanzi
+      options: [ 我的家, 家的我, 我家的 ]
+      answer: 0
+    - id: q-h1-04-x13
+      type: order
+      tests: { words: [ 的 ], grammar: [ h1-g09 ] }
+      tiles: [ 的, 名字, 这, 是, 我 ]
+      answer: s-h1-04-10
+    - id: q-h1-04-x14
+      type: choice
+      tests: { words: [ 也, 学生 ], grammar: [ h1-g10 ] }
+      prompt: { kind: vi, text: Tôi cũng là học sinh. }
+      optionKind: hanzi
+      options: [ 我也是学生, 也我是学生, 我是也学生 ]
+      answer: 0
+    - id: q-h1-04-x15
+      type: order
+      tests: { words: [ 同学 ], grammar: [ h1-g10, h1-g09 ] }
+      tiles: [ 也, 他, 是, 我的, 同学 ]
+      answer: s-h1-04-11
+    - id: q-h1-04-x16
+      type: tone
+      tests: { words: [ 家 ], tone: true }
+      prompt: { kind: audio, ref: 家 }
+      syllable: 0
+      answer: 1
+    - id: q-h1-04-x17
+      type: trueFalse
+      tests: { words: [ 弟弟 ] }
+      prompt: { kind: hanzi, ref: 弟弟 }
+      statement: 弟弟 nghĩa là em trai.
+      answer: true
+    - id: q-h1-04-x18
+      type: trueFalse
+      tests: { words: [ 同学 ] }
+      prompt: { kind: hanzi, ref: 同学 }
+      statement: 同学 nghĩa là giáo viên.
+      answer: false
+    - id: q-h1-04-x19
+      type: choice
+      tests: { words: [ 学生 ] }
+      prompt: { kind: audio, ref: 学生 }
+      optionKind: hanzi
+      options: [ 学生, 同学, 医生, 老师 ]
+      answer: 0
+    - id: q-h1-04-x20
+      type: choice
+      tests: { words: [ 也 ] }
+      prompt: { kind: audio, ref: 也 }
+      optionKind: hanzi
+      options: [ 也, 的, 家, 是 ]
+      answer: 0
+    - id: q-h1-04-x21
+      type: trueFalse
+      tests: { words: [ 的 ], grammar: [ h1-g09 ] }
+      prompt: { kind: vi, text: Câu này đúng không? }
+      statement: 名字的我叫小红。
+      answer: false

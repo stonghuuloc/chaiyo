@@ -29,7 +29,7 @@ Feature: Section: Nghe & nói
 
   Scenario: Listening questions are real
     Given I open "Nghe & nói" (5 steps)
-    Then I get a tone question (4 contours, answer hǎo), a word question and a meaning question, each with the talking Hachiware clip
+    Then I get a tone question (4 contours, answer hǎo), a word question and a meaning question, each with the talking red panda clip
     And my answers are graded and recorded as Attempts
 
   Scenario: Real mic level meter

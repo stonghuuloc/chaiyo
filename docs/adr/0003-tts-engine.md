@@ -4,7 +4,7 @@ Status: superseded by [0004](0004-azure-single-tts-source.md) (2026-11-09)
 
 ## Context
 
-The Audio Renderer (CHY-15) turns every manifest entry (`sha256(hanzi|voice)`, voices `redpanda`, `takin`, `narrator`) into an mp3. The engine has to say the readings that break TTS (polyphones such as 行, 一 and 不 sandhi, 3-3 sandhi) and keep one stable voice per speaking Cast member (the ticket names them Hachiware and Momonga; the Cast ids are `redpanda` and `takin`).
+The Audio Renderer (CHY-15) turns every manifest entry (`sha256(hanzi|voice)`, voices `redpanda`, `takin`, `narrator`) into an mp3. The engine has to say the readings that break TTS (polyphones such as 行, 一 and 不 sandhi, 3-3 sandhi) and keep one stable voice per speaking Cast member (the ticket names them the red panda and the takin; the Cast ids are `redpanda` and `takin`).
 
 The spike (CHY-14) rendered a 30-item test set ([`spike/sentences.yaml`](../../spike/sentences.yaml)) with one engine, OmniVoice (`k2-fsa/OmniVoice`, local, Apple Silicon `mps`, float16). Loc ruled out Azure and CosyVoice before the spike, and the VoiceStudio app is dropped too: the spike calls OmniVoice directly through its Python package (`spike/omnivoice_render.py`), so VoiceStudio's AGPL app is not in the stack. The blind comparison is therefore between two ways of pinning an OmniVoice voice, not between engines:
 
@@ -56,10 +56,10 @@ Loc accepted the non-commercial CC-BY-NC weights on 2026-11-07 (M-2 design Q1, a
 
 ### Voice map
 
-| Voice | Ticket name | Voice id | Voice prompt | Seed | Base pace | Restore |
+| Voice | Cast member | Voice id | Voice prompt | Seed | Base pace | Restore |
 |---|---|---|---|---|---|---|
-| `redpanda` | Hachiware | `redpanda-1` | female, teenager, moderate pitch | 1401 | 0.85 | render the audition line from the prompt and seed, reuse as reference |
-| `takin` | Momonga | `takin-3` | male, young adult, high pitch | 1402 | 0.85 | same |
+| `redpanda` | red panda | `redpanda-1` | female, teenager, moderate pitch | 1401 | 0.85 | render the audition line from the prompt and seed, reuse as reference |
+| `takin` | takin | `takin-3` | male, young adult, high pitch | 1402 | 0.85 | same |
 | `narrator` | none | `narrator-1` | male, middle-aged, moderate pitch | 1403 | 0.75 | same |
 
 The same ids are in [`content/cast.yaml`](../../content/cast.yaml) and `spike/sentences.yaml` (`voices.chosen`, `voices.pace`).

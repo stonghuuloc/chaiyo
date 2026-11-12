@@ -42,8 +42,8 @@ Feature: Sections: Khởi động + Từ mới + Word Page
 
   Scenario: Mini-check uses the talking Cast
     Given I finish word 3
-    Then I see "Kiểm tra nhanh" and "Nghe rồi chọn từ đúng" with the talking Hachiware saying the clip
-    And tapping Hachiware or the speaker replays it, and a second tap plays it slowly
+    Then I see "Kiểm tra nhanh" and "Nghe rồi chọn từ đúng" with the talking red panda saying the clip
+    And tapping the red panda or the speaker replays it, and a second tap plays it slowly
 
   Scenario: Từ mới done
     When I finish word 10

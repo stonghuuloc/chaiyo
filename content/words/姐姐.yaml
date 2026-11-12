@@ -11,3 +11,4 @@ senses:
   example: s-w-469258
 examples:
 - s-w-469258
+image: { file: words/jiejie.png, prompt: "Only the red panda and the fawn. The red panda wearing a small hair ribbon gently brushing the fawn's head fur like a big sister, cozy bedroom" }

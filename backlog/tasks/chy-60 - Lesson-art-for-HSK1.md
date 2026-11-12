@@ -23,7 +23,7 @@ Word art and result scenes via `scripts/gen-result-art.sh` (gpt-image-2), cast b
 ```gherkin
 Feature: Lesson art for HSK1
   As a content author
-  I want art for every HSK 1 lesson in the approved Chiikawa style
+  I want art for every HSK 1 lesson in the approved cast v2 style
   So that lessons and results feel warm and consistent
 
   Scenario: Every lesson has its art
@@ -36,9 +36,9 @@ Feature: Lesson art for HSK1
     Then it ends with "Only characters from the lineup may appear, no other creatures or people."
 
   Scenario: Cast by canon role
-    When a scene needs Hachiware, Chiikawa, Usagi or Momonga
+    When a scene needs the red panda, baby panda, fawn or takin
     Then each character is cast in the role from the "Art — locked" table
-    And for "duibuqi" and "meiguanxi" Chiikawa comforts a crying Hachiware, not the reverse
+    And for "duibuqi" and "meiguanxi" the baby panda comforts a crying red panda, not the reverse
 
   Scenario: Re-roll a bad image
     When I run `scripts/gen-result-art.sh <name>` for one name

@@ -162,9 +162,33 @@ export const references = (set: ContentSet, refs: LintRefs): LintError[] => {
 				);
 		});
 
+		const gids = sections.grammar.ids;
+		if (gids.length < 1 || gids.length > 3)
+			add(
+				file,
+				['sections', 'grammar', 'ids'],
+				`Lesson has ${gids.length} grammar points, needs 1 to 3`
+			);
 		const stds = points.flatMap((g) => g.value.std);
-		if (stds.length && !stds.some((n) => refs.syllabus.get(n) === l.level))
+		if (!stds.some((n) => refs.syllabus.get(n) === l.level))
 			add(file, ['sections', 'grammar', 'ids'], `No grammar std item at lesson level ${l.level}`);
+
+		const uses = (qs: Question[], id: string) =>
+			qs.filter((q) => q.tests.grammar?.includes(id)).length;
+		const applied = [...sections.dialogue.questions, ...sections.listenSpeak.items];
+		gids.forEach((id, i) => {
+			if (!grammarIds.has(id)) return;
+			const path = ['sections', 'grammar', 'ids', i];
+			const gate = uses(l.gate.pool, id);
+			if (gate < 2)
+				add(file, path, `Grammar point ${id} is tested by ${gate} gate pool questions, needs 2`);
+			if (!uses(applied, id))
+				add(
+					file,
+					path,
+					`Grammar point ${id} is not tested by any dialogue or listenSpeak question`
+				);
+		});
 	};
 
 	for (const { file, value } of set.lessons) {

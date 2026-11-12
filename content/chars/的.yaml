@@ -1,0 +1,20 @@
+hanzi: 的
+readings:
+  - pinyin: de
+    hanviet: đích
+  - pinyin: dí
+    hanviet: đích
+  - pinyin: dì
+    hanviet: đích
+  - pinyin: dī
+    hanviet: đích
+    rare: true
+radical: 白
+ids: ⿰白勺
+strokes: 8
+mnemonic:
+  hinh: cái muôi (勺) màu trắng (白) — muôi của ai thì là của người đó
+  am: đích — dùng hằng ngày trong mục đích (目的), đích thực (的确)
+  doiThat: '我的 (tab "Của tôi" trong mọi app: WeChat, Alipay, Taobao); 目的地 ở sân bay/app xe; gọi taxi qua app là 打的/的士'
+  tuongPhan: "≠ 约 (yuē, đã dùng trong hẹn) = 纟 + 勺. Cùng 勺 bên phải, khác bên trái: 白→的, 纟→约"
+  kind: invented

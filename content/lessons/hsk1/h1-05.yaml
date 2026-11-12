@@ -1,0 +1,300 @@
+# content/lessons/hsk1/h1-05.yaml
+id: h1-05
+level: 1
+topic: Gia đình
+order: 5
+title: Bạn mấy tuổi?
+titleHanzi: 你几岁
+goal: Đếm đến 99, hỏi và nói tuổi, hỏi câu có hay không
+scene:
+  file: lessons/h1-05.png
+  cast: [ redpanda, takin, panda ]
+  prompt: Only the red panda, the takin and the baby panda. The red panda and the takin sit at a picnic table with a small birthday cake with nine candles; the baby panda sits beside them, proudly raising one round paw.
+sentences:
+  - { id: s-h1-05-01, hanzi: 小红，你几岁？, pinyin: "Xiǎo Hóng, nǐ jǐ suì?", spoken: "Xiǎo Hóng, ní jǐ suì?", vi: "Tiểu Hồng, cậu mấy tuổi?", speaker: takin, unknown: [ { hanzi: 小红, pinyin: Xiǎo Hóng, vi: Tiểu Hồng (tên) } ] }
+  - { id: s-h1-05-02, hanzi: 我九岁。你呢？, pinyin: wǒ jiǔ suì. nǐ ne?, spoken: wó jiǔ suì. nǐ ne?, vi: Tớ chín tuổi. Còn cậu?, speaker: redpanda }
+  - { id: s-h1-05-03, hanzi: 我也九岁！, pinyin: wǒ yě jiǔ suì!, spoken: wó yé jiǔ suì!, vi: Tớ cũng chín tuổi!, speaker: takin, style: cheerful }
+  - { id: s-h1-05-04, hanzi: 你弟弟几岁？, pinyin: nǐ dìdi jǐ suì?, vi: Em trai cậu mấy tuổi?, speaker: takin }
+  - { id: s-h1-05-05, hanzi: 他五岁。, pinyin: tā wǔ suì., vi: Em ấy năm tuổi., speaker: redpanda }
+  - { id: s-h1-05-06, hanzi: 他是学生吗？, pinyin: tā shì xuésheng ma?, vi: Em ấy là học sinh à?, speaker: takin }
+  - { id: s-h1-05-07, hanzi: 是，他是学生。, pinyin: "shì, tā shì xuésheng.", vi: "Ừ, em ấy là học sinh.", speaker: redpanda }
+  - { id: s-h1-05-08, hanzi: 你爸爸是老师吗？, pinyin: nǐ bàba shì lǎoshī ma?, vi: Bố cậu là giáo viên à?, speaker: takin }
+  - { id: s-h1-05-09, hanzi: 他是医生。我妈妈是老师。, pinyin: tā shì yīshēng. wǒ māma shì lǎoshī., vi: Bố tớ là bác sĩ. Mẹ tớ là giáo viên., speaker: redpanda }
+  - { id: s-h1-05-10, hanzi: 我八岁。, pinyin: wǒ bā suì., vi: Tôi tám tuổi. }
+  - { id: s-h1-05-11, hanzi: 我十岁，你呢？, pinyin: "wǒ shí suì, nǐ ne?", vi: "Tôi mười tuổi, còn bạn?" }
+  - { id: s-h1-05-12, hanzi: 我哥哥二十岁。, pinyin: wǒ gēge èrshí suì., vi: Anh tôi hai mươi tuổi. }
+  - { id: s-h1-05-13, hanzi: 你是老师吗？, pinyin: nǐ shì lǎoshī ma?, vi: Bạn là giáo viên à? }
+  - { id: s-h1-05-14, hanzi: 他十七岁。, pinyin: tā shíqī suì., vi: Cậu ấy mười bảy tuổi. }
+  - { id: s-h1-05-15, hanzi: 你几岁？, pinyin: nǐ jǐ suì?, spoken: ní jǐ suì?, vi: Bạn mấy tuổi? }
+sections:
+  warmup: {}
+  words:
+    ids: [ 一, 二, 三, 四, 五, 六, 七, 八, 九, 十, 几, 岁, 吗, 呢 ]
+  grammar:
+    ids: [ h1-g11, h1-g12, h1-g13 ]
+    drills:
+      - id: q-h1-05-g01
+        type: choice
+        tests: { grammar: [ h1-g11 ], words: [ 二, 十 ] }
+        prompt: { kind: vi, text: hai mươi (20) }
+        optionKind: hanzi
+        options: [ 二十, 十二, 二二 ]
+        answer: 0
+      - id: q-h1-05-g02
+        type: choice
+        tests: { grammar: [ h1-g11 ], words: [ 五 ] }
+        prompt: { kind: vi, text: mười lăm (15) }
+        optionKind: hanzi
+        options: [ 十五, 五十, 一五 ]
+        answer: 0
+      - id: q-h1-05-g03
+        type: choice
+        tests: { grammar: [ h1-g11 ], words: [ 九 ] }
+        prompt: { kind: vi, text: chín mươi chín (99) }
+        optionKind: hanzi
+        options: [ 九十九, 九九十, 十九九 ]
+        answer: 0
+      - id: q-h1-05-g04
+        type: order
+        tests: { grammar: [ h1-g12 ], words: [ 几, 岁 ] }
+        tiles: [ 几, 你, 岁 ]
+        answer: s-h1-05-15
+      - id: q-h1-05-g05
+        type: choice
+        tests: { grammar: [ h1-g12 ], words: [ 八 ] }
+        prompt: { kind: vi, text: Tôi tám tuổi. }
+        optionKind: hanzi
+        options: [ 我八岁, 我是八岁, 八岁我 ]
+        answer: 0
+      - id: q-h1-05-g06
+        type: choice
+        ask: Chọn câu đáp
+        tests: { grammar: [ h1-g12 ], words: [ 七 ] }
+        prompt: { kind: audio, ref: s-h1-05-15 }
+        optionKind: hanzi
+        options: [ 我七岁。, 我是七。, 七岁吗？ ]
+        answer: 0
+      - id: q-h1-05-g07
+        type: choice
+        tests: { grammar: [ h1-g13 ], words: [ 吗 ] }
+        prompt: { kind: vi, text: Cậu ấy là học sinh à? }
+        optionKind: hanzi
+        options: [ 他是学生吗, 他是学生呢, 他吗是学生 ]
+        answer: 0
+      - id: q-h1-05-g08
+        type: trueFalse
+        tests: { grammar: [ h1-g13 ], words: [ 吗 ] }
+        prompt: { kind: vi, text: Câu này đúng không? }
+        statement: 你几岁吗？
+        answer: false
+      - id: q-h1-05-g09
+        type: choice
+        tests: { grammar: [ h1-g13 ], words: [ 呢 ] }
+        prompt: { kind: vi, text: Tớ chín tuổi. Còn cậu? }
+        optionKind: hanzi
+        options: [ 我九岁，你呢？, 我九岁，你吗？, 我九岁，呢你？ ]
+        answer: 0
+  dialogue:
+    parts:
+      - title: Mấy tuổi?
+        lines: [ s-h1-05-01, s-h1-05-02, s-h1-05-03 ]
+      - title: Em trai Tiểu Hồng
+        lines: [ s-h1-05-04, s-h1-05-05, s-h1-05-06, s-h1-05-07, s-h1-05-08, s-h1-05-09 ]
+    questions:
+      - id: q-h1-05-d01
+        type: choice
+        ask: Tiểu Hồng mấy tuổi?
+        tests: { words: [ 九 ], grammar: [ h1-g11, h1-g12 ] }
+        prompt: { kind: audio, ref: s-h1-05-02 }
+        optionKind: vi
+        options: [ chín tuổi, năm tuổi, mười tuổi ]
+        answer: 0
+      - id: q-h1-05-d02
+        type: choice
+        ask: A Ngưu hỏi gì?
+        tests: { words: [ 吗 ], grammar: [ h1-g13 ] }
+        prompt: { kind: audio, ref: s-h1-05-06 }
+        optionKind: vi
+        options: [ Em ấy là học sinh à?, Em ấy mấy tuổi?, Em ấy tên gì? ]
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-05-l01
+        type: tone
+        tests: { words: [ 几 ], tone: true }
+        prompt: { kind: audio, ref: 几 }
+        syllable: 0
+        answer: 3
+      - id: q-h1-05-l02
+        type: choice
+        tests: { words: [ 四 ] }
+        prompt: { kind: audio, ref: 四 }
+        optionKind: hanzi
+        options: [ 四, 十, 是 ]
+        answer: 0
+      - id: q-h1-05-l03
+        type: choice
+        tests: { words: [ 六 ] }
+        prompt: { kind: audio, ref: 六 }
+        optionKind: hanzi
+        options: [ 六, 九, 七 ]
+        answer: 0
+      - id: q-h1-05-s01
+        type: readAloud
+        tests: { words: [ 岁 ], grammar: [ h1-g12 ], tone: true }
+        sentence: s-h1-05-15
+      - id: q-h1-05-f01
+        type: freeAnswer
+        tests: { words: [ 呢 ], grammar: [ h1-g12, h1-g13 ] }
+        prompt: { kind: vi, text: "Nói tuổi của bạn, rồi hỏi lại bạn mình." }
+        rubric: [ Dùng 我 + số + 岁, Hỏi lại bằng 你呢？ ]
+      - id: q-h1-05-f02
+        type: freeAnswer
+        tests: { words: [ 吗 ], grammar: [ h1-g13 ] }
+        prompt: { kind: vi, text: Hỏi một bạn xem bạn ấy có phải học sinh không. }
+        rubric: [ Câu kể + 吗？ (你是学生吗？) ]
+  writing:
+    chars: [ 几, 岁, 十 ]
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-05-x01
+      type: choice
+      tests: { words: [ 一 ] }
+      prompt: { kind: hanzi, ref: 一 }
+      optionKind: vi
+      options: [ một, hai, ba, mười ]
+      answer: 0
+    - id: q-h1-05-x02
+      type: choice
+      tests: { words: [ 二 ] }
+      prompt: { kind: vi, text: hai }
+      optionKind: hanzi
+      options: [ 二, 三, 十, 一 ]
+      answer: 0
+    - id: q-h1-05-x03
+      type: typePinyin
+      tests: { words: [ 三 ] }
+      prompt: { kind: hanzi, ref: 三 }
+      answer: sān
+    - id: q-h1-05-x04
+      type: choice
+      tests: { words: [ 四 ] }
+      prompt: { kind: audio, ref: 四 }
+      optionKind: hanzi
+      options: [ 四, 十, 是, 谁 ]
+      answer: 0
+    - id: q-h1-05-x05
+      type: choice
+      tests: { words: [ 五 ] }
+      prompt: { kind: hanzi, ref: 五 }
+      optionKind: vi
+      options: [ năm, bốn, sáu, chín ]
+      answer: 0
+    - id: q-h1-05-x06
+      type: typePinyin
+      tests: { words: [ 六 ] }
+      prompt: { kind: hanzi, ref: 六 }
+      answer: liù
+    - id: q-h1-05-x07
+      type: choice
+      tests: { words: [ 七 ] }
+      prompt: { kind: vi, text: bảy }
+      optionKind: hanzi
+      options: [ 七, 八, 九, 六 ]
+      answer: 0
+    - id: q-h1-05-x08
+      type: typePinyin
+      tests: { words: [ 八 ] }
+      prompt: { kind: hanzi, ref: 八 }
+      answer: bā
+    - id: q-h1-05-x09
+      type: choice
+      tests: { words: [ 九 ] }
+      prompt: { kind: hanzi, ref: 九 }
+      optionKind: vi
+      options: [ chín, sáu, bảy, tám ]
+      answer: 0
+    - id: q-h1-05-x10
+      type: typePinyin
+      tests: { words: [ 十 ] }
+      prompt: { kind: hanzi, ref: 十 }
+      answer: shí
+    - id: q-h1-05-x11
+      type: choice
+      tests: { words: [ 几 ] }
+      prompt: { kind: hanzi, ref: 几 }
+      optionKind: vi
+      options: [ mấy, tuổi, gì, ai ]
+      answer: 0
+    - id: q-h1-05-x12
+      type: typePinyin
+      tests: { words: [ 岁 ] }
+      prompt: { kind: hanzi, ref: 岁 }
+      answer: suì
+    - id: q-h1-05-x13
+      type: choice
+      tests: { words: [ 三, 五, 十 ], grammar: [ h1-g11 ] }
+      prompt: { kind: vi, text: ba mươi lăm (35) }
+      optionKind: hanzi
+      options: [ 三十五, 五十三, 三五十 ]
+      answer: 0
+    - id: q-h1-05-x14
+      type: choice
+      tests: { words: [ 八 ], grammar: [ h1-g11 ] }
+      prompt: { kind: vi, text: mười tám (18) }
+      optionKind: hanzi
+      options: [ 十八, 八十, 一八 ]
+      answer: 0
+    - id: q-h1-05-x15
+      type: order
+      tests: { words: [ 几 ], grammar: [ h1-g12 ] }
+      tiles: [ 几, 你, 岁 ]
+      answer: s-h1-05-15
+    - id: q-h1-05-x16
+      type: choice
+      tests: { words: [ 岁 ], grammar: [ h1-g12 ] }
+      prompt: { kind: vi, text: Em trai tôi năm tuổi. }
+      optionKind: hanzi
+      options: [ 我弟弟五岁, 我弟弟是五, 五岁我弟弟 ]
+      answer: 0
+    - id: q-h1-05-x17
+      type: choice
+      tests: { words: [ 吗 ], grammar: [ h1-g13 ] }
+      prompt: { kind: vi, text: Bạn là giáo viên à? }
+      optionKind: hanzi
+      options: [ 你是老师吗, 你是老师呢, 你吗是老师 ]
+      answer: 0
+    - id: q-h1-05-x18
+      type: trueFalse
+      tests: { words: [ 吗 ], grammar: [ h1-g13 ] }
+      prompt: { kind: vi, text: Câu này đúng không? }
+      statement: 他几岁吗？
+      answer: false
+    - id: q-h1-05-x19
+      type: choice
+      ask: Chọn câu đáp
+      tests: { words: [ 呢 ], grammar: [ h1-g13 ] }
+      prompt: { kind: audio, ref: s-h1-05-11 }
+      optionKind: hanzi
+      options: [ 我八岁。, 你几岁？, 是。 ]
+      answer: 0
+    - id: q-h1-05-x20
+      type: tone
+      tests: { words: [ 九 ], tone: true }
+      prompt: { kind: audio, ref: 九 }
+      syllable: 0
+      answer: 3
+    - id: q-h1-05-x21
+      type: trueFalse
+      tests: { words: [ 呢 ] }
+      prompt: { kind: hanzi, ref: 呢 }
+      statement: "你呢？ nghĩa là “Còn bạn?”."
+      answer: true
+    - id: q-h1-05-x22
+      type: choice
+      tests: { words: [ 十 ] }
+      prompt: { kind: audio, ref: 十 }
+      optionKind: hanzi
+      options: [ 十, 四, 是, 七 ]
+      answer: 0

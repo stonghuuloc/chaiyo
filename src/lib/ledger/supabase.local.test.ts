@@ -50,7 +50,11 @@ describe.skipIf(!process.env.LEDGER_SUPABASE)('ledger on local supabase', () => 
 		});
 		const linh = await learner('linh', fetch as typeof globalThis.fetch);
 		const idb = new IDBFactory();
-		const ledger = await openLedger({ initial: initialState(), store: supabaseStore(linh), idb });
+		const ledger = await openLedger({
+			initial: initialState(),
+			store: supabaseStore(linh, (await linh.auth.getSession()).data.session!.user.id),
+			idb
+		});
 		down = true;
 		for (let n = 1; n <= 10; n++)
 			await ledger.record(att(`a-${String(n).padStart(2, '0')}`, T + n * MIN, '你', 'the', true));
@@ -60,7 +64,11 @@ describe.skipIf(!process.env.LEDGER_SUPABASE)('ledger on local supabase', () => 
 		await ledger.sync();
 		expect(await count(linh)).toBe(10);
 		expect(ledger.pending()).toBe(0);
-		const reopened = await openLedger({ initial: initialState(), store: supabaseStore(linh), idb });
+		const reopened = await openLedger({
+			initial: initialState(),
+			store: supabaseStore(linh, (await linh.auth.getSession()).data.session!.user.id),
+			idb
+		});
 		posts = 0;
 		await reopened.sync();
 		expect(posts).toBe(0);
@@ -69,7 +77,7 @@ describe.skipIf(!process.env.LEDGER_SUPABASE)('ledger on local supabase', () => 
 	it("merges Linh's other device and hides her rows from Nam", async () => {
 		const linh = await learner('linh');
 		const nam = await learner('nam');
-		const store = supabaseStore(linh);
+		const store = supabaseStore(linh, (await linh.auth.getSession()).data.session!.user.id);
 		const a = await openLedger({ initial: initialState(), store, idb: new IDBFactory(), db: 'A' });
 		const b = await openLedger({ initial: initialState(), store, idb: new IDBFactory(), db: 'B' });
 		for (const [i, m] of [0, 2, 4, 6].entries())
@@ -90,7 +98,7 @@ describe.skipIf(!process.env.LEDGER_SUPABASE)('ledger on local supabase', () => 
 		expect(a.state()).toEqual(fold(server as Attempt[]));
 		const other = await openLedger({
 			initial: initialState(),
-			store: supabaseStore(nam),
+			store: supabaseStore(nam, (await nam.auth.getSession()).data.session!.user.id),
 			idb: new IDBFactory(),
 			db: 'N'
 		});

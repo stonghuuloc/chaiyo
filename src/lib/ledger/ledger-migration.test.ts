@@ -54,6 +54,18 @@ describe('ledger migration', () => {
 		await asOwner(db);
 	});
 
+	it('rejects an explicitly pinned attempt under another learner session', async () => {
+		await asLearner(db, NAM);
+		expect(
+			await code(
+				db.query(
+					`insert into attempts (learner_id, id, question_id, content_sha, correct, ms, at) values ('${LINH}', 'private', 'q', 'sha', true, 1, now()) on conflict (learner_id, id) do nothing`
+				)
+			)
+		).toBe('42501');
+		await asOwner(db);
+	});
+
 	it('attempts.step stores jsonb and stays append-only', async () => {
 		await asLearner(db, LINH);
 		await db.query(

@@ -11,3 +11,4 @@ senses:
   example: s-w-1163561
 examples:
 - s-w-1163561
+image: { file: words/xuesheng.png, prompt: "Only the panda. The panda carrying a schoolbag and holding a blank notebook, walking through an open school gate, morning" }

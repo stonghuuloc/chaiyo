@@ -58,13 +58,22 @@ async function paged<T>(query: (from: number) => PromiseLike<Result<T>>): Promis
 	}
 }
 
-export function supabaseStore(client: SupabaseClient): Store {
+export function supabaseStore(client: SupabaseClient, learnerId: string): Store {
+	const own = async () => {
+		const { data, error } = await client.auth.getSession();
+		if (error) throw error;
+		if (!learnerId || data.session?.user.id !== learnerId)
+			throw new Error('signed in as another learner');
+	};
 	return {
 		async push(inputs) {
-			const attempts = inputs.filter((i): i is Attempt => !('kind' in i)).map(toRow);
+			await own();
+			const attempts = inputs
+				.filter((i): i is Attempt => !('kind' in i))
+				.map((a) => ({ ...toRow(a), learner_id: learnerId }));
 			const saves = inputs
 				.filter((i): i is WordSaved => 'kind' in i)
-				.map((s) => ({ word: s.word, saved_at: s.at }));
+				.map((s) => ({ learner_id: learnerId, word: s.word, saved_at: s.at }));
 			if (attempts.length > 0) {
 				const { error, status } = await client
 					.from('attempts')
@@ -79,10 +88,12 @@ export function supabaseStore(client: SupabaseClient): Store {
 			}
 		},
 		async pull() {
+			await own();
 			const attempts = await paged<Row>((from) =>
 				client
 					.from('attempts')
 					.select(COLS)
+					.eq('learner_id', learnerId)
 					.order('at')
 					.order('id')
 					.range(from, from + PAGE - 1)
@@ -91,6 +102,7 @@ export function supabaseStore(client: SupabaseClient): Store {
 				client
 					.from('lexicon_saves')
 					.select('word, saved_at')
+					.eq('learner_id', learnerId)
 					.order('saved_at')
 					.order('word')
 					.range(from, from + PAGE - 1)

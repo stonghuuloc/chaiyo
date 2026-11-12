@@ -31,3 +31,4 @@ examples:
 - s-w-335119
 - s-w-2555373
 - s-w-ai-f038ccea
+image: { file: words/jia.png, prompt: "Only the panda. The panda waving from the doorstep of a cozy little cottage with a chimney and warm lit windows, evening" }

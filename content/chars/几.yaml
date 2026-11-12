@@ -1,0 +1,16 @@
+hanzi: 几
+readings:
+  - pinyin: jǐ
+    hanviet: kỷ
+  - pinyin: jī
+    hanviet: cơ
+    rare: true
+radical: 几
+ids: 几
+strokes: 2
+mnemonic:
+  hinh: Hình vẽ cái bàn/ghế nhỏ có 2 chân — nghĩa gốc "cái kỷ" (bàn để đồ), sau mượn dùng để hỏi số lượng nhỏ "mấy, bao nhiêu".
+  am: '"kỷ" — như trong 茶几 (trà kỷ, bàn trà nhỏ), 几乎 (kỷ hồ, hầu như — ít gặp).'
+  doiThat: '"几点" trên đồng hồ/app hẹn giờ khi hỏi mấy giờ; "要几个?" khi gọi món ở quán ăn.'
+  tuongPhan: ≠ 儿 (học cùng lesson này) — 几 có móc nhọn ở cuối nét ngang bên phải, 儿 chỉ có 2 nét cong mềm, không móc.
+  kind: etymology
