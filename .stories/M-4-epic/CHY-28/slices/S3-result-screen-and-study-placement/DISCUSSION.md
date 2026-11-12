@@ -15,6 +15,11 @@ ACs: AC4, AC5 · design lead CHAA (M-4 design wave) · 2026-11-11
 
 - [AC5] Q: how do the 25 Attempts reach the server while the learner stays online (PR #107 review)? A: the page calls `ledger.sync()` after recording. CHY-26 S3 makes a sync already in flight push the records that land during it. Without both, the Attempts stay pending until a network change, and a second device never sees the placement. Confidence 85%.
 
+- [AC5] Q: offline with an expired access token, getSession() is null; does the learner Ledger fall back to a shared db (the dev ledger opens chaiyo-ledger-dev)? A: no. learnerLedger takes a session and has no shared fallback. With no session the result page shows the result but records nothing and keeps the handoff in sessionStorage, so the Attempts reach the learner's own Ledger on the next visit with a session (sessionStorage survives a reload). Confidence 85%.
+- [AC5] Q: when does /placement/result remove the handoff? A: it reads it on mount and removes it once every record has persisted (a reload in between re-records known ids, which the Ledger ignores). An exit from /placement writes nothing (S2). Confidence 85%.
+- [AC4] Q: the desktop result is 1040px wide, wider than FocusFrame's columns. A: FocusFrame gets a `wide` prop (R2 file, 3 lines) instead of a second frame in the page; --col = narrow + form + 80px (1040), no new token. Result art ships placed-1280.webp (3:2, from assets/onboard/placed.png). Confidence 80%.
+- [AC4] Q: the Bài 0 start art at desktop? A: start-b0.webp (860w) only; the SPEC names only placed-1280. Confidence 80%.
+
 ## Open — needs an answer before execute
 None: WAVE-PLAN Q3 is assumed A.
 

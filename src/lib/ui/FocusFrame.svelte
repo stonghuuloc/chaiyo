@@ -5,11 +5,12 @@
 	type Props = {
 		step?: unknown;
 		narrow?: boolean;
+		wide?: boolean;
 		top?: Snippet;
 		actions?: Snippet;
 		children: Snippet;
 	};
-	let { step, narrow = false, top, actions, children }: Props = $props();
+	let { step, narrow = false, wide = false, top, actions, children }: Props = $props();
 	let column: HTMLElement | undefined = $state();
 	let first = true;
 
@@ -28,7 +29,10 @@
 	});
 </script>
 
-<div class="frame" class:narrow>
+<div
+	class="frame {wide ? 'lg:[--col:calc(var(--container-narrow)+var(--container-form)+80px)]!' : ''}"
+	class:narrow
+>
 	{#if top}
 		<header class="top"><div class="in">{@render top()}</div></header>
 	{/if}
