@@ -2,6 +2,7 @@
 ACs: AC1, AC2, AC3 · design lead CHAA (M-4 design wave) · 2026-11-11
 
 ## Decided by Loc
+- 2026-11-13: use both generated images for Landing: landscape `landing-wide` on mobile and medium, portrait `landing-tall` (2:3, 480px box) as the left art column from 1024px, next to the 400px column. Welcome keeps its own art. Picked over ADR 0008's 3:2 art on public pages; Login keeps 3:2.
 - ADR 0001: SvelteKit with a prerendered Landing Page.
 
 ## Answered here (≥80% rule, CREW.md)

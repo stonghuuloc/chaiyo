@@ -1,7 +1,7 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"landing_title": "Học tiếng Trung, từng bài một",
-	"landing_lede": "HSK1 đến HSK5 cho người Việt: âm Hán Việt, nét chữ, luyện nói, ôn tập đúng lúc.",
+	"landing_title": "Học tiếng Trung bằng tiếng Việt",
+	"landing_lede": "Mỗi ngày một chút, cùng các bạn thú.",
 	"tabs_label": "Thanh điều hướng",
 	"tab_today": "Hôm nay",
 	"tab_roadmap": "Lộ trình",
@@ -107,5 +107,12 @@
 	"placement_result_daily_sub": "Xen với bài mới, không dồn ôn hết trong hôm nay",
 	"placement_result_cta_b0": "Bắt đầu Bài 0",
 	"placement_result_cta_lesson": "Bắt đầu Bài {n}",
-	"placement_result_cta_topics": "Xem Chuyên đề"
+	"placement_result_cta_topics": "Xem Chuyên đề",
+	"landing_point_han_viet": "Mỗi chữ có Hán Việt",
+	"landing_point_voices": "Nghe giọng thật từ các bạn thú",
+	"landing_point_path": "Mỗi ngày một chút, có lộ trình HSK",
+	"landing_cta": "Bắt đầu học",
+	"landing_logo_alt": "Chaiyo!",
+	"landing_login": "Đã có tài khoản? Đăng nhập",
+	"landing_art_alt": "Gấu trúc, gấu trúc đỏ và hươu con cùng đứng trước cổng một ngôi trường nhỏ, vẫy tay chào bạn"
 }
