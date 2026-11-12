@@ -118,6 +118,17 @@ def test_reading_match_ignores_spacing_tone_and_erhua(gen, model, source, ok):
     assert (gen.canon(model, [{'pinyin': source}]) == source) is ok
 
 
+@pytest.mark.parametrize('model,source', [('yǒukòngr', 'yǒukòngr5'), ('xiàohuàr', 'xiàohuar5'), ('bù yīhuǐr', 'bù yīhuǐr5')])
+def test_reading_match_accepts_erhua_tail_with_tone_digit(gen, model, source):
+    # Arrange
+    readings = [{'pinyin': gen.src_pinyin(source)}]
+    # Act
+    got = gen.canon(model, readings)
+    # Assert
+    assert got == gen.src_pinyin(source)
+    assert not any(c.isdigit() for c in got)
+
+
 def test_reading_match_prefers_exact(gen):
     assert gen.canon('dōng xī', [{'pinyin': 'dōng xi'}, {'pinyin': 'dōng xī'}]) == 'dōng xī'
 

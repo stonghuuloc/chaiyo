@@ -164,7 +164,7 @@ def source(hz):
     hv_by_py = {row[1].lower(): row[3], **{p.lower(): v for p, v, _ in row[7]}}
     readings, skipped = [], []
     for fi, f in enumerate(h['f']):
-        py = f['i']['y']
+        py = src_pinyin(f['i']['y'])
         keep = [m for m in f['m'] if not XREF.search(m)]
         skipped += [m for m in f['m'] if XREF.search(m)]
         if not keep:
@@ -199,6 +199,10 @@ def py_errors(py):
     return [f'{e} "{py}"' for e in errs]
 
 TONES = '̄́̌̀'
+
+def src_pinyin(y):
+    """The HSK list writes an erhua tail with a tone digit (yǒukòngr5); the model and dict.json write yǒukòngr."""
+    return re.sub(r'r5\b', 'r', y)
 
 def canon(py, readings):
     """The source reading the model's pinyin names: spacing is ignored, a toneless source vowel accepts any tone, a dropped erhua r is accepted; a single-reading word also tolerates tone sandhi; an exact match wins."""
@@ -743,7 +747,7 @@ Chỉ trả về JSON:
 
 def to_yaml(hz, e):
     row = DICT[hz]
-    nums = {f['i']['y'].lower(): f['i']['n'] for f in HSK[hz]['f']}
+    nums = {src_pinyin(f['i']['y']).lower(): f['i']['n'] for f in HSK[hz]['f']}
     words, sentences = {}, {}
     for r in e['readings']:
         py = r['pinyin'].lower()
@@ -986,7 +990,7 @@ def main(argv, llm=ask):
             print(f'skip {w}: not in HSK{LEVEL} list')
     rows = tatoeba()
     done, rejected, pending = [], [], []
-    with ThreadPoolExecutor(8) as pool:
+    with ThreadPoolExecutor(int(os.environ.get("GEN_WORKERS", 8))) as pool:
         for w, f in [(w, pool.submit(entry, w, rows, llm)) for w in words]:
             try:
                 hz, e = f.result()
