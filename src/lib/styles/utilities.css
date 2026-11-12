@@ -16,10 +16,3 @@
 		background: var(--color-frost-divider);
 	}
 }
-
-/* centred page column: width follows --col and --gutter, set per breakpoint by the shell or a FocusFrame */
-@utility page-col {
-	width: 100%;
-	max-width: calc(var(--col) + 2 * var(--gutter));
-	margin-inline: auto;
-}

@@ -4,15 +4,13 @@
 	import type { ChipClip, SyllableCell } from './syllable-cells.server';
 	import { TONE_CONTOURS } from './syllable-grid';
 
-	let {
-		cells,
-		chips,
-		player = play
-	}: {
+	type Props = {
 		cells: SyllableCell[];
 		chips: ChipClip[];
 		player?: (key: string, options?: { base?: string }) => Promise<boolean>;
-	} = $props();
+	};
+
+	let { cells, chips, player = play }: Props = $props();
 
 	let selected = $state<string>();
 	let readout = $state('tap a cell');

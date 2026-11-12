@@ -1,6 +1,17 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
+	type Props = {
+		variant?: 'primary' | 'ink' | 'outline';
+		href?: string;
+		disabled?: boolean;
+		icon?: string;
+		caret?: boolean;
+		type?: 'button' | 'submit';
+		onclick?: (e: MouseEvent) => void;
+		children: Snippet;
+	};
+
 	let {
 		variant = 'primary',
 		href,
@@ -10,16 +21,7 @@
 		type = 'button',
 		onclick,
 		children
-	}: {
-		variant?: 'primary' | 'ink' | 'outline';
-		href?: string;
-		disabled?: boolean;
-		icon?: string;
-		caret?: boolean;
-		type?: 'button' | 'submit';
-		onclick?: (e: MouseEvent) => void;
-		children: Snippet;
-	} = $props();
+	}: Props = $props();
 
 	const base =
 		'flex w-full items-center justify-center gap-3 rounded-action font-display leading-none no-underline cursor-pointer transition-[scale,background-color,opacity] duration-(--motion-press) disabled:cursor-default disabled:bg-shaded-paper disabled:shadow-none disabled:inset-shadow-none motion-reduce:transition-[background-color,opacity] motion-reduce:duration-(--motion-fade-reduced)';
