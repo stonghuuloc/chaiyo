@@ -18,3 +18,6 @@ None: WAVE-PLAN Q2 is assumed A.
 
 ## Locked (do not re-open)
 - Reminder: once a day, any mix of channels (CONTEXT.md "Reminder"); `settings.tz` (M-3 Q3 A).
+
+## Answered here (implementation, 2026-11-12)
+- [AC6] Q: Toast for "Chưa lưu được" and "Chưa đọc được ảnh"? A: no, an inline `role="alert"` line above the action bar. The fixed Toast sits at bottom 20px and covers the sticky action bar (retry button on the offer step, "Tiếp" on step 0), against ADR 0008 (floating UI never covers content). Same copy; SPEC said Toast. Confidence 85%.

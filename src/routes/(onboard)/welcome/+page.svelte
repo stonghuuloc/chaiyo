@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import sprite from '#lib/assets/icons.svg?raw';
@@ -9,14 +9,24 @@
 	import { keys } from '#lib/ui/keys.js';
 	import {
 		TIMES,
+		advance,
+		askPush,
 		canNext,
+		finishWelcome,
 		fromUser,
 		initials,
 		noChannel,
 		pickCustom,
+		photoPicker,
 		pickPreset,
+		pushBlocked,
+		retreat,
+		toggleChannel,
 		pressed
 	} from '#lib/welcome/welcome.js';
+	import { saveWelcome } from '#lib/welcome/save.js';
+	import { avatarDataUrl } from '#lib/welcome/photo.js';
+	import { supabase } from '#lib/supabase.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { PageProps } from './$types';
 
@@ -24,29 +34,86 @@
 
 	// svelte-ignore state_referenced_locally
 	let s = $state(fromUser(data.session?.user));
-	let preview = $state<string | null>(null);
 	let picker = $state<HTMLInputElement>();
+	let saving = $state(false);
+	let asking = $state(false);
+	const photos = photoPicker(avatarDataUrl);
+	let error = $state('');
 
-	const shown = $derived(preview ?? s.photo);
+	onMount(() => {
+		s.pushDenied = pushBlocked(window);
+	});
+
 	const none = $derived(s.step === 1 && noChannel(s));
 	const next = () => {
-		if (canNext(s) && s.step < 2) s.step += 1;
+		Object.assign(s, advance(s));
+		error = '';
 	};
 	const back = () => {
-		if (s.step > 0) s.step -= 1;
+		Object.assign(s, retreat(s));
+		error = '';
 	};
 
-	function choose(e: Event) {
-		const file = (e.currentTarget as HTMLInputElement).files?.[0];
+	async function choose(e: Event) {
+		const input = e.currentTarget as HTMLInputElement;
+		const file = input.files?.[0];
+		input.value = '';
 		if (!file) return;
-		if (preview) URL.revokeObjectURL(preview);
-		preview = URL.createObjectURL(file);
+		error = '';
+		await photos.pick(
+			file,
+			(photo) => (s.photo = photo),
+			() => (error = m.welcome_photo_error())
+		);
 	}
 
-	onDestroy(() => preview && URL.revokeObjectURL(preview));
+	async function toggle(key: 'push' | 'emailOn' | 'telegram') {
+		const patch = await toggleChannel(
+			s,
+			key,
+			async () => {
+				asking = true;
+				try {
+					return await askPush(window);
+				} finally {
+					asking = false;
+				}
+			},
+			asking
+		);
+		Object.assign(s, patch);
+	}
+
+	async function finish(to: '/(app)/(tabs)/today' | '/(onboard)/placement') {
+		saving = true;
+		error = '';
+		try {
+			const saved = await finishWelcome({
+				settled: photos.settled,
+				save: async () => {
+					if (!data.session) throw new Error('no session');
+					await saveWelcome(s, {
+						client: supabase,
+						learnerId: data.session.user.id,
+						now: new Date(),
+						tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+					});
+				},
+				go: () => goto(resolve(to))
+			});
+			if (!saved) error = m.welcome_save_error();
+		} finally {
+			saving = false;
+		}
+	}
 
 	const channels = $derived([
-		{ key: 'push', label: m.welcome_push(), sub: m.welcome_push_sub(), icon: 'fill-bell' },
+		{
+			key: 'push',
+			label: m.welcome_push(),
+			sub: s.pushDenied ? m.welcome_push_blocked() : m.welcome_push_sub(),
+			icon: 'fill-bell'
+		},
 		{ key: 'emailOn', label: m.welcome_email(), sub: s.email, icon: 'fill-letter' },
 		{
 			key: 'telegram',
@@ -71,6 +138,7 @@
 						: ''}"
 					aria-label={m.welcome_back()}
 					tabindex={s.step === 0 ? -1 : 0}
+					disabled={saving}
 					onclick={back}
 				>
 					<svg class="size-[22px] rotate-180 fill-current" aria-hidden="true"
@@ -98,9 +166,9 @@
 				<p class="mt-2 text-pencil">{m.welcome_profile_lead()}</p>
 				<div class="mt-6 grid justify-items-center">
 					<div class="relative size-28">
-						{#if shown}
+						{#if s.photo}
 							<img
-								src={shown}
+								src={s.photo}
 								alt=""
 								referrerpolicy="no-referrer"
 								class="size-full rounded-full object-cover"
@@ -115,6 +183,7 @@
 							type="button"
 							class="absolute -right-0.5 -bottom-0.5 grid size-11 place-items-center rounded-full border-[3px] border-notebook-paper bg-ink text-notebook-paper"
 							aria-label={m.welcome_photo_change()}
+							disabled={saving}
 							onclick={() => picker?.click()}
 						>
 							<svg class="size-5 fill-current" aria-hidden="true"><use href="#i-fill-camera" /></svg
@@ -126,6 +195,7 @@
 							accept="image/*"
 							class="hidden"
 							tabindex="-1"
+							disabled={saving}
 							onchange={choose}
 						/>
 					</div>
@@ -184,15 +254,20 @@
 						</span>
 						<span class="min-w-0">
 							<b class="block font-semibold">{c.label}</b>
-							<small class="block truncate text-label text-pencil">{c.sub}</small>
+							<small
+								class="block text-label text-pencil {c.key === 'push' && s.pushDenied
+									? ''
+									: 'truncate'}">{c.sub}</small
+							>
 						</span>
 						<button
 							type="button"
 							role="switch"
 							aria-checked={s[c.key]}
 							aria-label={c.label}
-							class="group grid h-11 w-[52px] place-items-center"
-							onclick={() => (s[c.key] = !s[c.key])}
+							disabled={c.key === 'push' && s.pushDenied}
+							class="group grid h-11 w-[52px] place-items-center disabled:opacity-50"
+							onclick={() => toggle(c.key)}
 						>
 							<span
 								class="relative block h-8 w-[52px] rounded-full bg-ruled-line transition-colors group-aria-checked:bg-ink motion-reduce:transition-none"
@@ -225,6 +300,11 @@
 		{/if}
 
 		{#snippet actions()}
+			{#if error}
+				<p role="alert" class="mb-3 bg-notebook-paper text-center text-label text-lantern-red-text">
+					{error}
+				</p>
+			{/if}
 			{#if s.step < 2}
 				<Button caret disabled={!canNext(s)} onclick={next}>
 					{m.welcome_next()}<Kbd>Enter</Kbd>
@@ -233,11 +313,14 @@
 					<p class="mt-3 text-center text-label text-pencil">{m.welcome_no_channel()}</p>
 				{/if}
 			{:else}
-				<Button disabled>{m.welcome_offer_cta()}</Button>
+				<Button disabled={saving} onclick={() => finish('/(onboard)/placement')}
+					>{m.welcome_offer_cta()}</Button
+				>
 				<button
 					type="button"
-					class="mt-3 h-11 w-full text-center text-title text-pencil underline"
-					onclick={() => goto(resolve('/(app)/(tabs)/today'))}
+					disabled={saving}
+					class="mt-3 h-11 w-full text-center text-title text-pencil underline disabled:opacity-50"
+					onclick={() => finish('/(app)/(tabs)/today')}
 				>
 					{m.welcome_skip()}
 				</button>
