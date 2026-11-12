@@ -113,7 +113,7 @@
 
 	.label {
 		font-size: var(--text-tab);
-		font-weight: 600;
+		font-weight: var(--text-tab--font-weight);
 	}
 
 	.tab[aria-current='page'],
