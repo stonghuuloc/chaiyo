@@ -46,11 +46,11 @@
 
 	const none = $derived(s.step === 1 && noChannel(s));
 	const next = () => {
-		s = advance(s);
+		Object.assign(s, advance(s));
 		error = '';
 	};
 	const back = () => {
-		s = retreat(s);
+		Object.assign(s, retreat(s));
 		error = '';
 	};
 
@@ -70,7 +70,8 @@
 	async function toggle(key: 'push' | 'emailOn' | 'telegram') {
 		if (asking) return;
 		asking = true;
-		Object.assign(s, await toggleChannel(s, key, () => askPush(window)));
+		const patch = await toggleChannel(s, key, () => askPush(window));
+		Object.assign(s, patch);
 		asking = false;
 	}
 
@@ -128,6 +129,7 @@
 						: ''}"
 					aria-label={m.welcome_back()}
 					tabindex={s.step === 0 ? -1 : 0}
+					disabled={saving}
 					onclick={back}
 				>
 					<svg class="size-[22px] rotate-180 fill-current" aria-hidden="true"
@@ -172,6 +174,7 @@
 							type="button"
 							class="absolute -right-0.5 -bottom-0.5 grid size-11 place-items-center rounded-full border-[3px] border-notebook-paper bg-ink text-notebook-paper"
 							aria-label={m.welcome_photo_change()}
+							disabled={saving}
 							onclick={() => picker?.click()}
 						>
 							<svg class="size-5 fill-current" aria-hidden="true"><use href="#i-fill-camera" /></svg
