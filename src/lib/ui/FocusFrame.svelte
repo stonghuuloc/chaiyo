@@ -29,7 +29,10 @@
 	});
 </script>
 
-<div class="frame" class:narrow class:wide>
+<div
+	class="frame {wide ? 'lg:[--col:calc(var(--container-narrow)+var(--container-form)+80px)]!' : ''}"
+	class:narrow
+>
 	{#if top}
 		<header class="top"><div class="in">{@render top()}</div></header>
 	{/if}
@@ -110,10 +113,6 @@
 
 		.frame.narrow {
 			--col: var(--container-narrow);
-		}
-
-		.frame.wide {
-			--col: calc(var(--container-narrow) + var(--container-form) + 80px);
 		}
 
 		.in {
