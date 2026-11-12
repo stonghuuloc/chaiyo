@@ -32,9 +32,11 @@ export const hanviet = (set: ContentSet) => {
 		const syls = clauses.flat();
 		return chars.flatMap((c, i) => {
 			const s = syls.find((x) => x.charIndex === i);
-			if (!s) return [];
-			const { tone } = s;
-			const syl = s.erhua ? s.syl.replace(/r$/i, '') : s.syl;
+			// erhua: zhèr covers 这 (zhè) and the trailing 儿 (ér)
+			const erhuaTail = !s && syls.some((x) => x.erhua && x.charIndex === i - 1);
+			if (!s && !erhuaTail) return [];
+			const tone = s ? s.tone : 2;
+			const syl = !s ? 'ér' : s.erhua ? s.syl.replace(/r$/i, '') : s.syl;
 			const key = (p: string) => (tone === 0 ? toneless(p) : p.normalize('NFC').toLowerCase());
 			const same = readings.get(c)?.filter((r) => key(r.pinyin) === key(syl));
 			if (!same?.length || same.some((r) => r.hanviet === parts[i] || blank(r.hanviet))) return [];

@@ -62,6 +62,28 @@ describe('check 1 Hán Việt', () => {
 		}).filter((e) => e.check === 1);
 		only(errors, 1, 'words/这儿.yaml', 'hanviet');
 	});
+	it('checks the trailing 儿 of an erhua syllable', () => {
+		const errors = run((s) => {
+			const base = char(s, '你');
+			s.chars.push(
+				{
+					file: 'chars/这.yaml',
+					value: { ...base.value, hanzi: '这', readings: [{ pinyin: 'zhè', hanviet: 'giá' }] }
+				},
+				{
+					file: 'chars/儿.yaml',
+					value: { ...base.value, hanzi: '儿', readings: [{ pinyin: 'ér', hanviet: 'nhi' }] }
+				}
+			);
+			const w = word(s, '你好');
+			s.words.push({
+				file: 'words/这儿.yaml',
+				value: { ...w.value, id: '这儿', hanzi: '这儿', pinyin: 'zhèr', hanviet: 'giá xyz' }
+			});
+		}).filter((e) => e.check === 1);
+		only(errors, 1, 'words/这儿.yaml', 'hanviet');
+		expect(errors[0].message).toContain('儿');
+	});
 	it('matches the char reading by tone, not just letters', () =>
 		only(
 			run((s) => (word(s, '你好').value.hanviet = 'nhĩ hiếu')),
