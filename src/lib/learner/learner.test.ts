@@ -3,7 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { learnerLedger } from './index';
 
-function stub(tz: string | null, signedOut: { fire?: (e: string) => void } = {}) {
+type Hook = { fire?: (e: string, s?: { user: { id: string } } | null) => void };
+
+function stub(tz: string | null, signedOut: Hook = {}) {
 	return {
 		from: () => ({
 			select: () => ({
@@ -11,7 +13,7 @@ function stub(tz: string | null, signedOut: { fire?: (e: string) => void } = {})
 			})
 		}),
 		auth: {
-			onAuthStateChange: (fn: (e: string) => void) => {
+			onAuthStateChange: (fn: NonNullable<Hook['fire']>) => {
 				signedOut.fire = fn;
 				return { data: { subscription: { unsubscribe() {} } } };
 			}
@@ -39,12 +41,30 @@ describe('learnerLedger', () => {
 
 	it('forgets the Ledger on SIGNED_OUT', async () => {
 		const idb = new IDBFactory();
-		const hook: { fire?: (e: string) => void } = {};
+		const hook: Hook = {};
 		const client = stub('Asia/Tokyo', hook);
 		const a = await learnerLedger({ user: { id: 'u-c' } }, { client, idb });
 		hook.fire?.('TOKEN_REFRESHED');
 		expect(await learnerLedger({ user: { id: 'u-c' } }, { client, idb })).toBe(a);
 		hook.fire?.('SIGNED_OUT');
+		const sync = vi.spyOn(a, 'sync');
+		sync.mockClear();
+		window.dispatchEvent(new Event('online'));
+		expect(sync).not.toHaveBeenCalled();
 		expect(await learnerLedger({ user: { id: 'u-c' } }, { client, idb })).not.toBe(a);
+	});
+
+	it('forgets the Ledger when another learner signs in over it', async () => {
+		const idb = new IDBFactory();
+		const hook: Hook = {};
+		const client = stub('Asia/Tokyo', hook);
+		const a = await learnerLedger({ user: { id: 'u-d' } }, { client, idb });
+		hook.fire?.('SIGNED_IN', { user: { id: 'u-d' } });
+		expect(await learnerLedger({ user: { id: 'u-d' } }, { client, idb })).toBe(a);
+		hook.fire?.('SIGNED_IN', { user: { id: 'u-e' } });
+		const sync = vi.spyOn(a, 'sync');
+		window.dispatchEvent(new Event('online'));
+		expect(sync).not.toHaveBeenCalled();
+		expect(await learnerLedger({ user: { id: 'u-d' } }, { client, idb })).not.toBe(a);
 	});
 });

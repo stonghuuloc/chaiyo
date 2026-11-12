@@ -25,8 +25,8 @@ export function learnerLedger(
 			idb
 		});
 		const stop = syncWhenOnline(l);
-		const { data: auth } = client.auth.onAuthStateChange((event) => {
-			if (event !== 'SIGNED_OUT') return;
+		const { data: auth } = client.auth.onAuthStateChange((event, next) => {
+			if (event !== 'SIGNED_OUT' && (!next || next.user.id === uid)) return;
 			stop();
 			opened.delete(uid);
 			auth.subscription.unsubscribe();

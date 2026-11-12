@@ -19,7 +19,7 @@ export function resultView(cleared: number, lessons: CurriculumLesson[]) {
 				{
 					label: m.placement_result_next_label(),
 					value: m.placement_result_next_value({ count: level(1).filter((l) => l.n > 0).length }),
-					sub: m.placement_result_next_sub({ n: first?.n ?? 1, title: first?.title ?? '' })
+					sub: m.placement_result_next_sub({ n: first!.n, title: first!.title })
 				}
 			],
 			cta: m.placement_result_cta_b0(),
@@ -35,7 +35,7 @@ export function resultView(cleared: number, lessons: CurriculumLesson[]) {
 			label: m.placement_result_open_label(),
 			value: m.placement_result_open_value({
 				range: cleared > 1 ? `HSK 1–${cleared}` : 'HSK 1',
-				n: opened.at(-1)?.n ?? 0
+				n: opened.at(-1)!.n
 			}),
 			sub: m.placement_result_open_sub()
 		},

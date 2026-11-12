@@ -6,9 +6,8 @@
 	import { LESSONS } from '#lib/curriculum/index.js';
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
-	import { HANDOFF } from '#lib/placement/index.js';
+	import { readHandoff, recordHandoff } from '#lib/placement/handoff.js';
 	import { resultView } from '#lib/placement/result.js';
-	import type { Attempt } from '#lib/study/index.js';
 	import Button from '#lib/ui/Button.svelte';
 	import { celebrate } from '#lib/ui/celebrate.js';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
@@ -26,31 +25,18 @@
 	const art = $derived(cleared === 0 ? 'start-b0' : 'placed');
 
 	onMount(() => {
-		const handoff = (() => {
-			try {
-				return JSON.parse(sessionStorage.getItem(HANDOFF) ?? 'null') as {
-					cleared: number;
-					attempts: Attempt[];
-				} | null;
-			} catch {
-				return null;
-			}
-		})();
-		if (!handoff || !Number.isInteger(handoff.cleared) || !Array.isArray(handoff.attempts)) {
+		const handoff = readHandoff(sessionStorage);
+		if (!handoff) {
 			void goto(today(), { replace: true });
 			return;
 		}
-		const { attempts } = handoff;
 		cleared = handoff.cleared;
 		view = resultView(cleared, LESSONS);
 
 		if (data.session)
-			void (async () => {
-				const ledger = await learnerLedger(data.session!);
-				for (const a of attempts) await ledger.record(a);
-				sessionStorage.removeItem(HANDOFF);
-				void ledger.sync().catch(() => undefined);
-			})().catch(() => undefined);
+			void learnerLedger(data.session)
+				.then((ledger) => recordHandoff(sessionStorage, handoff, ledger))
+				.catch(() => undefined);
 
 		let stop = () => {};
 		const timer = setTimeout(() => {
