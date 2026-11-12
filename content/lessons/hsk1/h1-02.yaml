@@ -102,7 +102,7 @@ sections:
         tests: { words: [ 她 ], grammar: [ h1-g03 ] }
         prompt: { kind: audio, ref: s-h1-02-03 }
         optionKind: vi
-        options: [ một bạn nữ, một bạn nam, Tiểu Hồng ]
+        options: [ một bạn khác, Tiểu Hồng, chính A Ngưu ]
         answer: 0
       - id: q-h1-02-d02
         type: choice
