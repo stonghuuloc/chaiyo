@@ -81,18 +81,14 @@ describe('layout rules', () => {
 		expect(layout).toContain('pb-[calc(66px+14px+env(safe-area-inset-bottom,0px))] lg:pb-16');
 	});
 
-	it('Given_LayoutCss_Then_NavInsetIsNonZeroOnlyUnderMinWidth64rem', () => {
+	it('Given_AppLayout_Then_NavInsetIsNonZeroOnlyUnderMinWidth64rem', () => {
 		// Arrange
-		const css = read('routes/layout.css');
 		// Act
-		const base = css.match(/\.shell \{[^}]*--nav-inset: (\S+);/)?.[1];
-		const wide = css.match(
-			/@media \(min-width: 64rem\) \{[^@]*\.shell\[data-nav\] \{\s*--nav-inset: var\(--sidebar\);/
-		);
-		const all = css.match(/--nav-inset: [^;]+;/g);
+		const layout = read('routes/(app)/+layout.svelte');
+		const all = layout.match(/--nav-inset:[^\s\]]+/g);
 		// Assert
-		expect(base).toBe('0px');
-		expect(wide).not.toBeNull();
+		expect(layout).toContain('[--nav-inset:0px]');
+		expect(layout).toContain('lg:data-nav:[--nav-inset:var(--sidebar)]');
 		expect(all).toHaveLength(2);
 	});
 
@@ -102,7 +98,7 @@ describe('layout rules', () => {
 		// Act
 		const bad = files.flatMap((file) => {
 			const code = readFileSync(file, 'utf8');
-			return [...code.matchAll(/:hover/g)]
+			return [...code.matchAll(/(?<!\(hover):hover/g)]
 				.filter((hit) => !insideHoverMedia(code, hit.index))
 				.map(() => file.replace(src, ''));
 		});
