@@ -95,9 +95,11 @@ export const retreat = (s: Welcome): Welcome => (s.step > 0 ? { ...s, step: s.st
 export async function toggleChannel(
 	s: Pick<Welcome, 'push' | 'emailOn' | 'telegram'>,
 	key: 'push' | 'emailOn' | 'telegram',
-	ask: () => Promise<boolean>
+	ask: () => Promise<boolean>,
+	asking = false
 ): Promise<Partial<Welcome>> {
 	if (key !== 'push' || s.push) return { [key]: !s[key] };
+	if (asking) return {};
 	const granted = await ask();
 	return { push: granted, pushDenied: !granted };
 }

@@ -68,11 +68,20 @@
 	}
 
 	async function toggle(key: 'push' | 'emailOn' | 'telegram') {
-		if (asking) return;
-		asking = true;
-		const patch = await toggleChannel(s, key, () => askPush(window));
+		const patch = await toggleChannel(
+			s,
+			key,
+			async () => {
+				asking = true;
+				try {
+					return await askPush(window);
+				} finally {
+					asking = false;
+				}
+			},
+			asking
+		);
 		Object.assign(s, patch);
-		asking = false;
 	}
 
 	async function finish(to: '/(app)/(tabs)/today' | '/(onboard)/placement') {
@@ -186,6 +195,7 @@
 							accept="image/*"
 							class="hidden"
 							tabindex="-1"
+							disabled={saving}
 							onchange={choose}
 						/>
 					</div>

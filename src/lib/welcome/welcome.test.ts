@@ -213,6 +213,10 @@ describe('toggleChannel', () => {
 	});
 	it('turns push off without asking', async () =>
 		expect(await toggleChannel(on, 'push', yes)).toEqual({ push: false }));
+	it('ignores a second push tap while the prompt is open, but not email', async () => {
+		expect(await toggleChannel(off, 'push', yes, true)).toEqual({});
+		expect(await toggleChannel(off, 'emailOn', yes, true)).toEqual({ emailOn: false });
+	});
 	it('asks before turning push on', async () => {
 		expect(await toggleChannel(off, 'push', yes)).toEqual({ push: true, pushDenied: false });
 		expect(await toggleChannel(off, 'push', no)).toEqual({ push: false, pushDenied: true });
