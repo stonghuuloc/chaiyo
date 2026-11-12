@@ -82,7 +82,7 @@ interface Word {
   senses: { vi: string; note?: string; pos?: Word['pos'][number]; rare?: true; example?: SentenceId }[];   // one per meaning group, most used first
   collocations?: { hanzi: string; pinyin: string; vi: string }[]; // 搭配, shown first on Word Page
   examples: SentenceId[];           // 1–3, Word Page
-  image?: { file: string; cast?: CastId[]; prompt?: string }; // only for words a picture can show (people, places, things, and 你/你们 as someone being addressed); never 我/他/她 or their plurals, question words, numbers, 岁, 是/叫/名字, 这/那, particles; family words show one species (a bigger/smaller version of that cast member), never mixed species
+  image?: { file: string; cast?: CastId[]; prompt?: string }; // only for words a picture can show (people, places, things, and 你/你们 as someone being addressed); never 我/他/她 or their plurals, question words, numbers, 岁, 是/叫/名字, 这/那, particles; family words show one species (a bigger/smaller version of that cast member), never mixed species; a sibling's gender shows on the picture (girl: flower or bow on the head, boy: a small cap), and the red panda is a girl, the takin a boy
   parts?: { hanzi: string; pinyin: string; hanviet: string; vi: string }[]; // per-character breakdown of a compound
   components?: { hanzi: string; name: string; vi: string }[];                // radical components of a single-character word
   taughtIn?: LessonId;              // set by importer from lessons; never authored here
