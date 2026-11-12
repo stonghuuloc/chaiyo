@@ -1,0 +1,13 @@
+# content/grammar/h1-g03.yaml
+id: h1-g03
+level: 1
+std: [ 5 ]
+title: "Đại từ: 我 / 你 / 他 / 她 + 们"
+pattern: 我 / 你 / 他 / 她 + 们
+explain: |-
+  我 (ngã) là tôi, 你 là bạn, 他 (tha) là anh ấy, 她 (tha) là cô ấy. 他 và 她 đọc giống hệt nhau: tā. Chỉ chữ viết khác: 她 có bộ 女 (nữ).
+
+  Thêm 们 là số nhiều: 我们 (chúng tôi), 他们, 她们 (họ). Nhóm có cả nam và nữ dùng 他们.
+examples: [ s-h1-02-04, s-h1-02-11 ]
+pitfalls:
+  - { wrong: 她们, right: 他们, why: "Nhóm có cả nam và nữ thì dùng 他们." }

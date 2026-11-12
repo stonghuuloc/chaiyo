@@ -1,7 +1,7 @@
 # content/grammar/h1-g01.yaml
 id: h1-g01
 level: 1
-std: []
+std: [ 5 ]
 title: "Chào hỏi: A + 好"
 pattern: 你 / 您 / 你们 + 好
 explain: |-

@@ -1,0 +1,13 @@
+# content/grammar/h1-g13.yaml
+id: h1-g13
+level: 1
+std: [ 22, 33, 45 ]
+title: "Câu hỏi với 吗 và 呢"
+pattern: câu kể + 吗？ · … ，你呢？
+explain: |-
+  Thêm 吗 (ma) vào cuối câu kể là thành câu hỏi có hay không, như “… không?”: 他是学生。 → 他是学生吗？
+
+  呢 (ne) hỏi lại câu vừa nói, về người khác: 我九岁，你呢？ = Tớ chín tuổi, còn cậu?
+examples: [ s-h1-05-06, s-h1-05-02 ]
+pitfalls:
+  - { wrong: 你几岁吗？, right: 你几岁？, why: "Câu đã có từ hỏi (几, 什么, 谁) thì không thêm 吗." }

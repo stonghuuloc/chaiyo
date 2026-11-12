@@ -28,7 +28,7 @@ Feature: Audio Renderer CLI → R2
   So that every sentence and word has one clip and re-runs cost nothing
 
   Background:
-    Given an audio manifest with 3 entries: "你好！" by hachiware, "你好！" by momonga, "谢谢" by narrator
+    Given an audio manifest with 3 entries: "你好！" by redpanda, "你好！" by takin, "谢谢" by narrator
     And an empty R2 bucket
 
   Scenario: First render uploads every clip
@@ -44,8 +44,8 @@ Feature: Audio Renderer CLI → R2
 
   Scenario: Key is sha256 of hanzi and voice, normal speed only
     When I run the renderer on the manifest
-    Then the object key of "你好！" by hachiware is sha256("你好！|" + the hachiware voice id)
-    And "你好！" by hachiware and "你好！" by momonga get two different keys
+    Then the object key of "你好！" by redpanda is sha256("你好！|" + the redpanda voice id)
+    And "你好！" by redpanda and "你好！" by takin get two different keys
     And no object exists for a slow-speed variant, because slow play is the client replaying at 0.5×
 
   Scenario: Only the new entry is rendered

@@ -11,3 +11,4 @@ senses:
   example: s-w-490784
 examples:
 - s-w-490784
+image: { file: words/pengyou.png, prompt: "Only the panda and the fawn. The panda and the fawn sitting together on a bench sharing a snack and laughing, sunny park" }

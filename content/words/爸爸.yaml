@@ -11,3 +11,4 @@ senses:
   example: s-w-13119020
 examples:
 - s-w-13119020
+image: { file: words/baba.png, prompt: "Only the takin and the fawn. The takin wearing a small necktie lifting the fawn up high playfully like a dad, both laughing, living room" }

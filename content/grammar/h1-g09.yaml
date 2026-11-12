@@ -1,0 +1,13 @@
+# content/grammar/h1-g09.yaml
+id: h1-g09
+level: 1
+std: [ 20, 27 ]
+title: "Của ai: người + 的 + vật"
+pattern: người + 的 + vật / người
+explain: |-
+  的 (đích, de) là “của”, nhưng thứ tự ngược tiếng Việt: người sở hữu đứng trước. 我的名字 = tên của tôi. 我的家 = nhà của tôi.
+
+  Người thân và bạn bè thì bỏ 的 cũng được: 我妈妈, 我朋友.
+examples: [ s-h1-04-01, s-h1-04-10 ]
+pitfalls:
+  - { wrong: 名字的我, right: 我的名字, why: "Người sở hữu đứng trước 的, vật đứng sau." }

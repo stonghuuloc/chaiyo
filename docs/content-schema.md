@@ -42,7 +42,7 @@ content/
   chars/你.yaml             one file per character (generated from vault, then hand-fixed)
   words/你好.yaml           one file per word; polyphones split: words/行-xing.yaml, words/行-hang.yaml
   grammar/h1-g01.yaml       one file per grammar point
-  levels/hsk1.yaml          topics + lesson order for the level
+  levels/hsk1.yaml          topics + lesson order + planned std items per lesson (levels.test.ts)
   lessons/hsk1/h1-01.yaml   one file per lesson: sections, dialogue, questions, inline sentences
   lessons/hsk1/h0-00.yaml   the Pinyin Primer (Bài 0): kind: primer, see below
   syllables.yaml            every valid pinyin syllable (initial × final), source of the Pinyin Table
@@ -82,7 +82,7 @@ interface Word {
   senses: { vi: string; note?: string; pos?: Word['pos'][number]; rare?: true; example?: SentenceId }[];   // one per meaning group, most used first
   collocations?: { hanzi: string; pinyin: string; vi: string }[]; // 搭配, shown first on Word Page
   examples: SentenceId[];           // 1–3, Word Page
-  image?: { file: string; cast?: CastId[]; prompt?: string };
+  image?: { file: string; cast?: CastId[]; prompt?: string }; // only for words a picture can show (people, places, things); never pronouns, question words, numbers, 岁, 是/叫/名字, 这/那, particles
   parts?: { hanzi: string; pinyin: string; hanviet: string; vi: string }[]; // per-character breakdown of a compound
   components?: { hanzi: string; name: string; vi: string }[];                // radical components of a single-character word
   taughtIn?: LessonId;              // set by importer from lessons; never authored here
@@ -361,12 +361,12 @@ Content tables: `select` for authenticated Learners, no writes (RLS). Attempts r
 | 5 | 80% known chars | a sentence uses a char outside known-so-far (all earlier lessons' words + this lesson's) and not in `unknown` |
 | 6 | Real glyphs | any code point in U+2E80–U+2FDF |
 | 7 | Mnemonic reuse | `mnemonic` differs from vault `meo.py` output for that char |
-| 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool; a word whose `hanzi` is one char and sits inside another word's `hanzi` in the same `sections.words` and is neither a token of a lesson grammar point's `pattern` nor in the `tests.words` of a drill, dialogue or listenSpeak question (decision 1); a grammar `std` item not in `data/sources/hsk30-grammar.csv` or above its level; a lesson with a non-empty `std` and none at exactly its level (`std: []` exempt) |
+| 8 | References | unknown word / sentence / grammar / Cast id; word count outside 8–15; gate pool < 2 × draw; a lesson word never tested in gate pool; a word whose `hanzi` is one char and sits inside another word's `hanzi` in the same `sections.words` and is neither a token of a lesson grammar point's `pattern` nor in the `tests.words` of a drill, dialogue or listenSpeak question (decision 1); a grammar `std` item not in `data/sources/hsk30-grammar.csv` or above its level; a lesson with fewer than 1 or more than 3 grammar points; a lesson with no `std` item at exactly its level (`std: []` points may sit beside one); a lesson grammar point tested by fewer than 2 gate pool questions, or by no dialogue or listenSpeak question |
 | 9 | Audio | sentence `speaker` is not a speaking Cast member (redpanda, takin); a dialogue line without a speaker; a dialogue part with fewer than 2 distinct speaking voices (back-to-back lines from one voice are fine) |
 
 ## Open decisions
 
 1. ~~Single chars inside compounds~~ **Decided 2026-11-02:** a single char that also appears inside a compound is listed in `sections.words` next to the compound (你 next to 你好) only when the lesson teaches it on its own: it is a whole token of one of the lesson's grammar `pattern`s (split on whitespace, `/`, `+`, brackets and full-width punctuation), or a drill, dialogue or listenSpeak question names it in `tests.words` (the gate pool does not count). Bài 1: 你 sits inside 你好 and 你们, 好 sits inside 你好, and both are tokens of h1-g01's `你 / 您 / 你们 + 好` (好 is also tested by listenSpeak `q-h1-01-l01`), so it keeps 10 ids. Lint 8 checks it.
-2. ~~Grammar point ids~~ **Decided 2026-10-26:** ids stay our own `h<L>-gNN`; each point carries `std` = the GF 0025-2021 item numbers it teaches. Lint: no item above the lesson level; when any point in the lesson has a non-empty `std`, at least one item at exactly the lesson level (`std: []` = vocabulary pattern, exempt).
+2. ~~Grammar point ids~~ **Decided 2026-10-26:** ids stay our own `h<L>-gNN`; each point carries `std` = the GF 0025-2021 item numbers it teaches. Lint: no item above the lesson level; when any point in the lesson has a non-empty `std`, at least one item at exactly the lesson level (`std: []` = vocabulary pattern, exempt). **Revised 2026-11-11:** the exemption is gone: every lesson needs at least one item at exactly its level, so no lesson teaches only vocabulary patterns.
 3. ~~Cast voice per member (and gender) waits on the VoiceStudio spike.~~ **Decided 2026-11-08:** [ADR 0003](adr/0003-tts-engine.md): redpanda redpanda-1, takin takin-3, narrator narrator-1.
 4. Mock Test sections need a `MockSection` type (timing, play limits, HSKK parts); deferred to P2.

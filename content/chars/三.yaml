@@ -1,0 +1,13 @@
+hanzi: 三
+readings:
+  - pinyin: sān
+    hanviet: tam
+radical: 一
+ids: ⿱一二
+strokes: 3
+mnemonic:
+  hinh: Ba nét ngang chồng lên nhau — đúng BA, tiếp nối từ 一 và 二
+  am: Hán Việt "tam" — tam giác, đệ tam, Tam Quốc
+  doiThat: biển "三楼" (tầng 3), menu "三人套餐" (set 3 người)
+  tuongPhan: ≠ 王 (wáng, vua — ba nét ngang NHƯNG có thêm 1 nét dọc xuyên qua, dễ viết nhầm khi viết nhanh)
+  kind: etymology

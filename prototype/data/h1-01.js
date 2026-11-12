@@ -57,3 +57,10 @@ export const GRAMMAR = {
   more: 'Người kia chỉ cần chào lại bằng đúng câu đó: 你好！ → 你好！. 你们 = 你 + 们 (môn, số nhiều), nên 你们好 là chào cả nhóm.',
   examples: ['s08', 's09'], wrong: ['好你', '你好'],
 };
+
+export const GRAMMAR2 = {
+  id: 'h1-g02', std: [31], title: 'Câu không chủ ngữ: 谢谢！对不起！', pattern: [['谢谢', '不客气'], ['对不起', '没关系']],
+  explain: '谢谢！, 对不起！, 再见！ tự nó đã là một câu đủ, không cần chủ ngữ phía trước, giống tiếng Việt nói “Cảm ơn!”.',
+  more: 'Mỗi câu có câu đáp riêng: 谢谢！ → 不客气。 (không có gì), 对不起！ → 没关系。 (không sao). 再见！ thì đáp lại bằng 再见！.',
+  examples: ['s05', 's06'], wrong: ['谢谢！没关系。', '谢谢！不客气。'],
+};

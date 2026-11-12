@@ -1,0 +1,13 @@
+hanzi: 这
+readings:
+  - pinyin: zhè
+    hanviet: giá
+radical: 辶
+ids: ⿺辶文
+strokes: 7
+mnemonic:
+  hinh: đang đi tới (辶) và chỉ ngay vào cái trước mặt (文, tạm coi "cái này") → "này, cái này".
+  am: Hán-Việt **giá** (dạng phồn thể 這). Âm này không sống độc lập trong tiếng Việt hiện đại vì 这 là chữ khẩu ngữ cận đại — neo bằng kênh HÌNH (辶 = đi tới, chỉ vào cái trước mặt).
+  doiThat: 这里/这个 dày đặc trong hội thoại, app chat, menu quán ("这是我们的招牌菜").
+  tuongPhan: 那 hình gần giống nhưng phần phải là 阝 (ấp), không phải 文 — 这 = gần (辶+文), 那 = xa (阝).
+  kind: invented

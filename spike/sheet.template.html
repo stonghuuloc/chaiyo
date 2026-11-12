@@ -21,7 +21,7 @@ audio{width:200px;height:34px}label{margin-right:.6rem;white-space:nowrap}
 var DATA=__DATA__;
 var KEY='chy14-picks';
 var S=JSON.parse(localStorage.getItem(KEY)||'{"picks":{},"notes":{},"said":{},"voices":{}}');
-var NAMES={redpanda:'redpanda (Hachiware)',takin:'takin (Momonga)',narrator:'narrator'};
+var NAMES={redpanda:'redpanda (red panda)',takin:'takin',narrator:'narrator'};
 var side={};DATA.order.forEach(function(o){side[o.n]={A:o.A,B:o.A==='design'?'refclip':'design'};});
 function pad(n){return String(n).padStart(2,'0');}
 function persist(){localStorage.setItem(KEY,JSON.stringify(S));}

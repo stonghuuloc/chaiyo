@@ -42,7 +42,7 @@ Feature: Linter: 9 contract checks
       | 6 | Real glyphs      | a code point in U+2E80–U+2FDF is used                                |
       | 7 | Mnemonic reuse   | `mnemonic` differs from vault `meo.py` output                        |
       | 8 | References       | unknown word/sentence/grammar/Cast id, 8–15 words broken, gate pool < 2 × draw, or lesson word untested in gate pool |
-      | 9 | Audio            | speaker is not hachiware/momonga, or dialogue speakers do not alternate |
+      | 9 | Audio            | speaker is not redpanda/takin, or dialogue speakers do not alternate |
 
   Scenario: A clean lesson passes
     Given the Bài 1 fixture with no violations

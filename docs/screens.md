@@ -127,7 +127,7 @@ Columns: **Job** (why the screen exists) · **Primary action** (exactly one) · 
 | L2 | Warm up on due/previous words before new material | Answer → next | Due Lexicon items + previous lesson's words | Nothing due → short recap of previous lesson · Skippable when lesson is Bài 1 |
 | L3 | Teach 8–15 new words one at a time | "Tiếp" after each word's mini-check | Per word: hanzi (Kaishu, stroke-order animation), pinyin with sandhi, Hán Việt, meaning, picture, audio (one button; 2nd tap = 0.5×), radicals, 1 example | Words enter Lexicon on section finish · Audio missing → text-only + Error Report link |
 | L4 | Explain grammar points, then drill | Answer → next | Numbered HSK 3.0 grammar points, Vietnamese explanation, pattern, examples, drills | Long explanation → collapsible "Xem thêm" |
-| L5 | Play the dialogue with the Cast voices; check comprehension | Play / "Tiếp" | Lines (speaker, hanzi, pinyin toggle, Vietnamese toggle, audio per line), questions | Every hanzi tappable (X1) · Pinyin/meaning hidden by default after HSK2 [open: confirm] |
+| L5 | Play the dialogue with the Cast voices; check comprehension | Play / "Tiếp" | Lines (speaker, hanzi, pinyin toggle, Vietnamese toggle, audio per line), questions | Every hanzi tappable (X1) · Pinyin follows the Pinyin setting (see Pinyin display) · Vietnamese hidden by default after HSK2 [open: confirm] |
 | L6 | Listening questions + Speaking Answers | Record / answer | Audio clips, read-aloud sentences, free-answer prompts; scores per syllable/tone | Mic denied → skip speaking, section still completes, Stats note · Scoring failure/offline → "Thử lại" (recording never stored) |
 | L7 | Write the lesson's characters | Trace → next | Hanzi Writer stroke data per character | Touch only; on desktop mouse works · Skip a character allowed |
 | L8 | Decide unlock: ≥80% passes | Answer → next, then "Nộp bài" | Fresh question draw over the lesson's words + grammar | Quit midway → no score saved · Offline → cannot start (needs fresh draw + server-side result) [open: confirm] |
@@ -155,13 +155,24 @@ Columns: **Job** (why the screen exists) · **Primary action** (exactly one) · 
 | U1 | Show earned and locked Badges | none | Badge list from the fixed set, earned date | None earned → show next 3 reachable |
 | U2 | Watch Friends' progress | "Theo dõi" (search Learners) | Followed Learners' Public Profiles, leaderboard by Streak / words known this week | No Friends → search + share link [open: invite link?] · Hidden profiles never appear |
 | U3 | See another Learner's Public Profile | Follow / Unfollow | Name, photo, HSK level, current lesson, Streak, words known, Badges | Hidden profile → "Hồ sơ đang ẩn" |
-| U4 | Control account | Per-row toggles | Display name/photo, Reminder time + channels (push/email/Telegram link), Kaishu/Xingshu toggle, hide Public Profile, delete account | Delete → 7-day Pending deletion with restore notice · Telegram link flow (bot deep link) |
+| U4 | Control account | Per-row toggles | Display name/photo, Reminder time + channels (push/email/Telegram link), Kaishu/Xingshu toggle, Pinyin toggle (see Pinyin display), hide Public Profile, delete account | Delete → 7-day Pending deletion with restore notice · Telegram link flow (bot deep link) |
 | A1 | Triage Error Reports | Mark resolved | Reports with context link, category, note, reporter | Empty inbox |
 | A2 | See where Learners drop off | none | Active Learners, gate fail rate per lesson, drop-off per section, Reminder effectiveness | Few users → raw numbers, no charts that imply scale |
 
+## Pinyin display
+
+Decided 2026-11-11. One app-wide Pinyin setting per Learner, switchable from the "Pinyin" pill on any lesson screen and from U4. Default: on while the Learner's current level is HSK1–2, off from HSK3. A Learner who switches it keeps their choice; the level default never overrides it.
+
+| Where | Pinyin |
+|---|---|
+| L3 new words, W1, W2, X1 | Always shown |
+| L4 explanation and examples, L5 dialogue, L6 read-aloud text | Follows the setting |
+| Drills, L6 questions, L8 Gate Test, K1 Practice | Always hidden: pinyin would give away a reading or meaning answer |
+| `typePinyin` and tone questions | Always hidden: pinyin is the answer |
+
 ## Open decisions
 
-1. L5: hide pinyin/Vietnamese by default from which level?
+1. L5: hide Vietnamese by default from which level?
 2. L8: can a Gate Test run offline (pre-drawn questions, graded on sync)?
 3. M1: may a Learner take a Mock Test above their unlocked level?
 4. U2: share/invite link for Friends, or search only?

@@ -1,0 +1,11 @@
+# content/grammar/h1-g10.yaml
+id: h1-g10
+level: 1
+std: [ 13 ]
+title: "Cũng: người + 也 + động từ"
+pattern: người + 也 + 是 / 叫…
+explain: |-
+  也 (dã, yě) là “cũng”. Đặt sau người, ngay trước động từ, giống tiếng Việt: 我也是学生 = Tôi cũng là học sinh.
+examples: [ s-h1-04-04, s-h1-04-09 ]
+pitfalls:
+  - { wrong: 也我是学生。, right: 我也是学生。, why: "也 không đứng đầu câu." }

@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-3378193
 - s-w-ai-2bed22c6
+image: { file: words/meimei.png, prompt: "Only the takin and the fawn. The takin giving the fawn a piggyback ride, both laughing, flower garden" }

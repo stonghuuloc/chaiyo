@@ -1,0 +1,13 @@
+# content/grammar/h1-g04.yaml
+id: h1-g04
+level: 1
+std: [ 24, 25, 26, 29, 32 ]
+title: "Câu kể: người + 叫 + tên"
+pattern: người + 叫 + tên
+explain: |-
+  Câu tiếng Trung xếp giống tiếng Việt: ai → làm gì → cái gì. 我叫小红 = Tôi tên (là) Tiểu Hồng.
+
+  叫 (khiếu) đã có nghĩa “tên là”, không cần thêm từ nào khác. Đổi chỗ hai người là đổi nghĩa.
+examples: [ s-h1-02-09, s-h1-02-06 ]
+pitfalls:
+  - { wrong: 小红叫我。, right: 我叫小红。, why: "小红叫我 nghĩa là Tiểu Hồng gọi tôi." }

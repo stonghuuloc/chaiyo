@@ -1,0 +1,288 @@
+# content/lessons/hsk1/h1-02.yaml
+id: h1-02
+level: 1
+topic: Chào hỏi
+order: 2
+title: Bạn tên gì?
+titleHanzi: 你叫什么名字
+goal: Giới thiệu tên mình, hỏi tên người khác
+scene:
+  file: lessons/h1-02.png
+  cast: [ redpanda, takin, panda, fawn ]
+  prompt: All four characters. The red panda and the takin meet in a sunny park and wave; behind them the baby panda and the fawn play together on the grass.
+sentences:
+  - { id: s-h1-02-01, hanzi: 你好！我叫小红。你叫什么名字？, pinyin: "nǐ hǎo! wǒ jiào Xiǎo Hóng. nǐ jiào shénme míngzi?", spoken: "ní hǎo! wǒ jiào Xiǎo Hóng. nǐ jiào shénme míngzi?", vi: Chào bạn! Tớ tên là Tiểu Hồng. Bạn tên gì?, speaker: redpanda, style: cheerful, unknown: [ { hanzi: 小红, pinyin: Xiǎo Hóng, vi: Tiểu Hồng (tên) } ] }
+  - { id: s-h1-02-02, hanzi: 你好！我叫阿牛。, pinyin: "nǐ hǎo! wǒ jiào Ā Niú.", spoken: "ní hǎo! wǒ jiào Ā Niú.", vi: Chào bạn! Tớ tên là A Ngưu., speaker: takin, style: cheerful, unknown: [ { hanzi: 阿牛, pinyin: Ā Niú, vi: A Ngưu (tên) } ] }
+  - { id: s-h1-02-03, hanzi: 她叫什么名字？, pinyin: tā jiào shénme míngzi?, vi: Cô ấy tên gì?, speaker: takin }
+  - { id: s-h1-02-04, hanzi: 她叫小花。, pinyin: tā jiào Xiǎo Huā., vi: Cô ấy tên là Tiểu Hoa., speaker: redpanda, unknown: [ { hanzi: 小花, pinyin: Xiǎo Huā, vi: Tiểu Hoa (tên) } ] }
+  - { id: s-h1-02-05, hanzi: 他叫什么名字？, pinyin: tā jiào shénme míngzi?, vi: Cậu ấy tên gì?, speaker: takin }
+  - { id: s-h1-02-06, hanzi: 他叫小白。, pinyin: tā jiào Xiǎo Bái., vi: Cậu ấy tên là Tiểu Bạch., speaker: redpanda, unknown: [ { hanzi: 小白, pinyin: Xiǎo Bái, vi: Tiểu Bạch (tên) } ] }
+  - { id: s-h1-02-07, hanzi: 谢谢！, pinyin: xièxie!, vi: Cảm ơn!, speaker: takin, style: cheerful }
+  - { id: s-h1-02-08, hanzi: 不客气。再见！, pinyin: bù kèqi. zàijiàn!, spoken: bú kèqi. zàijiàn!, vi: Không có gì. Tạm biệt!, speaker: redpanda, style: cheerful }
+  - { id: s-h1-02-09, hanzi: 我叫小红。, pinyin: wǒ jiào Xiǎo Hóng., vi: Tôi tên là Tiểu Hồng., unknown: [ { hanzi: 小红, pinyin: Xiǎo Hóng, vi: Tiểu Hồng (tên) } ] }
+  - { id: s-h1-02-10, hanzi: 你叫什么名字？, pinyin: nǐ jiào shénme míngzi?, vi: Bạn tên gì? }
+  - { id: s-h1-02-11, hanzi: 他们叫小花、小白。, pinyin: "tāmen jiào Xiǎo Huā, Xiǎo Bái.", vi: "Họ tên là Tiểu Hoa, Tiểu Bạch.", unknown: [ { hanzi: 小花, pinyin: Xiǎo Huā, vi: Tiểu Hoa (tên) }, { hanzi: 小白, pinyin: Xiǎo Bái, vi: Tiểu Bạch (tên) } ] }
+  - { id: s-h1-02-12, hanzi: 我叫阿牛。, pinyin: wǒ jiào Ā Niú., vi: Tôi tên là A Ngưu., unknown: [ { hanzi: 阿牛, pinyin: Ā Niú, vi: A Ngưu (tên) } ] }
+sections:
+  warmup: {}
+  words:
+    ids: [ 我, 他, 她, 我们, 他们, 她们, 叫, 什么, 名字 ]
+  grammar:
+    ids: [ h1-g03, h1-g04, h1-g05 ]
+    drills:
+      - id: q-h1-02-g01
+        type: choice
+        tests: { grammar: [ h1-g03 ], words: [ 他 ] }
+        prompt: { kind: vi, text: anh ấy }
+        optionKind: hanzi
+        options: [ 他, 她, 我 ]
+        answer: 0
+      - id: q-h1-02-g02
+        type: choice
+        tests: { grammar: [ h1-g03 ], words: [ 他们 ] }
+        prompt: { kind: vi, text: Họ (một nhóm có cả nam và nữ) }
+        optionKind: hanzi
+        options: [ 他们, 她们, 我们 ]
+        answer: 0
+      - id: q-h1-02-g03
+        type: choice
+        tests: { grammar: [ h1-g03 ], words: [ 我们 ] }
+        prompt: { kind: vi, text: chúng tôi }
+        optionKind: hanzi
+        options: [ 我们, 你们, 他们 ]
+        answer: 0
+      - id: q-h1-02-g04
+        type: order
+        tests: { grammar: [ h1-g04 ], words: [ 叫 ] }
+        tiles: [ 叫, 我, 小红 ]
+        answer: s-h1-02-09
+      - id: q-h1-02-g05
+        type: trueFalse
+        tests: { grammar: [ h1-g04 ], words: [ 叫 ] }
+        prompt: { kind: vi, text: "Câu này nghĩa là “Tôi tên là Tiểu Hồng”?" }
+        statement: 小红叫我。
+        answer: false
+      - id: q-h1-02-g06
+        type: choice
+        tests: { grammar: [ h1-g04 ], words: [ 他 ] }
+        prompt: { kind: vi, text: Cậu ấy tên là Tiểu Bạch }
+        optionKind: hanzi
+        options: [ 他叫小白, 小白叫他, 叫他小白 ]
+        answer: 0
+      - id: q-h1-02-g07
+        type: order
+        tests: { grammar: [ h1-g05 ], words: [ 什么, 名字 ] }
+        tiles: [ 什么, 你, 名字, 叫 ]
+        answer: s-h1-02-10
+      - id: q-h1-02-g08
+        type: choice
+        tests: { grammar: [ h1-g05 ], words: [ 她 ] }
+        prompt: { kind: vi, text: Cô ấy tên gì? }
+        optionKind: hanzi
+        options: [ 她叫什么名字, 什么她叫名字, 她什么叫名字 ]
+        answer: 0
+      - id: q-h1-02-g09
+        type: choice
+        ask: Chọn câu đáp
+        tests: { grammar: [ h1-g05, h1-g04 ], words: [ 叫 ] }
+        prompt: { kind: audio, ref: s-h1-02-10 }
+        optionKind: hanzi
+        options: [ 我叫阿牛。, 阿牛叫我。, 谢谢！ ]
+        answer: 0
+  dialogue:
+    parts:
+      - title: Làm quen
+        lines: [ s-h1-02-01, s-h1-02-02 ]
+      - title: Bạn của Tiểu Hồng
+        lines: [ s-h1-02-03, s-h1-02-04, s-h1-02-05, s-h1-02-06, s-h1-02-07, s-h1-02-08 ]
+    questions:
+      - id: q-h1-02-d01
+        type: choice
+        ask: A Ngưu hỏi tên ai?
+        tests: { words: [ 她 ], grammar: [ h1-g03 ] }
+        prompt: { kind: audio, ref: s-h1-02-03 }
+        optionKind: vi
+        options: [ một bạn nữ, một bạn nam, Tiểu Hồng ]
+        answer: 0
+      - id: q-h1-02-d02
+        type: choice
+        ask: Bạn ấy tên gì?
+        tests: { words: [ 叫 ], grammar: [ h1-g04 ] }
+        prompt: { kind: audio, ref: s-h1-02-02 }
+        optionKind: vi
+        options: [ A Ngưu, Tiểu Hồng, Tiểu Bạch ]
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-02-l01
+        type: tone
+        tests: { words: [ 我 ], tone: true }
+        prompt: { kind: audio, ref: 我 }
+        syllable: 0
+        answer: 3
+      - id: q-h1-02-l02
+        type: choice
+        tests: { words: [ 他们 ] }
+        prompt: { kind: audio, ref: 他们 }
+        optionKind: hanzi
+        options: [ 他们, 我们, 你们 ]
+        answer: 0
+      - id: q-h1-02-l03
+        type: choice
+        tests: { words: [ 名字 ] }
+        prompt: { kind: audio, ref: 名字 }
+        optionKind: vi
+        options: [ tên, gì, tên là ]
+        answer: 0
+      - id: q-h1-02-s01
+        type: readAloud
+        tests: { words: [ 什么 ], grammar: [ h1-g05 ], tone: true }
+        sentence: s-h1-02-10
+      - id: q-h1-02-f01
+        type: freeAnswer
+        tests: { words: [ 叫 ], grammar: [ h1-g04 ] }
+        prompt: { kind: vi, text: Giới thiệu tên của bạn. }
+        rubric: [ Nói 我叫 + tên của mình ]
+      - id: q-h1-02-f02
+        type: freeAnswer
+        tests: { words: [ 什么 ], grammar: [ h1-g05 ] }
+        prompt: { kind: vi, text: Hỏi tên một bạn mới. }
+        rubric: [ Hỏi bằng 你叫什么名字？ ]
+  writing:
+    chars: [ 我, 他, 叫 ]
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-02-x01
+      type: choice
+      tests: { words: [ 我 ] }
+      prompt: { kind: audio, ref: 我 }
+      optionKind: hanzi
+      options: [ 我, 你, 他, 好 ]
+      answer: 0
+    - id: q-h1-02-x02
+      type: typePinyin
+      tests: { words: [ 我 ] }
+      prompt: { kind: hanzi, ref: 我 }
+      answer: wǒ
+    - id: q-h1-02-x03
+      type: choice
+      tests: { words: [ 他 ] }
+      prompt: { kind: hanzi, ref: 他 }
+      optionKind: vi
+      options: [ anh ấy, cô ấy, tôi, bạn ]
+      answer: 0
+    - id: q-h1-02-x04
+      type: choice
+      tests: { words: [ 她 ] }
+      prompt: { kind: hanzi, ref: 她 }
+      optionKind: vi
+      options: [ cô ấy, anh ấy, tôi, các bạn ]
+      answer: 0
+    - id: q-h1-02-x05
+      type: choice
+      tests: { words: [ 我们 ], grammar: [ h1-g03 ] }
+      prompt: { kind: vi, text: chúng tôi }
+      optionKind: hanzi
+      options: [ 我们, 你们, 他们, 她们 ]
+      answer: 0
+    - id: q-h1-02-x06
+      type: choice
+      tests: { words: [ 她们 ], grammar: [ h1-g03 ] }
+      prompt: { kind: vi, text: Họ (một nhóm toàn bạn nữ) }
+      optionKind: hanzi
+      options: [ 她们, 他们, 我们, 你们 ]
+      answer: 0
+    - id: q-h1-02-x07
+      type: choice
+      tests: { words: [ 他们 ] }
+      prompt: { kind: hanzi, ref: 他们 }
+      optionKind: vi
+      options: [ họ, chúng tôi, các bạn, anh ấy ]
+      answer: 0
+    - id: q-h1-02-x08
+      type: typePinyin
+      tests: { words: [ 叫 ] }
+      prompt: { kind: hanzi, ref: 叫 }
+      answer: jiào
+    - id: q-h1-02-x09
+      type: choice
+      tests: { words: [ 叫 ] }
+      prompt: { kind: hanzi, ref: 叫 }
+      optionKind: vi
+      options: [ tên là, gì, tên, tôi ]
+      answer: 0
+    - id: q-h1-02-x10
+      type: typePinyin
+      tests: { words: [ 什么 ] }
+      prompt: { kind: hanzi, ref: 什么 }
+      answer: shénme
+    - id: q-h1-02-x11
+      type: choice
+      tests: { words: [ 什么 ] }
+      prompt: { kind: hanzi, ref: 什么 }
+      optionKind: vi
+      options: [ gì, tên, tên là, chúng tôi ]
+      answer: 0
+    - id: q-h1-02-x12
+      type: typePinyin
+      tests: { words: [ 名字 ] }
+      prompt: { kind: hanzi, ref: 名字 }
+      answer: míngzi
+    - id: q-h1-02-x13
+      type: choice
+      tests: { words: [ 名字 ] }
+      prompt: { kind: vi, text: tên }
+      optionKind: hanzi
+      options: [ 名字, 什么, 叫, 我们 ]
+      answer: 0
+    - id: q-h1-02-x14
+      type: order
+      tests: { words: [ 他 ], grammar: [ h1-g04 ] }
+      tiles: [ 叫, 他, 小白 ]
+      answer: s-h1-02-06
+    - id: q-h1-02-x15
+      type: choice
+      tests: { words: [ 叫 ], grammar: [ h1-g04 ] }
+      prompt: { kind: vi, text: Tôi tên là A Ngưu }
+      optionKind: hanzi
+      options: [ 我叫阿牛, 阿牛叫我, 叫我阿牛 ]
+      answer: 0
+    - id: q-h1-02-x16
+      type: order
+      tests: { words: [ 她 ], grammar: [ h1-g05 ] }
+      tiles: [ 名字, 什么, 她, 叫 ]
+      answer: s-h1-02-03
+    - id: q-h1-02-x17
+      type: choice
+      tests: { words: [ 名字 ], grammar: [ h1-g05 ] }
+      prompt: { kind: vi, text: Bạn tên gì? }
+      optionKind: hanzi
+      options: [ 你叫什么名字, 什么你叫名字, 你什么叫名字 ]
+      answer: 0
+    - id: q-h1-02-x18
+      type: tone
+      tests: { words: [ 叫 ], tone: true }
+      prompt: { kind: audio, ref: 叫 }
+      syllable: 0
+      answer: 4
+    - id: q-h1-02-x19
+      type: trueFalse
+      tests: { words: [ 她 ] }
+      prompt: { kind: hanzi, ref: 她 }
+      statement: 她 dùng để chỉ một người nữ.
+      answer: true
+    - id: q-h1-02-x20
+      type: trueFalse
+      tests: { words: [ 我们 ] }
+      prompt: { kind: hanzi, ref: 我们 }
+      statement: 我们 nghĩa là các bạn.
+      answer: false
+    - id: q-h1-02-x21
+      type: choice
+      ask: Chọn câu đáp
+      tests: { words: [ 什么 ], grammar: [ h1-g05, h1-g04 ] }
+      prompt: { kind: audio, ref: s-h1-02-10 }
+      optionKind: hanzi
+      options: [ 我叫小红。, 小红叫我。, 不客气。 ]
+      answer: 0

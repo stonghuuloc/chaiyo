@@ -11,3 +11,4 @@ senses:
   example: s-w-334971
 examples:
 - s-w-334971
+image: { file: words/yisheng.png, prompt: "Only the red panda and the panda. The red panda wearing a small white coat and a stethoscope listening to the panda's chest, the panda sitting on a chair, clinic room" }

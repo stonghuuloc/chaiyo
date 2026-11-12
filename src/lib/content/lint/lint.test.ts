@@ -40,6 +40,20 @@ describe('check 1 Hán Việt', () => {
 			'chars/们.yaml',
 			'readings[0].hanviet'
 		));
+	it('flags a word hanviet that differs from the char file', () =>
+		only(
+			run((s) => (word(s, '你好').value.hanviet = 'nễ hảo')),
+			1,
+			'words/你好.yaml',
+			'hanviet'
+		));
+	it('matches the char reading by tone, not just letters', () =>
+		only(
+			run((s) => (word(s, '你好').value.hanviet = 'nhĩ hiếu')),
+			1,
+			'words/你好.yaml',
+			'hanviet'
+		));
 });
 
 describe('check 2 Polyphones', () => {
@@ -173,7 +187,7 @@ describe('check 8 References', () => {
 		));
 	it('flags an unknown Cast id', () =>
 		only(
-			run((s) => (lesson(s).scene.cast = ['panda', 'hachiware'])),
+			run((s) => (lesson(s).scene.cast = ['panda', 'nobody'])),
 			8,
 			F,
 			'scene.cast[1]'
@@ -282,17 +296,42 @@ describe('check 8 References', () => {
 			'grammar/h1-g01.yaml',
 			'std[1]'
 		));
-	it('flags a lesson with std but none at its level', () =>
+	it('flags a lesson with no std item at its level', () =>
 		only(
-			run((s) => {
-				lesson(s).level = 2;
-				grammar(s).std = [1];
-			}),
+			run((s) => (lesson(s).level = 2)),
 			8,
 			F,
 			'sections.grammar.ids'
 		));
-	it('allows std: [] at any level', () => expect(run((s) => (lesson(s).level = 3))).toEqual([]));
+	it('flags a lesson whose grammar points are all std: []', () =>
+		only(
+			run((s) => (grammar(s).std = [])),
+			8,
+			F,
+			'sections.grammar.ids'
+		));
+	it('flags a lesson with more than 3 grammar points', () => {
+		const errors = run((s) => (lesson(s).sections.grammar.ids = Array(4).fill('h1-g01')));
+		only(errors, 8, F, 'sections.grammar.ids');
+		expect(errors[0].message).toContain('4 grammar points');
+	});
+	it('flags a grammar point tested by fewer than 2 gate pool questions', () => {
+		const errors = run((s) => {
+			const q = pool(s).find((x) => x.tests.grammar?.length)!;
+			q.tests.grammar = [];
+		});
+		only(errors, 8, F, 'sections.grammar.ids[0]');
+		expect(errors[0].message).toContain('1 gate pool questions');
+	});
+	it('flags a grammar point no dialogue or listenSpeak question uses', () => {
+		const errors = run((s) =>
+			[...lesson(s).sections.dialogue.questions, ...lesson(s).sections.listenSpeak.items].forEach(
+				(q) => (q.tests.grammar = [])
+			)
+		);
+		only(errors, 8, F, 'sections.grammar.ids[0]');
+		expect(errors[0].message).toContain('dialogue or listenSpeak');
+	});
 });
 
 describe('check 9 Audio', () => {

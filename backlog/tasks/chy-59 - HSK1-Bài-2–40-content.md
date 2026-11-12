@@ -50,6 +50,12 @@ Feature: HSK1 Bài 2–40 content
 
   Scenario: Roadmap titles stay in sync
     Then every lesson title in the roadmap matches the lesson's content title
+
+  Scenario: Every HSK1 grammar item is taught
+    Given content/levels/hsk1.yaml maps GF 0025-2021 items 1–48 to Bài 1–40
+    When src/lib/content/levels.test.ts runs over Bài 1 to Bài 40
+    Then each of items 1 to 48 is planned at least once
+    And each lesson's title matches its row and its grammar points carry every std item of that row
 ```
 <!-- SECTION:DESCRIPTION:END -->
 
@@ -60,4 +66,5 @@ Feature: HSK1 Bài 2–40 content
 - [ ] #3 Scenario: A bad lesson fails the run
 - [ ] #4 Scenario: Audio rendered for all
 - [ ] #5 Scenario: Roadmap titles stay in sync
+- [ ] #6 Scenario: Every HSK1 grammar item is taught
 <!-- AC:END -->

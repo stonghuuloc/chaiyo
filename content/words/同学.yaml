@@ -11,3 +11,4 @@ senses:
   example: s-w-333784
 examples:
 - s-w-333784
+image: { file: words/tongxue.png, prompt: "Only the panda and the fawn. The panda and the fawn sitting on chairs at two desks side by side in a classroom with a blank green chalkboard, smiling at each other" }
