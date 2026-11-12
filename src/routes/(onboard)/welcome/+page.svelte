@@ -91,8 +91,11 @@
 			saving = false;
 			return;
 		}
-		await goto(resolve(to));
-		saving = false;
+		try {
+			await goto(resolve(to));
+		} finally {
+			saving = false;
+		}
 	}
 
 	const channels = $derived([
@@ -286,7 +289,9 @@
 
 		{#snippet actions()}
 			{#if error}
-				<p role="alert" class="mb-3 text-center text-label text-lantern-red-text">{error}</p>
+				<p role="alert" class="mb-3 bg-notebook-paper text-center text-label text-lantern-red-text">
+					{error}
+				</p>
 			{/if}
 			{#if s.step < 2}
 				<Button caret disabled={!canNext(s)} onclick={next}>
