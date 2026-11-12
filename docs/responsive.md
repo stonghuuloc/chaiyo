@@ -36,7 +36,7 @@ RESPONSIVE (docs/adr/0008)
 | Hub / List / Detail / Settings | 430, no nav | 600, no nav | sidebar + 640 | sidebar + 640 (+ aside if the story draws one) |
 | Step flow / Test runner | 430, sticky action bar | 600 (form steps 560) | 640 (form steps 560), no nav | same |
 | Result | 430 | 600 | art 3:2 left + result right, max 1040 | same |
-| Public page | 430 | 480 | art 3:2 (560) + 400 column, max 1120 | same |
+| Public page | 430 | 480 | Login: art 3:2 (560) + 400 column, max 1120; Landing: art 2:3 (480) + 400 column | same |
 | Sheet | bottom sheet 430 | bottom sheet 430 | centred dialog 480 | same |
 
 ## Retrofit plan

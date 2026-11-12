@@ -19,7 +19,10 @@
 	<picture class="art">
 		<source
 			media="(min-width: 1024px)"
-			srcset={asset('onboard/landing-tall.webp')}
+			srcset="{asset('onboard/landing-tall.webp')} 640w, {asset(
+				'onboard/landing-tall-960.webp'
+			)} 960w"
+			sizes="480px"
 			width="640"
 			height="954"
 		/>
@@ -27,7 +30,7 @@
 			srcset="{asset('onboard/landing-wide.webp')} 860w, {asset(
 				'onboard/landing-wide-1280.webp'
 			)} 1264w"
-			sizes="(min-width: 768px) 480px, 100vw"
+			sizes="(min-width: 768px) 480px, min(100vw, 470px)"
 		/>
 		<img
 			src={asset('onboard/landing-wide.webp')}
@@ -39,7 +42,13 @@
 	</picture>
 
 	<div class="column">
-		<img class="logo" src={asset('brand/logo-224.webp')} alt="" width="112" height="112" />
+		<img
+			class="logo"
+			src={asset('brand/logo-224.webp')}
+			alt={m.landing_logo_alt()}
+			width="96"
+			height="96"
+		/>
 		<h1 class="title">{m.landing_title()}</h1>
 		<p class="lede">{m.landing_lede()}</p>
 
@@ -61,18 +70,19 @@
 
 <style>
 	.landing {
+		--gutter: 20px;
 		display: flex;
 		flex-direction: column;
-		max-width: calc(var(--container-column) + 40px);
+		max-width: calc(var(--container-column) + 2 * var(--gutter));
 		margin-inline: auto;
-		padding: 0 20px 32px;
+		padding: 0 var(--gutter) 32px;
 		text-align: center;
 	}
 
 	.art {
 		display: block;
 		min-width: 0;
-		margin-inline: -20px;
+		margin-inline: calc(-1 * var(--gutter));
 		aspect-ratio: 3 / 2;
 		overflow: hidden;
 		mask-image: linear-gradient(var(--color-ink) 70%, transparent);
@@ -145,10 +155,16 @@
 		font-weight: var(--text-title--font-weight);
 	}
 
+	@media (hover: hover) {
+		.login:hover {
+			text-decoration: underline;
+		}
+	}
+
 	@media (min-width: 48rem) {
 		.landing {
-			max-width: calc(var(--container-sheet) + 64px);
-			padding-inline: 32px;
+			--gutter: 32px;
+			max-width: calc(var(--container-sheet) + 2 * var(--gutter));
 		}
 
 		.art {
@@ -168,9 +184,10 @@
 			align-items: center;
 			justify-content: center;
 			gap: 80px;
-			max-width: 1120px;
+			--gutter: 40px;
+			max-width: none;
 			min-height: 100dvh;
-			padding: 40px;
+			padding: var(--gutter);
 			text-align: left;
 		}
 
@@ -187,13 +204,10 @@
 
 		.column {
 			flex: 0 0 var(--container-form);
-			padding: 0;
 		}
 
 		.logo {
 			margin: 0;
-			width: 96px;
-			height: 96px;
 		}
 
 		.actions {
