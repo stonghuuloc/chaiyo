@@ -18,7 +18,7 @@ export function learnerLedger(
 	const ledger = (async () => {
 		const { data } = await client.from('settings').select('tz').eq('learner_id', uid).maybeSingle();
 		const tz = data?.tz ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
-		const remote = supabaseStore(client);
+		const remote = supabaseStore(client, uid);
 		const own = async () => {
 			const { data: now } = await client.auth.getSession();
 			if (now.session?.user.id !== uid) throw new Error('signed in as another learner');

@@ -13,11 +13,17 @@ const json = (body: unknown, status: number) =>
 		status,
 		headers: { 'content-type': 'application/json' }
 	});
-const clientWith = (fetch: typeof globalThis.fetch) =>
-	createClient('http://127.0.0.1:56321', 'test-key', {
+const clientWith = (fetch: typeof globalThis.fetch) => {
+	const client = createClient('http://127.0.0.1:56321', 'test-key', {
 		auth: { persistSession: false },
 		global: { fetch }
 	});
+	vi.spyOn(client.auth, 'getSession').mockResolvedValue({
+		data: { session: { user: { id: 'learner-a' } } },
+		error: null
+	} as Awaited<ReturnType<typeof client.auth.getSession>>);
+	return client;
+};
 
 describe('sync', () => {
 	it('back online, sync exactly once', async () => {
@@ -85,7 +91,7 @@ describe('sync', () => {
 		});
 		const ledger = await openLedger({
 			initial: initialState(),
-			store: supabaseStore(clientWith(fetch as typeof globalThis.fetch)),
+			store: supabaseStore(clientWith(fetch as typeof globalThis.fetch), 'learner-a'),
 			idb: new IDBFactory()
 		});
 		await ledger.record(att('a-01', T + MIN, '你', 'the', true));
@@ -95,10 +101,56 @@ describe('sync', () => {
 		expect(posts[0].url).toContain('/rest/v1/attempts?on_conflict=learner_id%2Cid');
 		expect(posts[0].prefer).toContain('resolution=ignore-duplicates');
 		expect(posts[0].body.map((r) => r.id)).toEqual(['a-01', 'a-02']);
-		expect(posts[0].body.every((r) => !('learner_id' in r))).toBe(true);
+		expect(posts[0].body.every((r) => r.learner_id === 'learner-a')).toBe(true);
 		await ledger.sync();
 		expect(posts[1].body.map((r) => r.id)).toEqual(['a-01', 'a-02']);
 		expect(ledger.pending()).toBe(0);
+	});
+
+	it('rejects a stale or signed-out owner and keeps its outbox pending', async () => {
+		const fetch = vi.fn(async () => json([], 200));
+		const client = clientWith(fetch);
+		const store = supabaseStore(client, 'learner-a');
+		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
+		await ledger.record(att('private', T, '你', 'the', true));
+		for (const session of [{ user: { id: 'learner-b' } }, null]) {
+			vi.mocked(client.auth.getSession).mockResolvedValue({
+				data: { session },
+				error: null
+			} as Awaited<ReturnType<typeof client.auth.getSession>>);
+			await expect(ledger.sync()).rejects.toThrow('another learner');
+			await expect(store.pull()).rejects.toThrow('another learner');
+			expect(ledger.pending()).toBe(1);
+		}
+		expect(fetch).not.toHaveBeenCalled();
+	});
+
+	it('pins both upload types and every pull page to the original owner across a session race', async () => {
+		const requests: { url: URL; body: Record<string, unknown>[] }[] = [];
+		const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+			requests.push({ url: new URL(String(input)), body: JSON.parse(String(init?.body ?? '[]')) });
+			return json([], 200);
+		});
+		const client = clientWith(fetch);
+		const store = supabaseStore(client, 'learner-a');
+		// Simulate auth changing after the ownership check, before the HTTP request.
+		vi.spyOn(
+			client as unknown as { _getAccessToken(): Promise<string> },
+			'_getAccessToken'
+		).mockResolvedValue('learner-b-token');
+		await store.push([
+			att('private', T, '你', 'the', true),
+			{ kind: 'saved', word: '你', at: new Date(T).toISOString() }
+		]);
+		expect(requests.slice(0, 2).map((r) => r.body[0].learner_id)).toEqual([
+			'learner-a',
+			'learner-a'
+		]);
+		await store.pull();
+		expect(requests.slice(2).map((r) => r.url.searchParams.get('learner_id'))).toEqual([
+			'eq.learner-a',
+			'eq.learner-a'
+		]);
 	});
 
 	it('pull pages', async () => {
@@ -126,7 +178,10 @@ describe('sync', () => {
 				200
 			);
 		});
-		const pulled = await supabaseStore(clientWith(fetch as typeof globalThis.fetch)).pull();
+		const pulled = await supabaseStore(
+			clientWith(fetch as typeof globalThis.fetch),
+			'learner-a'
+		).pull();
 		expect(pulled).toHaveLength(2003);
 		const a = gets.filter((g) => g.includes('/attempts'));
 		expect(a[0]).toContain('offset=0&limit=1000');
