@@ -70,7 +70,7 @@ if (!manifestPath) {
 const cast = CAST;
 const { entries } = JSON.parse(readFileSync(manifestPath, 'utf8')) as { entries: AudioEntry[] };
 const stagedFile = (key: string) => join(fromDir ?? '', `${key}.mp3`);
-const requestOf = (e: AudioEntry) => azureRequest(cast, e);
+const requestOf = (e: AudioEntry) => azureRequest(cast, { ...e, text: e.reading ?? e.hanzi });
 const renderable = fromDir
 	? recordedOnly(entries, (key) => existsSync(stagedFile(key)))
 	: entries.filter((e) => requestOf(e) !== undefined);
