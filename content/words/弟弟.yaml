@@ -11,4 +11,4 @@ senses:
   example: s-w-771449
 examples:
 - s-w-771449
-image: { file: words/didi.png, prompt: "Only the red panda and the panda. The red panda walking the panda to school, the panda carrying a small schoolbag and holding the red panda's paw, morning village lane" }
+image: { file: words/didi.png, prompt: "Only the red panda and its little brother, a smaller red panda with the same red panda colours and face, wearing a tiny schoolbag. The red panda walks its little brother to school along a village path, both smiling. The little brother is part of this scene even though he is not in the lineup." }

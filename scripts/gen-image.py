@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One image via opencode-go hosted gpt-image-2, with the cast lineup attached as reference.
 Calls the API directly: omp 18.12.5 drops the x-opencode-session header on image requests (400 MissingSessionID).
-Usage: gen-image.py OUT.png "prompt" [ref.png]"""
+Usage: [IMAGE_QUALITY=low|medium|high] gen-image.py OUT.png "prompt" [ref.png]"""
 import base64, json, os, sqlite3, sys, urllib.request, uuid
 
 out, prompt = sys.argv[1], sys.argv[2]
@@ -22,7 +22,7 @@ body = {
     'input': [{'role': 'user', 'content': content}],
     # no 'model' → opencode silently serves gpt-image-1 (much worse); pin gpt-image-2
     'tools': [{'type': 'image_generation', 'model': 'gpt-image-2', 'action': 'edit' if ref else 'generate',
-               'output_format': 'png', 'size': '1536x1024', 'quality': 'high'}],
+               'output_format': 'png', 'size': '1536x1024', 'quality': os.environ.get('IMAGE_QUALITY', 'high')}],
     'tool_choice': {'type': 'image_generation'},
     'store': False,
 }
