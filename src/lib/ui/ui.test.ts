@@ -165,10 +165,8 @@ describe('Kbd', () => {
 		// Assert
 		expect(out).toContain('<kbd');
 		expect(out).toContain('aria-hidden="true"');
-		expect(src).toMatch(/kbd \{\s*display: none;/);
-		expect(src).toMatch(
-			/@media \(hover: hover\) and \(pointer: fine\) \{\s*kbd \{\s*display: inline-grid;/
-		);
+		expect(src).toMatch(/class="hidden /);
+		expect(src).toContain('[@media(hover:hover)_and_(pointer:fine)]:inline-grid');
 	});
 });
 
@@ -182,7 +180,7 @@ describe('FocusFrame', () => {
 		// Assert
 		expect(out).toMatch(/<header[^>]*>[\s\S]*top[\s\S]*<\/header>/);
 		expect(out).toContain('body');
-		expect(out).toMatch(/class="actions[^"]*"[^>]*>[\s\S]*go/);
+		expect(out).toMatch(/class="[^"]*sticky bottom-0[^"]*"[^>]*>[\s\S]*go/);
 	});
 
 	it('Given_NoSlots_When_Render_Then_NoHeaderNoActionBar', () => {
@@ -191,7 +189,7 @@ describe('FocusFrame', () => {
 		const out = html(FocusFrame, { children: text('body') });
 		// Assert
 		expect(out).not.toContain('<header');
-		expect(out).not.toContain('actions');
+		expect(out).not.toContain('sticky bottom-0');
 	});
 
 	it('Given_FocusFrameCss_Then_ColumnsFromTokensAndActionBarSticky', () => {
@@ -201,8 +199,8 @@ describe('FocusFrame', () => {
 		// Assert
 		expect(src).toContain('var(--container-main)');
 		expect(src).toContain('var(--container-narrow)');
-		expect(src).toMatch(/\.actions \{[^}]*position: sticky;[^}]*bottom: 0/);
-		expect(src).not.toMatch(/\d+px\)? *;? *\n *max-width/);
+		expect(src).toContain('sticky bottom-0');
+		expect(src).not.toMatch(/max-w-\[\d+px\]/);
 	});
 });
 

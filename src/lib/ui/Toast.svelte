@@ -2,15 +2,21 @@
 	import { prefersReducedMotion } from 'svelte/motion';
 	import { toastRise } from './motion';
 
-	type Props = {
+	let {
+		open,
+		message,
+		actionLabel,
+		onaction,
+		onclose,
+		duration = 4500
+	}: {
 		open: boolean;
 		message: string;
 		actionLabel?: string;
 		onaction?: () => void;
 		onclose?: () => void;
 		duration?: number;
-	};
-	let { open, message, actionLabel, onaction, onclose, duration = 4500 }: Props = $props();
+	} = $props();
 	const reduced = $derived(prefersReducedMotion.current);
 
 	$effect(() => {

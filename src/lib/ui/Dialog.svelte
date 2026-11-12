@@ -4,8 +4,12 @@
 	import { modal } from './modal';
 	import { dialogPop, scrimFade } from './motion';
 
-	type Props = { open: boolean; title: string; onclose: () => void; children: Snippet };
-	let { open, title, onclose, children }: Props = $props();
+	let {
+		open,
+		title,
+		onclose,
+		children
+	}: { open: boolean; title: string; onclose: () => void; children: Snippet } = $props();
 	const uid = $props.id();
 	const reduced = $derived(prefersReducedMotion.current);
 </script>
