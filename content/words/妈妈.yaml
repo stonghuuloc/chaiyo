@@ -11,3 +11,4 @@ senses:
   example: s-w-349505
 examples:
 - s-w-349505
+image: { file: words/mama.png, prompt: "Only the red panda and the panda. The red panda wearing a small apron hugging the panda warmly like a mom, cozy kitchen" }

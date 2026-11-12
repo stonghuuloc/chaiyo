@@ -1,13 +1,13 @@
 id: 吗
 hanzi: 吗
-pinyin: má
+pinyin: ma
 hanviet: ma
 level: 1
 pos:
-- pron
+- part
 senses:
-- vi: 'gì (trong 干吗: làm gì; chỉ dùng trong 干吗)'
-  pos: pron
-  example: s-w-ai-1c5dfd7c
+- vi: không? (đặt cuối câu kể để hỏi có hay không)
+  pos: part
+  example: s-w-10966843
 examples:
-- s-w-ai-1c5dfd7c
+- s-w-10966843

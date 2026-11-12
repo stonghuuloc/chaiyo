@@ -20,7 +20,7 @@ ordinal: 45000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-Prototype `home-glass.html`: Chiikawa state scene (`assets/home/`), one Next CTA (due practice → current lesson → mock at level end → "Xong hôm nay"), roadmap slice, week strip, streak chip, friends strip, "Luyện hôm nay" row.
+Prototype `home-glass.html`: Cast state scene (`assets/home/`), one Next CTA (due practice → current lesson → mock at level end → "Xong hôm nay"), roadmap slice, week strip, streak chip, friends strip, "Luyện hôm nay" row.
 
 ```gherkin
 Feature: Hôm nay tab

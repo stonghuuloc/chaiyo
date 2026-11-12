@@ -1,0 +1,13 @@
+# content/grammar/h1-g08.yaml
+id: h1-g08
+level: 1
+std: [ 4, 46 ]
+title: "Hỏi người: 谁"
+pattern: 这是 + 谁？
+explain: |-
+  谁 (thùy, shéi) là “ai”. Giống 什么: đặt 谁 vào đúng chỗ của người cần hỏi.
+
+  这是我哥哥。 → 这是谁？ · 他是老师。 → 谁是老师？
+examples: [ s-h1-03-01, s-h1-03-09 ]
+pitfalls:
+  - { wrong: 谁这是？, right: 这是谁？ }

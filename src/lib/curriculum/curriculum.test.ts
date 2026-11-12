@@ -22,13 +22,17 @@ describe('curriculum', () => {
 		expect(LESSONS.map((l) => [l.id, l.n])).toEqual([
 			['h0-00', 0],
 			['h1-01', 1],
-			['h2-01', 2],
-			['h3-01', 3],
-			['h4-01', 4],
-			['h5-01', 5]
+			['h1-02', 2],
+			['h1-03', 3],
+			['h1-04', 4],
+			['h1-05', 5],
+			['h2-01', 6],
+			['h3-01', 7],
+			['h4-01', 8],
+			['h5-01', 9]
 		]);
-		expect(LESSONS.map((l) => l.words.length)).toEqual([0, 10, 12, 13, 15, 15]);
-		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(65);
+		expect(LESSONS.map((l) => l.words.length)).toEqual([0, 10, 9, 10, 8, 14, 12, 13, 15, 15]);
+		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(106);
 	});
 
 	it('lists sections without warmup and flags the primer', () => {

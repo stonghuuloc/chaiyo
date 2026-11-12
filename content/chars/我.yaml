@@ -1,0 +1,13 @@
+hanzi: 我
+readings:
+  - pinyin: wǒ
+    hanviet: ngã
+radical: 戈
+ids: 我
+strokes: 7
+mnemonic:
+  hinh: "Tay cầm giáo (戈) để tự vệ — chính là TA/TÔI (gốc thật: hình vẽ vũ khí răng cưa, mượn âm chỉ ngôi 1)"
+  am: Hán Việt "ngã" — tự ngã, bản ngã, vô ngã
+  doiThat: tab "我的账户" trong app ngân hàng, nút "我的" trong app mua sắm TQ
+  tuongPhan: ≠ 找 (zhǎo, tìm) — cùng có 戈 nhưng thêm 扌rõ ràng bên trái
+  kind: invented

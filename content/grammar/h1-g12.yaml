@@ -1,0 +1,13 @@
+# content/grammar/h1-g12.yaml
+id: h1-g12
+level: 1
+std: [ 4, 46 ]
+title: "Hỏi tuổi: 你几岁？"
+pattern: người + 几 + 岁？ → người + số + 岁
+explain: |-
+  几 (kỷ, jǐ) hỏi một con số nhỏ: mấy. 你几岁？ = Bạn mấy tuổi? Hay dùng để hỏi tuổi trẻ em.
+
+  Trả lời: thay 几 bằng số. 我八岁 = Tôi tám tuổi. Nói tuổi không cần 是.
+examples: [ s-h1-05-15, s-h1-05-10 ]
+pitfalls:
+  - { wrong: 我是八岁。, right: 我八岁。, why: "Nói tuổi không dùng 是." }

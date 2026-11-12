@@ -1,0 +1,13 @@
+# content/grammar/h1-g05.yaml
+id: h1-g05
+level: 1
+std: [ 4, 46 ]
+title: "Hỏi bằng 什么: hỏi ở đâu, đáp ở đó"
+pattern: 你叫 + 什么 + 名字？
+explain: |-
+  Muốn hỏi, đặt 什么 (gì) vào đúng chỗ của câu trả lời. Không đảo câu: 我叫小红。 → 你叫什么名字？
+
+  Giống tiếng Việt “Bạn tên gì?”: câu hỏi giữ nguyên thứ tự câu kể.
+examples: [ s-h1-02-10, s-h1-02-03 ]
+pitfalls:
+  - { wrong: 什么你叫名字？, right: 你叫什么名字？ }

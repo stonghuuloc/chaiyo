@@ -1,0 +1,13 @@
+# content/grammar/h1-g02.yaml
+id: h1-g02
+level: 1
+std: [ 31 ]
+title: "Câu không chủ ngữ: 谢谢！对不起！"
+pattern: 谢谢 → 不客气 / 对不起 → 没关系
+explain: |-
+  谢谢！, 对不起！, 再见！ tự nó đã là một câu đủ, không cần chủ ngữ phía trước, giống tiếng Việt nói “Cảm ơn!”.
+
+  Mỗi câu có câu đáp riêng: 谢谢！ → 不客气。 (không có gì), 对不起！ → 没关系。 (không sao). 再见！ thì đáp lại bằng 再见！.
+examples: [ s-h1-01-05, s-h1-01-06 ]
+pitfalls:
+  - { wrong: 谢谢！没关系。, right: 谢谢！不客气。 }

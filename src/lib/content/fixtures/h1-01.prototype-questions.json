@@ -27,6 +27,33 @@
 		"answer": "你们好"
 	},
 	{
+		"id": "q-h1-01-g04",
+		"section": "grammar",
+		"page": "l4-grammar.html",
+		"kind": "choice",
+		"prompt": "Bạn của bạn nói 谢谢！ Bạn đáp gì?",
+		"options": ["不客气", "没关系", "再见"],
+		"answer": "不客气"
+	},
+	{
+		"id": "q-h1-01-g05",
+		"section": "grammar",
+		"page": "l4-grammar.html",
+		"kind": "choice",
+		"prompt": "Bạn của bạn nói 对不起！ Bạn đáp gì?",
+		"options": ["不客气", "没关系", "谢谢"],
+		"answer": "没关系"
+	},
+	{
+		"id": "q-h1-01-g06",
+		"section": "grammar",
+		"page": "l4-grammar.html",
+		"kind": "choice",
+		"prompt": "Bạn làm rơi bút của cô giáo. Nói gì?",
+		"options": ["谢谢", "对不起", "再见"],
+		"answer": "对不起"
+	},
+	{
 		"id": "q-h1-01-d01",
 		"section": "dialogue",
 		"page": "l5-dialogue.html",

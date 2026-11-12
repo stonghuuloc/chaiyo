@@ -1,0 +1,13 @@
+hanzi: 呢
+readings:
+  - pinyin: ne
+    hanviet: ni
+radical: 口
+ids: ⿰口尼
+strokes: 8
+mnemonic:
+  hinh: 口 miệng + 尼 (chỉ âm) → tiếng cuối câu để hỏi lại
+  am: 'ne nghe như "nè": 你呢？ = "còn bạn nè?"'
+  doiThat: 我很好，你呢？
+  tuongPhan: 吗 hỏi có/không; 呢 hỏi lại "còn … thì sao?"
+  kind: invented

@@ -1,0 +1,13 @@
+# content/grammar/h1-g11.yaml
+id: h1-g11
+level: 1
+std: [ 7 ]
+title: "Số đếm 1–99"
+pattern: số + 十 + số
+explain: |-
+  一 到 十 học thuộc. Từ 11 trở lên ghép như tiếng Việt: 十一 = mười một, 二十 = hai mươi, 二十五 = hai mươi lăm.
+
+  十 làm cả việc của “mười” lẫn “mươi”: đứng sau số là hàng chục, đứng trước số là mười mấy.
+examples: [ s-h1-05-12, s-h1-05-14 ]
+pitfalls:
+  - { wrong: 十二, right: 二十, why: "Hai mươi là 二十; 十二 là mười hai." }

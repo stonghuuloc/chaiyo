@@ -65,7 +65,7 @@ sections:
           'options': ['nǐ hǎo', 'nín hǎo'],
           'answer': 0,
           'optionKind': 'pinyin',
-          'tests': { 'words': ['你'] }
+          'tests': { 'words': ['你'], 'grammar': ['h1-g01'] }
         }
   listenSpeak:
     items:
@@ -149,7 +149,7 @@ gate:
         'type': 'typePinyin',
         'prompt': { 'kind': 'hanzi', 'ref': '你好' },
         'answer': 'nǐ hǎo',
-        'tests': { 'words': ['你好'] }
+        'tests': { 'words': ['你好'], 'grammar': ['h1-g01'] }
       }
     - {
         'id': 'q-h1-01-g10',
@@ -158,7 +158,7 @@ gate:
         'options': ['nǐ hǎo', 'duìbuqǐ'],
         'answer': 0,
         'optionKind': 'pinyin',
-        'tests': { 'words': ['你好'] }
+        'tests': { 'words': ['你好'], 'grammar': ['h1-g01'] }
       }
     - {
         'id': 'q-h1-01-g11',

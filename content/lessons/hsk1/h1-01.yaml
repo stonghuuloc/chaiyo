@@ -35,7 +35,7 @@ sections:
   words:
     ids: [ 你, 好, 您, 你们, 你好, 对不起, 没关系, 谢谢, 不客气, 再见 ]
   grammar:
-    ids: [ h1-g01 ]
+    ids: [ h1-g01, h1-g02 ]
     drills:
       - id: q-h1-01-g01
         type: choice
@@ -56,6 +56,27 @@ sections:
         tests: { grammar: [ h1-g01 ] }
         tiles: [ 们, 你, 好 ]
         answer: s-h1-01-09
+      - id: q-h1-01-g04
+        type: choice
+        tests: { grammar: [ h1-g02 ], words: [ 不客气 ] }
+        prompt: { kind: vi, text: Bạn của bạn nói 谢谢！ Bạn đáp gì? }
+        optionKind: hanzi
+        options: [ 不客气, 没关系, 再见 ]
+        answer: 0
+      - id: q-h1-01-g05
+        type: choice
+        tests: { grammar: [ h1-g02 ], words: [ 没关系 ] }
+        prompt: { kind: vi, text: Bạn của bạn nói 对不起！ Bạn đáp gì? }
+        optionKind: hanzi
+        options: [ 不客气, 没关系, 谢谢 ]
+        answer: 1
+      - id: q-h1-01-g06
+        type: choice
+        tests: { grammar: [ h1-g02 ], words: [ 对不起 ] }
+        prompt: { kind: vi, text: Bạn làm rơi bút của cô giáo. Nói gì? }
+        optionKind: hanzi
+        options: [ 谢谢, 对不起, 再见 ]
+        answer: 1
   dialogue:
     parts:
       - title: Gặp nhau
@@ -65,7 +86,7 @@ sections:
     questions:
       - id: q-h1-01-d01
         type: choice
-        tests: { words: [ 没关系 ] }
+        tests: { words: [ 没关系 ], grammar: [ h1-g02 ] }
         prompt: { kind: audio, ref: s-h1-01-03 }
         optionKind: hanzi
         options: [ 没关系。, 不客气。, 再见！ ]
@@ -98,9 +119,14 @@ sections:
         sentence: s-h1-01-06
       - id: q-h1-01-f01
         type: freeAnswer
-        tests: { words: [ 对不起 ] }
+        tests: { words: [ 对不起 ], grammar: [ h1-g02 ] }
         prompt: { kind: vi, text: Bạn làm đổ trà của bạn mình. Nói gì? }
         rubric: [ Nói 对不起 (xin lỗi) bằng một câu ngắn ]
+      - id: q-h1-01-f02
+        type: freeAnswer
+        tests: { words: [ 您 ], grammar: [ h1-g01 ] }
+        prompt: { kind: vi, text: Bạn gặp cô giáo ở cổng trường. Chào cô. }
+        rubric: [ Chào bằng 您好 (lịch sự), không dùng 你好 ]
   writing:
     chars: [ 你, 好, 们 ]
 gate:
@@ -233,3 +259,17 @@ gate:
       prompt: { kind: hanzi, ref: 再见 }
       statement: 再见 nghĩa là xin chào.
       answer: false
+    - id: q-h1-01-x21
+      type: choice
+      tests: { words: [ 不客气 ], grammar: [ h1-g02 ] }
+      prompt: { kind: audio, ref: s-h1-01-17 }
+      optionKind: hanzi
+      options: [ 不客气。, 没关系。, 对不起！, 你好！ ]
+      answer: 0
+    - id: q-h1-01-x22
+      type: choice
+      tests: { words: [ 没关系 ], grammar: [ h1-g02 ] }
+      prompt: { kind: audio, ref: s-h1-01-15 }
+      optionKind: hanzi
+      options: [ 谢谢！, 不客气。, 没关系。, 再见！ ]
+      answer: 2

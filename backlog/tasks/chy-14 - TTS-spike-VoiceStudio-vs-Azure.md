@@ -18,7 +18,7 @@ ordinal: 14000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-Spike from NOTES.md: polyphone control (行), 一/不 and 3-3 sandhi, model-weight licences, Cast voices (Hachiware, Momonga, narrator).
+Spike from NOTES.md: polyphone control (行), 一/不 and 3-3 sandhi, model-weight licences, Cast voices (red panda, takin, narrator).
 
 ```gherkin
 Feature: TTS spike: VoiceStudio vs Azure
@@ -45,8 +45,8 @@ Feature: TTS spike: VoiceStudio vs Azure
       | 不 before a tone-4 syllable  | bú (不客气)      |
       | 一 before each tone          | yī / yí / yì     |
       | two tone-3 syllables (你好)  | ní hǎo           |
-      | a Hachiware line             | Hachiware voice  |
-      | a Momonga line               | Momonga voice    |
+      | a red panda line             | red panda voice  |
+      | a takin line                 | takin voice      |
 
   Scenario: Loc picks by ear
     Given the listening sheet lists each of the 30 sentences with clip A and clip B, engine order shuffled
@@ -59,7 +59,7 @@ Feature: TTS spike: VoiceStudio vs Azure
     When the ADR file "docs/adr/0002-tts-engine.md" is written
     Then it states the chosen engine and the tally from the listening sheet
     And it states the licence status of the model weights (allowed for commercial use: yes or no, with the licence name)
-    And it maps hachiware, momonga and the narrator to one fixed voice id each
+    And it maps redpanda, takin and the narrator to one fixed voice id each
 
   Scenario: The content-schema open decision is closed
     Given "docs/content-schema.md" lists open decision 3 "Cast voice per member (and gender) waits on the VoiceStudio spike"

@@ -1,0 +1,11 @@
+# content/grammar/h1-g06.yaml
+id: h1-g06
+level: 1
+std: [ 6 ]
+title: "Đây / kia: 这 · 那"
+pattern: 这 / 那 + 是 + người
+explain: |-
+  这 (giá, zhè) chỉ người hoặc vật ở gần: đây. 那 (na, nà) chỉ ở xa: kia, đó.
+
+  Đứng đầu câu, giống tiếng Việt: 这是我妈妈 = Đây là mẹ tôi. 那是我爸爸 = Kia là bố tôi.
+examples: [ s-h1-03-02, s-h1-03-04 ]

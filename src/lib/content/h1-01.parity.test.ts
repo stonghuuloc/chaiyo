@@ -31,14 +31,16 @@ type Proto = {
 		{ hz: string; py: string; vi: string; spoken?: string; speaker?: string }
 	>;
 	DIALOGUE: { title: string; lines: string[] }[];
-	GRAMMAR: {
-		title: string;
-		pattern: string[];
-		explain: string;
-		more: string;
-		examples: string[];
-		wrong: string[];
-	};
+	GRAMMAR: ProtoGrammar<string[]>;
+	GRAMMAR2: ProtoGrammar<string[][]>;
+};
+type ProtoGrammar<P> = {
+	title: string;
+	pattern: P;
+	explain: string;
+	more: string;
+	examples: string[];
+	wrong: string[];
 };
 type Section = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -115,16 +117,21 @@ function parity(b: Bundle, proto: Proto, fx: FxQuestion[]): string[] {
 		check(`dialogue[${i}] lines`, JSON.stringify(part?.lines) === JSON.stringify(d.lines.map(sid)));
 	});
 
-	const g = b.grammar[0];
-	const pg = proto.GRAMMAR;
-	check('grammar title', g?.title === pg.title);
-	check('grammar pattern', g?.pattern === pg.pattern.join(' + '));
-	check('grammar explain', g?.explain === `${pg.explain}\n\n${pg.more}`);
-	check('grammar examples', JSON.stringify(g?.examples) === JSON.stringify(pg.examples.map(sid)));
-	check(
-		'grammar pitfall',
-		g?.pitfalls?.[0]?.wrong === pg.wrong[0] && g?.pitfalls?.[0]?.right === pg.wrong[1]
-	);
+	const points: [string, ProtoGrammar<unknown>, string][] = [
+		['grammar', proto.GRAMMAR, proto.GRAMMAR.pattern.join(' + ')],
+		['grammar2', proto.GRAMMAR2, proto.GRAMMAR2.pattern.map((p) => p.join(' → ')).join(' / ')]
+	];
+	points.forEach(([name, pg, pattern], i) => {
+		const g = b.grammar[i];
+		check(`${name} title`, g?.title === pg.title);
+		check(`${name} pattern`, g?.pattern === pattern);
+		check(`${name} explain`, g?.explain === `${pg.explain}\n\n${pg.more}`);
+		check(`${name} examples`, JSON.stringify(g?.examples) === JSON.stringify(pg.examples.map(sid)));
+		check(
+			`${name} pitfall`,
+			g?.pitfalls?.[0]?.wrong === pg.wrong[0] && g?.pitfalls?.[0]?.right === pg.wrong[1]
+		);
+	});
 
 	const text = (ref: string) => sentence(ref)?.hanzi ?? b.words.find((w) => w.id === ref)?.hanzi;
 	for (const f of fx) {
@@ -210,11 +217,13 @@ function coverage(b: Bundle, fx: FxQuestion[]): string[] {
 			section: 'Ngữ pháp',
 			page: 'l4-grammar.html',
 			check: () => [
-				...(JSON.stringify(b.grammar.map((g) => g.id)) === '["h1-g01"]' ? [] : ['grammar ids']),
-				...(b.grammar[0]?.examples.length === 2 && b.grammar[0].examples.every(inBundle)
+				...(JSON.stringify(b.grammar.map((g) => g.id)) === '["h1-g01","h1-g02"]'
+					? []
+					: ['grammar ids']),
+				...(b.grammar.every((g) => g.examples.length === 2 && g.examples.every(inBundle))
 					? []
 					: ['examples']),
-				...(lesson.grammar.drills.length === 3 ? [] : ['drills'])
+				...(lesson.grammar.drills.length === 6 ? [] : ['drills'])
 			]
 		},
 		{
@@ -240,7 +249,9 @@ function coverage(b: Bundle, fx: FxQuestion[]): string[] {
 			check: () =>
 				sameSet(
 					(lesson.listenSpeak.items as { type: string }[]).map((i, n) => `${n}${i.type}`),
-					['tone', 'choice', 'choice', 'readAloud', 'freeAnswer'].map((t, n) => `${n}${t}`)
+					['tone', 'choice', 'choice', 'readAloud', 'freeAnswer', 'freeAnswer'].map(
+						(t, n) => `${n}${t}`
+					)
 				)
 					? []
 					: ['items']
@@ -263,7 +274,7 @@ function coverage(b: Bundle, fx: FxQuestion[]): string[] {
 			section: 'Gate Test',
 			page: 'l8-gate.html',
 			check: () => [
-				...(b.lesson.gate.pool.length === 20 ? [] : ['pool 20']),
+				...(b.lesson.gate.pool.length === 22 ? [] : ['pool 22']),
 				...(b.lesson.gate.draw === 10 ? [] : ['draw 10']),
 				...fx
 					.filter((f) => f.section === 'gate' && !b.lesson.gate.pool.some((q) => q.id === f.id))
@@ -300,7 +311,7 @@ describe('h1-01 prototype parity', () => {
 			Object.keys(proto.SENTENCES).length,
 			proto.DIALOGUE.length,
 			FX.length
-		]).toEqual([10, 9, 2, 19]);
+		]).toEqual([10, 9, 2, 22]);
 	});
 	it.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])('word %i matches', (i) => {
 		const hz = proto.WORDS[i].hz;
@@ -315,9 +326,9 @@ describe('h1-01 prototype parity', () => {
 	it.each(['dialogue', 'grammar'])('%s matches', (prefix) => {
 		expect(parity(b, proto, FX).filter((m) => m.startsWith(prefix))).toEqual([]);
 	});
-	it('questions match: 3 drills, 1 dialogue, 5 listenSpeak, 10 gate', () => {
+	it('questions match: 6 drills, 1 dialogue, 5 listenSpeak, 10 gate', () => {
 		expect(FX.map((f) => f.section)).toEqual([
-			...Array(3).fill('grammar'),
+			...Array(6).fill('grammar'),
 			'dialogue',
 			...Array(5).fill('listenSpeak'),
 			...Array(10).fill('gate')

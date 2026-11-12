@@ -40,6 +40,57 @@ describe('check 1 Hán Việt', () => {
 			'chars/们.yaml',
 			'readings[0].hanviet'
 		));
+	it('flags a word hanviet that differs from the char file', () =>
+		only(
+			run((s) => (word(s, '你好').value.hanviet = 'nễ hảo')),
+			1,
+			'words/你好.yaml',
+			'hanviet'
+		));
+	it('checks the char that carries an erhua syllable', () => {
+		const errors = run((s) => {
+			const base = char(s, '你');
+			s.chars.push({
+				file: 'chars/这.yaml',
+				value: { ...base.value, hanzi: '这', readings: [{ pinyin: 'zhè', hanviet: 'giá' }] }
+			});
+			const w = word(s, '你好');
+			s.words.push({
+				file: 'words/这儿.yaml',
+				value: { ...w.value, id: '这儿', hanzi: '这儿', pinyin: 'zhèr', hanviet: 'chá nhi' }
+			});
+		}).filter((e) => e.check === 1);
+		only(errors, 1, 'words/这儿.yaml', 'hanviet');
+	});
+	it('checks the trailing 儿 of an erhua syllable', () => {
+		const errors = run((s) => {
+			const base = char(s, '你');
+			s.chars.push(
+				{
+					file: 'chars/这.yaml',
+					value: { ...base.value, hanzi: '这', readings: [{ pinyin: 'zhè', hanviet: 'giá' }] }
+				},
+				{
+					file: 'chars/儿.yaml',
+					value: { ...base.value, hanzi: '儿', readings: [{ pinyin: 'ér', hanviet: 'nhi' }] }
+				}
+			);
+			const w = word(s, '你好');
+			s.words.push({
+				file: 'words/这儿.yaml',
+				value: { ...w.value, id: '这儿', hanzi: '这儿', pinyin: 'zhèr', hanviet: 'giá xyz' }
+			});
+		}).filter((e) => e.check === 1);
+		only(errors, 1, 'words/这儿.yaml', 'hanviet');
+		expect(errors[0].message).toContain('儿');
+	});
+	it('matches the char reading by tone, not just letters', () =>
+		only(
+			run((s) => (word(s, '你好').value.hanviet = 'nhĩ hiếu')),
+			1,
+			'words/你好.yaml',
+			'hanviet'
+		));
 });
 
 describe('check 2 Polyphones', () => {
@@ -173,7 +224,7 @@ describe('check 8 References', () => {
 		));
 	it('flags an unknown Cast id', () =>
 		only(
-			run((s) => (lesson(s).scene.cast = ['panda', 'hachiware'])),
+			run((s) => (lesson(s).scene.cast = ['panda', 'nobody'])),
 			8,
 			F,
 			'scene.cast[1]'
@@ -282,17 +333,42 @@ describe('check 8 References', () => {
 			'grammar/h1-g01.yaml',
 			'std[1]'
 		));
-	it('flags a lesson with std but none at its level', () =>
+	it('flags a lesson with no std item at its level', () =>
 		only(
-			run((s) => {
-				lesson(s).level = 2;
-				grammar(s).std = [1];
-			}),
+			run((s) => (lesson(s).level = 2)),
 			8,
 			F,
 			'sections.grammar.ids'
 		));
-	it('allows std: [] at any level', () => expect(run((s) => (lesson(s).level = 3))).toEqual([]));
+	it('flags a lesson whose grammar points are all std: []', () =>
+		only(
+			run((s) => (grammar(s).std = [])),
+			8,
+			F,
+			'sections.grammar.ids'
+		));
+	it('flags a lesson with more than 3 grammar points', () => {
+		const errors = run((s) => (lesson(s).sections.grammar.ids = Array(4).fill('h1-g01')));
+		only(errors, 8, F, 'sections.grammar.ids');
+		expect(errors[0].message).toContain('4 grammar points');
+	});
+	it('flags a grammar point tested by fewer than 2 gate pool questions', () => {
+		const errors = run((s) => {
+			const q = pool(s).find((x) => x.tests.grammar?.length)!;
+			q.tests.grammar = [];
+		});
+		only(errors, 8, F, 'sections.grammar.ids[0]');
+		expect(errors[0].message).toContain('1 gate pool questions');
+	});
+	it('flags a grammar point no dialogue or listenSpeak question uses', () => {
+		const errors = run((s) =>
+			[...lesson(s).sections.dialogue.questions, ...lesson(s).sections.listenSpeak.items].forEach(
+				(q) => (q.tests.grammar = [])
+			)
+		);
+		only(errors, 8, F, 'sections.grammar.ids[0]');
+		expect(errors[0].message).toContain('dialogue or listenSpeak');
+	});
 });
 
 describe('check 9 Audio', () => {
