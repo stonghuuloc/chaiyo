@@ -711,3 +711,26 @@ def test_every_staged_headword_is_a_fixed_point_of_normalize_py(gen):
         if py != w['pinyin']:
             moved.append((w['id'], w['pinyin'], py))
     assert moved == []
+
+
+def test_level_2_stages_and_promotes_its_own_sentence_file(gen):
+    # Arrange
+    gen.LEVEL = 2
+    out = gen.out_dir()
+    (out / 'words').mkdir(parents=True)
+    (out / 'words/打算.yaml').write_text(yaml.safe_dump({'id': '打算', 'hanzi': '打算', 'senses': [{'vi': 'định', 'example': 's-w-new'}], 'examples': ['s-w-new', 's-w-shared']}, allow_unicode=True), encoding='utf-8')
+    (out / 'sentences').mkdir()
+    (out / 'sentences/hsk2.yaml').write_text(yaml.safe_dump([{'id': 's-w-new', 'hanzi': '新'}, {'id': 's-w-shared', 'hanzi': '旧'}], allow_unicode=True), encoding='utf-8')
+    hsk1 = gen.CONTENT.parent / 'sentences/hsk1.yaml'
+    hsk1.parent.mkdir(parents=True)
+    hsk1.write_text(yaml.safe_dump([{'id': 's-w-shared', 'hanzi': '旧'}], allow_unicode=True), encoding='utf-8')
+    (out / 'review-1.md').write_text(f'staged-set sha: {gen.staged_sha(out)}', encoding='utf-8')
+
+    # Act
+    gen.promote(out, 1)
+
+    # Assert
+    assert out.name == 'out-hsk2'
+    ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk2.yaml').read_text(encoding='utf-8'))]
+    assert ids == ['s-w-new']
+    assert [s['id'] for s in yaml.safe_load(hsk1.read_text(encoding='utf-8'))] == ['s-w-shared']
