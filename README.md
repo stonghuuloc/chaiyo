@@ -44,7 +44,13 @@ Vercel project `chaiyo` (scope `stonghuulocs-projects`), linked to the GitHub re
 - Preview URLs: `https://chaiyo-git-<branch>-stonghuulocs-projects.vercel.app` (branch alias) and `https://chaiyo-<hash>-stonghuulocs-projects.vercel.app` (one per deploy).
 - Env vars: set `PUBLIC_SUPABASE_URL` (the hosted project URL) and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` for Production and Preview with `vercel env add <NAME> --environment production,preview --no-sensitive`. Development stays unset: local values live in `.env`. Both values are public by design; keep every other secret out of Vercel and the repo.
 - Speed Insights: `injectSpeedInsights()` in `src/routes/+layout.ts`. Enable it once under Project → Speed Insights; data appears after the first production visit.
-- Hosted auth redirects: `additional_redirect_urls` in `supabase/config.toml` (`[remotes.hosted.auth]`) holds the production domain and the wildcard `https://chaiyo-*-stonghuulocs-projects.vercel.app/**` for previews. The wildcard needs at least a trailing `/`, so a redirect to a slashless preview origin falls back to the production `site_url`. Change it only through `pnpm supabase:push <ref>`.
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:9a201bae3f249f37b2d90f004a44bb194d49a36faa0f9b9c19ea710299e1bc70 -->
+
+- Hosted auth redirects: `additional_redirect_urls` in `supabase/config.toml` (`[remotes.hosted.auth]`) allows the production origin and its exact `/auth/callback` URL, plus the listed loopback origins. Preview URLs are not allowlisted by default; to enable one, verify its ownership in the Vercel project and add its exact `https://<deployment-host>/auth/callback` URL. Do not use hostname wildcards on the shared `vercel.app` domain: matching names do not prove ownership. Apply changes only through `pnpm supabase:push <ref>`.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 ## Generated files
 
