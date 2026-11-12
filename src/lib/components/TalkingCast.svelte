@@ -14,8 +14,9 @@
 		type TalkingCastPlayer
 	} from './talking-cast';
 
-	let { clip, player, label }: { clip: string; player: TalkingCastPlayer; label: string } =
-		$props();
+	type Props = { clip: string; player: TalkingCastPlayer; label: string };
+
+	let { clip, player, label }: Props = $props();
 
 	const arts = [closedArt, halfArt, openArt];
 	let frame = $state<Frame>(0);

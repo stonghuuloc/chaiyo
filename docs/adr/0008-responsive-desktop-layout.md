@@ -43,7 +43,7 @@ Height: at medium and expanded the Today art band uses `clamp(280px, 42svh, 380p
 | L0a, L2–L8, K1 `/practice/session`, M2, M3, L9, Welcome, Placement + result | Focus flow | none | none |
 | Landing, Login | Public page | none | none |
 
-W1 has three parents (T3a, X1, A1); it always lights Luyện tập, where the Lexicon lives. Focus flows have a top bar with ✕ or back plus progress, one centred column, and an action bar that is `position: sticky; bottom: 0` after the content: short content keeps the button next to it, long content keeps it at the bottom edge. While the sidebar shows, `--nav-inset` is 232px, else 0. It is set in CSS only: by the `lg:data-nav:[--nav-inset:var(--sidebar)]` utility on the shell wrapper that carries the nav-visible data attribute (`data-nav`), so it is never non-zero below 1024px. Toast and any other overlay that centres on the content area must be rendered inside that wrapper, so it inherits `--nav-inset`.
+W1 has three parents (T3a, X1, A1); it always lights Luyện tập, where the Lexicon lives. Focus flows have a top bar with ✕ or back plus progress, one centred column, and an action bar that is `position: sticky; bottom: 0` after the content: short content keeps the button next to it, long content keeps it at the bottom edge. While the sidebar shows, `--nav-inset` is 232px, else 0. It is set in CSS only: under `@media (min-width: 64rem)` on the shell wrapper that carries the nav-visible data attribute (`.shell[data-nav]`), so it is never non-zero below 1024px. Toast and any other overlay that centres on the content area must be rendered inside that wrapper, so it inherits `--nav-inset`.
 
 **5. Overlays.** Sheet stays a bottom sheet (430px) below 1024px and becomes a centred dialog (`--container-sheet` 480px) from 1024px: same component, same focus trap, Esc closes it. `--container-dialog` 340px stays for Dialog, which is unchanged. The lookup popover (X1) anchors above or below the clicked text at every width. Toasts centre on the content area (`calc(50% + var(--nav-inset) / 2)`).
 
@@ -62,7 +62,7 @@ W1 has three parents (T3a, X1, A1); it always lights Luyện tập, where the Le
 
 ## Consequences
 
-- Tokens gain `--container-medium 600px`, `--container-main 640px`, `--container-aside 280px`, `--container-narrow 560px`, `--container-form 400px`, `--container-sheet 480px`, `--sidebar 232px`; `--container-column` 430 and `--container-dialog` 340 stay. `--nav-inset` is a runtime variable, not a design token: it is 0 or `var(--sidebar)`, set with Tailwind utilities on the shell wrapper in `src/routes/(app)/+layout.svelte` (`data-nav`).
+- Tokens gain `--container-medium 600px`, `--container-main 640px`, `--container-aside 280px`, `--container-narrow 560px`, `--container-form 400px`, `--container-sheet 480px`, `--sidebar 232px`; `--container-column` 430 and `--container-dialog` 340 stay. `--nav-inset` is a runtime variable, not a design token: it is 0 or `var(--sidebar)`, set in `src/routes/layout.css` on the shell wrapper (`.shell[data-nav]`).
 - The retrofit is two sequential slices before more UI lands (`docs/responsive.md`: R1 shell, R2 primitives). The Login desktop layout and every unbuilt M-4 screen get desktop rows in their own slices.
 - Screens with no desktop prototype (lessons, practice, Mock Test, Tôi) follow their template's rules here until their story draws them.
 - Art shown wider than 430 CSS px ships a 1280px-wide WebP (a 560px slot on a 2× screen needs 1120 device px); the 1536×1024 masters cover it.
