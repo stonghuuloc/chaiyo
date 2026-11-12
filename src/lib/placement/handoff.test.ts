@@ -22,10 +22,14 @@ describe('placement handoff', () => {
 		expect(readHandoff(stored(JSON.stringify(h)))).toEqual(h);
 	});
 
-	it.each([null, 'not json', '{"cleared":"2","attempts":[]}', '{"cleared":1}', 'null'])(
-		'treats %s as no handoff',
-		(raw) => expect(readHandoff(stored(raw))).toBeNull()
-	);
+	it.each([
+		null,
+		'not json',
+		'{"cleared":"2","attempts":[]}',
+		'{"cleared":1}',
+		'{"cleared":-1,"attempts":[]}',
+		'null'
+	])('treats %s as no handoff', (raw) => expect(readHandoff(stored(raw))).toBeNull());
 
 	it('records every Attempt, then removes the key, then syncs', async () => {
 		const order: string[] = [];

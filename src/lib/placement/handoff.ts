@@ -7,7 +7,9 @@ export type Handoff = { cleared: number; attempts: Attempt[] };
 export function readHandoff(storage: Pick<Storage, 'getItem'>): Handoff | null {
 	try {
 		const value = JSON.parse(storage.getItem(HANDOFF) ?? 'null');
-		return Number.isInteger(value?.cleared) && Array.isArray(value?.attempts) ? value : null;
+		return Number.isInteger(value?.cleared) && value.cleared >= 0 && Array.isArray(value?.attempts)
+			? value
+			: null;
 	} catch {
 		return null;
 	}

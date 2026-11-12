@@ -5,14 +5,18 @@ import { learnerLedger } from './index';
 
 type Hook = { fire?: (e: string, s?: { user: { id: string } } | null) => void };
 
-function stub(tz: string | null, signedOut: Hook = {}) {
+function stub(tz: string | null, signedOut: Hook = {}, who = '', tables: string[] = []) {
 	return {
-		from: () => ({
-			select: () => ({
-				eq: () => ({ maybeSingle: async () => ({ data: tz ? { tz } : null, error: null }) })
-			})
-		}),
+		from: (table: string) => (
+			tables.push(table),
+			{
+				select: () => ({
+					eq: () => ({ maybeSingle: async () => ({ data: tz ? { tz } : null, error: null }) })
+				})
+			}
+		),
 		auth: {
+			getSession: async () => ({ data: { session: who ? { user: { id: who } } : null } }),
 			onAuthStateChange: (fn: NonNullable<Hook['fire']>) => {
 				signedOut.fire = fn;
 				return { data: { subscription: { unsubscribe() {} } } };
@@ -52,6 +56,25 @@ describe('learnerLedger', () => {
 		window.dispatchEvent(new Event('online'));
 		expect(sync).not.toHaveBeenCalled();
 		expect(await learnerLedger({ user: { id: 'u-c' } }, { client, idb })).not.toBe(a);
+	});
+
+	it('never syncs when the shared client is signed in as another learner', async () => {
+		const tables: string[] = [];
+		const a = await learnerLedger(
+			{ user: { id: 'u-f' } },
+			{ client: stub('Asia/Tokyo', {}, 'u-g', tables), idb: new IDBFactory() }
+		);
+		await a.record({
+			id: 'x',
+			at: '2026-11-11T02:00:00Z',
+			questionId: 'q',
+			contentSha: 's',
+			correct: true,
+			ms: 1
+		});
+		await expect(a.sync()).rejects.toThrow('another learner');
+		expect(tables).toEqual(['settings']);
+		expect(a.pending()).toBe(1);
 	});
 
 	it('forgets the Ledger when another learner signs in over it', async () => {
