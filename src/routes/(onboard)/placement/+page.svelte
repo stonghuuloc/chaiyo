@@ -76,7 +76,7 @@
 			<div class="grid grid-cols-[44px_1fr_44px] items-center">
 				<button
 					type="button"
-					class="relative grid size-11 cursor-pointer place-items-center rounded-full text-ink"
+					class="relative grid size-11 place-items-center rounded-full"
 					aria-label={m.placement_exit_label()}
 					onclick={() => (leaving = true)}
 				>
@@ -105,7 +105,7 @@
 			<div class="relative mt-5 grid h-[168px] place-items-center rounded-action bg-shaded-paper">
 				<button
 					type="button"
-					class="grid size-[72px] cursor-pointer place-items-center rounded-full bg-white text-primary shadow-lift"
+					class="grid size-[72px] place-items-center rounded-full bg-white text-primary shadow-lift"
 					aria-label={m.placement_replay()}
 					onclick={() => void play(item.clip)}
 				>
@@ -121,10 +121,10 @@
 			{#each options as option, i (option)}
 				<button
 					type="button"
-					class="flex min-h-14 cursor-pointer items-center gap-3 rounded-action border px-4 py-3 text-left {item.kind ===
+					class="flex min-h-14 items-center gap-3 rounded-action border px-4 py-3 text-left {item.kind ===
 					'listen'
 						? 'min-h-[92px] justify-center font-hanzi text-[28px]'
-						: 'text-body'} {pick === option
+						: ''} {pick === option
 						? 'border-2 border-ink bg-white'
 						: 'border-ruled-line bg-white/40'}"
 					aria-pressed={pick === option}
@@ -138,7 +138,7 @@
 
 		<button
 			type="button"
-			class="mt-3 flex min-h-[52px] w-full cursor-pointer items-center justify-center gap-2 rounded-action border border-dashed border-faint-pencil font-semibold text-graphite"
+			class="mt-3 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-action border border-dashed border-faint-pencil font-semibold text-graphite"
 			onclick={() => submit(null)}
 		>
 			{m.placement_unknown()}
@@ -155,7 +155,7 @@
 </div>
 
 <Sheet open={leaving} title={m.placement_exit_title()} onclose={() => (leaving = false)}>
-	<p class="mt-2 text-body text-graphite">{m.placement_exit_body()}</p>
+	<p class="mt-2 text-graphite">{m.placement_exit_body()}</p>
 	<div class="mt-5 grid gap-3">
 		<Button onclick={() => (leaving = false)}>{m.placement_keep()}</Button>
 		<Button variant="outline" onclick={leave}>{m.placement_leave()}</Button>

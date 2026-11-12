@@ -98,7 +98,7 @@
 			type="button"
 			tabindex="-1"
 			aria-hidden="true"
-			class="absolute inset-0 block size-full cursor-pointer border-0 bg-transparent p-0"
+			class="absolute inset-0 block size-full"
 			onclick={onTap}
 		>
 			{#each arts as art, i (i)}
@@ -114,7 +114,7 @@
 	<button
 		type="button"
 		aria-label={label}
-		class="absolute right-2 bottom-2 grid size-11 cursor-pointer place-items-center rounded-full bg-lantern-red text-white shadow-lift"
+		class="absolute right-2 bottom-2 grid size-11 place-items-center rounded-full bg-lantern-red text-white shadow-lift"
 		onclick={onTap}
 	>
 		<svg class="size-6 fill-current" aria-hidden="true"><use href="#i-fill-speaker-high" /></svg>

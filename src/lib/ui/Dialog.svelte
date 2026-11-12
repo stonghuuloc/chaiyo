@@ -19,7 +19,7 @@
 	>
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
-			class="max-h-[calc(100dvh-40px)] w-[calc(100%-40px)] max-w-dialog overflow-y-auto overscroll-contain rounded-[24px] bg-background px-4 pt-5 pb-4 text-center text-text shadow-overlay outline-none"
+			class="max-h-[calc(100dvh-40px)] w-[calc(100%-40px)] max-w-dialog overflow-y-auto overscroll-contain rounded-[24px] bg-background px-4 pt-5 pb-4 text-center text-text shadow-overlay"
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="{uid}-title"

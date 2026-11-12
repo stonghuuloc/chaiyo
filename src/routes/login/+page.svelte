@@ -167,7 +167,7 @@
 {#snippet back(to: 'start' | 'email')}
 	<button
 		type="button"
-		class="mb-4 -ml-2 grid size-11 cursor-pointer place-items-center rounded-full text-ink lg:mt-0"
+		class="mb-4 -ml-2 grid size-11 place-items-center rounded-full lg:mt-0"
 		aria-label={m.login_back()}
 		disabled={sending}
 		onclick={() => (view = to)}
@@ -217,10 +217,8 @@
 					</span>
 					{m.login_google()}
 				</Button>
-				<button
-					type="button"
-					class="h-12 cursor-pointer text-title text-ink"
-					onclick={() => (view = 'email')}>{m.login_use_email()}</button
+				<button type="button" class="h-12 text-title" onclick={() => (view = 'email')}
+					>{m.login_use_email()}</button
 				>
 			</div>
 		{:else if view === 'email'}
@@ -254,7 +252,7 @@
 						spellcheck="false"
 						autofocus={!expired}
 						placeholder={m.login_email_placeholder()}
-						class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4 text-body text-ink"
+						class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4"
 					/>
 				</label>
 				{#if bad}<p class="mt-2 text-label text-lantern-red-text" role="alert">
@@ -292,7 +290,7 @@
 						inputmode="numeric"
 						autocomplete="one-time-code"
 						maxlength="6"
-						class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4 text-body tracking-[0.3em] text-ink"
+						class="mt-1 h-14 w-full rounded-action border border-ruled-line bg-white px-4 tracking-[0.3em]"
 					/>
 				</label>
 				{#if codeBad}<p class="mt-2 text-left text-label text-lantern-red-text" role="alert">
@@ -310,7 +308,7 @@
 				>
 				<button
 					type="button"
-					class="h-12 cursor-pointer text-title text-ink"
+					class="h-12 text-title"
 					disabled={sending}
 					onclick={() => ((view = 'email'), (code = ''), (codeBad = false))}
 					>{m.login_change_email()}</button
@@ -332,11 +330,8 @@
 			</p>{/if}
 		<div class="mt-5 flex flex-col gap-2">
 			<Button disabled={restoring} onclick={restoreAccount}>{m.login_restore_do()}</Button>
-			<button
-				type="button"
-				class="h-12 cursor-pointer text-title text-ink"
-				disabled={restoring}
-				onclick={later}>{m.login_restore_later()}</button
+			<button type="button" class="h-12 text-title" disabled={restoring} onclick={later}
+				>{m.login_restore_later()}</button
 			>
 		</div>
 	{/if}

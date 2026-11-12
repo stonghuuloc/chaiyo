@@ -32,7 +32,7 @@
 		class="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+--spacing(5))] z-60 flex justify-center ps-(--nav-inset,0px)"
 	>
 		<div
-			class="pointer-events-auto flex max-w-[calc(100%-40px)] items-center gap-3 rounded-pill bg-ink py-1 pr-1.5 pl-4 font-sans text-toast text-notebook-paper"
+			class="pointer-events-auto flex max-w-[calc(100%-40px)] items-center gap-3 rounded-pill bg-ink py-1 pr-1.5 pl-4 text-toast text-notebook-paper"
 			role="status"
 			transition:toastRise={{ reduced }}
 		>
