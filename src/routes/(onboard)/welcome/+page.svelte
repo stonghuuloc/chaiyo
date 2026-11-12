@@ -9,14 +9,19 @@
 	import { keys } from '#lib/ui/keys.js';
 	import {
 		TIMES,
+		advance,
 		askPush,
 		canNext,
+		finishWelcome,
 		fromUser,
 		initials,
 		noChannel,
 		pickCustom,
+		photoPicker,
 		pickPreset,
 		pushBlocked,
+		retreat,
+		toggleChannel,
 		pressed
 	} from '#lib/welcome/welcome.js';
 	import { saveWelcome } from '#lib/welcome/save.js';
@@ -32,6 +37,7 @@
 	let picker = $state<HTMLInputElement>();
 	let saving = $state(false);
 	let asking = $state(false);
+	const photos = photoPicker(avatarDataUrl);
 	let error = $state('');
 
 	onMount(() => {
@@ -40,11 +46,11 @@
 
 	const none = $derived(s.step === 1 && noChannel(s));
 	const next = () => {
-		if (canNext(s) && s.step < 2) s.step += 1;
+		s = advance(s);
 		error = '';
 	};
 	const back = () => {
-		if (s.step > 0) s.step -= 1;
+		s = retreat(s);
 		error = '';
 	};
 
@@ -54,45 +60,38 @@
 		input.value = '';
 		if (!file) return;
 		error = '';
-		try {
-			const photo = await avatarDataUrl(file);
-			if (!saving) s.photo = photo;
-		} catch {
-			error = m.welcome_photo_error();
-		}
+		await photos.pick(
+			file,
+			(photo) => (s.photo = photo),
+			() => (error = m.welcome_photo_error())
+		);
 	}
 
 	async function toggle(key: 'push' | 'emailOn' | 'telegram') {
-		if (key !== 'push' || s.push) {
-			s[key] = !s[key];
-			return;
-		}
 		if (asking) return;
 		asking = true;
-		const granted = await askPush(window);
+		Object.assign(s, await toggleChannel(s, key, () => askPush(window)));
 		asking = false;
-		s.push = granted;
-		s.pushDenied = !granted;
 	}
 
 	async function finish(to: '/(app)/(tabs)/today' | '/(onboard)/placement') {
 		saving = true;
 		error = '';
 		try {
-			if (!data.session) throw new Error('no session');
-			await saveWelcome(s, {
-				client: supabase,
-				learnerId: data.session.user.id,
-				now: new Date(),
-				tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+			const saved = await finishWelcome({
+				settled: photos.settled,
+				save: async () => {
+					if (!data.session) throw new Error('no session');
+					await saveWelcome(s, {
+						client: supabase,
+						learnerId: data.session.user.id,
+						now: new Date(),
+						tz: Intl.DateTimeFormat().resolvedOptions().timeZone
+					});
+				},
+				go: () => goto(resolve(to))
 			});
-		} catch {
-			error = m.welcome_save_error();
-			saving = false;
-			return;
-		}
-		try {
-			await goto(resolve(to));
+			if (!saved) error = m.welcome_save_error();
 		} finally {
 			saving = false;
 		}
