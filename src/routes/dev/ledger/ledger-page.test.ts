@@ -26,6 +26,34 @@ describe('/dev/ledger', () => {
 		expect(ledgerDb(undefined)).toBe('chaiyo-ledger-dev');
 	});
 
+	it('does not restore anonymous, legacy, or another learner records into a signed-in ledger', async () => {
+		const idb = new IDBFactory();
+		const now = new Date();
+		await run(10, idb, now); // legacy/shared outbox remains untouched
+		const a = await openLedger({
+			initial: initial(),
+			store: memoryStore(),
+			idb,
+			db: ledgerDb('a')
+		});
+		await a.record(finish(now, () => 'private')[0]);
+		const b = await openLedger({
+			initial: initial(),
+			store: memoryStore(),
+			idb,
+			db: ledgerDb('b')
+		});
+		expect(b.pending()).toBe(0);
+		expect(b.state()).toEqual(initial());
+		const reopened = await openLedger({
+			initial: initial(),
+			store: memoryStore(),
+			idb,
+			db: ledgerDb('a')
+		});
+		expect(reopened.pending()).toBe(1);
+	});
+
 	it('10 Attempts finish Từ mới, count today, stay pending, and survive reopen', async () => {
 		const now = new Date();
 		const idb = new IDBFactory();
