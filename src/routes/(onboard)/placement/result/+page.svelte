@@ -58,7 +58,7 @@
 			<div class="grid grid-cols-[44px_1fr_44px] items-center">
 				<button
 					type="button"
-					class="relative grid size-11 cursor-pointer place-items-center rounded-full text-ink"
+					class="relative grid size-11 place-items-center rounded-full"
 					aria-label={m.placement_result_exit()}
 					onclick={() => void goto(today())}
 				>
@@ -90,7 +90,7 @@
 						{view.eyebrow}
 					</p>
 					<h1 class="mt-1 font-display text-headline lg:text-display">{view.title}</h1>
-					<p class="mt-2 text-body text-graphite">{view.lead}</p>
+					<p class="mt-2 text-graphite">{view.lead}</p>
 					<dl class="mt-5 border-t border-ruled-line">
 						{#each view.rows as row (row.label)}
 							<div class="grid grid-cols-[96px_1fr] gap-3 border-b border-ruled-line py-3">

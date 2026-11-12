@@ -24,7 +24,7 @@
 	}: Props = $props();
 
 	const base =
-		'flex w-full items-center justify-center gap-3 rounded-action font-display leading-none no-underline cursor-pointer transition-[scale,background-color,opacity] duration-(--motion-press) disabled:cursor-default disabled:bg-shaded-paper disabled:shadow-none disabled:inset-shadow-none motion-reduce:transition-[background-color,opacity] motion-reduce:duration-(--motion-fade-reduced)';
+		'flex w-full items-center justify-center gap-3 rounded-action font-display leading-none transition-[scale,background-color,opacity] duration-(--motion-press) disabled:cursor-default disabled:bg-shaded-paper disabled:shadow-none disabled:inset-shadow-none motion-reduce:transition-[background-color,opacity] motion-reduce:duration-(--motion-fade-reduced)';
 	const variants = {
 		primary:
 			'h-[62px] bg-lantern-red text-action text-white shadow-lift inset-shadow-lift hover:not-disabled:bg-lantern-red-press active:not-disabled:bg-lantern-red-press motion-safe:active:not-disabled:scale-[.985] disabled:text-pencil',

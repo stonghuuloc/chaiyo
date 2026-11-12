@@ -133,7 +133,7 @@
 			<div class="flex items-center gap-3">
 				<button
 					type="button"
-					class="grid size-11 flex-none place-items-center rounded-full text-ink {s.step === 0
+					class="grid size-11 flex-none place-items-center rounded-full {s.step === 0
 						? 'invisible'
 						: ''}"
 					aria-label={m.welcome_back()}
@@ -211,7 +211,7 @@
 						autocomplete="name"
 						maxlength="30"
 						bind:value={s.name}
-						class="mt-2 h-14 w-full rounded-cell border border-ruled-line bg-white/50 px-4 text-title text-ink"
+						class="mt-2 h-14 w-full rounded-cell border border-ruled-line bg-white/50 px-4 text-title"
 					/>
 				</label>
 			</form>
@@ -238,7 +238,7 @@
 					type="time"
 					value={s.time}
 					oninput={(e) => (s = pickCustom(s, e.currentTarget.value))}
-					class="h-11 rounded-cell border border-ruled-line bg-white/50 px-3 text-title text-ink"
+					class="h-11 rounded-cell border border-ruled-line bg-white/50 px-3 text-title"
 				/>
 			</label>
 			<p class="mt-6 text-label font-semibold text-pencil">{m.welcome_channels_label()}</p>

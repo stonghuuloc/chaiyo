@@ -112,7 +112,7 @@
 	}
 
 	.label {
-		font-size: 11.5px;
+		font-size: var(--text-tab);
 		font-weight: 600;
 	}
 
