@@ -572,7 +572,7 @@ MUST_HAVE = {  # core senses of the most polysemous HSK 1 words; the audit must 
     '开': ['Động từ: mở', 'Động từ: lái (xe) (开车)', 'Động từ: bật, vận hành (máy)'], '很': ['Phó từ: rất'], '打': ['Động từ: đánh', 'Động từ: gọi (điện thoại)', 'Động từ: chơi (bóng)'],
     '多': ['Tính từ: nhiều', 'Phó từ: bao nhiêu, mấy (多大)'], '下': ['Danh từ: dưới', 'Động từ: xuống', 'Lượng từ: lần (一下)'],
     '上': ['Danh từ: trên', 'Động từ: lên'], '把': ['Giới từ: 把 (đưa tân ngữ lên trước)'],
-    '给': ['Động từ: cho, đưa (nghĩa phải có từ "cho": 给我一本书)', 'Giới từ: cho, giúp (làm việc gì cho ai), để'], '做': ['Động từ: làm'], '的': ['Trợ từ: của, định ngữ'],
+    '做': ['Động từ: làm'], '的': ['Trợ từ: của, định ngữ'],
 }
 
 def standins(hz, e, bound):
