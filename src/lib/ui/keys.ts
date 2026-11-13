@@ -16,8 +16,8 @@ type KeyEventLike = Pick<
 const TEXT_FIELD = 'input, textarea, select, [contenteditable]:not([contenteditable="false"])';
 const NATIVE_ACTIVATION = 'button, a[href], summary, [role="button"], [role="link"]';
 
-// A selected-state button (aria-pressed) is an option, not an action: Enter submits the flow instead of re-picking it.
-const CHOICE = '[aria-pressed]';
+// The selected option (aria-pressed="true") is an option, not an action: Enter submits the flow instead of re-picking it.
+const CHOICE = '[aria-pressed="true"]';
 
 const matches = (target: unknown, selector: string) =>
 	typeof (target as Element | null)?.closest === 'function' &&
@@ -31,10 +31,10 @@ export function keyIntent(e: KeyEventLike, handlers: KeyHandlers): (() => void) 
 	const digit = /^(?:Digit|Numpad)([1-9])$/.exec(e.code)?.[1];
 	if (digit) return handlers.digit ? () => handlers.digit!(Number(digit)) : null;
 	if (e.code === 'Escape') return handlers.escape ?? null;
-	const onChoice = matches(e.target, CHOICE);
-	if (e.code === 'Enter' && onChoice) return handlers.enter ?? null;
+	const enter = e.code === 'Enter' || e.code === 'NumpadEnter';
+	if (enter && matches(e.target, CHOICE)) return handlers.enter ?? null;
 	if (matches(e.target, NATIVE_ACTIVATION)) return null;
-	if (e.code === 'Enter' || e.code === 'NumpadEnter') return handlers.enter ?? null;
+	if (enter) return handlers.enter ?? null;
 	if (e.code === 'Space') return handlers.space ?? null;
 	return null;
 }

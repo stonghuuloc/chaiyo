@@ -16,7 +16,8 @@ const el = (selectors: string[]) => ({
 	closest: (s: string) => (selectors.some((x) => s.includes(x)) ? {} : null)
 });
 const option = {
-	closest: (s: string) => (s === '[aria-pressed]' || s.startsWith('button, a[href]') ? {} : null)
+	closest: (s: string) =>
+		s === '[aria-pressed="true"]' || s.startsWith('button, a[href]') ? {} : null
 };
 const handlers = () => ({ digit: vi.fn(), enter: vi.fn(), space: vi.fn(), escape: vi.fn() });
 const fire = (h: KeyHandlers, e: Partial<typeof base>) => keyIntent({ ...base, ...e }, h)?.();
@@ -116,6 +117,25 @@ describe('keyIntent', () => {
 		fire(h, { code: 'Enter', target: option });
 		// Assert
 		expect(h.enter).toHaveBeenCalledOnce();
+	});
+
+	it('Given_NumpadEnter_When_SelectedOptionFocused_Then_EnterHandlerAdvances', () => {
+		// Arrange
+		const h = handlers();
+		// Act
+		fire(h, { code: 'NumpadEnter', target: option });
+		// Assert
+		expect(h.enter).toHaveBeenCalledOnce();
+	});
+
+	it('Given_Enter_When_UnselectedOptionFocused_Then_NativeSelectWins', () => {
+		// Arrange: aria-pressed="false" matches button but not the selected-option selector
+		const h = handlers();
+		const unselected = { closest: (s: string) => (s.startsWith('button, a[href]') ? {} : null) };
+		// Act
+		const act = keyIntent({ ...base, code: 'Enter', target: unselected }, h);
+		// Assert
+		expect(act).toBeNull();
 	});
 
 	it('Given_Space_When_OptionButtonFocused_Then_NativeSelectWins', () => {
