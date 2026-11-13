@@ -35,7 +35,8 @@ jobs:
       - run: pnpm lint
       - run: pnpm check
         if: ${{ !cancelled() }}
-      - run: pnpm test:coverage
+      # Runner is an 8-core laptop shared with other work: cap workers, allow slow tests under load.
+      - run: pnpm test:coverage --maxWorkers=3 --testTimeout=30000
         if: ${{ !cancelled() }}
       - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
         if: ${{ !cancelled() }}
