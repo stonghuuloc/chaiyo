@@ -18,9 +18,10 @@ env:
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
 
 # Self-hosted Mac runner (~/actions-runner): GitHub-hosted minutes are capped on this private repo.
+# Dependabot branches stay on GitHub-hosted VMs so unreviewed dependency code never runs on the Mac.
 jobs:
   web:
-    runs-on: [self-hosted, chaiyo]
+    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-web
@@ -30,8 +31,11 @@ jobs:
           python-version: '3.12'
       - run: pnpm lint
       - run: pnpm check
+        if: ${{ !cancelled() }}
       - run: pnpm test:coverage
+        if: ${{ !cancelled() }}
       - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
+        if: ${{ !cancelled() }}
       - name: Coverage summary
         if: always()
         run: |
@@ -47,20 +51,25 @@ jobs:
           path: coverage/
           if-no-files-found: ignore
       - run: pnpm build
+        if: ${{ !cancelled() }}
 
   python:
-    runs-on: [self-hosted, chaiyo]
+    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - run: uvx ruff@0.17.5 check scripts
-      # pngquant + ImageMagick come from Homebrew on the runner host.
-      - run: command -v pngquant && command -v magick
-      - run: uv run --locked --with-requirements scripts/requirements-fonts.txt python -m unittest discover -s scripts -p 'test_*.py'
-      - run: uv run --locked pytest scripts/tests
+      # Mac runner: pngquant + ImageMagick from Homebrew. Ubuntu (Dependabot): apt.
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
+      - run: command -v pngquant && (command -v magick || command -v convert)
+      - run: uv run --locked --python 3.12 --with-requirements scripts/requirements-fonts.txt python -m unittest discover -s scripts -p 'test_*.py'
+        if: ${{ !cancelled() }}
+      - run: uv run --locked --python 3.12 pytest scripts/tests
+        if: ${{ !cancelled() }}
 
   security:
-    runs-on: [self-hosted, chaiyo]
+    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
     steps:
       - uses: actions/checkout@v7
         with:
