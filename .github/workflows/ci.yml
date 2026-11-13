@@ -16,6 +16,8 @@ env:
   # Kit validates these at check/test/build; CI never talks to Supabase.
   PUBLIC_SUPABASE_URL: http://127.0.0.1:56321
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
+  # The Mac host has the real vault at the refs.ts default path; fixtures must not lint against it.
+  CHAIYO_VAULT: /nonexistent/chaiyo-vault
 
 # Self-hosted Mac runner (~/actions-runner): GitHub-hosted minutes are capped on this private repo.
 # Dependabot branches stay on GitHub-hosted VMs so unreviewed dependency code never runs on the Mac.
@@ -25,8 +27,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-web
-      # refs.ts execs python3; refs.test.ts drives it with a fake vault.
+      # refs.ts execs python3; refs.test.ts drives it with a fake vault. Mac host has its own python3.
       - uses: actions/setup-python@v7
+        if: runner.environment == 'github-hosted'
         with:
           python-version: '3.12'
       - run: pnpm lint
@@ -60,9 +63,10 @@ jobs:
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - run: uvx ruff@0.17.5 check scripts
       # Mac runner: pngquant + ImageMagick from Homebrew. Ubuntu (Dependabot): apt.
-      - if: runner.os == 'Linux'
+      - if: ${{ !cancelled() && runner.os == 'Linux' }}
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
       - run: command -v pngquant && (command -v magick || command -v convert)
+        if: ${{ !cancelled() }}
       - run: uv run --locked --python 3.12 --with-requirements scripts/requirements-fonts.txt python -m unittest discover -s scripts -p 'test_*.py'
         if: ${{ !cancelled() }}
       - run: uv run --locked --python 3.12 pytest scripts/tests
