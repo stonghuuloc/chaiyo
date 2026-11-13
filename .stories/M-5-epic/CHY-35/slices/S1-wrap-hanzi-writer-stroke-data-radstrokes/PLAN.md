@@ -1,11 +1,12 @@
 # CHY-35 S1 — plan
-ACs: AC2, AC6  ·  Spec rev 2  ·  Repo: chaiyo (stonghuuloc/chaiyo)  ·  Branch: stonghuuloc/CHY-35-S1
-Base: .@d090b0a0
+ACs: AC2, AC6  ·  Spec rev 2  ·  Repo: chaiyo (stonghuuloc/chaiyo)  ·  Branch: CHY-35-S1
+Base: .@0836423e
 
-Branch note: the M-5 wave plan gives each wave-1 lane its own worktree branch (`stonghuuloc/CHY-35-S1`); S2 (wave 4) reuses the story branch the coordinator names then.
+Branch note: the M-5 wave plan gives each wave-1 lane its own worktree branch (`CHY-35-S1`); S2 (wave 4) reuses the story branch the coordinator names then.
 
-## Anchors (verified 2026-11-13 on d090b0a0)
+## Anchors (re-verified 2026-11-13 on 0836423e (ci.yml +2 lines, vi.json rewritten, icons ids intact))
 - `package.json:70` — `"dependencies": {` (5 entries, `zod` last at :75); no `hanzi-writer`.
+- `docs/copy-voice.md` rule 8 says append-only; PLAN keeps one block after `screen_word` (lane-conflict avoidance, per coordinator). Copy complies with rules 1-3,7.
 - `messages/vi.json:13` — `"screen_word": "Từ",` (insert point for the `strokes_*` keys; words-lane neighbour, keeps other lanes' appends at EOF conflict-free).
 - `src/lib/styles/tokens.css:10` `--color-lantern-red: #c6301d` · `:19` `--color-ink: #1d1814` · `:23` `--color-ruled-line: #ddd5c8`.
 - `src/lib/styles/guard.test.ts:7` — colour literals banned in `.svelte`/`.css`; allowed in `.ts` (precedent `src/lib/ui/celebrate.ts:1`).
@@ -16,7 +17,7 @@ Branch note: the M-5 wave plan gives each wave-1 lane its own worktree branch (`
 - `src/lib/assets/icons.svg:3` — `i-regular-play`, `i-regular-lightbulb`, `i-regular-arrow-counter-clockwise`.
 - `prototype/l7-writing.html:84` — `HanziWriter.create` options (pen 48, colours, leniency 1.2, `highlightOnComplete: false`); `:101-126` quiz / demo / tip wiring.
 - `prototype/step.js:99` — `RAD = { 再: [1, 2], 见: [0, 1, 2, 3], 气: [0, 1, 2, 3] }`.
-- `.github/workflows/ci.yml:86` — `pnpm audit --prod --audit-level=high`; `:88` semgrep on `src`.
+- `.github/workflows/ci.yml:88` — `pnpm audit --prod --audit-level=high`; `:90` semgrep on `src`.
 - hanzi-writer 3.7.3 tarball (not in repo): default loader URL `dist/index.esm.js` L2193-2195; Promise-returning loader handled L2286-2297; types `dist/types/index.esm.d.ts` L52-57, L440.
 
 ## Task 1 [CHORE] Add hanzi-writer
