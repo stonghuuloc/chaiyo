@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { CAST as cast } from '../audio/cast';
-import { azureEngine, azureRequest, billable, ssml } from './azure';
+import { azureEngine, azureRequest, billable, sapi, ssml } from './azure';
 
 const clip = new Uint8Array([0xff, 0xf3, 1, 2, 3]);
 type Opts = { kind?: 'sentence' | 'word' | 'syllable'; voice?: string; style?: string };
@@ -45,7 +45,30 @@ describe('ssml', () => {
 	});
 });
 
+describe('sapi', () => {
+	it.each([
+		['dī', '的', 'di 1'],
+		['guo', '过', 'guo 5'],
+		['dōngxi', '东西', 'dong 1 xi 5'],
+		['duōshao', '多少', 'duo 1 shao 5'],
+		['lǜ', '绿', 'lv 4'],
+		['yíhuìr', '一会儿', 'yi 2 hui r 4']
+	])('%s %s → %s', (reading, hanzi, ph) => {
+		expect(sapi(reading, hanzi)).toBe(ph);
+	});
+
+	it('gives up when the syllables do not line up with the hanzi', () => {
+		expect(sapi('dōng', '东西')).toBeUndefined();
+	});
+});
+
 describe('azureRequest', () => {
+	it('keeps the plain body when the reading is the hanzi, so cached clips keep their hash', () => {
+		const plain = azureRequest(cast, req('行', { kind: 'word', style: 'poetry-reading' }))!.body;
+		expect(plain).not.toContain('phoneme');
+		expect(plain).toBe(ssml(cast, 'zh-CN-XiaoxiaoNeural', 'poetry-reading', '行'));
+	});
+
 	it('sends a sentence as written, in its speaker’s voice and style', () => {
 		const body = azureRequest(cast, req('对不起！', { voice: 'takin', style: 'serious' }))!.body;
 		expect(body).toContain('<voice name="zh-CN-YunfengNeural">');
@@ -122,11 +145,26 @@ describe('azureEngine', () => {
 		await expect(b.engine.synthesize(req('好'))).rejects.toThrow('Azure answered 400');
 	});
 
-	it('refuses a word whose reading is not its hanzi without calling Azure', async () => {
+	it('pins a second reading with a sapi phoneme so Azure does not read the common one', async () => {
+		// Arrange
 		const { engine, fetchImpl } = setup([]);
+		// Act
+		await engine.synthesize({
+			...req('行', { kind: 'word', style: 'poetry-reading' }),
+			text: 'háng'
+		});
+		// Assert
+		const body = fetchImpl.mock.calls[0][1].body as string;
+		expect(body).toContain('> <phoneme alphabet="sapi" ph="hang 2">行</phoneme> <');
+	});
+
+	it('refuses a reading that does not split into its hanzi without calling Azure', async () => {
+		// Arrange
+		const { engine, fetchImpl } = setup([]);
+		// Act / Assert
 		await expect(
-			engine.synthesize({ ...req('行', { kind: 'word', style: 'poetry-reading' }), text: 'háng' })
-		).rejects.toThrow('Azure takes hanzi');
+			engine.synthesize({ ...req('东西', { kind: 'word', style: 'poetry-reading' }), text: 'dōng' })
+		).rejects.toThrow('does not split into its hanzi');
 		expect(fetchImpl).not.toHaveBeenCalled();
 	});
 
