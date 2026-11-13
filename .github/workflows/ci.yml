@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,35 +16,30 @@ env:
   # Kit validates these at check/test/build; CI never talks to Supabase.
   PUBLIC_SUPABASE_URL: http://127.0.0.1:56321
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
+  # The Mac host has the real vault at the refs.ts default path; fixtures must not lint against it.
+  CHAIYO_VAULT: /nonexistent/chaiyo-vault
 
+# Self-hosted Mac runner (~/actions-runner): GitHub-hosted minutes are capped on this private repo.
+# Dependabot branches stay on GitHub-hosted VMs so unreviewed dependency code never runs on the Mac.
 jobs:
-  lint:
-    runs-on: ubuntu-latest
+  web:
+    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-web
-      - run: pnpm lint
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-      - run: uvx ruff@0.17.5 check scripts
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-web
-      - run: pnpm check
-
-  test-web:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-web
-      # refs.ts execs python3; refs.test.ts drives it with a fake vault.
+      # refs.ts execs python3; refs.test.ts drives it with a fake vault. Mac host has its own python3.
       - uses: actions/setup-python@v7
+        if: runner.environment == 'github-hosted'
         with:
           python-version: '3.12'
-      - run: pnpm test:coverage
+      - run: pnpm lint
+      - run: pnpm check
+        if: ${{ !cancelled() }}
+      # Runner is an 8-core laptop shared with other work: cap workers, allow slow tests under load.
+      - run: pnpm test:coverage --maxWorkers=3 --testTimeout=30000 --hookTimeout=30000
+        if: ${{ !cancelled() }}
       - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
+        if: ${{ !cancelled() }}
       - name: Coverage summary
         if: always()
         run: |
@@ -58,29 +54,27 @@ jobs:
           name: coverage
           path: coverage/
           if-no-files-found: ignore
-
-  test-py:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-      - run: pip install -r scripts/requirements-fonts.txt
-      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
-      - run: uv run --locked pytest scripts/tests
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-web
       - run: pnpm build
+        if: ${{ !cancelled() }}
+
+  python:
+    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - run: uvx ruff@0.17.5 check scripts
+      # Mac runner: pngquant + ImageMagick from Homebrew. Ubuntu (Dependabot): apt.
+      - if: ${{ !cancelled() && runner.os == 'Linux' }}
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
+      - run: command -v pngquant && (command -v magick || command -v convert)
+        if: ${{ !cancelled() }}
+      - run: uv run --locked --python 3.12 --with-requirements scripts/requirements-fonts.txt python -m unittest discover -s scripts -p 'test_*.py'
+        if: ${{ !cancelled() }}
+      - run: uv run --locked --python 3.12 pytest scripts/tests
+        if: ${{ !cancelled() }}
 
   security:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
     steps:
       - uses: actions/checkout@v7
         with:
