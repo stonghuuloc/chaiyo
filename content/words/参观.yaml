@@ -11,3 +11,4 @@ senses:
   example: s-w-472389
 examples:
 - s-w-472389
+image: { file: words/canguan.png, prompt: "Only the panda and the red panda. The panda and the red panda walking upright through a museum hall, looking up with curious wide eyes at a big dinosaur skeleton and pointing at it, paintings with no writing on the walls." }

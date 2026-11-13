@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-556f5606
 examples:
 - s-w-ai-556f5606
+image: { file: words/xiaoyuan.png, prompt: "Only the takin and the fawn. The takin and the fawn walking upright with school bags along a tree-lined path on a school campus, a school building with a clock tower and a sports field behind them, flower beds and a flag pole with a plain colored flag. No text." }

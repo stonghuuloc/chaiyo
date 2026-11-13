@@ -23,3 +23,4 @@ examples:
 - s-w-7768273
 - s-w-ai-c9aa8628
 - s-w-ai-98d4a0d7
+image: { file: words/mai2.png, prompt: "Only the red panda and the takin. The red panda standing on the floor behind a fruit stall in a sunny market, handing a paper bag of apples to the takin, who stands in front of the stall holding out coins. No people or other creatures." }

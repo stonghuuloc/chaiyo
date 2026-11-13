@@ -11,3 +11,4 @@ senses:
   example: s-w-426433
 examples:
 - s-w-426433
+image: { file: words/zuowei.png, prompt: "Only the panda. Inside a cinema with rows of red cushioned seats all facing the big screen, the panda stands in the aisle pointing at one empty seat; every seat faces the screen correctly, seat backs toward the viewer." }

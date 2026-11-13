@@ -11,3 +11,4 @@ senses:
   example: s-w-1304156
 examples:
 - s-w-1304156
+image: { file: words/song.png, prompt: "Only the takin and the red panda. The takin handing a gift box with a ribbon to the red panda, who is surprised and happy" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-346457
 examples:
 - s-w-346457
+image: { file: words/chuzuche.png, prompt: "Only the red panda. The red panda standing upright on the sidewalk, one paw raised to hail a yellow taxi car with a roof light that is driving up to the curb, city buildings behind, a small suitcase beside its feet. No text on the taxi." }

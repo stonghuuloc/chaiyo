@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-410898
 - s-w-ai-481ef068
+image: { file: words/zhaogu.png, prompt: "Only the red panda and the panda. The red panda in a little nurse cap and apron stands on the floor beside a bed, gently feeding warm soup with a spoon to the panda, who lies sick in bed under a blanket with a cold towel on its forehead." }

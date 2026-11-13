@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-3378265
 - s-w-1399754
+image: { file: words/yuanzi.png, prompt: "Only the takin. The takin standing upright in the yard of a small house, a fenced courtyard with a tree, grass, a swing and a small pond, the house door visible behind, the takin sweeping fallen leaves with a broom on a sunny day." }

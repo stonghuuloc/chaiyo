@@ -30,3 +30,4 @@ examples:
 - s-w-2143990
 - s-w-6089707
 - s-w-1411709
+image: { file: words/kao.png, prompt: "Only the takin. The takin standing upright on a grassy hill leaning its back and shoulder comfortably against a big tree trunk, one leg crossed over the other, relaxed and smiling, with leaves drifting down." }

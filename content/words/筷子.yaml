@@ -11,3 +11,4 @@ senses:
   example: s-w-2257020
 examples:
 - s-w-2257020
+image: { file: words/kuaizi.png, prompt: "Only the panda. The panda sitting on a visible chair beside a table, holding a pair of wooden chopsticks in one paw and lifting a bite of noodles from a bowl with a happy face, steam rising; the chopsticks are large and clearly visible as two slim sticks." }

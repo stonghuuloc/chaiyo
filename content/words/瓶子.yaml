@@ -11,3 +11,4 @@ senses:
   example: s-w-1411634
 examples:
 - s-w-1411634
+image: { file: words/pingzi.png, prompt: "Only the takin. The takin standing on the floor next to a low shelf, holding up a tall clear glass bottle with a cork stopper filled with blue liquid, smiling; a smaller round bottle with pink liquid sits beside it. No labels or text." }

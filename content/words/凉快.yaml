@@ -11,3 +11,4 @@ senses:
   example: s-w-405263
 examples:
 - s-w-405263
+image: { file: words/liang2.png, prompt: "Only the fawn. The fawn standing upright in a gentle autumn breeze under a tree, a light jacket on, holding its arms comfortably, enjoying a cool breeze with wind swirl lines moving leaves, a refreshing cool smile with closed eyes, a glass of cold water beside it on the ground." }

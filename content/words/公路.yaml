@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-6482591
 - s-w-ai-4a0e0d97
+image: { file: words/gonglu.png, prompt: "Only the fawn. The fawn standing upright on the roadside next to a long, wide paved highway with painted lane lines winding through green hills, one small car driving far along the road, blue sky and a few clouds." }

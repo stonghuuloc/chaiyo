@@ -34,3 +34,4 @@ examples:
 - s-w-8656972
 - s-w-ai-ed552f37
 - s-w-420002
+image: { file: words/qing2.png, prompt: "Only the red panda. The red panda standing upright, easily lifting a huge fluffy pink cloud-like pillow over its head with just one paw, smiling effortlessly, a small feather floating beside it, showing that the thing is very light." }

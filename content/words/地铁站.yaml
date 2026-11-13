@@ -11,3 +11,4 @@ senses:
   example: s-w-4563027
 examples:
 - s-w-4563027
+image: { file: words/ditiezhan.png, prompt: "Only the red panda. The red panda standing upright on a subway station platform beside a yellow safety line, a sleek train with open doors waiting at the platform, tiled arched ceiling with round lights and an escalator in the background. No signs or text." }

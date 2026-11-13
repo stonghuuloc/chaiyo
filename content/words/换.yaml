@@ -22,3 +22,4 @@ examples:
 - s-w-9419163
 - s-w-353542
 - s-w-512054
+image: { file: words/huan.png, prompt: "Only the panda and the red panda. The panda and the red panda standing upright on the floor facing each other, happily swapping toys: the panda hands over a small toy car while the red panda hands over a small toy rabbit, each paw holding one toy, with arrows-free simple playroom background." }

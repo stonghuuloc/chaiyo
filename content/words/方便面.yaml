@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-25d7fe1a
 examples:
 - s-w-ai-25d7fe1a
+image: { file: words/fangbianmian.png, prompt: "Only the panda. The panda standing on the kitchen floor beside a counter, pouring hot water from a whistling kettle that it holds by the handle into an instant noodle cup on the counter, steam rising, the kettle clearly in its paws." }

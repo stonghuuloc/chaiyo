@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-ai-6710479e
 - s-w-ai-696e306a
+image: { file: words/ganhuor.png, prompt: "Only the takin. The takin wearing a hard hat and work gloves, standing on the ground and pushing a wheelbarrow full of bricks at a building site, sweaty and busy but cheerful, a half-built wall behind." }

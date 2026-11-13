@@ -11,3 +11,4 @@ senses:
   example: s-w-1416169
 examples:
 - s-w-1416169
+image: { file: words/hu.png, prompt: "Only the fawn and the red panda. The fawn and the red panda standing upright side by side on the shore of a big, calm, round blue lake enclosed by trees and hills, looking out at the still water, a small wooden rowboat floating on the lake." }

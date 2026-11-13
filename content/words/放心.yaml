@@ -11,3 +11,4 @@ senses:
   example: s-w-1424246
 examples:
 - s-w-1424246
+image: { file: words/fangxin.png, prompt: "Only the takin. The takin sitting on a visible chair beside a table in a cozy room, hand on chest, letting out a long relieved sigh with closed eyes and a gentle smile, shoulders relaxed; a thought bubble above its head shows a small kid fawn safe at home in bed with a blanket, and a phone with a green check mark-free blank screen lies on the floor." }

@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-13881273
 - s-w-333907
+image: { file: words/tingche.png, prompt: "Only the takin. The takin driving a small red car that has stopped at a white stop line at a street crossing, in front of a traffic light glowing red and an octagon red stop sign with no writing on it; the takin waits patiently behind the wheel." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-9409623
 examples:
 - s-w-9409623
+image: { file: words/diantou.png, prompt: "Only the takin. Close side view of the takin standing upright, nodding its head down with a happy agreeing smile and closed eyes, small curved motion lines near its head showing the downward nod, a friendly room background." }

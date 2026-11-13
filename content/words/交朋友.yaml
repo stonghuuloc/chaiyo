@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-9963198
 - s-w-ai-d5c660d4
+image: { file: words/jiaopengyou.png, prompt: "Only the panda and the red panda. The panda and the red panda meeting for the first time in a sunny park, shaking paws with big warm smiles, a small heart floating between them, trees and flowers around." }

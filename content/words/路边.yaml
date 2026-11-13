@@ -11,3 +11,4 @@ senses:
   example: s-w-3660224
 examples:
 - s-w-3660224
+image: { file: words/lubian.png, prompt: "Only the takin. The takin standing upright on the curb at the edge of a road, beside the roadside with a small tree and a bench, a few cars driving past on the road, the takin waiting calmly with its feet on the sidewalk and looking at the road." }

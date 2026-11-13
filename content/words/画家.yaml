@@ -11,3 +11,4 @@ senses:
   example: s-w-9700539
 examples:
 - s-w-9700539
+image: { file: words/huajia.png, prompt: "Only the red panda. The red panda wearing a beret and a paint-smeared smock, standing upright in front of a wooden easel, holding a paintbrush and a palette of colorful paint, painting a landscape of hills and a sun on the canvas, paint pots on the floor beside it." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-8821386
 examples:
 - s-w-8821386
+image: { file: words/dahai.png, prompt: "Only the fawn. The fawn standing upright on a sandy beach looking out at a huge wide blue ocean with rolling waves reaching the horizon, white foam on the shore, seagulls in the sky, a happy amazed face, shells on the sand." }

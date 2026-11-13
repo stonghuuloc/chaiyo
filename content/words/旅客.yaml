@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-7370d7dd
 examples:
 - s-w-ai-7370d7dd
+image: { file: words/luke.png, prompt: "Only the red panda. The red panda standing upright in a busy train station hall with a rolling suitcase beside it, holding a blank paper ticket in one paw and looking up at a big wordless departure board, a train waiting on the platform behind it." }

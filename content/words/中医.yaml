@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-827188
 - s-w-827180
+image: { file: words/zhongyi.png, prompt: "Only the takin and the fawn. The takin dressed as a traditional Chinese medicine doctor in a long light-colored robe, sitting on a visible chair, gently feeling the pulse on the wrist of the fawn, who sits on a stool beside him; an herbal medicine shop with wooden drawers and jars of dried herbs behind them." }

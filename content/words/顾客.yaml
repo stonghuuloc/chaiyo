@@ -11,3 +11,4 @@ senses:
   example: s-w-902044
 examples:
 - s-w-902044
+image: { file: words/guke.png, prompt: "Only the red panda and the takin. In a small shop, the red panda stands upright as a customer holding a shopping basket of fruit and handing coins across the counter, while the takin shopkeeper in an apron stands on the floor behind the counter, smiling and ready to serve." }

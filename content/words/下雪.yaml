@@ -11,3 +11,4 @@ senses:
   example: s-w-780269
 examples:
 - s-w-780269
+image: { file: words/xiaxue.png, prompt: "Only the fawn. The fawn standing upright outdoors in a snowy yard wearing a red scarf and mittens, catching big white snowflakes on its outstretched paw with a delighted face, snow falling thickly from a grey sky and covering the trees and ground." }

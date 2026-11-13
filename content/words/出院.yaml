@@ -11,3 +11,4 @@ senses:
   example: s-w-13199804
 examples:
 - s-w-13199804
+image: { file: words/chuyuan.png, prompt: "Only the fawn. The fawn walking slowly out of the glass front doors of a big white hospital building with a red cross on it, still a little pale and tired with a bandage on its arm, carrying a small bag of medicine, while the red panda waits outside on the path with open arms and a bunch of flowers to take it home." }

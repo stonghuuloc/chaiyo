@@ -11,3 +11,4 @@ senses:
   example: s-w-333832
 examples:
 - s-w-333832
+image: { file: words/bangongshi.png, prompt: "Only the takin. The takin sitting on a visible office chair beside a desk with a computer showing a blank screen, a telephone, a stack of papers and a desk lamp, in a bright office with filing shelves and a potted plant behind it, working with a focused face." }

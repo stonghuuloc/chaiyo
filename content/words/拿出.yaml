@@ -22,3 +22,4 @@ examples:
 - s-w-8789702
 - s-w-ai-9e73f4e4
 - s-w-ai-65eacb74
+image: { file: words/nachu.png, prompt: "Only the fawn. The fawn standing upright in a bedroom, one paw reaching into an open backpack and pulling out a big red apple, holding it up in front of it, a few other items such as a ball and a scarf visible still in the bag." }

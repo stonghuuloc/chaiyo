@@ -35,3 +35,4 @@ examples:
 - s-w-2158934
 - s-w-ai-ac6f19ed
 - s-w-ai-7b3cfc08
+image: { file: words/malu.png, prompt: "Only the panda and the takin. A wide city road with cars driving on it and a zebra crossing, the panda and the takin waiting on the sidewalk" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-1430237
 examples:
 - s-w-1430237
+image: { file: words/luse.png, prompt: "Only the red panda. The red panda standing upright and smiling, holding up a big bright green leaf in one paw and a green apple in the other, with a green balloon and green plants around it; everything in the scene is clearly the color green." }

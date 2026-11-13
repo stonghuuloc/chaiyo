@@ -11,3 +11,4 @@ senses:
   example: s-w-8980989
 examples:
 - s-w-8980989
+image: { file: words/chunjie.png, prompt: "Only the red panda and the takin. The red panda and the takin standing upright in festive red clothes in front of a house decorated with red lanterns and wordless red paper cutouts, holding red envelopes and happily watching fireworks in the sky, a plate of dumplings on a small stand nearby." }

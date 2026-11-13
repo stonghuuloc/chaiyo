@@ -22,3 +22,4 @@ examples:
 - s-w-6197293
 - s-w-ai-7d7d52a8
 - s-w-332833
+image: { file: words/fangxia.png, prompt: "Only the panda. The panda standing upright in a kitchen, gently lowering a heavy basket of fruit onto the floor with both paws, bending its knees, the basket just touching the floor, a relieved happy face, apples and oranges in the basket." }

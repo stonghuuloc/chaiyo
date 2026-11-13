@@ -17,3 +17,4 @@ senses:
 examples:
 - s-w-9409442
 - s-w-ai-12738788
+image: { file: words/menkou.png, prompt: "Only the red panda and the takin. The red panda standing at the front door of a house, the door wide open, greeting the takin who is arriving at the doorstep" }

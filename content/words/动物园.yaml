@@ -11,3 +11,4 @@ senses:
   example: s-w-8863241
 examples:
 - s-w-8863241
+image: { file: words/dongwuyuan.png, prompt: "Only the panda and the fawn. The panda and the fawn walking upright hand in hand through a zoo entrance path, pointing happily at a big friendly elephant and a giraffe standing behind low fences with trees, a balloon in the fawn's paw. No signs with writing." }

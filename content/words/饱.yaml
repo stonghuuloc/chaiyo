@@ -11,3 +11,4 @@ senses:
   example: s-w-430995
 examples:
 - s-w-430995
+image: { file: words/bao2.png, prompt: "Only the panda. The panda sitting on a visible chair beside a table with empty plates and bowls stacked, leaning back and patting its very round full belly with both paws, a satisfied happy face with half-closed eyes, a little burp puff of air." }

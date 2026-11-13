@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1990257
 - s-w-ai-47d7b7f0
+image: { file: words/lian.png, prompt: "Only the red panda and the panda. Classroom anatomy lesson: the red panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the panda's face, which is clearly highlighted with a soft glow; the panda stands upright facing the viewer, smiling. No text." }

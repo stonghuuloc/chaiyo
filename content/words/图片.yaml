@@ -11,3 +11,4 @@ senses:
   example: s-w-5978324
 examples:
 - s-w-5978324
+image: { file: words/zhaopian.png, prompt: "Only the panda and the red panda. The panda and the red panda standing side by side, both smiling and looking at a framed photograph held between them that shows the two of them hugging in a sunny park; the photo is clearly a flat picture in a frame. No text." }

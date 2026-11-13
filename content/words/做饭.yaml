@@ -11,3 +11,4 @@ senses:
   example: s-w-4456369
 examples:
 - s-w-4456369
+image: { file: words/zuofan.png, prompt: "Only the panda. Side view: the panda in a chef's apron standing on the kitchen floor in front of the stove, facing the stove, stirring a steaming pot with a big wooden spoon, vegetables on the counter beside it." }

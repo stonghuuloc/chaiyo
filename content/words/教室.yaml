@@ -11,3 +11,4 @@ senses:
   example: s-w-465918
 examples:
 - s-w-465918
+image: { file: words/jiaoshi.png, prompt: "Only the red panda. The red panda standing upright inside an empty classroom, small wooden desks with chairs in rows, a big blank green blackboard at the front, a window with sunlight, a globe and a bookshelf on the side; the red panda smiles with a school bag on its back." }

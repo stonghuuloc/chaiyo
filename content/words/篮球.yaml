@@ -11,3 +11,4 @@ senses:
   example: s-w-6020854
 examples:
 - s-w-6020854
+image: { file: words/lanqiu.png, prompt: "Only the takin. The takin standing upright on an outdoor court, jumping and shooting a big orange basketball with black lines towards a hoop with a net, arms stretched upward, a happy determined face. No text or numbers on the ball or court." }

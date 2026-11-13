@@ -11,3 +11,4 @@ senses:
   example: s-w-8800811
 examples:
 - s-w-8800811
+image: { file: words/xue.png, prompt: "Only the panda and the red panda. The panda and the red panda standing upright in a snowy yard wearing warm hats and scarves, white snowflakes falling from the sky, white snow covering the ground and trees, the red panda catching a snowflake on its paw while the panda holds a small snowball." }

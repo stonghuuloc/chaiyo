@@ -30,3 +30,4 @@ examples:
 - s-w-2138521
 - s-w-ai-599ef43e
 - s-w-ai-205724f8
+image: { file: words/dao.png, prompt: "Only the fawn. On a park path, the fawn has tripped over a small stone and fallen flat face down on the ground, arms and legs splayed, crying hard with big cartoon tears and an open wailing mouth, a little dust puff around it. Cartoon, not hurt badly, no blood." }

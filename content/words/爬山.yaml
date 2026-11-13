@@ -11,3 +11,4 @@ senses:
   example: s-w-1266522
 examples:
 - s-w-1266522
+image: { file: words/pashan.png, prompt: "Only the panda and the fawn. The panda and the fawn hiking upright on two legs up a steep rocky mountain trail with backpacks and walking sticks, the fawn leading and waving, green peaks and blue sky behind them, both smiling and a little sweaty." }

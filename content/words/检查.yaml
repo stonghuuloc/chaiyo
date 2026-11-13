@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-3890963
 - s-w-756862
+image: { file: words/jiancha.png, prompt: "Only the panda and the fawn. The panda dressed as a doctor in a white coat with a stethoscope, standing on the floor in a clinic and listening to the chest of the fawn, who sits on a visible examination stool. No toys." }

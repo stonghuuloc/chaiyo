@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-3626385
 - s-w-ai-9f0b3be4
+image: { file: words/guanji.png, prompt: "Only the red panda. Late at night in a small office, the red panda sitting on a visible office chair beside a desk, exhausted after overtime, with droopy tired eyes, a big relieved sigh and a finished stack of papers, pressing the power button so the laptop screen turns off. Night window, desk lamp, empty coffee cups." }

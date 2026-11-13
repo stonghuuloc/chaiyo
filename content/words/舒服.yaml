@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-414407
 - s-w-501698
+image: { file: words/shufu.png, prompt: "Only the panda. The panda lying stretched out on a soft sofa in a cozy room, completely relaxed and blissful: eyes gently closed in happy arcs, a wide content smile, a fluffy blanket and a cushion under its head, a steaming cup of tea nearby." }

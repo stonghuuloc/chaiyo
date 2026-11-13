@@ -11,3 +11,4 @@ senses:
   example: s-w-1636170
 examples:
 - s-w-1636170
+image: { file: words/zhanzhu.png, prompt: "Only the fawn. The fawn standing upright on a path, skidding to a sudden stop with both feet planted and dust puffs at its heels, one paw held out flat in a stop gesture, a big red stop-sign-free fence with a small cliff edge-free background; just a wide-eyed alert face and a few motion lines showing it halted abruptly." }

@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-5136687
 - s-w-7768354
+image: { file: words/bangmang.png, prompt: "Only the panda and the fawn. The fawn helping the panda carry a big heavy box together, both smiling" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-616338
 examples:
 - s-w-616338
+image: { file: words/pengjian.png, prompt: "Only the panda and the red panda. Two friends turning a corner on a street and unexpectedly meeting each other: the panda and the red panda stand upright face to face, both with surprised wide eyes and happy open mouths, paws raised in surprise, a shopping bag in the panda's paw, a small surprise sparkle above them." }

@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-ai-7ece704c
 - s-w-ai-0681620a
+image: { file: words/kaiji.png, prompt: "Only the panda. The panda sitting on a visible chair beside a desk, pressing the power button of a laptop with one paw, the screen lighting up with a bright blank glow and rays of light, an excited curious face." }

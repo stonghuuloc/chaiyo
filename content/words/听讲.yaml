@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-8d1aea63
 examples:
 - s-w-ai-8d1aea63
+image: { file: words/shangke.png, prompt: "Only the red panda, the panda and the fawn. A class in progress: the red panda teaching at the front by a blank chalkboard, the panda and the fawn sitting at desks listening" }

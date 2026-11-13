@@ -11,3 +11,4 @@ senses:
   example: s-w-803706
 examples:
 - s-w-803706
+image: { file: words/shangren.png, prompt: "Only the takin. The takin in an old-fashioned merchant's robe and small round hat, standing behind a wooden market cart piled with rolls of colorful cloth and baskets of goods, holding a small wooden abacus in one paw and a bulging coin bag in the other, with a cheerful business-like grin." }

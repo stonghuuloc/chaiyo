@@ -23,3 +23,4 @@ examples:
 - s-w-784471
 - s-w-ai-c5c16d83
 - s-w-2000409
+image: { file: words/liang.png, prompt: "Only the red panda. The red panda standing upright in a dark bedroom, one paw pressing a wall light switch, the room now glowing bright, a bright lamp shining with golden rays and the red panda blinking with a happy surprised face, shadows gone." }

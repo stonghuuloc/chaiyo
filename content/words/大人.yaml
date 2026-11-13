@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-471372
 - s-w-ai-35c5bd2b
+image: { file: words/daren.png, prompt: "Only the takin and a grown-up takin. A tall grown-up takin in a shirt and tie with a briefcase holds the paw of the small takin, who looks up at him; they walk upright along a sunny street. Both are takins; the grown-up is part of this scene even though he is not in the lineup." }

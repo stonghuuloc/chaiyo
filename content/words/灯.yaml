@@ -11,3 +11,4 @@ senses:
   example: s-w-9423284
 examples:
 - s-w-9423284
+image: { file: words/deng2.png, prompt: "Only the red panda. The red panda standing on the floor in a dim bedroom next to a tall floor lamp that has just been switched on, glowing warm yellow light that fills the room, the red panda looking up at it happily with one paw on the lamp's switch; the window outside shows dark night sky." }

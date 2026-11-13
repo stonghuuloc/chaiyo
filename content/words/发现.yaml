@@ -20,3 +20,4 @@ examples:
 - s-w-343914
 - s-w-9433046
 - s-w-332427
+image: { file: words/faxian.png, prompt: "Only the fawn. The fawn crouching in a garden among bushes, eyes wide and mouth open in delighted surprise, pointing at a shiny golden treasure chest half-hidden in the leaves, a bright exclamation-like sparkle above its head." }

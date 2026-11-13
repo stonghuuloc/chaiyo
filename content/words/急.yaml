@@ -26,3 +26,4 @@ examples:
 - s-w-390552
 - s-w-3698035
 - s-w-ai-adabd212
+image: { file: words/ji.png, prompt: "Only the red panda. The red panda rushing upright on two legs toward a bus stop in a hurry, a small alarm clock-shaped sun-less sky behind, hair messy, sweat drops flying, one paw holding a half-buttoned coat and the other waving urgently at a bus that is pulling away in the distance, a worried wide-eyed face." }

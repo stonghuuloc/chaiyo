@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-1789983
 - s-w-11241265
+image: { file: words/huanying.png, prompt: "Only the takin and the red panda. The takin and the red panda standing upright at an open front door, both waving with big warm smiles and arms spread wide to welcome a guest, balloons and colorful flowers by the door, a cozy welcome-mat with no writing at their feet." }

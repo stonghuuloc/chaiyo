@@ -22,3 +22,4 @@ examples:
 - s-w-1974792
 - s-w-ai-7a72fac5
 - s-w-ai-6ba7fdf1
+image: { file: words/huang.png, prompt: "Only the panda. The panda standing upright and smiling, holding a big bright yellow banana in one paw and a yellow sunflower in the other, wearing a yellow raincoat with a yellow rubber duck at its feet; everything in the scene is clearly the color yellow." }

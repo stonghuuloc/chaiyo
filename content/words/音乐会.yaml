@@ -11,3 +11,4 @@ senses:
   example: s-w-334653
 examples:
 - s-w-334653
+image: { file: words/yinyuehui.png, prompt: "Only the panda and the red panda. On a concert stage with a curtain and warm spotlights, the panda in a black bow tie plays a cello sitting on a visible chair and the red panda in a pretty dress stands upright playing a violin, rows of empty velvet seats in front, musical notes floating. No text." }

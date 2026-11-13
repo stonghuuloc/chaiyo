@@ -28,3 +28,4 @@ examples:
 - s-w-ai-2fda6e3c
 - s-w-ai-5dea0fce
 - s-w-ai-eea12fd0
+image: { file: words/yintian.png, prompt: "Only the takin. The takin walking upright on a quiet street under a sky full of thick gray clouds with no sun, looking up at the clouds with a slightly gloomy but calm face, gray light everywhere, no rain and no snow." }

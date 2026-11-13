@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-3667795
 - s-w-474220
+image: { file: words/jiaotong.png, prompt: "Only the panda. The panda standing upright on a sidewalk beside a busy city road full of cars, a bus, bicycles and a motorbike moving along, with traffic lights glowing red and green at an intersection, watching the flow of traffic with wide curious eyes." }

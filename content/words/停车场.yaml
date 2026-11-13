@@ -11,3 +11,4 @@ senses:
   example: s-w-332814
 examples:
 - s-w-332814
+image: { file: words/tingchechang.png, prompt: "Only the panda. The panda standing upright holding a car key, next to its small blue car in a big outdoor parking lot with many neatly parked cars in painted white lined spaces, looking around for its spot with a smile; no signs with writing." }

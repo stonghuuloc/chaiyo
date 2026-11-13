@@ -21,3 +21,4 @@ examples:
 - s-w-334621
 - s-w-ai-e13e868e
 - s-w-ai-4a1c6e7e
+image: { file: words/pa2.png, prompt: "Only the fawn. The fawn standing upright and trembling, hiding behind its own paws with wide frightened eyes, looking at a small cartoon mouse on the floor in front of it, with sweat drops flying off its head." }

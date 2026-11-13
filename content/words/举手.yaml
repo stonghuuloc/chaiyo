@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-d251575a
 examples:
 - s-w-ai-d251575a
+image: { file: words/jushou.png, prompt: "Only the fawn. The fawn sitting upright on a visible chair in a bright classroom, one paw stretched straight up high with an eager happy face, a teacher's blackboard with only simple wordless pictures behind it." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-4751231
 examples:
 - s-w-4751231
+image: { file: words/yun.png, prompt: "Only the panda. The panda lying on its back on a green grass hill, looking up at a bright blue sky filled with big fluffy white clouds, one paw pointing up at a cloud, a calm happy face." }

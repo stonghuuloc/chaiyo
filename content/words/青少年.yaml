@@ -11,3 +11,4 @@ senses:
   example: s-w-14037667
 examples:
 - s-w-14037667
+image: { file: words/qingshaonian.png, prompt: "Only the fawn. The fawn drawn as a cool teenager, taller and lanky, wearing a hoodie and sneakers with headphones around its neck and a backpack, holding a skateboard under one arm, standing upright on a city sidewalk with a relaxed look." }

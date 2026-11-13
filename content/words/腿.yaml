@@ -11,3 +11,4 @@ senses:
   example: s-w-453742
 examples:
 - s-w-453742
+image: { file: words/tui2.png, prompt: "Only the red panda and the fawn. Classroom anatomy lesson: the red panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the fawn's leg, which is clearly highlighted with a soft glow; the fawn stands upright facing the viewer, smiling. No text." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-917936
 examples:
 - s-w-917936
+image: { file: words/quanshen.png, prompt: "Only the red panda. The red panda standing upright in a full-body pose with arms stretched out to the sides, a big soft glowing outline drawn around her whole body from head to toe, a plain light background, a happy face." }

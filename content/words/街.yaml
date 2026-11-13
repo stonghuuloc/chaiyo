@@ -11,3 +11,4 @@ senses:
   example: s-w-2882913
 examples:
 - s-w-2882913
+image: { file: words/jie.png, prompt: "Only the panda and the red panda. The panda and the red panda walking upright side by side along a busy city street, shops with colorful awnings on both sides, a few cars on the road, streetlamps and a crosswalk, one holding an ice cream. No signs with writing." }

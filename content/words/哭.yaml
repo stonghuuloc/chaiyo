@@ -11,3 +11,4 @@ senses:
   example: s-w-5092280
 examples:
 - s-w-5092280
+image: { file: words/ku.png, prompt: "Only the takin. The takin sitting on the floor of a living room with a dropped ice cream on the floor in front of it, face scrunched up, tears streaming down its cheeks, mouth open wailing, wiping its eyes with one paw." }

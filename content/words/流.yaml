@@ -28,3 +28,4 @@ examples:
 - s-w-345946
 - s-w-ai-f5ddf926
 - s-w-ai-e1ae2a69
+image: { file: words/liu.png, prompt: "Only the fawn. The fawn standing upright beside a garden tap, with a clear stream of water flowing from the tap into a small stream that runs along the ground, the fawn watching the flowing water happily with ripples and a few drops sparkling in the sun, flowers around." }

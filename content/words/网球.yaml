@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1471149
 - s-w-ai-a6de3b70
+image: { file: words/wangqiu.png, prompt: "Only the red panda. The red panda standing upright on a tennis court, holding a tennis racket in one paw and a bright yellow-green tennis ball in the other, a net behind it and a second ball on the court at its feet, a sporty happy face." }

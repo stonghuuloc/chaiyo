@@ -11,3 +11,4 @@ senses:
   example: s-w-4970153
 examples:
 - s-w-4970153
+image: { file: words/zuojia.png, prompt: "Only the panda. The panda dressed as a writer in a cardigan and glasses, sitting on a visible chair beside a desk in a cozy study, holding a feather pen and thinking with a dreamy look, a stack of books with wordless covers and a lamp nearby, the panda's whole body visible." }

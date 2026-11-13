@@ -34,3 +34,4 @@ examples:
 - s-w-9991906
 - s-w-3060526
 - s-w-ai-8135e350
+image: { file: words/hei.png, prompt: "Only the fawn. The fawn standing upright holding a big black umbrella, wearing a black hat, with a black balloon and a black cat-shaped toy beside it, bright daylight and a cheerful face; everything it holds is clearly the color black." }

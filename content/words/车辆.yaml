@@ -11,3 +11,4 @@ senses:
   example: s-w-787284
 examples:
 - s-w-787284
+image: { file: words/qiche.png, prompt: "Only the fawn. A small round red car parked on a street, the fawn waving happily from the open driver's window" }

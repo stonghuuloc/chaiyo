@@ -11,3 +11,4 @@ senses:
   example: s-w-5617204
 examples:
 - s-w-5617204
+image: { file: words/jiu.png, prompt: "Only the takin. The takin standing upright on the floor of a cozy room, proudly holding up a decorated bottle of Chinese rice wine with a red ribbon as a gift, two tiny empty cups on a small tray on a visible stool beside it." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-2200378
 examples:
 - s-w-2200378
+image: { file: words/huzhao.png, prompt: "Only the red panda. The red panda standing upright at an airport check-in desk counter, holding up a small dark blue passport booklet with a plain blank cover and a simple globe-shaped emblem, a small suitcase beside its feet and a toy airplane visible through the window behind it. No text on the passport." }

@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-4673804
 - s-w-1695437
+image: { file: words/zuoye.png, prompt: "Only the fawn. The fawn sitting on a visible chair beside a desk at home, doing homework with a pencil in a blank workbook, a stack of workbooks and a pencil case next to it, a lamp on, a thoughtful face. No writing visible on the pages." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-787589
 examples:
 - s-w-787589
+image: { file: words/qiang.png, prompt: "Only the panda. The panda standing upright next to a tall red brick wall, one paw touching the wall, with a vine of green leaves climbing up it and a small bird sitting on top of the wall, a grass lawn at its feet." }

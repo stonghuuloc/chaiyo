@@ -11,3 +11,4 @@ senses:
   example: s-w-348163
 examples:
 - s-w-348163
+image: { file: words/gushi.png, prompt: "Only the panda and the fawn. The panda sitting on a visible chair holding a big open picture book with wordless colorful pictures, the fawn sitting on the floor in front of it listening with wide sparkling eyes; above the panda a big round thought bubble shows a little dragon and a castle, as if the story is coming alive. No text on the book." }

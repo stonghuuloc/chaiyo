@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-9462615
 - s-w-ai-2833ceb3
+image: { file: words/zidian.png, prompt: "Only the red panda. The red panda sitting on a visible chair beside a table, a thick open dictionary with wordless tiny dots and lines on its pages in front of it, one paw tracing along the page, a magnifying glass in the other paw, a curious look." }

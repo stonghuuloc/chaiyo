@@ -11,3 +11,4 @@ senses:
   example: s-w-1891626
 examples:
 - s-w-1891626
+image: { file: words/haokan.png, prompt: "Only the red panda. The red panda in a pretty pink dress with a flower crown, twirling happily in a sunny flower garden full of roses, the skirt flaring out, petals in the air. No mirror, no reflection." }

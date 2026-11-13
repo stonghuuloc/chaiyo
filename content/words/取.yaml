@@ -11,3 +11,4 @@ senses:
   example: s-w-8423582
 examples:
 - s-w-8423582
+image: { file: words/qu.png, prompt: "Only the takin. The takin standing on the floor in front of a bank cash machine, taking a stack of green banknotes from the slot with one paw and smiling, no text or numbers on the machine or money." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-dfec1771
 examples:
 - s-w-ai-dfec1771
+image: { file: words/tiyuguan.png, prompt: "Only the takin. The takin standing upright on a polished wooden floor inside a large indoor sports hall, jumping to shoot a basketball toward a hoop, with high roof beams, bright ceiling lights, and bleachers along the walls." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-1216091
 examples:
 - s-w-1216091
+image: { file: words/shangdian.png, prompt: "Only the red panda. A small corner shop with shelves of snacks and drinks, the red panda standing behind the counter smiling, an open door with a little bell" }

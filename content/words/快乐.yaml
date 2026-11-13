@@ -11,3 +11,4 @@ senses:
   example: s-w-1361961
 examples:
 - s-w-1361961
+image: { file: words/gaoxing.png, prompt: "Only the panda and the fawn. The panda and the fawn jumping up with joy, arms in the air, big smiles, confetti around" }

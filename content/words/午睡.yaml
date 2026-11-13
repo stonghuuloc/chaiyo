@@ -11,3 +11,4 @@ senses:
   example: s-w-8792844
 examples:
 - s-w-8792844
+image: { file: words/wushui.png, prompt: "Only the takin. The takin curled up asleep on a cozy sofa under a light blanket, eyes closed with a peaceful face and a little Z-shaped bubble floating above, bright sun high outside the window." }

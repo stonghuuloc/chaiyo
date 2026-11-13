@@ -11,3 +11,4 @@ senses:
   example: s-w-482704
 examples:
 - s-w-482704
+image: { file: words/chufa.png, prompt: "Only the panda, the fawn and the takin. At the start line of a running race on a track, the panda and the fawn crouch upright in ready positions, and the takin as the referee stands beside the track in a striped referee shirt raising a toy starter pistol that fires only a little puff of smoke and a cartoon BANG star shape (no letters). Cartoon, not a real gun." }

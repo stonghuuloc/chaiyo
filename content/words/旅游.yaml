@@ -20,3 +20,4 @@ examples:
 - s-w-1605957
 - s-w-501697
 - s-w-2448826
+image: { file: words/luyou.png, prompt: "Only the panda and the red panda. The panda and the red panda walking upright on a scenic path as tourists, wearing sun hats, the panda pulling a small suitcase and the red panda holding a camera strap around its neck, a famous-looking pagoda and green mountains behind them, both smiling." }

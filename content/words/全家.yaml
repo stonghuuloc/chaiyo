@@ -11,3 +11,4 @@ senses:
   example: s-w-791569
 examples:
 - s-w-791569
+image: { file: words/quanjia.png, prompt: "Only the red panda and her family: a grown-up red panda father, a grown-up red panda mother with a flower, the little red panda and a tiny red panda baby brother with a cap, all smiling together at a picnic in a sunny park. All are red pandas; the family members are part of this scene even though they are not in the lineup." }

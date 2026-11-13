@@ -11,3 +11,4 @@ senses:
   example: s-w-5611583
 examples:
 - s-w-5611583
+image: { file: words/guanxin.png, prompt: "Only the takin and the fawn. The takin sitting up in bed looking a little sad with a blanket on, while the fawn stands on the floor next to the bed gently placing a hand on its shoulder and holding a cup of warm tea, a caring face; a small basket of fruit on the bedside floor." }

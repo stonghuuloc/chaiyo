@@ -11,3 +11,4 @@ senses:
   example: s-w-3309268
 examples:
 - s-w-3309268
+image: { file: words/xingxing.png, prompt: "Only the takin. The takin standing upright on a grassy hill at night looking up in wonder with its mouth open, pointing at a dark sky full of twinkling yellow stars with a crescent moon, a small telescope on a tripod beside it." }

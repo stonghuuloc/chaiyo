@@ -11,3 +11,4 @@ senses:
   example: s-w-10871964
 examples:
 - s-w-10871964
+image: { file: words/duizhang.png, prompt: "Only the takin and the fawn. The takin wearing a bright team jersey with a captain's armband on its sleeve, standing upright in front of the fawn teammate in the same jersey, pointing forward to lead the team on a soccer field with a confident smile, while the fawn listens eagerly." }

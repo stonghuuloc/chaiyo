@@ -11,3 +11,4 @@ senses:
   example: s-w-8854263
 examples:
 - s-w-8854263
+image: { file: words/keai.png, prompt: "Only the red panda. The red panda standing upright and tilting her head with big sparkling eyes and rosy cheeks, holding a tiny fluffy kitten in both paws, surrounded by little floating hearts and flowers, a soft pastel background." }

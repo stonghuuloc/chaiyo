@@ -11,3 +11,4 @@ senses:
   example: s-w-345325
 examples:
 - s-w-345325
+image: { file: words/zhuyuan.png, prompt: "Only the panda. The panda lying in a hospital bed under a white blanket, looking weak and miserable with droopy eyes and a small frown, a drip bag on a stand beside the bed, a hospital room with a window and a visible bedside cabinet." }

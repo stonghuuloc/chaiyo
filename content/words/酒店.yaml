@@ -25,3 +25,4 @@ examples:
 - s-w-1335409
 - s-w-ai-0db2c633
 - s-w-ai-7f0b5609
+image: { file: words/jiudian.png, prompt: "Only the panda. The panda in a bellhop uniform with a little cap, standing upright in a grand hotel lobby, pushing a luggage cart with two suitcases, a reception desk with a bell, a chandelier, a sofa and a potted plant in the background. No text." }

@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-10535629
 - s-w-ai-fb9e7bc8
+image: { file: words/shu2.png, prompt: "Only the fawn. The fawn sitting on a visible chair beside a table, side view, pointing with one paw at a row of four round gold coins on the table, counting them; above the fawn's head float the numbers 1, 2, 3, 4 in a playful bubbly style, one above each coin." }

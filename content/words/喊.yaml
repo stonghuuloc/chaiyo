@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1406486
 - s-w-689562
+image: { file: words/han.png, prompt: "Only the panda. The panda standing on a hill with both paws cupped around its wide-open mouth, shouting loudly toward a far-away fawn-shaped hill, sound waves drawn as curved lines coming from its mouth." }

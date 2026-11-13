@@ -11,3 +11,4 @@ senses:
   example: s-w-897539
 examples:
 - s-w-897539
+image: { file: words/yingpian.png, prompt: "Only the panda and the takin. The panda and the takin sitting on visible sofa seats side by side in a cozy living room, eating popcorn, looking at a big wall-mounted screen showing a wordless animated scene of a rocket and stars, a film reel and clapperboard with no writing on a side shelf." }

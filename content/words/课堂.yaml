@@ -11,3 +11,4 @@ senses:
   example: s-w-2500072
 examples:
 - s-w-2500072
+image: { file: words/ketang.png, prompt: "Only the fawn and the takin. The fawn and the takin sitting on visible chairs behind their desks in a lively class, the fawn raising a paw to answer, the takin listening with an open notebook with blank pages, the teacher's blank blackboard in front with only simple drawings of a sun and a flower, no writing." }

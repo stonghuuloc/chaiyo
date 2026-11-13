@@ -31,3 +31,4 @@ examples:
 - s-w-10616260
 - s-w-480956
 - s-w-ai-54202014
+image: { file: words/bei2.png, prompt: "Only the red panda and the panda. Classroom anatomy lesson: the red panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the panda's back; the panda stands upright turned away from the viewer so its back faces the viewer, looking over its shoulder with a smile. No text." }

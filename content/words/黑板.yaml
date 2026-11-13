@@ -11,3 +11,4 @@ senses:
   example: s-w-13148495
 examples:
 - s-w-13148495
+image: { file: words/heiban.png, prompt: "Only the fawn. The fawn standing on the floor of a classroom in front of a big green-black blackboard, holding a piece of white chalk and drawing a simple sun, a flower and a smiley face on the board with chalk, a chalk tray and eraser at the bottom. No letters or numbers on the board." }

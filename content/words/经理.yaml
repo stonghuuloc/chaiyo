@@ -11,3 +11,4 @@ senses:
   example: s-w-11837809
 examples:
 - s-w-11837809
+image: { file: words/jingli.png, prompt: "Only the takin. The takin in a smart suit and tie standing confidently upright in a bright office with arms crossed and a satisfied look, pointing with one paw toward a big wordless wall chart of colorful rising bars, a large desk and leather chair beside it." }

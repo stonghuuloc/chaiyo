@@ -11,3 +11,4 @@ senses:
   example: s-w-2062975
 examples:
 - s-w-2062975
+image: { file: words/huar.png, prompt: "Only the red panda. The red panda standing upright next to a wooden easel on the floor, holding a paintbrush and a color palette, having just painted a bright picture of a sunny mountain, a river and flowers on the canvas, paint dabs on its cheek, smiling proudly." }

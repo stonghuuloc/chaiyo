@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-1216141
 - s-w-7767607
+image: { file: words/jiankang.png, prompt: "Only the panda. The panda standing upright in a sunny park, strong and cheerful, flexing one arm muscle with a big smile and rosy cheeks, a basket of fresh fruit and vegetables and a jump rope on the grass beside it." }

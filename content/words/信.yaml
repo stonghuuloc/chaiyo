@@ -24,3 +24,4 @@ examples:
 - s-w-333502
 - s-w-ai-4c4e87cf
 - s-w-6101308
+image: { file: words/xin.png, prompt: "Only the red panda. The red panda standing upright by a red mailbox, happily holding up an opened white paper letter with a small heart drawn on it and an envelope with a stamp in the other paw. No text on the letter, only wordless squiggles." }

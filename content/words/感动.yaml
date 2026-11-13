@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-465026
 - s-w-1504990
+image: { file: words/gandong.png, prompt: "Only the panda and the fawn. The fawn proudly holds out a handmade paper flower bouquet with wordless blank cards to the panda; the panda stands upright with both paws pressed to its chest, big shiny teary eyes and a touched smile, a happy tear rolling down its cheek, small floating hearts around them, in a sunny garden." }

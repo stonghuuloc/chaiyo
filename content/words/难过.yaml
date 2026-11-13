@@ -21,3 +21,4 @@ examples:
 - s-w-333736
 - s-w-ai-1f2dc3fe
 - s-w-ai-124c3546
+image: { file: words/nanguo.png, prompt: "Only the fawn. The fawn sitting on a park bench, hugging its knees, with big tears rolling down its cheeks, a sad downturned mouth and droopy ears, a dropped ice cream cone lying on the ground in front of it, a small grey rain cloud above its head." }

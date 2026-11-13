@@ -20,3 +20,4 @@ examples:
 - s-w-487593
 - s-w-10484366
 - s-w-ai-42edfb1b
+image: { file: words/jiao.png, prompt: "Only the red panda and the takin. Classroom anatomy lesson: the red panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the takin's foot, which is clearly highlighted with a soft glow; the takin stands upright facing the viewer, smiling. No text." }

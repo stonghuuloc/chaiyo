@@ -21,3 +21,4 @@ examples:
 - s-w-3845346
 - s-w-ai-92746700
 - s-w-ai-98f0e7b4
+image: { file: words/wen.png, prompt: "Only the red panda. The red panda standing upright in a sunny garden, eyes closed and a happy smile, leaning in to sniff a big pink flower held in both paws, little curly scent lines floating from the flower to her nose." }

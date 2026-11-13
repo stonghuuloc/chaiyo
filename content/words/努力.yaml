@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-5102184
 - s-w-1992630
+image: { file: words/nuli.png, prompt: "Only the red panda. The red panda sitting on a visible chair beside a desk, studying hard with a determined face, a stack of blank-paged books and a pencil in paw, sweat drops on its forehead, a clenched-fist pose of effort." }

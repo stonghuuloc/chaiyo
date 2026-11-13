@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-4763866
 - s-w-ai-e6e0870d
+image: { file: words/chang.png, prompt: "Only the fawn. The fawn standing upright holding one end of a very long colorful scarf that stretches far across the floor and out of the room, while a short small scarf lies next to it, showing clearly long versus short." }

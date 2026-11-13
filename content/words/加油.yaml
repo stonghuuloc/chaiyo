@@ -22,3 +22,4 @@ examples:
 - s-w-1501769
 - s-w-8682684
 - s-w-ai-a8fd88b6
+image: { file: words/jiayou.png, prompt: "Only the cast. The fawn running upright on a track toward a finish ribbon, panting with determination, while the panda, the red panda and the takin stand behind the side rail cheering loudly with pom-poms and raised paws. All four characters appear." }

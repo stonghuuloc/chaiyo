@@ -11,3 +11,4 @@ senses:
   example: s-w-431555
 examples:
 - s-w-431555
+image: { file: words/kaixue.png, prompt: "Only the fawn and the red panda. The fawn and the red panda walking upright through a school gate on the first day of school, both with new backpacks and happy faces, balloons and a colorful school building ahead with no writing." }

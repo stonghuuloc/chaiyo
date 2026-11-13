@@ -24,3 +24,4 @@ examples:
 - s-w-8854251
 - s-w-ai-b236744e
 - s-w-ai-c5be46b2
+image: { file: words/caodi.png, prompt: "Only the fawn. The fawn lying and playing on a wide, soft, open meadow of lush green grass, with a few little flowers, a blue sky and white clouds, sitting upright and happily touching the thick grass with its paws." }
