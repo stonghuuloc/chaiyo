@@ -180,13 +180,13 @@
 
 <main class="page">
 	<div
-		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
+		class="-mx-5 aspect-3/2 overflow-hidden mask-b-from-92% md:mx-0 md:mt-6 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
 		'start'
 			? ''
 			: 'hidden'}"
 	>
 		<img
-			class="block size-full object-cover object-[50%_60%]"
+			class="block size-full object-cover"
 			src="/onboard/welcome.webp"
 			srcset="/onboard/welcome.webp 860w, /onboard/welcome-1280.webp 1280w"
 			sizes="(min-width: 1024px) 560px, (min-width: 768px) 480px, 100vw"
