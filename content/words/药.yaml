@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-759374
 - s-w-ai-6f761f1a
+image: { file: words/yao.png, prompt: "Only the takin. The takin sick in bed under a quilt, looking miserable and weak: droopy half-closed eyes, eyebrows raised in misery, a small sad frown, holding a small medicine cup in one paw and a glass of water in the other, a medicine bottle on the bedside table. NOT smug, NOT smirking, NOT smiling." }

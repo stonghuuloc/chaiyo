@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-8932596
 - s-w-ai-97c0bfd0
+image: { file: words/zhi.png, prompt: "Only the red panda. The red panda sitting on the floor in a bright room, happily holding up a single large blank white sheet of paper in both paws, a stack of more white paper sheets beside it and a few crayons on the floor. The paper is completely blank." }

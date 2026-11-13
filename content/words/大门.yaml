@@ -11,3 +11,4 @@ senses:
   example: s-w-9961403
 examples:
 - s-w-9961403
+image: { file: words/damen.png, prompt: "Only the takin. The takin standing upright in front of a big, wide, closed double gate of a house compound, with stone pillars on each side and a lantern on each pillar, one paw waving hello, a garden path leading up to the gate. No writing on the gate." }

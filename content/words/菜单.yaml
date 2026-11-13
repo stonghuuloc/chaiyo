@@ -11,3 +11,4 @@ senses:
   example: s-w-3478397
 examples:
 - s-w-3478397
+image: { file: words/caidan.png, prompt: "Only the panda and the red panda. The panda and the red panda sitting on visible chairs beside a restaurant table, the red panda holding open a big folded menu that shows only pictures of dishes (noodles, dumplings, soup) and no words, both pointing at a dish they want, a waiter-free cozy restaurant." }

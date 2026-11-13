@@ -11,3 +11,4 @@ senses:
   example: s-w-504872
 examples:
 - s-w-504872
+image: { file: words/yinhang.png, prompt: "Only the fawn. The fawn standing on the floor in a bright bank hall in front of a counter with a glass window, holding a stack of green banknotes and a small blank-covered bankbook, a big round metal safe door with a wheel in the background. No text." }

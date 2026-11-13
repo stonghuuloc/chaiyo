@@ -19,3 +19,4 @@ examples:
 - s-w-501554
 - s-w-ai-0b25e077
 - s-w-ai-0ead17d9
+image: { file: words/zui.png, prompt: "Only the red panda and the panda. Classroom anatomy lesson: the red panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the panda's mouth, which is clearly highlighted with a soft glow; the panda stands upright facing the viewer, smiling. No text." }

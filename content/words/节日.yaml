@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-8591239
 - s-w-2032317
+image: { file: words/jieri.png, prompt: "Only the fawn and the panda. The fawn and the panda standing upright in a town square decorated for a festival with colorful flags, lanterns and balloons, holding small gifts and smiling, confetti falling in the air, a cheerful celebration." }

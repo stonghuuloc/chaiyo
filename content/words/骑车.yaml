@@ -11,3 +11,4 @@ senses:
   example: s-w-2317106
 examples:
 - s-w-2317106
+image: { file: words/qiche2.png, prompt: "Only the panda. The panda riding a bicycle upright on a park path, both paws on the handlebars, feet on the pedals, a helmet on its head, wind blowing and trees passing, side view." }

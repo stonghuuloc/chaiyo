@@ -11,3 +11,4 @@ senses:
   example: s-w-761010
 examples:
 - s-w-761010
+image: { file: words/gongjiaoche.png, prompt: "Only the panda and the fawn. The panda and the fawn standing upright at a bus stop as a big green city bus pulls up with doors opening, passengers' windows visible, a bus stop pole beside them. No text on the bus or signs." }

@@ -19,3 +19,4 @@ examples:
 - s-w-8934349
 - s-w-ai-3af25c2b
 - s-w-ai-80407802
+image: { file: words/peng.png, prompt: "Only the fawn. The fawn standing upright in a hallway, gently touching a cute cactus in a pot with one fingertip and recoiling slightly with a surprised face, small motion lines at the contact point, a sunny window behind." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-348608
 examples:
 - s-w-348608
+image: { file: words/baozhi.png, prompt: "Only the takin. The takin sitting on a visible chair beside a small table in a cozy living room, holding open a large folded newspaper with wordless pictures and blank gray columns of squiggly lines only, a cup of tea on the table. No letters or numbers anywhere." }

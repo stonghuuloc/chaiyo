@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-92efd991
 examples:
 - s-w-ai-92efd991
+image: { file: words/qing.png, prompt: "Only the fawn. The fawn walking upright on two legs along a park path under a bright, completely cloudless blue sky, a big smiling sun overhead, cheerful and relaxed, with the grass and flowers dry and sunny around it." }

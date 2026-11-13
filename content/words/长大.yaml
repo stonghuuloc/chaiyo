@@ -11,3 +11,4 @@ senses:
   example: s-w-9962396
 examples:
 - s-w-9962396
+image: { file: words/zhangda.png, prompt: "Only the fawn. A split scene: on the left a tiny baby fawn in a diaper sitting on a blanket, with small soft antler buds; on the right the same fawn grown taller, standing upright with a school backpack and clearly visible small deer antlers, a wall growth chart between them. Both sides show the fawn's horns." }

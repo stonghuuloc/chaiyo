@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-5845311
 - s-w-ai-44188d69
+image: { file: words/anjing.png, prompt: "Only the panda. The panda sitting quietly on a visible armchair in a calm, empty library, reading a picture book with wordless pictures, a finger on its lips, soft light, nobody else around." }

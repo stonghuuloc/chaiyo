@@ -35,3 +35,4 @@ examples:
 - s-w-2254360
 - s-w-333953
 - s-w-ai-a52e979b
+image: { file: words/man2.png, prompt: "Only the red panda. The red panda standing on the floor next to a kitchen counter, proudly pointing with one paw at a glass of orange juice that is filled right up to the brim, the juice almost spilling over the top, next to an empty glass for comparison." }

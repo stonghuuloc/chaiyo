@@ -26,3 +26,4 @@ examples:
 - s-w-5091444
 - s-w-617711
 - s-w-ai-b6071b90
+image: { file: words/bi.png, prompt: "Only the takin. The takin standing upright on the floor, holding up one pen in one paw like a prize, with a pencil and a ballpoint pen also lying clearly side by side in a small cup on a visible low stool beside it, a smiling face. The pens are drawn large and clear, no writing anywhere." }

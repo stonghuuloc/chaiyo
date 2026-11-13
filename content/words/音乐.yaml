@@ -11,3 +11,4 @@ senses:
   example: s-w-747653
 examples:
 - s-w-747653
+image: { file: words/yinyue.png, prompt: "Only the panda and the red panda. The panda playing a small piano upright on a visible chair and the red panda standing next to it playing a violin, colorful musical notes without any writing floating in the air, a happy, lively concert mood in a cozy room." }

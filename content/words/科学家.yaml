@@ -11,3 +11,4 @@ senses:
   example: s-w-1733473
 examples:
 - s-w-1733473
+image: { file: words/kexuejia.png, prompt: "Only the panda. The panda in a white lab coat and safety goggles, standing on the floor next to a lab bench, holding up a glass flask of bubbling colorful liquid with excitement; a microscope and test tubes are on the bench." }

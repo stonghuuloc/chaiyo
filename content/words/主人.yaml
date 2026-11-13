@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-9518684
 - s-w-ai-dc0dc9bb
+image: { file: words/zhuren.png, prompt: "Only the takin. The takin as a proud pet owner walking upright along a park path holding a leash, a small fluffy puppy walking happily beside him on the leash, looking up at its owner. The puppy is part of this scene even though not in the lineup; drawn in the same cute chibi style." }

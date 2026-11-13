@@ -28,3 +28,4 @@ examples:
 - s-w-14023282
 - s-w-ai-285cfe1b
 - s-w-1759725
+image: { file: words/tui.png, prompt: "Only the takin. The takin standing upright on the floor, side view, leaning forward with both paws and all its weight pushing a big heavy cardboard box across the floor, feet planted and straining, a determined face, dust puffs behind its feet." }

@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-1541719
 - s-w-948078
+image: { file: words/manyi.png, prompt: "Only the red panda. The red panda standing upright in front of a freshly painted picture on an easel, holding one paw up in a thumbs-up and smiling with sparkling happy eyes and closed-eye satisfied grin, a bright gold star sticker floating beside the painting, paint brushes in the other paw, a tidy sunny studio." }

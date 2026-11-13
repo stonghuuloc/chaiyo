@@ -19,3 +19,4 @@ examples:
 - s-w-2444467
 - s-w-711635
 - s-w-8591276
+image: { file: words/la.png, prompt: "Only the takin. The takin standing upright on the floor leaning backward, pulling a small red wagon toward itself with both paws on the handle, the wagon loaded with a few toy blocks, a grassy park path behind it, a clearly effortful but cheerful face." }

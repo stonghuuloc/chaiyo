@@ -11,3 +11,4 @@ senses:
   example: s-w-336623
 examples:
 - s-w-336623
+image: { file: words/tiyuchang.png, prompt: "Only the fawn. The fawn running upright on the oval red running track of a huge open-air stadium, with a green grass field in the middle, big tiers of empty seats around, tall floodlights and the open blue sky above." }

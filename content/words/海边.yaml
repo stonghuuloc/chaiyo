@@ -11,3 +11,4 @@ senses:
   example: s-w-1752659
 examples:
 - s-w-1752659
+image: { file: words/haibian.png, prompt: "Only the panda. The panda standing upright on a sandy beach at the seaside, waves rolling gently onto the shore, wet footprints in the sand, a small sandcastle and a bucket beside its feet, seagulls and a blue sky, the panda smiling at the sea." }

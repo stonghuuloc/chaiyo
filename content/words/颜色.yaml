@@ -21,3 +21,4 @@ examples:
 - s-w-2161120
 - s-w-ai-b2f7bbde
 - s-w-ai-9994b9ab
+image: { file: words/yanse.png, prompt: "Only the red panda. The red panda standing upright holding a painter's palette with many bright colors, a paint brush in its other paw, in front of a big rainbow-colored painting of stripes and splashes of red, yellow, blue and green, a row of paint tubes at its feet." }

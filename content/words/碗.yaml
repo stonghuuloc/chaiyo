@@ -21,3 +21,4 @@ examples:
 - s-w-5911714
 - s-w-ai-c2ab0e08
 - s-w-ai-4f9e584f
+image: { file: words/wan.png, prompt: "Only the fawn. The fawn sitting on a visible chair beside a table in a kitchen, holding a round white porcelain bowl in both paws, the bowl full of steaming white rice with a little soup beside it, a happy face. The bowl is large and clearly the main object; nothing sits on the table but dishes." }

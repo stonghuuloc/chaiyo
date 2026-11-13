@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-004114ed
 examples:
 - s-w-ai-004114ed
+image: { file: words/zhaoxiang.png, prompt: "Only the panda. The panda standing upright in a flower garden holding a camera up to its eye and taking a photo, aimed toward the viewer, one paw on the lens and the other on the body of the camera, a small flash sparkle at the camera, blooming flowers all around." }

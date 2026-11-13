@@ -11,3 +11,4 @@ senses:
   example: s-w-334694
 examples:
 - s-w-334694
+image: { file: words/shoudao.png, prompt: "Only the red panda. The red panda standing upright at its front door, delighted with sparkling eyes and a big smile, holding a gift box with a ribbon and a sealed envelope with a heart sticker (no writing), a postman's bag and a cheerful mail truck leaving in the background." }

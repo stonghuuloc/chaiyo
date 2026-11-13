@@ -20,3 +20,4 @@ examples:
 - s-w-14067734
 - s-w-ai-bbdbbfc5
 - s-w-ai-9c343535
+image: { file: words/waimai.png, prompt: "Only the red panda. The red panda in a yellow delivery uniform and helmet riding a small scooter upright along a street, a paper takeout bag and a lidded food box on the back, arriving at a front door of a house where a hand-free doorway shows a smiling door mat, steam rising from the bag." }

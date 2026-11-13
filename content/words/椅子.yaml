@@ -11,3 +11,4 @@ senses:
   example: s-w-8656972
 examples:
 - s-w-8656972
+image: { file: words/yizi.png, prompt: "Only the fawn. The fawn standing on the floor next to a single wooden chair, one paw resting on its backrest, the chair shown large and clear in side view with four legs, a seat and a back, in a plain bright room. Nothing else on the chair." }

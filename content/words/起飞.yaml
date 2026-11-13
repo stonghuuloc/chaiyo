@@ -11,3 +11,4 @@ senses:
   example: s-w-8883976
 examples:
 - s-w-8883976
+image: { file: words/qifei.png, prompt: "Only the panda. A small cartoon airplane with the panda in a pilot cap and uniform waving from the cockpit window, the nose tilted up as it lifts off the runway, its wheels just leaving the ground, with blue sky and fluffy clouds ahead and an airport building in the distance." }

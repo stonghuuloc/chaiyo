@@ -11,3 +11,4 @@ senses:
   example: s-w-401371
 examples:
 - s-w-401371
+image: { file: words/paidui.png, prompt: "Only the panda and the takin. A very long queue in front of a bakery stretches far into the distance: the line is made of many soft grey silhouette shadow figures of all sizes standing one behind another, and at the very end of the long line stand the panda and the takin in full color, waiting patiently. The shadow figures are plain grey silhouettes with no faces." }

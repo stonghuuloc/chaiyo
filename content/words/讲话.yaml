@@ -20,3 +20,4 @@ examples:
 - s-w-1394872
 - s-w-380600
 - s-w-791425
+image: { file: words/jianghua.png, prompt: "Only the panda. The panda standing upright on the floor behind a small podium with a microphone, wearing a bow tie, speaking to a crowd of tiny stuffed-toy audience seats in front, one paw raised in an expressive gesture, mouth open mid-speech; no text on the podium." }

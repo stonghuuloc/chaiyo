@@ -11,3 +11,4 @@ senses:
   example: s-w-8795139
 examples:
 - s-w-8795139
+image: { file: words/ditie.png, prompt: "Only the takin. Inside a subway train carriage, the takin standing upright holding a handrail strap, seats along the sides, a map-like colorful line diagram without writing above the door, dark tunnel with lights streaming past the window." }

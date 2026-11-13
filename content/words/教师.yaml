@@ -11,3 +11,4 @@ senses:
   example: s-w-7768344
 examples:
 - s-w-7768344
+image: { file: words/laoshi.png, prompt: "Only the red panda. The red panda standing in front of a blank green chalkboard holding a thin wooden pointer, teaching with a kind smile, classroom" }

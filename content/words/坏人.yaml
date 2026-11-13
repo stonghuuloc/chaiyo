@@ -11,3 +11,4 @@ senses:
   example: s-w-8746390
 examples:
 - s-w-8746390
+image: { file: words/huairen.png, prompt: "Only the takin. The takin dressed as a cartoon super villain with a black cape, a little black eye mask and a twirly mustache, standing upright on a rooftop in daylight with fists on hips, head thrown back in a huge iconic evil laugh, mouth wide open, little cartoon laugh lines around it. Comical, not scary." }

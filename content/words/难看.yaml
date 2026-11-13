@@ -11,3 +11,4 @@ senses:
   example: s-w-343425
 examples:
 - s-w-343425
+image: { file: words/nankan.png, prompt: "Only the red panda. The red panda standing upright on the floor holding up a lumpy, crooked, ugly clay pot with uneven blobs and cracks, looking at it with a disappointed wrinkled-nose frown, a few clumsy clay lumps on a visible small chair beside the pottery table, tidy craft room." }

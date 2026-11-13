@@ -11,3 +11,4 @@ senses:
   example: s-w-836117
 examples:
 - s-w-836117
+image: { file: words/paiqiu.png, prompt: "Only the panda and the red panda. The panda and the red panda playing volleyball upright on an outdoor court on either side of a net, the red panda jumping to hit a round volleyball over the net with both hands, the panda ready to receive it, happy and energetic." }

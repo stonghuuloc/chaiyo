@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-ed08bc66
 examples:
 - s-w-ai-ed08bc66
+image: { file: words/kaosheng.png, prompt: "Only the fawn. The fawn sitting on a visible chair at a school desk in a quiet exam hall, holding a pencil over a test paper with only blank lines, looking nervous and focused with a small sweat drop, a plain wall clock without numbers behind it." }

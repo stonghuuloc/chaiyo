@@ -11,3 +11,4 @@ senses:
   example: s-w-2029449
 examples:
 - s-w-2029449
+image: { file: words/chuan2.png, prompt: "Only the panda and the red panda. A big white passenger ship with two decks, a funnel and round portholes sailing on a wide blue sea, the panda and the red panda standing at the deck rail waving, seagulls far away." }

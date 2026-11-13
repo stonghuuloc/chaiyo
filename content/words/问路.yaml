@@ -11,3 +11,4 @@ senses:
   example: s-w-8744696
 examples:
 - s-w-8744696
+image: { file: words/wenlu.png, prompt: "Only the panda and the red panda. On a city street corner, the panda holds up a blank folded paper map and points at it with a puzzled face, asking the red panda who stands upright beside it and points helpfully down the road, with a signpost with only blank arrows and a few shop buildings behind." }

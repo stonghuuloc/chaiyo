@@ -11,3 +11,4 @@ senses:
   example: s-w-345984
 examples:
 - s-w-345984
+image: { file: words/xinwen.png, prompt: "Only the red panda. The red panda standing upright in a TV studio like a news reporter, holding a microphone with a plain blank logo and speaking to a big camera on a tripod, a plain blue backdrop with a simple globe picture behind it. No text or screens with writing." }

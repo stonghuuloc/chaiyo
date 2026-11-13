@@ -11,3 +11,4 @@ senses:
   example: s-w-348019
 examples:
 - s-w-348019
+image: { file: words/liwu.png, prompt: "Only the panda and the red panda. The panda holding out a big gift box wrapped in shiny paper with a big ribbon bow towards the red panda, who is clapping with delight and big sparkling eyes, balloons floating behind them in a cheerful room." }

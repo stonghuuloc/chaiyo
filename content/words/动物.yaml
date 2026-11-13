@@ -11,3 +11,4 @@ senses:
   example: s-w-512178
 examples:
 - s-w-512178
+image: { file: words/dongwu.png, prompt: "Only the fawn and real animals. The fawn standing upright in a green farm meadow happily pointing at a group of real everyday animals: a cow, a horse, a sheep, a pig and a rabbit, all drawn in the same cute chibi style. The other animals are part of this scene even though they are not in the lineup." }

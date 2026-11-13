@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-13911124
 - s-w-ai-81de0c9f
+image: { file: words/zang.png, prompt: "Only the takin. The takin standing upright with a very dirty body, covered in muddy brown splotches on its clothes, face and paws, standing next to a puddle with muddy footprints behind it, looking down at itself with a sad, embarrassed face and a few flies buzzing." }

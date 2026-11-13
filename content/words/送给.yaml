@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-843481
 - s-w-ai-612b5fef
+image: { file: words/song.png, prompt: "Only the takin and the red panda. The takin handing a gift box with a ribbon to the red panda, who is surprised and happy" }

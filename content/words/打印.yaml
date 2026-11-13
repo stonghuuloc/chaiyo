@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-e3ea2409
 examples:
 - s-w-ai-e3ea2409
+image: { file: words/dayin.png, prompt: "Only the red panda. The red panda standing upright on the floor next to a big office printer, happily taking a freshly printed colorful picture of a flower from the output tray, more wordless picture sheets sliding out; the pages show only pictures, no text or numbers." }

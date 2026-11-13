@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-10552177
 - s-w-ai-1ba8af27
+image: { file: words/jiazhang.png, prompt: "Only the panda and a little panda. At a school gate, a bigger grown-up panda parent stands upright beside a small panda child; both face the viewer, the child wears a school backpack and the parent waves goodbye with one paw. Both heads face forward normally. The little panda child is part of this scene even though it is not in the lineup." }

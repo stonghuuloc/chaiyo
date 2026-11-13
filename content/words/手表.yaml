@@ -11,3 +11,4 @@ senses:
   example: s-w-1216071
 examples:
 - s-w-1216071
+image: { file: words/shoubiao.png, prompt: "Only the panda. The panda standing upright on the floor of a bright room, proudly holding up one wrist to show a shiny wristwatch with a round blank face (no numbers, no marks) on a leather strap, with a happy smile; the watch is worn on the wrist and clearly the main object." }

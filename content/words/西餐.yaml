@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-329b5d91
 examples:
 - s-w-ai-329b5d91
+image: { file: words/xican.png, prompt: "Only the red panda and the panda. They sit on visible chairs beside a table set with a white tablecloth, candles, steak-free dishes of spaghetti and a bread basket, holding forks and knives, a glass of juice each, a bowl of salad, elegant restaurant setting with a vase of flowers." }

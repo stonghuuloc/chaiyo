@@ -11,3 +11,4 @@ senses:
   example: s-w-8727835
 examples:
 - s-w-8727835
+image: { file: words/canjia.png, prompt: "Only the panda and the fawn. On a sports day field with colorful bunting, the fawn waves the panda over and the panda happily runs upright to join the fawn at the start line of a race, both wearing numbered-free sports bibs. No other creatures." }

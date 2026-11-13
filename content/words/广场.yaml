@@ -11,3 +11,4 @@ senses:
   example: s-w-1977188
 examples:
 - s-w-1977188
+image: { file: words/guangchang.png, prompt: "Only the fawn. The fawn standing upright in the middle of a huge open town square paved with light stones, a round fountain in the center, pigeons walking around, a few benches and tall buildings at the far edges, the fawn feeding pigeons with crumbs." }

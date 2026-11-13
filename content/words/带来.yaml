@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-9709532
 - s-w-760732
+image: { file: words/dailai.png, prompt: "Only the fawn. The fawn standing at a front door with a big happy smile, holding out a wrapped gift box and a basket of fruit toward the red panda-free open doorway, as if just arriving with presents, flowers in the background." }

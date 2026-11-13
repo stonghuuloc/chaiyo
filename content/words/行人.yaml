@@ -11,3 +11,4 @@ senses:
   example: s-w-3188388
 examples:
 - s-w-3188388
+image: { file: words/xingren.png, prompt: "Only the red panda. The red panda walking upright across a zebra crossing on a city street, looking both ways, with a stopped car waiting at the crossing and a traffic light showing a green walking pictogram, buildings and a sidewalk in the background." }

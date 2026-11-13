@@ -11,3 +11,4 @@ senses:
   example: s-w-4549645
 examples:
 - s-w-4549645
+image: { file: words/zouguo.png, prompt: "Only the panda. The panda walking upright across a zebra crossing on a quiet street, side view, mid-stride with one leg forward, a traffic light with a green walking figure no text, having just passed the first stripes, a calm cheerful face and houses on both sides." }

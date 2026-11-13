@@ -11,3 +11,4 @@ senses:
   example: s-w-6031936
 examples:
 - s-w-6031936
+image: { file: words/diqiu.png, prompt: "Only the panda. The panda standing upright on the floor hugging a large round globe of the Earth with blue oceans and green continents, a loving happy smile, tiny stars around, a view of the whole planet blue and green with no text." }

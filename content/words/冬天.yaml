@@ -11,3 +11,4 @@ senses:
   example: s-w-9415382
 examples:
 - s-w-9415382
+image: { file: words/dongtian.png, prompt: "Only the takin. The takin standing upright in a snowy winter landscape wearing a thick woolly hat, scarf, and coat, puffs of breath visible, shivering slightly with a smile, bare trees with snow and a small snowman next to it." }

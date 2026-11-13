@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-2357613
 - s-w-ai-2a223a7a
+image: { file: words/jin.png, prompt: "Only the fawn. The fawn stepping in through an open doorway into a bright room" }

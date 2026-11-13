@@ -43,3 +43,4 @@ examples:
 - s-w-344189
 - s-w-817370
 - s-w-1785980
+image: { file: words/diao.png, prompt: "Only the fawn. The fawn standing upright on a sunny sidewalk, startled with wide eyes, as an ice cream cone slips from its paw and falls through the air, the scoop of pink ice cream tumbling toward the ground, a little motion line above it." }

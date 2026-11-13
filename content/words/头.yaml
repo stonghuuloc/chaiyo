@@ -44,3 +44,4 @@ examples:
 - s-w-1749200
 - s-w-10541644
 - s-w-ai-8ab043c4
+image: { file: words/tou.png, prompt: "Only the red panda and the takin. Classroom anatomy lesson: the red panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the takin's head, which is clearly highlighted with a soft glow; the takin stands upright facing the viewer, smiling. No text." }

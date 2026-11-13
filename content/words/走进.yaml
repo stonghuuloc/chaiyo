@@ -11,3 +11,4 @@ senses:
   example: s-w-989138
 examples:
 - s-w-989138
+image: { file: words/zoujin.png, prompt: "Only the fawn. Side view of the fawn walking upright on two legs through an open classroom doorway, one foot just over the threshold, with the hallway behind it and a bright room with small chairs and colorful wordless picture posters ahead. It looks curious and happy as it steps inside." }

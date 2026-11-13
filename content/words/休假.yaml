@@ -11,3 +11,4 @@ senses:
   example: s-w-6071018
 examples:
 - s-w-6071018
+image: { file: words/xiujia.png, prompt: "Only the takin. The takin relaxing on a tropical beach in sunglasses and a flowery shirt, sitting on a beach chair on the sand with a coconut drink, a small suitcase beside it, calm sea and sun in the background." }

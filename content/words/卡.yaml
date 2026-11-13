@@ -24,3 +24,4 @@ examples:
 - s-w-ai-28315e42
 - s-w-ai-dc204c88
 - s-w-ai-a0a6190c
+image: { file: words/xinyongka.png, prompt: "Only the takin. The takin standing upright at a shop counter, holding up a shiny blue plastic credit card in one paw to pay, a small card machine on the counter with a blank screen, a shopping bag at its feet, a satisfied smile. No numbers or text on the card." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-4147188
 examples:
 - s-w-4147188
+image: { file: words/chaoshi.png, prompt: "Only the red panda. The red panda standing upright in a supermarket aisle pushing a shopping cart filled with fruit, vegetables, milk cartons and bread, tall shelves full of colorful wordless packages on both sides, a happy face." }

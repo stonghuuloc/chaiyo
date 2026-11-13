@@ -11,3 +11,4 @@ senses:
   example: s-w-334532
 examples:
 - s-w-334532
+image: { file: words/zixingche.png, prompt: "Only the fawn. The fawn riding a small bicycle upright on a sunny park path, both paws on the handlebars, feet on the pedals, two round wheels clearly visible, a small basket on the front with flowers, trees behind it, a happy face." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-2782908
 examples:
 - s-w-2782908
+image: { file: words/jiating.png, prompt: "Only the panda and its family: a bigger grown-up panda father with a small cap, a bigger grown-up panda mother with a flower, and the little panda between them, all hugging on a sofa in a cozy living room. All three are pandas; the parents are part of this scene even though they are not in the lineup." }

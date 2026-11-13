@@ -11,3 +11,4 @@ senses:
   example: s-w-5555771
 examples:
 - s-w-5555771
+image: { file: words/xiaozhang.png, prompt: "Only the panda and the fawn. The panda dressed in a formal suit and bow tie with round glasses, standing upright in front of a school building with its paws clasped behind its back, smiling kindly, while the fawn student in a school uniform bows politely to greet it." }

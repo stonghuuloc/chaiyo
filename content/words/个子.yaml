@@ -11,3 +11,4 @@ senses:
   example: s-w-7772132
 examples:
 - s-w-7772132
+image: { file: words/gezi.png, prompt: "Only the takin and the fawn. The tall takin and the short fawn standing back to back on the floor in a bedroom beside a wall height chart with blank unmarked stripes, the takin standing much taller than the fawn, the fawn looking up at it with big eyes and a small smile." }

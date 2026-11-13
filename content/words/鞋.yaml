@@ -11,3 +11,4 @@ senses:
   example: s-w-819697
 examples:
 - s-w-819697
+image: { file: words/xie2.png, prompt: "Only the panda. The panda standing on the floor of an entrance hall, holding up one brown leather shoe with a happy face, a neat pair of shoes and a pair of small slippers lined up on a shoe rack beside it." }

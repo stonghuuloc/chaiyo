@@ -24,3 +24,4 @@ examples:
 - s-w-10696011
 - s-w-ai-31ddd570
 - s-w-ai-2aaf496a
+image: { file: words/you.png, prompt: "Only the takin. The takin standing on the floor in a kitchen wearing an apron, pouring golden cooking oil from a glass bottle into a sizzling frying pan on the stove, shiny oil droplets and a golden oil drop icon floating, a happy face." }

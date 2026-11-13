@@ -11,3 +11,4 @@ senses:
   example: s-w-4625757
 examples:
 - s-w-4625757
+image: { file: words/yintian.png, prompt: "Only the takin. The takin walking upright on a quiet street under a sky full of thick gray clouds with no sun, looking up at the clouds with a slightly gloomy but calm face, gray light everywhere, no rain and no snow." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-4080f695
 examples:
 - s-w-ai-4080f695
+image: { file: words/qiuxie.png, prompt: "Only the fawn. The fawn standing upright on a school sports track, lifting one foot to proudly show a bright colorful sneaker with white laces and a thick sole, the other sneaker on its other foot, a soccer ball and a small pair of spare sneakers beside it. No logos or text." }

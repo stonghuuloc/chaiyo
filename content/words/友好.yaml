@@ -11,3 +11,4 @@ senses:
   example: s-w-8727930
 examples:
 - s-w-8727930
+image: { file: words/youhao.png, prompt: "Only the panda and the red panda. The panda and the red panda standing upright facing each other on a sunny path, shaking hands and smiling warmly, one holding out a small gift of flowers." }

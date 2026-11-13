@@ -11,3 +11,4 @@ senses:
   example: s-w-332847
 examples:
 - s-w-332847
+image: { file: words/gongyuan.png, prompt: "Only the fawn and the panda. The fawn and the panda enjoying a sunny public park: the fawn on a swing and the panda walking upright along a path beside a pond, with trees, flower beds, a bench, and a kite in the sky." }

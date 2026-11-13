@@ -24,3 +24,4 @@ examples:
 - s-w-8696293
 - s-w-ai-7e082f55
 - s-w-ai-5f6245cb
+image: { file: words/dao2.png, prompt: "Only the red panda. The red panda standing on the floor in a kitchen, tilting a teapot to pour tea in a clear stream into a cup that sits on a low stool beside it, the liquid visibly flowing from spout to cup." }

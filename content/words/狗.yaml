@@ -11,3 +11,4 @@ senses:
   example: s-w-340502
 examples:
 - s-w-340502
+image: { file: words/gou.png, prompt: "Only the takin. The takin standing upright in a sunny yard, happily patting a small fluffy brown puppy dog that wags its tail and looks up at it. The puppy dog is part of this scene even though it is not in the lineup; it is drawn in the same cute chibi style." }

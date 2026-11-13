@@ -20,3 +20,4 @@ examples:
 - s-w-1565722
 - s-w-347602
 - s-w-ai-f058147b
+image: { file: words/chukou.png, prompt: "Only the red panda. The red panda walking upright out through the open double doors of a big hall into bright sunlight, looking forward with a happy relieved face, with a green sign above the doors showing only a running-person pictogram and an arrow, no writing." }

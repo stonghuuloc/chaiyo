@@ -19,3 +19,4 @@ examples:
 - s-w-10834899
 - s-w-8649707
 - s-w-8608696
+image: { file: words/kepa.png, prompt: "Only the fawn. The fawn hiding upright behind a sofa in a cozy living room, peeking out with wide frightened eyes and shaking knees at a big cartoon thunderstorm flashing outside the window. Cartoon and soft, not dark or gory." }

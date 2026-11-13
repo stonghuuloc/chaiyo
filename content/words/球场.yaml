@@ -20,3 +20,4 @@ examples:
 - s-w-ai-93841d6e
 - s-w-ai-34056890
 - s-w-ai-65acce49
+image: { file: words/qiuchang.png, prompt: "Only the takin. The takin standing upright on an outdoor basketball court with painted lines and a hoop, bouncing an orange basketball with one paw and smiling, ready to shoot, a fence and trees around the court. No numbers or text." }

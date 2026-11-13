@@ -11,3 +11,4 @@ senses:
   example: s-w-334122
 examples:
 - s-w-334122
+image: { file: words/mingxing.png, prompt: "Only the red panda. The red panda in a sparkling gown walking upright and waving on a red carpet, sparkling stars around it, camera flashes bursting from the sides, a rope barrier, and a happy glowing smile as if it is a famous celebrity." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-336041
 examples:
 - s-w-336041
+image: { file: words/gongsi.png, prompt: "Only the red panda. The red panda in a blazer carrying a briefcase and a takeaway coffee, walking upright toward the glass doors of a tall modern office building, with many windows and a plain blank facade, morning sun shining." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-1218350
 examples:
 - s-w-1218350
+image: { file: words/qiutian.png, prompt: "Only the panda and the fawn. The panda and the fawn walking upright side by side along a park path in autumn, with orange, red and yellow leaves falling from the trees and covering the ground, both wearing light scarves and playing with the falling leaves." }

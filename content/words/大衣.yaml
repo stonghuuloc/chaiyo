@@ -11,3 +11,4 @@ senses:
   example: s-w-358069
 examples:
 - s-w-358069
+image: { file: words/dayi.png, prompt: "Only the fawn. The fawn standing upright in a snowy park, wearing a long warm camel-colored overcoat down to its knees with big buttons, a scarf and a belt, snowflakes falling, smiling and holding the coat's lapels." }

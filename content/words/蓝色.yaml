@@ -11,3 +11,4 @@ senses:
   example: s-w-3378086
 examples:
 - s-w-3378086
+image: { file: words/lanse.png, prompt: "Only the panda. The panda standing upright holding a big blue paint brush next to a large canvas painted in solid blue, with a blue balloon, a blue bucket of paint and a blue hat on its head, bright and cheerful; everything in the scene is clearly the color blue." }

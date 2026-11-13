@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-2675124
 - s-w-ai-af48acdf
+image: { file: words/teng.png, prompt: "Only the fawn. The fawn sitting on a path beside a tipped-over small bicycle, holding its scraped knee with a bandage on it, a miserable crying face with teary eyes and little jagged pain lines around the knee. Not smiling, no blood." }

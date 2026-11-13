@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-3630686
 - s-w-ai-ff4ec17d
+image: { file: words/zhongcan.png, prompt: "Only the takin. The takin sitting on a visible chair beside a round table with a lazy-susan, with several Chinese dishes: stir-fried vegetables, a whole steamed fish, fried rice, dumplings and a bowl of soup, holding chopsticks and bowl of rice with a happy face, red paper lanterns hanging in a restaurant." }

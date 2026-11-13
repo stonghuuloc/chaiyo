@@ -11,3 +11,4 @@ senses:
   example: s-w-1446769
 examples:
 - s-w-1446769
+image: { file: words/he2.png, prompt: "Only the panda. The panda standing upright on a grassy bank beside a long, wide, winding river that flows from the foreground into the distance, with gentle blue water, small ripples and green hills on both sides, watching the water flow by." }

@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-9961558
 - s-w-ai-ced412a0
+image: { file: words/zoukai.png, prompt: "Only the red panda and the takin. The red panda standing upright with one paw held out in a firm go-away gesture and an annoyed frown, while the takin walks away upright with drooping shoulders, glancing back sadly, a park bench in the background." }

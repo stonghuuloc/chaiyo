@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-a1f28bc8
 examples:
 - s-w-ai-a1f28bc8
+image: { file: words/yaodian.png, prompt: "Only the fawn. The fawn dressed as a pharmacist in a white coat with a green cross badge, standing on the floor behind a shop counter in a pharmacy, shelves behind it filled with wordless medicine boxes and bottles, holding a small medicine box out to the customer side with a kind smile." }

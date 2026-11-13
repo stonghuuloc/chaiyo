@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-8800802
 - s-w-ai-a7a1f648
+image: { file: words/tingche.png, prompt: "Only the takin. The takin driving a small red car that has stopped at a white stop line at a street crossing, in front of a traffic light glowing red and an octagon red stop sign with no writing on it; the takin waits patiently behind the wheel." }

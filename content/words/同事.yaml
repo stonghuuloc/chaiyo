@@ -11,3 +11,4 @@ senses:
   example: s-w-6149266
 examples:
 - s-w-6149266
+image: { file: words/tongshi.png, prompt: "Only the panda and the red panda. The panda and the red panda in office clothes with matching lanyards (no writing on them), standing upright side by side next to a water cooler in an office hallway, chatting and smiling, each holding a paper cup of coffee." }

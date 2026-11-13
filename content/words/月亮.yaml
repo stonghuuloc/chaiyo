@@ -11,3 +11,4 @@ senses:
   example: s-w-9918416
 examples:
 - s-w-9918416
+image: { file: words/yueliang.png, prompt: "Only the red panda. The red panda standing upright on a grassy hill at night, pointing one paw up at a huge, bright, round full moon glowing in a dark blue starry sky, a few small stars around it, a peaceful and cozy mood." }

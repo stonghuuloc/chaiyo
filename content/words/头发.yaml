@@ -11,3 +11,4 @@ senses:
   example: s-w-687036
 examples:
 - s-w-687036
+image: { file: words/toufa.png, prompt: "Only the red panda and the panda. Classroom anatomy lesson: the panda in a little teacher cardigan stands on the floor holding a long wooden pointer stick, touching the tip of the stick to the red panda's long glossy hair in two pigtails, which is clearly highlighted with a soft glow; the red panda stands upright facing the viewer, smiling. No text." }

@@ -11,3 +11,4 @@ senses:
   example: s-w-4887700
 examples:
 - s-w-4887700
+image: { file: words/shiwu.png, prompt: "Only the fawn. The fawn standing upright next to a big picnic blanket spread with many kinds of food: bread, fruit, vegetables, rice balls, cheese, eggs and a cake, holding out both paws happily toward the food with a delighted smile, sunny meadow." }

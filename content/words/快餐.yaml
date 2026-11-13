@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-ai-d18b6952
 - s-w-ai-003b5064
+image: { file: words/kuaican.png, prompt: "Only the fawn. The fawn standing upright at a bright fast-food counter, holding a paper tray with a burger, french fries and a cup with a straw, a happy hurried face, a small clock-shaped sun-less speed lines behind it, colorful counter with picture menu boards showing only pictures and no text." }

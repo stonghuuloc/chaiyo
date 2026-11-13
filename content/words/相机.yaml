@@ -17,3 +17,4 @@ senses:
 examples:
 - s-w-8795147
 - s-w-ai-392ad813
+image: { file: words/xiangji.png, prompt: "Only the panda. The panda standing upright in a sunny garden, holding a camera up to its eye with both paws and pointing it forward to take a picture, a big lens clearly visible, flowers and butterflies in front of it. No screens with writing." }

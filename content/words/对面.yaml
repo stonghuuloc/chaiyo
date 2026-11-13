@@ -17,3 +17,4 @@ senses:
 examples:
 - s-w-827446
 - s-w-ai-0eb47054
+image: { file: words/duimian.png, prompt: "Only the panda and the red panda. Side view of a quiet street: the panda stands on the left sidewalk of the street, the red panda stands on the opposite sidewalk across the road, they wave happily to each other, a small house behind each of them, the empty road with a crosswalk between them." }

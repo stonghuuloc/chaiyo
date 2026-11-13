@@ -11,3 +11,4 @@ senses:
   example: s-w-756982
 examples:
 - s-w-756982
+image: { file: words/guonian.png, prompt: "Only the red panda and the takin. The red panda and the takin in red festive clothes standing on the floor of a cozy living room, holding hands up in a cheerful greeting pose, with red paper lanterns hanging, a plate of oranges, small red envelopes in their paws, and tiny firecracker-free sparkles outside the window. No text on the decorations." }

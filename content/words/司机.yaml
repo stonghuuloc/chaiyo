@@ -11,3 +11,4 @@ senses:
   example: s-w-614443
 examples:
 - s-w-614443
+image: { file: words/siji.png, prompt: "Only the panda. The panda in a neat driver's cap and uniform sitting in the driver's seat of a city bus, both paws on the big steering wheel, looking ahead down the road with a calm smile, seen through the open side of the bus." }

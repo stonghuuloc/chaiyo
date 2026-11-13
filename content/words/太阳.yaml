@@ -11,3 +11,4 @@ senses:
   example: s-w-9501215
 examples:
 - s-w-9501215
+image: { file: words/taiyang.png, prompt: "Only the red panda. The red panda standing upright on a hill at morning looking up at a big bright round yellow sun with rays shining in a clear blue sky, wearing sunglasses and smiling, shielding its eyes with one paw, flowers around its feet." }

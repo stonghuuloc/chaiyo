@@ -19,3 +19,4 @@ examples:
 - s-w-1372495
 - s-w-10352464
 - s-w-ai-9e09145d
+image: { file: words/pa.png, prompt: "Only the takin. The takin climbing a tall tree, upright with both arms and legs gripping the trunk, going up step by step toward a branch with an apple, leaves around, a determined smile, a ladder-free tree in a sunny garden." }

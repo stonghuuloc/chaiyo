@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-374820
 - s-w-1202599
+image: { file: words/buhaoyisi.png, prompt: "Only the panda. The panda standing upright in a quiet library hallway holding a stack of fallen picture books, bowing slightly with a blushing face, one paw scratching the back of its head, an embarrassed apologetic look." }

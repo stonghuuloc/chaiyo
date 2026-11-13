@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-8640260
 - s-w-380278
+image: { file: words/ganbei.png, prompt: "Only the panda and the takin. The panda and the takin standing on the floor at a party, clinking two glasses of juice together at the center of the picture, big joyful smiles, confetti and balloons around." }

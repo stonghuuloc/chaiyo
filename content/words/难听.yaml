@@ -23,3 +23,4 @@ examples:
 - s-w-ai-804a64b8
 - s-w-ai-7764772f
 - s-w-ai-4a1fef38
+image: { file: words/nanting.png, prompt: "Only the panda and the fawn. The panda stands upright on the floor singing loudly off-key with its mouth wide open and zigzag noise squiggles coming out; the fawn stands beside it covering both ears with its paws, eyes squeezed shut, a pained wincing face, in a living room with a toy microphone." }

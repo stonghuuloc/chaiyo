@@ -25,3 +25,4 @@ examples:
 - s-w-400263
 - s-w-14061592
 - s-w-ai-e5af2fb6
+image: { file: words/chui.png, prompt: "Only the red panda. The red panda standing on a grassy lawn blowing hard through pursed lips to inflate a big round pink balloon, cheeks puffed out, a few other balloons floating nearby." }

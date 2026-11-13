@@ -22,3 +22,4 @@ examples:
 - s-w-ai-c24866a7
 - s-w-1394927
 - s-w-ai-d1e51f1b
+image: { file: words/cha2.png, prompt: "Only the red panda. The red panda sitting on a visible chair beside a desk in a library, side view, holding a big magnifying glass over a thick open dictionary with wordless pictures, searching carefully for something." }

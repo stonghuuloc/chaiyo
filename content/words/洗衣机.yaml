@@ -11,3 +11,4 @@ senses:
   example: s-w-829623
 examples:
 - s-w-829623
+image: { file: words/xiyiji.png, prompt: "Only the takin. The takin standing upright on the floor of a laundry room, smiling and putting colorful clothes into a front-loading washing machine with a round glass door, soap bubbles visible through the door, a laundry basket on the floor beside it. No text or buttons with writing." }

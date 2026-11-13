@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-10552170
 - s-w-335615
+image: { file: words/keren.png, prompt: "Only the red panda and the panda. Inside a cozy home entrance, the red panda stands at the open front door as a visitor holding a gift box with a ribbon and a basket of fruit, while the panda host stands upright on the floor inside, waving and welcoming it in with a big smile." }

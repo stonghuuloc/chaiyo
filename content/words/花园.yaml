@@ -11,3 +11,4 @@ senses:
   example: s-w-827446
 examples:
 - s-w-827446
+image: { file: words/huayuan.png, prompt: "Only the red panda. The red panda standing upright in a lovely flower garden with colorful roses, tulips and sunflowers, a small stone path, a watering can in its paws and butterflies flying around, a wooden garden fence and trees in the background." }

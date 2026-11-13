@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-4970147
 - s-w-ai-c9f88e33
+image: { file: words/youke.png, prompt: "Only the panda. The panda as a sightseeing tourist wearing a sun hat and sunglasses, a camera hanging from its neck, standing upright in front of a famous tall pagoda, holding up the camera to take a photo with a happy excited face, a wordless folded map in its pocket." }
