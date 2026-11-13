@@ -5,14 +5,17 @@ updates:
     schedule:
       interval: weekly
     groups:
-      npm:
+      # Majors get their own PR so one breaking bump can't block the rest.
+      npm-minor-patch:
         patterns: ['*']
+        update-types: [minor, patch]
+    ignore:
+      # TS 7 breaks svelte-kit sync (ts.sys) and typescript-eslint; lift when both support it.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+  # Also picks up scripts/requirements-fonts.txt.
   - package-ecosystem: uv
     directory: /
-    schedule:
-      interval: weekly
-  - package-ecosystem: pip
-    directory: /scripts
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
