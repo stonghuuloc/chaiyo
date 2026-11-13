@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,25 +17,10 @@ env:
   PUBLIC_SUPABASE_URL: http://127.0.0.1:56321
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
 
+# Self-hosted Mac runner (~/actions-runner): GitHub-hosted minutes are capped on this private repo.
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-web
-      - run: pnpm lint
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-      - run: uvx ruff@0.17.5 check scripts
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-web
-      - run: pnpm check
-
-  test-web:
-    runs-on: ubuntu-latest
+  web:
+    runs-on: [self-hosted, chaiyo]
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-web
@@ -42,6 +28,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+      - run: pnpm lint
+      - run: pnpm check
       - run: pnpm test:coverage
       - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
       - name: Coverage summary
@@ -58,29 +46,21 @@ jobs:
           name: coverage
           path: coverage/
           if-no-files-found: ignore
-
-  test-py:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-      - run: pip install -r scripts/requirements-fonts.txt
-      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
-      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
-      - run: uv run --locked pytest scripts/tests
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-web
       - run: pnpm build
 
+  python:
+    runs-on: [self-hosted, chaiyo]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - run: uvx ruff@0.17.5 check scripts
+      # pngquant + ImageMagick come from Homebrew on the runner host.
+      - run: command -v pngquant && command -v magick
+      - run: uv run --locked --with-requirements scripts/requirements-fonts.txt python -m unittest discover -s scripts -p 'test_*.py'
+      - run: uv run --locked pytest scripts/tests
+
   security:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, chaiyo]
     steps:
       - uses: actions/checkout@v7
         with:
