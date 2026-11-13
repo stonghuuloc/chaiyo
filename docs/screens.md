@@ -18,7 +18,7 @@ Decisions this file rests on:
 | P2 | Đăng nhập (login) | Public page | P1 | `p2-login.html` | |
 | O1 | Chào mừng (first run: name, photo, Reminder time) | Step flow | P2, first login | `o1-welcome.html` | |
 | O2 | Placement Test | Test runner | O1 | `o2-placement.html` | |
-| O3 | Kết quả xếp lớp (placement result) | Result | O2 | `o3-result.html` | |
+| O3 | Kết quả kiểm tra (placement result) | Result | O2 | `o3-result.html` | |
 | T1 | Hôm nay | Tab root | Tab | `home-glass.html` | ✅ |
 | T2 | Lộ trình (Roadmap) | Tab root | Tab, T1 | `t2-roadmap.html` | |
 | T3 | Luyện tập (practice hub: skills, Thi thử, Từ của tôi) | Tab root | Tab | `t3-practice.html` | ✅ |
