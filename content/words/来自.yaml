@@ -1,0 +1,18 @@
+id: 来自
+hanzi: 来自
+pinyin: láizì
+hanviet: lai tự
+level: 2
+pos:
+- v
+senses:
+- vi: đến từ (nơi nào)
+  pos: v
+  example: s-w-398937
+- vi: 'Từ: (tiêu đề email)'
+  pos: v
+  rare: true
+  example: s-w-ai-0c2b2a58
+examples:
+- s-w-398937
+- s-w-ai-0c2b2a58

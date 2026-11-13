@@ -1,0 +1,18 @@
+id: 家长
+hanzi: 家长
+pinyin: jiāzhǎng
+hanviet: gia trưởng
+level: 2
+pos:
+- n
+senses:
+- vi: cha mẹ, phụ huynh (của trẻ)
+  pos: n
+  example: s-w-10552177
+- vi: chủ gia đình, gia trưởng
+  pos: n
+  rare: true
+  example: s-w-ai-1ba8af27
+examples:
+- s-w-10552177
+- s-w-ai-1ba8af27

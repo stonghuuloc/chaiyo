@@ -1,0 +1,32 @@
+id: 响
+hanzi: 响
+pinyin: xiǎng
+hanviet: hưởng
+level: 2
+pos:
+- v
+- adj
+- n
+- mw
+senses:
+- vi: vang lên, kêu, reo (chuông, điện thoại)
+  pos: v
+  example: s-w-332972
+- vi: to, lớn (âm thanh)
+  pos: adj
+  example: s-w-4147304
+- vi: tiếng, tiếng động (chỉ dùng trong 响声, 声响, 巨响)
+  pos: n
+  example: s-w-ai-e7172e6b
+- vi: tiếng vang, tiếng vọng (chỉ dùng trong 回响)
+  pos: n
+  rare: true
+  example: s-w-ai-123948b9
+- vi: tiếng (động; chỉ dùng trong 砰的一响, 咣的一响)
+  pos: mw
+  rare: true
+  example: s-w-ai-e17b5d19
+examples:
+- s-w-332972
+- s-w-4147304
+- s-w-ai-e7172e6b

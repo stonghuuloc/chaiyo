@@ -1,0 +1,26 @@
+id: 提
+hanzi: 提
+pinyin: tí
+hanviet: đề
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: đề xuất, nêu ra (ý kiến, vấn đề)
+  pos: v
+  example: s-w-2561521
+- vi: nhắc đến, nói đến (chuyện, người)
+  pos: v
+  example: s-w-9178020
+- vi: xách, nhấc (đồ vật)
+  pos: v
+  example: s-w-2200441
+- vi: nét nâng bút (chữ Hán, hội họa)
+  pos: n
+  rare: true
+  example: s-w-ai-e81e6b8f
+examples:
+- s-w-2561521
+- s-w-9178020
+- s-w-2200441

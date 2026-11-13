@@ -1,0 +1,18 @@
+id: 永远
+hanzi: 永远
+pinyin: yǒngyuǎn
+hanviet: vĩnh viễn
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: mãi mãi
+  pos: adv
+  example: s-w-13881198
+- vi: vĩnh cửu, vĩnh viễn (bạn bè, tình yêu)
+  pos: adj
+  example: s-w-ai-436f91a9
+examples:
+- s-w-13881198
+- s-w-ai-436f91a9

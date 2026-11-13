@@ -1,0 +1,17 @@
+id: 一直
+hanzi: 一直
+pinyin: yīzhí
+hanviet: nhất trực
+level: 2
+pos:
+- adv
+senses:
+- vi: liên tục, suốt, luôn luôn
+  pos: adv
+  example: s-w-5763002
+- vi: thẳng, không rẽ
+  pos: adv
+  example: s-w-ai-786067a9
+examples:
+- s-w-5763002
+- s-w-ai-786067a9

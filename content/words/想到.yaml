@@ -1,0 +1,17 @@
+id: 想到
+hanzi: 想到
+pinyin: xiǎngdào
+hanviet: tưởng đáo
+level: 2
+pos:
+- v
+senses:
+- vi: nghĩ đến, nhớ đến, nảy ra
+  pos: v
+  example: s-w-835764
+- vi: dự liệu, không ngờ tới (chỉ dùng trong 没想到, 想不到)
+  pos: v
+  example: s-w-2332835
+examples:
+- s-w-835764
+- s-w-2332835

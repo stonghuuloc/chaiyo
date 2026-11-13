@@ -1,0 +1,17 @@
+id: 网球
+hanzi: 网球
+pinyin: wǎngqiú
+hanviet: võng cầu
+level: 2
+pos:
+- n
+senses:
+- vi: quần vợt
+  pos: n
+  example: s-w-1471149
+- vi: quả bóng quần vợt
+  pos: n
+  example: s-w-ai-a6de3b70
+examples:
+- s-w-1471149
+- s-w-ai-a6de3b70

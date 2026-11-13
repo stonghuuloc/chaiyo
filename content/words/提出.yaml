@@ -1,0 +1,22 @@
+id: 提出
+hanzi: 提出
+pinyin: tíchū
+hanviet: đề xuất
+level: 2
+pos:
+- v
+senses:
+- vi: nêu, đặt ra (vấn đề, câu hỏi)
+  pos: v
+  example: s-w-347322
+- vi: đề xuất, đưa ra, đề nghị (ý kiến, lý thuyết)
+  pos: v
+  example: s-w-6451977
+- vi: rút (tiền mặt)
+  pos: v
+  rare: true
+  example: s-w-ai-9675468e
+examples:
+- s-w-347322
+- s-w-6451977
+- s-w-ai-9675468e

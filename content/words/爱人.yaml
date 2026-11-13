@@ -1,0 +1,18 @@
+id: 爱人
+hanzi: 爱人
+pinyin: àiren
+hanviet: ái nhân
+level: 2
+pos:
+- n
+senses:
+- vi: vợ hoặc chồng (ở Trung Quốc đại lục)
+  pos: n
+  example: s-w-7148495
+- vi: người yêu (ngoài Trung Quốc đại lục)
+  pos: n
+  rare: true
+  example: s-w-1214425
+examples:
+- s-w-7148495
+- s-w-1214425

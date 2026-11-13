@@ -1,0 +1,19 @@
+id: 角-jue2
+hanzi: 角
+pinyin: jué
+hanviet: giác
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: vai diễn (sân khấu)
+  pos: n
+  example: s-w-ai-db7559dd
+- vi: cạnh tranh, tranh đua
+  pos: v
+  rare: true
+  example: s-w-ai-1f46238b
+examples:
+- s-w-ai-db7559dd
+- s-w-ai-1f46238b

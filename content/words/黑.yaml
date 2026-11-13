@@ -1,0 +1,36 @@
+id: 黑
+hanzi: 黑
+pinyin: hēi
+hanviet: hắc
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: đen
+  pos: adj
+  example: s-w-9991906
+- vi: tối
+  pos: adj
+  example: s-w-3060526
+- vi: độc ác, hiểm độc (chỉ dùng trong 心黑, 黑心, 手黑)
+  pos: adj
+  example: s-w-ai-8135e350
+- vi: bí mật, mờ ám
+  pos: adj
+  example: s-w-ai-fb650ba0
+- vi: phi pháp, lậu (chỉ dùng trong 黑市, 黑车, 黑户)
+  pos: adj
+  example: s-w-ai-0b6cd172
+- vi: bôi nhọ (ai)
+  pos: v
+  rare: true
+  example: s-w-4638699
+- vi: xâm nhập trái phép (máy tính, hệ thống)
+  pos: v
+  rare: true
+  example: s-w-ai-2d71fd49
+examples:
+- s-w-9991906
+- s-w-3060526
+- s-w-ai-8135e350

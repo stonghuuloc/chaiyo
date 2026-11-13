@@ -1,0 +1,23 @@
+id: 封
+hanzi: 封
+pinyin: fēng
+hanviet: phong
+level: 2
+pos:
+- v
+- mw
+senses:
+- vi: niêm phong, bịt kín (cửa, phong bì)
+  pos: v
+  example: s-w-ai-2f278e2d
+- vi: ban, phong (tước vị, danh hiệu)
+  pos: v
+  rare: true
+  example: s-w-ai-9587b91e
+- vi: bức, phong (thư)
+  pos: mw
+  example: s-w-ai-ec058014
+examples:
+- s-w-ai-2f278e2d
+- s-w-ai-9587b91e
+- s-w-ai-ec058014

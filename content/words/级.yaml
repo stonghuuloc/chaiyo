@@ -1,0 +1,22 @@
+id: 级
+hanzi: 级
+pinyin: jí
+hanviet: cấp
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: cấp, bậc (trình độ)
+  pos: n
+  example: s-w-ai-7a4d1df8
+- vi: lớp, khối (trường học)
+  pos: n
+  example: s-w-ai-ca07048f
+- vi: bậc (thềm, cầu thang)
+  pos: mw
+  example: s-w-ai-3a5f6a31
+examples:
+- s-w-ai-7a4d1df8
+- s-w-ai-ca07048f
+- s-w-ai-3a5f6a31

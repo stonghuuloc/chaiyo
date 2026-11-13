@@ -1,0 +1,18 @@
+id: 同样
+hanzi: 同样
+pinyin: tóngyàng
+hanviet: đồng dạng
+level: 2
+pos:
+- adj
+- adv
+senses:
+- vi: giống nhau, như nhau
+  pos: adj
+  example: s-w-787608
+- vi: cũng, cũng như vậy
+  pos: adv
+  example: s-w-2192125
+examples:
+- s-w-787608
+- s-w-2192125

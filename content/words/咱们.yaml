@@ -1,0 +1,18 @@
+id: 咱们
+hanzi: 咱们
+pinyin: zánmen
+hanviet: ta môn
+level: 2
+pos:
+- pron
+senses:
+- vi: chúng ta (bao gồm người nghe)
+  pos: pron
+  example: s-w-4760043
+- vi: bạn (phương ngữ, giọng dỗ dành)
+  pos: pron
+  rare: true
+  example: s-w-ai-e6e7fc15
+examples:
+- s-w-4760043
+- s-w-ai-e6e7fc15

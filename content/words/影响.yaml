@@ -1,0 +1,25 @@
+id: 影响
+hanzi: 影响
+pinyin: yǐngxiǎng
+hanviet: ảnh hưởng
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: ảnh hưởng (đến ai, cái gì)
+  pos: v
+  example: s-w-13744230
+- vi: gây ảnh hưởng xấu (đến ...)
+  pos: v
+  example: s-w-334691
+- vi: làm phiền (ai)
+  pos: v
+  example: s-w-ai-535cb6fe
+- vi: ảnh hưởng, tác động
+  pos: n
+  example: s-w-332838
+examples:
+- s-w-13744230
+- s-w-334691
+- s-w-ai-535cb6fe

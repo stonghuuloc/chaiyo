@@ -1,0 +1,17 @@
+id: 笔记本
+hanzi: 笔记本
+pinyin: bǐjìběn
+hanviet: bút ký bản
+level: 2
+pos:
+- n
+senses:
+- vi: sổ tay, vở ghi chép
+  pos: n
+  example: s-w-5637369
+- vi: máy tính xách tay (laptop)
+  pos: n
+  example: s-w-13277835
+examples:
+- s-w-5637369
+- s-w-13277835

@@ -1,0 +1,22 @@
+id: 原来
+hanzi: 原来
+pinyin: yuánlái
+hanviet: nguyên lai
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: hóa ra, thì ra
+  pos: adv
+  example: s-w-2301453
+- vi: vốn là, trước đây
+  pos: adv
+  example: s-w-2158928
+- vi: ban đầu, trước đây
+  pos: adj
+  example: s-w-2317127
+examples:
+- s-w-2301453
+- s-w-2158928
+- s-w-2317127

@@ -1,0 +1,30 @@
+id: 刚
+hanzi: 刚
+pinyin: gāng
+hanviet: cương
+level: 2
+pos:
+- adj
+- adv
+senses:
+- vi: cứng, rắn chắc
+  pos: adj
+  rare: true
+  example: s-w-ai-c11bc86f
+- vi: mạnh mẽ, cứng rắn
+  pos: adj
+  rare: true
+  example: s-w-ai-952714d8
+- vi: vừa mới
+  pos: adv
+  example: s-w-451439
+- vi: vừa tròn, vừa đúng
+  pos: adv
+  example: s-w-ai-83abd276
+- vi: vừa đủ
+  pos: adv
+  example: s-w-ai-fe255b8e
+examples:
+- s-w-ai-c11bc86f
+- s-w-ai-952714d8
+- s-w-451439

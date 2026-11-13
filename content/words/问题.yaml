@@ -1,0 +1,22 @@
+id: 问题
+hanzi: 问题
+pinyin: wèntí
+hanviet: vấn đề
+level: 2
+pos:
+- n
+senses:
+- vi: câu hỏi
+  pos: n
+  example: s-w-349931
+- vi: vấn đề, trục trặc
+  pos: n
+  example: s-w-10188547
+- vi: chủ đề (đang bàn)
+  pos: n
+  rare: true
+  example: s-w-333526
+examples:
+- s-w-349931
+- s-w-10188547
+- s-w-333526

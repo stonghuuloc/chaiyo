@@ -1,0 +1,29 @@
+id: 收
+hanzi: 收
+pinyin: shōu
+hanviet: thu
+level: 2
+pos:
+- v
+senses:
+- vi: nhận, chấp nhận
+  pos: v
+  example: s-w-1584522
+- vi: thu, thu gom (tiền, đồ đạc)
+  pos: v
+  example: s-w-338410
+- vi: cất đi (đồ vật)
+  pos: v
+  example: s-w-ai-9187837d
+- vi: kiềm chế, bớt lại (thái độ, lời nói)
+  pos: v
+  rare: true
+  example: s-w-ai-1cf4aa73
+- vi: dừng, thôi (làm việc gì đó; chỉ dùng trong 收手)
+  pos: v
+  rare: true
+  example: s-w-ai-b410c4ab
+examples:
+- s-w-1584522
+- s-w-338410
+- s-w-ai-9187837d

@@ -1,0 +1,24 @@
+id: 留下
+hanzi: 留下
+pinyin: liúxià
+hanviet: lưu hạ
+level: 2
+pos:
+- v
+senses:
+- vi: ở lại, còn lại
+  pos: v
+  example: s-w-9178046
+- vi: để lại (đồ vật, dấu vết, ấn tượng)
+  pos: v
+  example: s-w-9432376
+- vi: giữ lại (đồ vật)
+  pos: v
+  example: s-w-ai-4ec66926
+- vi: giữ (ai) lại, không cho đi
+  pos: v
+  example: s-w-ai-878a9a69
+examples:
+- s-w-9178046
+- s-w-9432376
+- s-w-ai-4ec66926

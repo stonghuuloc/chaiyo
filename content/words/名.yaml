@@ -1,0 +1,23 @@
+id: 名
+hanzi: 名
+pinyin: míng
+hanviet: danh
+level: 2
+pos:
+- n
+- adj
+- mw
+senses:
+- vi: tên (người, sự vật)
+  pos: n
+  example: s-w-4265085
+- vi: nổi tiếng, có tiếng (chỉ dùng trong 有名, 名人, 名牌, 名校)
+  pos: adj
+  example: s-w-ai-06d3f8fa
+- vi: người (đếm người)
+  pos: mw
+  example: s-w-ai-220e62a1
+examples:
+- s-w-4265085
+- s-w-ai-06d3f8fa
+- s-w-ai-220e62a1

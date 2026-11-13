@@ -1,0 +1,18 @@
+id: 班长
+hanzi: 班长
+pinyin: bānzhǎng
+hanviet: ban trưởng
+level: 2
+pos:
+- n
+senses:
+- vi: lớp trưởng
+  pos: n
+  example: s-w-ai-51b48f42
+- vi: đội trưởng, nhóm trưởng
+  pos: n
+  rare: true
+  example: s-w-ai-9784c4e5
+examples:
+- s-w-ai-51b48f42
+- s-w-ai-9784c4e5

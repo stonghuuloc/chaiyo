@@ -1,0 +1,22 @@
+id: 好像
+hanzi: 好像
+pinyin: hǎoxiàng
+hanviet: hảo tượng
+level: 2
+pos:
+- adv
+- v
+senses:
+- vi: hình như, có lẽ (phỏng đoán không chắc)
+  pos: adv
+  example: s-w-427591
+- vi: như thể, giống như
+  pos: v
+  example: s-w-334549
+- vi: dường như, có vẻ
+  pos: v
+  example: s-w-845112
+examples:
+- s-w-427591
+- s-w-334549
+- s-w-845112

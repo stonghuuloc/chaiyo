@@ -1,0 +1,18 @@
+id: 进入
+hanzi: 进入
+pinyin: jìnrù
+hanviet: tiến nhập
+level: 2
+pos:
+- v
+senses:
+- vi: đi vào, bước vào (nơi chốn, giai đoạn)
+  pos: v
+  example: s-w-2357613
+- vi: gia nhập (tổ chức, công ty)
+  pos: v
+  rare: true
+  example: s-w-ai-2a223a7a
+examples:
+- s-w-2357613
+- s-w-ai-2a223a7a

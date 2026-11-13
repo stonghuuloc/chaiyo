@@ -1,0 +1,21 @@
+id: 得-dei3
+hanzi: 得
+pinyin: děi
+hanviet: đắc
+level: 2
+pos:
+- v
+senses:
+- vi: phải (làm gì)
+  pos: v
+  example: s-w-345397
+- vi: cần (làm gì)
+  pos: v
+  example: s-w-13210549
+- vi: nên (làm gì)
+  pos: v
+  example: s-w-ai-b2ba3312
+examples:
+- s-w-345397
+- s-w-13210549
+- s-w-ai-b2ba3312

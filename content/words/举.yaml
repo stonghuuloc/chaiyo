@@ -1,0 +1,30 @@
+id: 举
+hanzi: 举
+pinyin: jǔ
+hanviet: cử
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: giơ, nâng (lên)
+  pos: v
+  example: s-w-333761
+- vi: tổ chức, tiến hành (lễ, hội)
+  pos: v
+  example: s-w-ai-15d5b54c
+- vi: nêu, kể ra (ví dụ)
+  pos: v
+  example: s-w-ai-ecca9905
+- vi: bầu, đề cử (người; chỉ dùng trong 推举, 选举)
+  pos: v
+  rare: true
+  example: s-w-ai-e640510f
+- vi: hành động, cử chỉ (chỉ dùng trong 举动)
+  pos: n
+  rare: true
+  example: s-w-ai-e65c9a74
+examples:
+- s-w-333761
+- s-w-ai-15d5b54c
+- s-w-ai-ecca9905

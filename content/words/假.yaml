@@ -1,0 +1,17 @@
+id: 假
+hanzi: 假
+pinyin: jiǎ
+hanviet: giả
+level: 2
+pos:
+- adj
+senses:
+- vi: giả, không thật
+  pos: adj
+  example: s-w-7769298
+- vi: nhân tạo (như răng giả; chỉ dùng trong 假牙, 假发, 假肢)
+  pos: adj
+  example: s-w-ai-2f237344
+examples:
+- s-w-7769298
+- s-w-ai-2f237344

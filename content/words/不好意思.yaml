@@ -1,0 +1,18 @@
+id: 不好意思
+hanzi: 不好意思
+pinyin: bùhǎoyìsi
+hanviet: bất hảo ý tư
+level: 2
+pos:
+- v
+- interj
+senses:
+- vi: cảm thấy ngại, xấu hổ
+  pos: v
+  example: s-w-374820
+- vi: xin lỗi, ngại quá (khi làm phiền ai)
+  pos: interj
+  example: s-w-1202599
+examples:
+- s-w-374820
+- s-w-1202599

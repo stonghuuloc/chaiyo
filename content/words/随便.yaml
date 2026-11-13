@@ -1,0 +1,29 @@
+id: 随便
+hanzi: 随便
+pinyin: suíbiàn
+hanviet: tuỳ tiện
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: tuỳ ý
+  pos: adv
+  example: s-w-8500073
+- vi: bừa, ngẫu nhiên
+  pos: adv
+  example: s-w-335081
+- vi: xuề xoà, tuỳ tiện
+  pos: adj
+  example: s-w-3709354
+- vi: cẩu thả, qua loa
+  pos: adj
+  example: s-w-ai-9b744e1f
+- vi: buông thả, bừa bãi
+  pos: adj
+  rare: true
+  example: s-w-1992691
+examples:
+- s-w-8500073
+- s-w-335081
+- s-w-3709354

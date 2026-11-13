@@ -1,0 +1,18 @@
+id: 疼
+hanzi: 疼
+pinyin: téng
+hanviet: đông
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: đau, nhức
+  pos: adj
+  example: s-w-2675124
+- vi: yêu thương hết mực
+  pos: v
+  example: s-w-ai-af48acdf
+examples:
+- s-w-2675124
+- s-w-ai-af48acdf

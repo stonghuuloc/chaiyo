@@ -1,0 +1,27 @@
+id: 接着
+hanzi: 接着
+pinyin: jiēzhe
+hanviet: tiếp trước
+level: 2
+pos:
+- v
+- conj
+- adv
+senses:
+- vi: tiếp tục, tiến hành (việc đang làm)
+  pos: v
+  example: s-w-4760079
+- vi: theo sau, đi theo
+  pos: v
+  rare: true
+  example: s-w-ai-22e54363
+- vi: rồi, sau đó
+  pos: conj
+  example: s-w-336880
+- vi: lần lượt, đến lượt (chỉ dùng trong 一个接着一个, 一…接着一…)
+  pos: adv
+  example: s-w-1361969
+examples:
+- s-w-4760079
+- s-w-ai-22e54363
+- s-w-336880

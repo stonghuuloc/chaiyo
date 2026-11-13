@@ -1,0 +1,18 @@
+id: 想法
+hanzi: 想法
+pinyin: xiǎngfǎ
+hanviet: tưởng pháp
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: ý nghĩ, suy nghĩ, ý kiến
+  pos: n
+  example: s-w-8463682
+- vi: nghĩ cách (làm gì)
+  pos: v
+  example: s-w-ai-abb51e29
+examples:
+- s-w-8463682
+- s-w-ai-abb51e29

@@ -1,0 +1,24 @@
+id: 加油
+hanzi: 加油
+pinyin: jiāyóu
+hanviet: gia du
+level: 2
+pos:
+- v
+senses:
+- vi: cổ vũ, động viên (ai)
+  pos: v
+  example: s-w-1501769
+- vi: cố gắng thêm, nỗ lực hơn
+  pos: v
+  example: s-w-8682684
+- vi: đổ (xăng), tiếp (nhiên liệu)
+  pos: v
+  example: s-w-ai-a8fd88b6
+- vi: tăng tốc, đạp (ga)
+  pos: v
+  example: s-w-ai-ae0c080a
+examples:
+- s-w-1501769
+- s-w-8682684
+- s-w-ai-a8fd88b6

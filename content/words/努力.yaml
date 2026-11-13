@@ -1,0 +1,18 @@
+id: 努力
+hanzi: 努力
+pinyin: nǔlì
+hanviet: nỗ lực
+level: 2
+pos:
+- v
+- adj
+senses:
+- vi: cố gắng, nỗ lực
+  pos: v
+  example: s-w-5102184
+- vi: chăm chỉ, chịu khó
+  pos: adj
+  example: s-w-1992630
+examples:
+- s-w-5102184
+- s-w-1992630

@@ -1,0 +1,18 @@
+id: 不错
+hanzi: 不错
+pinyin: bùcuò
+hanviet: bất thác
+level: 2
+pos:
+- adj
+senses:
+- vi: khá tốt, không tệ
+  pos: adj
+  example: s-w-1073169
+- vi: đúng, không sai
+  pos: adj
+  rare: true
+  example: s-w-ai-06a2d308
+examples:
+- s-w-1073169
+- s-w-ai-06a2d308

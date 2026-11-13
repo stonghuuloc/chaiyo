@@ -1,0 +1,19 @@
+id: 更-geng1
+hanzi: 更
+pinyin: gēng
+hanviet: canh
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: thay, đổi (cái cũ; chỉ dùng trong 更换, 更改, 更新, 更正)
+  pos: v
+  example: s-w-ai-d66586e7
+- vi: canh (mỗi canh 2 giờ trong đêm)
+  pos: n
+  rare: true
+  example: s-w-ai-d2b61847
+examples:
+- s-w-ai-d66586e7
+- s-w-ai-d2b61847

@@ -1,0 +1,21 @@
+id: 日子
+hanzi: 日子
+pinyin: rìzi
+hanviet: nhật tử
+level: 2
+pos:
+- n
+senses:
+- vi: ngày (khoảng thời gian 24 giờ)
+  pos: n
+  example: s-w-6451962
+- vi: những ngày trong đời, cuộc sống
+  pos: n
+  example: s-w-9401135
+- vi: ngày tháng cụ thể (trên lịch)
+  pos: n
+  example: s-w-6451979
+examples:
+- s-w-6451962
+- s-w-9401135
+- s-w-6451979

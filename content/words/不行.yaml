@@ -1,0 +1,27 @@
+id: 不行
+hanzi: 不行
+pinyin: bùxíng
+hanviet: bất hành
+level: 2
+pos:
+- adj
+senses:
+- vi: không được, không thể chấp nhận
+  pos: adj
+  example: s-w-13205173
+- vi: không có khả năng, kém năng lực
+  pos: adj
+  example: s-w-1911459
+- vi: không tốt, không hay
+  pos: adj
+  example: s-w-8463547
+- vi: không dùng được, không hiệu quả
+  pos: adj
+  example: s-w-351238
+- vi: không chịu nổi, kiệt sức
+  pos: adj
+  example: s-w-502777
+examples:
+- s-w-13205173
+- s-w-1911459
+- s-w-8463547

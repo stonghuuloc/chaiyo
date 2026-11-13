@@ -1,0 +1,36 @@
+id: 轻
+hanzi: 轻
+pinyin: qīng
+hanviet: khinh
+level: 2
+pos:
+- adj
+- v
+- n
+senses:
+- vi: nhẹ (cân nặng)
+  pos: adj
+  example: s-w-8656972
+- vi: nhẹ nhàng, dễ dàng (việc)
+  pos: adj
+  example: s-w-ai-ed552f37
+- vi: nhẹ nhàng, nhẹ tay (làm việc gì)
+  pos: adj
+  example: s-w-420002
+- vi: khẽ, nhỏ (tiếng)
+  pos: adj
+  example: s-w-6307289
+- vi: nhẹ, không nghiêm trọng (bệnh, vết thương)
+  pos: adj
+  example: s-w-ai-b90d3184
+- vi: coi thường, khinh (ai; chỉ dùng trong 轻视)
+  pos: v
+  example: s-w-ai-68894fd2
+- vi: thanh nhẹ (âm tiết không nhấn)
+  pos: n
+  rare: true
+  example: s-w-ai-82f81be6
+examples:
+- s-w-8656972
+- s-w-ai-ed552f37
+- s-w-420002

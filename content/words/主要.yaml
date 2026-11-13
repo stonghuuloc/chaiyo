@@ -1,0 +1,18 @@
+id: 主要
+hanzi: 主要
+pinyin: zhǔyào
+hanviet: chủ yếu
+level: 2
+pos:
+- adj
+- adv
+senses:
+- vi: chính, chủ yếu (quan trọng nhất)
+  pos: adj
+  example: s-w-796732
+- vi: chủ yếu, phần lớn là
+  pos: adv
+  example: s-w-673339
+examples:
+- s-w-796732
+- s-w-673339

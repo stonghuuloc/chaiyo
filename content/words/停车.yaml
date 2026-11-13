@@ -1,0 +1,18 @@
+id: 停车
+hanzi: 停车
+pinyin: tíngchē
+hanviet: đình xa
+level: 2
+pos:
+- v
+senses:
+- vi: đỗ (xe)
+  pos: v
+  example: s-w-8800802
+- vi: (máy móc) ngừng hoạt động, chết máy
+  pos: v
+  rare: true
+  example: s-w-ai-a7a1f648
+examples:
+- s-w-8800802
+- s-w-ai-a7a1f648

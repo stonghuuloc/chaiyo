@@ -1,0 +1,28 @@
+id: 平安
+hanzi: 平安
+pinyin: píng'ān
+hanviet: bình an
+level: 2
+pos:
+- adj
+- n
+senses:
+- vi: bình an, không gặp chuyện gì
+  pos: adj
+  example: s-w-ai-0e805599
+- vi: khỏe mạnh, bình an (khi hỏi thăm)
+  pos: adj
+  example: s-w-ai-9be441f5
+- vi: yên ổn, êm ả
+  pos: adj
+  example: s-w-ai-0a21ea91
+- vi: thanh thản, yên lòng
+  pos: adj
+  example: s-w-ai-d64b85ba
+- vi: sự bình an, sự an toàn
+  pos: n
+  example: s-w-ai-e78ab378
+examples:
+- s-w-ai-0e805599
+- s-w-ai-9be441f5
+- s-w-ai-0a21ea91

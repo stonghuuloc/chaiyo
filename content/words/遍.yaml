@@ -1,0 +1,18 @@
+id: 遍
+hanzi: 遍
+pinyin: biàn
+hanviet: biến
+level: 2
+pos:
+- comp
+- mw
+senses:
+- vi: khắp, khắp nơi (sau động từ)
+  pos: comp
+  example: s-w-ai-d1fb5c39
+- vi: lần (hành động)
+  pos: mw
+  example: s-w-ai-d0b01566
+examples:
+- s-w-ai-d1fb5c39
+- s-w-ai-d0b01566

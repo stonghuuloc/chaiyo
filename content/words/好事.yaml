@@ -1,0 +1,17 @@
+id: 好事
+hanzi: 好事
+pinyin: hǎoshì
+hanviet: hảo sự
+level: 2
+pos:
+- n
+senses:
+- vi: việc tốt, việc thiện
+  pos: n
+  example: s-w-5812278
+- vi: chuyện vui, tin vui
+  pos: n
+  example: s-w-ai-60da0a80
+examples:
+- s-w-5812278
+- s-w-ai-60da0a80

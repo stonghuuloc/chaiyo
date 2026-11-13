@@ -1,0 +1,27 @@
+id: 弄
+hanzi: 弄
+pinyin: nòng
+hanviet: lộng
+level: 2
+pos:
+- v
+senses:
+- vi: làm (việc gì)
+  pos: v
+  example: s-w-13893691
+- vi: lo liệu, xử lý (việc)
+  pos: v
+  example: s-w-335500
+- vi: nghịch, chơi (đồ vật)
+  pos: v
+  example: s-w-ai-f1e58ddc
+- vi: làm rối, gây phiền (ai)
+  pos: v
+  example: s-w-334912
+- vi: sửa (đồ vật)
+  pos: v
+  example: s-w-ai-54994b7a
+examples:
+- s-w-13893691
+- s-w-335500
+- s-w-ai-f1e58ddc

@@ -1,0 +1,22 @@
+id: 画
+hanzi: 画
+pinyin: huà
+hanviet: hoạ
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: tranh, bức tranh
+  pos: n
+  example: s-w-1783764
+- vi: nét chữ Hán
+  pos: n
+  example: s-w-ai-71d31124
+- vi: vẽ, tô (tranh, hình, đường)
+  pos: v
+  example: s-w-630268
+examples:
+- s-w-1783764
+- s-w-ai-71d31124
+- s-w-630268

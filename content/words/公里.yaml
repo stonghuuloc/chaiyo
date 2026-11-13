@@ -1,0 +1,18 @@
+id: 公里
+hanzi: 公里
+pinyin: gōnglǐ
+hanviet: công lý
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: ki-lô-mét (đơn vị đo độ dài)
+  pos: n
+  example: s-w-2113788
+- vi: cây số (quãng đường)
+  pos: mw
+  example: s-w-ai-1c1bafd9
+examples:
+- s-w-2113788
+- s-w-ai-1c1bafd9

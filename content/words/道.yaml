@@ -1,0 +1,37 @@
+id: 道
+hanzi: 道
+pinyin: dào
+hanviet: đạo
+level: 2
+pos:
+- n
+- v
+- mw
+senses:
+- vi: đường, lối đi
+  pos: n
+  example: s-w-2158934
+- vi: lý lẽ, nguyên tắc (chỉ dùng trong 道理)
+  pos: n
+  example: s-w-ai-ac6f19ed
+- vi: đạo đức (chỉ dùng trong 道德)
+  pos: n
+  example: s-w-ai-7b3cfc08
+- vi: kỹ năng, nghệ thuật (nhu đạo, trà đạo; chỉ dùng trong 柔道, 茶道, 剑道)
+  pos: n
+  rare: true
+  example: s-w-ai-a9500e1b
+- vi: Đạo giáo (chỉ dùng trong 道教)
+  pos: n
+  rare: true
+  example: s-w-ai-1473b7b3
+- vi: nói; bày tỏ (lời xin lỗi, cảm ơn; chỉ dùng trong 道歉, 道谢, 道喜, 道别)
+  pos: v
+  example: s-w-5550005
+- vi: bức, dải, câu, món (tường, sông, câu hỏi, món ăn)
+  pos: mw
+  example: s-w-ai-f0f64e78
+examples:
+- s-w-2158934
+- s-w-ai-ac6f19ed
+- s-w-ai-7b3cfc08

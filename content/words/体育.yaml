@@ -1,0 +1,17 @@
+id: 体育
+hanzi: 体育
+pinyin: tǐyù
+hanviet: thể dục
+level: 2
+pos:
+- n
+senses:
+- vi: thể thao
+  pos: n
+  example: s-w-2394580
+- vi: môn thể dục (ở trường)
+  pos: n
+  example: s-w-ai-b36bc63b
+examples:
+- s-w-2394580
+- s-w-ai-b36bc63b

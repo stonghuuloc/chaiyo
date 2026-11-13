@@ -1,0 +1,17 @@
+id: 院长
+hanzi: 院长
+pinyin: yuànzhǎng
+hanviet: viện trưởng
+level: 2
+pos:
+- n
+senses:
+- vi: viện trưởng (cơ quan, trường đại học)
+  pos: n
+  example: s-w-ai-0cf9cb0e
+- vi: trưởng khoa
+  pos: n
+  example: s-w-ai-3aae83f1
+examples:
+- s-w-ai-0cf9cb0e
+- s-w-ai-3aae83f1

@@ -1,0 +1,13 @@
+id: 报纸
+hanzi: 报纸
+pinyin: bàozhǐ
+hanviet: báo chỉ
+level: 2
+pos:
+- n
+senses:
+- vi: báo, tờ báo
+  pos: n
+  example: s-w-348608
+examples:
+- s-w-348608

@@ -1,0 +1,25 @@
+id: 生活
+hanzi: 生活
+pinyin: shēnghuó
+hanviet: sinh hoạt
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: cuộc sống
+  pos: n
+  example: s-w-402747
+- vi: sinh kế
+  pos: n
+  example: s-w-ai-a699eaaa
+- vi: sống
+  pos: v
+  example: s-w-ai-5e25525f
+- vi: kiếm sống bằng (nghề; chỉ dùng trong 靠…生活)
+  pos: v
+  example: s-w-375285
+examples:
+- s-w-402747
+- s-w-ai-a699eaaa
+- s-w-ai-5e25525f

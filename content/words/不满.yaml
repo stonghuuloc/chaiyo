@@ -1,0 +1,22 @@
+id: 不满
+hanzi: 不满
+pinyin: bùmǎn
+hanviet: bất mãn
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: bực bội, bất bình
+  pos: adj
+  example: s-w-ai-8dc482e2
+- vi: không hài lòng
+  pos: adj
+  example: s-w-4757613
+- vi: không hài lòng với (ai, cái gì)
+  pos: v
+  example: s-w-ai-d32e40f2
+examples:
+- s-w-ai-8dc482e2
+- s-w-4757613
+- s-w-ai-d32e40f2

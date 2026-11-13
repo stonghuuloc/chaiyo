@@ -1,0 +1,27 @@
+id: 方便
+hanzi: 方便
+pinyin: fāngbiàn
+hanviet: phương tiện
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: tiện lợi, thuận tiện
+  pos: adj
+  example: s-w-7768311
+- vi: có tiền dư, dư dả (chỉ trong cụm 手头方便)
+  pos: adj
+  rare: true
+  example: s-w-ai-529d5c37
+- vi: tạo điều kiện, làm cho dễ dàng (cho ai)
+  pos: v
+  example: s-w-ai-e956d723
+- vi: đi vệ sinh
+  pos: v
+  rare: true
+  example: s-w-9096138
+examples:
+- s-w-7768311
+- s-w-ai-529d5c37
+- s-w-ai-e956d723

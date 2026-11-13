@@ -1,0 +1,19 @@
+id: 水平
+hanzi: 水平
+pinyin: shuǐpíng
+hanviet: thuỷ bình
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: trình độ, mức độ (kỹ năng, thành tựu)
+  pos: n
+  example: s-w-11702375
+- vi: nằm ngang, phẳng (đường, mặt)
+  pos: adj
+  rare: true
+  example: s-w-ai-ba482570
+examples:
+- s-w-11702375
+- s-w-ai-ba482570

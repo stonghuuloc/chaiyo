@@ -1,0 +1,19 @@
+id: 或者
+hanzi: 或者
+pinyin: huòzhě
+hanviet: hoặc giả
+level: 2
+pos:
+- conj
+- adv
+senses:
+- vi: hoặc, hay
+  pos: conj
+  example: s-w-791438
+- vi: có lẽ, có thể (ý chưa chắc chắn)
+  pos: adv
+  rare: true
+  example: s-w-ai-10144a84
+examples:
+- s-w-791438
+- s-w-ai-10144a84

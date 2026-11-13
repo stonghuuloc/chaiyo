@@ -1,0 +1,18 @@
+id: 大部分
+hanzi: 大部分
+pinyin: dàbùfen
+hanviet: đại bộ phận
+level: 2
+pos:
+- n
+- adv
+senses:
+- vi: phần lớn, đa số
+  pos: n
+  example: s-w-414246
+- vi: phần lớn, chủ yếu
+  pos: adv
+  example: s-w-5624924
+examples:
+- s-w-414246
+- s-w-5624924

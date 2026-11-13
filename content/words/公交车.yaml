@@ -1,0 +1,13 @@
+id: 公交车
+hanzi: 公交车
+pinyin: gōngjiāochē
+hanviet: công giao xa
+level: 2
+pos:
+- n
+senses:
+- vi: xe buýt (phương tiện công cộng)
+  pos: n
+  example: s-w-758028
+examples:
+- s-w-758028

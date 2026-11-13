@@ -1,0 +1,19 @@
+id: 黄色
+hanzi: 黄色
+pinyin: huángsè
+hanviet: hoàng sắc
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: màu vàng
+  pos: n
+  example: s-w-8853706
+- vi: khiêu dâm, thô tục
+  pos: adj
+  rare: true
+  example: s-w-ai-28726b0b
+examples:
+- s-w-8853706
+- s-w-ai-28726b0b

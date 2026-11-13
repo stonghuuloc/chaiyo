@@ -1,0 +1,21 @@
+id: 以前
+hanzi: 以前
+pinyin: yǐqián
+hanviet: dĩ tiền
+level: 2
+pos:
+- n
+senses:
+- vi: trước đây, trước kia
+  pos: n
+  example: s-w-426893
+- vi: trước (một mốc thời gian)
+  pos: n
+  example: s-w-333154
+- vi: cách đây (sau khoảng thời gian)
+  pos: n
+  example: s-w-ai-879f2dbe
+examples:
+- s-w-426893
+- s-w-333154
+- s-w-ai-879f2dbe

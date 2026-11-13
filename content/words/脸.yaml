@@ -1,0 +1,17 @@
+id: 脸
+hanzi: 脸
+pinyin: liǎn
+hanviet: kiểm
+level: 2
+pos:
+- n
+senses:
+- vi: khuôn mặt
+  pos: n
+  example: s-w-1990257
+- vi: thể diện, mặt mũi
+  pos: n
+  example: s-w-ai-47d7b7f0
+examples:
+- s-w-1990257
+- s-w-ai-47d7b7f0

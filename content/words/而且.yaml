@@ -1,0 +1,17 @@
+id: 而且
+hanzi: 而且
+pinyin: érqiě
+hanviet: nhi thả
+level: 2
+pos:
+- conj
+senses:
+- vi: hơn nữa, thêm vào đó
+  pos: conj
+  example: s-w-346771
+- vi: không những ... mà còn
+  pos: conj
+  example: s-w-333469
+examples:
+- s-w-346771
+- s-w-333469

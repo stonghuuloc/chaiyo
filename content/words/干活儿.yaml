@@ -1,0 +1,17 @@
+id: 干活儿
+hanzi: 干活儿
+pinyin: gànhuór
+hanviet: cán hoạt nhi
+level: 2
+pos:
+- v
+senses:
+- vi: làm việc, làm lụng (chân tay)
+  pos: v
+  example: s-w-ai-6710479e
+- vi: đi làm, có việc làm
+  pos: v
+  example: s-w-ai-696e306a
+examples:
+- s-w-ai-6710479e
+- s-w-ai-696e306a

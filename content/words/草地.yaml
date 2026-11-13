@@ -1,0 +1,17 @@
+id: 草地
+hanzi: 草地
+pinyin: cǎodì
+hanviet: thảo địa
+level: 2
+pos:
+- n
+senses:
+- vi: bãi cỏ, thảm cỏ
+  pos: n
+  example: s-w-6959856
+- vi: đồng cỏ
+  pos: n
+  example: s-w-1016761
+examples:
+- s-w-6959856
+- s-w-1016761

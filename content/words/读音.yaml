@@ -1,0 +1,18 @@
+id: 读音
+hanzi: 读音
+pinyin: dúyīn
+hanviet: độc âm
+level: 2
+pos:
+- n
+senses:
+- vi: cách phát âm
+  pos: n
+  example: s-w-ai-9009455d
+- vi: âm đọc văn (khác âm khẩu ngữ)
+  pos: n
+  rare: true
+  example: s-w-ai-387f266d
+examples:
+- s-w-ai-9009455d
+- s-w-ai-387f266d

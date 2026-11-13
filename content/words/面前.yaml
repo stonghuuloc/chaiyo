@@ -1,0 +1,17 @@
+id: 面前
+hanzi: 面前
+pinyin: miànqián
+hanviet: diện tiền
+level: 2
+pos:
+- n
+senses:
+- vi: trước mặt, trước mắt, đối diện
+  pos: n
+  example: s-w-760397
+- vi: trước mặt ai (khi người đó có mặt)
+  pos: n
+  example: s-w-13104168
+examples:
+- s-w-760397
+- s-w-13104168

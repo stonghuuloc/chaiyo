@@ -1,0 +1,18 @@
+id: 游客
+hanzi: 游客
+pinyin: yóukè
+hanviet: du khách
+level: 2
+pos:
+- n
+senses:
+- vi: khách du lịch, du khách
+  pos: n
+  example: s-w-4970147
+- vi: người chơi khách (game trực tuyến)
+  pos: n
+  rare: true
+  example: s-w-ai-c9f88e33
+examples:
+- s-w-4970147
+- s-w-ai-c9f88e33

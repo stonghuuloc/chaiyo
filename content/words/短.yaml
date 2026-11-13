@@ -1,0 +1,24 @@
+id: 短
+hanzi: 短
+pinyin: duǎn
+hanviet: đoản
+level: 2
+pos:
+- adj
+- n
+- v
+senses:
+- vi: ngắn
+  pos: adj
+  example: s-w-687036
+- vi: điểm yếu, khuyết điểm (chỉ dùng trong 短处, 护短, 揭短, 长短)
+  pos: n
+  example: s-w-1577264
+- vi: thiếu
+  pos: v
+  rare: true
+  example: s-w-ai-73d2db00
+examples:
+- s-w-687036
+- s-w-1577264
+- s-w-ai-73d2db00

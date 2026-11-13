@@ -1,0 +1,17 @@
+id: 信心
+hanzi: 信心
+pinyin: xìnxīn
+hanviet: tín tâm
+level: 2
+pos:
+- n
+senses:
+- vi: sự tự tin
+  pos: n
+  example: s-w-14037677
+- vi: niềm tin, lòng tin (vào ai, điều gì)
+  pos: n
+  example: s-w-2054131
+examples:
+- s-w-14037677
+- s-w-2054131

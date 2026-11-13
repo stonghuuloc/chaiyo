@@ -1,0 +1,26 @@
+id: 信
+hanzi: 信
+pinyin: xìn
+hanviet: tín
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: thư, bức thư
+  pos: n
+  example: s-w-333502
+- vi: sự tự tin
+  pos: n
+  example: s-w-ai-4c4e87cf
+- vi: tin, tin tưởng (ai, điều gì)
+  pos: v
+  example: s-w-6101308
+- vi: theo (tôn giáo)
+  pos: v
+  rare: true
+  example: s-w-ai-54bcc8af
+examples:
+- s-w-333502
+- s-w-ai-4c4e87cf
+- s-w-6101308

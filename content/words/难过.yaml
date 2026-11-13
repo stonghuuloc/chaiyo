@@ -1,0 +1,23 @@
+id: 难过
+hanzi: 难过
+pinyin: nánguò
+hanviet: nan quá
+level: 2
+pos:
+- adj
+senses:
+- vi: buồn, đau lòng
+  pos: adj
+  example: s-w-333736
+- vi: khó chịu, không khỏe (trong người)
+  pos: adj
+  rare: true
+  example: s-w-ai-1f2dc3fe
+- vi: khó khăn, vất vả (về cuộc sống)
+  pos: adj
+  rare: true
+  example: s-w-ai-124c3546
+examples:
+- s-w-333736
+- s-w-ai-1f2dc3fe
+- s-w-ai-124c3546

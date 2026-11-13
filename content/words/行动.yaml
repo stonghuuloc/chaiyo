@@ -1,0 +1,27 @@
+id: 行动
+hanzi: 行动
+pinyin: xíngdòng
+hanviet: hành động
+level: 2
+pos:
+- v
+- n
+- adj
+senses:
+- vi: hành động, ra tay
+  pos: v
+  example: s-w-819699
+- vi: đi lại, di chuyển (chỉ dùng trong 行动不便, 行动自如)
+  pos: v
+  example: s-w-ai-d6e47f96
+- vi: hành động, hoạt động
+  pos: n
+  example: s-w-333240
+- vi: di động, cơ động
+  pos: adj
+  rare: true
+  example: s-w-ai-de5c5de4
+examples:
+- s-w-819699
+- s-w-ai-d6e47f96
+- s-w-333240

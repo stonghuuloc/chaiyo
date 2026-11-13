@@ -1,0 +1,18 @@
+id: 那样
+hanzi: 那样
+pinyin: nàyàng
+hanviet: na dạng
+level: 2
+pos:
+- pron
+- adv
+senses:
+- vi: kiểu đó, loại đó
+  pos: pron
+  example: s-w-1372532
+- vi: như thế, như vậy (đứng trước động từ)
+  pos: adv
+  example: s-w-5925227
+examples:
+- s-w-1372532
+- s-w-5925227

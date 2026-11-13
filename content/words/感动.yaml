@@ -1,0 +1,18 @@
+id: 感动
+hanzi: 感动
+pinyin: gǎndòng
+hanviet: cảm động
+level: 2
+pos:
+- v
+- adj
+senses:
+- vi: làm (ai) cảm động, làm xúc động
+  pos: v
+  example: s-w-465026
+- vi: cảm động, xúc động
+  pos: adj
+  example: s-w-1504990
+examples:
+- s-w-465026
+- s-w-1504990

@@ -1,0 +1,18 @@
+id: 练习
+hanzi: 练习
+pinyin: liànxí
+hanviet: luyện tập
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: luyện tập (kỹ năng)
+  pos: v
+  example: s-w-380887
+- vi: bài tập
+  pos: n
+  example: s-w-ai-58f53b6f
+examples:
+- s-w-380887
+- s-w-ai-58f53b6f

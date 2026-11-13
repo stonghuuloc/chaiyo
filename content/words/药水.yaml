@@ -1,0 +1,18 @@
+id: 药水
+hanzi: 药水
+pinyin: yàoshuǐ
+hanviet: dược thuỷ
+level: 2
+pos:
+- n
+senses:
+- vi: thuốc nước, thuốc dạng lỏng
+  pos: n
+  example: s-w-ai-5f794209
+- vi: dung dịch bôi da (lotion)
+  pos: n
+  rare: true
+  example: s-w-ai-ae05cb25
+examples:
+- s-w-ai-5f794209
+- s-w-ai-ae05cb25

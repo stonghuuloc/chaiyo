@@ -1,0 +1,27 @@
+id: 数字
+hanzi: 数字
+pinyin: shùzì
+hanviet: số tự
+level: 2
+pos:
+- n
+senses:
+- vi: con số, số
+  pos: n
+  example: s-w-4844975
+- vi: chữ số
+  pos: n
+  example: s-w-465943
+- vi: số lượng
+  pos: n
+  example: s-w-336684
+- vi: số liệu
+  pos: n
+  example: s-w-9973730
+- vi: kỹ thuật số (điện tử)
+  pos: n
+  example: s-w-ai-e4366614
+examples:
+- s-w-4844975
+- s-w-465943
+- s-w-336684

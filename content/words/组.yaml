@@ -1,0 +1,29 @@
+id: 组
+hanzi: 组
+pinyin: zǔ
+hanviet: tổ
+level: 2
+pos:
+- v
+- n
+- mw
+senses:
+- vi: lập thành, tạo thành
+  pos: v
+  example: s-w-ai-3cd6bc5f
+- vi: tổ chức, lập (nhóm, đội)
+  pos: v
+  example: s-w-13942532
+- vi: nhóm người
+  pos: n
+  example: s-w-ai-b7fcb668
+- vi: đội, tổ (làm việc)
+  pos: n
+  example: s-w-ai-570b0647
+- vi: bộ, nhóm (ảnh, pin, người)
+  pos: mw
+  example: s-w-ai-d346c729
+examples:
+- s-w-ai-3cd6bc5f
+- s-w-13942532
+- s-w-ai-b7fcb668

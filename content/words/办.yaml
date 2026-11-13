@@ -1,0 +1,24 @@
+id: 办
+hanzi: 办
+pinyin: bàn
+hanviet: biện
+level: 2
+pos:
+- v
+senses:
+- vi: làm, lo liệu (việc, thủ tục)
+  pos: v
+  example: s-w-747558
+- vi: tổ chức (tiệc, lễ)
+  pos: v
+  example: s-w-332774
+- vi: mở, thành lập (trường, công ty)
+  pos: v
+  example: s-w-332507
+- vi: quản lý, điều hành (công ty)
+  pos: v
+  example: s-w-ai-f9598a05
+examples:
+- s-w-747558
+- s-w-332774
+- s-w-332507

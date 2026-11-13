@@ -1,0 +1,13 @@
+id: 药店
+hanzi: 药店
+pinyin: yàodiàn
+hanviet: dược điếm
+level: 2
+pos:
+- n
+senses:
+- vi: nhà thuốc, hiệu thuốc
+  pos: n
+  example: s-w-ai-a1f28bc8
+examples:
+- s-w-ai-a1f28bc8

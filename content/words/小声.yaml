@@ -1,0 +1,18 @@
+id: 小声
+hanzi: 小声
+pinyin: xiǎoshēng
+hanviet: tiểu thanh
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: nhỏ giọng, thì thầm
+  pos: adv
+  example: s-w-1946803
+- vi: giọng nhỏ, khẽ
+  pos: adj
+  example: s-w-12420104
+examples:
+- s-w-1946803
+- s-w-12420104

@@ -1,0 +1,21 @@
+id: 拉
+hanzi: 拉
+pinyin: lā
+hanviet: lạp
+level: 2
+pos:
+- v
+senses:
+- vi: kéo, lôi (vật gì)
+  pos: v
+  example: s-w-2444467
+- vi: chơi (đàn vĩ cầm)
+  pos: v
+  example: s-w-711635
+- vi: đi ngoài (khẩu ngữ, thô)
+  pos: v
+  example: s-w-8591276
+examples:
+- s-w-2444467
+- s-w-711635
+- s-w-8591276

@@ -1,0 +1,21 @@
+id: 嘴
+hanzi: 嘴
+pinyin: zuǐ
+hanviet: chuỷ
+level: 2
+pos:
+- n
+senses:
+- vi: miệng, mồm
+  pos: n
+  example: s-w-501554
+- vi: mỏ (chim)
+  pos: n
+  example: s-w-ai-0b25e077
+- vi: vòi (ấm trà, bình)
+  pos: n
+  example: s-w-ai-0ead17d9
+examples:
+- s-w-501554
+- s-w-ai-0b25e077
+- s-w-ai-0ead17d9

@@ -1,0 +1,36 @@
+id: 排
+hanzi: 排
+pinyin: pái
+hanviet: bài
+level: 2
+pos:
+- v
+- mw
+- n
+senses:
+- vi: xếp hàng (chỉ dùng trong 排队)
+  pos: v
+  example: s-w-ai-77e541d0
+- vi: sắp xếp, xếp theo thứ tự (đồ vật)
+  pos: v
+  example: s-w-ai-074f1381
+- vi: loại trừ, loại bỏ (khả năng; chỉ dùng trong 排除)
+  pos: v
+  example: s-w-ai-1599fd10
+- vi: tháo, thoát (nước)
+  pos: v
+  example: s-w-ai-77cc6049
+- vi: hàng (cây, ghế)
+  pos: mw
+  example: s-w-ai-13ce3627
+- vi: hàng, dãy, dòng
+  pos: n
+  example: s-w-747620
+- vi: trung đội (quân đội)
+  pos: n
+  rare: true
+  example: s-w-ai-8f6f684c
+examples:
+- s-w-ai-77e541d0
+- s-w-ai-074f1381
+- s-w-ai-1599fd10

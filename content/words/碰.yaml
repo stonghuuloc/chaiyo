@@ -1,0 +1,21 @@
+id: 碰
+hanzi: 碰
+pinyin: pèng
+hanviet: bính
+level: 2
+pos:
+- v
+senses:
+- vi: chạm, sờ (vào)
+  pos: v
+  example: s-w-8934349
+- vi: tình cờ gặp (ai; chỉ dùng trong 碰到, 碰上, 碰见)
+  pos: v
+  example: s-w-ai-3af25c2b
+- vi: va, đụng (vào)
+  pos: v
+  example: s-w-ai-80407802
+examples:
+- s-w-8934349
+- s-w-ai-3af25c2b
+- s-w-ai-80407802

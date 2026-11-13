@@ -1,0 +1,26 @@
+id: 近
+hanzi: 近
+pinyin: jìn
+hanviet: cận
+level: 2
+pos:
+- adj
+- v
+- adv
+senses:
+- vi: gần, sát
+  pos: adj
+  example: s-w-408485
+- vi: gần đây (thời gian)
+  pos: adj
+  example: s-w-ai-d10c78a4
+- vi: sắp đến, đến gần (thời gian)
+  pos: v
+  example: s-w-501201
+- vi: gần, khoảng (đứng trước số lượng)
+  pos: adv
+  example: s-w-707500
+examples:
+- s-w-408485
+- s-w-ai-d10c78a4
+- s-w-501201

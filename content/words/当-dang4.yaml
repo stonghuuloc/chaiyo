@@ -1,0 +1,31 @@
+id: 当-dang4
+hanzi: 当
+pinyin: dàng
+hanviet: đáng
+level: 2
+pos:
+- adj
+- adv
+- v
+senses:
+- vi: thích đáng, ổn thoả (chỉ dùng trong 不当, 得当, 妥当)
+  pos: adj
+  example: s-w-ai-c45d0887
+- vi: ngay trong (ngày, nơi) đó (chỉ dùng trong 当天, 当地, 当年)
+  pos: adv
+  example: s-w-ai-dda73c28
+- vi: coi (ai, gì) là, cho là
+  pos: v
+  example: s-w-390493
+- vi: đem cầm (đồ đạc)
+  pos: v
+  rare: true
+  example: s-w-ai-7d4e1283
+- vi: cho trượt (sinh viên)
+  pos: v
+  rare: true
+  example: s-w-ai-7edc69a4
+examples:
+- s-w-ai-c45d0887
+- s-w-ai-dda73c28
+- s-w-390493

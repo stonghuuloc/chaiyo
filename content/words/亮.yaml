@@ -1,0 +1,25 @@
+id: 亮
+hanzi: 亮
+pinyin: liàng
+hanviet: lượng
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: sáng
+  pos: adj
+  example: s-w-784471
+- vi: vang, rõ (giọng nói)
+  pos: adj
+  example: s-w-ai-c5c16d83
+- vi: sáng lên, bật sáng (đèn)
+  pos: v
+  example: s-w-2000409
+- vi: trình, đưa ra (giấy tờ); công khai (quan điểm)
+  pos: v
+  example: s-w-ai-56d3143d
+examples:
+- s-w-784471
+- s-w-ai-c5c16d83
+- s-w-2000409

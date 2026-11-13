@@ -1,0 +1,21 @@
+id: 碰到
+hanzi: 碰到
+pinyin: pèngdào
+hanviet: bính đáo
+level: 2
+pos:
+- v
+senses:
+- vi: gặp, tình cờ gặp (ai đó)
+  pos: v
+  example: s-w-10350436
+- vi: gặp phải (khó khăn, vấn đề)
+  pos: v
+  example: s-w-ai-b26237c2
+- vi: va phải, chạm vào (vật)
+  pos: v
+  example: s-w-8511060
+examples:
+- s-w-10350436
+- s-w-ai-b26237c2
+- s-w-8511060

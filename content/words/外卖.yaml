@@ -1,0 +1,22 @@
+id: 外卖
+hanzi: 外卖
+pinyin: wàimài
+hanviet: ngoại mại
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: đồ ăn mang về, giao tận nhà
+  pos: n
+  example: s-w-14067734
+- vi: dịch vụ mang về, giao hàng
+  pos: n
+  example: s-w-ai-bbdbbfc5
+- vi: bán mang về, giao tận nhà (đồ ăn)
+  pos: v
+  example: s-w-ai-9c343535
+examples:
+- s-w-14067734
+- s-w-ai-bbdbbfc5
+- s-w-ai-9c343535

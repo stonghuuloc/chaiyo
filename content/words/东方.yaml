@@ -1,0 +1,17 @@
+id: 东方
+hanzi: 东方
+pinyin: dōngfāng
+hanviet: đông phương
+level: 2
+pos:
+- n
+senses:
+- vi: phương Đông
+  pos: n
+  example: s-w-795015
+- vi: hướng đông
+  pos: n
+  example: s-w-353631
+examples:
+- s-w-795015
+- s-w-353631

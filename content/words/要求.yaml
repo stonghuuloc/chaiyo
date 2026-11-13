@@ -1,0 +1,22 @@
+id: 要求
+hanzi: 要求
+pinyin: yāoqiú
+hanviet: yêu cầu
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: yêu cầu, đề nghị
+  pos: v
+  example: s-w-628525
+- vi: đòi hỏi, đòi (quyền lợi)
+  pos: v
+  example: s-w-9963181
+- vi: yêu cầu, đòi hỏi
+  pos: n
+  example: s-w-349983
+examples:
+- s-w-628525
+- s-w-9963181
+- s-w-349983

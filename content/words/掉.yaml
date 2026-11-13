@@ -1,0 +1,45 @@
+id: 掉
+hanzi: 掉
+pinyin: diào
+hanviet: điệu
+level: 2
+pos:
+- v
+- comp
+senses:
+- vi: mất, đánh mất (đồ vật)
+  pos: v
+  example: s-w-344189
+- vi: rơi, rớt
+  pos: v
+  example: s-w-817370
+- vi: làm rơi, đánh rơi (đồ vật)
+  pos: v
+  example: s-w-1785980
+- vi: rụng (tóc)
+  pos: v
+  example: s-w-ai-8fdb890f
+- vi: giảm (giá, trọng lượng)
+  pos: v
+  example: s-w-ai-e0217b8d
+- vi: quay đầu (xe, người; chỉ dùng trong 掉头)
+  pos: v
+  example: s-w-ai-063272b8
+- vi: tụt lại phía sau (chỉ dùng trong 掉队)
+  pos: v
+  example: s-w-ai-f5f0de37
+- vi: đổi, trao đổi (hàng hóa; chỉ dùng trong 掉换)
+  pos: v
+  rare: true
+  example: s-w-ai-b007bffe
+- vi: khoe (chữ nghĩa; chỉ dùng trong 掉书袋)
+  pos: v
+  rare: true
+  example: s-w-ai-418b4772
+- vi: hết, mất đi (sau động từ)
+  pos: comp
+  example: s-w-2442222
+examples:
+- s-w-344189
+- s-w-817370
+- s-w-1785980

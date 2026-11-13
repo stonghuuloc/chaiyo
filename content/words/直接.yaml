@@ -1,0 +1,18 @@
+id: 直接
+hanzi: 直接
+pinyin: zhíjiē
+hanviet: trực tiếp
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: 'trực tiếp (đối lập: gián tiếp)'
+  pos: adj
+  example: s-w-5663456
+- vi: thẳng thắn
+  pos: adj
+  example: s-w-2298338
+examples:
+- s-w-5663456
+- s-w-2298338

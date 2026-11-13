@@ -1,0 +1,17 @@
+id: 多久
+hanzi: 多久
+pinyin: duōjiǔ
+hanviet: đa cửu
+level: 2
+pos:
+- pron
+senses:
+- vi: bao lâu?
+  pos: pron
+  example: s-w-9956347
+- vi: không lâu, chẳng bao lâu (chỉ dùng trong 没多久, 不多久, V不了多久)
+  pos: pron
+  example: s-w-13861328
+examples:
+- s-w-9956347
+- s-w-13861328

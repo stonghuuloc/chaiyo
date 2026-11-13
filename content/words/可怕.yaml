@@ -1,0 +1,21 @@
+id: 可怕
+hanzi: 可怕
+pinyin: kěpà
+hanviet: khả phạ
+level: 2
+pos:
+- adj
+senses:
+- vi: đáng sợ, đáng gờm
+  pos: adj
+  example: s-w-10834899
+- vi: khủng khiếp, tồi tệ
+  pos: adj
+  example: s-w-8649707
+- vi: ghê rợn, gớm ghiếc
+  pos: adj
+  example: s-w-8608696
+examples:
+- s-w-10834899
+- s-w-8649707
+- s-w-8608696

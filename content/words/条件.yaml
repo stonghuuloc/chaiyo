@@ -1,0 +1,17 @@
+id: 条件
+hanzi: 条件
+pinyin: tiáojiàn
+hanviet: điều kiện
+level: 2
+pos:
+- n
+senses:
+- vi: điều kiện, hoàn cảnh
+  pos: n
+  example: s-w-5897899
+- vi: yêu cầu, điều kiện tiên quyết
+  pos: n
+  example: s-w-1404363
+examples:
+- s-w-5897899
+- s-w-1404363

@@ -1,0 +1,22 @@
+id: 差不多
+hanzi: 差不多
+pinyin: chàbuduō
+hanviet: sai bất đa
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: gần, suýt
+  pos: adv
+  example: s-w-333787
+- vi: xấp xỉ, gần bằng nhau
+  pos: adj
+  example: s-w-407293
+- vi: tạm được, khá ổn
+  pos: adj
+  example: s-w-ai-1316b985
+examples:
+- s-w-333787
+- s-w-407293
+- s-w-ai-1316b985

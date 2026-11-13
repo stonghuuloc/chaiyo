@@ -1,0 +1,17 @@
+id: 北方
+hanzi: 北方
+pinyin: běifāng
+hanviet: bắc phương
+level: 2
+pos:
+- n
+senses:
+- vi: phía bắc, miền bắc
+  pos: n
+  example: s-w-798086
+- vi: miền Bắc Trung Quốc (phía bắc sông Hoàng Hà)
+  pos: n
+  example: s-w-727968
+examples:
+- s-w-798086
+- s-w-727968

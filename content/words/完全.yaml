@@ -1,0 +1,19 @@
+id: 完全
+hanzi: 完全
+pinyin: wánquán
+hanviet: hoàn toàn
+level: 2
+pos:
+- adj
+- adv
+senses:
+- vi: hoàn chỉnh, đầy đủ
+  pos: adj
+  rare: true
+  example: s-w-ai-0a56da15
+- vi: hoàn toàn
+  pos: adv
+  example: s-w-5945140
+examples:
+- s-w-ai-0a56da15
+- s-w-5945140

@@ -1,0 +1,18 @@
+id: 帮助
+hanzi: 帮助
+pinyin: bāngzhù
+hanviet: bang trợ
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: giúp đỡ, hỗ trợ
+  pos: v
+  example: s-w-5136687
+- vi: sự giúp đỡ, sự hỗ trợ
+  pos: n
+  example: s-w-7768354
+examples:
+- s-w-5136687
+- s-w-7768354

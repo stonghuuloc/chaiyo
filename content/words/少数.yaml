@@ -1,0 +1,18 @@
+id: 少数
+hanzi: 少数
+pinyin: shǎoshù
+hanviet: thiểu số
+level: 2
+pos:
+- num
+- n
+senses:
+- vi: số ít, số lượng nhỏ
+  pos: num
+  example: s-w-2485701
+- vi: thiểu số (phần ít trong một tập thể)
+  pos: n
+  example: s-w-346775
+examples:
+- s-w-2485701
+- s-w-346775

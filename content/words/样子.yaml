@@ -1,0 +1,25 @@
+id: 样子
+hanzi: 样子
+pinyin: yàngzi
+hanviet: dạng tử
+level: 2
+pos:
+- n
+senses:
+- vi: hình dạng, vẻ bề ngoài
+  pos: n
+  example: s-w-3704425
+- vi: dáng vẻ khi làm việc gì đó
+  pos: n
+  example: s-w-1746060
+- vi: xu thế, có vẻ (trong 看样子)
+  pos: n
+  example: s-w-5691236
+- vi: kiểu mẫu, mẫu (để làm theo)
+  pos: n
+  rare: true
+  example: s-w-ai-678e1201
+examples:
+- s-w-3704425
+- s-w-1746060
+- s-w-5691236

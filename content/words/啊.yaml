@@ -1,0 +1,21 @@
+id: 啊
+hanzi: 啊
+pinyin: à
+hanviet: a
+level: 2
+pos:
+- interj
+senses:
+- vi: Được chứ, được thôi
+  pos: interj
+  example: s-w-1670048
+- vi: Ừm (ngập ngừng)
+  pos: interj
+  example: s-w-ai-84b383cb
+- vi: Ồ, đúng rồi! (nhận ra)
+  pos: interj
+  example: s-w-13938590
+examples:
+- s-w-1670048
+- s-w-ai-84b383cb
+- s-w-13938590

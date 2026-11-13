@@ -1,0 +1,13 @@
+id: 人口
+hanzi: 人口
+pinyin: rénkǒu
+hanviet: nhân khẩu
+level: 2
+pos:
+- n
+senses:
+- vi: dân số, số người (của một nơi)
+  pos: n
+  example: s-w-970199
+examples:
+- s-w-970199

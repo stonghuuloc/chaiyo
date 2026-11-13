@@ -1,0 +1,30 @@
+id: 场
+hanzi: 场
+pinyin: chǎng
+hanviet: trường
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: sân, bãi (nơi rộng dùng cho việc riêng; chỉ dùng trong 机场, 广场, 操场, 停车场, 会场, 场地)
+  pos: n
+  example: s-w-ai-bc34042c
+- vi: sân khấu (chỉ dùng trong 上场, 下场, 出场, 登场)
+  pos: n
+  example: s-w-ai-49ace364
+- vi: cảnh (trong vở kịch)
+  pos: n
+  rare: true
+  example: s-w-ai-de6a8dc6
+- vi: trận, ván (thi đấu, giải trí)
+  pos: mw
+  example: s-w-ai-032f168c
+- vi: kỳ, lần (thi)
+  pos: mw
+  rare: true
+  example: s-w-ai-69cdbc7a
+examples:
+- s-w-ai-bc34042c
+- s-w-ai-49ace364
+- s-w-ai-de6a8dc6

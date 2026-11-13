@@ -1,0 +1,28 @@
+id: 又
+hanzi: 又
+pinyin: yòu
+hanviet: hựu
+level: 2
+pos:
+- adv
+- conj
+senses:
+- vi: lại, lần nữa
+  pos: adv
+  example: s-w-507343
+- vi: cũng
+  pos: adv
+  example: s-w-1998174
+- vi: vừa... vừa...
+  pos: adv
+  example: s-w-334638
+- vi: dù sao đi nữa (chỉ dùng trong 又不是…, 又没…, 又不…)
+  pos: adv
+  example: s-w-ai-cdb4a811
+- vi: thế nhưng, vậy mà (chỉ dùng trong 又…又…)
+  pos: conj
+  example: s-w-ai-0268d9d3
+examples:
+- s-w-507343
+- s-w-1998174
+- s-w-334638

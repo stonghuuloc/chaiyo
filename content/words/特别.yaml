@@ -1,0 +1,26 @@
+id: 特别
+hanzi: 特别
+pinyin: tèbié
+hanviet: đặc biệt
+level: 2
+pos:
+- adv
+- adj
+- conj
+senses:
+- vi: rất, đặc biệt (+ tính từ)
+  pos: adv
+  example: s-w-1231670
+- vi: cố ý, riêng (vì mục đích cụ thể)
+  pos: adv
+  example: s-w-ai-4c33108b
+- vi: đặc biệt, khác thường
+  pos: adj
+  example: s-w-10199319
+- vi: đặc biệt là (chỉ dùng trong 特别是)
+  pos: conj
+  example: s-w-ai-31bbd83c
+examples:
+- s-w-1231670
+- s-w-ai-4c33108b
+- s-w-10199319

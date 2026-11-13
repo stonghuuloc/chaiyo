@@ -1,0 +1,25 @@
+id: 作用
+hanzi: 作用
+pinyin: zuòyòng
+hanviet: tác dụng
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: tác dụng, công dụng
+  pos: n
+  example: s-w-1317002
+- vi: hiệu quả, kết quả (của thuốc, biện pháp)
+  pos: n
+  example: s-w-10064219
+- vi: ảnh hưởng, tác động
+  pos: n
+  example: s-w-1450427
+- vi: tác động, ảnh hưởng (đến ai, cái gì; chỉ dùng trong 作用于, 作用在)
+  pos: v
+  example: s-w-ai-e0101f76
+examples:
+- s-w-1317002
+- s-w-10064219
+- s-w-1450427

@@ -1,0 +1,30 @@
+id: 流
+hanzi: 流
+pinyin: liú
+hanviet: lưu
+level: 2
+pos:
+- v
+- n
+- adj
+senses:
+- vi: chảy (nước, nước mắt)
+  pos: v
+  example: s-w-345946
+- vi: lan truyền, lưu hành (tin tức, sách)
+  pos: v
+  example: s-w-ai-f5ddf926
+- vi: trôi, trôi dạt
+  pos: v
+  rare: true
+  example: s-w-ai-e1ae2a69
+- vi: dòng (nước), dòng chảy (chỉ dùng trong 水流, 河流, 气流, 电流, 人流)
+  pos: n
+  example: s-w-ai-9af349c4
+- vi: hạng nhất, hàng đầu (chỉ dùng trong 一流, 二流, 三流, 超一流)
+  pos: adj
+  example: s-w-ai-456d5333
+examples:
+- s-w-345946
+- s-w-ai-f5ddf926
+- s-w-ai-e1ae2a69

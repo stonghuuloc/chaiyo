@@ -1,0 +1,26 @@
+id: 结果
+hanzi: 结果
+pinyin: jiéguǒ
+hanviet: kết quả
+level: 2
+pos:
+- n
+- adv
+- conj
+senses:
+- vi: kết quả, kết cục
+  pos: n
+  example: s-w-398890
+- vi: kết luận
+  pos: n
+  example: s-w-1314189
+- vi: cuối cùng, rốt cuộc
+  pos: adv
+  example: s-w-499623
+- vi: vì thế, nên (dẫn đến hệ quả)
+  pos: conj
+  example: s-w-431630
+examples:
+- s-w-398890
+- s-w-1314189
+- s-w-499623

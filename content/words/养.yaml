@@ -1,0 +1,21 @@
+id: 养
+hanzi: 养
+pinyin: yǎng
+hanviet: dưỡng
+level: 2
+pos:
+- v
+senses:
+- vi: nuôi (động vật, thú cưng)
+  pos: v
+  example: s-w-333709
+- vi: nuôi nấng (con cái)
+  pos: v
+  example: s-w-787565
+- vi: nuôi, chu cấp (gia đình)
+  pos: v
+  example: s-w-ai-986b3fca
+examples:
+- s-w-333709
+- s-w-787565
+- s-w-ai-986b3fca

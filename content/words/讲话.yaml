@@ -1,0 +1,22 @@
+id: 讲话
+hanzi: 讲话
+pinyin: jiǎnghuà
+hanviet: giảng thoại
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: bài phát biểu
+  pos: n
+  example: s-w-1394872
+- vi: nói, nói chuyện (với ai)
+  pos: v
+  example: s-w-380600
+- vi: phát biểu trước (đám đông, quốc dân)
+  pos: v
+  example: s-w-791425
+examples:
+- s-w-1394872
+- s-w-380600
+- s-w-791425

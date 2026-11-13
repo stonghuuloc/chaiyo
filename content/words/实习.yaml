@@ -1,0 +1,23 @@
+id: 实习
+hanzi: 实习
+pinyin: shíxí
+hanviet: thực tập
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: thực tập (nghề, ở công ty)
+  pos: v
+  example: s-w-ai-9aee6128
+- vi: thực tập ngoài hiện trường
+  pos: v
+  rare: true
+  example: s-w-ai-e9fc3f3d
+- vi: kỳ thực tập
+  pos: n
+  example: s-w-1100759
+examples:
+- s-w-ai-9aee6128
+- s-w-ai-e9fc3f3d
+- s-w-1100759

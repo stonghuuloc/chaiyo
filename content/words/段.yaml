@@ -1,0 +1,22 @@
+id: 段
+hanzi: 段
+pinyin: duàn
+hanviet: đoạn
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: đoạn văn
+  pos: n
+  example: s-w-9569029
+- vi: đoạn, phần
+  pos: n
+  example: s-w-13971868
+- vi: đoạn, quãng (đường, thời gian, chuyện, dây)
+  pos: mw
+  example: s-w-ai-15ff0bd5
+examples:
+- s-w-9569029
+- s-w-13971868
+- s-w-ai-15ff0bd5

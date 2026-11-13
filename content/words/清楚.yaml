@@ -1,0 +1,18 @@
+id: 清楚
+hanzi: 清楚
+pinyin: qīngchu
+hanviet: thanh sở
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: rõ ràng
+  pos: adj
+  example: s-w-6114398
+- vi: hiểu rõ, nắm rõ (điều gì)
+  pos: v
+  example: s-w-10986125
+examples:
+- s-w-6114398
+- s-w-10986125

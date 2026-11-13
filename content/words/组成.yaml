@@ -1,0 +1,17 @@
+id: 组成
+hanzi: 组成
+pinyin: zǔchéng
+hanviet: tổ thành
+level: 2
+pos:
+- v
+senses:
+- vi: gồm có, cấu thành
+  pos: v
+  example: s-w-343759
+- vi: tạo thành, hình thành (đội, nhóm)
+  pos: v
+  example: s-w-336671
+examples:
+- s-w-343759
+- s-w-336671

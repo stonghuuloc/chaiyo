@@ -1,0 +1,24 @@
+id: 怎么样
+hanzi: 怎么样
+pinyin: zěnmeyàng
+hanviet: chẩm ma dạng
+level: 2
+pos:
+- pron
+senses:
+- vi: ra sao? (hỏi thăm tình hình hiện tại)
+  pos: pron
+  example: s-w-2239090
+- vi: thế nào? (hỏi về trải nghiệm đã qua)
+  pos: pron
+  example: s-w-390497
+- vi: thì sao? (gợi ý, đề nghị)
+  pos: pron
+  example: s-w-472844
+- vi: như thế nào?
+  pos: pron
+  example: s-w-5214222
+examples:
+- s-w-2239090
+- s-w-390497
+- s-w-472844

@@ -1,0 +1,23 @@
+id: 练
+hanzi: 练
+pinyin: liàn
+hanviet: luyện
+level: 2
+pos:
+- v
+senses:
+- vi: luyện tập, tập luyện
+  pos: v
+  example: s-w-336428
+- vi: huấn luyện (động vật, người)
+  pos: v
+  rare: true
+  example: s-w-ai-915d847b
+- vi: diễn tập (quân sự)
+  pos: v
+  rare: true
+  example: s-w-ai-29874afb
+examples:
+- s-w-336428
+- s-w-ai-915d847b
+- s-w-ai-29874afb

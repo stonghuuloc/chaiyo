@@ -1,0 +1,28 @@
+id: 才
+hanzi: 才
+pinyin: cái
+hanviet: tài
+level: 2
+pos:
+- adv
+- n
+senses:
+- vi: vừa mới
+  pos: adv
+  example: s-w-3538055
+- vi: chỉ... mới
+  pos: adv
+  example: s-w-8599725
+- vi: mới, chỉ (trước số lượng; chỉ dùng trong 才 + số lượng (才三岁, 才十块))
+  pos: adv
+  example: s-w-ai-465ed8ab
+- vi: tài năng, năng lực
+  pos: n
+  example: s-w-1694979
+- vi: người tài, người có năng lực
+  pos: n
+  example: s-w-ai-10ba3788
+examples:
+- s-w-3538055
+- s-w-8599725
+- s-w-ai-465ed8ab

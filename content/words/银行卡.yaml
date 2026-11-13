@@ -1,0 +1,13 @@
+id: 银行卡
+hanzi: 银行卡
+pinyin: yínhángkǎ
+hanviet: ngân hàng ca
+level: 2
+pos:
+- n
+senses:
+- vi: thẻ ngân hàng, thẻ ATM
+  pos: n
+  example: s-w-3377881
+examples:
+- s-w-3377881

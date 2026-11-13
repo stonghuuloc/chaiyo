@@ -1,0 +1,21 @@
+id: 多么
+hanzi: 多么
+pinyin: duōme
+hanviet: đa ma
+level: 2
+pos:
+- adv
+senses:
+- vi: thật là, biết bao (cảm thán)
+  pos: adv
+  example: s-w-7772100
+- vi: dù... đến đâu (nhượng bộ; chỉ dùng trong 不管多么…都, 无论多么…也)
+  pos: adv
+  example: s-w-3035567
+- vi: đến mức nào (dùng trong câu hỏi; chỉ dùng trong 多么…吗, 多么…呢)
+  pos: adv
+  example: s-w-9779555
+examples:
+- s-w-7772100
+- s-w-3035567
+- s-w-9779555

@@ -1,0 +1,32 @@
+id: 装
+hanzi: 装
+pinyin: zhuāng
+hanviet: trang
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: giả vờ, giả bộ
+  pos: v
+  example: s-w-10538616
+- vi: lắp, lắp đặt
+  pos: v
+  example: s-w-5845595
+- vi: trang trí, sửa sang (nhà cửa; chỉ dùng trong 装修)
+  pos: v
+  example: s-w-ai-1095e63c
+- vi: đóng gói, đóng (vào thùng, hộp)
+  pos: v
+  example: s-w-ai-36c53c06
+- vi: ăn mặc (làm dáng)
+  pos: v
+  rare: true
+  example: s-w-760890
+- vi: quần áo, trang phục (chỉ dùng trong 女装, 男装, 服装, 便装)
+  pos: n
+  example: s-w-ai-fdfccd13
+examples:
+- s-w-10538616
+- s-w-5845595
+- s-w-ai-1095e63c

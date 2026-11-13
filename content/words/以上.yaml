@@ -1,0 +1,24 @@
+id: 以上
+hanzi: 以上
+pinyin: yǐshàng
+hanviet: dĩ thượng
+level: 2
+pos:
+- n
+- adj
+- phrase
+senses:
+- vi: từ mức/số lượng đó trở lên
+  pos: n
+  example: s-w-3289558
+- vi: đã nêu trên, nói trên
+  pos: adj
+  example: s-w-ai-dfc3ac2d
+- vi: hết, xin hết (kết thúc phát biểu)
+  pos: phrase
+  rare: true
+  example: s-w-13847547
+examples:
+- s-w-3289558
+- s-w-ai-dfc3ac2d
+- s-w-13847547

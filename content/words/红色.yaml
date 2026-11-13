@@ -1,0 +1,18 @@
+id: 红色
+hanzi: 红色
+pinyin: hóngsè
+hanviet: hồng sắc
+level: 2
+pos:
+- n
+senses:
+- vi: màu đỏ
+  pos: n
+  example: s-w-9955413
+- vi: mang tính cách mạng
+  pos: n
+  rare: true
+  example: s-w-ai-1a67d751
+examples:
+- s-w-9955413
+- s-w-ai-1a67d751

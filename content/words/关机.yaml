@@ -1,0 +1,18 @@
+id: 关机
+hanzi: 关机
+pinyin: guānjī
+hanviet: quan cơ
+level: 2
+pos:
+- v
+senses:
+- vi: tắt (máy, thiết bị)
+  pos: v
+  example: s-w-3626385
+- vi: kết thúc quay (phim)
+  pos: v
+  rare: true
+  example: s-w-ai-9f0b3be4
+examples:
+- s-w-3626385
+- s-w-ai-9f0b3be4

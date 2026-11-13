@@ -1,0 +1,23 @@
+id: 碗
+hanzi: 碗
+pinyin: wǎn
+hanviet: ''
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: bát, chén (đựng cơm, canh)
+  pos: n
+  example: s-w-5911714
+- vi: chén (uống nước, trà)
+  pos: n
+  rare: true
+  example: s-w-ai-c2ab0e08
+- vi: bát (cơm, canh)
+  pos: mw
+  example: s-w-ai-4f9e584f
+examples:
+- s-w-5911714
+- s-w-ai-c2ab0e08
+- s-w-ai-4f9e584f

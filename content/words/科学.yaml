@@ -1,0 +1,22 @@
+id: 科学
+hanzi: 科学
+pinyin: kēxué
+hanviet: khoa học
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: khoa học
+  pos: n
+  example: s-w-2188486
+- vi: mang tính khoa học
+  pos: adj
+  example: s-w-791504
+- vi: hợp lý
+  pos: adj
+  example: s-w-ai-bb66b3d8
+examples:
+- s-w-2188486
+- s-w-791504
+- s-w-ai-bb66b3d8

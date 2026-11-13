@@ -1,0 +1,18 @@
+id: 打算
+hanzi: 打算
+pinyin: dǎsuàn
+hanviet: đả toán
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: dự định, định (làm gì)
+  pos: v
+  example: s-w-803832
+- vi: kế hoạch, ý định
+  pos: n
+  example: s-w-848562
+examples:
+- s-w-803832
+- s-w-848562

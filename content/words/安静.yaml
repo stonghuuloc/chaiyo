@@ -1,0 +1,17 @@
+id: 安静
+hanzi: 安静
+pinyin: ānjìng
+hanviet: an tĩnh
+level: 2
+pos:
+- adj
+senses:
+- vi: yên tĩnh, im lặng (không ồn)
+  pos: adj
+  example: s-w-5845311
+- vi: bình yên, điềm tĩnh
+  pos: adj
+  example: s-w-ai-44188d69
+examples:
+- s-w-5845311
+- s-w-ai-44188d69

@@ -1,0 +1,22 @@
+id: 出口
+hanzi: 出口
+pinyin: chūkǒu
+hanviet: xuất khẩu
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: lối ra
+  pos: n
+  example: s-w-1565722
+- vi: nói ra, thốt ra (chỉ dùng trong 出口成章, 出口伤人, 说出口, 说不出口)
+  pos: v
+  example: s-w-347602
+- vi: xuất khẩu (hàng hóa)
+  pos: v
+  example: s-w-ai-f058147b
+examples:
+- s-w-1565722
+- s-w-347602
+- s-w-ai-f058147b

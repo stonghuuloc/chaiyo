@@ -1,0 +1,18 @@
+id: 交朋友
+hanzi: 交朋友
+pinyin: jiāopéngyou
+hanviet: giao bằng hữu
+level: 2
+pos:
+- v
+senses:
+- vi: kết bạn
+  pos: v
+  example: s-w-9963198
+- vi: (phương ngữ) ngoại tình với ai
+  pos: v
+  rare: true
+  example: s-w-ai-d5c660d4
+examples:
+- s-w-9963198
+- s-w-ai-d5c660d4

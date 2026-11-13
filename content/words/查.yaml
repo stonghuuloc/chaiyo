@@ -1,0 +1,24 @@
+id: 查
+hanzi: 查
+pinyin: chá
+hanviet: tra
+level: 2
+pos:
+- v
+senses:
+- vi: kiểm tra, xem lại
+  pos: v
+  example: s-w-ai-c24866a7
+- vi: tra cứu (từ điển)
+  pos: v
+  example: s-w-1394927
+- vi: điều tra, tìm hiểu (vấn đề)
+  pos: v
+  example: s-w-ai-d1e51f1b
+- vi: tham khảo (sách, tài liệu)
+  pos: v
+  example: s-w-ai-1904ff09
+examples:
+- s-w-ai-c24866a7
+- s-w-1394927
+- s-w-ai-d1e51f1b

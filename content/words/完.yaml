@@ -1,0 +1,18 @@
+id: 完
+hanzi: 完
+pinyin: wán
+hanviet: hoàn
+level: 2
+pos:
+- comp
+- v
+senses:
+- vi: xong, hết (sau động từ)
+  pos: comp
+  example: s-w-9432382
+- vi: kết thúc, hết (chương trình, buổi)
+  pos: v
+  example: s-w-3534641
+examples:
+- s-w-9432382
+- s-w-3534641

@@ -1,0 +1,18 @@
+id: 笑话
+hanzi: 笑话
+pinyin: xiàohua
+hanviet: tiếu thoại
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: chuyện cười, trò đùa
+  pos: n
+  example: s-w-679437
+- vi: cười nhạo, chế giễu (ai)
+  pos: v
+  example: s-w-1324961
+examples:
+- s-w-679437
+- s-w-1324961

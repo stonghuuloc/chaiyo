@@ -1,0 +1,18 @@
+id: 纸
+hanzi: 纸
+pinyin: zhǐ
+hanviet: chỉ
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: giấy (để viết, in)
+  pos: n
+  example: s-w-8932596
+- vi: tờ, bản (giấy tờ, văn bản)
+  pos: mw
+  example: s-w-ai-97c0bfd0
+examples:
+- s-w-8932596
+- s-w-ai-97c0bfd0

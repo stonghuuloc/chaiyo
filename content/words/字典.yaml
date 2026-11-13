@@ -1,0 +1,17 @@
+id: 字典
+hanzi: 字典
+pinyin: zìdiǎn
+hanviet: tự điển
+level: 2
+pos:
+- n
+senses:
+- vi: từ điển
+  pos: n
+  example: s-w-9462615
+- vi: từ điển chữ Hán (tra từng chữ)
+  pos: n
+  example: s-w-ai-2833ceb3
+examples:
+- s-w-9462615
+- s-w-ai-2833ceb3

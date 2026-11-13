@@ -1,0 +1,22 @@
+id: 座
+hanzi: 座
+pinyin: zuò
+hanviet: toạ
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: chỗ ngồi
+  pos: n
+  example: s-w-8500212
+- vi: đế, bệ, giá đỡ (của vật; chỉ dùng trong 灯座, 底座, 基座)
+  pos: n
+  example: s-w-ai-686dcaec
+- vi: tòa, ngọn (nhà, núi)
+  pos: mw
+  example: s-w-ai-8a0d2897
+examples:
+- s-w-8500212
+- s-w-ai-686dcaec
+- s-w-ai-8a0d2897

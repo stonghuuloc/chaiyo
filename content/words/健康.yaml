@@ -1,0 +1,18 @@
+id: 健康
+hanzi: 健康
+pinyin: jiànkāng
+hanviet: kiện khang
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: sức khỏe
+  pos: n
+  example: s-w-1216141
+- vi: khỏe mạnh
+  pos: adj
+  example: s-w-7767607
+examples:
+- s-w-1216141
+- s-w-7767607

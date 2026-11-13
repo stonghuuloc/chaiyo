@@ -1,0 +1,17 @@
+id: 自己
+hanzi: 自己
+pinyin: zìjǐ
+hanviet: tự kỷ
+level: 2
+pos:
+- pron
+senses:
+- vi: tự mình, bản thân
+  pos: pron
+  example: s-w-478125
+- vi: của mình, riêng
+  pos: pron
+  example: s-w-4517811
+examples:
+- s-w-478125
+- s-w-4517811

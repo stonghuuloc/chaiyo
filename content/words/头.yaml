@@ -1,0 +1,46 @@
+id: 头
+hanzi: 头
+pinyin: tóu
+hanviet: đầu
+level: 2
+pos:
+- n
+- num
+- v
+- mw
+senses:
+- vi: đầu
+  pos: n
+  example: s-w-1749200
+- vi: tóc, kiểu tóc
+  pos: n
+  example: s-w-10541644
+- vi: đầu mút, phần cuối (chỉ dùng trong 桥头, 村头)
+  pos: n
+  example: s-w-ai-8ab043c4
+- vi: mẩu thừa, đầu mẩu (thuốc lá; chỉ dùng trong 烟头, 线头, 布头)
+  pos: n
+  example: s-w-ai-767b87ab
+- vi: sếp, người đứng đầu (chỉ dùng trong 头儿, 头头, 工头)
+  pos: n
+  example: s-w-ai-4109a5d6
+- vi: bên, phía (chỉ dùng trong 这头, 那头, 哪头)
+  pos: n
+  example: s-w-ai-33cd9df1
+- vi: đỉnh, phần trên cùng (chỉ dùng trong 山头)
+  pos: n
+  rare: true
+  example: s-w-ai-9f4fa1bd
+- vi: đầu tiên, thứ nhất (chỉ dùng trong 头一, 头号)
+  pos: num
+  example: s-w-ai-7256a547
+- vi: dẫn đầu (ghép với 带头, 领头)
+  pos: v
+  example: s-w-ai-14ad1a55
+- vi: con (heo, gia súc)
+  pos: mw
+  example: s-w-ai-d24bf3b8
+examples:
+- s-w-1749200
+- s-w-10541644
+- s-w-ai-8ab043c4

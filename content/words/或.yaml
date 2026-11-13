@@ -1,0 +1,19 @@
+id: 或
+hanzi: 或
+pinyin: huò
+hanviet: hoặc
+level: 2
+pos:
+- conj
+- adv
+senses:
+- vi: hoặc
+  pos: conj
+  example: s-w-827160
+- vi: có lẽ, có thể
+  pos: adv
+  rare: true
+  example: s-w-ai-6fdbb184
+examples:
+- s-w-827160
+- s-w-ai-6fdbb184

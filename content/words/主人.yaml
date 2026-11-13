@@ -1,0 +1,17 @@
+id: 主人
+hanzi: 主人
+pinyin: zhǔrén
+hanviet: chủ nhân
+level: 2
+pos:
+- n
+senses:
+- vi: chủ nhân, người làm chủ
+  pos: n
+  example: s-w-9518684
+- vi: chủ nhà (người tiếp khách, chủ tiệc)
+  pos: n
+  example: s-w-ai-dc0dc9bb
+examples:
+- s-w-9518684
+- s-w-ai-dc0dc9bb

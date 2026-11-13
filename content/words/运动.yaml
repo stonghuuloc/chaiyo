@@ -1,14 +1,39 @@
-# content/words/运动.yaml
 id: 运动
 hanzi: 运动
 pinyin: yùndòng
 hanviet: vận động
 level: 2
-pos: [ v ]
+pos:
+- n
+- v
 senses:
-  - { vi: "tập thể dục, vận động" }
+- vi: tập thể dục, vận động
+- vi: thể thao
+  pos: n
+  example: s-w-406351
+- vi: sự vận động, tập luyện
+  pos: n
+  example: s-w-333295
+- vi: vận động, tập thể dục
+  pos: v
+  example: s-w-1064541
+- vi: chuyển động
+  pos: v
+  rare: true
+  example: s-w-ai-fecd972c
+examples:
+- s-h2-01-08
+- s-w-406351
+- s-w-333295
+image:
+  file: words/h2-01/w11.png
+  prompt: The takin and the red panda stretch and jog together on a grassy field at sunrise. Only the takin and the red panda.
 parts:
-  - { hanzi: 运, pinyin: yùn, hanviet: vận, vi: "vận chuyển, chuyển động" }
-  - { hanzi: 动, pinyin: dòng, hanviet: động, vi: "động, cử động" }
-examples: [ s-h2-01-08 ]
-image: { file: words/h2-01/w11.png, prompt: The takin and the red panda stretch and jog together on a grassy field at sunrise. Only the takin and the red panda. }
+- hanzi: 运
+  pinyin: yùn
+  hanviet: vận
+  vi: vận chuyển, chuyển động
+- hanzi: 动
+  pinyin: dòng
+  hanviet: động
+  vi: động, cử động

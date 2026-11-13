@@ -1,0 +1,34 @@
+id: 说明
+hanzi: 说明
+pinyin: shuōmíng
+hanviet: thuyết minh
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: giải thích
+  pos: v
+  example: s-w-396829
+- vi: cho thấy, chứng tỏ
+  pos: v
+  example: s-w-757003
+- vi: chứng minh
+  pos: v
+  example: s-w-714798
+- vi: minh họa
+  pos: v
+  example: s-w-ai-ec2df574
+- vi: lời giải thích
+  pos: n
+  example: s-w-335328
+- vi: hướng dẫn, chỉ dẫn
+  pos: n
+  example: s-w-ai-b10c8b29
+- vi: chú thích
+  pos: n
+  example: s-w-ai-3aa5df0b
+examples:
+- s-w-396829
+- s-w-757003
+- s-w-714798

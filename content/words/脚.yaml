@@ -1,0 +1,22 @@
+id: 脚
+hanzi: 脚
+pinyin: jiǎo
+hanviet: cước
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: bàn chân
+  pos: n
+  example: s-w-487593
+- vi: chân (động vật, đồ vật)
+  pos: n
+  example: s-w-10484366
+- vi: cú (đá)
+  pos: mw
+  example: s-w-ai-42edfb1b
+examples:
+- s-w-487593
+- s-w-10484366
+- s-w-ai-42edfb1b

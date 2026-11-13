@@ -1,0 +1,17 @@
+id: 答应
+hanzi: 答应
+pinyin: dāying
+hanviet: đáp ưng
+level: 2
+pos:
+- v
+senses:
+- vi: đáp lại, trả lời (khi được gọi)
+  pos: v
+  example: s-w-ai-64f019c2
+- vi: đồng ý, nhận lời, hứa
+  pos: v
+  example: s-w-10194942
+examples:
+- s-w-ai-64f019c2
+- s-w-10194942

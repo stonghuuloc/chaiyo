@@ -1,0 +1,37 @@
+id: 周
+hanzi: 周
+pinyin: zhōu
+hanviet: chu
+level: 2
+pos:
+- n
+- v
+- mw
+- adj
+- adv
+senses:
+- vi: chu vi (chỉ dùng trong 周长)
+  pos: n
+  example: s-w-ai-2d62c4ff
+- vi: chu kỳ (chỉ dùng trong 周期, 周期性)
+  pos: n
+  example: s-w-ai-54c9aea4
+- vi: tuần
+  pos: n
+  example: s-w-ai-996d9e54
+- vi: đi một vòng
+  pos: v
+  example: s-w-ai-d2c98dc0
+- vi: vòng (chạy, đi)
+  pos: mw
+  example: s-w-ai-0e335481
+- vi: chu đáo, đầy đủ (chỉ dùng trong 周到, 周全, 周密)
+  pos: adj
+  example: s-w-ai-197f6cdd
+- vi: hằng tuần, mỗi tuần (chỉ dùng trong 每周, 周刊, 周报)
+  pos: adv
+  example: s-w-ai-c64132fd
+examples:
+- s-w-ai-2d62c4ff
+- s-w-ai-54c9aea4
+- s-w-ai-996d9e54

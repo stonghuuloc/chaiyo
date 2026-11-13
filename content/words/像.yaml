@@ -1,0 +1,27 @@
+id: 像
+hanzi: 像
+pinyin: xiàng
+hanviet: tượng
+level: 2
+pos:
+- v
+- prep
+- n
+senses:
+- vi: giống, giống như
+  pos: v
+  example: s-w-662315
+- vi: trông như, có vẻ như
+  pos: v
+  example: s-w-1438409
+- vi: như, chẳng hạn
+  pos: prep
+  example: s-w-ai-95c3b6ff
+- vi: hình ảnh, chân dung (chỉ dùng trong 画像, 肖像, 头像, 图像)
+  pos: n
+  rare: true
+  example: s-w-ai-7fda00ea
+examples:
+- s-w-662315
+- s-w-1438409
+- s-w-ai-95c3b6ff

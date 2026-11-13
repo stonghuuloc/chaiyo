@@ -1,0 +1,24 @@
+id: 意见
+hanzi: 意见
+pinyin: yìjiàn
+hanviet: ý kiến
+level: 2
+pos:
+- n
+senses:
+- vi: ý kiến, quan điểm
+  pos: n
+  example: s-w-10484404
+- vi: góp ý, đề xuất
+  pos: n
+  example: s-w-4717472
+- vi: sự phản đối
+  pos: n
+  example: s-w-8720485
+- vi: bất mãn, không hài lòng (với ai; chỉ dùng trong 有意见, 对…有意见)
+  pos: n
+  example: s-w-ai-3f519a00
+examples:
+- s-w-10484404
+- s-w-4717472
+- s-w-8720485

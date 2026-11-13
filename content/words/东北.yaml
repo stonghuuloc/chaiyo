@@ -1,0 +1,17 @@
+id: 东北
+hanzi: 东北
+pinyin: dōngběi
+hanviet: đông bắc
+level: 2
+pos:
+- n
+senses:
+- vi: vùng Đông Bắc Trung Quốc (Mãn Châu)
+  pos: n
+  example: s-w-ai-f5b94663
+- vi: phía đông bắc, hướng đông bắc
+  pos: n
+  example: s-w-ai-38d9e9e2
+examples:
+- s-w-ai-f5b94663
+- s-w-ai-38d9e9e2

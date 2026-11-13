@@ -1,0 +1,25 @@
+id: 省
+hanzi: 省
+pinyin: shěng
+hanviet: tỉnh
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: tiết kiệm (tiền bạc, thời gian)
+  pos: v
+  example: s-w-ai-2c601752
+- vi: lược bỏ, bỏ đi (phần không cần thiết)
+  pos: v
+  example: s-w-ai-e9a1dddf
+- vi: tỉnh (đơn vị hành chính)
+  pos: n
+  example: s-w-10171221
+- vi: tỉnh lỵ (chỉ dùng trong 省会, 省城)
+  pos: n
+  example: s-w-ai-8342c5f0
+examples:
+- s-w-ai-2c601752
+- s-w-ai-e9a1dddf
+- s-w-10171221

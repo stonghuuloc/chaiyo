@@ -1,0 +1,17 @@
+id: 药
+hanzi: 药
+pinyin: yào
+hanviet: dược
+level: 2
+pos:
+- n
+senses:
+- vi: thuốc (chữa bệnh)
+  pos: n
+  example: s-w-759374
+- vi: chất (gây nổ, gây độc)
+  pos: n
+  example: s-w-ai-6f761f1a
+examples:
+- s-w-759374
+- s-w-ai-6f761f1a

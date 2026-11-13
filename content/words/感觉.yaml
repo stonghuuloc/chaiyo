@@ -1,0 +1,18 @@
+id: 感觉
+hanzi: 感觉
+pinyin: gǎnjué
+hanviet: cảm giác
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: cảm giác, ấn tượng
+  pos: n
+  example: s-w-503236
+- vi: cảm thấy, cảm nhận được
+  pos: v
+  example: s-w-784051
+examples:
+- s-w-503236
+- s-w-784051

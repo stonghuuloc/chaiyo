@@ -1,0 +1,26 @@
+id: 可能
+hanzi: 可能
+pinyin: kěnéng
+hanviet: khả năng
+level: 2
+pos:
+- adv
+- adj
+- n
+senses:
+- vi: có thể (xảy ra)
+  pos: adv
+  example: s-w-465902
+- vi: có lẽ
+  pos: adv
+  example: s-w-5906576
+- vi: có thể, có khả năng (xảy ra)
+  pos: adj
+  example: s-w-ai-83fa3c11
+- vi: khả năng, xác suất
+  pos: n
+  example: s-w-9432340
+examples:
+- s-w-465902
+- s-w-5906576
+- s-w-ai-83fa3c11

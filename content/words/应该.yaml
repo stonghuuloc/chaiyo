@@ -1,0 +1,17 @@
+id: 应该
+hanzi: 应该
+pinyin: yīnggāi
+hanviet: ưng cai
+level: 2
+pos:
+- v
+senses:
+- vi: nên
+  pos: v
+  example: s-w-5571039
+- vi: phải, cần phải
+  pos: v
+  example: s-w-392254
+examples:
+- s-w-5571039
+- s-w-392254

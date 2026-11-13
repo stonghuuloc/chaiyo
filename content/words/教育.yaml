@@ -1,0 +1,18 @@
+id: 教育
+hanzi: 教育
+pinyin: jiàoyù
+hanviet: giáo dục
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: giáo dục
+  pos: n
+  example: s-w-346757
+- vi: dạy dỗ, giáo dục (con cái)
+  pos: v
+  example: s-w-3031919
+examples:
+- s-w-346757
+- s-w-3031919

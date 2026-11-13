@@ -1,0 +1,22 @@
+id: 科
+hanzi: 科
+pinyin: kē
+hanviet: khoa
+level: 2
+pos:
+- n
+senses:
+- vi: ngành học, lĩnh vực (chỉ dùng trong 文科, 理科, 学科, 本科, 专科)
+  pos: n
+  example: s-w-ai-413779ef
+- vi: khoa, phòng ban (bệnh viện, cơ quan)
+  pos: n
+  example: s-w-ai-33f51a0b
+- vi: họ (phân loại sinh vật)
+  pos: n
+  rare: true
+  example: s-w-ai-863be3bb
+examples:
+- s-w-ai-413779ef
+- s-w-ai-33f51a0b
+- s-w-ai-863be3bb

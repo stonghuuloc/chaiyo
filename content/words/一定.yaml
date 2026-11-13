@@ -1,0 +1,31 @@
+id: 一定
+hanzi: 一定
+pinyin: yīdìng
+hanviet: nhất định
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: chắc chắn, nhất định
+  pos: adv
+  example: s-w-2029434
+- vi: phải, chắc hẳn là
+  pos: adv
+  example: s-w-844516
+- vi: nhất thiết (phải)
+  pos: adv
+  example: s-w-335491
+- vi: cố định, đã định sẵn
+  pos: adj
+  example: s-w-ai-71c1e144
+- vi: một mức nhất định (số lượng, độ)
+  pos: adj
+  example: s-w-ai-5944f142
+- vi: nhất định, cụ thể
+  pos: adj
+  example: s-w-ai-7a279863
+examples:
+- s-w-2029434
+- s-w-844516
+- s-w-335491

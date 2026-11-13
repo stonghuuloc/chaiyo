@@ -1,0 +1,17 @@
+id: 网
+hanzi: 网
+pinyin: wǎng
+hanviet: võng
+level: 2
+pos:
+- n
+senses:
+- vi: mạng (internet, mạng máy tính)
+  pos: n
+  example: s-w-841861
+- vi: lưới
+  pos: n
+  example: s-w-1883145
+examples:
+- s-w-841861
+- s-w-1883145

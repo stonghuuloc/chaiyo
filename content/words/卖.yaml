@@ -1,0 +1,25 @@
+id: 卖
+hanzi: 卖
+pinyin: mài
+hanviet: mại
+level: 2
+pos:
+- v
+senses:
+- vi: bán (hàng hóa, nhà cửa)
+  pos: v
+  example: s-w-7768273
+- vi: phản bội, bán đứng (bạn bè)
+  pos: v
+  example: s-w-ai-c9aa8628
+- vi: ra sức, hết sức (làm việc; chỉ dùng trong 卖力, 卖劲)
+  pos: v
+  example: s-w-ai-98d4a0d7
+- vi: khoe khoang, phô trương (chỉ dùng trong 卖弄)
+  pos: v
+  rare: true
+  example: s-w-ai-69b927ed
+examples:
+- s-w-7768273
+- s-w-ai-c9aa8628
+- s-w-ai-98d4a0d7

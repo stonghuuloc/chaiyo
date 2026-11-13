@@ -1,0 +1,18 @@
+id: 低
+hanzi: 低
+pinyin: dī
+hanviet: đê
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: thấp
+  pos: adj
+  example: s-w-399949
+- vi: cúi (đầu; chỉ dùng trong 低头, 低下头, 低着头)
+  pos: v
+  example: s-w-ai-32d01896
+examples:
+- s-w-399949
+- s-w-ai-32d01896

@@ -1,0 +1,23 @@
+id: 题
+hanzi: 题
+pinyin: tí
+hanviet: đề
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: chủ đề, đề tài
+  pos: n
+  example: s-w-ai-0118c89d
+- vi: câu hỏi (thi), đề thi
+  pos: n
+  example: s-w-10219984
+- vi: đề (chữ) lên (tranh, sách)
+  pos: v
+  rare: true
+  example: s-w-ai-56f9af2b
+examples:
+- s-w-ai-0118c89d
+- s-w-10219984
+- s-w-ai-56f9af2b

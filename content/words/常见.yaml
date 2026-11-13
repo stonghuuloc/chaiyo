@@ -1,0 +1,19 @@
+id: 常见
+hanzi: 常见
+pinyin: chángjiàn
+hanviet: thường kiến
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: thường thấy, phổ biến
+  pos: adj
+  example: s-w-9962913
+- vi: thường gặp (ai, cái gì)
+  pos: v
+  rare: true
+  example: s-w-349702
+examples:
+- s-w-9962913
+- s-w-349702

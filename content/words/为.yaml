@@ -1,0 +1,21 @@
+id: 为
+hanzi: 为
+pinyin: wéi
+hanviet: vi
+level: 2
+pos:
+- v
+senses:
+- vi: chọn, coi (ai/cái gì) là
+  pos: v
+  example: s-w-333818
+- vi: cư xử, ăn ở (làm người; chỉ dùng trong 为人)
+  pos: v
+  example: s-w-ai-b0147eff
+- vi: trở thành
+  pos: v
+  example: s-w-ai-020887a2
+examples:
+- s-w-333818
+- s-w-ai-b0147eff
+- s-w-ai-020887a2

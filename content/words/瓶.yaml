@@ -1,0 +1,23 @@
+id: 瓶
+hanzi: 瓶
+pinyin: píng
+hanviet: bình
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: chai, bình
+  pos: n
+  example: s-w-389787
+- vi: bình (cắm hoa)
+  pos: n
+  rare: true
+  example: s-w-ai-b5cc5d2e
+- vi: chai (rượu, chất lỏng)
+  pos: mw
+  example: s-w-ai-1f373dec
+examples:
+- s-w-389787
+- s-w-ai-b5cc5d2e
+- s-w-ai-1f373dec

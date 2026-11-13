@@ -1,0 +1,18 @@
+id: 大小
+hanzi: 大小
+pinyin: dàxiǎo
+hanviet: đại tiểu
+level: 2
+pos:
+- n
+- phrase
+senses:
+- vi: kích thước, kích cỡ
+  pos: n
+  example: s-w-476181
+- vi: lớn nhỏ (không phân biệt; chỉ dùng trong 不分大小, 不论大小)
+  pos: phrase
+  example: s-w-ai-cefd207b
+examples:
+- s-w-476181
+- s-w-ai-cefd207b

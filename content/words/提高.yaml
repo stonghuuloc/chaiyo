@@ -1,0 +1,17 @@
+id: 提高
+hanzi: 提高
+pinyin: tígāo
+hanviet: đề cao
+level: 2
+pos:
+- v
+senses:
+- vi: tăng, nâng lên (âm lượng, tỉ lệ)
+  pos: v
+  example: s-w-10021136
+- vi: nâng cao (trình độ, năng lực)
+  pos: v
+  example: s-w-2032199
+examples:
+- s-w-10021136
+- s-w-2032199

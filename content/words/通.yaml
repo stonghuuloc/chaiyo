@@ -1,0 +1,32 @@
+id: 通
+hanzi: 通
+pinyin: tōng
+hanviet: thông
+level: 2
+pos:
+- v
+- adj
+- mw
+senses:
+- vi: thông tới, dẫn tới (đường)
+  pos: v
+  example: s-w-ai-67723329
+- vi: kết nối, nối (điện thoại, đường dây)
+  pos: v
+  example: s-w-ai-d1f70884
+- vi: thông nhau, liên thông (đường, mạng)
+  pos: v
+  example: s-w-ai-5748ffd4
+- vi: thông thạo, hiểu rõ (lĩnh vực)
+  pos: v
+  example: s-w-ai-d67133e7
+- vi: thông, không bị tắc (đường, ống)
+  pos: adj
+  example: s-w-ai-06ad7350
+- vi: cuộc (gọi), bức (thư, điện)
+  pos: mw
+  example: s-w-ai-a73747c3
+examples:
+- s-w-ai-67723329
+- s-w-ai-d1f70884
+- s-w-ai-5748ffd4

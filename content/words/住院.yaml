@@ -1,0 +1,13 @@
+id: 住院
+hanzi: 住院
+pinyin: zhùyuàn
+hanviet: trú viện
+level: 2
+pos:
+- v
+senses:
+- vi: nhập viện, nằm viện
+  pos: v
+  example: s-w-345325
+examples:
+- s-w-345325

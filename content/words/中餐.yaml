@@ -1,0 +1,18 @@
+id: 中餐
+hanzi: 中餐
+pinyin: zhōngcān
+hanviet: trung xan
+level: 2
+pos:
+- n
+senses:
+- vi: món ăn Trung Quốc
+  pos: n
+  example: s-w-3630686
+- vi: bữa trưa (cách dùng ở Đài Loan, Hồng Kông)
+  pos: n
+  rare: true
+  example: s-w-ai-ff4ec17d
+examples:
+- s-w-3630686
+- s-w-ai-ff4ec17d

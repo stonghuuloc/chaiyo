@@ -1,0 +1,26 @@
+id: 红
+hanzi: 红
+pinyin: hóng
+hanviet: hồng
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: đỏ
+  pos: adj
+  example: s-w-13880571
+- vi: được ưa chuộng, nổi tiếng
+  pos: adj
+  example: s-w-ai-561cca9d
+- vi: cách mạng (quân đội, chính quyền)
+  pos: adj
+  rare: true
+  example: s-w-ai-cb198632
+- vi: ửng đỏ, đỏ lên
+  pos: v
+  example: s-w-1990257
+examples:
+- s-w-13880571
+- s-w-ai-561cca9d
+- s-w-ai-cb198632

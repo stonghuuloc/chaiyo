@@ -1,0 +1,28 @@
+id: 让
+hanzi: 让
+pinyin: ràng
+hanviet: nhượng
+level: 2
+pos:
+- v
+- prep
+senses:
+- vi: để, cho phép (ai làm gì)
+  pos: v
+  example: s-w-1862917
+- vi: bảo, sai (ai làm gì)
+  pos: v
+  example: s-w-1415761
+- vi: khiến ai cảm thấy (buồn, vui…)
+  pos: v
+  example: s-w-2029465
+- vi: nhường (chỗ, phần cho người khác)
+  pos: v
+  example: s-w-ai-32c3217d
+- vi: bị, bởi (chỉ tác nhân trong câu bị động)
+  pos: prep
+  example: s-w-ai-3ffc119a
+examples:
+- s-w-1862917
+- s-w-1415761
+- s-w-2029465

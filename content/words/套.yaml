@@ -1,0 +1,35 @@
+id: 套
+hanzi: 套
+pinyin: tào
+hanviet: sáo
+level: 2
+pos:
+- v
+- n
+- mw
+senses:
+- vi: che, phủ, bọc (lên vật)
+  pos: v
+  example: s-w-5903466
+- vi: áp dụng, bắt chước (theo mẫu)
+  pos: v
+  rare: true
+  example: s-w-ai-3a4e15c4
+- vi: moi, dò (thông tin) khéo léo
+  pos: v
+  rare: true
+  example: s-w-ai-c0dd147e
+- vi: vỏ, bao (bọc ngoài)
+  pos: n
+  example: s-w-ai-92558360
+- vi: khuôn sáo, lời sáo rỗng (chỉ dùng trong 套话)
+  pos: n
+  rare: true
+  example: s-w-ai-ddd5b215
+- vi: bộ, căn (nhà, quần áo)
+  pos: mw
+  example: s-w-ai-b5955934
+examples:
+- s-w-5903466
+- s-w-ai-3a4e15c4
+- s-w-ai-c0dd147e

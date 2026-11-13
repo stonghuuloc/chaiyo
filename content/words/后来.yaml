@@ -1,0 +1,19 @@
+id: 后来
+hanzi: 后来
+pinyin: hòulái
+hanviet: hậu lai
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: sau đó, về sau
+  pos: adv
+  example: s-w-1394976
+- vi: người đến sau, mới đến
+  pos: adj
+  rare: true
+  example: s-w-ai-91227f03
+examples:
+- s-w-1394976
+- s-w-ai-91227f03

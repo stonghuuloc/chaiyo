@@ -1,0 +1,25 @@
+id: 难听
+hanzi: 难听
+pinyin: nántīng
+hanviet: nan thính
+level: 2
+pos:
+- adj
+senses:
+- vi: khó nghe (âm thanh, giọng nói)
+  pos: adj
+  example: s-w-ai-804a64b8
+- vi: thô tục (lời lẽ)
+  pos: adj
+  example: s-w-ai-7764772f
+- vi: xúc phạm (lời nói)
+  pos: adj
+  example: s-w-ai-4a1fef38
+- vi: xấu hổ, mất mặt (chuyện)
+  pos: adj
+  rare: true
+  example: s-w-ai-774d65d0
+examples:
+- s-w-ai-804a64b8
+- s-w-ai-7764772f
+- s-w-ai-4a1fef38

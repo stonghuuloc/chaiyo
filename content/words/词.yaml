@@ -1,0 +1,22 @@
+id: 词
+hanzi: 词
+pinyin: cí
+hanviet: ''
+level: 2
+pos:
+- n
+senses:
+- vi: từ (đơn vị ngôn ngữ)
+  pos: n
+  example: s-w-7768200
+- vi: lời bài hát
+  pos: n
+  example: s-w-ai-2d248489
+- vi: thể thơ từ (đời Tống)
+  pos: n
+  rare: true
+  example: s-w-ai-70d37b8e
+examples:
+- s-w-7768200
+- s-w-ai-2d248489
+- s-w-ai-70d37b8e

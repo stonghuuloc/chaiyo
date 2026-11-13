@@ -1,0 +1,18 @@
+id: 满意
+hanzi: 满意
+pinyin: mǎnyì
+hanviet: mãn ý
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: hài lòng, vừa ý
+  pos: adj
+  example: s-w-1541719
+- vi: làm (ai) hài lòng
+  pos: v
+  example: s-w-948078
+examples:
+- s-w-1541719
+- s-w-948078

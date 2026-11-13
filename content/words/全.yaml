@@ -1,0 +1,22 @@
+id: 全
+hanzi: 全
+pinyin: quán
+hanviet: toàn
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: tất cả, hết sạch
+  pos: adv
+  example: s-w-2607376
+- vi: hoàn toàn (thường đi với 不)
+  pos: adv
+  example: s-w-3523959
+- vi: toàn bộ, mọi (không trừ ai, cái nào)
+  pos: adj
+  example: s-w-421204
+examples:
+- s-w-2607376
+- s-w-3523959
+- s-w-421204

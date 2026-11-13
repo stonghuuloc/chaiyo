@@ -1,0 +1,17 @@
+id: 海
+hanzi: 海
+pinyin: hǎi
+hanviet: hải
+level: 2
+pos:
+- n
+senses:
+- vi: biển, đại dương
+  pos: n
+  example: s-w-782693
+- vi: số lượng lớn (người, vật; chỉ dùng trong 人海, 题海, 书海)
+  pos: n
+  example: s-w-ai-fa7e7217
+examples:
+- s-w-782693
+- s-w-ai-fa7e7217

@@ -1,0 +1,18 @@
+id: 快餐
+hanzi: 快餐
+pinyin: kuàicān
+hanviet: khoái xan
+level: 2
+pos:
+- n
+senses:
+- vi: đồ ăn nhanh, bữa ăn nhanh
+  pos: n
+  example: s-w-ai-d18b6952
+- vi: đồ ăn nhẹ
+  pos: n
+  rare: true
+  example: s-w-ai-003b5064
+examples:
+- s-w-ai-d18b6952
+- s-w-ai-003b5064

@@ -1,0 +1,26 @@
+id: 卡
+hanzi: 卡
+pinyin: kǎ
+hanviet: ca
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: thẻ (ngân hàng, thẻ từ)
+  pos: n
+  example: s-w-ai-28315e42
+- vi: xe tải (chỉ dùng trong 卡车)
+  pos: n
+  example: s-w-ai-dc204c88
+- vi: calo (đơn vị năng lượng)
+  pos: n
+  rare: true
+  example: s-w-ai-a0a6190c
+- vi: chậm, giật (máy tính)
+  pos: adj
+  example: s-w-ai-d222c841
+examples:
+- s-w-ai-28315e42
+- s-w-ai-dc204c88
+- s-w-ai-a0a6190c

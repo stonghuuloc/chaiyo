@@ -1,0 +1,18 @@
+id: 不要
+hanzi: 不要
+pinyin: bùyào
+hanviet: bất yếu
+level: 2
+pos:
+- adv
+- v
+senses:
+- vi: đừng, không được
+  pos: adv
+  example: s-w-461602
+- vi: không muốn, không cần
+  pos: v
+  example: s-w-3068723
+examples:
+- s-w-461602
+- s-w-3068723

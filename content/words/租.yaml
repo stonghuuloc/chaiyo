@@ -1,0 +1,22 @@
+id: 租
+hanzi: 租
+pinyin: zū
+hanviet: tô
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: thuê, mướn (nhà, xe)
+  pos: v
+  example: s-w-10230453
+- vi: cho thuê
+  pos: v
+  example: s-w-ai-6fa8c138
+- vi: tiền thuê (chỉ dùng trong 房租, 租金)
+  pos: n
+  example: s-w-ai-d25bbcd9
+examples:
+- s-w-10230453
+- s-w-ai-6fa8c138
+- s-w-ai-d25bbcd9

@@ -1,0 +1,18 @@
+id: 请求
+hanzi: 请求
+pinyin: qǐngqiú
+hanviet: thỉnh cầu
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: yêu cầu, đề nghị
+  pos: v
+  example: s-w-1272226
+- vi: lời yêu cầu, đề nghị
+  pos: n
+  example: s-w-3078823
+examples:
+- s-w-1272226
+- s-w-3078823

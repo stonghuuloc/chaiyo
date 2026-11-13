@@ -1,0 +1,24 @@
+id: 猫
+hanzi: 猫
+pinyin: māo
+hanviet: miêu
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: con mèo
+  pos: n
+  example: s-w-8854263
+- vi: modem (khẩu ngữ)
+  pos: n
+  rare: true
+  example: s-w-ai-5e4d0fcd
+- vi: trốn, ẩn náu (phương ngữ)
+  pos: v
+  rare: true
+  example: s-w-ai-c39c3940
+examples:
+- s-w-8854263
+- s-w-ai-5e4d0fcd
+- s-w-ai-c39c3940

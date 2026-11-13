@@ -1,0 +1,18 @@
+id: 不如
+hanzi: 不如
+pinyin: bùrú
+hanviet: bất như
+level: 2
+pos:
+- v
+- conj
+senses:
+- vi: không bằng, kém hơn (so sánh)
+  pos: v
+  example: s-w-527258
+- vi: chi bằng (gợi ý làm gì đó)
+  pos: conj
+  example: s-w-433708
+examples:
+- s-w-527258
+- s-w-433708

@@ -1,0 +1,18 @@
+id: 蛋
+hanzi: 蛋
+pinyin: dàn
+hanviet: đản
+level: 2
+pos:
+- n
+senses:
+- vi: trứng
+  pos: n
+  example: s-w-8701003
+- vi: vật hình bầu dục
+  pos: n
+  rare: true
+  example: s-w-334185
+examples:
+- s-w-8701003
+- s-w-334185

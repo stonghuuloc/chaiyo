@@ -1,0 +1,37 @@
+id: 带
+hanzi: 带
+pinyin: dài
+hanviet: đới
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: dải, ruy băng
+  pos: n
+  example: s-w-ai-7866df9b
+- vi: thắt lưng, dây lưng
+  pos: n
+  example: s-w-ai-8458ad78
+- vi: vùng, khu vực
+  pos: n
+  example: s-w-ai-04bf3403
+- vi: mang, đem theo (đồ vật)
+  pos: v
+  example: s-w-11508982
+- vi: dẫn, đưa (người đi đâu)
+  pos: v
+  example: s-w-465919
+- vi: chăm sóc, nuôi nấng (con cái)
+  pos: v
+  example: s-w-ai-9ebab457
+- vi: đeo (kính, đồng hồ)
+  pos: v
+  example: s-w-335089
+- vi: có, mang (giọng nói, nét riêng)
+  pos: v
+  example: s-w-9991939
+examples:
+- s-w-ai-7866df9b
+- s-w-ai-8458ad78
+- s-w-ai-04bf3403

@@ -1,0 +1,37 @@
+id: 讲
+hanzi: 讲
+pinyin: jiǎng
+hanviet: giảng
+level: 2
+pos:
+- v
+- prep
+- n
+senses:
+- vi: nói, kể (chuyện)
+  pos: v
+  example: s-w-528398
+- vi: giải thích, giảng giải (điều gì)
+  pos: v
+  example: s-w-ai-bf09018a
+- vi: thương lượng, mặc cả (giá; chỉ dùng trong 讲价, 讲价钱)
+  pos: v
+  example: s-w-ai-501a4a2f
+- vi: chú trọng, cầu kỳ (về điều gì; chỉ dùng trong 讲卫生, 讲礼貌, 讲信用)
+  pos: v
+  example: s-w-ai-bf7ab2a9
+- vi: nhấn mạnh (điều gì)
+  pos: v
+  rare: true
+  example: s-w-ai-a1ea191a
+- vi: xét về, đối với (ai, điều gì; chỉ dùng trong 对…来讲, 就…来讲, 从…来讲)
+  pos: prep
+  example: s-w-ai-86486351
+- vi: bài giảng (chỉ dùng trong 听讲, 讲座, 讲义)
+  pos: n
+  rare: true
+  example: s-w-ai-c0764b0d
+examples:
+- s-w-528398
+- s-w-ai-bf09018a
+- s-w-ai-501a4a2f

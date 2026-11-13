@@ -1,0 +1,26 @@
+id: 计划
+hanzi: 计划
+pinyin: jìhuà
+hanviet: kế hoạch
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: kế hoạch
+  pos: n
+  example: s-w-9473599
+- vi: dự án
+  pos: n
+  example: s-w-1366173
+- vi: chương trình
+  pos: n
+  rare: true
+  example: s-w-790601
+- vi: lập, vạch (kế hoạch)
+  pos: v
+  example: s-w-5095173
+examples:
+- s-w-9473599
+- s-w-1366173
+- s-w-790601

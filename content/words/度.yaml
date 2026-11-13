@@ -1,0 +1,28 @@
+id: 度
+hanzi: 度
+pinyin: dù
+hanviet: độ
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: độ (góc, nhiệt độ)
+  pos: n
+  example: s-w-1606074
+- vi: mức độ (chỉ dùng trong 深度, 难度, 知名度, 熟练度)
+  pos: n
+  example: s-w-787240
+- vi: số điện (kilowatt-giờ)
+  pos: n
+  example: s-w-ai-ac62a298
+- vi: giới hạn, chừng mực (chỉ dùng trong 有度, 适度, 过度, 无度)
+  pos: n
+  example: s-w-ai-93352b07
+- vi: trải qua, vượt qua (thời gian, khó khăn; chỉ dùng trong 度过, 度日, 虚度)
+  pos: v
+  example: s-w-ai-3ff833ca
+examples:
+- s-w-1606074
+- s-w-787240
+- s-w-ai-ac62a298
