@@ -1,19 +1,19 @@
 # CHY-30 S1 — plan
 ACs: AC1, AC2, AC3  ·  Spec rev 1  ·  Repo: chaiyo  ·  Branch: stonghuuloc/CHY-30-S1
-Base: .@d090b0a0
+Base: .@0836423e
 
-## Anchors (verified 2026-11-13 on d090b0a0)
+## Anchors (re-verified 2026-11-13 on 0836423e)
 - `prototype/step.js:26-33` — `bar(lit, total)`: segments on for `i < lit`, label `min(lit+1,total)/total`
 - `prototype/step.js:58-88` — `choice(q, done)`: pick :67-72, grade :73-83, CTA :84-87
 - `src/lib/ui/FocusFrame.svelte:5-13` — props `step`, `top`, `actions`, `children`; `:17-29` focuses the heading on `step` change
 - `src/lib/ui/Button.svelte:4-13` — `variant`, `disabled`, `caret`, `onclick`, `children`
-- `src/routes/(onboard)/placement/+page.svelte:93-108` — FocusFrame top snippet (✕ button pattern, `#i-regular-x` sprite)
-- `src/routes/(onboard)/placement/+page.svelte:140-157` — option buttons (`aria-pressed`, border classes)
-- `src/routes/(onboard)/placement/+page.svelte:168-172` — actions snippet, label `m.placement_next()`
+- `src/routes/(onboard)/placement/+page.svelte:93-108 (✕ at :102)` — FocusFrame top snippet (✕ button pattern, `#i-regular-x` sprite)
+- `src/routes/(onboard)/placement/+page.svelte:140-157 (aria-pressed :150)` — option buttons (`aria-pressed`, border classes)
+- `src/routes/(onboard)/placement/+page.svelte:168-172 (label :170)` — actions snippet, label `m.placement_next()`
 - `src/routes/(onboard)/placement/+page.svelte:89-90` — `{@html sprite}` (icons sprite must be on the page)
 - `src/lib/placement/run.ts:46-47` — 10 questions per level, level 5 is final
 - `src/lib/placement/run.test.ts:10-18` — `play(script)` helper
-- `messages/vi.json:11` — `"screen_gate": "Kiểm tra",` (insert S1 keys after this line)
+- `messages/vi.json:11` — `"screen_gate": "Kiểm tra",` (still :11 after #148; insert S1 keys after this line)
 - `src/routes/dev/ledger/+page.server.ts:1-10` — dev-only 404 guard to copy
 - `src/routes/dev/audio/syllable-cells.server.ts:23` — `import.meta.glob(…, { eager: true })` precedent
 - `src/lib/ui/ui.test.ts:3,14-15` — `svelte/server` render + `createRawSnippet` test pattern
@@ -48,7 +48,7 @@ File: `src/lib/lesson/steps/Choice.svelte` (new)
 - `$effect` pushes `cta(choiceCta(…) + onclick)` on every `pick`/`phase` change.
   onclick feedback+picking → `phase='graded'`; feedback+graded → `next(answer)`; test → `next(answer)` with no marks.
   `answer = toAnswer(step, pick, ms)` (Task 3). Module script imports `type Skill` from `#lib/study/index.js` for `Step.card`.
-- Markup: eyebrow `ask`, `<h2>` `title`, options as placement `+page.svelte:140-157` (`aria-pressed`), `data-mark="right|wrong"` + check / x badge (`#i-bold-check`, `#i-regular-x`) after grading, options inert once graded, verdict line `<p aria-live="polite">`.
+- Markup: eyebrow `ask`, `<h2>` `title`, options as placement `+page.svelte:140-157 (aria-pressed :150)` (`aria-pressed`), `data-mark="right|wrong"` + check / x badge (`#i-bold-check`, `#i-regular-x`) after grading, options inert once graded, verdict line `<p aria-live="polite">`.
 - Test first: covered by Task 6 render + Task 3 logic. Verify: `pnpm check`.
 
 ## Task 5 [NFR] Kind union + view lookup
