@@ -21,11 +21,7 @@ export function sapi(reading: string, hanzi: string) {
 	return clauses
 		.flat()
 		.map(({ syl, tone, erhua }) => {
-			const base = syl
-				.normalize('NFD')
-				.replace(/[̀́̄̌]/g, '')
-				.normalize('NFC')
-				.replace(/ü/g, 'v');
+			const base = syl.normalize('NFD').replace(/[̀́̄̌]/g, '').normalize('NFC').replace(/ü/g, 'v');
 			const t = tone || 5;
 			return erhua ? `${base.replace(/r$/, '')} r ${t}` : `${base} ${t}`;
 		})
