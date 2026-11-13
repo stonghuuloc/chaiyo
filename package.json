@@ -68,7 +68,7 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"dependencies": {
-		"@sentry/sveltekit": "^11.11.0",
+		"@sentry/sveltekit": "^11.12.0",
 		"@supabase/supabase-js": "^2.119.0",
 		"@vercel/speed-insights": "^2.1.0",
 		"ts-fsrs": "^6.0.0",
