@@ -112,3 +112,25 @@
 		grid-column: 1 / -1;
 	}
 }
+
+/* Landing (no JS) to Login: cross-document View Transition; browsers without support do a plain navigation */
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+
+	::view-transition-group(*) {
+		animation-duration: var(--motion-sheet);
+	}
+
+	::view-transition-group(landing-art) {
+		overflow: clip;
+	}
+
+	::view-transition-old(landing-art),
+	::view-transition-new(landing-art) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
