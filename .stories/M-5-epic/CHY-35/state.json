@@ -1,0 +1,49 @@
+{
+  "story": "CHY-35",
+  "title": "Section: Luy\u1ec7n vi\u1ebft (Hanzi Writer)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "wrap Hanzi Writer: stroke data, radStrokes patch, pen 48, tools, load error",
+      "acs": [
+        "AC2",
+        "AC6"
+      ],
+      "repo": "chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "design run done; picture not served (coordinator builds wave page)",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "Luy\u1ec7n vi\u1ebft section: trace + memory rounds, mistakes as Attempts, skip, done list",
+      "acs": [
+        "AC1",
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "repo": "chaiyo",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "wave 4 \u00b7 after CHY-35.S1, CHY-30.S2, CHY-25.S1",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "stonghuuloc/CHY-35-S1",
+  "log": [
+    "2026-11-13 init",
+    "2026-11-13 +S1 wrap Hanzi Writer: stroke data, radStrokes patch, pen 48, tools, load error [AC2,AC6]",
+    "2026-11-13 +S2 Luy\u1ec7n vi\u1ebft section: trace + memory rounds, mistakes as Attempts, skip, done list [AC1,AC3,AC4,AC5]",
+    "2026-11-13 S1 \u2192 spec",
+    "2026-11-13 S1 \u2192 plan",
+    "2026-11-13 S1 \u2192 picture",
+    "2026-11-13 S1 \u2192 picture"
+  ],
+  "updated": "2026-11-13T17:57:27+07:00"
+}
