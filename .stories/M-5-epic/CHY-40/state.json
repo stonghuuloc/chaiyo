@@ -1,0 +1,35 @@
+{
+  "story": "CHY-40",
+  "title": "B\u1ea3ng pinyin (W3)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "[chaiyo] B\u1ea3ng pinyin page: grid, tone sheet, deep link, close",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "repo": "chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "design run done; advisor r2 ship; awaiting wave review",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "stonghuuloc/CHY-40-S1",
+  "log": [
+    "2026-11-13 init",
+    "2026-11-13 +S1 [chaiyo] B\u1ea3ng pinyin page: grid, tone sheet, deep link, close [AC1,AC2,AC3,AC4]",
+    "2026-11-13 S1 \u2192 discuss",
+    "2026-11-13 S1 \u2192 spec",
+    "2026-11-13 S1 \u2192 plan",
+    "2026-11-13 S1 \u2192 picture"
+  ],
+  "updated": "2026-11-13T17:59:52+07:00"
+}
