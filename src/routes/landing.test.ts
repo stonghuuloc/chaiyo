@@ -17,16 +17,20 @@ describe('landing page', () => {
 	});
 
 	it('holds the copy and no placeholder text', () => {
-		expect(body).toContain('Học tiếng Trung bằng tiếng Việt');
-		expect(body).toContain('Mỗi ngày một chút, cùng các bạn thú.');
+		const lede =
+			'Quốc gia, học sinh, gia đình: Hán Việt đã nằm sẵn trong tiếng Việt. Chaiyo cùng bạn học nốt phần còn lại.';
+		expect(body).toContain('Bạn đã biết một nửa tiếng Trung rồi.');
+		expect(body).toContain(lede);
 		for (const p of [
-			'Mỗi chữ có Hán Việt',
-			'Nghe giọng thật từ các bạn thú',
-			'Mỗi ngày một chút, có lộ trình HSK'
+			'Mỗi chữ kèm phiên âm Hán Việt',
+			'Nghe và nói với giọng đọc tự nhiên',
+			'Lộ trình HSK3.0 mới nhất',
+			'Mỗi ngày vài phút, học cùng những người bạn đáng yêu'
 		])
 			expect(body).toContain(p);
-		expect(head).toContain('<title>Chaiyo! Học tiếng Trung bằng tiếng Việt</title>');
-		expect(head).toContain('content="Mỗi ngày một chút, cùng các bạn thú."');
+		expect(head).toContain('<title>Chaiyo! Bạn đã biết một nửa tiếng Trung rồi</title>');
+		expect(head).toContain(`content="${lede}"`);
+		expect(visible).not.toMatch(/bạn thú|dạy/i);
 		expect(visible).not.toMatch(/lorem|ipsum|TODO|TBD|placeholder|Hello|Welcome/i);
 	});
 
