@@ -11,4 +11,4 @@ senses:
   example: s-w-349505
 examples:
 - s-w-349505
-image: { file: words/mama.png, prompt: "Only the red panda and the panda. The red panda wearing a small apron hugging the panda warmly like a mom, cozy kitchen" }
+image: { file: words/mama.png, prompt: "Only the red panda and its mother, a bigger grown-up red panda with the same red panda colours and face, taller than the red panda and wearing a small apron. The mother hugs the little red panda warmly in a cozy kitchen, both smiling. The mother is part of this scene even though she is not in the lineup. No signature, no watermark." }

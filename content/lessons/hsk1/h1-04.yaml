@@ -8,8 +8,8 @@ titleHanzi: 我的家
 goal: Nói người và vật là của ai, nói mình cũng giống người khác
 scene:
   file: lessons/h1-04.png
-  cast: [ redpanda, takin, panda ]
-  prompt: Only the red panda, the takin and the baby panda. The red panda welcomes the takin at the door of a cozy little house; inside, the baby panda waves from a small desk with a schoolbag.
+  cast: [ redpanda, takin ]
+  prompt: Only the red panda, the takin and the red panda's little brother, a smaller red panda with the same red panda colours and face. The red panda welcomes the takin at the door of a cozy little house; inside, the little red panda waves from a small desk with a schoolbag. The little brother is part of this scene even though he is not in the lineup.
 sentences:
   - { id: s-h1-04-01, hanzi: 这是我的家。, pinyin: zhè shì wǒ de jiā., vi: Đây là nhà tớ., speaker: redpanda, style: cheerful }
   - { id: s-h1-04-02, hanzi: 那是谁？, pinyin: nà shì shéi?, vi: Kia là ai?, speaker: takin }
