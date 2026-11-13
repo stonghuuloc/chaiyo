@@ -233,7 +233,7 @@ Gently rounded, never sharp and never bubbly. Day cells 12px, the primary action
 - **States:** studied = Lantern Red disc with a white check; frozen = Freeze Blue snowflake; today = Lantern Red Wash fill, red border, Ink bold label, empty red ring; future = empty Faint Pencil ring.
 
 ### Navigation (tab bar)
-- **Style:** a floating 66px frosted pill, `position: fixed` 14px above the bottom safe area, max 402px wide. Same frost as the chips. Four tabs: Hôm nay, Lộ trình, Luyện tập, Tôi. Hidden inside lessons.
+- **Style:** a floating 66px frosted pill, `position: fixed` 14px above the bottom safe area, max 402px wide. Same frost as the chips. Four tabs: Hôm nay, Lộ trình, Luyện tập, Tài khoản. Hidden inside lessons.
 - **Desktop:** from 1024px the same four items move into a 232px sidebar on the left: flat Notebook Paper (not frost, because it sits beside the page), 1px Ruled Line on its right edge, the logo (32px tile + "Chaiyo!" in Literata 600 20px) at the top, then 48px rows: 24px icon left of a 15px/600 label. Active row: the milky selection pill at rest, bold-duotone red icon, Ink label. Hover: Shaded Paper fill. The sidebar also shows on pushed browse screens (hub, list, detail, settings) with the owning tab active; focus flows hide it.
 - **Items:** Solar line-duotone icon (24px) over a Tab label in Graphite. The active tab swaps to bold-duotone: the silhouette is Lantern Red (`--duo-c` at `--duo: 1`) and the inner detail is Lantern Red Wash, with an Ink label. Line and bold icons are stacked and crossfade by opacity only; there is no icon scale.
 

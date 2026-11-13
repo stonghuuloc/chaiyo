@@ -6,7 +6,7 @@ Decisions this file rests on:
 - A lesson is a **hub of 7 resumable sections**; each section is a full-screen step flow that saves on exit.
 - Practice is **per skill** (Thẻ từ, Nghe, Viết chữ): each word has a review state per skill; the app grades each answer and maps it to an FSRS rating. One mixed daily session (K1) clears every skill's due cards; K2 covers the skills outside the mix.
 - The **Lexicon is a pushed list** (Từ của tôi, T3a) reached from Luyện tập; the Dictionary is a lookup source (X1), no search screen.
-- One responsive PWA, phone and desktop both first-class (ADR 0008, `docs/responsive.md`). Below 1024px: one column, tab bar (Hôm nay · Lộ trình · Luyện tập · Tôi) on tab roots only, hidden inside lessons, practice, tests and every pushed screen. From 1024px: the same four items in a left sidebar, shown on tab roots and pushed browse screens, hidden in focus flows (lessons, practice, tests, onboarding). Desktop prototypes: `prototype/desktop/`.
+- One responsive PWA, phone and desktop both first-class (ADR 0008, `docs/responsive.md`). Below 1024px: one column, tab bar (Hôm nay · Lộ trình · Luyện tập · Tài khoản) on tab roots only, hidden inside lessons, practice, tests and every pushed screen. From 1024px: the same four items in a left sidebar, shown on tab roots and pushed browse screens, hidden in focus flows (lessons, practice, tests, onboarding). Desktop prototypes: `prototype/desktop/`.
 
 ## Inventory
 
@@ -23,7 +23,7 @@ Decisions this file rests on:
 | T2 | Lộ trình (Roadmap) | Tab root | Tab, T1 | `t2-roadmap.html` | |
 | T3 | Luyện tập (practice hub: skills, Thi thử, Từ của tôi) | Tab root | Tab | `t3-practice.html` | ✅ |
 | T3a | Từ của tôi (Lexicon) | List | T3, T4, L1, W1 | `t3-words.html` | ✅ |
-| T4 | Tôi (Learner Stats + menu) | Tab root | Tab | `t4-me.html` | |
+| T4 | Tài khoản (Learner Stats + menu) | Tab root | Tab | `t4-me.html` | |
 | L0 | Nhập môn (Pinyin Primer hub, Bài 0) | Hub | T1 first lesson, T2 | `l0-hub.html` | ✅ |
 | L0a | Primer section (Thanh điệu · Vận mẫu · Thanh mẫu · Quy tắc viết · Biến điệu) | Step flow | L0 | `l0-section.html` | ✅ |
 | L1 | Bài học (lesson hub) | Hub | T1, T2 | `l1-hub.html` | ✅ |
@@ -90,7 +90,7 @@ Any hanzi in any text (not in an Exam-mode Mock Test) ─tap─▶ X1 Lookup ─
 
 T2 Lộ trình ─▶ L1 (passed or current lesson; locked lessons show why) · ─▶ M1 Mock list per level
 T3 Luyện tập ─▶ K1 (mix or one skill) · K2 Nói / Viết đoạn · M1 Thi thử ─▶ K2 intro ─▶ M2 ─▶ M3 · T3a Từ của tôi ─▶ W1 / W2
-T4 Tôi ─▶ U1 Badges · U2 Friends ─▶ U3 Profile · U4 Settings · T3a Từ của tôi · A1/A2 (Admin)
+T4 Tài khoản ─▶ U1 Badges · U2 Friends ─▶ U3 Profile · U4 Settings · T3a Từ của tôi · A1/A2 (Admin)
 ```
 
 ## Per-screen briefs
@@ -148,7 +148,7 @@ Columns: **Job** (why the screen exists) · **Primary action** (exactly one) · 
 | X1 | Look up a tapped hanzi without losing your place | "Xem chi tiết" → W1/W2 | Word under the tap (longest dictionary match, user can shrink to single char), pinyin, Hán Việt, meaning, audio | **Must never cover the tapped text**: anchors above or below it · Multi-char ambiguity → chip row to pick 学 / 学生 |
 | X2 | Report a content error in 2 taps | "Gửi" | Auto context (word/lesson/step id), category chips (nghĩa sai · pinyin sai · âm thanh lỗi · khác), optional note | Sent → toast · Offline → queue and send later |
 
-### Tôi children and Admin
+### Tài khoản children and Admin
 
 | ID | Job | Primary action | Data | States |
 |---|---|---|---|---|

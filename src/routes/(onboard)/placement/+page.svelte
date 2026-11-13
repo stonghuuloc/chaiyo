@@ -29,6 +29,25 @@
 		return () => player.element()?.pause();
 	});
 
+	let playing = $state(false);
+
+	$effect(() => {
+		void stepId;
+		const el = player.element();
+		if (!el) return;
+		const on = () => (playing = true);
+		const off = () => (playing = false);
+		const stops = ['pause', 'ended', 'error', 'emptied', 'abort'];
+		playing = !el.paused && !el.ended;
+		el.addEventListener('playing', on);
+		stops.forEach((name) => el.addEventListener(name, off));
+		return () => {
+			el.removeEventListener('playing', on);
+			stops.forEach((name) => el.removeEventListener(name, off));
+			playing = false;
+		};
+	});
+
 	function submit(chosen: string | null) {
 		const at = new Date().toISOString();
 		const ms = Math.round(performance.now() - shown);
@@ -105,7 +124,8 @@
 			<div class="relative mt-5 grid h-[168px] place-items-center rounded-action bg-shaded-paper">
 				<button
 					type="button"
-					class="grid size-[72px] place-items-center rounded-full bg-white text-primary shadow-lift"
+					class="speaker"
+					class:playing
 					aria-label={m.placement_replay()}
 					onclick={() => void play(item.clip)}
 				>
@@ -161,3 +181,60 @@
 		<Button variant="outline" onclick={leave}>{m.placement_leave()}</Button>
 	</div>
 </Sheet>
+
+<style>
+	.speaker {
+		position: relative;
+		display: grid;
+		place-items: center;
+		width: 72px;
+		height: 72px;
+		border-radius: var(--radius-pill);
+		background: var(--color-white);
+		color: var(--color-primary);
+		box-shadow: var(--shadow-lift);
+		transition:
+			background-color var(--motion-press),
+			color var(--motion-press);
+	}
+
+	.speaker.playing {
+		background: var(--color-primary);
+		color: var(--color-white);
+	}
+
+	.speaker::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		border: 3px solid var(--color-primary);
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.speaker.playing::after {
+		opacity: 1;
+		inset: -8px;
+		border-color: var(--color-lantern-red-wash);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.speaker.playing::after {
+			inset: 0;
+			border-color: var(--color-primary);
+			animation: speaker-pulse 1.1s ease-out infinite;
+		}
+	}
+
+	@keyframes speaker-pulse {
+		from {
+			opacity: 0.6;
+			transform: scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: scale(1.6);
+		}
+	}
+</style>
