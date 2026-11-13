@@ -76,7 +76,7 @@ def test_review_page_lists_rare_star_and_labels(gen):
     out = stage_words(gen, 3)
     gen.review(out, 1)
     page = (out / 'review-1.md').read_text(encoding='utf-8')
-    assert '★ b' in page and '- a' in page and 'AI viết' in page and 'CC-CEDICT: 0.0 word' in page
+    assert '★ b' in page and '- a' in page and 'AI viết' not in page and 'CC-CEDICT: 0.0 word' in page
     assert 'staged-set sha: ' in page and 'rare senses 1 in 1 words' in page
 
 

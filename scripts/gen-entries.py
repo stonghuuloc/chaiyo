@@ -914,8 +914,8 @@ def review(out, seed, size=20):
             lines.append(f'**{pos}**')
             for s in senses:
                 x = sentences.get(s.get('example'))
-                label = ('Tatoeba #' + x['source'].split(':')[1]) if x and x['source'].startswith('tatoeba:') else 'AI viết'
-                lines.append(f'- {"★ " if s.get("rare") else ""}{s["vi"]}' + (f' — {x["hanzi"]} / {x["pinyin"]} / {x["vi"]} ({label})' if x else ''))
+                label = f' (Tatoeba #{x["source"].split(":")[1]})' if x and x['source'].startswith('tatoeba:') else ''
+                lines.append(f'- {"★ " if s.get("rare") else ""}{s["vi"]}' + (f' — {x["hanzi"]} / {x["pinyin"]} / {x["vi"]}{label}' if x else ''))
             lines.append('')
         src_file = out / 'src' / f'{i}.json'
         if src_file.exists():
