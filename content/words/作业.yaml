@@ -1,0 +1,17 @@
+id: 作业
+hanzi: 作业
+pinyin: zuòyè
+hanviet: tác nghiệp
+level: 2
+pos:
+- n
+senses:
+- vi: bài tập về nhà
+  pos: n
+  example: s-w-4673804
+- vi: công việc, nhiệm vụ
+  pos: n
+  example: s-w-1695437
+examples:
+- s-w-4673804
+- s-w-1695437

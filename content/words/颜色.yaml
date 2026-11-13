@@ -1,0 +1,23 @@
+id: 颜色
+hanzi: 颜色
+pinyin: yánsè
+hanviet: nhan sắc
+level: 2
+pos:
+- n
+senses:
+- vi: màu, màu sắc
+  pos: n
+  example: s-w-2161120
+- vi: chất màu, thuốc màu
+  pos: n
+  rare: true
+  example: s-w-ai-b2f7bbde
+- vi: thuốc nhuộm
+  pos: n
+  rare: true
+  example: s-w-ai-9994b9ab
+examples:
+- s-w-2161120
+- s-w-ai-b2f7bbde
+- s-w-ai-9994b9ab

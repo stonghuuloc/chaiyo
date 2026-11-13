@@ -1,0 +1,18 @@
+id: 流行
+hanzi: 流行
+pinyin: liúxíng
+hanviet: lưu hành
+level: 2
+pos:
+- v
+- adj
+senses:
+- vi: lan truyền, lây lan (bệnh, tin tức)
+  pos: v
+  example: s-w-1424458
+- vi: thịnh hành, phổ biến
+  pos: adj
+  example: s-w-415644
+examples:
+- s-w-1424458
+- s-w-415644

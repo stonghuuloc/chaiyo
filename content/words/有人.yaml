@@ -1,0 +1,25 @@
+id: 有人
+hanzi: 有人
+pinyin: yǒurén
+hanviet: hữu nhân
+level: 2
+pos:
+- pron
+- phrase
+senses:
+- vi: ai đó, bất kỳ ai
+  pos: pron
+  example: s-w-2062938
+- vi: một số người
+  pos: pron
+  example: s-w-ai-15c35ff5
+- vi: có người ở đó
+  pos: phrase
+  example: s-w-5942072
+- vi: đang có người (đã bị chiếm)
+  pos: phrase
+  example: s-w-10026346
+examples:
+- s-w-2062938
+- s-w-ai-15c35ff5
+- s-w-5942072

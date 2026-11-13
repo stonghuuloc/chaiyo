@@ -1,0 +1,26 @@
+id: 倒-dao4
+hanzi: 倒
+pinyin: dào
+hanviet: đảo
+level: 2
+pos:
+- v
+- adj
+- adv
+senses:
+- vi: rót, đổ (nước, chất lỏng)
+  pos: v
+  example: s-w-8696293
+- vi: úp ngược, lật ngược (vật)
+  pos: v
+  example: s-w-ai-7e082f55
+- vi: lùi (xe), đi lùi (chỉ dùng trong 倒车)
+  pos: v
+  example: s-w-ai-5f6245cb
+- vi: ngược lại, có điều, nhưng
+  pos: adv
+  example: s-w-403712
+examples:
+- s-w-8696293
+- s-w-ai-7e082f55
+- s-w-ai-5f6245cb

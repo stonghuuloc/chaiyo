@@ -1,0 +1,13 @@
+id: 动物
+hanzi: 动物
+pinyin: dòngwù
+hanviet: động vật
+level: 2
+pos:
+- n
+senses:
+- vi: động vật
+  pos: n
+  example: s-w-512178
+examples:
+- s-w-512178

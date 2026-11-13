@@ -1,0 +1,21 @@
+id: 单位
+hanzi: 单位
+pinyin: dānwèi
+hanviet: đơn vị
+level: 2
+pos:
+- n
+senses:
+- vi: cơ quan, nơi làm việc
+  pos: n
+  example: s-w-785378
+- vi: đơn vị (đo lường)
+  pos: n
+  example: s-w-ai-bbdbcea3
+- vi: tập thể, đơn vị (nhóm người)
+  pos: n
+  example: s-w-ai-f3bde778
+examples:
+- s-w-785378
+- s-w-ai-bbdbcea3
+- s-w-ai-f3bde778

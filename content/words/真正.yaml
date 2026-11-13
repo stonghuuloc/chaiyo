@@ -1,0 +1,18 @@
+id: 真正
+hanzi: 真正
+pinyin: zhēnzhèng
+hanviet: chân chính
+level: 2
+pos:
+- adj
+- adv
+senses:
+- vi: thật, chân chính
+  pos: adj
+  example: s-w-10981527
+- vi: thật sự, quả thật
+  pos: adv
+  example: s-w-4705813
+examples:
+- s-w-10981527
+- s-w-4705813

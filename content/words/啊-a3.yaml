@@ -1,0 +1,18 @@
+id: 啊-a3
+hanzi: 啊
+pinyin: ǎ
+hanviet: a
+level: 2
+pos:
+- interj
+- part
+senses:
+- vi: Hả? (ngạc nhiên, nghi ngờ)
+  pos: interj
+  example: s-w-11235954
+- vi: Hỏi nhẹ (sao vậy, thế nào)
+  pos: part
+  example: s-w-ai-ed6dff73
+examples:
+- s-w-11235954
+- s-w-ai-ed6dff73

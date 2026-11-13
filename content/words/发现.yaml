@@ -1,0 +1,22 @@
+id: 发现
+hanzi: 发现
+pinyin: fāxiàn
+hanviet: phát hiện
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: phát hiện, tìm thấy
+  pos: v
+  example: s-w-343914
+- vi: nhận ra, để ý thấy
+  pos: v
+  example: s-w-9433046
+- vi: sự phát hiện, khám phá
+  pos: n
+  example: s-w-332427
+examples:
+- s-w-343914
+- s-w-9433046
+- s-w-332427

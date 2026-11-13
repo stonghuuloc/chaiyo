@@ -1,0 +1,19 @@
+id: 相机
+hanzi: 相机
+pinyin: xiàngjī
+hanviet: tướng cơ
+level: 2
+pos:
+- n
+- phrase
+senses:
+- vi: máy ảnh
+  pos: n
+  example: s-w-8795147
+- vi: tùy cơ ứng biến (nhân lúc thích hợp)
+  pos: phrase
+  rare: true
+  example: s-w-ai-392ad813
+examples:
+- s-w-8795147
+- s-w-ai-392ad813

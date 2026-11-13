@@ -1,0 +1,23 @@
+id: 以外
+hanzi: 以外
+pinyin: yǐwài
+hanviet: dĩ ngoại
+level: 2
+pos:
+- prep
+- n
+senses:
+- vi: ngoài, trừ (đi với 除了)
+  pos: prep
+  example: s-w-684827
+- vi: ngoài, bên ngoài (phạm vi, thời gian)
+  pos: n
+  example: s-w-3493150
+- vi: bên kia (của một vật, nơi chốn)
+  pos: n
+  rare: true
+  example: s-w-ai-8f0fba31
+examples:
+- s-w-684827
+- s-w-3493150
+- s-w-ai-8f0fba31

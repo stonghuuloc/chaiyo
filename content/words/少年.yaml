@@ -1,0 +1,22 @@
+id: 少年
+hanzi: 少年
+pinyin: shàonián
+hanviet: thiếu niên
+level: 2
+pos:
+- n
+senses:
+- vi: cậu bé, thiếu niên
+  pos: n
+  example: s-w-347096
+- vi: chàng trai
+  pos: n
+  example: s-w-2669709
+- vi: tuổi thiếu niên
+  pos: n
+  rare: true
+  example: s-w-ai-0a11af5c
+examples:
+- s-w-347096
+- s-w-2669709
+- s-w-ai-0a11af5c

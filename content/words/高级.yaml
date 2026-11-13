@@ -1,0 +1,21 @@
+id: 高级
+hanzi: 高级
+pinyin: gāojí
+hanviet: cao cấp
+level: 2
+pos:
+- adj
+senses:
+- vi: cao cấp, sang trọng (chất lượng)
+  pos: adj
+  example: s-w-ai-30929c0f
+- vi: trình độ cao, nâng cao
+  pos: adj
+  example: s-w-ai-96e8d073
+- vi: cấp cao (chức vụ)
+  pos: adj
+  example: s-w-ai-f8988866
+examples:
+- s-w-ai-30929c0f
+- s-w-ai-96e8d073
+- s-w-ai-f8988866

@@ -1,0 +1,23 @@
+id: 句
+hanzi: 句
+pinyin: jù
+hanviet: câu
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: câu văn, câu nói
+  pos: n
+  example: s-w-900752
+- vi: mệnh đề (ngữ pháp)
+  pos: n
+  rare: true
+  example: s-w-ai-94e2b9c4
+- vi: câu (lời nói, câu thơ)
+  pos: mw
+  example: s-w-ai-c8287ed1
+examples:
+- s-w-900752
+- s-w-ai-94e2b9c4
+- s-w-ai-c8287ed1

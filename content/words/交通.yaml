@@ -1,0 +1,17 @@
+id: 交通
+hanzi: 交通
+pinyin: jiāotōng
+hanviet: giao thông
+level: 2
+pos:
+- n
+senses:
+- vi: giao thông, xe cộ trên đường
+  pos: n
+  example: s-w-3667795
+- vi: giao thông, vận tải (hệ thống đi lại)
+  pos: n
+  example: s-w-474220
+examples:
+- s-w-3667795
+- s-w-474220

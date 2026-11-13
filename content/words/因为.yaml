@@ -1,0 +1,18 @@
+id: 因为
+hanzi: 因为
+pinyin: yīnwèi
+hanviet: nhân vị
+level: 2
+pos:
+- conj
+- prep
+senses:
+- vi: vì, bởi vì (nêu lý do)
+  pos: conj
+  example: s-w-481162
+- vi: vì, do (nguyên nhân)
+  pos: prep
+  example: s-w-2325065
+examples:
+- s-w-481162
+- s-w-2325065

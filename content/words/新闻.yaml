@@ -1,0 +1,13 @@
+id: 新闻
+hanzi: 新闻
+pinyin: xīnwén
+hanviet: tân văn
+level: 2
+pos:
+- n
+senses:
+- vi: tin tức
+  pos: n
+  example: s-w-345984
+examples:
+- s-w-345984

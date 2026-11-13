@@ -1,0 +1,18 @@
+id: 大人
+hanzi: 大人
+pinyin: dàren
+hanviet: đại nhân
+level: 2
+pos:
+- n
+senses:
+- vi: người lớn, người trưởng thành
+  pos: n
+  example: s-w-471372
+- vi: ngài, đại nhân (cách xưng hô tôn kính cấp trên)
+  pos: n
+  rare: true
+  example: s-w-ai-35c5bd2b
+examples:
+- s-w-471372
+- s-w-ai-35c5bd2b

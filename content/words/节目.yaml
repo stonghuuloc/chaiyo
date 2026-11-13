@@ -1,0 +1,17 @@
+id: 节目
+hanzi: 节目
+pinyin: jiémù
+hanviet: tiết mục
+level: 2
+pos:
+- n
+senses:
+- vi: chương trình (truyền hình, phát thanh)
+  pos: n
+  example: s-w-3534639
+- vi: tiết mục (biểu diễn)
+  pos: n
+  example: s-w-766011
+examples:
+- s-w-3534639
+- s-w-766011

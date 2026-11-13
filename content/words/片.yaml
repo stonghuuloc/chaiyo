@@ -1,0 +1,33 @@
+id: 片
+hanzi: 片
+pinyin: piàn
+hanviet: phiến
+level: 2
+pos:
+- n
+- v
+- mw
+senses:
+- vi: mảnh, lát (mỏng)
+  pos: n
+  example: s-w-ai-1dda6dc3
+- vi: phim (điện ảnh, truyền hình)
+  pos: n
+  example: s-w-4952819
+- vi: thái, cắt (thành lát mỏng)
+  pos: v
+  rare: true
+  example: s-w-ai-16577094
+- vi: đĩa (CD, DVD, phim)
+  pos: mw
+  example: s-w-735385
+- vi: miếng, viên (thuốc), mảnh (đất, mặt nước)
+  pos: mw
+  example: s-w-10011733
+- vi: cảnh, mảng (không khí, âm thanh; chỉ dùng trong 一片 + danh từ chỉ cảnh, không khí hay âm thanh (一片安静, 一片寂静, 一片欢声))
+  pos: mw
+  example: s-w-ai-8b9ca83d
+examples:
+- s-w-ai-1dda6dc3
+- s-w-4952819
+- s-w-ai-16577094

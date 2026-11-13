@@ -1,0 +1,17 @@
+id: 西医
+hanzi: 西医
+pinyin: xīyī
+hanviet: tây y
+level: 2
+pos:
+- n
+senses:
+- vi: y học phương Tây
+  pos: n
+  example: s-w-ai-82a0fe69
+- vi: bác sĩ Tây y
+  pos: n
+  example: s-w-ai-698b30f1
+examples:
+- s-w-ai-82a0fe69
+- s-w-ai-698b30f1

@@ -1,0 +1,26 @@
+id: 油
+hanzi: 油
+pinyin: yóu
+hanviet: du
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: dầu, mỡ
+  pos: n
+  example: s-w-10696011
+- vi: dầu mỏ
+  pos: n
+  example: s-w-ai-31ddd570
+- vi: béo, nhiều dầu
+  pos: adj
+  example: s-w-ai-2aaf496a
+- vi: lém lỉnh, xảo quyệt
+  pos: adj
+  rare: true
+  example: s-w-ai-c1d0b090
+examples:
+- s-w-10696011
+- s-w-ai-31ddd570
+- s-w-ai-2aaf496a

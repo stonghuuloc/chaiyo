@@ -1,0 +1,17 @@
+id: 公路
+hanzi: 公路
+pinyin: gōnglù
+hanviet: công lộ
+level: 2
+pos:
+- n
+senses:
+- vi: đường bộ, đường (cho xe cộ đi lại)
+  pos: n
+  example: s-w-6482591
+- vi: đường cao tốc
+  pos: n
+  example: s-w-ai-4a0e0d97
+examples:
+- s-w-6482591
+- s-w-ai-4a0e0d97

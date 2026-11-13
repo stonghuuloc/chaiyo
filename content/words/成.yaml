@@ -1,0 +1,36 @@
+id: 成
+hanzi: 成
+pinyin: chéng
+hanviet: thành
+level: 2
+pos:
+- v
+- adj
+- interj
+- num
+senses:
+- vi: thành công
+  pos: v
+  example: s-w-13922480
+- vi: hoàn thành, làm xong (việc)
+  pos: v
+  example: s-w-2029467
+- vi: trở thành, biến thành
+  pos: v
+  example: s-w-2028018
+- vi: ổn, được
+  pos: adj
+  rare: true
+  example: s-w-ai-f76a9705
+- vi: OK, được rồi
+  pos: interj
+  rare: true
+  example: s-w-ai-dbccda4e
+- vi: một phần mười
+  pos: num
+  rare: true
+  example: s-w-ai-eddc02b7
+examples:
+- s-w-13922480
+- s-w-2029467
+- s-w-2028018

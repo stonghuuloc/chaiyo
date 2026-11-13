@@ -1,0 +1,41 @@
+id: 活动
+hanzi: 活动
+pinyin: huódòng
+hanviet: hoạt động
+level: 2
+pos:
+- n
+- v
+- adj
+senses:
+- vi: hoạt động
+  pos: n
+  example: s-w-8677654
+- vi: chiến dịch, đợt khuyến mãi
+  pos: n
+  example: s-w-ai-f61b94da
+- vi: vận động, tập thể dục
+  pos: v
+  example: s-w-ai-17e1dd59
+- vi: cử động, đi lại
+  pos: v
+  example: s-w-ai-7ccb3ad0
+- vi: dùng quan hệ, chạy chọt
+  pos: v
+  rare: true
+  example: s-w-ai-ae51673e
+- vi: lỏng, lung lay
+  pos: adj
+  example: s-w-ai-a5b106a0
+- vi: tích cực, năng nổ (chỉ dùng trong 活动分子)
+  pos: adj
+  rare: true
+  example: s-w-ai-c644339f
+- vi: di động, tháo lắp được
+  pos: adj
+  rare: true
+  example: s-w-ai-ae6bef44
+examples:
+- s-w-8677654
+- s-w-ai-f61b94da
+- s-w-ai-17e1dd59

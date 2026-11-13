@@ -1,0 +1,18 @@
+id: 检查
+hanzi: 检查
+pinyin: jiǎnchá
+hanviet: kiểm tra
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: kiểm tra, khám (sức khỏe, hành lý)
+  pos: v
+  example: s-w-3890963
+- vi: sự kiểm tra, đợt kiểm tra
+  pos: n
+  example: s-w-756862
+examples:
+- s-w-3890963
+- s-w-756862

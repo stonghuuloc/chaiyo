@@ -1,0 +1,17 @@
+id: 这么
+hanzi: 这么
+pinyin: zhème
+hanviet: giá ma
+level: 2
+pos:
+- pron
+senses:
+- vi: đến thế, đến mức này (chỉ mức độ)
+  pos: pron
+  example: s-w-1157366
+- vi: như thế này, như vậy, theo cách này
+  pos: pron
+  example: s-w-335011
+examples:
+- s-w-1157366
+- s-w-335011

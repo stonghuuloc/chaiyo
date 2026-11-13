@@ -1,0 +1,21 @@
+id: 角
+hanzi: 角
+pinyin: jiǎo
+hanviet: giác
+level: 2
+pos:
+- n
+senses:
+- vi: góc
+  pos: n
+  example: s-w-1582763
+- vi: hào (đơn vị tiền)
+  pos: n
+  example: s-w-ai-113dc42c
+- vi: sừng
+  pos: n
+  example: s-w-ai-bf277582
+examples:
+- s-w-1582763
+- s-w-ai-113dc42c
+- s-w-ai-bf277582

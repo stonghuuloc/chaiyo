@@ -1,0 +1,35 @@
+id: 发
+hanzi: 发
+pinyin: fā
+hanviet: phát
+level: 2
+pos:
+- v
+- mw
+senses:
+- vi: gửi (thư, tin nhắn)
+  pos: v
+  example: s-w-1870348
+- vi: phát, cấp (huy chương, giấy tờ)
+  pos: v
+  example: s-w-4835906
+- vi: phát hành, công bố (bài viết, thông báo)
+  pos: v
+  example: s-w-ai-a1d46179
+- vi: phát triển
+  pos: v
+  example: s-w-ai-d20bf0c7
+- vi: nổi (giận), bộc lộ (cảm xúc)
+  pos: v
+  example: s-w-ai-46c9c38d
+- vi: làm giàu, phát tài
+  pos: v
+  example: s-w-ai-63db31fa
+- vi: phát (đạn)
+  pos: mw
+  rare: true
+  example: s-w-ai-d8235b2f
+examples:
+- s-w-1870348
+- s-w-4835906
+- s-w-ai-a1d46179

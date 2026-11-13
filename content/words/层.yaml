@@ -1,0 +1,27 @@
+id: 层
+hanzi: 层
+pinyin: céng
+hanviet: tằng
+level: 2
+pos:
+- n
+- mw
+- v
+senses:
+- vi: lớp
+  pos: n
+  example: s-w-ai-d707b6e5
+- vi: tầng (nhà)
+  pos: n
+  example: s-w-ai-c0b2da31
+- vi: tầng, lớp (nhà, vật xếp chồng)
+  pos: mw
+  example: s-w-ai-b6ad1423
+- vi: xếp chồng lên nhau
+  pos: v
+  rare: true
+  example: s-w-ai-b170fe46
+examples:
+- s-w-ai-d707b6e5
+- s-w-ai-c0b2da31
+- s-w-ai-b6ad1423

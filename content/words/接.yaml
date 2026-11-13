@@ -1,0 +1,34 @@
+id: 接
+hanzi: 接
+pinyin: jiē
+hanviet: tiếp
+level: 2
+pos:
+- v
+senses:
+- vi: đón (người)
+  pos: v
+  example: s-w-13946996
+- vi: nghe, trả lời (điện thoại)
+  pos: v
+  example: s-w-4104698
+- vi: nhận (cuộc gọi, tin)
+  pos: v
+  example: s-w-ai-c4c7c705
+- vi: bắt, đỡ (vật đang rơi)
+  pos: v
+  example: s-w-ai-724f2216
+- vi: nối, ghép (lại với nhau)
+  pos: v
+  example: s-w-ai-69298175
+- vi: thay ca, tiếp quản (cho ai)
+  pos: v
+  example: s-w-ai-5c553e94
+- vi: nối dài (dây, ống)
+  pos: v
+  rare: true
+  example: s-w-ai-41b8a87a
+examples:
+- s-w-13946996
+- s-w-4104698
+- s-w-ai-c4c7c705

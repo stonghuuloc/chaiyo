@@ -1,0 +1,18 @@
+id: 广告
+hanzi: 广告
+pinyin: guǎnggào
+hanviet: quảng cáo
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: quảng cáo, mẩu quảng cáo
+  pos: n
+  example: s-w-333273
+- vi: quảng cáo (sản phẩm, dịch vụ)
+  pos: v
+  example: s-w-ai-c47cca75
+examples:
+- s-w-333273
+- s-w-ai-c47cca75

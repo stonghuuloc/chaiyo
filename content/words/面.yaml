@@ -1,0 +1,50 @@
+id: 面
+hanzi: 面
+pinyin: miàn
+hanviet: diện
+level: 2
+pos:
+- n
+- v
+- mw
+- adj
+senses:
+- vi: mặt
+  pos: n
+  example: s-w-ai-30feec8f
+- vi: bên, phía (chỉ dùng trong 前面, 后面, 左面, 右面, 对面)
+  pos: n
+  example: s-w-ai-443dfd47
+- vi: bề mặt (chỉ dùng trong 地面, 水面, 桌面, 页面)
+  pos: n
+  example: s-w-ai-dd86a90b
+- vi: khía cạnh (chỉ dùng trong 方面, 各方面, 多方面)
+  pos: n
+  example: s-w-ai-5f81e7b4
+- vi: phía trên, trên (chỉ dùng trong 上面)
+  pos: n
+  example: s-w-ai-220c4efc
+- vi: mì, sợi mì
+  pos: n
+  example: s-w-13142061
+- vi: bột mì (chỉ dùng trong 面粉, 面包, 面团)
+  pos: n
+  example: s-w-ai-17170086
+- vi: đối diện, đối mặt
+  pos: v
+  example: s-w-ai-81d8dcc3
+- vi: tấm, chiếc (gương, cờ, trống)
+  pos: mw
+  example: s-w-ai-c3b6dbf8
+- vi: bở, không giòn (đồ ăn)
+  pos: adj
+  rare: true
+  example: s-w-ai-e11046c0
+- vi: nhu nhược, vô dụng (lóng)
+  pos: adj
+  rare: true
+  example: s-w-ai-dcb054c0
+examples:
+- s-w-ai-30feec8f
+- s-w-ai-443dfd47
+- s-w-ai-dd86a90b

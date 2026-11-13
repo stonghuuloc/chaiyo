@@ -1,0 +1,23 @@
+id: 闻
+hanzi: 闻
+pinyin: wén
+hanviet: văn
+level: 2
+pos:
+- v
+- n
+- adj
+senses:
+- vi: ngửi, ngửi thấy
+  pos: v
+  example: s-w-3845346
+- vi: tin tức (chỉ dùng trong 新闻, 新闻社, 新闻稿)
+  pos: n
+  example: s-w-ai-92746700
+- vi: nổi tiếng, nổi danh (chỉ dùng trong 闻名, 闻名全国, 闻名于世)
+  pos: adj
+  example: s-w-ai-98f0e7b4
+examples:
+- s-w-3845346
+- s-w-ai-92746700
+- s-w-ai-98f0e7b4

@@ -1,0 +1,17 @@
+id: 声音
+hanzi: 声音
+pinyin: shēngyīn
+hanviet: thanh âm
+level: 2
+pos:
+- n
+senses:
+- vi: âm thanh, tiếng động
+  pos: n
+  example: s-w-9955874
+- vi: giọng (nói, hát)
+  pos: n
+  example: s-w-1454448
+examples:
+- s-w-9955874
+- s-w-1454448

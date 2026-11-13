@@ -1,0 +1,18 @@
+id: 作文
+hanzi: 作文
+pinyin: zuòwén
+hanviet: tác văn
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: bài văn, bài làm văn
+  pos: n
+  example: s-w-426366
+- vi: viết (bài văn)
+  pos: v
+  example: s-w-ai-e346b864
+examples:
+- s-w-426366
+- s-w-ai-e346b864

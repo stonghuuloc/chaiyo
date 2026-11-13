@@ -1,0 +1,18 @@
+id: 好多
+hanzi: 好多
+pinyin: hǎoduō
+hanviet: hảo đa
+level: 2
+pos:
+- num
+- adv
+senses:
+- vi: nhiều, khá nhiều (người, đồ vật)
+  pos: num
+  example: s-w-382503
+- vi: đỡ hơn nhiều (bệnh, tâm trạng)
+  pos: adv
+  example: s-w-334279
+examples:
+- s-w-382503
+- s-w-334279

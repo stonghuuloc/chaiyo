@@ -1,0 +1,17 @@
+id: 照顾
+hanzi: 照顾
+pinyin: zhàogu
+hanviet: chiếu cố
+level: 2
+pos:
+- v
+senses:
+- vi: chăm sóc, trông nom (người, vật)
+  pos: v
+  example: s-w-410898
+- vi: quan tâm, lưu ý đến (cảm xúc người khác)
+  pos: v
+  example: s-w-ai-481ef068
+examples:
+- s-w-410898
+- s-w-ai-481ef068

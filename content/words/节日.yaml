@@ -1,0 +1,17 @@
+id: 节日
+hanzi: 节日
+pinyin: jiérì
+hanviet: tiết nhật
+level: 2
+pos:
+- n
+senses:
+- vi: ngày lễ
+  pos: n
+  example: s-w-8591239
+- vi: lễ hội
+  pos: n
+  example: s-w-2032317
+examples:
+- s-w-8591239
+- s-w-2032317

@@ -1,0 +1,19 @@
+id: 笔记
+hanzi: 笔记
+pinyin: bǐjì
+hanviet: bút ký
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: bản ghi chép, ghi chú
+  pos: n
+  example: s-w-5571039
+- vi: ghi chép (lời, nội dung)
+  pos: v
+  rare: true
+  example: s-w-ai-a40e42a0
+examples:
+- s-w-5571039
+- s-w-ai-a40e42a0

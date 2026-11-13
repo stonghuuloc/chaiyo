@@ -1,0 +1,17 @@
+id: 市
+hanzi: 市
+pinyin: shì
+hanviet: thị
+level: 2
+pos:
+- n
+senses:
+- vi: thành phố
+  pos: n
+  example: s-w-1506818
+- vi: chợ
+  pos: n
+  example: s-w-ai-77f3a347
+examples:
+- s-w-1506818
+- s-w-ai-77f3a347

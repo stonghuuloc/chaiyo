@@ -1,0 +1,29 @@
+id: 气
+hanzi: 气
+pinyin: qì
+hanviet: khí
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: khí; không khí
+  pos: n
+  example: s-w-755855
+- vi: mùi (chỉ dùng trong 香气, 臭气, 气味)
+  pos: n
+  example: s-w-ai-8d26d7c7
+- vi: thời tiết (chỉ dùng trong 天气)
+  pos: n
+  example: s-w-ai-6daadb52
+- vi: khí (năng lượng sống)
+  pos: n
+  rare: true
+  example: s-w-ai-18cab235
+- vi: tức giận; làm tức, chọc tức (ai)
+  pos: v
+  example: s-w-9972435
+examples:
+- s-w-755855
+- s-w-ai-8d26d7c7
+- s-w-ai-6daadb52

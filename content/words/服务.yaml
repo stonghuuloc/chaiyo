@@ -1,0 +1,18 @@
+id: 服务
+hanzi: 服务
+pinyin: fúwù
+hanviet: phục vụ
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: phục vụ (ai)
+  pos: v
+  example: s-w-14065490
+- vi: dịch vụ
+  pos: n
+  example: s-w-9953258
+examples:
+- s-w-14065490
+- s-w-9953258

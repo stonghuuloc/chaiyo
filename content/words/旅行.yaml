@@ -1,0 +1,18 @@
+id: 旅行
+hanzi: 旅行
+pinyin: lǚxíng
+hanviet: lữ hành
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: đi du lịch
+  pos: v
+  example: s-w-1446790
+- vi: chuyến đi, cuộc hành trình
+  pos: n
+  example: s-w-390497
+examples:
+- s-w-1446790
+- s-w-390497

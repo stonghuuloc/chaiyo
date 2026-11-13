@@ -1,0 +1,18 @@
+id: 脏
+hanzi: 脏
+pinyin: zāng
+hanviet: tang
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: bẩn, dơ bẩn
+  pos: adj
+  example: s-w-13911124
+- vi: làm bẩn (quần áo, đồ vật; chỉ dùng trong 弄脏)
+  pos: v
+  example: s-w-ai-81de0c9f
+examples:
+- s-w-13911124
+- s-w-ai-81de0c9f

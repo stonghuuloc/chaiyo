@@ -1,0 +1,27 @@
+id: 实在
+hanzi: 实在
+pinyin: shízài
+hanviet: thực tại
+level: 2
+pos:
+- adv
+- adj
+- n
+senses:
+- vi: thật sự, quả thật
+  pos: adv
+  example: s-w-405744
+- vi: thật, có thật
+  pos: adj
+  example: s-w-ai-70eb1d09
+- vi: thật thà, đáng tin cậy
+  pos: adj
+  example: s-w-3703826
+- vi: hiện thực (triết học)
+  pos: n
+  rare: true
+  example: s-w-ai-f4da3c4b
+examples:
+- s-w-405744
+- s-w-ai-70eb1d09
+- s-w-3703826

@@ -1,0 +1,17 @@
+id: 数
+hanzi: 数
+pinyin: shǔ
+hanviet: sổ
+level: 2
+pos:
+- v
+senses:
+- vi: đếm, kể (tiền, số lượng)
+  pos: v
+  example: s-w-10535629
+- vi: được xem là, thuộc hàng
+  pos: v
+  example: s-w-ai-fb9e7bc8
+examples:
+- s-w-10535629
+- s-w-ai-fb9e7bc8

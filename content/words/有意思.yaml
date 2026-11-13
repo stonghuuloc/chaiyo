@@ -1,0 +1,18 @@
+id: 有意思
+hanzi: 有意思
+pinyin: yǒuyìsi
+hanviet: hữu ý tư
+level: 2
+pos:
+- phrase
+senses:
+- vi: thú vị, vui
+  pos: phrase
+  example: s-w-5942069
+- vi: có ý nghĩa
+  pos: phrase
+  rare: true
+  example: s-w-ai-69584659
+examples:
+- s-w-5942069
+- s-w-ai-69584659

@@ -1,0 +1,29 @@
+id: 往
+hanzi: 往
+pinyin: wǎng
+hanviet: vãng
+level: 2
+pos:
+- prep
+- v
+- n
+- adj
+senses:
+- vi: về phía, hướng tới, đến
+  pos: prep
+  example: s-w-333189
+- vi: chạy về, đi về (tàu, xe)
+  pos: v
+  example: s-w-ai-216d4b54
+- vi: quá khứ (chỉ dùng trong 以往, 往事)
+  pos: n
+  rare: true
+  example: s-w-ai-306f8cdc
+- vi: trước đây, năm trước (chỉ dùng trong 往年, 往届)
+  pos: adj
+  rare: true
+  example: s-w-ai-1cc2ed92
+examples:
+- s-w-333189
+- s-w-ai-216d4b54
+- s-w-ai-306f8cdc

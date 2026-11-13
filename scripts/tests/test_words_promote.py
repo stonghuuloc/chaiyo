@@ -76,7 +76,7 @@ def test_review_page_lists_rare_star_and_labels(gen):
     out = stage_words(gen, 3)
     gen.review(out, 1)
     page = (out / 'review-1.md').read_text(encoding='utf-8')
-    assert '★ b' in page and '- a' in page and 'AI viết' in page and 'CC-CEDICT: 0.0 word' in page
+    assert '★ b' in page and '- a' in page and 'AI viết' not in page and 'CC-CEDICT: 0.0 word' in page
     assert 'staged-set sha: ' in page and 'rare senses 1 in 1 words' in page
 
 
@@ -116,6 +116,17 @@ def test_promote_matching_sha_copies_and_prunes_orphan_sentences(gen):
     ('bàba', 'bà ba', True), ('dǎn', 'dǎ', False)])
 def test_reading_match_ignores_spacing_tone_and_erhua(gen, model, source, ok):
     assert (gen.canon(model, [{'pinyin': source}]) == source) is ok
+
+
+@pytest.mark.parametrize('model,source', [('yǒukòngr', 'yǒukòngr5'), ('xiàohuàr', 'xiàohuar5'), ('bù yīhuǐr', 'bù yīhuǐr5')])
+def test_reading_match_accepts_erhua_tail_with_tone_digit(gen, model, source):
+    # Arrange
+    readings = [{'pinyin': gen.src_pinyin(source)}]
+    # Act
+    got = gen.canon(model, readings)
+    # Assert
+    assert got == gen.src_pinyin(source)
+    assert not any(c.isdigit() for c in got)
 
 
 def test_reading_match_prefers_exact(gen):
@@ -711,3 +722,61 @@ def test_every_staged_headword_is_a_fixed_point_of_normalize_py(gen):
         if py != w['pinyin']:
             moved.append((w['id'], w['pinyin'], py))
     assert moved == []
+
+
+def test_level_2_stages_and_promotes_its_own_sentence_file(gen):
+    # Arrange
+    gen.LEVEL = 2
+    out = gen.out_dir()
+    (out / 'words').mkdir(parents=True)
+    (out / 'words/打算.yaml').write_text(yaml.safe_dump({'id': '打算', 'hanzi': '打算', 'senses': [{'vi': 'định', 'example': 's-w-new'}], 'examples': ['s-w-new', 's-w-shared']}, allow_unicode=True), encoding='utf-8')
+    (out / 'sentences').mkdir()
+    (out / 'sentences/hsk2.yaml').write_text(yaml.safe_dump([{'id': 's-w-new', 'hanzi': '新'}, {'id': 's-w-shared', 'hanzi': '旧'}], allow_unicode=True), encoding='utf-8')
+    hsk1 = gen.CONTENT.parent / 'sentences/hsk1.yaml'
+    hsk1.parent.mkdir(parents=True)
+    hsk1.write_text(yaml.safe_dump([{'id': 's-w-shared', 'hanzi': '旧'}], allow_unicode=True), encoding='utf-8')
+    (out / 'review-1.md').write_text(f'staged-set sha: {gen.staged_sha(out)}', encoding='utf-8')
+
+    # Act
+    gen.promote(out, 1)
+
+    # Assert
+    assert out.name == 'out-hsk2'
+    ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk2.yaml').read_text(encoding='utf-8'))]
+    assert ids == ['s-w-new']
+    assert [s['id'] for s in yaml.safe_load(hsk1.read_text(encoding='utf-8'))] == ['s-w-shared']
+
+
+def test_promote_keeps_a_sentence_only_another_levels_word_cites(gen):
+    # Arrange
+    out = stage_words(gen, 1)
+    staged = out / 'sentences/hsk1.yaml'
+    staged.write_text(staged.read_text(encoding='utf-8') + yaml.safe_dump([{'id': 's-w-cited-by-hsk2', 'hanzi': '旧'}], allow_unicode=True), encoding='utf-8')
+    gen.CONTENT.mkdir(parents=True, exist_ok=True)
+    (gen.CONTENT / '打算.yaml').write_text(yaml.safe_dump({'id': '打算', 'hanzi': '打算', 'level': 2, 'senses': [{'vi': 'định'}], 'examples': ['s-w-cited-by-hsk2']}, allow_unicode=True), encoding='utf-8')
+    gen.review(out, 1)
+
+    # Act
+    gen.promote(out, 1)
+
+    # Assert
+    ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))]
+    assert 's-w-cited-by-hsk2' in ids
+
+
+def test_promote_carries_over_a_cited_sentence_the_staged_file_lacks(gen):
+    # Arrange
+    out = stage_words(gen, 1)
+    current = gen.CONTENT.parent / 'sentences/hsk1.yaml'
+    current.parent.mkdir(parents=True, exist_ok=True)
+    current.write_text(yaml.safe_dump([{'id': 's-w-cited-by-hsk2', 'hanzi': '旧'}, {'id': 's-w-uncited', 'hanzi': '弃'}], allow_unicode=True), encoding='utf-8')
+    gen.CONTENT.mkdir(parents=True, exist_ok=True)
+    (gen.CONTENT / '打算.yaml').write_text(yaml.safe_dump({'id': '打算', 'hanzi': '打算', 'level': 2, 'senses': [{'vi': 'định'}], 'examples': ['s-w-cited-by-hsk2']}, allow_unicode=True), encoding='utf-8')
+    gen.review(out, 1)
+
+    # Act
+    gen.promote(out, 1)
+
+    # Assert
+    ids = [s['id'] for s in yaml.safe_load(current.read_text(encoding='utf-8'))]
+    assert 's-w-cited-by-hsk2' in ids and 's-w-uncited' not in ids

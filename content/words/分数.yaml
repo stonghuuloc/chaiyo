@@ -1,0 +1,18 @@
+id: 分数
+hanzi: 分数
+pinyin: fēnshù
+hanviet: phân số
+level: 2
+pos:
+- n
+senses:
+- vi: điểm số, điểm (bài thi)
+  pos: n
+  example: s-w-402781
+- vi: phân số
+  pos: n
+  rare: true
+  example: s-w-ai-0d7df844
+examples:
+- s-w-402781
+- s-w-ai-0d7df844

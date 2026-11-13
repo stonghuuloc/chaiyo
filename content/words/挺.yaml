@@ -1,0 +1,34 @@
+id: 挺
+hanzi: 挺
+pinyin: tǐng
+hanviet: đĩnh
+level: 2
+pos:
+- adv
+- v
+- adj
+- mw
+senses:
+- vi: khá, khá là
+  pos: adv
+  example: s-w-6940059
+- vi: chịu nổi, chịu đựng được (chỉ dùng trong 挺住, 挺得住, 挺不住)
+  pos: v
+  example: s-w-ai-372d8a1c
+- vi: chìa, ưỡn (bụng, ngực)
+  pos: v
+  example: s-w-ai-1e7b1ebc
+- vi: ưỡn thẳng (lưng, người)
+  pos: v
+  example: s-w-ai-a51c7326
+- vi: thẳng, đứng thẳng
+  pos: adj
+  example: s-w-ai-99481b79
+- vi: khẩu (súng máy)
+  pos: mw
+  rare: true
+  example: s-w-ai-b2e08799
+examples:
+- s-w-6940059
+- s-w-ai-372d8a1c
+- s-w-ai-1e7b1ebc

@@ -1,0 +1,33 @@
+id: 生
+hanzi: 生
+pinyin: shēng
+hanviet: sinh
+level: 2
+pos:
+- n
+- v
+- adj
+senses:
+- vi: học sinh, sinh viên (chỉ dùng trong 学生, 大学生, 男生, 女生, 留学生)
+  pos: n
+  example: s-w-ai-1896c2da
+- vi: cuộc sống, sự sống (chỉ dùng trong 生活, 生命, 生存)
+  pos: n
+  example: s-w-ai-40994be3
+- vi: ra đời, được sinh ra
+  pos: v
+  example: s-w-7771873
+- vi: sinh, đẻ (con)
+  pos: v
+  example: s-w-13256585
+- vi: lớn lên, sinh trưởng (cây cỏ)
+  pos: v
+  rare: true
+  example: s-w-ai-50467d7e
+- vi: sống, chưa chín
+  pos: adj
+  example: s-w-2225648
+examples:
+- s-w-ai-1896c2da
+- s-w-ai-40994be3
+- s-w-7771873

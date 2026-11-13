@@ -1,0 +1,18 @@
+id: 鸟
+hanzi: 鸟
+pinyin: niǎo
+hanviet: điểu
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: chim, chim chóc
+  pos: n
+  example: s-w-10260765
+- vi: con, đàn (chim)
+  pos: mw
+  example: s-w-ai-b38cbcb9
+examples:
+- s-w-10260765
+- s-w-ai-b38cbcb9

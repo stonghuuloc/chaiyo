@@ -1,14 +1,35 @@
-# content/words/以后.yaml
 id: 以后
 hanzi: 以后
 pinyin: yǐhòu
 hanviet: dĩ hậu
 level: 2
-pos: [ n ]
+pos:
+- n
+- adv
 senses:
-  - { vi: "sau khi, về sau" }
+- vi: sau khi, về sau
+- vi: sau này, tương lai
+  pos: n
+  example: s-w-4759995
+- vi: sau (khi làm việc gì đó)
+  pos: n
+  example: s-w-427648
+- vi: về sau, sau đó
+  pos: adv
+  example: s-w-330582
+examples:
+- s-h2-01-03
+- s-w-4759995
+- s-w-427648
+image:
+  file: words/h2-01/w12.png
+  prompt: The red panda hands the takin a towel just after he climbs out of bed, a bed shown behind them. Only the red panda and the takin.
 parts:
-  - { hanzi: 以, pinyin: yǐ, hanviet: dĩ, vi: "lấy, dùng" }
-  - { hanzi: 后, pinyin: hòu, hanviet: hậu, vi: sau }
-examples: [ s-h2-01-03 ]
-image: { file: words/h2-01/w12.png, prompt: "The red panda hands the takin a towel just after he climbs out of bed, a bed shown behind them. Only the red panda and the takin." }
+- hanzi: 以
+  pinyin: yǐ
+  hanviet: dĩ
+  vi: lấy, dùng
+- hanzi: 后
+  pinyin: hòu
+  hanviet: hậu
+  vi: sau

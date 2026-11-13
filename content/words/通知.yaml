@@ -1,0 +1,18 @@
+id: 通知
+hanzi: 通知
+pinyin: tōngzhī
+hanviet: thông tri
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: báo, thông báo (cho ai biết)
+  pos: v
+  example: s-w-1325048
+- vi: thông báo, giấy báo
+  pos: n
+  example: s-w-421022
+examples:
+- s-w-1325048
+- s-w-421022

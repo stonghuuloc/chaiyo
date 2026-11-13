@@ -1,0 +1,18 @@
+id: 小心
+hanzi: 小心
+pinyin: xiǎoxīn
+hanviet: tiểu tâm
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: cẩn thận, coi chừng (nguy hiểm)
+  pos: adj
+  example: s-w-11207038
+- vi: coi chừng, giữ gìn (chó dữ, sức khỏe)
+  pos: v
+  example: s-w-772362
+examples:
+- s-w-11207038
+- s-w-772362

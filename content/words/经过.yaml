@@ -1,0 +1,18 @@
+id: 经过
+hanzi: 经过
+pinyin: jīngguò
+hanviet: kinh quá
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: đi qua, trải qua
+  pos: v
+  example: s-w-1399633
+- vi: quá trình, tiến trình
+  pos: n
+  example: s-w-ai-da8b9de5
+examples:
+- s-w-1399633
+- s-w-ai-da8b9de5

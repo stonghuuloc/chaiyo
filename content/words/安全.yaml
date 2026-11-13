@@ -1,0 +1,18 @@
+id: 安全
+hanzi: 安全
+pinyin: ānquán
+hanviet: an toàn
+level: 2
+pos:
+- adj
+- n
+senses:
+- vi: an toàn, không nguy hiểm
+  pos: adj
+  example: s-w-ai-87112044
+- vi: sự an toàn, an ninh
+  pos: n
+  example: s-w-797074
+examples:
+- s-w-ai-87112044
+- s-w-797074

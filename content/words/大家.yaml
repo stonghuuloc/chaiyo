@@ -1,0 +1,19 @@
+id: 大家
+hanzi: 大家
+pinyin: dàjiā
+hanviet: đại gia
+level: 2
+pos:
+- pron
+- n
+senses:
+- vi: mọi người
+  pos: pron
+  example: s-w-338827
+- vi: bậc thầy lớn (trong một lĩnh vực)
+  pos: n
+  rare: true
+  example: s-w-ai-fdc9c7d3
+examples:
+- s-w-338827
+- s-w-ai-fdc9c7d3

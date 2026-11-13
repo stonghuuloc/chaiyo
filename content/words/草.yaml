@@ -1,0 +1,26 @@
+id: 草
+hanzi: 草
+pinyin: cǎo
+hanviet: thảo
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: cỏ
+  pos: n
+  example: s-w-8854251
+- vi: rơm, cỏ khô
+  pos: n
+  example: s-w-ai-b236744e
+- vi: bản nháp, bản thảo (chỉ dùng trong 草稿, 草案, 草拟)
+  pos: n
+  example: s-w-ai-c5be46b2
+- vi: cẩu thả, sơ sài, qua loa (chỉ dùng trong 草率, 草草)
+  pos: adj
+  rare: true
+  example: s-w-ai-c033db02
+examples:
+- s-w-8854251
+- s-w-ai-b236744e
+- s-w-ai-c5be46b2

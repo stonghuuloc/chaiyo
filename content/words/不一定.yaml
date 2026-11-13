@@ -1,0 +1,17 @@
+id: 不一定
+hanzi: 不一定
+pinyin: bù yīdìng
+hanviet: bất nhất định
+level: 2
+pos:
+- adv
+senses:
+- vi: không nhất thiết
+  pos: adv
+  example: s-w-ai-89d57317
+- vi: có thể, chưa chắc
+  pos: adv
+  example: s-w-ai-f0cd7c37
+examples:
+- s-w-ai-89d57317
+- s-w-ai-f0cd7c37

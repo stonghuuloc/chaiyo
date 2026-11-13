@@ -1,0 +1,17 @@
+id: 过来
+hanzi: 过来
+pinyin: guòlái
+hanviet: quá lai
+level: 2
+pos:
+- v
+senses:
+- vi: qua, lại đây (về phía người nói)
+  pos: v
+  example: s-w-13891997
+- vi: lo xuể, xoay xở kịp (chỉ dùng trong 忙不过来, 应付得过来)
+  pos: v
+  example: s-w-2318409
+examples:
+- s-w-13891997
+- s-w-2318409

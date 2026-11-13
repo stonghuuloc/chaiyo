@@ -1,0 +1,17 @@
+id: 老年
+hanzi: 老年
+pinyin: lǎonián
+hanviet: lão niên
+level: 2
+pos:
+- n
+senses:
+- vi: người cao tuổi, người già (chỉ dùng trong 老年人, 老年朋友)
+  pos: n
+  example: s-w-ai-09b39b79
+- vi: tuổi già (giai đoạn cuối đời)
+  pos: n
+  example: s-w-ai-8435b18d
+examples:
+- s-w-ai-09b39b79
+- s-w-ai-8435b18d

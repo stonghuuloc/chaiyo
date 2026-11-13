@@ -1,0 +1,17 @@
+id: 重复
+hanzi: 重复
+pinyin: chóngfù
+hanviet: trùng phức
+level: 2
+pos:
+- v
+senses:
+- vi: lặp lại, nhắc lại (lời nói, hành động)
+  pos: v
+  example: s-w-12717084
+- vi: sao chép, nhân bản
+  pos: v
+  example: s-w-ai-26eeb924
+examples:
+- s-w-12717084
+- s-w-ai-26eeb924

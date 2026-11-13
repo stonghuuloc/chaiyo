@@ -1,0 +1,21 @@
+id: 南方
+hanzi: 南方
+pinyin: nánfāng
+hanviet: nam phương
+level: 2
+pos:
+- n
+senses:
+- vi: miền nam (của một nước)
+  pos: n
+  example: s-w-12422361
+- vi: phía nam
+  pos: n
+  example: s-w-11236453
+- vi: miền Nam Trung Quốc
+  pos: n
+  example: s-w-727971
+examples:
+- s-w-12422361
+- s-w-11236453
+- s-w-727971

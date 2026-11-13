@@ -1,0 +1,18 @@
+id: 感谢
+hanzi: 感谢
+pinyin: gǎnxiè
+hanviet: cảm tạ
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: cảm ơn (ai)
+  pos: v
+  example: s-w-330585
+- vi: lòng biết ơn
+  pos: n
+  example: s-w-ai-c5ed76c1
+examples:
+- s-w-330585
+- s-w-ai-c5ed76c1

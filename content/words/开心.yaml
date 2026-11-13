@@ -1,0 +1,22 @@
+id: 开心
+hanzi: 开心
+pinyin: kāixīn
+hanviet: khai tâm
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: vui, vui mừng
+  pos: adj
+  example: s-w-8924804
+- vi: vui chơi, vui vẻ
+  pos: v
+  example: s-w-5091761
+- vi: trêu chọc, đùa cợt (ai)
+  pos: v
+  example: s-w-5911610
+examples:
+- s-w-8924804
+- s-w-5091761
+- s-w-5911610

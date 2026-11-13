@@ -1,0 +1,17 @@
+id: 院
+hanzi: 院
+pinyin: yuàn
+hanviet: viện
+level: 2
+pos:
+- n
+senses:
+- vi: cơ quan, viện (bệnh viện, học viện)
+  pos: n
+  example: s-w-ai-c44c2e96
+- vi: sân (trong nhà, có tường bao quanh)
+  pos: n
+  example: s-w-ai-77252dee
+examples:
+- s-w-ai-c44c2e96
+- s-w-ai-77252dee

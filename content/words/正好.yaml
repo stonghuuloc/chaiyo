@@ -1,0 +1,25 @@
+id: 正好
+hanzi: 正好
+pinyin: zhènghǎo
+hanviet: chính hảo
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: vừa kịp, đúng lúc
+  pos: adv
+  example: s-w-2357622
+- vi: tình cờ, vừa hay
+  pos: adv
+  example: s-w-3081254
+- vi: vừa vặn, đúng mức
+  pos: adj
+  example: s-w-420228
+- vi: vừa đủ
+  pos: adj
+  example: s-w-ai-0c1cb761
+examples:
+- s-w-2357622
+- s-w-3081254
+- s-w-420228

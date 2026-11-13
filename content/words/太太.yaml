@@ -1,0 +1,17 @@
+id: 太太
+hanzi: 太太
+pinyin: tàitai
+hanviet: thái thái
+level: 2
+pos:
+- n
+senses:
+- vi: vợ (cách gọi lịch sự)
+  pos: n
+  example: s-w-512173
+- vi: bà (xưng hô lịch sự)
+  pos: n
+  example: s-w-ai-31d0d703
+examples:
+- s-w-512173
+- s-w-ai-31d0d703

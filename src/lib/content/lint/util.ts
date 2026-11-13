@@ -14,6 +14,8 @@ const NEUTRAL = new Set([
 	'a',
 	'ya',
 	'na',
+	'bian',
+	'tou',
 	'chu lai',
 	'qi lai'
 ]);

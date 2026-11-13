@@ -1,0 +1,18 @@
+id: 词语
+hanzi: 词语
+pinyin: cíyǔ
+hanviet: từ ngữ
+level: 2
+pos:
+- n
+senses:
+- vi: từ, từ ngữ
+  pos: n
+  example: s-w-727968
+- vi: thuật ngữ (chuyên ngành)
+  pos: n
+  rare: true
+  example: s-w-ai-1de63706
+examples:
+- s-w-727968
+- s-w-ai-1de63706

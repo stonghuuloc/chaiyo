@@ -1,0 +1,17 @@
+id: 算
+hanzi: 算
+pinyin: suàn
+hanviet: toán
+level: 2
+pos:
+- v
+senses:
+- vi: tính, tính toán
+  pos: v
+  example: s-w-1944224
+- vi: coi là, được xem là
+  pos: v
+  example: s-w-9408566
+examples:
+- s-w-1944224
+- s-w-9408566

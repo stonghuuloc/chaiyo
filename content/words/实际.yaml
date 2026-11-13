@@ -1,0 +1,25 @@
+id: 实际
+hanzi: 实际
+pinyin: shíjì
+hanviet: thực tế
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: thực tế, hiện thực
+  pos: n
+  example: s-w-ai-3d0c4762
+- vi: thực hành, thực tiễn
+  pos: n
+  example: s-w-ai-9ce9236e
+- vi: thực tế, có thật
+  pos: adj
+  example: s-w-13878976
+- vi: thiết thực, thực tế
+  pos: adj
+  example: s-w-ai-9caf7111
+examples:
+- s-w-ai-3d0c4762
+- s-w-ai-9ce9236e
+- s-w-13878976

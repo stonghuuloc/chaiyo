@@ -1,0 +1,24 @@
+id: 拿出
+hanzi: 拿出
+pinyin: náchū
+hanviet: nã xuất
+level: 2
+pos:
+- v
+senses:
+- vi: lấy ra, bày ra (đồ vật)
+  pos: v
+  example: s-w-8789702
+- vi: bỏ ra, dành ra (tiền, công sức)
+  pos: v
+  example: s-w-ai-9e73f4e4
+- vi: đưa ra (bằng chứng, chứng cứ)
+  pos: v
+  example: s-w-ai-65eacb74
+- vi: đề xuất (đề án, ý kiến)
+  pos: v
+  example: s-w-ai-05fe2083
+examples:
+- s-w-8789702
+- s-w-ai-9e73f4e4
+- s-w-ai-65eacb74

@@ -1,0 +1,25 @@
+id: 部分
+hanzi: 部分
+pinyin: bùfen
+hanviet: bộ phận
+level: 2
+pos:
+- n
+senses:
+- vi: phần, bộ phận (của một tổng thể)
+  pos: n
+  example: s-w-13881388
+- vi: phần, mục (trong văn bản)
+  pos: n
+  example: s-w-1785989
+- vi: phần được chia, phần hùn
+  pos: n
+  example: s-w-ai-258b72d2
+- vi: miếng, mảnh (đã tách ra)
+  pos: n
+  rare: true
+  example: s-w-1045396
+examples:
+- s-w-13881388
+- s-w-1785989
+- s-w-ai-258b72d2

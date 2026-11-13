@@ -1,0 +1,25 @@
+id: 通过
+hanzi: 通过
+pinyin: tōngguò
+hanviet: thông quá
+level: 2
+pos:
+- v
+- prep
+senses:
+- vi: đi qua, qua (đường, cửa)
+  pos: v
+  example: s-w-333792
+- vi: thông qua (nghị quyết, luật)
+  pos: v
+  example: s-w-805192
+- vi: đỗ, vượt qua (kỳ thi)
+  pos: v
+  example: s-w-791442
+- vi: bằng cách, thông qua
+  pos: prep
+  example: s-w-332842
+examples:
+- s-w-333792
+- s-w-805192
+- s-w-791442

@@ -1,0 +1,32 @@
+id: 靠
+hanzi: 靠
+pinyin: kào
+hanviet: kháo
+level: 2
+pos:
+- v
+- interj
+senses:
+- vi: dựa vào, tựa vào
+  pos: v
+  example: s-w-2143990
+- vi: phụ thuộc vào, dựa vào
+  pos: v
+  example: s-w-6089707
+- vi: đi sát, đứng cạnh (một bên)
+  pos: v
+  example: s-w-1411709
+- vi: đến gần, tiến lại gần (chỉ dùng trong 靠近, 靠岸)
+  pos: v
+  example: s-w-ai-dfb9f4b4
+- vi: tin cậy, đáng tin (chỉ dùng trong 靠得住, 靠不住)
+  pos: v
+  example: s-w-ai-24c6d5c5
+- vi: chết tiệt (thô tục)
+  pos: interj
+  rare: true
+  example: s-w-5094781
+examples:
+- s-w-2143990
+- s-w-6089707
+- s-w-1411709

@@ -1,0 +1,23 @@
+id: 重点
+hanzi: 重点
+pinyin: zhòngdiǎn
+hanviet: trọng điểm
+level: 2
+pos:
+- n
+- adj
+- adv
+senses:
+- vi: điểm chính, ý chính
+  pos: n
+  example: s-w-336109
+- vi: trọng điểm, quan trọng (dự án, trường học)
+  pos: adj
+  example: s-w-ai-482753ba
+- vi: chú trọng, nhấn mạnh
+  pos: adv
+  example: s-w-ai-e0a4bba5
+examples:
+- s-w-336109
+- s-w-ai-482753ba
+- s-w-ai-e0a4bba5

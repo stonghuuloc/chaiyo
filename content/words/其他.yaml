@@ -1,0 +1,17 @@
+id: 其他
+hanzi: 其他
+pinyin: qítā
+hanviet: kỳ tha
+level: 2
+pos:
+- pron
+senses:
+- vi: khác (người, việc khác)
+  pos: pron
+  example: s-w-9453452
+- vi: phần còn lại, những cái còn lại
+  pos: pron
+  example: s-w-10023033
+examples:
+- s-w-9453452
+- s-w-10023033

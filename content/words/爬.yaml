@@ -1,0 +1,21 @@
+id: 爬
+hanzi: 爬
+pinyin: pá
+hanviet: bà
+level: 2
+pos:
+- v
+senses:
+- vi: trèo, leo (núi, cây)
+  pos: v
+  example: s-w-1372495
+- vi: bò, lết
+  pos: v
+  example: s-w-10352464
+- vi: ngồi dậy, đứng dậy
+  pos: v
+  example: s-w-ai-9e09145d
+examples:
+- s-w-1372495
+- s-w-10352464
+- s-w-ai-9e09145d

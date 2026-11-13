@@ -1,0 +1,24 @@
+id: 黄
+hanzi: 黄
+pinyin: huáng
+hanviet: hoàng
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: màu vàng
+  pos: adj
+  example: s-w-1974792
+- vi: khiêu dâm, đồi trụy
+  pos: adj
+  rare: true
+  example: s-w-ai-7a72fac5
+- vi: đổ bể, hỏng (việc, kế hoạch)
+  pos: v
+  rare: true
+  example: s-w-ai-6ba7fdf1
+examples:
+- s-w-1974792
+- s-w-ai-7a72fac5
+- s-w-ai-6ba7fdf1

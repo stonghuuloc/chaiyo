@@ -1,0 +1,18 @@
+id: 老朋友
+hanzi: 老朋友
+pinyin: lǎopéngyou
+hanviet: lão bằng hữu
+level: 2
+pos:
+- n
+senses:
+- vi: bạn cũ
+  pos: n
+  example: s-w-10182749
+- vi: kỳ kinh nguyệt (tiếng lóng)
+  pos: n
+  rare: true
+  example: s-w-ai-d97f08d3
+examples:
+- s-w-10182749
+- s-w-ai-d97f08d3

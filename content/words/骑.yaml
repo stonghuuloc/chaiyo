@@ -1,0 +1,19 @@
+id: 骑
+hanzi: 骑
+pinyin: qí
+hanviet: kỵ
+level: 2
+pos:
+- v
+- mw
+senses:
+- vi: cưỡi (ngựa, xe đạp, xe máy)
+  pos: v
+  example: s-w-2364534
+- vi: con (ngựa)
+  pos: mw
+  rare: true
+  example: s-w-ai-b871f2ac
+examples:
+- s-w-2364534
+- s-w-ai-b871f2ac

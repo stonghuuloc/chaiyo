@@ -1,0 +1,17 @@
+id: 空气
+hanzi: 空气
+pinyin: kōngqì
+hanviet: không khí
+level: 2
+pos:
+- n
+senses:
+- vi: không khí
+  pos: n
+  example: s-w-1420669
+- vi: bầu không khí
+  pos: n
+  example: s-w-ai-0ddf36fa
+examples:
+- s-w-1420669
+- s-w-ai-0ddf36fa

@@ -1,0 +1,18 @@
+id: 西北
+hanzi: 西北
+pinyin: xīběi
+hanviet: tây bắc
+level: 2
+pos:
+- n
+senses:
+- vi: hướng tây bắc
+  pos: n
+  example: s-w-ai-81383c41
+- vi: vùng Tây Bắc (Trung Quốc)
+  pos: n
+  rare: true
+  example: s-w-ai-49c1cbf6
+examples:
+- s-w-ai-81383c41
+- s-w-ai-49c1cbf6

@@ -1,0 +1,26 @@
+id: 那么
+hanzi: 那么
+pinyin: nàme
+hanviet: na ma
+level: 2
+pos:
+- pron
+- conj
+- adv
+senses:
+- vi: như vậy, như thế
+  pos: pron
+  example: s-w-796838
+- vi: vậy thì, nếu vậy
+  pos: conj
+  example: s-w-400317
+- vi: quá, đến thế (trước tính từ)
+  pos: adv
+  example: s-w-425558
+- vi: nhiều đến thế, bấy nhiêu (trước 多, 少)
+  pos: adv
+  example: s-w-501717
+examples:
+- s-w-796838
+- s-w-400317
+- s-w-425558

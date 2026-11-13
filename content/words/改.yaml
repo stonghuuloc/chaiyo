@@ -1,0 +1,17 @@
+id: 改
+hanzi: 改
+pinyin: gǎi
+hanviet: cải
+level: 2
+pos:
+- v
+senses:
+- vi: thay đổi, biến đổi
+  pos: v
+  example: s-w-440029
+- vi: sửa, chữa (bài, lỗi)
+  pos: v
+  example: s-w-ai-b1098ebf
+examples:
+- s-w-440029
+- s-w-ai-b1098ebf

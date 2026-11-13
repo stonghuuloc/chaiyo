@@ -1,0 +1,18 @@
+id: 最近
+hanzi: 最近
+pinyin: zuìjìn
+hanviet: tối cận
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: gần đây, dạo này
+  pos: adv
+  example: s-w-409710
+- vi: gần nhất
+  pos: adj
+  example: s-w-8932578
+examples:
+- s-w-409710
+- s-w-8932578

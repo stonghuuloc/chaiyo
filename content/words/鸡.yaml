@@ -1,0 +1,18 @@
+id: 鸡
+hanzi: 鸡
+pinyin: jī
+hanviet: kê
+level: 2
+pos:
+- n
+senses:
+- vi: gà (cũng chỉ gia cầm nói chung)
+  pos: n
+  example: s-w-10749899
+- vi: gái mại dâm (lóng)
+  pos: n
+  rare: true
+  example: s-w-ai-18f87f22
+examples:
+- s-w-10749899
+- s-w-ai-18f87f22

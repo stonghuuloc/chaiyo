@@ -13,6 +13,8 @@ describe('lint util', () => {
 		expect(badPinyin('ni')).toBe('no tone mark');
 		expect(badPinyin('men')).toBeNull();
 		expect(badPinyin('qi lai')).toBeNull();
+		expect(badPinyin('bian')).toBeNull();
+		expect(badPinyin('tou')).toBeNull();
 	});
 
 	it('badPinyin reads decomposed and capital marks', () => {

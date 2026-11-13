@@ -1,0 +1,19 @@
+id: 接下来
+hanzi: 接下来
+pinyin: jiēxiàlái
+hanviet: tiếp hạ lai
+level: 2
+pos:
+- v
+- conj
+senses:
+- vi: chấp nhận, nhận (công việc)
+  pos: v
+  rare: true
+  example: s-w-ai-9304721d
+- vi: tiếp theo, kế đến
+  pos: conj
+  example: s-w-10019606
+examples:
+- s-w-ai-9304721d
+- s-w-10019606

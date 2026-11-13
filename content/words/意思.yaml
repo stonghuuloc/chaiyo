@@ -1,0 +1,31 @@
+id: 意思
+hanzi: 意思
+pinyin: yìsi
+hanviet: ý tư
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: nghĩa, ý nghĩa
+  pos: n
+  example: s-w-335099
+- vi: ý tưởng, ý kiến
+  pos: n
+  example: s-w-5095050
+- vi: ý muốn, mong muốn
+  pos: n
+  example: s-w-ai-273f5d12
+- vi: thú vị, hứng thú (chỉ dùng trong 有意思, 没意思)
+  pos: n
+  example: s-w-ai-25fe0ada
+- vi: chút lòng thành, món quà nhỏ (chỉ dùng trong 小意思, 一点小意思)
+  pos: n
+  example: s-w-ai-c5b23ec9
+- vi: tỏ chút lòng, biếu (quà nhỏ; chỉ dùng trong 意思意思, 意思一下)
+  pos: v
+  example: s-w-ai-451e554f
+examples:
+- s-w-335099
+- s-w-5095050
+- s-w-ai-273f5d12

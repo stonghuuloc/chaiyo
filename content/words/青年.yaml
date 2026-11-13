@@ -1,0 +1,17 @@
+id: 青年
+hanzi: 青年
+pinyin: qīngnián
+hanviet: thanh niên
+level: 2
+pos:
+- n
+senses:
+- vi: thanh niên, người trẻ
+  pos: n
+  example: s-w-432999
+- vi: tuổi trẻ, thời trẻ
+  pos: n
+  example: s-w-ai-d1b715e6
+examples:
+- s-w-432999
+- s-w-ai-d1b715e6

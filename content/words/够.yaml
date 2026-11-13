@@ -1,0 +1,25 @@
+id: 够
+hanzi: 够
+pinyin: gòu
+hanviet: cú
+level: 2
+pos:
+- v
+- adv
+senses:
+- vi: đủ, đủ dùng
+  pos: v
+  example: s-w-7781712
+- vi: đủ rồi, thôi đi
+  pos: v
+  example: s-w-1408101
+- vi: với tới (bằng cách vươn ra)
+  pos: v
+  example: s-w-ai-4b111137
+- vi: thật là (trước tính từ)
+  pos: adv
+  example: s-w-5685865
+examples:
+- s-w-7781712
+- s-w-1408101
+- s-w-ai-4b111137

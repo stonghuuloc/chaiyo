@@ -1,0 +1,22 @@
+id: 借
+hanzi: 借
+pinyin: jiè
+hanviet: tá
+level: 2
+pos:
+- v
+senses:
+- vi: mượn (đồ vật, tiền)
+  pos: v
+  example: s-w-8903300
+- vi: cho mượn (đồ vật, tiền)
+  pos: v
+  example: s-w-808253
+- vi: nhân, tận dụng (cơ hội)
+  pos: v
+  rare: true
+  example: s-w-ai-f01685c4
+examples:
+- s-w-8903300
+- s-w-808253
+- s-w-ai-f01685c4

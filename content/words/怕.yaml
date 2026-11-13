@@ -1,0 +1,23 @@
+id: 怕
+hanzi: 怕
+pinyin: pà
+hanviet: phạ
+level: 2
+pos:
+- v
+- adv
+senses:
+- vi: sợ, e ngại (ai, cái gì)
+  pos: v
+  example: s-w-334621
+- vi: không chịu được (nóng, lạnh)
+  pos: v
+  example: s-w-ai-e13e868e
+- vi: có lẽ
+  pos: adv
+  rare: true
+  example: s-w-ai-4a1c6e7e
+examples:
+- s-w-334621
+- s-w-ai-e13e868e
+- s-w-ai-4a1c6e7e

@@ -1,0 +1,18 @@
+id: 对话
+hanzi: 对话
+pinyin: duìhuà
+hanviet: đối thoại
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: nói chuyện (với ai)
+  pos: v
+  example: s-w-13887416
+- vi: cuộc đối thoại, cuộc trò chuyện
+  pos: n
+  example: s-w-466084
+examples:
+- s-w-13887416
+- s-w-466084

@@ -1,0 +1,28 @@
+id: 笔
+hanzi: 笔
+pinyin: bǐ
+hanviet: bút
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: bút (bi, máy)
+  pos: n
+  example: s-w-5091444
+- vi: bút chì
+  pos: n
+  example: s-w-617711
+- vi: bút lông (để viết chữ; chỉ dùng trong 毛笔, 笔墨)
+  pos: n
+  example: s-w-ai-b6071b90
+- vi: nét (chữ Hán)
+  pos: n
+  example: s-w-ai-d52c75ec
+- vi: khoản (tiền, giao dịch)
+  pos: mw
+  example: s-w-ai-0f40489a
+examples:
+- s-w-5091444
+- s-w-617711
+- s-w-ai-b6071b90

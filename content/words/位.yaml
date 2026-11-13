@@ -1,0 +1,23 @@
+id: 位
+hanzi: 位
+pinyin: wèi
+hanviet: vị
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: vị trí, chỗ (ngồi; chỉ dùng trong 座位, 空位, 位置, 各就各位)
+  pos: n
+  example: s-w-ai-4c9d06b9
+- vi: vị (người, cách gọi lịch sự)
+  pos: mw
+  example: s-w-ai-919aa515
+- vi: bit (đơn vị nhị phân)
+  pos: mw
+  rare: true
+  example: s-w-ai-60e04a34
+examples:
+- s-w-ai-4c9d06b9
+- s-w-ai-919aa515
+- s-w-ai-60e04a34

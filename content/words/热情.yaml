@@ -1,0 +1,26 @@
+id: 热情
+hanzi: 热情
+pinyin: rèqíng
+hanviet: nhiệt tình
+level: 2
+pos:
+- adj
+- n
+- adv
+senses:
+- vi: nồng nhiệt, nhiệt tình
+  pos: adj
+  example: s-w-1577185
+- vi: đam mê, say mê
+  pos: adj
+  example: s-w-ai-c0e46f72
+- vi: lòng nhiệt huyết, sự đam mê
+  pos: n
+  example: s-w-993751
+- vi: một cách nồng nhiệt, nhiệt tình
+  pos: adv
+  example: s-w-444791
+examples:
+- s-w-1577185
+- s-w-ai-c0e46f72
+- s-w-993751

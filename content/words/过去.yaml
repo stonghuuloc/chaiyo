@@ -1,0 +1,26 @@
+id: 过去
+hanzi: 过去
+pinyin: guòqù
+hanviet: quá khứ
+level: 2
+pos:
+- n
+- adj
+- v
+senses:
+- vi: quá khứ
+  pos: n
+  example: s-w-3565121
+- vi: trước đây, cũ
+  pos: adj
+  example: s-w-3065695
+- vi: đi sang, tới đó
+  pos: v
+  example: s-w-9857884
+- vi: trôi qua, qua đi
+  pos: v
+  example: s-w-7774794
+examples:
+- s-w-3565121
+- s-w-3065695
+- s-w-9857884

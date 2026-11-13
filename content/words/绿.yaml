@@ -1,0 +1,19 @@
+id: 绿
+hanzi: 绿
+pinyin: lǜ
+hanviet: lục
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: xanh lá, xanh lục
+  pos: adj
+  example: s-w-1020422
+- vi: cắm sừng (chồng, vợ, bạn trai, bạn gái)
+  pos: v
+  rare: true
+  example: s-w-ai-eff9d1be
+examples:
+- s-w-1020422
+- s-w-ai-eff9d1be

@@ -1,0 +1,17 @@
+id: 怎样
+hanzi: 怎样
+pinyin: zěnyàng
+hanviet: chẩm dạng
+level: 2
+pos:
+- pron
+senses:
+- vi: thế nào, ra sao (hỏi cách thức, tình trạng)
+  pos: pron
+  example: s-w-1746044
+- vi: loại nào, thế nào (hỏi tính chất)
+  pos: pron
+  example: s-w-1691742
+examples:
+- s-w-1746044
+- s-w-1691742

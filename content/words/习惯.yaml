@@ -1,14 +1,35 @@
-# content/words/习惯.yaml
 id: 习惯
 hanzi: 习惯
 pinyin: xíguàn
 hanviet: tập quán
 level: 2
-pos: [ n, v ]
+pos:
+- n
+- v
 senses:
-  - { vi: thói quen; quen với }
+- vi: thói quen; quen với
+- vi: thói quen
+  pos: n
+  example: s-w-2411919
+- vi: phong tục, tập quán
+  pos: n
+  example: s-w-ai-fa1baf90
+- vi: quen (với)
+  pos: v
+  example: s-w-736601
+examples:
+- s-h2-01-05
+- s-w-2411919
+- s-w-ai-fa1baf90
+image:
+  file: words/h2-01/w06.png
+  prompt: The red panda gives the takin a thumbs-up as the takin does his morning stretch in the same spot as always. Only the red panda and the takin.
 parts:
-  - { hanzi: 习, pinyin: xí, hanviet: tập, vi: "tập, luyện" }
-  - { hanzi: 惯, pinyin: guàn, hanviet: quán, vi: quen }
-examples: [ s-h2-01-05 ]
-image: { file: words/h2-01/w06.png, prompt: The red panda gives the takin a thumbs-up as the takin does his morning stretch in the same spot as always. Only the red panda and the takin. }
+- hanzi: 习
+  pinyin: xí
+  hanviet: tập
+  vi: tập, luyện
+- hanzi: 惯
+  pinyin: guàn
+  hanviet: quán
+  vi: quen

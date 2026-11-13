@@ -1,0 +1,18 @@
+id: 全国
+hanzi: 全国
+pinyin: quánguó
+hanviet: toàn quốc
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: cả nước, toàn quốc
+  pos: n
+  example: s-w-5613633
+- vi: toàn quốc, cấp quốc gia
+  pos: adj
+  example: s-w-ai-09f4c641
+examples:
+- s-w-5613633
+- s-w-ai-09f4c641

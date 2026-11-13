@@ -1,0 +1,25 @@
+id: 味道
+hanzi: 味道
+pinyin: wèidao
+hanviet: vị đạo
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: vị, hương vị (của món ăn)
+  pos: n
+  example: s-w-392763
+- vi: mùi, mùi hương
+  pos: n
+  example: s-w-2295633
+- vi: cảm giác, nét (của...)
+  pos: n
+  example: s-w-ai-6185160f
+- vi: thú vị, có duyên (chỉ dùng trong 有味道, 没有味道, 很有味道)
+  pos: adj
+  example: s-w-ai-c5244f0b
+examples:
+- s-w-392763
+- s-w-2295633
+- s-w-ai-6185160f

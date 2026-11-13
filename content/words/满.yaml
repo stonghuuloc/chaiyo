@@ -1,0 +1,37 @@
+id: 满
+hanzi: 满
+pinyin: mǎn
+hanviet: mãn
+level: 2
+pos:
+- v
+- adj
+- adv
+- comp
+senses:
+- vi: làm đầy, rót đầy (ly, chén)
+  pos: v
+  example: s-w-2254360
+- vi: đủ, tròn (kỳ hạn, tuổi)
+  pos: v
+  example: s-w-333953
+- vi: làm thỏa mãn, làm hài lòng (trong từ 满足)
+  pos: v
+  example: s-w-ai-a52e979b
+- vi: đầy, kín (chứa, không gian)
+  pos: adj
+  example: s-w-13107402
+- vi: hài lòng, mãn nguyện (trong từ 满意)
+  pos: adj
+  example: s-w-ai-f065db43
+- vi: rất, lắm (khẩu ngữ, miền Bắc)
+  pos: adv
+  rare: true
+  example: s-w-ai-7dc3e34b
+- vi: phủ kín, đầy khắp (sau động từ)
+  pos: comp
+  example: s-w-349929
+examples:
+- s-w-2254360
+- s-w-333953
+- s-w-ai-a52e979b

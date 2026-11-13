@@ -1,0 +1,18 @@
+id: 理想
+hanzi: 理想
+pinyin: lǐxiǎng
+hanviet: lý tưởng
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: lý tưởng, ước mơ
+  pos: n
+  example: s-w-ai-5c6fb1fa
+- vi: lý tưởng, hoàn hảo
+  pos: adj
+  example: s-w-343979
+examples:
+- s-w-ai-5c6fb1fa
+- s-w-343979

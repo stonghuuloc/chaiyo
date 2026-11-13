@@ -1,0 +1,18 @@
+id: 有一点儿
+hanzi: 有一点儿
+pinyin: yǒu yīdiǎnr
+hanviet: hữu nhất điểm nhi
+level: 2
+pos:
+- adv
+- phrase
+senses:
+- vi: hơi, có chút
+  pos: adv
+  example: s-w-ai-f1f0aed8
+- vi: một chút, một ít (đứng trước danh từ)
+  pos: phrase
+  example: s-w-ai-aa3dba41
+examples:
+- s-w-ai-f1f0aed8
+- s-w-ai-aa3dba41

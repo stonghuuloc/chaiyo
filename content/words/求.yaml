@@ -1,0 +1,21 @@
+id: 求
+hanzi: 求
+pinyin: qiú
+hanviet: cầu
+level: 2
+pos:
+- v
+senses:
+- vi: cầu xin, van xin
+  pos: v
+  example: s-w-2357191
+- vi: yêu cầu, đòi hỏi
+  pos: v
+  example: s-w-5574714
+- vi: tìm, tìm kiếm
+  pos: v
+  example: s-w-ai-4e3a7adb
+examples:
+- s-w-2357191
+- s-w-5574714
+- s-w-ai-4e3a7adb

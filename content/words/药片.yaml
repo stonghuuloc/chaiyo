@@ -1,0 +1,13 @@
+id: 药片
+hanzi: 药片
+pinyin: yàopiàn
+hanviet: dược phiến
+level: 2
+pos:
+- n
+senses:
+- vi: viên thuốc
+  pos: n
+  example: s-w-8860184
+examples:
+- s-w-8860184

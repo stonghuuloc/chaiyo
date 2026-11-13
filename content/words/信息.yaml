@@ -1,0 +1,17 @@
+id: 信息
+hanzi: 信息
+pinyin: xìnxī
+hanviet: tín tức
+level: 2
+pos:
+- n
+senses:
+- vi: thông tin, tin tức
+  pos: n
+  example: s-w-528043
+- vi: tin nhắn
+  pos: n
+  example: s-w-5945150
+examples:
+- s-w-528043
+- s-w-5945150

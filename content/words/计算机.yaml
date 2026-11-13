@@ -1,0 +1,18 @@
+id: 计算机
+hanzi: 计算机
+pinyin: jìsuànjī
+hanviet: kế toán cơ
+level: 2
+pos:
+- n
+senses:
+- vi: máy tính
+  pos: n
+  example: s-w-7781512
+- vi: máy tính cầm tay (Đài Loan)
+  pos: n
+  rare: true
+  example: s-w-ai-d1daf2ae
+examples:
+- s-w-7781512
+- s-w-ai-d1daf2ae

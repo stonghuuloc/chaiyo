@@ -1,0 +1,22 @@
+id: 球场
+hanzi: 球场
+pinyin: qiúchǎng
+hanviet: cầu trường
+level: 2
+pos:
+- n
+senses:
+- vi: sân vận động, sân bóng
+  pos: n
+  example: s-w-ai-93841d6e
+- vi: sân (bóng rổ, tennis, cầu lông)
+  pos: n
+  example: s-w-ai-34056890
+- vi: sân golf
+  pos: n
+  rare: true
+  example: s-w-ai-65acce49
+examples:
+- s-w-ai-93841d6e
+- s-w-ai-34056890
+- s-w-ai-65acce49

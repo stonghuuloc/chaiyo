@@ -1,14 +1,34 @@
-# content/words/出门.yaml
 id: 出门
 hanzi: 出门
 pinyin: chūmén
 hanviet: xuất môn
 level: 2
-pos: [ v ]
+pos:
+- v
 senses:
-  - { vi: "ra khỏi nhà, ra ngoài" }
+- vi: ra khỏi nhà, ra ngoài
+- vi: ra ngoài, rời nhà
+  pos: v
+  example: s-w-2300121
+- vi: đi vắng, vắng nhà
+  pos: v
+  example: s-w-8798302
+- vi: đi xa, đi du lịch
+  pos: v
+  example: s-w-6956916
+examples:
+- s-h2-01-06
+- s-w-2300121
+- s-w-8798302
+image:
+  file: words/h2-01/w10.png
+  prompt: The takin steps out through a round wooden front door into the morning light with a small bag on his back. Only the takin.
 parts:
-  - { hanzi: 出, pinyin: chū, hanviet: xuất, vi: ra }
-  - { hanzi: 门, pinyin: mén, hanviet: môn, vi: cửa }
-examples: [ s-h2-01-06 ]
-image: { file: words/h2-01/w10.png, prompt: The takin steps out through a round wooden front door into the morning light with a small bag on his back. Only the takin. }
+- hanzi: 出
+  pinyin: chū
+  hanviet: xuất
+  vi: ra
+- hanzi: 门
+  pinyin: mén
+  hanviet: môn
+  vi: cửa

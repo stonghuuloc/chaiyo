@@ -2,7 +2,12 @@
 name = "chaiyo-content"
 version = "0.0.0"
 requires-python = ">=3.11"
-dependencies = ["jieba", "opencc", "pyyaml"]
+dependencies = [
+    "anthropic>=2.8.0",
+    "jieba",
+    "opencc",
+    "pyyaml",
+]
 
 [dependency-groups]
 dev = ["pytest"]

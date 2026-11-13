@@ -1,0 +1,17 @@
+id: 角度
+hanzi: 角度
+pinyin: jiǎodù
+hanviet: giác độ
+level: 2
+pos:
+- n
+senses:
+- vi: quan điểm, góc nhìn
+  pos: n
+  example: s-w-353519
+- vi: góc (hình học, đo bằng độ)
+  pos: n
+  example: s-w-ai-63ce893b
+examples:
+- s-w-353519
+- s-w-ai-63ce893b

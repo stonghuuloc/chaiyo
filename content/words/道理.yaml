@@ -1,0 +1,28 @@
+id: 道理
+hanzi: 道理
+pinyin: dàoli
+hanviet: đạo lý
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: lẽ phải, sự hợp lý
+  pos: n
+  example: s-w-13117608
+- vi: lý do, căn cứ
+  pos: n
+  example: s-w-751898
+- vi: lý lẽ, lập luận
+  pos: n
+  example: s-w-850890
+- vi: đạo lý, nguyên tắc
+  pos: n
+  example: s-w-ai-5686ec33
+- vi: nói lý lẽ, tranh luận
+  pos: v
+  example: s-w-ai-fa06dc0c
+examples:
+- s-w-13117608
+- s-w-751898
+- s-w-850890

@@ -1,0 +1,28 @@
+id: 急
+hanzi: 急
+pinyin: jí
+hanviet: cấp
+level: 2
+pos:
+- v
+- adj
+senses:
+- vi: vội, vội vàng
+  pos: v
+  example: s-w-390552
+- vi: lo lắng, sốt ruột
+  pos: v
+  example: s-w-3698035
+- vi: làm (ai) lo lắng, sốt ruột
+  pos: v
+  example: s-w-ai-adabd212
+- vi: gấp, khẩn cấp
+  pos: adj
+  example: s-w-10742680
+- vi: chảy xiết (nói về dòng nước)
+  pos: adj
+  example: s-w-1516225
+examples:
+- s-w-390552
+- s-w-3698035
+- s-w-ai-adabd212

@@ -1,0 +1,18 @@
+id: 万
+hanzi: 万
+pinyin: wàn
+hanviet: vạn
+level: 2
+pos:
+- num
+senses:
+- vi: mười nghìn (vạn)
+  pos: num
+  example: s-w-ai-f5fb3c7f
+- vi: rất nhiều, vô số (chỉ dùng trong 成千上万, 千千万万)
+  pos: num
+  rare: true
+  example: s-w-ai-54a74f20
+examples:
+- s-w-ai-f5fb3c7f
+- s-w-ai-54a74f20

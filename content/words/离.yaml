@@ -1,0 +1,25 @@
+id: 离
+hanzi: 离
+pinyin: lí
+hanviet: ly
+level: 2
+pos:
+- v
+- prep
+senses:
+- vi: rời (nhà, trường)
+  pos: v
+  example: s-w-ai-61c6be0d
+- vi: tránh xa, cách xa (ai, cái gì)
+  pos: v
+  example: s-w-5091097
+- vi: không thể thiếu (ai, cái gì; chỉ dùng trong 离不开)
+  pos: v
+  example: s-w-ai-049185f9
+- vi: cách (nơi nào, khoảng cách)
+  pos: prep
+  example: s-w-501530
+examples:
+- s-w-ai-61c6be0d
+- s-w-5091097
+- s-w-ai-049185f9

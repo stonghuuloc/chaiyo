@@ -1,0 +1,17 @@
+id: 客人
+hanzi: 客人
+pinyin: kèrén
+hanviet: khách nhân
+level: 2
+pos:
+- n
+senses:
+- vi: khách (đến nhà, đến thăm)
+  pos: n
+  example: s-w-10552170
+- vi: khách hàng
+  pos: n
+  example: s-w-335615
+examples:
+- s-w-10552170
+- s-w-335615

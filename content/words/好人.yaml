@@ -1,0 +1,22 @@
+id: 好人
+hanzi: 好人
+pinyin: hǎorén
+hanviet: hảo nhân
+level: 2
+pos:
+- n
+senses:
+- vi: người tốt
+  pos: n
+  example: s-w-363983
+- vi: người cố không làm ai phật lòng (dù trái nguyên tắc; chỉ dùng trong 做好人, 当好人)
+  pos: n
+  example: s-w-ai-8a249d86
+- vi: người khỏe mạnh
+  pos: n
+  rare: true
+  example: s-w-ai-b1bc87bf
+examples:
+- s-w-363983
+- s-w-ai-8a249d86
+- s-w-ai-b1bc87bf

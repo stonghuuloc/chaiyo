@@ -1,0 +1,18 @@
+id: 开机
+hanzi: 开机
+pinyin: kāijī
+hanviet: khai cơ
+level: 2
+pos:
+- v
+senses:
+- vi: khởi động (máy tính, máy móc)
+  pos: v
+  example: s-w-ai-7ece704c
+- vi: bắt đầu quay (phim)
+  pos: v
+  rare: true
+  example: s-w-ai-0681620a
+examples:
+- s-w-ai-7ece704c
+- s-w-ai-0681620a

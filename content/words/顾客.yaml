@@ -1,0 +1,13 @@
+id: 顾客
+hanzi: 顾客
+pinyin: gùkè
+hanviet: cố khách
+level: 2
+pos:
+- n
+senses:
+- vi: khách hàng
+  pos: n
+  example: s-w-902044
+examples:
+- s-w-902044

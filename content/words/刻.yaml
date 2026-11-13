@@ -1,14 +1,34 @@
-# content/words/刻.yaml
 id: 刻
 hanzi: 刻
 pinyin: kè
 hanviet: khắc
 level: 2
-pos: [ mw ]
+pos:
+- n
+- v
+- mw
 senses:
-  - { vi: mười lăm phút (một phần tư giờ) }
+- vi: mười lăm phút (một phần tư giờ)
+- vi: một phần tư giờ (mười lăm phút; chỉ dùng trong 三点一刻, 两点一刻, 一刻钟)
+  pos: n
+  example: s-w-ai-65740735
+- vi: khoảnh khắc (chỉ dùng trong 一刻也不…, 一刻也没…, 时刻, 立刻, 即刻, 顷刻)
+  pos: n
+  example: s-w-ai-d2f339af
+- vi: khắc, chạm, gọt (gỗ, đá, chữ)
+  pos: v
+  example: s-w-3487188
+examples:
+- s-h2-01-02
+- s-w-ai-65740735
+- s-w-ai-d2f339af
+image:
+  file: words/h2-01/w02.png
+  prompt: The red panda points at a clock whose minute hand sits exactly one quarter of the way round the dial. Only the red panda.
 components:
-  - { hanzi: 亥, name: hợi, vi: phần đọc }
-  - { hanzi: 刂, name: đao, vi: con dao }
-examples: [ s-h2-01-02 ]
-image: { file: words/h2-01/w02.png, prompt: The red panda points at a clock whose minute hand sits exactly one quarter of the way round the dial. Only the red panda. }
+- hanzi: 亥
+  name: hợi
+  vi: phần đọc
+- hanzi: 刂
+  name: đao
+  vi: con dao

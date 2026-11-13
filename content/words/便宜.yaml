@@ -1,0 +1,24 @@
+id: 便宜
+hanzi: 便宜
+pinyin: piányi
+hanviet: tiện nghi
+level: 2
+pos:
+- adj
+- n
+- v
+senses:
+- vi: rẻ, không đắt
+  pos: adj
+  example: s-w-1216079
+- vi: chút lợi lộc, món lợi nhỏ (chỉ dùng trong 占便宜, 讨便宜, 沾便宜, 吃便宜, 贪便宜)
+  pos: n
+  example: s-w-ai-d9067ed2
+- vi: tha nhẹ (cho ai)
+  pos: v
+  rare: true
+  example: s-w-ai-b9b972be
+examples:
+- s-w-1216079
+- s-w-ai-d9067ed2
+- s-w-ai-b9b972be

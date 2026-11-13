@@ -1,0 +1,22 @@
+id: 这样
+hanzi: 这样
+pinyin: zhèyàng
+hanviet: giá dạng
+level: 2
+pos:
+- pron
+- adv
+senses:
+- vi: loại này, như vậy
+  pos: pron
+  example: s-w-3805063
+- vi: cách này, như thế này
+  pos: pron
+  example: s-w-9473597
+- vi: vậy, như thế
+  pos: adv
+  example: s-w-9961449
+examples:
+- s-w-3805063
+- s-w-9473597
+- s-w-9961449

@@ -1,0 +1,25 @@
+id: 边
+hanzi: 边
+pinyin: biān
+hanviet: biên
+level: 2
+pos:
+- n
+- adv
+senses:
+- vi: bên, cạnh (của vật)
+  pos: n
+  example: s-w-787196
+- vi: rìa, mép, lề
+  pos: n
+  example: s-w-816502
+- vi: biên giới, ranh giới (chỉ dùng trong 边界, 边境, 边疆)
+  pos: n
+  example: s-w-ai-7fe7fb5f
+- vi: vừa... vừa... (làm đồng thời)
+  pos: adv
+  example: s-w-1185681
+examples:
+- s-w-787196
+- s-w-816502
+- s-w-ai-7fe7fb5f

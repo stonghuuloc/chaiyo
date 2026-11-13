@@ -1,0 +1,13 @@
+id: 年级
+hanzi: 年级
+pinyin: niánjí
+hanviet: niên cấp
+level: 2
+pos:
+- n
+senses:
+- vi: lớp, khối lớp (trong trường học)
+  pos: n
+  example: s-w-ai-357d49bb
+examples:
+- s-w-ai-357d49bb

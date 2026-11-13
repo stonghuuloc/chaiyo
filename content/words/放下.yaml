@@ -1,0 +1,24 @@
+id: 放下
+hanzi: 放下
+pinyin: fàngxià
+hanviet: phóng hạ
+level: 2
+pos:
+- v
+senses:
+- vi: đặt xuống, để xuống
+  pos: v
+  example: s-w-6197293
+- vi: buông bỏ, từ bỏ
+  pos: v
+  example: s-w-ai-7d7d52a8
+- vi: gác lại, để sang một bên
+  pos: v
+  example: s-w-332833
+- vi: hạ xuống (rèm, màn)
+  pos: v
+  example: s-w-ai-670827be
+examples:
+- s-w-6197293
+- s-w-ai-7d7d52a8
+- s-w-332833

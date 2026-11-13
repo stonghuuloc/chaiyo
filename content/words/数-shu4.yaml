@@ -1,0 +1,18 @@
+id: 数-shu4
+hanzi: 数
+pinyin: shù
+hanviet: số
+level: 2
+pos:
+- n
+- num
+senses:
+- vi: con số; số liệu
+  pos: n
+  example: s-w-ai-fb6ee68f
+- vi: vài, một số (không rõ số lượng)
+  pos: num
+  example: s-w-ai-b81ee7bf
+examples:
+- s-w-ai-fb6ee68f
+- s-w-ai-b81ee7bf

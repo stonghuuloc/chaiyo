@@ -1,0 +1,18 @@
+id: 姓
+hanzi: 姓
+pinyin: xìng
+hanviet: tính
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: họ (trong họ tên)
+  pos: n
+  example: s-w-4815106
+- vi: mang họ (của ai)
+  pos: v
+  example: s-w-13947397
+examples:
+- s-w-4815106
+- s-w-13947397

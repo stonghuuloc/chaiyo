@@ -1,0 +1,17 @@
+id: 身边
+hanzi: 身边
+pinyin: shēnbiān
+hanviet: thân biên
+level: 2
+pos:
+- n
+senses:
+- vi: bên cạnh, bên mình
+  pos: n
+  example: s-w-10713940
+- vi: có sẵn bên mình (tiền, đồ)
+  pos: n
+  example: s-w-ai-ecc54cda
+examples:
+- s-w-10713940
+- s-w-ai-ecc54cda

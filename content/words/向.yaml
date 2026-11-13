@@ -1,0 +1,38 @@
+id: 向
+hanzi: 向
+pinyin: xiàng
+hanviet: hướng
+level: 2
+pos:
+- prep
+- v
+- adv
+- n
+- adj
+senses:
+- vi: về phía
+  pos: prep
+  example: s-w-5715118
+- vi: với, đối với (ai)
+  pos: prep
+  example: s-w-13788192
+- vi: quay mặt về, hướng về
+  pos: v
+  example: s-w-13109231
+- vi: nghiêng về, hướng tới
+  pos: v
+  example: s-w-ai-94765b8b
+- vi: từ trước đến nay, luôn luôn (chỉ dùng trong 向来)
+  pos: adv
+  example: s-w-ai-bc6bcedf
+- vi: chí hướng, mục tiêu theo đuổi
+  pos: n
+  example: s-w-ai-b8ce4eed
+- vi: hướng đến, dành cho (đối tượng)
+  pos: adj
+  rare: true
+  example: s-w-ai-c8ec39e9
+examples:
+- s-w-5715118
+- s-w-13788192
+- s-w-13109231

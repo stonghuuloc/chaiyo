@@ -1,0 +1,21 @@
+id: 方面
+hanzi: 方面
+pinyin: fāngmiàn
+hanviet: phương diện
+level: 2
+pos:
+- n
+senses:
+- vi: khía cạnh, mặt
+  pos: n
+  example: s-w-5631888
+- vi: lĩnh vực
+  pos: n
+  example: s-w-421006
+- vi: về mặt, về phương diện
+  pos: n
+  example: s-w-718453
+examples:
+- s-w-5631888
+- s-w-421006
+- s-w-718453

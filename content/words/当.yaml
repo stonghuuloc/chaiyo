@@ -1,0 +1,40 @@
+id: 当
+hanzi: 当
+pinyin: dāng
+hanviet: đương
+level: 2
+pos:
+- v
+- conj
+- adv
+- n
+- interj
+senses:
+- vi: làm, là (nghề, vai trò)
+  pos: v
+  example: s-w-1424260
+- vi: quản lý (việc nhà, công việc)
+  pos: v
+  rare: true
+  example: s-w-ai-dbb64388
+- vi: đảm nhận, gánh (việc, trách nhiệm)
+  pos: v
+  rare: true
+  example: s-w-ai-67b098b9
+- vi: khi, lúc, đúng lúc
+  pos: conj
+  example: s-w-1020095
+- vi: ngay tại chỗ (chỉ dùng trong 当场)
+  pos: adv
+  example: s-w-ai-5a9b825a
+- vi: ngay giữa, chính giữa (chỉ dùng trong 当中)
+  pos: n
+  example: s-w-ai-7412bdec
+- vi: (từ tượng thanh) đong, đinh đong (chuông)
+  pos: interj
+  rare: true
+  example: s-w-ai-49297682
+examples:
+- s-w-1424260
+- s-w-ai-dbb64388
+- s-w-ai-67b098b9

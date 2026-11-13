@@ -1,0 +1,18 @@
+id: 欢迎
+hanzi: 欢迎
+pinyin: huānyíng
+hanviet: hoan nghênh
+level: 2
+pos:
+- v
+- interj
+senses:
+- vi: chào đón (khách, người mới)
+  pos: v
+  example: s-w-1789983
+- vi: Chào mừng!
+  pos: interj
+  example: s-w-11241265
+examples:
+- s-w-1789983
+- s-w-11241265

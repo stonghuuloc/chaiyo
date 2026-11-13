@@ -1,0 +1,23 @@
+id: 平常
+hanzi: 平常
+pinyin: píngcháng
+hanviet: bình thường
+level: 2
+pos:
+- adj
+- n
+- adv
+senses:
+- vi: bình thường, thông thường
+  pos: adj
+  example: s-w-ai-c65b2146
+- vi: lúc bình thường, ngày thường
+  pos: n
+  example: s-w-ai-d02c74f1
+- vi: thường, thường ngày
+  pos: adv
+  example: s-w-420016
+examples:
+- s-w-ai-c65b2146
+- s-w-ai-d02c74f1
+- s-w-420016

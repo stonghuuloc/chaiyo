@@ -1,0 +1,28 @@
+id: 听说
+hanzi: 听说
+pinyin: tīngshuō
+hanviet: thính thuyết
+level: 2
+pos:
+- v
+- phrase
+- n
+senses:
+- vi: nghe (tin, chuyện)
+  pos: v
+  example: s-w-2182956
+- vi: nghe nói, nghe rằng
+  pos: phrase
+  example: s-w-1309524
+- vi: tin đồn, lời đồn
+  pos: n
+  rare: true
+  example: s-w-2367641
+- vi: kỹ năng nghe nói
+  pos: n
+  rare: true
+  example: s-w-ai-7be5dd48
+examples:
+- s-w-2182956
+- s-w-1309524
+- s-w-2367641

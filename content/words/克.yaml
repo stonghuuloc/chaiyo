@@ -1,0 +1,27 @@
+id: 克
+hanzi: 克
+pinyin: kè
+hanviet: khắc
+level: 2
+pos:
+- v
+- mw
+senses:
+- vi: chế ngự, khuất phục, vượt qua
+  pos: v
+  example: s-w-ai-2804c71f
+- vi: có thể (thường gặp ở dạng 不克)
+  pos: v
+  rare: true
+  example: s-w-ai-26428e9e
+- vi: gam (đơn vị khối lượng)
+  pos: mw
+  example: s-w-ai-4f1a3962
+- vi: khắc (đơn vị diện tích đất Tây Tạng, khoảng 6 a)
+  pos: mw
+  rare: true
+  example: s-w-ai-f7754be8
+examples:
+- s-w-ai-2804c71f
+- s-w-ai-26428e9e
+- s-w-ai-4f1a3962

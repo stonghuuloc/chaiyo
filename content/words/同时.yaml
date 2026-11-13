@@ -1,0 +1,18 @@
+id: 同时
+hanzi: 同时
+pinyin: tóngshí
+hanviet: đồng thời
+level: 2
+pos:
+- adv
+- n
+senses:
+- vi: cùng lúc, đồng thời
+  pos: adv
+  example: s-w-673260
+- vi: lúc đồng thời (trong 在…的同时)
+  pos: n
+  example: s-w-332894
+examples:
+- s-w-673260
+- s-w-332894

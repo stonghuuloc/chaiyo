@@ -1,0 +1,19 @@
+id: 对面
+hanzi: 对面
+pinyin: duìmiàn
+hanviet: đối diện
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: đối diện, bên kia (đường, nhà)
+  pos: n
+  example: s-w-827446
+- vi: đối mặt, đối diện (với nhau)
+  pos: v
+  rare: true
+  example: s-w-ai-0eb47054
+examples:
+- s-w-827446
+- s-w-ai-0eb47054

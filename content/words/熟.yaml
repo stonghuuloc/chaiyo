@@ -1,0 +1,24 @@
+id: 熟
+hanzi: 熟
+pinyin: shú
+hanviet: thục
+level: 2
+pos:
+- adj
+senses:
+- vi: quen, thân quen (với người, việc)
+  pos: adj
+  example: s-w-848655
+- vi: chín (trái cây, đồ ăn)
+  pos: adj
+  example: s-w-472845
+- vi: thành thạo, có kinh nghiệm
+  pos: adj
+  example: s-w-ai-57214125
+- vi: say (giấc ngủ)
+  pos: adj
+  example: s-w-ai-4736b21e
+examples:
+- s-w-848655
+- s-w-472845
+- s-w-ai-57214125

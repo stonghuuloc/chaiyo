@@ -1,0 +1,18 @@
+id: 必须
+hanzi: 必须
+pinyin: bìxū
+hanviet: tất tu
+level: 2
+pos:
+- adv
+- adj
+senses:
+- vi: phải, nhất thiết phải
+  pos: adv
+  example: s-w-407097
+- vi: bắt buộc
+  pos: adj
+  example: s-w-ai-34d76112
+examples:
+- s-w-407097
+- s-w-ai-34d76112

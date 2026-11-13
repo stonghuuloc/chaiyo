@@ -1,0 +1,24 @@
+id: 进行
+hanzi: 进行
+pinyin: jìnxíng
+hanviet: tiến hành
+level: 2
+pos:
+- v
+senses:
+- vi: tiến hành, thực hiện (kiểm tra, cải cách)
+  pos: v
+  example: s-w-5819726
+- vi: đang diễn ra, đang tiến hành
+  pos: v
+  example: s-w-8563442
+- vi: tiếp diễn, kéo dài (theo thời gian)
+  pos: v
+  example: s-w-ai-f97a0bc1
+- vi: tiến triển, diễn tiến (của sự việc)
+  pos: v
+  example: s-w-5650516
+examples:
+- s-w-5819726
+- s-w-8563442
+- s-w-ai-f97a0bc1

@@ -1,0 +1,19 @@
+id: 所有
+hanzi: 所有
+pinyin: suǒyǒu
+hanviet: sở hữu
+level: 2
+pos:
+- adj
+- v
+senses:
+- vi: tất cả, mọi (+ danh từ)
+  pos: adj
+  example: s-w-677005
+- vi: có, sở hữu (tài sản)
+  pos: v
+  rare: true
+  example: s-w-ai-5546682e
+examples:
+- s-w-677005
+- s-w-ai-5546682e

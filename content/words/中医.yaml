@@ -1,0 +1,17 @@
+id: 中医
+hanzi: 中医
+pinyin: Zhōngyī
+hanviet: trung y
+level: 2
+pos:
+- n
+senses:
+- vi: Đông y (y học cổ truyền Trung Quốc)
+  pos: n
+  example: s-w-827188
+- vi: thầy thuốc Đông y
+  pos: n
+  example: s-w-827180
+examples:
+- s-w-827188
+- s-w-827180

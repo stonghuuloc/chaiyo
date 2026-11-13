@@ -1,0 +1,18 @@
+id: 篇
+hanzi: 篇
+pinyin: piān
+hanviet: thiên
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: bài viết, bài văn (tờ giấy viết)
+  pos: n
+  example: s-w-7768282
+- vi: bài (văn, báo cáo)
+  pos: mw
+  example: s-w-ai-b6ae622f
+examples:
+- s-w-7768282
+- s-w-ai-b6ae622f

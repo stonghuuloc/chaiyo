@@ -1,0 +1,24 @@
+id: 换
+hanzi: 换
+pinyin: huàn
+hanviet: hoán
+level: 2
+pos:
+- v
+senses:
+- vi: đổi (phòng, công việc, tiền)
+  pos: v
+  example: s-w-9419163
+- vi: thay (quần áo)
+  pos: v
+  example: s-w-353542
+- vi: trao đổi (đồ vật, chỗ ngồi)
+  pos: v
+  example: s-w-512054
+- vi: thay thế (người, vật khác)
+  pos: v
+  example: s-w-ai-d83e006f
+examples:
+- s-w-9419163
+- s-w-353542
+- s-w-512054

@@ -1,0 +1,17 @@
+id: 变
+hanzi: 变
+pinyin: biàn
+hanviet: biến
+level: 2
+pos:
+- v
+senses:
+- vi: thay đổi, trở nên khác
+  pos: v
+  example: s-w-333218
+- vi: biến hóa (như ảo thuật)
+  pos: v
+  example: s-w-7976843
+examples:
+- s-w-333218
+- s-w-7976843

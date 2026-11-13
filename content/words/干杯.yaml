@@ -1,0 +1,18 @@
+id: 干杯
+hanzi: 干杯
+pinyin: gānbēi
+hanviet: can bôi
+level: 2
+pos:
+- v
+- interj
+senses:
+- vi: nâng ly chúc mừng
+  pos: v
+  example: s-w-8640260
+- vi: Cạn ly! (lời mời nâng ly)
+  pos: interj
+  example: s-w-380278
+examples:
+- s-w-8640260
+- s-w-380278

@@ -1,0 +1,18 @@
+id: 可是
+hanzi: 可是
+pinyin: kěshì
+hanviet: khả thị
+level: 2
+pos:
+- conj
+- adv
+senses:
+- vi: nhưng mà, tuy nhiên
+  pos: conj
+  example: s-w-4761402
+- vi: quả là (nhấn mạnh)
+  pos: adv
+  example: s-w-ai-ea0cca71
+examples:
+- s-w-4761402
+- s-w-ai-ea0cca71

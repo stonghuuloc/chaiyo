@@ -1,0 +1,21 @@
+id: 留
+hanzi: 留
+pinyin: liú
+hanviet: ''
+level: 2
+pos:
+- v
+senses:
+- vi: giữ, giữ lại (tóc, đồ vật)
+  pos: v
+  example: s-w-11243450
+- vi: ở lại
+  pos: v
+  example: s-w-334754
+- vi: để lại (lời nhắn, tiền bạc)
+  pos: v
+  example: s-w-5091297
+examples:
+- s-w-11243450
+- s-w-334754
+- s-w-5091297

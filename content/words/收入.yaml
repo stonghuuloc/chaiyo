@@ -1,0 +1,23 @@
+id: 收入
+hanzi: 收入
+pinyin: shōurù
+hanviet: thu nhập
+level: 2
+pos:
+- n
+- v
+senses:
+- vi: thu nhập
+  pos: n
+  example: s-w-8688148
+- vi: doanh thu
+  pos: n
+  example: s-w-ai-59c8f812
+- vi: thu vào, đưa vào (nội dung)
+  pos: v
+  rare: true
+  example: s-w-ai-138f2110
+examples:
+- s-w-8688148
+- s-w-ai-59c8f812
+- s-w-ai-138f2110

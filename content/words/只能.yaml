@@ -1,0 +1,17 @@
+id: 只能
+hanzi: 只能
+pinyin: zhǐnéng
+hanviet: chỉ năng
+level: 2
+pos:
+- v
+senses:
+- vi: chỉ có thể
+  pos: v
+  example: s-w-1313913
+- vi: buộc phải, không còn lựa chọn nào khác
+  pos: v
+  example: s-w-1888675
+examples:
+- s-w-1313913
+- s-w-1888675

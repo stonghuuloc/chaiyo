@@ -1,0 +1,17 @@
+id: 随时
+hanzi: 随时
+pinyin: suíshí
+hanviet: tuỳ thời
+level: 2
+pos:
+- adv
+senses:
+- vi: bất cứ lúc nào
+  pos: adv
+  example: s-w-5945143
+- vi: đúng lúc, khi cần thiết
+  pos: adv
+  example: s-w-ai-7b03c3d5
+examples:
+- s-w-5945143
+- s-w-ai-7b03c3d5

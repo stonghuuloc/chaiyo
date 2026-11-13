@@ -1,0 +1,30 @@
+id: 推
+hanzi: 推
+pinyin: tuī
+hanviet: suy
+level: 2
+pos:
+- v
+senses:
+- vi: đẩy (vật)
+  pos: v
+  example: s-w-14023282
+- vi: từ chối, khước từ
+  pos: v
+  example: s-w-ai-285cfe1b
+- vi: đùn đẩy (trách nhiệm)
+  pos: v
+  example: s-w-1759725
+- vi: hoãn, trì hoãn
+  pos: v
+  example: s-w-ai-f1bba086
+- vi: thúc đẩy, đẩy mạnh
+  pos: v
+  example: s-w-ai-28544878
+- vi: đề cử, bầu chọn
+  pos: v
+  example: s-w-ai-8c457415
+examples:
+- s-w-14023282
+- s-w-ai-285cfe1b
+- s-w-1759725

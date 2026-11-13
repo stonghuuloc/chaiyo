@@ -1,0 +1,17 @@
+id: 晴天
+hanzi: 晴天
+pinyin: qíngtiān
+hanviet: tình thiên
+level: 2
+pos:
+- n
+senses:
+- vi: ngày nắng
+  pos: n
+  example: s-w-10520473
+- vi: trời quang
+  pos: n
+  example: s-w-ai-1335c86b
+examples:
+- s-w-10520473
+- s-w-ai-1335c86b

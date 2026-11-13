@@ -1,0 +1,21 @@
+id: 更
+hanzi: 更
+pinyin: gèng
+hanviet: cánh
+level: 2
+pos:
+- adv
+senses:
+- vi: hơn (so sánh, dùng với 比)
+  pos: adv
+  example: s-w-4754679
+- vi: thêm, nhiều hơn (số lượng)
+  pos: adv
+  example: s-w-502858
+- vi: càng, còn hơn nữa
+  pos: adv
+  example: s-w-2347850
+examples:
+- s-w-4754679
+- s-w-502858
+- s-w-2347850

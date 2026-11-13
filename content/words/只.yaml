@@ -1,0 +1,18 @@
+id: 只
+hanzi: 只
+pinyin: zhǐ
+hanviet: chỉ
+level: 2
+pos:
+- adv
+- conj
+senses:
+- vi: chỉ, chỉ là
+  pos: adv
+  example: s-w-843486
+- vi: nhưng (đối lập với vế trước; chỉ dùng trong 只是)
+  pos: conj
+  example: s-w-ai-43622377
+examples:
+- s-w-843486
+- s-w-ai-43622377

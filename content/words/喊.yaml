@@ -1,0 +1,17 @@
+id: 喊
+hanzi: 喊
+pinyin: hǎn
+hanviet: hảm
+level: 2
+pos:
+- v
+senses:
+- vi: hét, la lớn
+  pos: v
+  example: s-w-1406486
+- vi: gọi (ai)
+  pos: v
+  example: s-w-689562
+examples:
+- s-w-1406486
+- s-w-689562

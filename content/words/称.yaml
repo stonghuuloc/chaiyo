@@ -1,0 +1,28 @@
+id: 称
+hanzi: 称
+pinyin: chēng
+hanviet: xưng
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: nói, tuyên bố, cho biết
+  pos: v
+  example: s-w-1314412
+- vi: gọi là, đặt tên (cho ai)
+  pos: v
+  example: s-w-8750754
+- vi: cân (đồ vật)
+  pos: v
+  example: s-w-ai-a4fd7cff
+- vi: khen ngợi, tán dương (chỉ dùng trong 称赞)
+  pos: v
+  example: s-w-ai-7428ef8f
+- vi: tên gọi, cách gọi (chỉ dùng trong 称呼, 名称)
+  pos: n
+  example: s-w-ai-68eacfc9
+examples:
+- s-w-1314412
+- s-w-8750754
+- s-w-ai-a4fd7cff

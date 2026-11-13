@@ -1,0 +1,22 @@
+id: 旅游
+hanzi: 旅游
+pinyin: lǚyóu
+hanviet: lữ du
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: đi du lịch
+  pos: v
+  example: s-w-1605957
+- vi: chuyến đi, chuyến du lịch
+  pos: n
+  example: s-w-501697
+- vi: du lịch (ngành, hoạt động)
+  pos: n
+  example: s-w-2448826
+examples:
+- s-w-1605957
+- s-w-501697
+- s-w-2448826

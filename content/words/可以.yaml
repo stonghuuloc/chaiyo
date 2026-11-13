@@ -1,0 +1,25 @@
+id: 可以
+hanzi: 可以
+pinyin: kěyǐ
+hanviet: khả dĩ
+level: 2
+pos:
+- v
+- adj
+senses:
+- vi: có thể, có khả năng
+  pos: v
+  example: s-w-918074
+- vi: được phép, có thể (xin phép)
+  pos: v
+  example: s-w-396894
+- vi: được, chấp nhận được
+  pos: adj
+  example: s-w-8569130
+- vi: khá tốt, không tệ
+  pos: adj
+  example: s-w-2265425
+examples:
+- s-w-918074
+- s-w-396894
+- s-w-8569130

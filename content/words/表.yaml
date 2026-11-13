@@ -1,0 +1,27 @@
+id: 表
+hanzi: 表
+pinyin: biǎo
+hanviet: biểu
+level: 2
+pos:
+- n
+senses:
+- vi: đồng hồ (đeo tay)
+  pos: n
+  example: s-w-487711
+- vi: bảng, biểu mẫu (ghi thông tin)
+  pos: n
+  example: s-w-ai-b3cef31a
+- vi: đồng hồ đo (điện, nước; chỉ dùng trong 电表, 水表, 煤气表, 抄表)
+  pos: n
+  example: s-w-ai-67b8fe62
+- vi: bề ngoài, bề mặt (chỉ dùng trong 外表, 表面)
+  pos: n
+  example: s-w-ai-92d4888d
+- vi: anh chị em họ (bên ngoại; chỉ dùng trong 表哥, 表姐, 表弟, 表妹)
+  pos: n
+  example: s-w-ai-ec430520
+examples:
+- s-w-487711
+- s-w-ai-b3cef31a
+- s-w-ai-67b8fe62

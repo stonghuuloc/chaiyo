@@ -1,0 +1,27 @@
+id: 得
+hanzi: 得
+pinyin: dé
+hanviet: đắc
+level: 2
+pos:
+- v
+- adj
+- phrase
+senses:
+- vi: nhận được, giành được
+  pos: v
+  example: s-w-1516453
+- vi: mắc, bị (bệnh)
+  pos: v
+  example: s-w-ai-2b2cf1e0
+- vi: thích hợp, phù hợp
+  pos: adj
+  rare: true
+  example: s-w-7886603
+- vi: xong, thôi (trong 得了)
+  pos: phrase
+  example: s-w-ai-a9405a46
+examples:
+- s-w-1516453
+- s-w-ai-2b2cf1e0
+- s-w-7886603

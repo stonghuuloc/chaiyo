@@ -8,8 +8,10 @@ Sources (the LLM edits, it does not invent meanings):
   examples  Tatoeba (CC BY 2.0 FR) simplified sentences that contain the word as a jieba token, with English
             (and Vietnamese when Tatoeba has it). LLM-written example only when no candidate fits, flagged ai.
 Output (staging, never content/): .cache/words/out/words/<id>.yaml (Word) + sentences/hsk1.yaml (Sentence[]) + src/<id>.json (numbered CC-CEDICT senses).
-Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [words]   (no words = all HSK 3.0 level 1 words in dict.json; sources download into .cache/words)"""
-import argparse, bz2, hashlib, threading, unicodedata, json, os, random, re, shutil, sys, urllib.request, uuid
+Run: OPENCODE_API_KEY=… uv run scripts/gen-entries.py [--level N] [words]   (no words = all HSK 3.0 level N words in dict.json; sources download into .cache/words)
+     GEN_PROVIDER=anthropic ANTHROPIC_API_KEY=… uv run scripts/gen-entries.py …   (Claude Haiku instead of opencode)
+     GEN_PROVIDER=claude-cli uv run scripts/gen-entries.py …   (Claude Haiku via `claude -p` on the logged-in subscription)"""
+import argparse, bz2, functools, hashlib, threading, unicodedata, json, os, random, re, shutil, subprocess, sys, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from pathlib import Path
@@ -18,6 +20,7 @@ import jieba, jieba.posseg as pseg, opencc, yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / 'content/words'
+LEVEL = 1  # HSK 3.0 level being generated (--level)
 CACHE = ROOT / '.cache/words'
 HSK_COMMIT = '7ac65bf1a6387d35f1ade478906172a19311c7f9'
 TATOEBA = 'https://downloads.tatoeba.org/exports/per_language'
@@ -87,7 +90,48 @@ def parse_json(text):
     """The first JSON object in the model's text; trailing text, a second object or a code fence is ignored."""
     return json.JSONDecoder().raw_decode(text[text.index('{'):])[0]
 
+CLAUDE_MODEL = 'claude-haiku-5-5'
+
+@functools.cache
+def claude():
+    import anthropic
+    return anthropic.Anthropic(max_retries=6)
+
+def ask_claude(prompt):
+    """GEN_PROVIDER=anthropic: same prompt and JSON parse as opencode, sent to Claude Haiku."""
+    res = claude().messages.create(model=CLAUDE_MODEL, max_tokens=16000, output_config={'effort': 'medium'},
+                                   messages=[{'role': 'user', 'content': prompt}])
+    USAGE['calls'] += 1
+    USAGE['input'] += res.usage.input_tokens
+    USAGE['output'] += res.usage.output_tokens
+    if res.stop_reason in ('refusal', 'max_tokens'):
+        raise RuntimeError(f'claude stopped: {res.stop_reason}')
+    return parse_json(''.join(b.text for b in res.content if b.type == 'text'))
+
+# Claude Code headless on the logged-in subscription; no tools, MCP, settings or skills keeps the context under 1k tokens
+CLAUDE_CLI = ['claude', '-p', '--model', 'haiku', '--system-prompt', 'You answer with JSON only.', '--tools', '',
+              '--no-session-persistence', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}',
+              '--setting-sources', '', '--disable-slash-commands', '--output-format', 'json']
+
+def ask_claude_cli(prompt):
+    run = subprocess.run(CLAUDE_CLI, input=prompt, capture_output=True, text=True, timeout=600)
+    try:
+        res = json.loads(run.stdout)
+    except json.JSONDecodeError:
+        raise RuntimeError(f'claude -p exit {run.returncode}: {(run.stderr or run.stdout)[:300]}') from None
+    if run.returncode or res.get('is_error'):
+        raise RuntimeError(f'claude -p {res.get("subtype")}: {str(res.get("result"))[:300]}')
+    USAGE['calls'] += 1
+    USAGE['input'] += res['usage']['input_tokens'] + res['usage'].get('cache_read_input_tokens', 0) + res['usage'].get('cache_creation_input_tokens', 0)
+    USAGE['output'] += res['usage']['output_tokens']
+    return parse_json(res['result'])
+
 def ask(prompt):
+    provider = os.environ.get('GEN_PROVIDER')
+    if provider == 'anthropic':
+        return ask_claude(prompt)
+    if provider == 'claude-cli':
+        return ask_claude_cli(prompt)
     key = os.environ['OPENCODE_API_KEY']
     body = {'model': 'gpt-6-luna', 'input': [{'role': 'user', 'content': [{'type': 'input_text', 'text': prompt}]}], 'store': False}
     req = urllib.request.Request('https://opencode.ai/inference/go/v1/responses', data=json.dumps(body).encode(),
@@ -120,7 +164,7 @@ def source(hz):
     hv_by_py = {row[1].lower(): row[3], **{p.lower(): v for p, v, _ in row[7]}}
     readings, skipped = [], []
     for fi, f in enumerate(h['f']):
-        py = f['i']['y']
+        py = src_pinyin(f['i']['y'])
         keep = [m for m in f['m'] if not XREF.search(m)]
         skipped += [m for m in f['m'] if XREF.search(m)]
         if not keep:
@@ -155,6 +199,10 @@ def py_errors(py):
     return [f'{e} "{py}"' for e in errs]
 
 TONES = '̄́̌̀'
+
+def src_pinyin(y):
+    """The HSK list writes an erhua tail with a tone digit (yǒukòngr5); the model and dict.json write yǒukòngr."""
+    return re.sub(r'r5\b', 'r', y)
 
 def canon(py, readings):
     """The source reading the model's pinyin names: spacing is ignored, a toneless source vowel accepts any tone, a dropped erhua r is accepted; a single-reading word also tolerates tone sandhi; an exact match wins."""
@@ -482,7 +530,7 @@ def cut_py(hz, py, classifiers, capital=True):
                     out += PUNCT.get(c, c)
     return (out[:1].upper() + out[1:]) if capital else out
 
-HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
+HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma', '哭': 'khốc', '爬': 'bà', '油': 'du', '层': 'tằng'}  # dict.json holds the native word for these
 
 def hanviet(hz, value):
     parts = value.split()
@@ -699,7 +747,7 @@ Chỉ trả về JSON:
 
 def to_yaml(hz, e):
     row = DICT[hz]
-    nums = {f['i']['y'].lower(): f['i']['n'] for f in HSK[hz]['f']}
+    nums = {src_pinyin(f['i']['y']).lower(): f['i']['n'] for f in HSK[hz]['f']}
     words, sentences = {}, {}
     for r in e['readings']:
         py = r['pinyin'].lower()
@@ -709,7 +757,7 @@ def to_yaml(hz, e):
         proper = variants[0] if variants and all(v[:1].isupper() for v in variants) else py
         w = words.setdefault(wid, {'id': wid, 'hanzi': hz, 'pinyin': normalize_py(hz, proper, capital=proper[:1].isupper(), override=OVERRIDE),
                                    'hanviet': hanviet(hz, row[3] if py == row[1].lower() else next((v for p, v, _ in row[7] if p.lower() == py), row[3])),
-                                   'level': 1, 'pos': [], 'senses': [], 'examples': []})
+                                   'level': LEVEL, 'pos': [], 'senses': [], 'examples': []})
         for g in r['groups']:
             code = POS_CODE[g['pos']]
             if code not in w['pos']:
@@ -750,9 +798,15 @@ def fold_hand(senses):
     senses[:] = [x for x in senses if not (norm(x['vi']) in seen or seen.add(norm(x['vi'])))]
     return senses
 
+def out_dir():
+    return CACHE / ('out' if LEVEL == 1 else f'out-hsk{LEVEL}')
+
+def sent_file():
+    return f'sentences/hsk{LEVEL}.yaml'
+
 def write_out(results):
-    out = CACHE / 'out'
-    sentences = {s['id']: s for s in (yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8')) if (out / 'sentences/hsk1.yaml').exists() else [])}
+    out = out_dir()
+    sentences = {s['id']: s for s in (yaml.safe_load((out / sent_file()).read_text(encoding='utf-8')) if (out / sent_file()).exists() else [])}
     for hz, e in results:
         for sub, ext in (('words', 'yaml'), ('src', 'json')):
             for old in [*(out / sub).glob(f'{hz}.{ext}'), *(out / sub).glob(f'{hz}-*.{ext}')]:
@@ -779,7 +833,7 @@ def write_out(results):
             nums = {**base, 'senses': {k: v for r in same for k, v in r['senses'].items()}, 'core': e.get('core', [])}
             (out / 'src').mkdir(parents=True, exist_ok=True)
             (out / 'src' / f'{wid}.json').write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
-    dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
+    dump(out / sent_file(), sorted(sentences.values(), key=lambda s: s['id']))
 
 def restage_sentences(w, sentences):
     """The pinyin every example sentence of a staged word gets from the current normalize_py, under that word's taught compounds and classifier."""
@@ -790,8 +844,8 @@ def restage_sentences(w, sentences):
 
 def restage():
     """Deterministic fixes over the staged set, no model call: sentence pinyin, header case, hand-gloss folds and the CC-CEDICT source of case-variant readings."""
-    out = CACHE / 'out'
-    sentences = {s['id']: s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))}
+    out = out_dir()
+    sentences = {s['id']: s for s in yaml.safe_load((out / sent_file()).read_text(encoding='utf-8'))}
     changed = {'sentences': 0, 'headers': 0, 'folds': 0, 'notes': 0, 'src': 0}
     settled = set()  # a sentence shared by several words takes the pinyin of the first word in file order
     for f in sorted((out / 'words').glob('*.yaml')):
@@ -829,7 +883,7 @@ def restage():
         if nums != old:
             src.write_text(json.dumps(nums, ensure_ascii=False, indent=1), encoding='utf-8')
             changed['src'] += 1
-    dump(out / 'sentences/hsk1.yaml', sorted(sentences.values(), key=lambda s: s['id']))
+    dump(out / sent_file(), sorted(sentences.values(), key=lambda s: s['id']))
     print('restaged', json.dumps(changed))
 
 def staged_sha(out):
@@ -844,7 +898,7 @@ def review(out, seed, size=20):
     if len(ids) < size:
         print(f'warning: only {len(ids)} staged words, sampling all')
     picked = sorted(random.Random(seed).sample(ids, min(size, len(ids))))
-    sentences = {s['id']: s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))}
+    sentences = {s['id']: s for s in yaml.safe_load((out / sent_file()).read_text(encoding='utf-8'))}
     total = [yaml.safe_load((out / 'words' / f'{i}.yaml').read_text(encoding='utf-8')) for i in ids]
     rare = [sum(bool(s.get('rare')) for s in w['senses']) for w in total]
     lines = [f'# Spot-check sample, seed {seed}', '',
@@ -860,8 +914,8 @@ def review(out, seed, size=20):
             lines.append(f'**{pos}**')
             for s in senses:
                 x = sentences.get(s.get('example'))
-                label = ('Tatoeba #' + x['source'].split(':')[1]) if x and x['source'].startswith('tatoeba:') else 'AI viết'
-                lines.append(f'- {"★ " if s.get("rare") else ""}{s["vi"]}' + (f' — {x["hanzi"]} / {x["pinyin"]} / {x["vi"]} ({label})' if x else ''))
+                label = f' (Tatoeba #{x["source"].split(":")[1]})' if x and x['source'].startswith('tatoeba:') else ''
+                lines.append(f'- {"★ " if s.get("rare") else ""}{s["vi"]}' + (f' — {x["hanzi"]} / {x["pinyin"]} / {x["vi"]}{label}' if x else ''))
             lines.append('')
         src_file = out / 'src' / f'{i}.json'
         if src_file.exists():
@@ -878,12 +932,22 @@ def promote(out, seed):
         print(f'review-{seed}.md is stale or missing', file=sys.stderr)
         sys.exit(2)
     words = sorted((out / 'words').glob('*.yaml'))
-    used = {x for f in words for w in [yaml.safe_load(f.read_text(encoding='utf-8'))] for x in [*w.get('examples', []), *(s['example'] for s in w['senses'] if 'example' in s)]}
-    sentences = [s for s in yaml.safe_load((out / 'sentences/hsk1.yaml').read_text(encoding='utf-8')) if not s['id'].startswith('s-w-') or s['id'] in used]
+    # refs of words that stay in content (other levels) count too, so this level's file never drops a sentence they cite
+    kept = [f for f in CONTENT.glob('*.yaml') if f.name not in {w.name for w in words}] if CONTENT.exists() else []
+    used = {x for f in [*words, *kept] for w in [yaml.safe_load(f.read_text(encoding='utf-8'))] for x in [*w.get('examples', []), *(s['example'] for s in w['senses'] if 'example' in s)]}
+    # a sentence another level's file already holds keeps its id there; listing it twice breaks the import
+    elsewhere = {s['id'] for f in (CONTENT.parent / 'sentences').glob('*.yaml') if f.name != Path(sent_file()).name
+                 for s in yaml.safe_load(f.read_text(encoding='utf-8')) or []}
+    sentences = [s for s in yaml.safe_load((out / sent_file()).read_text(encoding='utf-8'))
+                 if (not s['id'].startswith('s-w-') or s['id'] in used) and s['id'] not in elsewhere]
+    current = CONTENT.parent / sent_file()
+    staged_ids = {s['id'] for s in sentences}
+    sentences += [s for s in (yaml.safe_load(current.read_text(encoding='utf-8')) or [] if current.exists() else [])
+                  if s['id'] in used and s['id'] not in staged_ids and s['id'] not in elsewhere]
     CONTENT.mkdir(parents=True, exist_ok=True)
     for f in words:
         shutil.copy(f, CONTENT / f.name)
-    dump(CONTENT.parent / 'sentences/hsk1.yaml', sentences)
+    dump(CONTENT.parent / sent_file(), sentences)
     print(f'promoted {len(words)} words, {len(sentences)} sentences')
 
 def main(argv, llm=ask):
@@ -894,15 +958,18 @@ def main(argv, llm=ask):
     ap.add_argument('--promote', action='store_true')
     ap.add_argument('--restage', action='store_true')
     ap.add_argument('--approved', type=int)
+    ap.add_argument('--level', type=int, choices=range(1, 7), default=1)
     args = ap.parse_args(argv)
+    global LEVEL
+    LEVEL = args.level
     if args.promote and args.approved is None:
         ap.error('--promote needs --approved N')
     if args.sample and args.seed is None:
         ap.error('--sample needs --seed N')
     if args.promote:
-        return promote(CACHE / 'out', args.approved)
+        return promote(out_dir(), args.approved)
     if args.sample:
-        return review(CACHE / 'out', args.seed, args.sample)
+        return review(out_dir(), args.seed, args.sample)
     if args.restage:
         for name in SOURCES:
             fetch(name)
@@ -913,22 +980,27 @@ def main(argv, llm=ask):
         HINTS.update(json.loads(Path(os.environ['GEN_HINTS']).read_text(encoding='utf-8')))
     if llm is ask and os.environ.get('GEN_OFFLINE_DIR'):
         llm = ask_files
-    if llm is ask and not os.environ.get('OPENCODE_API_KEY'):
-        print('OPENCODE_API_KEY is not set', file=sys.stderr)
+    provider = os.environ.get('GEN_PROVIDER')
+    if provider not in (None, '', 'opencode', 'anthropic', 'claude-cli'):
+        print(f'unknown GEN_PROVIDER {provider!r} (use opencode, anthropic or claude-cli)', file=sys.stderr)
+        sys.exit(2)
+    need = {'anthropic': 'ANTHROPIC_API_KEY', 'claude-cli': None}.get(provider, 'OPENCODE_API_KEY')
+    if llm is ask and need and not os.environ.get(need):
+        print(f'{need} is not set', file=sys.stderr)
         sys.exit(2)
     for name in SOURCES:
         fetch(name)
     HSK.update({e['s']: e for e in json.loads((CACHE / 'complete.min.json').read_text(encoding='utf-8'))})
-    hsk1 = {s for s, e in HSK.items() if 'n1' in e['l']} & DICT.keys()
+    level = {s for s, e in HSK.items() if f'n{LEVEL}' in e['l']} & DICT.keys()
     words = []
-    for w in argv or sorted(hsk1):
-        if w in hsk1:
+    for w in argv or sorted(level):
+        if w in level:
             words.append(w)
         else:
-            print(f'skip {w}: not in HSK1 list')
+            print(f'skip {w}: not in HSK{LEVEL} list')
     rows = tatoeba()
     done, rejected, pending = [], [], []
-    with ThreadPoolExecutor(8) as pool:
+    with ThreadPoolExecutor(int(os.environ.get("GEN_WORKERS", 8))) as pool:
         for w, f in [(w, pool.submit(entry, w, rows, llm)) for w in words]:
             try:
                 hz, e = f.result()

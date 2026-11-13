@@ -1,0 +1,31 @@
+id: 长
+hanzi: 长
+pinyin: zhǎng
+hanviet: trưởng
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: lớn lên, mọc (cây, tóc)
+  pos: v
+  example: s-w-ai-98bd226d
+- vi: tiến bộ, phát triển (chỉ dùng trong 长进)
+  pos: v
+  example: s-w-ai-740dd7fb
+- vi: tăng (lên; chỉ dùng trong 增长)
+  pos: v
+  example: s-w-ai-a4722d84
+- vi: mở mang kiến thức, nâng cao (chỉ dùng trong 长见识)
+  pos: v
+  example: s-w-ai-d979eae7
+- vi: trưởng, người đứng đầu (nhóm, lớp; chỉ dùng trong 班长, 校长, 市长)
+  pos: n
+  example: s-w-ai-51b48f42
+- vi: bậc trưởng bối, người lớn tuổi (chỉ dùng trong 长辈)
+  pos: n
+  example: s-w-ai-9c53ea45
+examples:
+- s-w-ai-98bd226d
+- s-w-ai-740dd7fb
+- s-w-ai-a4722d84

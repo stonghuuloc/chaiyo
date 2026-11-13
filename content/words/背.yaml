@@ -1,0 +1,33 @@
+id: 背
+hanzi: 背
+pinyin: bèi
+hanviet: bối
+level: 2
+pos:
+- n
+- v
+- adj
+senses:
+- vi: lưng (người, đồ vật)
+  pos: n
+  example: s-w-10616260
+- vi: học thuộc lòng (bài, từ)
+  pos: v
+  example: s-w-480956
+- vi: quay lưng lại (ai; chỉ dùng trong 背对, 背过身)
+  pos: v
+  example: s-w-ai-54202014
+- vi: giấu, lén (ai; chỉ dùng trong 背着 + người (背着我), 背人)
+  pos: v
+  example: s-w-ai-84c0c903
+- vi: xui xẻo (khẩu ngữ)
+  pos: adj
+  example: s-w-ai-1adeb888
+- vi: nghễnh ngãng, nghe kém
+  pos: adj
+  rare: true
+  example: s-w-ai-0c29b4b4
+examples:
+- s-w-10616260
+- s-w-480956
+- s-w-ai-54202014

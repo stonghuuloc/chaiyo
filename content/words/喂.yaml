@@ -1,0 +1,18 @@
+id: 喂
+hanzi: 喂
+pinyin: wèi
+hanviet: uý
+level: 2
+pos:
+- interj
+- v
+senses:
+- vi: này (dùng để gọi người khác)
+  pos: interj
+  example: s-w-9012244
+- vi: cho ăn (động vật, em bé, người bệnh)
+  pos: v
+  example: s-w-1899706
+examples:
+- s-w-9012244
+- s-w-1899706

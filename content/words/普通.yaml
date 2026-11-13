@@ -1,0 +1,17 @@
+id: 普通
+hanzi: 普通
+pinyin: pǔtōng
+hanviet: phổ thông
+level: 2
+pos:
+- adj
+senses:
+- vi: bình thường, phổ biến (không có gì đặc biệt)
+  pos: adj
+  example: s-w-8897464
+- vi: trung bình, tầm thường (về chất lượng)
+  pos: adj
+  example: s-w-ai-afe620ba
+examples:
+- s-w-8897464
+- s-w-ai-afe620ba

@@ -1,0 +1,23 @@
+id: 眼
+hanzi: 眼
+pinyin: yǎn
+hanviet: nhãn
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: mắt
+  pos: n
+  example: s-w-2031476
+- vi: lỗ nhỏ (lỗ kim; chỉ dùng trong 针眼, 枪眼, 炮眼)
+  pos: n
+  example: s-w-ai-dbee96ee
+- vi: cái (giếng, bếp, nồi)
+  pos: mw
+  rare: true
+  example: s-w-ai-7727b33a
+examples:
+- s-w-2031476
+- s-w-ai-dbee96ee
+- s-w-ai-7727b33a

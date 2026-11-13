@@ -1,14 +1,41 @@
-# content/words/一般.yaml
 id: 一般
 hanzi: 一般
 pinyin: yībān
 hanviet: nhất ban
 level: 2
-pos: [ adv ]
+pos:
+- adj
+- adv
 senses:
-  - { vi: "thường thì, nói chung" }
+- vi: thường thì, nói chung
+- vi: bình thường, thông thường
+  pos: adj
+  example: s-w-8686667
+- vi: tàm tạm, trung bình
+  pos: adj
+  example: s-w-11049704
+- vi: giống nhau, ngang nhau (chỉ dùng trong 一般大, 一般高, 一般长, 一般重)
+  pos: adj
+  example: s-w-ai-de102134
+- vi: chung, tổng quát
+  pos: adj
+  example: s-w-ai-3727c8b4
+- vi: thường, nói chung
+  pos: adv
+  example: s-w-419800
+examples:
+- s-h2-01-01
+- s-w-8686667
+- s-w-11049704
+image:
+  file: words/h2-01/w08.png
+  prompt: The red panda tilts her head thoughtfully at a row of identical mornings drawn as small sunrises in a line. Only the red panda.
 parts:
-  - { hanzi: 一, pinyin: yī, hanviet: nhất, vi: một }
-  - { hanzi: 般, pinyin: bān, hanviet: ban, vi: "loại, kiểu" }
-examples: [ s-h2-01-01 ]
-image: { file: words/h2-01/w08.png, prompt: The red panda tilts her head thoughtfully at a row of identical mornings drawn as small sunrises in a line. Only the red panda. }
+- hanzi: 一
+  pinyin: yī
+  hanviet: nhất
+  vi: một
+- hanzi: 般
+  pinyin: bān
+  hanviet: ban
+  vi: loại, kiểu

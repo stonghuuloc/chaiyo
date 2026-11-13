@@ -1,0 +1,17 @@
+id: 心里
+hanzi: 心里
+pinyin: xīnli
+hanviet: tâm lý
+level: 2
+pos:
+- n
+senses:
+- vi: trong lòng (cảm xúc)
+  pos: n
+  example: s-w-503219
+- vi: trong đầu, trong suy nghĩ
+  pos: n
+  example: s-w-863328
+examples:
+- s-w-503219
+- s-w-863328

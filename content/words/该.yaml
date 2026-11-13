@@ -1,0 +1,31 @@
+id: 该
+hanzi: 该
+pinyin: gāi
+hanviet: cai
+level: 2
+pos:
+- v
+senses:
+- vi: nên, phải
+  pos: v
+  example: s-w-4302134
+- vi: đến lượt
+  pos: v
+  example: s-w-822719
+- vi: có lẽ, chắc là
+  pos: v
+  example: s-w-ai-26b64882
+- vi: phải là, chắc hẳn là
+  pos: v
+  example: s-w-ai-76526c9a
+- vi: xứng đáng, đáng bị phạt
+  pos: v
+  example: s-w-ai-cf043bd2
+- vi: nợ
+  pos: v
+  rare: true
+  example: s-w-ai-ebac92c5
+examples:
+- s-w-4302134
+- s-w-822719
+- s-w-ai-26b64882

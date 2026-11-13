@@ -1,0 +1,26 @@
+id: 卡-qia3
+hanzi: 卡
+pinyin: qiǎ
+hanviet: tạp
+level: 2
+pos:
+- v
+- n
+senses:
+- vi: mắc kẹt, bị kẹt lại
+  pos: v
+  example: s-w-1602364
+- vi: chặn (đường, cửa)
+  pos: v
+  example: s-w-ai-8e02524a
+- vi: cái kẹp, cái chốt (chỉ dùng trong 发卡, 卡子)
+  pos: n
+  example: s-w-ai-930bca54
+- vi: trạm kiểm soát, trạm hải quan (Đài Loan đọc kǎ; chỉ dùng trong 关卡, 哨卡)
+  pos: n
+  rare: true
+  example: s-w-ai-78ca392f
+examples:
+- s-w-1602364
+- s-w-ai-8e02524a
+- s-w-ai-930bca54

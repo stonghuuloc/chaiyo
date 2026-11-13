@@ -1,0 +1,17 @@
+id: 背-bei1
+hanzi: 背
+pinyin: bēi
+hanviet: bối
+level: 2
+pos:
+- v
+senses:
+- vi: gánh, mang (nợ nần, trách nhiệm)
+  pos: v
+  example: s-w-ai-089752e9
+- vi: cõng, đeo (đồ trên lưng hoặc vai)
+  pos: v
+  example: s-w-ai-fa794b6a
+examples:
+- s-w-ai-089752e9
+- s-w-ai-fa794b6a

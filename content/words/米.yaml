@@ -1,0 +1,18 @@
+id: 米
+hanzi: 米
+pinyin: mǐ
+hanviet: mễ
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: gạo
+  pos: n
+  example: s-w-6314510
+- vi: mét (chiều dài)
+  pos: mw
+  example: s-w-ai-7cd5d689
+examples:
+- s-w-6314510
+- s-w-ai-7cd5d689

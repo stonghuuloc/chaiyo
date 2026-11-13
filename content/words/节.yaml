@@ -1,0 +1,41 @@
+id: 节
+hanzi: 节
+pinyin: jié
+hanviet: tiết
+level: 2
+pos:
+- n
+- v
+- mw
+senses:
+- vi: ngày lễ, lễ hội (chỉ dùng trong 节日, 春节, 国庆节, 中秋节, 节假日)
+  pos: n
+  example: s-w-ai-1e8393fe
+- vi: phần, đoạn (trong sách, văn bản; chỉ dùng trong 章节, 节选)
+  pos: n
+  example: s-w-ai-1b2492d3
+- vi: khớp, đốt (xương, tre)
+  pos: n
+  example: s-w-ai-5d5b5923
+- vi: tiết khí (trong lịch âm)
+  pos: n
+  rare: true
+  example: s-w-ai-9fcc5331
+- vi: khí tiết, tiết tháo (chỉ dùng trong 气节, 节操, 守节)
+  pos: n
+  rare: true
+  example: s-w-ai-1ec5ebfb
+- vi: hải lý (đơn vị tốc độ)
+  pos: n
+  rare: true
+  example: s-w-ai-936452bd
+- vi: tiết kiệm (tiền bạc, thời gian; chỉ dùng trong 节约, 节省, 节水, 节能, 节俭)
+  pos: v
+  example: s-w-ai-290fb65a
+- vi: tiết, bài (học)
+  pos: mw
+  example: s-w-ai-8e424011
+examples:
+- s-w-ai-1e8393fe
+- s-w-ai-1b2492d3
+- s-w-ai-5d5b5923

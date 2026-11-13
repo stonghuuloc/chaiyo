@@ -1,0 +1,18 @@
+id: 大声
+hanzi: 大声
+pinyin: dàshēng
+hanviet: đại thanh
+level: 2
+pos:
+- n
+- adv
+senses:
+- vi: giọng to, tiếng to
+  pos: n
+  example: s-w-7768007
+- vi: to tiếng, lớn tiếng
+  pos: adv
+  example: s-w-1406486
+examples:
+- s-w-7768007
+- s-w-1406486

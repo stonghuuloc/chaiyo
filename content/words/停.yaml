@@ -1,0 +1,17 @@
+id: 停
+hanzi: 停
+pinyin: tíng
+hanviet: đình
+level: 2
+pos:
+- v
+senses:
+- vi: dừng, ngừng (lại)
+  pos: v
+  example: s-w-13881273
+- vi: đỗ (xe)
+  pos: v
+  example: s-w-333907
+examples:
+- s-w-13881273
+- s-w-333907

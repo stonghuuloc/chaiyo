@@ -1,0 +1,24 @@
+id: 交
+hanzi: 交
+pinyin: jiāo
+hanviet: giao
+level: 2
+pos:
+- v
+senses:
+- vi: giao, nộp, bàn giao (bài, đồ vật)
+  pos: v
+  example: s-w-6583580
+- vi: kết bạn
+  pos: v
+  example: s-w-2384347
+- vi: trả (tiền)
+  pos: v
+  example: s-w-ai-6a3d7cc8
+- vi: giao nhau (đường thẳng)
+  pos: v
+  example: s-w-ai-7ac14ad2
+examples:
+- s-w-6583580
+- s-w-2384347
+- s-w-ai-6a3d7cc8

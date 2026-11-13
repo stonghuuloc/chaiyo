@@ -1,0 +1,25 @@
+id: 不过
+hanzi: 不过
+pinyin: bùguò
+hanviet: bất quá
+level: 2
+pos:
+- adv
+- conj
+senses:
+- vi: chỉ, chỉ là
+  pos: adv
+  example: s-w-4270097
+- vi: 'hết sức, không thể hơn (sau tính từ; chỉ dùng trong 再 + tính từ + 不过(了), ví dụ: 再好不过了)'
+  pos: adv
+  example: s-w-8750768
+- vi: nhưng, tuy nhiên
+  pos: conj
+  example: s-w-10022454
+- vi: dù sao (quay lại chủ đề trước)
+  pos: conj
+  example: s-w-ai-1a5a5539
+examples:
+- s-w-4270097
+- s-w-8750768
+- s-w-10022454

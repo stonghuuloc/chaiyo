@@ -1,0 +1,25 @@
+id: 条
+hanzi: 条
+pinyin: tiáo
+hanviet: điều
+level: 2
+pos:
+- n
+- mw
+senses:
+- vi: dải, sợi (vật dài mỏng; chỉ dùng trong 面条, 布条, 纸条)
+  pos: n
+  example: s-w-ai-a621e4ba
+- vi: tin, mục (thông tin)
+  pos: n
+  example: s-w-8496213
+- vi: điều, khoản (luật, hiệp ước)
+  pos: n
+  example: s-w-2333764
+- vi: con, chiếc (sông, đường, váy)
+  pos: mw
+  example: s-w-ai-8d0a44bc
+examples:
+- s-w-ai-a621e4ba
+- s-w-8496213
+- s-w-2333764

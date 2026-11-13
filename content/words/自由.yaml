@@ -1,0 +1,18 @@
+id: 自由
+hanzi: 自由
+pinyin: zìyóu
+hanviet: tự do
+level: 2
+pos:
+- n
+- adj
+senses:
+- vi: tự do, sự tự do
+  pos: n
+  example: s-w-4620870
+- vi: tự do, không bị ràng buộc
+  pos: adj
+  example: s-w-9956709
+examples:
+- s-w-4620870
+- s-w-9956709

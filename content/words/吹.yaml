@@ -1,0 +1,27 @@
+id: 吹
+hanzi: 吹
+pinyin: chuī
+hanviet: xuy
+level: 2
+pos:
+- v
+senses:
+- vi: thổi (gió, hơi)
+  pos: v
+  example: s-w-400263
+- vi: chơi (nhạc cụ hơi)
+  pos: v
+  example: s-w-14061592
+- vi: thổi phồng (bóng, bong bóng)
+  pos: v
+  example: s-w-ai-e5af2fb6
+- vi: khoác lác, khoe khoang
+  pos: v
+  example: s-w-ai-7702790c
+- vi: hỏng, đổ bể (việc, kế hoạch)
+  pos: v
+  example: s-w-ai-0f6c38dd
+examples:
+- s-w-400263
+- s-w-14061592
+- s-w-ai-e5af2fb6

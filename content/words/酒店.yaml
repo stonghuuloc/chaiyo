@@ -1,0 +1,27 @@
+id: 酒店
+hanzi: 酒店
+pinyin: jiǔdiàn
+hanviet: tửu điếm
+level: 2
+pos:
+- n
+senses:
+- vi: khách sạn
+  pos: n
+  example: s-w-1335409
+- vi: nhà hàng
+  pos: n
+  rare: true
+  example: s-w-ai-0db2c633
+- vi: quán rượu, quán bar
+  pos: n
+  rare: true
+  example: s-w-ai-7f0b5609
+- vi: quán hostess (Đài Loan)
+  pos: n
+  rare: true
+  example: s-w-ai-b31025d0
+examples:
+- s-w-1335409
+- s-w-ai-0db2c633
+- s-w-ai-7f0b5609

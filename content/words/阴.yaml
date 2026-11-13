@@ -1,0 +1,30 @@
+id: 阴
+hanzi: 阴
+pinyin: yīn
+hanviet: âm
+level: 2
+pos:
+- adj
+- n
+senses:
+- vi: u ám (thời tiết)
+  pos: adj
+  example: s-w-ai-2fda6e3c
+- vi: râm mát (chỉ dùng trong 阴凉, 背阴)
+  pos: adj
+  example: s-w-ai-5dea0fce
+- vi: ngầm, ẩn giấu (ý xấu; chỉ dùng trong 阴险, 阴谋)
+  pos: adj
+  example: s-w-ai-eea12fd0
+- vi: nữ tính, giống cái
+  pos: adj
+  rare: true
+  example: s-w-ai-02edc470
+- vi: âm (trong thuyết âm dương)
+  pos: n
+  rare: true
+  example: s-w-ai-63a04156
+examples:
+- s-w-ai-2fda6e3c
+- s-w-ai-5dea0fce
+- s-w-ai-eea12fd0

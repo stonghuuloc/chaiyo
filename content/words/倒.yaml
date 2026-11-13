@@ -1,0 +1,32 @@
+id: 倒
+hanzi: 倒
+pinyin: dǎo
+hanviet: đảo
+level: 2
+pos:
+- v
+senses:
+- vi: ngã, đổ, nằm xuống
+  pos: v
+  example: s-w-2138521
+- vi: phá sản, thất bại (doanh nghiệp)
+  pos: v
+  example: s-w-ai-599ef43e
+- vi: lật đổ (chỉ dùng trong 打倒)
+  pos: v
+  example: s-w-ai-205724f8
+- vi: đổi (tàu, xe; chỉ dùng trong 倒车)
+  pos: v
+  example: s-w-ai-c073dc6e
+- vi: xê dịch, đảo qua đảo lại (đồ đạc; chỉ dùng trong 倒来倒去)
+  pos: v
+  rare: true
+  example: s-w-ai-ab8294ff
+- vi: mua đi bán lại kiếm lời (chỉ dùng trong 倒卖)
+  pos: v
+  rare: true
+  example: s-w-ai-f5abcc78
+examples:
+- s-w-2138521
+- s-w-ai-599ef43e
+- s-w-ai-205724f8
