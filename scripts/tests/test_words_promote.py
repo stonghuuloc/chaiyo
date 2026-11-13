@@ -762,3 +762,21 @@ def test_promote_keeps_a_sentence_only_another_levels_word_cites(gen):
     # Assert
     ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))]
     assert 's-w-cited-by-hsk2' in ids
+
+
+def test_promote_carries_over_a_cited_sentence_the_staged_file_lacks(gen):
+    # Arrange
+    out = stage_words(gen, 1)
+    current = gen.CONTENT.parent / 'sentences/hsk1.yaml'
+    current.parent.mkdir(parents=True, exist_ok=True)
+    current.write_text(yaml.safe_dump([{'id': 's-w-cited-by-hsk2', 'hanzi': '旧'}, {'id': 's-w-uncited', 'hanzi': '弃'}], allow_unicode=True), encoding='utf-8')
+    gen.CONTENT.mkdir(parents=True, exist_ok=True)
+    (gen.CONTENT / '打算.yaml').write_text(yaml.safe_dump({'id': '打算', 'hanzi': '打算', 'level': 2, 'senses': [{'vi': 'định'}], 'examples': ['s-w-cited-by-hsk2']}, allow_unicode=True), encoding='utf-8')
+    gen.review(out, 1)
+
+    # Act
+    gen.promote(out, 1)
+
+    # Assert
+    ids = [s['id'] for s in yaml.safe_load(current.read_text(encoding='utf-8'))]
+    assert 's-w-cited-by-hsk2' in ids and 's-w-uncited' not in ids

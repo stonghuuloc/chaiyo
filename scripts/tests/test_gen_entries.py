@@ -115,3 +115,16 @@ def test_cache_hit_skips_download(gen, seeded, monkeypatch, capsys):
         assert gen.fetch(name) == seeded / name
     assert 'download' not in capsys.readouterr().out
     assert set(__import__('json').loads((seeded / 'manifest.json').read_text())) == set(gen.SOURCES)
+
+
+def test_unknown_provider_exits_2_before_any_download(gen, monkeypatch, capsys):
+    # Arrange
+    monkeypatch.setenv('GEN_PROVIDER', 'claude_cli')
+    monkeypatch.setenv('OPENCODE_API_KEY', 'x')
+    monkeypatch.setattr(gen, 'fetch', lambda name: pytest.fail('download attempted'))
+    # Act
+    with pytest.raises(SystemExit) as e:
+        gen.main(['打'])
+    # Assert
+    assert e.value.code == 2
+    assert 'claude_cli' in capsys.readouterr().err

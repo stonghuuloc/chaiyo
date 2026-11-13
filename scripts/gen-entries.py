@@ -940,6 +940,10 @@ def promote(out, seed):
                  for s in yaml.safe_load(f.read_text(encoding='utf-8')) or []}
     sentences = [s for s in yaml.safe_load((out / sent_file()).read_text(encoding='utf-8'))
                  if (not s['id'].startswith('s-w-') or s['id'] in used) and s['id'] not in elsewhere]
+    current = CONTENT.parent / sent_file()
+    staged_ids = {s['id'] for s in sentences}
+    sentences += [s for s in (yaml.safe_load(current.read_text(encoding='utf-8')) or [] if current.exists() else [])
+                  if s['id'] in used and s['id'] not in staged_ids and s['id'] not in elsewhere]
     CONTENT.mkdir(parents=True, exist_ok=True)
     for f in words:
         shutil.copy(f, CONTENT / f.name)
