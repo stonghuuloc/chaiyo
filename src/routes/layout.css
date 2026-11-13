@@ -123,6 +123,10 @@
 		animation-duration: var(--motion-sheet);
 	}
 
+	::view-transition-group(landing-art) {
+		overflow: clip;
+	}
+
 	::view-transition-old(landing-art),
 	::view-transition-new(landing-art) {
 		width: 100%;
