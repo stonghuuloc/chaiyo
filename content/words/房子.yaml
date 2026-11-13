@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-8698976
 - s-w-1223781
+image: { file: words/fangzi.png, prompt: "Only the takin. A cute house with a red roof, a chimney and a garden fence, the takin standing proudly in front of it" }

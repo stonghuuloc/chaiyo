@@ -11,3 +11,4 @@ senses:
   example: s-w-4900904
 examples:
 - s-w-4900904
+image: { file: words/dache.png, prompt: "Only the panda. The panda standing at the roadside raising one paw to hail a yellow taxi that is pulling over" }

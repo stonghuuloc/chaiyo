@@ -39,3 +39,4 @@ examples:
 - s-w-349701
 - s-w-1450538
 - s-w-6055184
+image: { file: words/kan.png, prompt: "Only the takin. The takin looking through a pair of binoculars at colourful hot air balloons in the sky, outdoors" }

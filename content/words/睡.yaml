@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-9433041
 - s-w-ai-ad9f7faa
+image: { file: words/shuijiao.png, prompt: "Only the panda. The panda sleeping in bed under a quilt, a soft \"zzz\" cloud shape above its head (no letters), moon outside the window" }

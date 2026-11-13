@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1120765
 - s-w-ai-e290673e
+image: { file: words/fandian.png, prompt: "Only the takin and the red panda. A busy restaurant with round tables and red lanterns, the takin and the red panda looking at a menu with pictures (no text) and dishes of food on the table. Each character sits on a wooden chair that is clearly visible, placed BESIDE the table (side view), so their whole bodies, legs and feet are visible and NOT hidden behind the table; nobody sits or stands on the table." }

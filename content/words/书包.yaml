@@ -11,3 +11,4 @@ senses:
   example: s-w-3659898
 examples:
 - s-w-3659898
+image: { file: words/shubao.png, prompt: "Only the fawn. The fawn showing off a bright red school backpack, holding the straps proudly, a few blank notebooks peeking out of the open top" }

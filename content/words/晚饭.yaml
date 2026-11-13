@@ -11,3 +11,4 @@ senses:
   example: s-w-1323692
 examples:
 - s-w-1323692
+image: { file: words/wanfan.png, prompt: "Only the red panda and the takin. The red panda and the takin eating dinner at a round table with several dishes and bowls of rice, a warm lamp glowing, dark blue evening sky and a moon through the window. Each character sits on a wooden chair that is clearly visible, placed BESIDE the table (side view), so their whole bodies, legs and feet are visible and NOT hidden behind the table; nobody sits or stands on the table." }

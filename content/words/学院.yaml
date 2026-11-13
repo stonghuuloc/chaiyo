@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1577196
 - s-w-ai-5fdfcbad
+image: { file: words/daxue.png, prompt: "Only the red panda. A grand university campus with a big old building, wide green lawns and big trees, the red panda carrying a stack of books and a graduation cap on her head" }

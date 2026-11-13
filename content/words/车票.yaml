@@ -11,3 +11,4 @@ senses:
   example: s-w-4563004
 examples:
 - s-w-4563004
+image: { file: words/chepiao.png, prompt: "Only the fawn. The fawn holding up a small train ticket with a little train drawn on it (no text), standing on a station platform with a train behind it" }

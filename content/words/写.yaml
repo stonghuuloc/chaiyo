@@ -11,3 +11,4 @@ senses:
   example: s-w-8860672
 examples:
 - s-w-8860672
+image: { file: words/xie.png, prompt: "Only the panda. The panda writing with a pencil in a notebook with blank lines, tongue out in concentration. The character sits on a wooden chair that is clearly visible, placed BESIDE the table (side view), so its whole body, legs and feet are visible and NOT hidden behind the table; nobody sits or stands on the table." }

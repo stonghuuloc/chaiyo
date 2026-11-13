@@ -11,3 +11,4 @@ senses:
   example: s-w-836905
 examples:
 - s-w-836905
+image: { file: words/malu.png, prompt: "Only the panda and the takin. A wide city road with cars driving on it and a zebra crossing, the panda and the takin waiting on the sidewalk" }

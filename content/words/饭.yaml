@@ -20,3 +20,4 @@ examples:
 - s-w-2737459
 - s-w-ai-df7a2905
 - s-w-ai-3cd84f25
+image: { file: words/mifan.png, prompt: "Only the panda. The panda holding a bowl heaped with fluffy white steamed rice and a pair of chopsticks, smiling, simple kitchen. The character stands on the floor next to the table, its whole body and feet visible; nobody sits or stands on the table or counter." }

@@ -28,3 +28,4 @@ examples:
 - s-w-11508980
 - s-w-ai-a0c77bf0
 - s-w-1454462
+image: { file: words/hua.png, prompt: "Only the red panda. The red panda smelling a big bunch of colourful flowers she is holding, a flower bed full of tulips and daisies around her" }

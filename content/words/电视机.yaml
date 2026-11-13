@@ -11,3 +11,4 @@ senses:
   example: s-w-2004679
 examples:
 - s-w-2004679
+image: { file: words/dianshi.png, prompt: "Only the takin and the fawn. The takin and the fawn sitting on a sofa watching a TV set showing a simple blank bright screen, a remote control in the takin's paw, living room" }

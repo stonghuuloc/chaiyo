@@ -22,3 +22,4 @@ examples:
 - s-w-2024174
 - s-w-336651
 - s-w-526394
+image: { file: words/song.png, prompt: "Only the takin and the red panda. The takin handing a gift box with a ribbon to the red panda, who is surprised and happy" }

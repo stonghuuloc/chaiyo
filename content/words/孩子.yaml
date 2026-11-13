@@ -11,3 +11,4 @@ senses:
   example: s-w-4270097
 examples:
 - s-w-4270097
+image: { file: words/haizi.png, prompt: "Only the takin and its mother, a bigger grown-up takin with the same pale cream-yellow fur and curved horns, wearing a small apron. The mother holds the little takin's paw and walks it to school, the little takin with a schoolbag. The mother is part of this scene even though she is not in the lineup" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-6482556
 examples:
 - s-w-6482556
+image: { file: words/jipiao.png, prompt: "Only the panda. The panda holding up a plane ticket with a small airplane drawn on it (no text), a big airport window with a plane outside behind it" }

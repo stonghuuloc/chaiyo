@@ -11,3 +11,4 @@ senses:
   example: s-w-4673809
 examples:
 - s-w-4673809
+image: { file: words/jidan.png, prompt: "Only the red panda. The red panda holding up one white chicken egg in her paw, a small basket of brown and white eggs beside her, a hen nest of straw on the kitchen counter" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-3667681
 examples:
 - s-w-3667681
+image: { file: words/yu.png, prompt: "Only the panda. The panda under a red umbrella with rain falling all around, puddles on the ground, grey cloudy sky" }

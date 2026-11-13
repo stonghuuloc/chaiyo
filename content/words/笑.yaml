@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-335165
 - s-w-385298
+image: { file: words/xiao4.png, prompt: "Only the red panda. The red panda laughing out loud with her eyes squeezed shut and mouth wide open, holding her belly" }

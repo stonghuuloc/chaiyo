@@ -33,3 +33,4 @@ examples:
 - s-w-2040518
 - s-w-ai-e2e2c615
 - s-w-2023499
+image: { file: words/bao.png, prompt: "Only the red panda. The red panda carrying a small brown shoulder bag, opening it to put a wallet inside, standing at the front door" }

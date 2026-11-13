@@ -19,3 +19,4 @@ examples:
 - s-w-9795198
 - s-w-ai-a707f5a6
 - s-w-ai-56767778
+image: { file: words/xi.png, prompt: "Only the takin. The takin washing dishes in a sink full of soap bubbles, a stack of clean plates beside it" }

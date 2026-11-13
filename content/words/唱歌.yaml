@@ -11,3 +11,4 @@ senses:
   example: s-w-357940
 examples:
 - s-w-357940
+image: { file: words/changge.png, prompt: "Only the fawn. The fawn singing into a microphone on a little stage, musical notes floating in the air, spotlights" }

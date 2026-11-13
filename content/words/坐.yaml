@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-1216136
 - s-w-4563171
+image: { file: words/zuo.png, prompt: "Only the panda. The panda sitting on a wooden chair with its paws on its knees, smiling, plain room" }

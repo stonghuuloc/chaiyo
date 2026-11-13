@@ -11,3 +11,4 @@ senses:
   example: s-w-745160
 examples:
 - s-w-745160
+image: { file: words/shouji.png, prompt: "Only the fawn. The fawn holding a smartphone with a blank glowing screen, looking at it with wide excited eyes, sitting on a sofa" }

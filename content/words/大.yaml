@@ -28,3 +28,4 @@ examples:
 - s-w-13504539
 - s-w-1178883
 - s-w-ai-e8bbb137
+image: { file: words/da.png, prompt: "Only the takin. The takin standing next to a huge watermelon that is bigger than itself, surprised" }

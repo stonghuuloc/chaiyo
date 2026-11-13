@@ -26,3 +26,4 @@ examples:
 - s-w-472404
 - s-w-ai-88ac0f66
 - s-w-ai-80f50a6b
+image: { file: words/qiche.png, prompt: "Only the fawn. A small round red car parked on a street, the fawn waving happily from the open driver's window" }

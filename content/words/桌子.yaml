@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-2345989
 - s-w-2370640
+image: { file: words/zhuozi.png, prompt: "Only the fawn. A big wooden table in the middle of a room, the fawn standing next to it (on the floor) and patting the tabletop, a vase of flowers on the table" }

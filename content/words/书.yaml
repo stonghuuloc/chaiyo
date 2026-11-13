@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-334383
 - s-w-ai-a97213f7
+image: { file: words/shu.png, prompt: "Only the panda. The panda sitting on a cushion reading a big open book with blank pages, a small stack of closed books beside it, cozy reading corner" }

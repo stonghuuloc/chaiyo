@@ -40,3 +40,4 @@ examples:
 - s-w-2481833
 - s-w-6559053
 - s-w-ai-a3316240
+image: { file: words/xiayu.png, prompt: "Only the fawn. Heavy rain pouring down from dark clouds, the fawn standing at a window indoors watching raindrops run down the glass" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-710768
 examples:
 - s-w-710768
+image: { file: words/kaihui.png, prompt: "Only the red panda, the panda and the takin. The three sitting around a meeting table with papers, the red panda presenting at a blank whiteboard" }

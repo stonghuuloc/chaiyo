@@ -19,3 +19,4 @@ examples:
 - s-w-4971559
 - s-w-2062938
 - s-w-1411509
+image: { file: words/zhao.png, prompt: "Only the red panda. The red panda standing upright in a messy living room, holding a big magnifying glass up to one eye and looking around for something, cushions tossed on the floor, a drawer pulled open, a sock peeking out from under the sofa." }

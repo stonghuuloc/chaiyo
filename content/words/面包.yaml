@@ -11,3 +11,4 @@ senses:
   example: s-w-843482
 examples:
 - s-w-843482
+image: { file: words/mianbao.png, prompt: "Only the fawn. The fawn hugging a long golden loaf of bread almost as big as itself, a basket of round bread rolls beside it, little bakery" }

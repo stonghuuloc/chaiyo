@@ -20,3 +20,4 @@ examples:
 - s-w-10966853
 - s-w-ai-9b0f1e15
 - s-w-ai-9f99324d
+image: { file: words/xiansheng.png, prompt: "Only the takin. The takin dressed as a little gentleman in a suit, bow tie and hat, bowing politely" }

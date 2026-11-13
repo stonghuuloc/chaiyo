@@ -11,3 +11,4 @@ senses:
   example: s-w-10961144
 examples:
 - s-w-10961144
+image: { file: words/mifan.png, prompt: "Only the panda. The panda holding a bowl heaped with fluffy white steamed rice and a pair of chopsticks, smiling, simple kitchen. The character stands on the floor next to the table, its whole body and feet visible; nobody sits or stands on the table or counter." }

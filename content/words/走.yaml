@@ -36,3 +36,4 @@ examples:
 - s-w-3575629
 - s-w-345397
 - s-w-ai-da2e26e0
+image: { file: words/zoulu.png, prompt: "Only the red panda. The red panda walking along a tree-lined path with small steps, a backpack on, sunny morning" }

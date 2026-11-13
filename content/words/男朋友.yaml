@@ -11,3 +11,4 @@ senses:
   example: s-w-5359883
 examples:
 - s-w-5359883
+image: { file: words/nanpengyou.png, prompt: "Only the red panda and her boyfriend, another young red panda with the same red panda colours and face, a boy wearing a small blue cap. The boyfriend gives the red panda a single red rose, both blushing. The boyfriend is part of this scene even though he is not in the lineup" }

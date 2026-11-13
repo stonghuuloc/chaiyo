@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-ai-040f9ef5
 - s-w-ai-eeb2684f
+image: { file: words/wangyou.png, prompt: "Only the panda and the fawn. Split view: on the left the panda at home typing on a laptop, on the right the fawn in its own room typing on a laptop, both smiling at their screens, a dotted line with small hearts connecting the two screens" }

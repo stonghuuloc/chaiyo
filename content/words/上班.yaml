@@ -19,3 +19,4 @@ examples:
 - s-w-13158370
 - s-w-427960
 - s-w-5575448
+image: { file: words/shangban.png, prompt: "Only the takin. The takin in a shirt and tie with a briefcase walking into an office building in the morning, sun rising" }

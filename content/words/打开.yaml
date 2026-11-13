@@ -19,3 +19,4 @@ examples:
 - s-w-10733790
 - s-w-ai-83f3b373
 - s-w-2032175
+image: { file: words/kai.png, prompt: "Only the red panda. The red panda opening a window wide, fresh air and sunshine coming in, curtains blowing" }

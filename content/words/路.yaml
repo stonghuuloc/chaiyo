@@ -24,3 +24,4 @@ examples:
 - s-w-1395080
 - s-w-2113788
 - s-w-ai-4ac1336c
+image: { file: words/malu.png, prompt: "Only the panda and the takin. A wide city road with cars driving on it and a zebra crossing, the panda and the takin waiting on the sidewalk" }

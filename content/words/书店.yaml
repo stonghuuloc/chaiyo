@@ -11,3 +11,4 @@ senses:
   example: s-w-1021003
 examples:
 - s-w-1021003
+image: { file: words/shudian.png, prompt: "Only the panda. The panda inside a cozy bookshop with tall shelves full of colourful books, holding a book it chose, a shop counter by the door (no text)" }

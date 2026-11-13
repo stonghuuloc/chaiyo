@@ -11,3 +11,4 @@ senses:
   example: s-w-347260
 examples:
 - s-w-347260
+image: { file: words/xinnian.png, prompt: "Only the panda and the takin. Chinese New Year: red lanterns, fireworks in the night sky, the panda and the takin in red clothes holding red envelopes (no text)" }

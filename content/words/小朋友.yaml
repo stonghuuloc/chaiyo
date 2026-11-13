@@ -11,3 +11,4 @@ senses:
   example: s-w-421270
 examples:
 - s-w-421270
+image: { file: words/xiaohair.png, prompt: "Only the panda and the fawn. The panda and the fawn playing together in a sandbox with a bucket and a spade, playground with a slide" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-4764637
 examples:
 - s-w-4764637
+image: { file: words/kaiche.png, prompt: "Only the red panda. The red panda driving a little car, both paws on the steering wheel, looking ahead through the windscreen, road ahead" }

@@ -11,3 +11,4 @@ senses:
   example: s-w-13138445
 examples:
 - s-w-13138445
+image: { file: words/beijing.png, prompt: "Only the panda. The panda in front of Tiananmen gate in Beijing with its red walls, golden roof and red lanterns, blue sky, waving happily" }

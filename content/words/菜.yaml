@@ -26,3 +26,4 @@ examples:
 - s-w-3700708
 - s-w-2411926
 - s-w-3377911
+image: { file: words/cai.png, prompt: "Only the red panda. The red panda carrying a big steaming plate of stir-fried green vegetables to the table, more small dishes of food already on the table, home kitchen" }

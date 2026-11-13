@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-13138444
 - s-w-ai-67f91614
+image: { file: words/xiaoxuesheng.png, prompt: "Only the panda. The panda as a little primary school pupil in a yellow hat and a red scarf, carrying a backpack, walking to school" }

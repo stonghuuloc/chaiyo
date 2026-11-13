@@ -11,3 +11,4 @@ senses:
   example: s-w-13519455
 examples:
 - s-w-13519455
+image: { file: words/shan.png, prompt: "Only the takin. The takin standing on a grassy hill looking proudly at tall green mountains with a snowy peak behind, a winding path up the slope" }

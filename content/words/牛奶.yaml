@@ -11,3 +11,4 @@ senses:
   example: s-w-770691
 examples:
 - s-w-770691
+image: { file: words/niunai.png, prompt: "Only the takin. The takin holding a tall glass of white milk with a milk moustache on its muzzle, a milk carton with a simple cow-spot pattern beside it (no text)" }

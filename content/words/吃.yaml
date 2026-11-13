@@ -20,3 +20,4 @@ examples:
 - s-w-843482
 - s-w-ai-255317d8
 - s-w-ai-248164e7
+image: { file: words/chi.png, prompt: "Only the takin. The takin eating happily with chopsticks from a bowl of rice and dishes, cheeks full" }

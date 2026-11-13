@@ -37,3 +37,4 @@ examples:
 - s-w-ai-172311e8
 - s-w-ai-057cd2f2
 - s-w-ai-ad18ea34
+image: { file: words/kuai.png, prompt: "Only the fawn. The fawn racing very fast on a scooter, speed lines behind it. The fawn has short, small, rounded deer ears (NOT long rabbit ears)." }

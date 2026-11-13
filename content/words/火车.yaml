@@ -11,3 +11,4 @@ senses:
   example: s-w-1441855
 examples:
 - s-w-1441855
+image: { file: words/huoche.png, prompt: "Only the panda. A long green passenger train arriving at a station, the panda waving from one of the train windows, countryside behind" }

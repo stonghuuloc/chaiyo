@@ -15,3 +15,4 @@ senses:
 examples:
 - s-w-3378245
 - s-w-ai-978c8e0e
+image: { file: words/shangke.png, prompt: "Only the red panda, the panda and the fawn. A class in progress: the red panda teaching at the front by a blank chalkboard, the panda and the fawn sitting at desks listening" }

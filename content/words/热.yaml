@@ -24,3 +24,4 @@ examples:
 - s-w-343752
 - s-w-ai-c2f715fe
 - s-w-ai-0a6530e4
+image: { file: words/re.png, prompt: "Only the takin. The takin sweating in the hot sun, fanning itself with a hand fan, a melting ice cream in its other paw, a blazing sun" }

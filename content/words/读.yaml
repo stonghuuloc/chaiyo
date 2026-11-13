@@ -22,3 +22,4 @@ examples:
 - s-w-1312439
 - s-w-7817194
 - s-w-334302
+image: { file: words/dushu.png, prompt: "Only the red panda. The red panda reading a book aloud, holding it open in front of her, sitting in an armchair" }

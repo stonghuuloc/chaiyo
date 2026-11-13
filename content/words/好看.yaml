@@ -19,3 +19,4 @@ examples:
 - s-w-1178172
 - s-w-9958206
 - s-w-ai-34d15d63
+image: { file: words/haokan.png, prompt: "Only the red panda. The red panda in a pretty pink dress with a flower crown, twirling happily in a sunny flower garden full of roses, the skirt flaring out, petals in the air. No mirror, no reflection." }

@@ -19,3 +19,4 @@ examples:
 - s-w-10491160
 - s-w-847027
 - s-w-ai-55f8d683
+image: { file: words/chuan.png, prompt: "Only the fawn. The fawn putting on a jacket, one arm in the sleeve, in front of a mirror" }

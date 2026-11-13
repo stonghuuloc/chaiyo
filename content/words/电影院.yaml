@@ -11,3 +11,4 @@ senses:
   example: s-w-2779141
 examples:
 - s-w-2779141
+image: { file: words/dianyingyuan.png, prompt: "Only the panda and the fawn. Inside a dark cinema with rows of red seats and a big glowing screen, the panda and the fawn sitting together holding a big tub of popcorn" }

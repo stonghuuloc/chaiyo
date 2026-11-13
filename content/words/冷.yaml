@@ -11,3 +11,4 @@ senses:
   example: s-w-1085587
 examples:
 - s-w-1085587
+image: { file: words/leng.png, prompt: "Only the panda. The panda shivering in a thick scarf and winter hat in the snow, snowflakes falling, breath clouds" }

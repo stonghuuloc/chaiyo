@@ -19,3 +19,4 @@ examples:
 - s-w-3625661
 - s-w-5556160
 - s-w-10966785
+image: { file: words/dianhua.png, prompt: "Only the red panda. An old-style landline telephone with a curly cord on a small table, the red panda holding the receiver to her ear and smiling, cozy hallway" }

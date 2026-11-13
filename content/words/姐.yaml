@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-cef7ad40
 examples:
 - s-w-ai-cef7ad40
+image: { file: words/jiejie.png, prompt: "Only the fawn and its big sister, a slightly bigger young fawn with the same colours, face and back spots, wearing a small hair bow. The big sister gently brushes the little fawn's head fur in a cozy bedroom, both smiling. The big sister is part of this scene even though she is not in the lineup." }

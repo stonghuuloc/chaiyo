@@ -11,3 +11,4 @@ senses:
   example: s-w-ai-ea4e6e6d
 examples:
 - s-w-ai-ea4e6e6d
+image: { file: words/baozi.png, prompt: "Only the panda. The panda holding a big fluffy white steamed bun with a pleated top in both paws, about to take a bite, steam rising, a bamboo steamer of more buns on the counter beside it, cozy breakfast stall. The character stands on the floor next to the table, its whole body and feet visible; nobody sits or stands on the table or counter." }

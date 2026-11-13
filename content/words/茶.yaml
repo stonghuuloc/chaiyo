@@ -11,3 +11,4 @@ senses:
   example: s-w-399985
 examples:
 - s-w-399985
+image: { file: words/cha.png, prompt: "Only the panda. The panda pouring hot tea from a small clay teapot into a tiny teacup, steam rising, a few green tea leaves on a wooden tray" }

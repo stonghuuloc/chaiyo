@@ -11,3 +11,4 @@ senses:
   example: s-w-411624
 examples:
 - s-w-411624
+image: { file: words/qianbao.png, prompt: "Only the red panda. The red panda opening a small brown leather wallet, a few banknotes and cards peeking out (no text), shop counter" }

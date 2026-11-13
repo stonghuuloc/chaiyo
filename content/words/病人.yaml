@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-769699
 - s-w-ai-b920c535
+image: { file: words/bingren.png, prompt: "Only the fawn and the red panda. The fawn lying in a hospital bed with a thermometer in its mouth and a bandage on its head, the red panda in a white coat checking on it" }

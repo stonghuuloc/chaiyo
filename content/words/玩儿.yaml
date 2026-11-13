@@ -11,3 +11,4 @@ senses:
   example: s-w-770829
 examples:
 - s-w-770829
+image: { file: words/wanr.png, prompt: "Only the panda and the fawn. The panda and the fawn playing on a slide and swings in a playground, laughing" }

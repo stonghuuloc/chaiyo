@@ -28,3 +28,4 @@ examples:
 - s-w-7768235
 - s-w-8120972
 - s-w-ai-6e290baa
+image: { file: words/zhan.png, prompt: "Only the takin. The takin standing up straight and tall with its arms by its sides, proud face, in a school yard" }

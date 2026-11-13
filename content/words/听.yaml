@@ -20,3 +20,4 @@ examples:
 - s-w-747653
 - s-w-399179
 - s-w-ai-a751b646
+image: { file: words/ting.png, prompt: "Only the panda. The panda wearing big headphones with eyes closed, listening to music and smiling, musical notes around" }

@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-4761858
 - s-w-ai-f026bbfa
+image: { file: words/shu4.png, prompt: "Only the fawn. A tall leafy green tree in a meadow, the fawn standing at its foot looking up at the big branches, an empty bird nest of twigs on a branch" }

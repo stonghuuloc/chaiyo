@@ -11,3 +11,4 @@ senses:
   example: s-w-846455
 examples:
 - s-w-846455
+image: { file: words/yifu.png, prompt: "Only the red panda. The red panda holding up a bright little T-shirt in front of an open wardrobe full of colourful hanging clothes, a folded pile of clothes on the bed" }

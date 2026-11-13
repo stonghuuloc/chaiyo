@@ -26,3 +26,4 @@ examples:
 - s-w-347083
 - s-w-9963109
 - s-w-ai-11d5eccc
+image: { file: words/pao.png, prompt: "Only the fawn. The fawn running upright on its two legs like a small child, arms swinging, along a park path, dust puffs behind its feet, trees and flowers on both sides." }

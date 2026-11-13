@@ -16,3 +16,4 @@ senses:
 examples:
 - s-w-10303628
 - s-w-ai-4d437a94
+image: { file: words/chuang.png, prompt: "Only the panda. A cozy wooden bed with a fluffy pillow and a patterned quilt, the panda tucked in under the quilt, peaceful bedroom at night" }

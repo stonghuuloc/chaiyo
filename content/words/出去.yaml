@@ -11,3 +11,4 @@ senses:
   example: s-w-7812138
 examples:
 - s-w-7812138
+image: { file: words/chuqu.png, prompt: "Only the panda. The panda walking out of an open door to the sunny garden outside, waving goodbye behind it" }

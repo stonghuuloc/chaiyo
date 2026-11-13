@@ -11,3 +11,4 @@ senses:
   example: s-w-7775489
 examples:
 - s-w-7775489
+image: { file: words/zaofan.png, prompt: "Only the red panda. The red panda sitting at a small table eating breakfast: a bowl of rice porridge, a fried dough stick and a glass of soy milk, bright early morning sun rising through the kitchen window" }

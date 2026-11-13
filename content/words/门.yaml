@@ -37,3 +37,4 @@ examples:
 - s-w-10007048
 - s-w-ai-b35dcda5
 - s-w-ai-fa8a189e
+image: { file: words/men.png, prompt: "Only the red panda. The red panda opening a big red wooden door with a round brass knocker, peeking through it with a smile" }
