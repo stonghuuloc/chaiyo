@@ -179,14 +179,9 @@
 {/snippet}
 
 <main class="page">
-	<div
-		class="art -mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
-		'start'
-			? ''
-			: 'hidden'}"
-	>
+	<div class="art {view === 'start' ? '' : 'hidden'}">
 		<img
-			class="block size-full object-cover object-[50%_60%]"
+			class="block size-full object-cover"
 			src="/onboard/welcome.webp"
 			srcset="/onboard/welcome.webp 860w, /onboard/welcome-1280.webp 1280w"
 			sizes="(min-width: 1024px) 560px, (min-width: 768px) 480px, 100vw"
@@ -338,6 +333,10 @@
 <style>
 	.art {
 		view-transition-name: landing-art;
+		margin-inline: -20px;
+		aspect-ratio: 3 / 2;
+		overflow: hidden;
+		mask-image: linear-gradient(to bottom, black 92%, transparent);
 	}
 
 	.logo {
@@ -354,12 +353,23 @@
 	}
 
 	@media (min-width: 48rem) {
+		.art {
+			margin: 24px 0 0;
+			border-radius: 24px;
+			mask-image: none;
+		}
+
 		.page {
 			max-width: calc(var(--container-sheet) + 40px);
 		}
 	}
 
 	@media (min-width: 64rem) {
+		.art {
+			display: block;
+			margin-top: 0;
+		}
+
 		.page {
 			display: grid;
 			grid-template-columns: minmax(0, var(--container-narrow)) var(--container-form);
