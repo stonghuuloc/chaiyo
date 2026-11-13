@@ -1,6 +1,6 @@
 # CHY-25 S1 — plan
-ACs: AC2, AC3, AC4, AC7  ·  Spec rev 2  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-25 off main d090b0a0 · run `pnpm install` first
-Base: ~/Documents/Projects/chaiyo@d090b0a0
+ACs: AC2, AC3, AC4, AC7  ·  Spec rev 2  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-25 off main 0836423e · run `pnpm install` first
+Base: ~/Documents/Projects/chaiyo@0836423e
 
 ## Files touched
 - create: `src/lib/catalog/index.ts` (types, `CatalogError`, `createCatalog`)
@@ -8,7 +8,7 @@ Base: ~/Documents/Projects/chaiyo@d090b0a0
 - create: `src/lib/catalog/fixtures/source.ts` (test-only; excluded from coverage by `vite.config.ts:45`)
 No product code outside `src/lib/catalog/`; no schema, content, lint or route edit.
 
-## Anchors (re-verified 2026-11-13 on main d090b0a0; every anchored file is byte-identical to 23f1db9 except the fixture h1-01, whose gate `tests` gained `grammar`)
+## Anchors (re-verified 2026-11-13 on main 0836423e (only package.json deps bump drifted; :16 anchor unchanged); every anchored file is byte-identical to 23f1db9 except the fixture h1-01, whose gate `tests` gained `grammar`)
 - `src/lib/content/import/bundle.ts:6-16` `Bundle` type (`sha`, `lesson`, `sentences`, `questions`, `grammar`, `words`, `chars`, `gateCoverage`, `thin`); `:18-57` `buildBundle(content, id)`, `words` = content order.
 - `src/lib/content/import/sink.ts:19` `ImportedWord = Word & { taughtIn?; listedIn }`; `:21` `ImportedSentence = Sentence & { lessonId?; seg }`; `:52-70` `createMemorySink()` with synchronous `content`/`versions`.
 - `src/lib/content/import/import.ts:52` `importContent(dir, sink, opts?: { refs?, only? })` returns `{ sha } | { errors }`; `import/index.ts:1-5` is the barrel.
