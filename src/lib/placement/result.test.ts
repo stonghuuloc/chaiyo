@@ -24,15 +24,15 @@ describe('resultView', () => {
 	it('0 cleared starts at Bài 0 and never says the learner failed', () => {
 		const v = resultView(0, LESSONS);
 		expect(v).toMatchObject({
-			eyebrow: 'Bạn bắt đầu ở',
+			eyebrow: 'Bạn sẽ bắt đầu từ',
 			title: 'Bài 0 · Nhập môn 拼音',
 			cta: 'Bắt đầu Bài 0',
 			href: '/today',
 			confetti: 'none'
 		});
-		expect(v.lead).toMatch(/^Làm quen pinyin trước/);
+		expect(v.lead).toMatch(/^Làm quen với pinyin trước/);
 		expect(v.rows).toEqual([
-			{ label: 'Tiếp theo', value: 'HSK 1 · 1 bài', sub: 'Bắt đầu từ Bài 1 · Xin chào' }
+			{ label: 'Tiếp theo', value: 'Cấp đầu tiên · 1 bài', sub: 'Bắt đầu từ Bài 1 · Xin chào' }
 		]);
 		expect(JSON.stringify(v)).not.toMatch(/trượt|chưa đạt|tiếc/i);
 	});
@@ -47,7 +47,7 @@ describe('resultView', () => {
 			confetti: 'none'
 		});
 		expect(row(v, 0).value).toBe('HSK 1 · Bài 0–1');
-		expect(row(v, 1).value).toBe('+10 từ, chưa ôn');
+		expect(row(v, 1).value).toBe('+10 từ đang chờ ôn');
 	});
 
 	it('2 cleared opens HSK 1–2 with a normal burst', () => {
@@ -59,7 +59,7 @@ describe('resultView', () => {
 			confetti: 'normal'
 		});
 		expect(row(v, 0).value).toBe('HSK 1–2 · Bài 0–2');
-		expect(row(v, 1).value).toBe('+22 từ, chưa ôn');
+		expect(row(v, 1).value).toBe('+22 từ đang chờ ôn');
 		expect(row(v, 2).value).toBe('~20 từ mỗi ngày');
 	});
 
@@ -67,20 +67,20 @@ describe('resultView', () => {
 		const v = resultView(4, LESSONS);
 		expect(v).toMatchObject({ title: 'HSK 5 · Bài 5', cta: 'Bắt đầu Bài 5', confetti: 'big' });
 		expect(row(v, 0).value).toBe('HSK 1–4 · Bài 0–4');
-		expect(row(v, 1).value).toBe('+50 từ, chưa ôn');
+		expect(row(v, 1).value).toBe('+50 từ đang chờ ôn');
 	});
 
 	it('5 cleared finishes every level and points at the Roadmap', () => {
 		const v = resultView(5, LESSONS);
 		expect(v).toMatchObject({
 			eyebrow: 'Bạn đã qua',
-			title: 'Cả 5 cấp HSK',
+			title: 'Mọi cấp HSK',
 			cta: 'Xem Chuyên đề',
 			href: '/roadmap',
 			confetti: 'big'
 		});
-		expect(v.lead).toMatch(/^Mọi bài đã mở\./);
+		expect(v.lead).toMatch(/^Bạn đã mở khoá mọi bài\./);
 		expect(row(v, 0).value).toBe('HSK 1–5 · Bài 0–5');
-		expect(row(v, 1).value).toBe('+65 từ, chưa ôn');
+		expect(row(v, 1).value).toBe('+65 từ đang chờ ôn');
 	});
 });
