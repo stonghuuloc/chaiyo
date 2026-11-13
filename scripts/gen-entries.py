@@ -530,7 +530,7 @@ def cut_py(hz, py, classifiers, capital=True):
                     out += PUNCT.get(c, c)
     return (out[:1].upper() + out[1:]) if capital else out
 
-HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma'}  # dict.json holds the native word for these
+HANVIET_FIX = {'喝': 'hát', '女': 'nữ', '冷': 'lãnh', '读': 'độc', '拿': 'nã', '最': 'tối', '爸': 'bả', '妈': 'ma', '哭': 'khốc', '爬': 'bà', '油': 'du', '层': 'tằng'}  # dict.json holds the native word for these
 
 def hanviet(hz, value):
     parts = value.split()
