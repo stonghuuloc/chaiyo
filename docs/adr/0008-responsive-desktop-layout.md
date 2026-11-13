@@ -26,7 +26,7 @@ At 1280px the content area is 1280 − 232 − 2 × 40 = 968px, exactly 640 + 48
 Three named variants of the column rule:
 - **Form steps** (Welcome, Settings forms) use `--container-narrow` 560px from 768px, because one text field across 640px reads badly.
 - **Two-column Result** (O3, L9, M3) from 1024px: art 3:2 (520px) left, result and action right, max 1040px.
-- **Public pages** (Landing, Login) from 1024px: art left, a 400px column right, max 1120px. Login uses 3:2 art (560px). Landing uses portrait 2:3 art in a 480px box (Loc, 2026-11-13).
+- **Public pages** (Landing, Login) from 1024px: art left, a 400px column right, max 1120px. Login uses 3:2 art (560px). Landing uses portrait art 480px wide, stretched to the column height so both tops and bottoms align (Loc, 2026-11-13). Both pages centre the pair vertically as one block and align the tops.
 
 Height: at medium and expanded the Today art band uses `clamp(280px, 42svh, 380px)`; at wide the art keeps `aspect-ratio: 3 / 2`. Full-height layouts use `dvh`/`svh`, never `vh`. A 1366×768 laptop shows the primary action without scrolling.
 

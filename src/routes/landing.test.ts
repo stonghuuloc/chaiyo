@@ -7,7 +7,7 @@ import * as page from './+page';
 const { body, head } = render(Page);
 const visible =
 	(body + head).replace(/<[^>]+>/g, ' ') +
-	[...head.matchAll(/content="([^"]*)"/g)].map((x) => x[1]).join(' ');
+	[...(body + head).matchAll(/\b(?:content|alt|title)="([^"]*)"/g)].map((x) => x[1]).join(' ');
 
 describe('landing page', () => {
 	it('has two links to /login, the primary first', () => {
@@ -32,6 +32,11 @@ describe('landing page', () => {
 		expect(head).toContain(`content="${lede}"`);
 		expect(visible).not.toMatch(/bạn thú|dạy/i);
 		expect(visible).not.toMatch(/lorem|ipsum|TODO|TBD|placeholder|Hello|Welcome/i);
+	});
+
+	it('describes the art without claiming everyone waves', () => {
+		expect(body).toContain('bốn người bạn của Chaiyo"');
+		expect(body).not.toMatch(/vẫy/);
 	});
 
 	it('serves one image per device through picture sources', () => {

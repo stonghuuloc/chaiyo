@@ -178,11 +178,9 @@
 	</button>
 {/snippet}
 
-<main
-	class="mx-auto flex min-h-dvh max-w-[calc(var(--container-column)+--spacing(10))] flex-col px-5 pb-8 md:max-w-[calc(var(--container-sheet)+--spacing(10))] lg:max-w-[calc(var(--container-narrow)+var(--container-form)+--spacing(40))] lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:p-10"
->
+<main class="page">
 	<div
-		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block lg:flex-[0_1_var(--container-narrow)] {view ===
+		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
 		'start'
 			? ''
 			: 'hidden'}"
@@ -197,7 +195,7 @@
 			height="573"
 		/>
 	</div>
-	<div class="flex flex-1 flex-col lg:min-h-120 lg:flex-none lg:basis-form lg:justify-center">
+	<div class="flex flex-1 flex-col lg:min-h-120 lg:flex-none">
 		{#if view === 'start'}
 			<div class="flex-1 text-center lg:flex-none">
 				<img
@@ -336,3 +334,33 @@
 		</div>
 	{/if}
 </Sheet>
+
+<style>
+	.page {
+		display: flex;
+		flex-direction: column;
+		min-height: 100dvh;
+		max-width: calc(var(--container-column) + 40px);
+		margin-inline: auto;
+		padding: 0 20px 32px;
+	}
+
+	@media (min-width: 48rem) {
+		.page {
+			max-width: calc(var(--container-sheet) + 40px);
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.page {
+			display: grid;
+			grid-template-columns: minmax(0, var(--container-narrow)) var(--container-form);
+			align-content: center;
+			align-items: start;
+			justify-content: center;
+			gap: 80px;
+			max-width: calc(var(--container-narrow) + var(--container-form) + 160px);
+			padding: 40px;
+		}
+	}
+</style>
