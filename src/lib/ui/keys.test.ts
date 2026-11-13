@@ -15,6 +15,10 @@ const base = {
 const el = (selectors: string[]) => ({
 	closest: (s: string) => (selectors.some((x) => s.includes(x)) ? {} : null)
 });
+const option = {
+	closest: (s: string) =>
+		s === '[aria-pressed="true"]' || s.startsWith('button, a[href]') ? {} : null
+};
 const handlers = () => ({ digit: vi.fn(), enter: vi.fn(), space: vi.fn(), escape: vi.fn() });
 const fire = (h: KeyHandlers, e: Partial<typeof base>) => keyIntent({ ...base, ...e }, h)?.();
 
@@ -104,6 +108,66 @@ describe('keyIntent', () => {
 		const act = keyIntent({ ...base, code, target: el(['button']) }, h);
 		// Assert
 		expect(act).toBeNull();
+	});
+
+	it('Given_Enter_When_OptionButtonFocused_Then_EnterHandlerAdvances', () => {
+		// Arrange
+		const h = handlers();
+		// Act
+		fire(h, { code: 'Enter', target: option });
+		// Assert
+		expect(h.enter).toHaveBeenCalledOnce();
+	});
+
+	it('Given_NumpadEnter_When_SelectedOptionFocused_Then_EnterHandlerAdvances', () => {
+		// Arrange
+		const h = handlers();
+		// Act
+		fire(h, { code: 'NumpadEnter', target: option });
+		// Assert
+		expect(h.enter).toHaveBeenCalledOnce();
+	});
+
+	it('Given_Enter_When_UnselectedOptionFocused_Then_NativeSelectWins', () => {
+		// Arrange: aria-pressed="false" matches button but not the selected-option selector
+		const h = handlers();
+		const unselected = { closest: (s: string) => (s.startsWith('button, a[href]') ? {} : null) };
+		// Act
+		const act = keyIntent({ ...base, code: 'Enter', target: unselected }, h);
+		// Assert
+		expect(act).toBeNull();
+	});
+
+	it('Given_Space_When_OptionButtonFocused_Then_NativeSelectWins', () => {
+		// Arrange
+		const h = handlers();
+		// Act
+		const act = keyIntent({ ...base, code: 'Space', target: option }, h);
+		// Assert
+		expect(act).toBeNull();
+	});
+
+	it('Given_OptionButtonFocused_When_EnterPressed_Then_ClickIsPrevented', () => {
+		// Arrange
+		const listeners: ((e: unknown) => void)[] = [];
+		vi.stubGlobal('document', { activeElement: null });
+		vi.stubGlobal('window', {
+			addEventListener: (_: string, l: (e: unknown) => void) => listeners.push(l),
+			removeEventListener: vi.fn()
+		});
+		const enter = vi.fn();
+		keys({} as HTMLElement, { enter });
+		const ev = {
+			...base,
+			code: 'Enter',
+			target: option,
+			preventDefault: vi.fn()
+		};
+		// Act
+		listeners.forEach((l) => l(ev));
+		// Assert
+		expect(enter).toHaveBeenCalledOnce();
+		expect(ev.preventDefault).toHaveBeenCalled();
 	});
 
 	it('Given_Escape_When_ButtonFocused_Then_StillCloses', () => {

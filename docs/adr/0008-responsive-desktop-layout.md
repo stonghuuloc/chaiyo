@@ -39,7 +39,7 @@ Height: at medium and expanded the Today art band uses `clamp(280px, 42svh, 380p
 | `/today`, `/roadmap`, `/practice`, `/me` (T1–T4) | Tab root | tab bar | sidebar, itself |
 | L0 Primer hub, L1 lesson hub, W3 Pinyin Table | Hub / Detail | none | sidebar, Lộ trình |
 | T3a Lexicon, W1 Word Page, W2 entry, K2 skill, M1 Mock list | List / Detail | none | sidebar, Luyện tập |
-| U1 Badges, U2 Friends, U3 Profile, U4 Settings, A1, A2 | List / Detail / Settings | none | sidebar, Tôi |
+| U1 Badges, U2 Friends, U3 Profile, U4 Settings, A1, A2 | List / Detail / Settings | none | sidebar, Tài khoản |
 | L0a, L2–L8, K1 `/practice/session`, M2, M3, L9, Welcome, Placement + result | Focus flow | none | none |
 | Landing, Login | Public page | none | none |
 
@@ -56,7 +56,7 @@ W1 has three parents (T3a, X1, A1); it always lights Luyện tập, where the Le
 - Hanzi lookup opens on a single click (`event.detail === 1`) with a collapsed selection (`getSelection().isCollapsed`), never on hover. A drag or a double-click selects text as usual and Cmd+C copies it. Hanzi are not Tab stops; keyboard users reach a word through its W1 link.
 - Audio: a clip that starts on its own (a listening question) may be blocked by the browser's autoplay policy after a reload or a deep link. `play()` rejection is caught, the play button stays ready, and progress is never blocked.
 
-**7. PWA install on desktop.** The manifest already has `display: standalone` and a paper `theme_color`, so Chrome and Edge install it and Safari 17+ adds it to the Dock as is. CHY-61 adds, for desktop: an install row in Tôi → Cài đặt on Chromium (`beforeinstallprompt`), a short "Thêm vào Dock" hint on Safari for macOS, no automatic desktop banner (CHY-61's Android prompt stays as written), and `id: "/"` plus `launch_handler: { client_mode: "focus-existing" }` so the Dock icon focuses the open window. The installed window can be resized down to compact, so it follows rule 2.
+**7. PWA install on desktop.** The manifest already has `display: standalone` and a paper `theme_color`, so Chrome and Edge install it and Safari 17+ adds it to the Dock as is. CHY-61 adds, for desktop: an install row in Tài khoản → Cài đặt on Chromium (`beforeinstallprompt`), a short "Thêm vào Dock" hint on Safari for macOS, no automatic desktop banner (CHY-61's Android prompt stays as written), and `id: "/"` plus `launch_handler: { client_mode: "focus-existing" }` so the Dock icon focuses the open window. The installed window can be resized down to compact, so it follows rule 2.
 
 **8. Desktop proof.** Every UI slice proves 390×844, 1024×768, 1280×800 and 1440×900 (Chrome and Safari on the Mac), and one live resize from 1440 to 390 and back without state loss. The iPhone check in DESIGN.md stays.
 
@@ -64,7 +64,7 @@ W1 has three parents (T3a, X1, A1); it always lights Luyện tập, where the Le
 
 - Tokens gain `--container-medium 600px`, `--container-main 640px`, `--container-aside 280px`, `--container-narrow 560px`, `--container-form 400px`, `--container-sheet 480px`, `--sidebar 232px`; `--container-column` 430 and `--container-dialog` 340 stay. `--nav-inset` is a runtime variable, not a design token: it is 0 or `var(--sidebar)`, set in `src/routes/layout.css` on the shell wrapper (`.shell[data-nav]`).
 - The retrofit is two sequential slices before more UI lands (`docs/responsive.md`: R1 shell, R2 primitives). The Login desktop layout and every unbuilt M-4 screen get desktop rows in their own slices.
-- Screens with no desktop prototype (lessons, practice, Mock Test, Tôi) follow their template's rules here until their story draws them.
+- Screens with no desktop prototype (lessons, practice, Mock Test, Tài khoản) follow their template's rules here until their story draws them.
 - Art shown wider than 430 CSS px ships a 1280px-wide WebP (a 560px slot on a 2× screen needs 1120 device px); the 1536×1024 masters cover it.
 
 Prototypes: `prototype/desktop/` (shell, Today, Roadmap, Login, Welcome, Placement). Checklist and build plan: `docs/responsive.md`.
