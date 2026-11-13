@@ -14,3 +14,7 @@ dev = ["pytest"]
 
 [tool.uv]
 package = false
+
+[tool.ruff.lint]
+# Bug-class rules only; the scripts' terse one-liner style is intentional.
+select = ["F", "E9"]

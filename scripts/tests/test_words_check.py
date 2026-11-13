@@ -1,4 +1,4 @@
-import copy, json
+import copy
 
 import pytest
 from helpers import ROW, answer, scripted, sense
