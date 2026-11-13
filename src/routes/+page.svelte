@@ -142,6 +142,10 @@
 		object-fit: cover;
 	}
 
+	.points span {
+		text-wrap: balance;
+	}
+
 	.actions {
 		display: grid;
 		gap: 4px;
@@ -182,8 +186,9 @@
 
 	@media (min-width: 64rem) {
 		.landing {
-			flex-direction: row;
-			align-items: center;
+			display: grid;
+			grid-template-columns: minmax(0, var(--container-sheet)) var(--container-form);
+			align-content: center;
 			justify-content: center;
 			gap: 80px;
 			--gutter: 40px;
@@ -194,18 +199,12 @@
 		}
 
 		.art {
-			flex: 0 1 var(--container-sheet);
 			margin: 0;
-			aspect-ratio: 2 / 3;
-			max-height: calc(100dvh - 80px);
+			aspect-ratio: auto;
 		}
 
 		.art img {
 			object-position: 50% 40%;
-		}
-
-		.column {
-			flex: 0 0 var(--container-form);
 		}
 
 		.logo {

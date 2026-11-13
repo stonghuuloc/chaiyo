@@ -179,10 +179,13 @@
 {/snippet}
 
 <main
-	class="mx-auto flex min-h-dvh max-w-[calc(var(--container-column)+--spacing(10))] flex-col px-5 pb-8 md:max-w-[calc(var(--container-sheet)+--spacing(10))] lg:max-w-[calc(var(--container-narrow)+var(--container-form)+--spacing(40))] lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:p-10"
+	class="mx-auto flex min-h-dvh max-w-[calc(var(--container-column)+--spacing(10))] flex-col px-5 pb-8 md:max-w-[calc(var(--container-sheet)+--spacing(10))] lg:grid lg:max-w-[calc(var(--container-narrow)+var(--container-form)+--spacing(40))] lg:content-center lg:items-start lg:justify-center lg:gap-20 lg:p-10 {view ===
+	'start'
+		? 'lg:grid-cols-[minmax(0,var(--container-narrow))_var(--container-form)]'
+		: 'lg:grid-cols-[var(--container-form)]'}"
 >
 	<div
-		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block lg:flex-[0_1_var(--container-narrow)] {view ===
+		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
 		'start'
 			? ''
 			: 'hidden'}"
@@ -197,7 +200,7 @@
 			height="573"
 		/>
 	</div>
-	<div class="flex flex-1 flex-col lg:min-h-120 lg:flex-none lg:basis-form lg:justify-center">
+	<div class="flex flex-1 flex-col lg:min-h-120 lg:flex-none">
 		{#if view === 'start'}
 			<div class="flex-1 text-center lg:flex-none">
 				<img
