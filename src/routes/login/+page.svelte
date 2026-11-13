@@ -180,7 +180,7 @@
 
 <main class="page">
 	<div
-		class="-mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
+		class="art -mx-5 aspect-square overflow-hidden mask-b-from-70% md:mx-0 md:mt-6 md:aspect-3/2 md:rounded-[24px] md:mask-none lg:mt-0 lg:block {view ===
 		'start'
 			? ''
 			: 'hidden'}"
@@ -203,7 +203,7 @@
 					alt=""
 					width="112"
 					height="112"
-					class="relative mx-auto -mt-14 size-28 lg:mt-0 lg:size-24"
+					class="logo relative mx-auto -mt-14 size-28 lg:mt-0 lg:size-24"
 				/>
 				<h1 class="sr-only">{m.login_name()}</h1>
 				<p class="mt-3 text-title text-graphite">{m.login_tagline()}</p>
@@ -336,6 +336,14 @@
 </Sheet>
 
 <style>
+	.art {
+		view-transition-name: landing-art;
+	}
+
+	.logo {
+		view-transition-name: landing-logo;
+	}
+
 	.page {
 		display: flex;
 		flex-direction: column;

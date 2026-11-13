@@ -81,6 +81,7 @@
 	}
 
 	.art {
+		view-transition-name: landing-art;
 		display: block;
 		min-width: 0;
 		margin-inline: calc(-1 * var(--gutter));
@@ -97,6 +98,7 @@
 	}
 
 	.logo {
+		view-transition-name: landing-logo;
 		position: relative;
 		margin: -48px auto 0;
 		width: 96px;
