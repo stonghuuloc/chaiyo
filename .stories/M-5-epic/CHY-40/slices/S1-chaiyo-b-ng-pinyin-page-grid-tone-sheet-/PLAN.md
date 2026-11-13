@@ -1,10 +1,10 @@
 # CHY-40 S1 — plan
-ACs: AC1, AC2, AC3, AC4 · Spec rev 1 · Repo: chaiyo · Branch: stonghuuloc/CHY-40-S1
-Base: .@d090b0a0
+ACs: AC1, AC2, AC3, AC4 · Spec rev 1 · Repo: chaiyo · Branch: CHY-40-S1
+Base: .@0836423e
 
 Lane: talk. New files only under `src/routes/(app)/pinyin/` + `scripts/pinyin-chart.ts`. Two shared files get small, isolated edits: `messages/vi.json` (one key block after `shell_skip`) and `src/lib/shell/layout.test.ts` (two table rows).
 
-## Anchors (verified 2026-11-13 on d090b0a0)
+## Anchors (verified 2026-11-13, re-verified on 0836423e: vi.json rewritten by #148, shell_skip still :45)
 - `content/syllables.yaml:2-406` — 405 rows `{ syllable, initial, final }`; 22 initials, 36 finals, no duplicate (initial, final).
 - `src/lib/audio-renderer/recorded.ts:28-30` — `NO_CLIP` = bia, fiao, tei.
 - `src/routes/dev/audio/syllable-cells.server.ts:40-56` — `loadSyllableClips`: filter `NO_CLIP`, key = `audioKey(addTone(s, t), 'redpanda')`.
