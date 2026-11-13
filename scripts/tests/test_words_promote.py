@@ -745,3 +745,20 @@ def test_level_2_stages_and_promotes_its_own_sentence_file(gen):
     ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk2.yaml').read_text(encoding='utf-8'))]
     assert ids == ['s-w-new']
     assert [s['id'] for s in yaml.safe_load(hsk1.read_text(encoding='utf-8'))] == ['s-w-shared']
+
+
+def test_promote_keeps_a_sentence_only_another_levels_word_cites(gen):
+    # Arrange
+    out = stage_words(gen, 1)
+    staged = out / 'sentences/hsk1.yaml'
+    staged.write_text(staged.read_text(encoding='utf-8') + yaml.safe_dump([{'id': 's-w-cited-by-hsk2', 'hanzi': '旧'}], allow_unicode=True), encoding='utf-8')
+    gen.CONTENT.mkdir(parents=True, exist_ok=True)
+    (gen.CONTENT / '打算.yaml').write_text(yaml.safe_dump({'id': '打算', 'hanzi': '打算', 'level': 2, 'senses': [{'vi': 'định'}], 'examples': ['s-w-cited-by-hsk2']}, allow_unicode=True), encoding='utf-8')
+    gen.review(out, 1)
+
+    # Act
+    gen.promote(out, 1)
+
+    # Assert
+    ids = [s['id'] for s in yaml.safe_load((gen.CONTENT.parent / 'sentences/hsk1.yaml').read_text(encoding='utf-8'))]
+    assert 's-w-cited-by-hsk2' in ids

@@ -932,7 +932,9 @@ def promote(out, seed):
         print(f'review-{seed}.md is stale or missing', file=sys.stderr)
         sys.exit(2)
     words = sorted((out / 'words').glob('*.yaml'))
-    used = {x for f in words for w in [yaml.safe_load(f.read_text(encoding='utf-8'))] for x in [*w.get('examples', []), *(s['example'] for s in w['senses'] if 'example' in s)]}
+    # refs of words that stay in content (other levels) count too, so this level's file never drops a sentence they cite
+    kept = [f for f in CONTENT.glob('*.yaml') if f.name not in {w.name for w in words}] if CONTENT.exists() else []
+    used = {x for f in [*words, *kept] for w in [yaml.safe_load(f.read_text(encoding='utf-8'))] for x in [*w.get('examples', []), *(s['example'] for s in w['senses'] if 'example' in s)]}
     # a sentence another level's file already holds keeps its id there; listing it twice breaks the import
     elsewhere = {s['id'] for f in (CONTENT.parent / 'sentences').glob('*.yaml') if f.name != Path(sent_file()).name
                  for s in yaml.safe_load(f.read_text(encoding='utf-8')) or []}
@@ -974,7 +976,11 @@ def main(argv, llm=ask):
         HINTS.update(json.loads(Path(os.environ['GEN_HINTS']).read_text(encoding='utf-8')))
     if llm is ask and os.environ.get('GEN_OFFLINE_DIR'):
         llm = ask_files
-    need = {'anthropic': 'ANTHROPIC_API_KEY', 'claude-cli': None}.get(os.environ.get('GEN_PROVIDER'), 'OPENCODE_API_KEY')
+    provider = os.environ.get('GEN_PROVIDER')
+    if provider not in (None, '', 'opencode', 'anthropic', 'claude-cli'):
+        print(f'unknown GEN_PROVIDER {provider!r} (use opencode, anthropic or claude-cli)', file=sys.stderr)
+        sys.exit(2)
+    need = {'anthropic': 'ANTHROPIC_API_KEY', 'claude-cli': None}.get(provider, 'OPENCODE_API_KEY')
     if llm is ask and need and not os.environ.get(need):
         print(f'{need} is not set', file=sys.stderr)
         sys.exit(2)
