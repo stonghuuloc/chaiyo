@@ -22,10 +22,9 @@ describe('grade', () => {
 		expect(g.correct).toBe(true);
 		expect(g.marks).toEqual({ 好: 'right' });
 		expect(g.verdict).toBe('Đúng rồi.');
-		expect(g.hint).toBe('');
 	});
 
-	it('Given_WrongPick_When_Grade_Then_AnswerRightAndPickWrongWithDefaultHint', () => {
+	it('Given_WrongPick_When_Grade_Then_AnswerRightAndPickWrong', () => {
 		// Arrange
 		const pick = '你';
 		// Act
@@ -34,16 +33,6 @@ describe('grade', () => {
 		expect(g.correct).toBe(false);
 		expect(g.marks).toEqual({ 好: 'right', 你: 'wrong' });
 		expect(g.verdict).toBe('Chưa đúng. Đáp án là');
-		expect(g.hint).toBe('Câu này sẽ quay lại ở phần ôn');
-	});
-
-	it('Given_CustomMissHint_When_WrongPick_Then_CustomHintWins', () => {
-		// Arrange
-		const s = { ...step, missHint: 'Xem lại bài 1' };
-		// Act
-		const g = grade(s, '你');
-		// Assert
-		expect(g.hint).toBe('Xem lại bài 1');
 	});
 });
 

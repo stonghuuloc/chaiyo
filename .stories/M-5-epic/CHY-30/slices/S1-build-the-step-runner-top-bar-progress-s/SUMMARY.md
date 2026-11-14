@@ -6,9 +6,11 @@ ACs: AC1, AC2, AC3  ·  Commits: see git log origin/main..HEAD  ·  PR: not open
 - [AC2] `choice.ts` (`grade`, `choiceCta`, `toAnswer`) + `steps/Choice.svelte`: Kiểm tra → marks + verdict → Tiếp, `Answer` reported, next step. Tests: `choice.test.ts` ✓
 - [AC3] Test mode: "Câu tiếp" (caret), "Nộp bài" on last, no marks. Placement: `isLast` (`run.ts`) → `+page.svelte` CTA reads `lesson_submit` at level 5 index 9. Tests: `choice.test.ts`, `run.test.ts` ✓
 - [NFR] `steps.ts`: `LessonStep` union + `viewOf` via `import.meta.glob` on file name. Test: `steps.test.ts` ✓
-- Dev proof route `src/routes/dev/step` (`?mode=test`). 9 `lesson_*` keys in `messages/vi.json` after `screen_gate`.
+- Dev proof route `src/routes/dev/step` (`?mode=test`). 9 `lesson_*` keys appended at the end of `messages/vi.json`.
 
 ## Deviated from plan
+- `lesson_*` keys appended at the end of `messages/vi.json`, not after `screen_gate` (docs/copy-voice.md rule 8 beats PLAN Task 2). Expect a trivial EOF conflict with sibling lanes.
+- Review nit: `grade()` no longer returns `hint` (only `choiceCta` decides it).
 - Plan said leave `lesson/section/contentSha` out of the destructure to keep lint clean; `svelte/no-unused-props` fires anyway, so one `eslint-disable-next-line` with reason sits on the destructure.
 - `✕` anchor needs `eslint-disable svelte/no-navigation-without-resolve` (callers pass resolved paths; same reason as `Button.svelte`).
 - `next()` in the runner ignores its `answer` arg (S2 records it); `steps.ts` types views as `Component<StepProps<LessonStep>>`.
@@ -25,4 +27,5 @@ ACs: AC1, AC2, AC3  ·  Commits: see git log origin/main..HEAD  ·  PR: not open
 - `pnpm vitest --run src/lib/lesson src/lib/placement` → pass
 - full `pnpm test` → 2 failed (timeouts, load ~580) | 2921 passed; the two timeout files pass alone at load 391 (`--testTimeout=120000`); `icons.test.ts` still fails
 - `pnpm build` → exit 0
-- Browser (`/dev/step`, `?mode=test`): see worker_done
+- Browser (agent-browser, dev server in worktree): `/dev/step` feedback and `?mode=test` flows clicked through; see worker_done
+- pre-push-review round 1: 0 Important, 2 Nit (one fixed, one covered by the browser run)
