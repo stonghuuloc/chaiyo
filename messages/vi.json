@@ -11,11 +11,6 @@
 	"screen_gate": "Kiểm tra",
 	"screen_practice_session": "Luyện tập tổng hợp",
 	"screen_word": "Từ",
-	"strokes_count": "nét {done}/{total}",
-	"strokes_demo": "Xem mẫu",
-	"strokes_hint": "Gợi ý",
-	"strokes_redo": "Viết lại",
-	"strokes_load_error": "Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại.",
 	"screen_settings": "Cài đặt",
 	"login_title": "Đăng nhập",
 	"login_name": "Chaiyo!",
@@ -120,5 +115,10 @@
 	"landing_cta": "Bắt đầu học",
 	"landing_logo_alt": "Chaiyo!",
 	"landing_login": "Đã có tài khoản? Đăng nhập",
-	"landing_art_alt": "Gấu trúc, gấu trúc đỏ, hươu con và takin, bốn người bạn của Chaiyo"
+	"landing_art_alt": "Gấu trúc, gấu trúc đỏ, hươu con và takin, bốn người bạn của Chaiyo",
+	"strokes_count": "nét {done}/{total}",
+	"strokes_demo": "Xem mẫu",
+	"strokes_hint": "Gợi ý",
+	"strokes_redo": "Viết lại",
+	"strokes_load_error": "Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại."
 }

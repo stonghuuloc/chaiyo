@@ -6,7 +6,7 @@ ACs: AC2, AC6  ·  Branch: CHY-35-S1 (local, unpushed)  ·  PR: none yet
 - [AC2][AC6] `src/lib/components/hanzi-strokes.ts`: `withRadicals`, `loadStrokes` (CDN URL, rejects on fetch error / non-2xx), `writerOptions`. Test: `hanzi-strokes.test.ts` (16 cases incl. token-colour parity, AC6 copy).
 - [AC2][AC6] `HanziStrokes.svelte`: quiz/animate, counter `nét d/t`, Xem mẫu / Gợi ý / Viết lại, error state. Test: `HanziStrokes.test.ts` (server render).
 - [AC2][AC6] `/dev/strokes` proof page (`+page.server.ts` 404s outside dev/preview).
-- [AC2][AC6] `messages/vi.json`: 5 `strokes_*` keys, one block after `screen_word`.
+- [AC2][AC6] `messages/vi.json`: 5 `strokes_*` keys, appended at the end.
 
 ## Browser proof (Chrome, `pnpm dev` :5391, real mouse events)
 - AC2: 你 `nét 0/7` → drag 0 `1/7`; off-target drag `1/7`, mistakes 1; strokes 1-6 → `7/7`, `complete 1`, Gợi ý disabled.
@@ -19,9 +19,9 @@ ACs: AC2, AC6  ·  Branch: CHY-35-S1 (local, unpushed)  ·  PR: none yet
 - Round-2 fixes: slowed the import by 5 s (scratch edit, reverted). Switching char mid-import: with the `me !== gen` check `loads 1`, 1 svg; check removed (control) `loads 2` (stale 你 writer built). Switching char mid-Xem-mẫu: new char `nét 0/6`, tools enabled, 1 svg.
 
 ## Deviated from plan
-- `writerOptions(outline, size, load)`: `mode` parameter dropped (unused; plan allowed it). SPEC seam text still shows `mode`.
+- `writerOptions(outline, size, load)`: `mode` parameter dropped (unused; plan allowed it). SPEC seam updated to match.
 - Round-2 outline-toggle and import-generation behaviour are proved in the browser only: `$effect` code does not run in the Node vitest project, and the plan forbids a fake DOM. The generation check has no unit test.
-- `docs/copy-voice.md` rule 8 says append new keys; the plan's block after `screen_word` kept (lane merge conflicts).
+- Plan put the `strokes_*` keys after `screen_word`; `docs/copy-voice.md` rule 8 (append only) wins, so they sit at the end of `messages/vi.json`.
 - Prettier reformatted my three new files; no other file touched.
 
 ## Not done / follow-up
