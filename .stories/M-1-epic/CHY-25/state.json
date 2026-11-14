@@ -16,8 +16,9 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "execute",
       "reviews": 2,
-      "note": "built, verified, awaiting push",
-      "jira": ""
+      "note": "PR #155 open, awaiting Loc's review before verify",
+      "jira": "",
+      "pr": "#155"
     },
     {
       "id": "S2",
@@ -46,7 +47,9 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#155"
+  ],
   "branch": "agent/chy-25-design-slice-18d36a30eaa8",
   "log": [
     "2026-11-06 init",
@@ -60,7 +63,8 @@
     "2026-11-13 S1 \u2192 plan",
     "2026-11-13 S1 \u2192 picture",
     "2026-11-14 S1 \u2192 execute",
+    "2026-11-14 S1 \u2192 execute",
     "2026-11-14 S1 \u2192 execute"
   ],
-  "updated": "2026-11-14T16:15:46+07:00"
+  "updated": "2026-11-14T17:20:03+07:00"
 }
