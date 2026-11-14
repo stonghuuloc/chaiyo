@@ -57,6 +57,26 @@ describe('lesson', () => {
 		expect(bundle).toHaveBeenCalledTimes(1);
 	});
 
+	it('refetches a loaded lesson when the content sha changes', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const sha = await inner.current();
+		const next = 'a'.repeat(64);
+		let now = sha;
+		const bundle = vi.fn(async (_: string, id: string) => ({
+			...(await inner.bundle(sha, id)),
+			sha: now
+		}));
+		const catalog = createCatalog({ current: async () => now, bundle });
+		// Act
+		await catalog.lesson('h1-01');
+		now = next;
+		const l = await catalog.lesson('h1-01');
+		// Assert
+		expect(bundle).toHaveBeenCalledTimes(2);
+		expect(l.contentSha).toBe(next);
+	});
+
 	it('keeps the loaded bundle for word reads', async () => {
 		// Arrange
 		const inner = await fixtureSource();
