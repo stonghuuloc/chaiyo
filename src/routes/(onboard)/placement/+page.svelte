@@ -4,7 +4,7 @@
 	import sprite from '#lib/assets/icons.svg?raw';
 	import { play, player } from '#lib/audio/index.js';
 	import { m } from '#lib/paraglide/messages.js';
-	import { answer, HANDOFF, items, startRun } from '#lib/placement/index.js';
+	import { answer, HANDOFF, isLast, items, startRun } from '#lib/placement/index.js';
 	import { shuffle } from '#lib/placement/shuffle.js';
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
@@ -167,7 +167,7 @@
 
 		{#snippet actions()}
 			<Button caret disabled={pick === null} onclick={() => pick !== null && submit(pick)}>
-				{m.placement_next()}
+				{isLast(run) ? m.lesson_submit() : m.placement_next()}
 				<Kbd>Enter</Kbd>
 			</Button>
 		{/snippet}
