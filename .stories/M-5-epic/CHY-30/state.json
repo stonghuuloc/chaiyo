@@ -15,8 +15,9 @@
       "repo": "chaiyo",
       "stage": "execute",
       "reviews": 2,
-      "note": "built, verified, awaiting push",
-      "jira": ""
+      "note": "PR #154 open, awaiting Loc's review before verify",
+      "jira": "",
+      "pr": "#154"
     },
     {
       "id": "S2",
@@ -45,7 +46,9 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#154"
+  ],
   "branch": "stonghuuloc/CHY-30-S1",
   "log": [
     "2026-11-13 init",
@@ -57,7 +60,8 @@
     "2026-11-13 S1 \u2192 plan",
     "2026-11-13 S1 \u2192 plan",
     "2026-11-13 S1 \u2192 picture",
+    "2026-11-14 S1 \u2192 execute",
     "2026-11-14 S1 \u2192 execute"
   ],
-  "updated": "2026-11-14T15:40:37+07:00"
+  "updated": "2026-11-14T17:19:45+07:00"
 }
