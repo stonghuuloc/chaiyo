@@ -62,6 +62,7 @@ const toLessonContent = (b: Bundle): LessonContent => {
 };
 
 const tokenAt = (seg: string[], index: number): { token: string; start: number } | undefined => {
+	if (!Number.isInteger(index)) return undefined;
 	let start = 0;
 	for (const token of seg) {
 		const end = start + [...token].length;
@@ -85,6 +86,8 @@ export function createCatalog(source: CatalogSource): Catalog {
 	return {
 		async lesson(id) {
 			const sha = await source.current();
+			const cached = loaded.get(id);
+			if (cached?.sha === sha) return toLessonContent(cached);
 			const bundle = await source.bundle(sha, id);
 			if (bundle.sha !== sha || bundle.lesson.id !== id) throw new CatalogError('malformed', id);
 			loaded.set(id, bundle);

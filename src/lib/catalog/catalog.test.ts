@@ -22,6 +22,7 @@ describe('lesson', () => {
 		// Assert
 		expect(l.contentSha).toMatch(/^[0-9a-f]{64}$/);
 		expect(l.lesson.title).toBe('Xin chào');
+		expect(l.lesson.level).toBe(1);
 		expect(l.words.map((w) => w.id)).toEqual([
 			'你',
 			'好',
@@ -44,7 +45,19 @@ describe('lesson', () => {
 		expect(l.words).toEqual([]);
 	});
 
-	it('asks the source for a bundle once per call and keeps the result', async () => {
+	it('asks the source for a bundle once for repeated lesson calls', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const bundle = vi.fn(inner.bundle);
+		const catalog = createCatalog({ ...inner, bundle });
+		// Act
+		await catalog.lesson('h1-01');
+		await catalog.lesson('h1-01');
+		// Assert
+		expect(bundle).toHaveBeenCalledTimes(1);
+	});
+
+	it('keeps the loaded bundle for word reads', async () => {
 		// Arrange
 		const inner = await fixtureSource();
 		const bundle = vi.fn(inner.bundle);
@@ -152,6 +165,13 @@ describe('lookup', () => {
 				start: 0
 			});
 		}
+	});
+
+	it('throws not-found for a non-integer tap', async () => {
+		const catalog = createCatalog(await fixtureSource());
+		await catalog.lesson('h1-01');
+		const e = await failure(catalog.lookup('s-h1-01-01', 0.5));
+		expect([e.code, e.id]).toEqual(['not-found', 's-h1-01-01:0.5']);
 	});
 
 	it('throws not-found on punctuation and past the end', async () => {
