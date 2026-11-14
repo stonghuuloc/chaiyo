@@ -104,6 +104,12 @@
 						if (me !== gen) return;
 						total = data.strokes.length;
 						status = 'ready';
+						const wanted = untrack(() => outline);
+						if (wanted !== appliedOutline) {
+							appliedOutline = wanted;
+							if (wanted) void writer?.showOutline();
+							else void writer?.hideOutline();
+						}
 						if (quiz) startQuiz();
 						emit();
 					},
@@ -137,7 +143,6 @@
 	});
 
 	export async function play() {
-		if (status === 'error') return;
 		const w = writer;
 		if (!w || status !== 'ready') return;
 		const me = gen;
