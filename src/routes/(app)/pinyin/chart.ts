@@ -80,6 +80,9 @@ export const cellAt = (cells: ChartCell[], initial: string, final: string) =>
 export const findCell = (cells: ChartCell[], open: string | null) =>
 	open ? (cells.find((c) => c.syllable === open) ?? null) : null;
 
+export const arrivedInApp = (from: unknown, type: string | null) =>
+	from !== null && type !== 'popstate';
+
 export const backTarget = (hasPrevious: boolean) => (hasPrevious ? 'back' : 'h0-00');
 
 export const playTone = (tone: Tone, player: Player) =>

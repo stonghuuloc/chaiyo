@@ -19,6 +19,7 @@
 		"import:content": "tsx scripts/import-content.ts",
 		"render:audio": "tsx scripts/render-audio.ts",
 		"placement:clips": "tsx scripts/placement-clips.ts",
+		"pinyin:chart": "tsx scripts/pinyin-chart.ts",
 		"curriculum": "tsx scripts/build-curriculum.ts",
 		"tts:spike": "tsx scripts/tts-spike.ts",
 		"check:syllable-clips": "tsx scripts/check-syllable-clips.ts",

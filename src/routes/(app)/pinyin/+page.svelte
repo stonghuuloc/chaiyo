@@ -3,14 +3,14 @@
 	import { resolve } from '$app/paths';
 	import { m } from '#lib/paraglide/messages.js';
 	import chart from './chart.json';
-	import { backTarget, type ChartCell } from './chart';
+	import { arrivedInApp, backTarget, type ChartCell } from './chart';
 	import PinyinChart from './PinyinChart.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	let hasPrevious = false;
-	afterNavigate(({ from }) => {
-		hasPrevious ||= from !== null;
+	afterNavigate(({ from, type }) => {
+		hasPrevious ||= arrivedInApp(from, type);
 	});
 
 	function back() {
