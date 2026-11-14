@@ -9,8 +9,7 @@ export const grade = (step: Step, pick: string) => {
 	return {
 		correct,
 		marks,
-		verdict: correct ? m.lesson_right() : m.lesson_wrong(),
-		hint: correct ? '' : (step.missHint ?? m.lesson_review_hint())
+		verdict: correct ? m.lesson_right() : m.lesson_wrong()
 	};
 };
 
