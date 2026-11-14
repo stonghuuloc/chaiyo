@@ -55,14 +55,14 @@ export const RADICALS: Readonly<Record<string, readonly number[]>>; // 再 见 �
 export function withRadicals(char: string, data: CharacterJson): CharacterJson;
 export function loadStrokes(char: string, fetchFn?: typeof fetch): Promise<CharacterJson>;
 export function writerOptions(
-	mode: StrokeMode, outline: boolean, size: number, load: (char: string) => Promise<CharacterJson>
+	outline: boolean, size: number, load: (char: string) => Promise<CharacterJson>
 ): Partial<HanziWriterOptions>;
 ```
 The component is square and fills its parent's width; the consumer sizes the parent.
 
 ## Test contract
 - [AC2] `withRadicals('再', d)` → `radStrokes [1, 2]`; 见, 气 → `[0, 1, 2, 3]`; `withRadicals('你', {…radStrokes: [0, 1]})` returns it unchanged; an unknown char with no entry stays without `radStrokes`.
-- [AC2] `writerOptions('quiz', true, 280, load)` → `drawingWidth 48`, `radicalColor '#c6301d'`, `strokeColor '#1d1814'`, `outlineColor '#ddd5c8'`, `showOutline true`, `showCharacter false`; with `outline false` → `showOutline false`.
+- [AC2] `writerOptions(true, 280, load)` → `drawingWidth 48`, `radicalColor '#c6301d'`, `strokeColor '#1d1814'`, `outlineColor '#ddd5c8'`, `showOutline true`, `showCharacter false`; with `outline false` → `showOutline false`.
 - [AC2] `STROKE_COLORS` equals `--color-ink`, `--color-lantern-red`, `--color-ruled-line` in `src/lib/styles/tokens.css`.
 - [AC2] Server render of `quiz` mode contains "Xem mẫu", "Gợi ý", "Viết lại" and `nét 0/–`; `animate` mode contains none of them.
 - [AC6] `loadStrokes('再', fakeFetch)` requests `STROKE_DATA + '再.json'` and resolves with `radStrokes [1, 2]`; a rejecting fetch → rejects; a 404 response → rejects.
