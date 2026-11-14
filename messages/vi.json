@@ -129,5 +129,13 @@
 	"strokes_demo": "Xem mẫu",
 	"strokes_hint": "Gợi ý",
 	"strokes_redo": "Viết lại",
-	"strokes_load_error": "Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại."
+	"strokes_load_error": "Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại.",
+	"pinyin_title": "Bảng pinyin",
+	"pinyin_back": "Quay lại",
+	"pinyin_grid_label": "Bảng âm tiết pinyin",
+	"pinyin_corner": "Thanh mẫu · vận mẫu",
+	"pinyin_hint": "Chạm một thanh để nghe. Chạm lần nữa để nghe chậm.",
+	"pinyin_close": "Đóng",
+	"pinyin_tone_label": "Nghe thanh {tone}: {pinyin}",
+	"pinyin_tone_none": "Thanh {tone}: chưa có âm"
 }
