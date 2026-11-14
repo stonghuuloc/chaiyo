@@ -115,5 +115,13 @@
 	"landing_cta": "Bắt đầu học",
 	"landing_logo_alt": "Chaiyo!",
 	"landing_login": "Đã có tài khoản? Đăng nhập",
-	"landing_art_alt": "Gấu trúc, gấu trúc đỏ, hươu con và takin, bốn người bạn của Chaiyo"
+	"landing_art_alt": "Gấu trúc, gấu trúc đỏ, hươu con và takin, bốn người bạn của Chaiyo",
+	"pinyin_title": "Bảng pinyin",
+	"pinyin_back": "Quay lại",
+	"pinyin_grid_label": "Bảng âm tiết pinyin",
+	"pinyin_corner": "Thanh mẫu · vận mẫu",
+	"pinyin_hint": "Chạm một thanh để nghe. Chạm lần nữa để nghe chậm.",
+	"pinyin_close": "Đóng",
+	"pinyin_tone_label": "Nghe thanh {tone}: {pinyin}",
+	"pinyin_tone_none": "Thanh {tone}: chưa có âm"
 }
