@@ -31,7 +31,7 @@ jobs:
       - run: pnpm lint
       - run: pnpm check
         if: ${{ !cancelled() }}
-      - run: pnpm test:coverage --maxWorkers=3 --testTimeout=30000 --hookTimeout=30000
+      - run: pnpm test:coverage
         if: ${{ !cancelled() }}
       - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
         if: ${{ !cancelled() }}
@@ -60,7 +60,7 @@ jobs:
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - run: uvx ruff@0.17.5 check scripts
       # pngquant + ImageMagick via apt.
-      - if: ${{ !cancelled() && runner.os == 'Linux' }}
+      - if: ${{ !cancelled() }}
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
       - run: command -v pngquant && (command -v magick || command -v convert)
         if: ${{ !cancelled() }}
