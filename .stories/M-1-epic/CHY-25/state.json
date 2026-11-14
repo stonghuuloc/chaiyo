@@ -14,9 +14,9 @@
         "AC7"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "picture",
+      "stage": "execute",
       "reviews": 2,
-      "note": "rev 2 on d090b0a0; advisor 2/2 ready; picture written, not served (wave page)",
+      "note": "built, verified, awaiting push",
       "jira": ""
     },
     {
@@ -58,7 +58,8 @@
     "2026-11-06 S3 \u2192 plan",
     "2026-11-13 S1 \u2192 plan",
     "2026-11-13 S1 \u2192 plan",
-    "2026-11-13 S1 \u2192 picture"
+    "2026-11-13 S1 \u2192 picture",
+    "2026-11-14 S1 \u2192 execute"
   ],
-  "updated": "2026-11-13T17:52:10+07:00"
+  "updated": "2026-11-14T14:37:54+07:00"
 }
