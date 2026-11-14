@@ -9,7 +9,6 @@ runs:
     - uses: actions/setup-node@v7
       with:
         node-version: 24
-        # Self-hosted keeps its pnpm store on disk; the remote cache only adds a restore timeout there.
-        cache: ${{ runner.environment == 'github-hosted' && 'pnpm' || '' }}
+        cache: pnpm
     - run: pnpm install --frozen-lockfile
       shell: bash
