@@ -89,9 +89,9 @@ describe('arrivedInApp', () => {
 	it.each([
 		['link', {}, 'link', true],
 		['goto', {}, 'goto', true],
-		['popstate return', {}, 'popstate', false],
+		['popstate', {}, 'popstate', false],
 		['first load', null, 'enter', false]
-	])('Given_%s_When_ArrivedInApp_Then_%s', (_name, from, type, expected) => {
+	])('Given_%s_When_ArrivedInApp_Then_Matches', (_name, from, type, expected) => {
 		// Arrange
 		// Act
 		const got = arrivedInApp(from, type);
@@ -131,6 +131,18 @@ describe('playTone', () => {
 		// Assert
 		expect(played).toBe(false);
 		expect(player).not.toHaveBeenCalled();
+	});
+});
+
+describe('history snapshot', () => {
+	it('Given_PageSource_Then_ExportsSnapshotOfHasPrevious_SoBackIntoPinyinKeepsTheFlag', () => {
+		// Arrange
+		const src = readFileSync('src/routes/(app)/pinyin/+page.svelte', 'utf8');
+		// Act
+		// Assert
+		expect(src).toContain('snapshot({');
+		expect(src).toContain('capture: () => hasPrevious');
+		expect(src).toContain('hasPrevious = value');
 	});
 });
 

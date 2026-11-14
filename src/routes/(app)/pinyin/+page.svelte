@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto, afterNavigate } from '$app/navigation';
+	import { afterNavigate, snapshot } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { m } from '#lib/paraglide/messages.js';
 	import chart from './chart.json';
@@ -13,10 +13,16 @@
 		hasPrevious ||= arrivedInApp(from, type);
 	});
 
+	snapshot({
+		capture: () => hasPrevious,
+		restore: (value) => {
+			hasPrevious = value;
+		}
+	});
+
 	function back() {
 		if (backTarget(hasPrevious) === 'back') history.back();
-		// eslint-disable-next-line svelte/no-navigation-without-resolve -- /lesson/[id] has no page yet, so it is not a typed route
-		else void goto(`${resolve('/')}lesson/h0-00`);
+		else location.assign(`${resolve('/')}lesson/h0-00`);
 	}
 </script>
 
