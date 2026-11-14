@@ -13,7 +13,8 @@ ACs: AC1, AC2, AC3, AC4  ·  Branch: CHY-40-S1  ·  PR: none (coordinator pushes
 
 ## Deviated from plan
 - `vi.json` keys appended at the END of the file, not after `shell_skip`: `docs/copy-voice.md` rule 8 ("add new keys only by appending") beats PLAN. Expect a trivial EOF conflict at merge.
-- ✕ fallback: `resolve('/(app)/lesson/[id]', …)` fails `pnpm check` (no `+page` in `lesson/[id]/` yet). Used `goto(`${resolve('/')}lesson/h0-00`)` with an eslint-disable comment, as PLAN allowed.
+- ✕ fallback: `resolve('/(app)/lesson/[id]', …)` fails `pnpm check` (no `+page` in `lesson/[id]/` yet), and dev `goto` throws for an unmatched route. Used `location.assign(`${resolve('/')}lesson/h0-00`)`.
+- ✕ in-app flag: PLAN's `hasPrevious ||= from !== null` mis-fires on Back; review round 1-2 fixed it with `arrivedInApp(from, type)` plus a `snapshot()` (per history entry). Added helper + tests, a no-ledger/study source test and `pnpm pinyin:chart`.
 - Hatched empty cell uses `color-mix(… var(--color-faint-pencil) 35% …)`: `guard.test.ts` bans `rgb(` literals in components.
 - Browser proof used a test user created in local Supabase (`chy40s1@test.local`); not committed.
 
