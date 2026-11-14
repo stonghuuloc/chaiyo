@@ -8,6 +8,7 @@ import { addTone, audioKey } from '#lib/content/import/audio.js';
 import chart from './chart.json';
 import { load } from './+page';
 import {
+	arrivedInApp,
 	backTarget,
 	cellAt,
 	findCell,
@@ -84,6 +85,21 @@ describe('backTarget', () => {
 	});
 });
 
+describe('arrivedInApp', () => {
+	it.each([
+		['link', {}, 'link', true],
+		['goto', {}, 'goto', true],
+		['popstate return', {}, 'popstate', false],
+		['first load', null, 'enter', false]
+	])('Given_%s_When_ArrivedInApp_Then_%s', (_name, from, type, expected) => {
+		// Arrange
+		// Act
+		const got = arrivedInApp(from, type);
+		// Assert
+		expect(got).toBe(expected);
+	});
+});
+
 describe('playTone', () => {
 	const setup = () => {
 		const el = { src: '', playbackRate: 1, play: vi.fn(() => Promise.resolve()) };
@@ -115,6 +131,19 @@ describe('playTone', () => {
 		// Assert
 		expect(played).toBe(false);
 		expect(player).not.toHaveBeenCalled();
+	});
+});
+
+describe('page sources', () => {
+	it('Given_RouteSources_Then_NoLedgerOrStudyImport', () => {
+		// Arrange
+		const files = ['+page.svelte', '+page.ts', 'PinyinChart.svelte', 'chart.ts'];
+		// Act
+		const hits = files.filter((f) =>
+			/#lib\/(ledger|study)/.test(readFileSync(`src/routes/(app)/pinyin/${f}`, 'utf8'))
+		);
+		// Assert
+		expect(hits).toEqual([]);
 	});
 });
 
