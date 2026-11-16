@@ -3,6 +3,7 @@
 	import { SvelteSet } from 'svelte/reactivity';
 	import type { Ledger } from '#lib/ledger/index.js';
 	import { m } from '#lib/paraglide/messages.js';
+	import ReportButton from '#lib/report/ReportButton.svelte';
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
 	import { toAttempt } from './attempt';
@@ -92,7 +93,7 @@
 
 <FocusFrame step={index}>
 	{#snippet top()}
-		<div class="grid grid-cols-[44px_1fr_auto] items-center gap-3">
+		<div class="grid grid-cols-[44px_1fr_auto_44px] items-center gap-3">
 			<!-- eslint-disable svelte/no-navigation-without-resolve -- callers pass resolve()d paths -->
 			<a
 				href={exit}
@@ -115,6 +116,14 @@
 				{/each}
 			</div>
 			<span class="text-label font-semibold text-graphite tabular-nums">{p.label}</span>
+			<ReportButton
+				context={{
+					lesson,
+					step: steps[index].id,
+					word: steps[index].card?.word ?? null,
+					contentSha
+				}}
+			/>
 		</div>
 	{/snippet}
 
