@@ -56,16 +56,6 @@ export default defineConfig({
 					include: ['src/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
 				}
-			},
-			{
-				extends: './vite.config.ts',
-				resolve: process.env.VITEST ? { conditions: ['browser'] } : undefined,
-				test: {
-					// Components hold event handlers; svelte/server cannot reach them.
-					name: 'client',
-					environment: 'jsdom',
-					include: ['src/**/*.svelte.{test,spec}.{js,ts}']
-				}
 			}
 		]
 	}

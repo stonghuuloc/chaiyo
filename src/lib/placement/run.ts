@@ -55,5 +55,3 @@ export function answer(
 		runId: uuid()
 	};
 }
-
-export const isLast = (r: Run) => r.level === 5 && r.index === 9;

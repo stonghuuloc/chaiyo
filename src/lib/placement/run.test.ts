@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { answer, isLast, startRun, type Run } from './run';
+import { answer, startRun, type Run } from './run';
 import { HANDOFF, PLACEMENT_SHA } from './index';
 
 const counter = () => {
@@ -92,27 +92,5 @@ describe('placement run', () => {
 		const b = answer(a, { ok: true, ms: 1, at: 'x' }, u);
 		expect(b).not.toBe(a);
 		expect(a.attempts).toHaveLength(0);
-	});
-});
-
-describe('isLast', () => {
-	it('Given_Level5Index9_When_IsLast_Then_True', () => {
-		// Arrange
-		const run = play(seq('R'.repeat(49)));
-		// Act
-		const last = isLast(run);
-		// Assert
-		expect(run).toMatchObject({ level: 5, index: 9 });
-		expect(last).toBe(true);
-	});
-
-	it('Given_Level5Index8_When_IsLast_Then_False', () => {
-		expect(isLast(play(seq('R'.repeat(48))))).toBe(false);
-	});
-
-	it('Given_Level4Index9_When_IsLast_Then_False', () => {
-		const run = play(seq('R'.repeat(39)));
-		expect(run).toMatchObject({ level: 4, index: 9 });
-		expect(isLast(run)).toBe(false);
 	});
 });
