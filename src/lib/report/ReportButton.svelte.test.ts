@@ -6,27 +6,6 @@ import { m } from '#lib/paraglide/messages.js';
 import { openReports, report } from './index';
 import ReportButton from './ReportButton.svelte';
 
-// jsdom never boots Kit's dev env, which the app's Supabase client reads at import.
-vi.mock('$app/env/public', () => ({
-	PUBLIC_SUPABASE_URL: 'http://127.0.0.1:56321',
-	PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'test-key'
-}));
-
-// svelte/motion queries matchMedia while the UI kit's modules evaluate.
-vi.hoisted(() => {
-	window.matchMedia = (media: string) =>
-		({
-			matches: false,
-			media,
-			onchange: null,
-			addEventListener() {},
-			removeEventListener() {},
-			addListener() {},
-			removeListener() {},
-			dispatchEvent: () => false
-		}) as MediaQueryList;
-});
-
 const clientWith = (fetch: typeof globalThis.fetch, who: string) => {
 	const client = createClient('http://127.0.0.1:56321', 'test-key', {
 		auth: { persistSession: false },
@@ -44,22 +23,6 @@ const clientWith = (fetch: typeof globalThis.fetch, who: string) => {
 
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
-
-// jsdom has no Web Animations: finish every transition at once so an exited sheet leaves the DOM.
-Object.defineProperty(Element.prototype, 'animate', {
-	configurable: true,
-	value: () => {
-		const animation = {
-			onfinish: null as null | (() => void),
-			playState: 'running',
-			currentTime: 0,
-			effect: null,
-			cancel() {}
-		};
-		queueMicrotask(() => animation.onfinish?.());
-		return animation;
-	}
-});
 
 // Offline fetch: a sent report stays queued, so `pending()` proves what "Gửi" stored.
 const mountButton = async (uid: string) => {
