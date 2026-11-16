@@ -1,0 +1,16 @@
+# Content hashes used as clip ids live in a field named `key`, so the
+# generic-api-key rule reads them as credentials. Allowlist those data files only.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "sha256 clip ids in content data use the field name key"
+condition = "AND"
+paths = [
+  '''src/routes/\(app\)/pinyin/chart\.json''',
+  '''src/routes/dev/audio/clips\.ts''',
+  '''prototype/a1-reports\.html''',
+]
+regexTarget = "match"
+regexes = ['''[0-9a-f]{32,}''']
