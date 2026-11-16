@@ -20,7 +20,6 @@
 
 	let index = $state(0);
 	let current = $state<Cta | null>(null);
-	let finished = false;
 
 	const p = $derived(progress(index, steps.length));
 	const View = $derived(viewOf(steps[index].kind).default);
@@ -31,8 +30,6 @@
 			index += 1;
 			return;
 		}
-		if (finished) return;
-		finished = true;
 		onfinish();
 	}
 </script>
