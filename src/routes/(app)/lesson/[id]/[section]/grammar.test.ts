@@ -2,12 +2,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { m } from '#lib/paraglide/messages.js';
 import { createCatalog, type LessonContent } from '#lib/catalog/index.js';
-import { buildBundle } from '#lib/content/import/bundle';
-import { importContent } from '#lib/content/import/import';
-import { scopeFor, PRODUCTION_ROOTS } from '#lib/content/import/scope';
-import { createMemorySink } from '#lib/content/import/sink';
-import type { GrammarPoint, Lesson, Primer, Question } from '#lib/content/schemas';
-import type { ImportedSentence } from '#lib/content/import/sink';
+import { buildBundle } from '#lib/content/import/bundle.js';
+import { importContent } from '#lib/content/import/import.js';
+import { scopeFor, PRODUCTION_ROOTS } from '#lib/content/import/scope.js';
+import { createMemorySink, type ImportedSentence } from '#lib/content/import/sink.js';
+import type { GrammarPoint, Lesson, Primer, Question } from '#lib/content/schemas.js';
 import { describe, expect, it } from 'vitest';
 import { grammarSteps } from './grammar';
 
