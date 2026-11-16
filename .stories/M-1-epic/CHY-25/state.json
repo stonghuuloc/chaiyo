@@ -14,11 +14,11 @@
         "AC7"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 2,
-      "note": "PR #155 open, awaiting Loc's review before verify",
+      "note": "verified 2026-11-16, VERIFY.md",
       "jira": "",
-      "pr": "#155"
+      "pr": "#164"
     },
     {
       "id": "S2",
@@ -29,7 +29,7 @@
       "repo": "stonghuuloc/chaiyo",
       "stage": "plan",
       "reviews": 0,
-      "note": "review round 1 (Loc, 2026-11-06) addressed; awaiting re-review",
+      "note": "S1 verify decision: HTTP Source throws CatalogError (404\u2192not-found w/ id, network\u2192offline) + test",
       "jira": ""
     },
     {
@@ -48,7 +48,8 @@
   ],
   "locked": [],
   "prs": [
-    "#155"
+    "#155",
+    "#164"
   ],
   "branch": "agent/chy-25-design-slice-18d36a30eaa8",
   "log": [
@@ -64,7 +65,8 @@
     "2026-11-13 S1 \u2192 picture",
     "2026-11-14 S1 \u2192 execute",
     "2026-11-14 S1 \u2192 execute",
-    "2026-11-14 S1 \u2192 execute"
+    "2026-11-14 S1 \u2192 execute",
+    "2026-11-16 S1 \u2192 done"
   ],
-  "updated": "2026-11-14T17:20:03+07:00"
+  "updated": "2026-11-16T14:24:26+07:00"
 }
