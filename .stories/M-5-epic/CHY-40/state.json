@@ -1,7 +1,7 @@
 {
   "story": "CHY-40",
   "title": "B\u1ea3ng pinyin (W3)",
-  "stage": "in-slice",
+  "stage": "done",
   "current_slice": "S1",
   "slices": [
     {
@@ -14,16 +14,17 @@
         "AC4"
       ],
       "repo": "chaiyo",
-      "stage": "execute",
+      "stage": "done",
       "reviews": 2,
-      "note": "PR #157 open, awaiting Loc's review before verify",
+      "note": "verified 2026-11-16, VERIFY.md",
       "jira": "",
-      "pr": "#157"
+      "pr": "#165"
     }
   ],
   "locked": [],
   "prs": [
-    "#157"
+    "#157",
+    "#165"
   ],
   "branch": "stonghuuloc/CHY-40-S1",
   "log": [
@@ -35,7 +36,8 @@
     "2026-11-13 S1 \u2192 picture",
     "2026-11-14 S1 \u2192 execute",
     "2026-11-14 S1 \u2192 execute",
-    "2026-11-14 S1 \u2192 execute"
+    "2026-11-14 S1 \u2192 execute",
+    "2026-11-16 S1 \u2192 done"
   ],
-  "updated": "2026-11-14T17:20:15+07:00"
+  "updated": "2026-11-16T14:24:26+07:00"
 }
