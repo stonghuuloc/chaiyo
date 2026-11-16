@@ -56,6 +56,18 @@ describe('buildBundle', () => {
 		);
 	});
 
+	it('Given_Bundle_When_Build_Then_EverySentenceCarriesItsManifestKey', async () => {
+		const c = await loadOk();
+		const b = buildBundle(c, 'h1-01');
+		const keys = new Map(
+			c.audio.filter((a) => a.kind === 'sentence').map((a) => [a.ref, a.key])
+		);
+		expect(b.sentences.length).toBeGreaterThan(0);
+		for (const s of b.sentences) expect(s.audio).toBe(keys.get(s.id));
+		const noSpeaker = b.sentences.find((s) => s.speaker === undefined)!;
+		expect(noSpeaker.audio!.startsWith('examples/')).toBe(true);
+	});
+
 	it('holds the lesson sentences plus the free ones a taught word lists', async () => {
 		const c = await loadOk();
 		const ids = buildBundle(c, 'h1-01').sentences.map((s) => s.id);
