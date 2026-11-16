@@ -1,10 +1,14 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
+	import type { Ledger } from '#lib/ledger/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
+	import { toAttempt } from './attempt';
 	import { progress } from './progress';
+	import { resume } from './resume';
 	import { viewOf, type LessonStep } from './steps';
-	import type { Cta, Mode } from './types';
+	import type { Answer, Cta, Mode } from './types';
 
 	type Props = {
 		steps: LessonStep[];
@@ -13,23 +17,55 @@
 		lesson: string;
 		section: string;
 		contentSha: string;
+		ledger: Ledger;
 		onfinish: () => void;
 	};
-	// eslint-disable-next-line svelte/no-unused-props -- lesson, section, contentSha are read by CHY-30.S2
-	let { steps, mode = 'feedback', exit, onfinish }: Props = $props();
+	let {
+		steps,
+		mode = 'feedback',
+		exit,
+		lesson,
+		section,
+		contentSha,
+		ledger,
+		onfinish
+	}: Props = $props();
 
-	let index = $state(0);
+	const start = untrack(() =>
+		resume(ledger.state(), { lesson, section, ids: steps.map((s) => s.id) })
+	);
+	const run = start.run ?? crypto.randomUUID();
+	let index = $state(start.index);
 	let current = $state<Cta | null>(null);
+	let busy = false;
+	let done = false;
 
 	const p = $derived(progress(index, steps.length));
 	const View = $derived(viewOf(steps[index].kind).default);
 
-	function next() {
+	async function next(answer?: Answer) {
+		if (busy || done) return;
+		busy = true;
+		try {
+			await ledger.record(
+				toAttempt(
+					answer,
+					steps[index].id,
+					{ lesson, section, contentSha, run, of: steps.length },
+					{ id: crypto.randomUUID(), at: new Date().toISOString() }
+				)
+			);
+		} catch {
+			return;
+		} finally {
+			busy = false;
+		}
 		current = null;
 		if (index < steps.length - 1) {
 			index += 1;
 			return;
 		}
+		done = true;
 		onfinish();
 	}
 </script>

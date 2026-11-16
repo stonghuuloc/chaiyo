@@ -1,5 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
+import type { Ledger } from '#lib/ledger/index.js';
+import { initialState } from '#lib/study/index.js';
 import StepRunner from './StepRunner.svelte';
 import type { LessonStep } from './steps';
 
@@ -12,6 +14,8 @@ const steps: LessonStep[] = Array.from({ length: 6 }, (_, i) => ({
 	answer: '好'
 }));
 
+const ledger = { state: () => initialState(), record: async () => [] } as unknown as Ledger;
+
 const html = () =>
 	render(StepRunner, {
 		props: {
@@ -20,6 +24,7 @@ const html = () =>
 			lesson: 'h1-01',
 			section: 'dev',
 			contentSha: 'x',
+			ledger,
 			onfinish: () => {}
 		}
 	}).body;
