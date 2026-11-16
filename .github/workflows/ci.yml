@@ -16,27 +16,22 @@ env:
   # Kit validates these at check/test/build; CI never talks to Supabase.
   PUBLIC_SUPABASE_URL: http://127.0.0.1:56321
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
-  # The Mac host has the real vault at the refs.ts default path; fixtures must not lint against it.
-  CHAIYO_VAULT: /nonexistent/chaiyo-vault
 
-# Self-hosted Mac runner (~/actions-runner): GitHub-hosted minutes are capped on this private repo.
-# Dependabot branches stay on GitHub-hosted VMs so unreviewed dependency code never runs on the Mac.
 jobs:
   web:
-    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-web
-      # refs.ts execs python3; refs.test.ts drives it with a fake vault. Mac host has its own python3.
+      # refs.ts execs python3; refs.test.ts drives it with a fake vault.
       - uses: actions/setup-python@v7
-        if: runner.environment == 'github-hosted'
         with:
           python-version: '3.12'
       - run: pnpm lint
       - run: pnpm check
         if: ${{ !cancelled() }}
-      # Runner is an 8-core laptop shared with other work: cap workers, allow slow tests under load.
-      - run: pnpm test:coverage --maxWorkers=3 --testTimeout=30000 --hookTimeout=30000
+      - run: pnpm test:coverage
         if: ${{ !cancelled() }}
       - run: pnpm -s import:content src/lib/content/import/fixtures/ok --sink memory --only lessons/hsk1
         if: ${{ !cancelled() }}
@@ -58,13 +53,14 @@ jobs:
         if: ${{ !cancelled() }}
 
   python:
-    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - run: uvx ruff@0.17.5 check scripts
-      # Mac runner: pngquant + ImageMagick from Homebrew. Ubuntu (Dependabot): apt.
-      - if: ${{ !cancelled() && runner.os == 'Linux' }}
+      # pngquant + ImageMagick via apt.
+      - if: ${{ !cancelled() }}
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pngquant imagemagick
       - run: command -v pngquant && (command -v magick || command -v convert)
         if: ${{ !cancelled() }}
@@ -74,7 +70,8 @@ jobs:
         if: ${{ !cancelled() }}
 
   security:
-    runs-on: ${{ fromJSON(startsWith(github.ref, 'refs/heads/dependabot/') && '"ubuntu-latest"' || '["self-hosted","chaiyo"]') }}
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
@@ -82,8 +79,6 @@ jobs:
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # The action downloads to $TMPDIR/gitleaks.tmp and leaves it; on the persistent Mac host the next run then fails.
-          TMPDIR: ${{ runner.temp }}
       - uses: ./.github/actions/setup-web
       - run: pnpm audit --prod --audit-level=high
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
