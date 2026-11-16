@@ -22,11 +22,7 @@ const exampleOf = (sentences: ImportedSentence[], id: string) => {
 	return { hanzi: s.hanzi, pinyin: s.pinyin, vi: s.vi, ...(s.audio ? { audio: s.audio } : {}) };
 };
 
-const drillStep = (
-	d: Question,
-	ask: string,
-	sentences: ImportedSentence[]
-): LessonStep => {
+const drillStep = (d: Question, ask: string, sentences: ImportedSentence[]): LessonStep => {
 	if (d.type === 'choice' && d.prompt.kind === 'vi')
 		return {
 			kind: 'choice',

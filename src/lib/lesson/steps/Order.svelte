@@ -29,7 +29,7 @@
 	$effect(() => {
 		const c =
 			mode === 'test'
-				? choiceCta({ mode: 'test', last, phase, picked: full, correct })
+				? choiceCta({ mode: 'test', last, phase: 'picking', picked: full, correct })
 				: phase === 'graded'
 					? choiceCta({ mode, last, phase: 'graded', picked: full, correct })
 					: {
@@ -65,7 +65,7 @@
 <h2 class="mt-1 font-display text-headline">{step.title}</h2>
 
 <div class="mt-5 flex flex-wrap gap-2" data-part="slots">
-	{#each step.tiles as _, slot (slot)}
+	{#each step.tiles.keys() as slot (slot)}
 		{@const tile = placed[slot]}
 		<button
 			type="button"

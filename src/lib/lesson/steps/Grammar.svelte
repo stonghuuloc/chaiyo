@@ -85,7 +85,9 @@
 </h3>
 <ul class="mt-2 flex flex-col gap-2">
 	{#each step.examples as ex (ex.hanzi)}
-		<li class="flex items-center gap-3 rounded-action border border-ruled-line bg-white/40 px-3 py-2">
+		<li
+			class="flex items-center gap-3 rounded-action border border-ruled-line bg-white/40 px-3 py-2"
+		>
 			<div class="flex flex-1 flex-col">
 				<span class="font-hanzi text-[22px]">{ex.hanzi}</span>
 				<span class="font-pinyin text-chip text-graphite">{ex.pinyin}</span>
@@ -99,7 +101,9 @@
 					aria-label={m.grammar_play({ hanzi: ex.hanzi })}
 					onclick={() => void playClip(ex.audio!)}
 				>
-					<svg class="size-5 fill-current" aria-hidden="true"><use href="#i-bold-volume-loud" /></svg>
+					<svg class="size-5 fill-current" aria-hidden="true"
+						><use href="#i-bold-volume-loud" /></svg
+					>
 				</button>
 			{/if}
 		</li>
