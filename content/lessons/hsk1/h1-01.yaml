@@ -77,6 +77,7 @@ sections:
         optionKind: hanzi
         options: [ 谢谢, 对不起, 再见 ]
         answer: 1
+    done: Mẫu A + 好 và các câu đáp đã vào phần ôn tập, sẽ quay lại cùng các câu hỏi khác.
   dialogue:
     parts:
       - title: Gặp nhau

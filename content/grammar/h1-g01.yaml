@@ -4,6 +4,7 @@ level: 1
 std: [ 5 ]
 title: "Chào hỏi: A + 好"
 pattern: 你 / 您 / 你们 + 好
+labels: [ người được chào, luôn có ]
 explain: |-
   Thêm 好 (hảo, “tốt”) sau người được chào. 您 (nâm) là cách lịch sự với người lớn tuổi, thầy cô.
 

@@ -4,6 +4,7 @@ level: 1
 std: [ 31 ]
 title: "Câu không chủ ngữ: 谢谢！对不起！"
 pattern: 谢谢 → 不客气 / 对不起 → 没关系
+labels: [ người kia nói, bạn đáp ]
 explain: |-
   谢谢！, 对不起！, 再见！ tự nó đã là một câu đủ, không cần chủ ngữ phía trước, giống tiếng Việt nói “Cảm ơn!”.
 

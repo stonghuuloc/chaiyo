@@ -115,6 +115,7 @@ interface GrammarPoint {
   std: number[];                    // GF 0025-2021 Appendix A item numbers (data/sources/hsk30-grammar.csv); [] = vocabulary pattern, no item
   title: string;                    // Vietnamese
   pattern: string;                  // 'A + 好'
+  labels?: string[];                // one label per pattern slot column, e.g. ['người được chào', 'luôn có']
   explain: string;                  // Vietnamese markdown, short; long parts behind "Xem thêm"
   examples: SentenceId[];
   pitfalls?: { wrong: string; right: string; why?: string }[];
@@ -134,7 +135,7 @@ interface Lesson {
   sections: {
     warmup: { extra?: SentenceId[] };                    // set derived: due words + previous lesson
     words: { ids: string[] };                            // 8–15
-    grammar: { ids: string[]; drills: Question[] };
+    grammar: { ids: string[]; drills: Question[]; done?: string };  // done = text shown after the last step
     dialogue: { parts: { title?: string; lines: SentenceId[] }[]; questions: Question[] };
     listenSpeak: { items: Question[] };                  // listening + Speaking Answers
     writing: { chars: string[] };                        // Hanzi Writer targets
