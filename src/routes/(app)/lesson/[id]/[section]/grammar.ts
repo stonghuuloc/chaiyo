@@ -1,8 +1,8 @@
 import { m } from '#lib/paraglide/messages.js';
 import type { LessonContent } from '#lib/catalog/index.js';
-import type { Question } from '#lib/content/schemas';
-import type { ImportedSentence } from '#lib/content/import/sink';
-import type { LessonStep } from '#lib/lesson/steps';
+import type { Question } from '#lib/content/schemas.js';
+import type { ImportedSentence } from '#lib/content/import/sink.js';
+import type { LessonStep } from '#lib/lesson/steps.js';
 
 const rowsOf = (pattern: string) =>
 	pattern.includes('→')

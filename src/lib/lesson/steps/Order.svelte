@@ -29,7 +29,7 @@
 	$effect(() => {
 		const c =
 			mode === 'test'
-				? choiceCta({ mode: 'test', last, picked: full })
+				? choiceCta({ mode: 'test', last, phase, picked: full, correct })
 				: phase === 'graded'
 					? choiceCta({ mode, last, phase: 'graded', picked: full, correct })
 					: {
