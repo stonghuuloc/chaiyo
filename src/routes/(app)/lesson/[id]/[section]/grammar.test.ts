@@ -51,7 +51,13 @@ const point = (over: Partial<GrammarPoint> & { id: string }): GrammarPoint => ({
 	...over
 });
 
-const choice = (id: string, gid: string, text: string, options: string[], answer: number): Question => ({
+const choice = (
+	id: string,
+	gid: string,
+	text: string,
+	options: string[],
+	answer: number
+): Question => ({
 	id,
 	type: 'choice',
 	tests: { grammar: [gid] },
@@ -138,18 +144,9 @@ describe('grammarSteps', () => {
 			'choice',
 			'choice'
 		]);
-		expect(steps.map((s) => s.id)).toEqual([
-			'g1',
-			'd1',
-			'd2',
-			'd3',
-			'g2',
-			'd4',
-			'd5',
-			'd6'
-		]);
+		expect(steps.map((s) => s.id)).toEqual(['g1', 'd1', 'd2', 'd3', 'g2', 'd4', 'd5', 'd6']);
 		expect(steps.map((s) => s.id)).not.toContain('q-d01');
-		expect(steps.map((s) => s.ask ?? '')).toEqual([
+		expect(steps.map((s) => ('ask' in s ? s.ask : ''))).toEqual([
 			'',
 			m.grammar_drill({ n: 1, of: 3 }),
 			m.grammar_drill({ n: 2, of: 3 }),
