@@ -93,4 +93,29 @@ describe('resume', () => {
 		// Assert
 		expect(got).toEqual({ run: 'g1', index: 2 });
 	});
+
+	it('Given_OpenGateRun_When_ResumeWordsSection_Then_Fresh', () => {
+		// Arrange
+		const state = stateWith({
+			g1: { step: { kind: 'gate', lesson: 'h1-01', run: 'g1', of: 6 }, answers: answers(0, 1) }
+		});
+
+		// Act
+		const got = resume(state, { lesson: 'h1-01', section: 'words', ids });
+
+		// Assert
+		expect(got).toEqual({ run: null, index: 0 });
+	});
+
+	it('Given_SameOfButForeignAnswerIds_When_Resume_Then_Fresh', () => {
+		// Arrange
+		const state = stateWith({ r1: { step: section(), answers: answers(0, 1, 2) } });
+		const reauthored = Array.from({ length: 6 }, (_, i) => `n${i}`);
+
+		// Act
+		const got = resume(state, { lesson: 'h1-01', section: 'words', ids: reauthored });
+
+		// Assert
+		expect(got).toEqual({ run: null, index: 0 });
+	});
 });

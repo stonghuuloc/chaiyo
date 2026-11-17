@@ -7,7 +7,8 @@ export function resume(
 	const open = Object.entries(state.runs).filter(([, r]) => {
 		const step = r.step;
 		if (r.closed || step.kind === 'mock' || step.of !== o.ids.length) return false;
-		if (step.kind === 'gate') return step.lesson === o.lesson;
+		if (!Object.keys(r.answers).every((id) => o.ids.includes(id))) return false;
+		if (step.kind === 'gate') return o.section === 'gate' && step.lesson === o.lesson;
 		return step.kind === 'section' && step.lesson === o.lesson && step.section === o.section;
 	});
 	if (open.length === 0) return { run: null, index: 0 };
