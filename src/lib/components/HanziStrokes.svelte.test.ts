@@ -7,7 +7,7 @@ import HanziStrokes from './HanziStrokes.svelte';
 const hw = vi.hoisted(() => ({ create: vi.fn() }));
 
 vi.mock('hanzi-writer', () => ({
-	default: { create: (...args: unknown[]) => (hw.create as (...a: unknown[]) => unknown)(...args) }
+	default: { create: (...args: unknown[]) => hw.create(...args) }
 }));
 
 const data: CharacterJson = { strokes: ['M0 0L1 1', 'M1 1L2 2'], medians: [] };
@@ -52,7 +52,12 @@ const makeWriter = (): FakeWriter => ({
 let writer: FakeWriter;
 let options: WriterOptions;
 let target: HTMLDivElement | undefined;
-let app: Record<string, unknown> | undefined;
+let app: ReturnType<typeof mount> | undefined;
+
+const need = <T>(v: T | null | undefined): T => {
+	if (v == null) throw new Error('missing test value');
+	return v;
+};
 let resized: (() => void) | undefined;
 
 const settle = async () => {
@@ -67,12 +72,12 @@ const mountStrokes = async (props: Props = {}) => {
 	app = mount(HanziStrokes, {
 		target,
 		props: { char: '你', mode: 'quiz', load: () => Promise.resolve(data), ...props }
-	}) as Record<string, unknown>;
+	});
 	await settle();
 	return {
-		text: () => target!.textContent ?? '',
+		text: () => need(target).textContent ?? '',
 		button: (label: string) =>
-			[...target!.querySelectorAll('button')].find((b) => b.textContent?.includes(label))!
+			need([...need(target).querySelectorAll('button')].find((b) => b.textContent?.includes(label)))
 	};
 };
 
@@ -98,7 +103,7 @@ beforeEach(() => {
 
 afterEach(() => {
 	vi.unstubAllGlobals();
-	if (app) unmount(app as never);
+	if (app) unmount(app);
 	target?.remove();
 	target = undefined;
 	app = undefined;
@@ -108,7 +113,7 @@ describe('HanziStrokes interaction', () => {
 	it('Given_QuizMode_When_DataLoads_Then_CounterShowsTotalAndQuizStarts', async () => {
 		// Arrange / Act
 		const ui = await mountStrokes();
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 
 		// Assert
 		await settle();
@@ -120,7 +125,7 @@ describe('HanziStrokes interaction', () => {
 		// Arrange
 		const seen: unknown[] = [];
 		const ui = await mountStrokes({ onprogress: (p) => seen.push(p) });
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
 
 		// Act
@@ -137,7 +142,7 @@ describe('HanziStrokes interaction', () => {
 		// Arrange
 		const seen: { mistakes: number }[] = [];
 		const ui = await mountStrokes({ onprogress: (p) => seen.push(p) });
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
 
 		// Act
@@ -153,7 +158,7 @@ describe('HanziStrokes interaction', () => {
 		// Arrange
 		const done: { mistakes: number }[] = [];
 		const ui = await mountStrokes({ oncomplete: (p) => done.push(p) });
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
 
 		// Act
@@ -172,8 +177,8 @@ describe('HanziStrokes interaction', () => {
 		const ui = await mountStrokes({ onerror: () => errors.push(1) });
 
 		// Act
-		options.onLoadCharDataError!();
-		options.onLoadCharDataError!();
+		need(options.onLoadCharDataError)();
+		need(options.onLoadCharDataError)();
 		await settle();
 
 		// Assert
@@ -185,7 +190,7 @@ describe('HanziStrokes interaction', () => {
 	it('Given_Ready_When_DemoPressed_Then_CharacterAnimatedAndQuizRestarted', async () => {
 		// Arrange
 		const ui = await mountStrokes();
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
 
 		// Act
@@ -201,7 +206,7 @@ describe('HanziStrokes interaction', () => {
 	it('Given_Complete_When_RedoPressed_Then_CountersReset', async () => {
 		// Arrange
 		const ui = await mountStrokes();
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
 		writer.quiz.mock.calls[0][0].onComplete({ totalMistakes: 2 });
 		await settle();
@@ -217,7 +222,7 @@ describe('HanziStrokes interaction', () => {
 	it('Given_AnimateMode_When_DataLoads_Then_NoQuizAndNoTools', async () => {
 		// Arrange / Act
 		const ui = await mountStrokes({ mode: 'animate' });
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
 
 		// Assert
@@ -239,7 +244,7 @@ describe('HanziStrokes interaction', () => {
 		expect(up).toHaveBeenCalledTimes(1);
 
 		// Act
-		unmount(app as never);
+		unmount(need(app));
 		app = undefined;
 		document.dispatchEvent(new Event('mouseup'));
 
@@ -250,14 +255,14 @@ describe('HanziStrokes interaction', () => {
 	it('Given_PadResized_When_Observed_Then_WriterDimensionsUpdated', async () => {
 		// Arrange
 		await mountStrokes();
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
-		const pad = target!.querySelector<HTMLElement>('.touch-none')!;
+		const pad = need(need(target).querySelector<HTMLElement>('.touch-none'));
 		Object.defineProperty(pad, 'clientWidth', { configurable: true, value: 300 });
 
 		// Act
-		resized!();
-		resized!();
+		need(resized)();
+		need(resized)();
 
 		// Assert
 		expect(writer.updateDimensions).toHaveBeenCalledTimes(1);
@@ -281,11 +286,13 @@ describe('HanziStrokes interaction', () => {
 					return props.outline;
 				}
 			}
-		}) as Record<string, unknown>;
+		});
 		await settle();
-		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
 		await settle();
-		[...target.querySelectorAll('button')].find((b) => b.textContent?.includes('Xem mẫu'))!.click();
+		need(
+			[...target.querySelectorAll('button')].find((b) => b.textContent?.includes('Xem mẫu'))
+		).click();
 		await settle();
 
 		// Act
