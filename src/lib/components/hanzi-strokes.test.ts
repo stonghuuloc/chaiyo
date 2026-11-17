@@ -101,6 +101,8 @@ describe('isCharacterJson', () => {
 		['non-number median', { strokes: ['M0 0'], medians: [[['x', 1]]] }],
 		['bad radStrokes', { strokes: ['M0 0'], medians: [[[1, 2]]], radStrokes: ['0'] }],
 		['null', null],
+		['empty median', { strokes: ['M0 0'], medians: [[]] }],
+		['median point without two numbers', { strokes: ['M0 0'], medians: [[[1]]] }],
 		['fewer medians than strokes', { strokes: ['M0 0', 'M1 1'], medians: [[[1, 2]]] }]
 	])('Given_%s_When_Checked_Then_Rejected', (_, v) => {
 		// Arrange / Act / Assert

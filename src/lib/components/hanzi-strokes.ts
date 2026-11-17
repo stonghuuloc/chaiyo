@@ -29,6 +29,8 @@ export async function loadStrokes(
 const isNumbers = (v: unknown): v is number[] =>
 	Array.isArray(v) && v.every((n) => typeof n === 'number');
 
+const isPoint = (v: unknown): v is [number, number] => isNumbers(v) && v.length === 2;
+
 export const isCharacterJson = (v: unknown): v is CharacterJson => {
 	if (typeof v !== 'object' || v === null) return false;
 	const { strokes, medians, radStrokes } = v as Record<string, unknown>;
@@ -37,7 +39,7 @@ export const isCharacterJson = (v: unknown): v is CharacterJson => {
 		strokes.every((s) => typeof s === 'string') &&
 		Array.isArray(medians) &&
 		medians.length === strokes.length &&
-		medians.every((m) => Array.isArray(m) && m.every(isNumbers)) &&
+		medians.every((m) => Array.isArray(m) && m.length > 0 && m.every(isPoint)) &&
 		(radStrokes === undefined || isNumbers(radStrokes))
 	);
 };
