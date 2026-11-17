@@ -3,6 +3,20 @@ import { CatalogError, type CatalogSource } from './index';
 
 type Fetch = (url: string) => Promise<Response>;
 
+const field = (value: unknown, key: string): unknown =>
+	typeof value === 'object' && value !== null ? (value as Record<string, unknown>)[key] : undefined;
+
+const isBundle = (value: unknown): value is Bundle => {
+	const lesson = field(value, 'lesson');
+	const sections = field(lesson, 'sections');
+	return (
+		typeof field(value, 'sha') === 'string' &&
+		typeof field(lesson, 'id') === 'string' &&
+		typeof sections === 'object' &&
+		sections !== null
+	);
+};
+
 /**
  * The CatalogSource served from `/content/<sha>/<id>.json` with `current.json`
  * naming the sha. Errors come from here, not from the catalog (S1 decision).
@@ -31,7 +45,10 @@ export function httpSource(fetchFn?: Fetch, base = '/content'): CatalogSource {
 				throw new CatalogError('malformed', 'current');
 			return sha;
 		},
-		bundle: async (sha, id) =>
-			(await read(`${base}/${sha}/${encodeURIComponent(id)}.json`, id)) as Bundle
+		bundle: async (sha, id) => {
+			const body = await read(`${base}/${sha}/${encodeURIComponent(id)}.json`, id);
+			if (!isBundle(body)) throw new CatalogError('malformed', id);
+			return body;
+		}
 	};
 }

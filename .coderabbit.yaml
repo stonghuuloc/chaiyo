@@ -30,7 +30,7 @@ reviews:
     - path: 'scripts/**/*.py'
       instructions: Stdlib only, except font scripts (build-lesson-media.py, stamp-arphic-notice.py, build-kaishu-subsets.py and its test_kaishu_subsets.py) that need fonttools + brotli (/tmp/etts venv locally, scripts/requirements-fonts.txt in CI). Never print or log .env values or R2 secrets. Paths may be non-ASCII, never pass them through a shell.
     - path: '.github/workflows/**'
-      instructions: CI must run exactly check, lint, test, build. Flag secrets, unpinned third-party actions, and any added write permission.
+      instructions: CI must run exactly check, lint, test, build. The web job installs the font deps and runs scripts/build-content.sh before build, because the build step reads the built content. Flag secrets, unpinned third-party actions, and any added write permission.
     - path: 'supabase/**'
       instructions: Every table needs row level security. Flag policies that allow anon writes or read other users' rows.
   tools:
