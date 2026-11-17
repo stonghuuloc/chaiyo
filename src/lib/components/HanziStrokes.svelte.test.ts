@@ -322,11 +322,14 @@ describe('HanziStrokes interaction', () => {
 			writable: true
 		});
 
-		// Act
-		withDocumentListeners(() => 1).release();
+		try {
+			// Act
+			withDocumentListeners(() => 1).release();
 
-		// Assert
-		expect(Object.getOwnPropertyDescriptor(document, 'addEventListener')?.value).toBe(own);
-		delete (document as Partial<Document>).addEventListener;
+			// Assert
+			expect(Object.getOwnPropertyDescriptor(document, 'addEventListener')?.value).toBe(own);
+		} finally {
+			delete (document as Partial<Document>).addEventListener;
+		}
 	});
 });
