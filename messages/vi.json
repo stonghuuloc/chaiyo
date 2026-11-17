@@ -169,5 +169,16 @@
 	"pinyin_hint": "Chạm một thanh để nghe. Chạm lần nữa để nghe chậm.",
 	"pinyin_close": "Đóng",
 	"pinyin_tone_label": "Nghe thanh {tone}: {pinyin}",
-	"pinyin_tone_none": "Thanh {tone}: chưa có âm"
+	"pinyin_tone_none": "Thanh {tone}: chưa có âm",
+	"lesson_speak_idle": "Giữ nút đỏ bên dưới khi nói, nói xong thì thả.",
+	"lesson_speak_hold": "Giữ để nói",
+	"lesson_speak_opening": "Đang bật micro…",
+	"lesson_speak_release": "Thả khi nói xong",
+	"lesson_speak_listening": "Đang nghe… thả nút khi nói xong",
+	"lesson_speak_short": "Ngắn quá — giữ nút lâu hơn một chút rồi nói.",
+	"lesson_speak_blocked": "Không dùng được micro — bỏ qua phần nói, phần học vẫn tính là xong.",
+	"lesson_speak_skip": "Bỏ qua",
+	"lesson_speak_read_ask": "Nói · đọc to",
+	"lesson_speak_read_title": "Đọc to câu này",
+	"lesson_speak_answer_ask": "Nói · trả lời"
 }

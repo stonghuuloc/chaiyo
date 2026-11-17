@@ -43,6 +43,16 @@
 	let current = $state<Cta | null>(null);
 	let busy = false;
 	let done = false;
+	// A hold's own click (pointer up, Space key up) must not press the button it just swapped in.
+	let pressed = false;
+	let swallow = false;
+
+	function endHold() {
+		if (!pressed) return;
+		pressed = false;
+		swallow = true;
+		current?.hold?.onrelease();
+	}
 
 	const p = $derived(progress(answered.size, steps.length));
 	const last = $derived(steps.every((s, i) => i === index || answered.has(s.id)));
@@ -110,13 +120,51 @@
 	{/key}
 
 	{#snippet actions()}
-		<Button
-			caret={current?.caret}
-			disabled={!current || current.disabled}
-			onclick={current?.onclick}
+		<div
+			role="presentation"
+			class={current?.hold ? 'touch-none select-none' : ''}
+			onpointerdown={(e) => {
+				swallow = false;
+				if (!current?.hold) return;
+				e.preventDefault();
+				(e.target as Element).setPointerCapture?.(e.pointerId);
+				pressed = true;
+				current.hold.onpress();
+			}}
+			onpointerup={() => endHold()}
+			onpointercancel={() => endHold()}
+			onkeydown={(e) => {
+				if (e.key !== ' ' && e.key !== 'Enter') return;
+				swallow = false;
+				if (!current?.hold) return;
+				e.preventDefault();
+				if (e.repeat) return;
+				pressed = true;
+				current.hold.onpress();
+			}}
+			onkeyup={(e) => {
+				if ((e.key !== ' ' && e.key !== 'Enter') || !pressed) return;
+				e.preventDefault();
+				endHold();
+			}}
+			onclickcapture={(e) => {
+				if (!swallow) return;
+				swallow = false;
+				e.stopPropagation();
+				e.preventDefault();
+			}}
+			oncontextmenu={(e) => {
+				if (current?.hold) e.preventDefault();
+			}}
 		>
-			{current?.label ?? ''}
-		</Button>
+			<Button
+				caret={current?.caret}
+				disabled={!current || current.disabled}
+				onclick={current?.onclick}
+			>
+				{current?.label ?? ''}
+			</Button>
+		</div>
 		<p class="mt-2 min-h-5 text-center text-label text-graphite">{current?.hint ?? ''}</p>
 	{/snippet}
 </FocusFrame>
