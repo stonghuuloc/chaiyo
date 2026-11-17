@@ -87,6 +87,9 @@
 	}
 </script>
 
+<svelte:window onblur={() => endHold()} />
+<svelte:document onvisibilitychange={() => document.hidden && endHold()} />
+
 <FocusFrame step={index}>
 	{#snippet top()}
 		<div class="grid grid-cols-[44px_1fr_auto] items-center gap-3">
@@ -133,8 +136,14 @@
 			}}
 			onpointerup={() => endHold()}
 			onpointercancel={() => endHold()}
+			onfocusout={() => endHold()}
 			onkeydown={(e) => {
 				if (e.key !== ' ' && e.key !== 'Enter') return;
+				// A key still held after its hold ended (blocked mic) must not activate the new button.
+				if (pressed) {
+					e.preventDefault();
+					return;
+				}
 				swallow = false;
 				if (!current?.hold) return;
 				e.preventDefault();
