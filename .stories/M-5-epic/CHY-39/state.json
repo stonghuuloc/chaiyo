@@ -1,0 +1,36 @@
+{
+  "story": "CHY-39",
+  "title": "B\u00e1o l\u1ed7i sheet (X2)",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "B\u00e1o l\u1ed7i sheet + error_reports table + offline queue",
+      "acs": [
+        "AC1",
+        "AC2",
+        "AC3",
+        "AC4",
+        "AC5"
+      ],
+      "repo": "chaiyo",
+      "stage": "picture",
+      "reviews": 1,
+      "note": "design run done: spec+plan+picture; advisor 2 rounds",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-39",
+  "log": [
+    "2026-11-13 init",
+    "2026-11-13 +S1 B\u00e1o l\u1ed7i sheet + error_reports table + offline queue [AC1,AC2,AC3,AC4,AC5]",
+    "2026-11-16 S1 \u2192 discuss",
+    "2026-11-16 S1 \u2192 spec",
+    "2026-11-16 S1 \u2192 plan",
+    "2026-11-16 S1 \u2192 picture"
+  ],
+  "updated": "2026-11-16T15:08:49+07:00"
+}
