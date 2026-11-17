@@ -70,7 +70,7 @@ export function withDocumentListeners<T>(create: () => T): { value: T; release: 
 		};
 	} finally {
 		if (own) Object.defineProperty(document, 'addEventListener', own);
-		else delete (document as Partial<Document>).addEventListener;
+		else Reflect.deleteProperty(document, 'addEventListener');
 	}
 }
 

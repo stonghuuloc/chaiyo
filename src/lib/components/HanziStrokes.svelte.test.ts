@@ -336,7 +336,7 @@ describe('HanziStrokes interaction', () => {
 			// Assert
 			expect(Object.getOwnPropertyDescriptor(document, 'addEventListener')?.value).toBe(own);
 		} finally {
-			delete (document as Partial<Document>).addEventListener;
+			Reflect.deleteProperty(document, 'addEventListener');
 		}
 	});
 });
