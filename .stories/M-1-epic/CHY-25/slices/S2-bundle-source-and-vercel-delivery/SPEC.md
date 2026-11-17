@@ -20,7 +20,7 @@ ACs: AC1  ·  Repo: stonghuuloc/chaiyo  ·  rev 3 (re-based on a65f4297, 2026-11
 - [AC1] `src/routes/(app)/lesson/[id]/+layout.ts` `load({ params })` returns `{ lesson: await catalog.lesson(params.id) }` (type `LessonContent`). Every child route (`[section]`, `gate`, the hub) reads `data.lesson`; none calls the catalog itself. A `CatalogError` propagates out of `load` (its screens are S3 / parked).
 - [AC1] Hub proof: `lesson/[id]/+page.ts` returns `{ shell: { template: 'pushed', section: 'roadmap' } }`; `+page.svelte` renders `titleHanzi`, `title` and each of `data.lesson.words` in order as `hanzi pinyin — hanviet`, and sets `data-content-sha` on its root. CHY-31.S1 replaces the body; no new `messages/vi.json` key.
 - [AC1] `vercel.json` (new, repo root):
-  - `buildCommand` = `python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build`.
+  - `buildCommand` = `bash scripts/vercel-build.sh`: fontTools goes into a venv, then `build-content.sh` and `pnpm build`.
   - `headers` (Cache-Control):
 
     | Path | Cache-Control |
@@ -58,5 +58,5 @@ ACs: AC1  ·  Repo: stonghuuloc/chaiyo  ·  rev 3 (re-based on a65f4297, 2026-11
 - [AC1] Team-authored Vercel deploy (handoff, not an agent proof — Vercel blocks non-team authors): `curl -sI` on the 3 header paths shows the 3 values above.
 
 ## Open assumptions
-- [AC1] The Vercel build image has `python3 -m pip` (D3, 80%). If wrong, the first team deploy fails at `pip install`. Fallback: build the fonts in CI.
+- [AC1] The Vercel build image's Python is uv-managed and refuses `pip install` (PEP 668; PR #169 deploy log, 2026-11-17). `scripts/vercel-build.sh` installs fontTools into a venv instead (D3 rev 2).
 - [AC1] `vercel.json` `headers` apply to the static files adapter-vercel emits. The team-deploy curl is the check.
