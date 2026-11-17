@@ -72,8 +72,11 @@
 			class="flex size-14 items-center justify-center rounded-action border font-hanzi text-[28px] {tile ===
 			undefined
 				? 'border-dashed border-ruled-line bg-white/40'
-				: 'border-2 border-ink bg-white'}"
+				: phase === 'graded' && !correct
+					? 'border-2 border-lantern-red bg-white'
+					: 'border-2 border-ink bg-white'}"
 			data-slot={slot}
+			data-mark={phase === 'graded' ? (correct ? 'right' : 'wrong') : undefined}
 			aria-label={tile === undefined ? undefined : m.grammar_order_remove({ c: step.tiles[tile] })}
 			disabled={phase === 'graded'}
 			onclick={() => remove(slot)}

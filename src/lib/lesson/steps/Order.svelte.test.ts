@@ -88,6 +88,10 @@ describe('Order', () => {
 
 		// Assert
 		expect(target!.textContent).toContain(m.lesson_right());
+		expect(target!.querySelectorAll('[data-slot]')).toHaveLength(3);
+		expect(
+			[...target!.querySelectorAll('[data-slot]')].map((s) => s.getAttribute('data-mark'))
+		).toEqual(['right', 'right', 'right']);
 		expect(target!.textContent).toContain('你们好');
 		expect(cta().label).toBe(m.lesson_continue());
 		cta().onclick();
@@ -113,6 +117,9 @@ describe('Order', () => {
 
 		// Assert
 		expect(target!.textContent).toContain(m.lesson_wrong());
+		expect(
+			[...target!.querySelectorAll('[data-slot]')].map((s) => s.getAttribute('data-mark'))
+		).toEqual(['wrong', 'wrong', 'wrong']);
 		expect(target!.textContent).toContain('你们好');
 		expect(cta().hint).toBe(m.lesson_review_hint());
 	});
