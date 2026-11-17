@@ -150,6 +150,52 @@ describe('report', () => {
 		expect((await openReports({ user: { id: 'u-dup' } }, { client, idb })).pending()).toBe(0);
 	});
 
+	it('signed-out report throws', async () => {
+		// Arrange
+		const client = clientWith(recording().fetch, 'u-out');
+		vi.spyOn(client.auth, 'getSession').mockResolvedValue({
+			data: { session: null },
+			error: null
+		} as Awaited<ReturnType<typeof client.auth.getSession>>);
+
+		// Act / Assert
+		await expect(
+			report({ lesson: null, step: null, word: '你好', contentSha: 'sha1' }, 'audio', '', {
+				client,
+				idb: new IDBFactory()
+			})
+		).rejects.toThrow('signed out');
+	});
+
+	it('sign-out drops the cached queue', async () => {
+		// Arrange
+		const client = clientWith(recording().fetch, 'u-drop');
+		let onAuth: (event: string, next: { user: { id: string } } | null) => void = () => {};
+		const unsubscribe = vi.fn();
+		vi.spyOn(client.auth, 'onAuthStateChange').mockImplementation((cb) => {
+			onAuth = cb as typeof onAuth;
+			return { data: { subscription: { unsubscribe } } } as unknown as ReturnType<
+				typeof client.auth.onAuthStateChange
+			>;
+		});
+		const idb = new IDBFactory();
+		const session = { user: { id: 'u-drop' } };
+		const first = openReports(session, { client, idb });
+		await first;
+
+		// Act
+		onAuth('TOKEN_REFRESHED', session);
+		const kept = openReports(session, { client, idb });
+		onAuth('SIGNED_OUT', null);
+		const fresh = openReports(session, { client, idb });
+
+		// Assert
+		expect(kept).toBe(first);
+		expect(unsubscribe).toHaveBeenCalledTimes(1);
+		expect(fresh).not.toBe(first);
+		await fresh;
+	});
+
 	it('queued report goes out on online', async () => {
 		// Arrange
 		let online = false;
