@@ -117,6 +117,36 @@ describe('speakSteps', () => {
 		});
 	});
 
+	it('Given_ReadAloudWithoutSpoken_When_SpeakSteps_Then_PinyinFromSentence', () => {
+		// Arrange
+		const c = content([readAloud], [sentence('s1', '谢谢。', 'xièxie', 'Cảm ơn.')]);
+
+		// Act
+		const [step] = speakSteps(c) as Extract<LessonStep, { kind: 'speak' }>[];
+
+		// Assert
+		expect(step.pinyin).toBe('xièxie');
+	});
+
+	it('Given_ReadAloudMissingSentence_When_SpeakSteps_Then_ItemSkipped', () => {
+		// Arrange
+		const c = content([{ ...readAloud, sentence: 's9' }, freeAnswer]);
+
+		// Act / Assert
+		expect(speakSteps(c).map((s) => s.id)).toEqual(['q-f01']);
+	});
+
+	it('Given_FreeAnswerAudioPrompt_When_SpeakSteps_Then_TitleIsPromptRef', () => {
+		// Arrange
+		const c = content([{ ...freeAnswer, prompt: { kind: 'audio', ref: '你好吗？' } }]);
+
+		// Act
+		const [step] = speakSteps(c);
+
+		// Assert
+		expect(step).toMatchObject({ title: '你好吗？' });
+	});
+
 	it('Given_Primer_When_SpeakSteps_Then_Empty', () => {
 		// Arrange
 		const section = { cards: [], drills: [] };

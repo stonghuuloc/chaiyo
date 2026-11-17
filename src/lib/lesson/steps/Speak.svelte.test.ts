@@ -51,13 +51,15 @@ let app: Record<string, unknown> | undefined;
 let cta: Cta | undefined;
 let calls: (Answer | undefined)[] = [];
 
-const mountSpeak = () => {
+const mountSpeak = (s: Step = step) => {
+	if (app) unmount(app as never);
+	target?.remove();
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Speak, {
 		target,
 		props: {
-			step,
+			step: s,
 			mode: 'feedback',
 			last: false,
 			cta: (c: Cta) => (cta = c),
@@ -320,5 +322,45 @@ describe('Speak', () => {
 		// Assert
 		expect(calls).toHaveLength(1);
 		expect(calls[0]).toBeUndefined();
+	});
+
+	it('Given_StepWithoutHanzi_When_Mounted_Then_NoSentenceCard', () => {
+		// Act
+		mountSpeak({
+			kind: 'speak',
+			id: 'q-h1-01-s02',
+			ask: 'Nói · trả lời',
+			title: 'Bạn khoẻ không?'
+		});
+
+		// Assert
+		expect(target!.querySelector('.font-hanzi')).toBeNull();
+		expect(text()).not.toContain(step.pinyin!);
+	});
+
+	it('Given_HanziOnly_When_Mounted_Then_NoPinyinNoMeaning', () => {
+		// Act
+		mountSpeak({ ...step, pinyin: undefined, meaning: undefined });
+
+		// Assert
+		expect(target!.querySelector('.font-hanzi')!.textContent).toBe(step.hanzi);
+		expect(text()).not.toContain(step.pinyin!);
+		expect(text()).not.toContain(step.meaning!);
+	});
+
+	it('Given_Live_When_PressAgain_Then_MicOpenedOnce', async () => {
+		// Arrange
+		const getUserMedia = vi.fn(async () => fakeStream());
+		setMic({ getUserMedia });
+		const hold = cta!.hold!;
+		await press();
+
+		// Act
+		hold.onpress();
+		await settle();
+
+		// Assert
+		expect(getUserMedia).toHaveBeenCalledTimes(1);
+		expect(cta!.label).toBe(m.lesson_speak_release());
 	});
 });
