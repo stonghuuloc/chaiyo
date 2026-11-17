@@ -1,7 +1,7 @@
 import { flushSync, mount, unmount } from 'svelte';
 import type { CharacterJson } from 'hanzi-writer';
 import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
-import type { StrokeMode, StrokeProgress } from './hanzi-strokes';
+import { withDocumentListeners, type StrokeMode, type StrokeProgress } from './hanzi-strokes';
 import HanziStrokes from './HanziStrokes.svelte';
 
 const hw = vi.hoisted(() => ({ create: vi.fn() }));
@@ -299,5 +299,17 @@ describe('HanziStrokes interaction', () => {
 		expect(writer.hideOutline).toHaveBeenCalledTimes(1);
 		expect(duringDemo).toBe(1);
 		expect(writer.quiz).toHaveBeenCalledTimes(2);
+	});
+
+	it('Given_WriterCreated_When_Released_Then_DocumentHasNoOwnAddEventListener', () => {
+		// Arrange
+		const up = () => {};
+
+		// Act
+		const made = withDocumentListeners(() => document.addEventListener('mouseup', up));
+		made.release();
+
+		// Assert
+		expect(Object.hasOwn(document, 'addEventListener')).toBe(false);
 	});
 });

@@ -36,6 +36,7 @@ export const isCharacterJson = (v: unknown): v is CharacterJson => {
 		Array.isArray(strokes) &&
 		strokes.every((s) => typeof s === 'string') &&
 		Array.isArray(medians) &&
+		medians.length === strokes.length &&
 		medians.every((m) => Array.isArray(m) && m.every(isNumbers)) &&
 		(radStrokes === undefined || isNumbers(radStrokes))
 	);
@@ -53,6 +54,7 @@ type DocListener = Parameters<typeof document.addEventListener>;
 export function withDocumentListeners<T>(create: () => T): { value: T; release: () => void } {
 	const added: DocListener[] = [];
 	const add = document.addEventListener;
+	const own = Object.getOwnPropertyDescriptor(document, 'addEventListener');
 	document.addEventListener = function (this: Document, ...args: DocListener) {
 		added.push(args);
 		add.apply(this, args);
@@ -65,7 +67,8 @@ export function withDocumentListeners<T>(create: () => T): { value: T; release: 
 				added.forEach(([type, fn, opts]) => document.removeEventListener(type, fn, opts))
 		};
 	} finally {
-		document.addEventListener = add;
+		if (own) Object.defineProperty(document, 'addEventListener', own);
+		else delete (document as Partial<Document>).addEventListener;
 	}
 }
 
