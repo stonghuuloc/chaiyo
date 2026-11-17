@@ -68,7 +68,7 @@ describe('tone sheet', () => {
 		expect(sheet).toContain('>ǎ<');
 		expect(sheet).toContain('>à<');
 		expect(disabledButtons(sheet)).toHaveLength(0);
-		expect(sheet.match(/class="hz[^"]*"[^>]*><\/span>/g)).toHaveLength(2);
+		expect(sheet.match(/class="font-hanzi[^"]*"[^>]*><\/span>/g)).toHaveLength(2);
 	});
 
 	it('Given_FixtureTone3KeyNull_When_Render_Then_Tone3DisabledDash', () => {
