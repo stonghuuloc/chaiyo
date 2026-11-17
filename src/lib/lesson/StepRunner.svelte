@@ -94,10 +94,10 @@
 				class="grid grid-cols-[repeat(var(--n),1fr)] gap-[3px]"
 				style="--n:{steps.length}"
 			>
-				{#each steps as { id }, i (id)}
+				{#each steps as { id } (id)}
 					<i
-						class="rounded-sm h-1 {i < p.on ? 'bg-lantern-red' : 'bg-ruled-line'}"
-						data-on={i < p.on}
+						class="rounded-sm h-1 {answered.has(id) ? 'bg-lantern-red' : 'bg-ruled-line'}"
+						data-on={answered.has(id)}
 					></i>
 				{/each}
 			</div>

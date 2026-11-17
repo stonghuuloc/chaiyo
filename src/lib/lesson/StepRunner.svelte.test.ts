@@ -325,6 +325,7 @@ describe('StepRunner', () => {
 		detach();
 		view = mountRunner(ledger, { steps: [q1, q0, q2], onfinish: () => (finished += 1) });
 		expect(target!.textContent).toContain('Câu 2');
+		expect(view.segments()).toEqual(['false', 'true', 'false']);
 
 		// Act
 		pickAndCheck(view);
