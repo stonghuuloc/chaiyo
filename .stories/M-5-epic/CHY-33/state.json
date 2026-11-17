@@ -12,10 +12,11 @@
         "AC2"
       ],
       "repo": "chaiyo",
-      "stage": "picture",
+      "stage": "done",
       "reviews": 1,
       "note": "design run done; awaiting go. lint: only drift vs origin/main revert #161",
-      "jira": ""
+      "jira": "",
+      "pr": "#172"
     },
     {
       "id": "S2",
@@ -46,7 +47,9 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#172"
+  ],
   "branch": "CHY-33",
   "log": [
     "2026-11-13 init",
@@ -58,7 +61,8 @@
     "2026-11-16 S1 \u2192 spec",
     "2026-11-16 S1 \u2192 plan",
     "2026-11-16 S1 \u2192 picture",
-    "2026-11-16 S1 \u2192 picture"
+    "2026-11-16 S1 \u2192 picture",
+    "2026-11-17 S1 \u2192 done"
   ],
-  "updated": "2026-11-16T15:13:57+07:00"
+  "updated": "2026-11-17T11:03:08+07:00"
 }
