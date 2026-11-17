@@ -31,7 +31,7 @@ afterEach(() => {
 describe('word page', () => {
 	it('Given_DataWordChanges_When_Rerender_Then_ToggleReset', () => {
 		// Arrange
-		const props = $state({ data: { word: view('好', 'tốt, khỏe, hay') } });
+		const props = $state({ data: { id: '好', word: view('好', 'tốt, khỏe, hay') } });
 		target = document.createElement('div');
 		document.body.append(target);
 		app = mount(Page, { target, props: props as never }) as Record<string, unknown>;
@@ -41,10 +41,27 @@ describe('word page', () => {
 		flushSync();
 		expect(toggle().textContent?.trim()).toBe('Thu gọn');
 		// Act
-		props.data = { word: view('你', 'bạn, anh, chị') };
+		props.data = { id: '你', word: view('你', 'bạn, anh, chị') };
 		flushSync();
 		// Assert
 		expect(toggle().textContent?.trim()).toBe('Xem thêm 1 nghĩa ít gặp');
 		expect(target.textContent).toContain('bạn, anh, chị');
+	});
+
+	it('Given_HomographIds_When_Navigate_Then_ToggleReset', () => {
+		// Arrange
+		const props = $state({ data: { id: '了', word: view('了', 'rồi, xong') } });
+		target = document.createElement('div');
+		document.body.append(target);
+		app = mount(Page, { target, props: props as never }) as Record<string, unknown>;
+		flushSync();
+		const toggle = () => target!.querySelector('button')!;
+		toggle().click();
+		flushSync();
+		// Act
+		props.data = { id: '了-liao3', word: view('了', 'hiểu, xong') };
+		flushSync();
+		// Assert
+		expect(toggle().textContent?.trim()).toBe('Xem thêm 1 nghĩa ít gặp');
 	});
 });
