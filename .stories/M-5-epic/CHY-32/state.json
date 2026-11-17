@@ -1,0 +1,61 @@
+{
+  "story": "CHY-32",
+  "title": "Sections: Kh\u1edfi \u0111\u1ed9ng + T\u1eeb m\u1edbi + Word Page",
+  "stage": "in-slice",
+  "current_slice": "S1",
+  "slices": [
+    {
+      "id": "S1",
+      "name": "T\u1eeb m\u1edbi section: word cards, mini-check with TalkingCast, done",
+      "acs": [
+        "AC2",
+        "AC3",
+        "AC4"
+      ],
+      "repo": "chaiyo",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "wave 3 \u00b7 lane words \u00b7 after CHY-30.S1,CHY-25.S1,CHY-35.S1",
+      "jira": ""
+    },
+    {
+      "id": "S2",
+      "name": "Word Page from the C7 entry: POS groups, rare senses, example source",
+      "acs": [
+        "AC5",
+        "AC6"
+      ],
+      "repo": "chaiyo",
+      "stage": "picture",
+      "reviews": 2,
+      "note": "design run done: spec+plan+picture; advisor 2/2 applied; awaiting Loc review",
+      "jira": ""
+    },
+    {
+      "id": "S3",
+      "name": "Kh\u1edfi \u0111\u1ed9ng section from due cards and previous lesson words",
+      "acs": [
+        "AC1"
+      ],
+      "repo": "chaiyo",
+      "stage": "todo",
+      "reviews": 0,
+      "note": "wave 4 \u00b7 lane words \u00b7 after CHY-30.S2,CHY-32.S1",
+      "jira": ""
+    }
+  ],
+  "locked": [],
+  "prs": [],
+  "branch": "CHY-32",
+  "log": [
+    "2026-11-13 init",
+    "2026-11-13 +S1 T\u1eeb m\u1edbi section: word cards, mini-check with TalkingCast, done [AC2,AC3,AC4]",
+    "2026-11-13 +S2 Word Page from the C7 entry: POS groups, rare senses, example source [AC5,AC6]",
+    "2026-11-13 +S3 Kh\u1edfi \u0111\u1ed9ng section from due cards and previous lesson words [AC1]",
+    "2026-11-16 S2 \u2192 discuss",
+    "2026-11-16 S2 \u2192 spec",
+    "2026-11-16 S2 \u2192 plan",
+    "2026-11-16 S2 \u2192 picture"
+  ],
+  "updated": "2026-11-16T15:14:22+07:00"
+}
