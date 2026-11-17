@@ -56,7 +56,7 @@
 				<tr>
 					<th
 						scope="row"
-						class="text-base sticky left-0 z-10 w-[52px] min-w-[52px] border-r-2 border-b border-lantern-red bg-lantern-red-wash font-pinyin font-bold text-lantern-red-text"
+						class="sticky left-0 z-10 w-[52px] min-w-[52px] border-r-2 border-b border-lantern-red bg-lantern-red-wash font-pinyin font-bold text-lantern-red-text"
 					>
 						{initial || '∅'}
 					</th>
@@ -67,7 +67,7 @@
 								<button
 									type="button"
 									data-s={cell.syllable}
-									class="text-base block min-h-11 w-full font-pinyin font-semibold text-ink active:bg-shaded-paper"
+									class="block min-h-11 w-full font-pinyin font-semibold text-ink active:bg-shaded-paper"
 									onclick={() => {
 										shown = cell;
 										isOpen = true;
@@ -120,7 +120,9 @@
 						stroke-linejoin="round"
 					/>
 				</svg>
-				<span class="hz text-2xl leading-tight text-graphite" lang="zh">{tone.hanzi ?? ''}</span>
+				<span class="font-hanzi text-[24px] leading-tight text-graphite" lang="zh"
+					>{tone.hanzi ?? ''}</span
+				>
 			</button>
 		{/each}
 	</div>
