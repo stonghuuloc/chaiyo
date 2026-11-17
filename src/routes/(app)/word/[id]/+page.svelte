@@ -11,7 +11,7 @@
 {#if 'notFound' in data.word}
 	<p>{m.word_not_found()}</p>
 {:else}
-	{#key data.word.hanzi}
+	{#key data.id}
 		<WordEntry view={data.word} />
 	{/key}
 {/if}

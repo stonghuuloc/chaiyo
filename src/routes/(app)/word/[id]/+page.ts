@@ -5,5 +5,6 @@ import { loadWord } from './word-view';
 
 export const load: PageLoad = async ({ params, url }) => ({
 	shell: { template: 'pushed', section: 'practice' } satisfies Shell,
+	id: params.id,
 	word: await loadWord(catalog, params.id, url.searchParams.get('lesson'))
 });
