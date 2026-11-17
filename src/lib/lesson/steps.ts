@@ -1,10 +1,11 @@
 import type { Component } from 'svelte';
+import type { Step as ChoiceStep } from './steps/Choice.svelte';
+import type { Step as GrammarStep } from './steps/Grammar.svelte';
+import type { Step as OrderStep } from './steps/Order.svelte';
+import type { Step as SpeakStep } from './steps/Speak.svelte';
 import type { StepProps } from './types';
 
-export type LessonStep =
-	| import('./steps/Choice.svelte').Step
-	| import('./steps/Grammar.svelte').Step
-	| import('./steps/Order.svelte').Step;
+export type LessonStep = ChoiceStep | GrammarStep | OrderStep | SpeakStep;
 
 type View = { default: Component<StepProps<LessonStep>>; kind: string };
 

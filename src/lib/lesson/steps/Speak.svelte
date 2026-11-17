@@ -1,0 +1,136 @@
+<script module lang="ts">
+	export const kind = 'speak';
+	export type Step = {
+		kind: 'speak';
+		id: string;
+		ask: string;
+		title: string;
+		hanzi?: string;
+		pinyin?: string;
+		meaning?: string;
+	};
+</script>
+
+<script lang="ts">
+	import { m } from '#lib/paraglide/messages.js';
+	import { BARS, clock, held, push } from '../../speak/hold';
+	import { openMic, type Mic } from '../../speak/mic';
+	import type { StepProps } from '../types';
+
+	let { step, cta, next }: StepProps<Step> = $props();
+
+	let phase = $state<'idle' | 'opening' | 'live' | 'short' | 'blocked' | 'done'>('idle');
+	let levels = $state<number[]>(Array(BARS).fill(0));
+	let elapsed = $state(0);
+
+	let session = 0;
+	let mic: Mic | undefined;
+	let micOnAt: number | null = null;
+	let raf = 0;
+
+	function tick() {
+		if (!mic || micOnAt === null) return;
+		levels = push(levels, mic.level());
+		elapsed = performance.now() - micOnAt;
+		raf = requestAnimationFrame(tick);
+	}
+
+	async function press() {
+		if (phase !== 'idle' && phase !== 'short') return;
+		const me = ++session;
+		phase = 'opening';
+		let opened: Mic;
+		try {
+			opened = await openMic();
+		} catch {
+			if (me === session) phase = 'blocked';
+			return;
+		}
+		if (me !== session) {
+			opened.close();
+			phase = 'short';
+			return;
+		}
+		mic = opened;
+		micOnAt = performance.now();
+		elapsed = 0;
+		levels = Array(BARS).fill(0);
+		phase = 'live';
+		raf = requestAnimationFrame(tick);
+	}
+
+	function release() {
+		if (phase !== 'opening' && phase !== 'live') return;
+		cancelAnimationFrame(raf);
+		session += 1;
+		phase = held(micOnAt, performance.now());
+		mic?.close();
+		mic = undefined;
+		micOnAt = null;
+	}
+
+	$effect(() => {
+		if (phase === 'done') {
+			cta({ label: m.lesson_continue(), caret: true, onclick: () => next() });
+			return;
+		}
+		if (phase === 'blocked') {
+			cta({ label: m.lesson_speak_skip(), onclick: () => next() });
+			return;
+		}
+		cta({
+			label: phase === 'live' ? m.lesson_speak_release() : m.lesson_speak_hold(),
+			hint: '',
+			hold: { onpress: press, onrelease: release },
+			onclick: () => {}
+		});
+	});
+
+	$effect(() => () => {
+		session += 1;
+		cancelAnimationFrame(raf);
+		mic?.close();
+		mic = undefined;
+		micOnAt = null;
+	});
+</script>
+
+<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+	{step.ask}
+</p>
+<h2 class="mt-1 font-display text-headline">{step.title}</h2>
+
+{#if step.hanzi}
+	<div class="mt-5 rounded-action border border-ruled-line bg-white/40 p-5 text-center">
+		<p class="font-hanzi text-[40px]">{step.hanzi}</p>
+		{#if step.pinyin}<p class="mt-1 text-title text-graphite">{step.pinyin}</p>{/if}
+		{#if step.meaning}<p class="mt-1 text-label text-faint-pencil">{step.meaning}</p>{/if}
+	</div>
+{/if}
+
+<div
+	class="mt-5 min-h-24 rounded-action border border-dashed border-ruled-line p-4"
+	aria-live="polite"
+	data-rec
+>
+	{#if phase === 'opening'}
+		<p class="text-center text-label text-graphite">{m.lesson_speak_opening()}</p>
+	{:else if phase === 'live' || phase === 'done'}
+		<div class="flex h-16 items-end justify-center gap-[3px]">
+			{#each levels as l, i (i)}
+				<i class="rounded-sm w-1 bg-lantern-red" data-bar style="height:{3 + l * 58}px"></i>
+			{/each}
+		</div>
+		<p class="mt-2 text-center text-label text-graphite">
+			<span data-timer>{clock(elapsed)}</span>
+			{#if phase === 'live'}
+				· {m.lesson_speak_listening()}{/if}
+		</p>
+	{:else if phase === 'short'}
+		<p class="text-center text-label text-graphite">{m.lesson_speak_short()}</p>
+	{:else if phase === 'blocked'}
+		<p class="text-center text-label text-graphite">{m.lesson_speak_blocked()}</p>
+	{:else}
+		<p class="text-center text-label text-graphite">{m.lesson_speak_idle()}</p>
+	{/if}
+</div>
