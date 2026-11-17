@@ -26,10 +26,11 @@
         "AC6"
       ],
       "repo": "chaiyo",
-      "stage": "picture",
+      "stage": "done",
       "reviews": 2,
       "note": "design run done: spec+plan+picture; advisor 2/2 applied; awaiting Loc review",
-      "jira": ""
+      "jira": "",
+      "pr": "#171"
     },
     {
       "id": "S3",
@@ -45,7 +46,9 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#171"
+  ],
   "branch": "CHY-32",
   "log": [
     "2026-11-13 init",
@@ -55,7 +58,8 @@
     "2026-11-16 S2 \u2192 discuss",
     "2026-11-16 S2 \u2192 spec",
     "2026-11-16 S2 \u2192 plan",
-    "2026-11-16 S2 \u2192 picture"
+    "2026-11-16 S2 \u2192 picture",
+    "2026-11-17 S2 \u2192 done"
   ],
-  "updated": "2026-11-16T15:14:22+07:00"
+  "updated": "2026-11-17T11:03:07+07:00"
 }
