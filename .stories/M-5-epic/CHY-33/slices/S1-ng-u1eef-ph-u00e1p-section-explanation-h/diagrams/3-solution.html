@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar section over our components</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #2d3142;   /* deep warm charcoal */
+      --color-ink:     #f5f5f5;   /* warm off-white */
+      --color-muted:   #bfc0c0;
+      --color-accent:  #f08a59;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', 'Noto Serif', 'Noto Serif KR', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1200px; width: 100%; }
+    /* The SVG holds its readable width (min-width == the viewBox width, so the
+       type ramp is never silently scaled down). This wrapper lets a narrow
+       screen scroll the diagram instead of the whole page. */
+    .diagram-container { width: 100%; overflow-x: auto; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 640px; display: block; }
+    /* Paper has no scrollbar, so the local scroller would clip instead of
+       scroll. Let the diagram scale down to the sheet: smaller but whole
+       beats sharp but cut off. Must come after the svg rule above - a media
+       query adds no specificity, so a later plain rule would win. */
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Architecture delta · CHY-33 S1</p>
+    <h1>Grammar section over our components</h1>
+
+    <!-- Replace [diagram-slug] with a unique slug for this diagram before export. -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 640 580" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="3-solution-title 3-solution-desc"><title id="3-solution-title">Grammar section over our components</title><desc id="3-solution-desc">Bài 1 content and the importer change, a new section registry and grammar section feed the existing StepRunner, which renders two new step kinds and the existing choice kind.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bfc0c0"/></marker><marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#f08a59"/></marker></defs><rect width="100%" height="100%" fill="#2d3142"/><path d="M300,54 H338" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M470,88 V124" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M470,176 V186 Q470,194 462,194 H328 Q320,194 320,202 V212" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M320,264 V296" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M320,348 V380" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M240,432 V446 Q240,454 232,454 H128 Q120,454 120,462 V476" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M320,432 V476" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/><path d="M400,432 V446 Q400,454 408,454 H512 Q520,454 520,462 V476" fill="none" stroke="#f08a59" stroke-width="1.2" marker-end="url(#arrow-accent)"/><rect x="40" y="20" width="260" height="68" rx="6" fill="#2d3142"/><rect x="40" y="20" width="260" height="68" rx="6" fill="rgba(245,245,245,0.04)" stroke="#bfc0c0" stroke-width="1.2"/><text x="170.0" y="41.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">Bài 1 content</text><text x="170.0" y="59.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">grammar labels</text><text x="170.0" y="75.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">grammar.done</text><rect x="48" y="13" width="59" height="14" rx="2" fill="#2d3142" stroke="#bfc0c0" stroke-width="1"/><text x="77.5" y="24" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="10" fill="#bfc0c0">CHANGED</text><rect x="340" y="20" width="260" height="68" rx="6" fill="#2d3142"/><rect x="340" y="20" width="260" height="68" rx="6" fill="rgba(245,245,245,0.04)" stroke="#bfc0c0" stroke-width="1.2"/><text x="470.0" y="41.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">Importer buildBundle</text><text x="470.0" y="59.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">sentence.audio = clip key</text><text x="470.0" y="75.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">bundle.ts · sink.ts</text><rect x="348" y="13" width="59" height="14" rx="2" fill="#2d3142" stroke="#bfc0c0" stroke-width="1"/><text x="377.5" y="24" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="10" fill="#bfc0c0">CHANGED</text><rect x="340" y="124" width="260" height="52" rx="6" fill="#2d3142"/><rect x="340" y="124" width="260" height="52" rx="6" fill="none" stroke="#bfc0c0" stroke-width="1.2" stroke-dasharray="4,3"/><text x="470.0" y="146.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">lesson/[id]/+layout.ts</text><text x="470.0" y="164.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">data.lesson · CHY-25.S2</text><rect x="150" y="212" width="340" height="52" rx="6" fill="#2d3142"/><rect x="150" y="212" width="340" height="52" rx="6" fill="rgba(245,245,245,0.04)" stroke="#bfc0c0" stroke-width="1.2"/><text x="320.0" y="234.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">[section]/+page.svelte + sections.ts</text><text x="320.0" y="252.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">grammar → GrammarSection</text><rect x="158" y="205" width="31" height="14" rx="2" fill="#2d3142" stroke="#f08a59" stroke-width="1"/><text x="173.5" y="216" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="10" fill="#f08a59">NEW</text><rect x="150" y="296" width="340" height="52" rx="6" fill="#2d3142"/><rect x="150" y="296" width="340" height="52" rx="6" fill="rgba(245,245,245,0.04)" stroke="#bfc0c0" stroke-width="1.2"/><text x="320.0" y="318.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">GrammarSection + grammarSteps</text><text x="320.0" y="336.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">8 steps · done view</text><rect x="158" y="289" width="31" height="14" rx="2" fill="#2d3142" stroke="#f08a59" stroke-width="1"/><text x="173.5" y="300" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="10" fill="#f08a59">NEW</text><rect x="150" y="380" width="340" height="52" rx="6" fill="#2d3142"/><rect x="150" y="380" width="340" height="52" rx="6" fill="none" stroke="#bfc0c0" stroke-width="1.2" stroke-dasharray="4,3"/><text x="320.0" y="402.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">StepRunner</text><text x="320.0" y="420.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">ledger prop · CHY-30.S2</text><rect x="30" y="476" width="180" height="52" rx="6" fill="#2d3142"/><rect x="30" y="476" width="180" height="52" rx="6" fill="rgba(245,245,245,0.04)" stroke="#bfc0c0" stroke-width="1.2"/><text x="120.0" y="498.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">Grammar.svelte</text><text x="120.0" y="516.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">kind grammar</text><rect x="38" y="469" width="31" height="14" rx="2" fill="#2d3142" stroke="#f08a59" stroke-width="1"/><text x="53.5" y="480" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="10" fill="#f08a59">NEW</text><rect x="230" y="476" width="180" height="52" rx="6" fill="#2d3142"/><rect x="230" y="476" width="180" height="52" rx="6" fill="none" stroke="#bfc0c0" stroke-width="1.2" stroke-dasharray="4,3"/><text x="320.0" y="498.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">Choice.svelte</text><text x="320.0" y="516.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">kind choice</text><rect x="430" y="476" width="180" height="52" rx="6" fill="#2d3142"/><rect x="430" y="476" width="180" height="52" rx="6" fill="rgba(240,138,89,0.10)" stroke="#f08a59" stroke-width="1.2"/><text x="520.0" y="498.0" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="600" font-size="14" fill="#f5f5f5">Order.svelte</text><text x="520.0" y="516.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">kind order → Gate</text><rect x="438" y="469" width="31" height="14" rx="2" fill="#2d3142" stroke="#f08a59" stroke-width="1"/><text x="453.5" y="480" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="10" fill="#f08a59">NEW</text><rect x="20" y="556" width="20" height="12" rx="2" fill="none" stroke="#f08a59"/><text x="48" y="566" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">new</text><rect x="94.2" y="556" width="20" height="12" rx="2" fill="none" stroke="#bfc0c0"/><text x="122.2" y="566" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">changed</text><rect x="198.0" y="556" width="20" height="12" rx="2" fill="none" stroke="#bfc0c0" stroke-dasharray="4,3"/><text x="226.0" y="566" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#bfc0c0">unchanged / other lane</text></svg>
+    </div>
+  </div>
+</body>
+</html>
