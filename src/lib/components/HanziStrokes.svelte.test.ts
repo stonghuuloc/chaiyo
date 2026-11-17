@@ -301,7 +301,7 @@ describe('HanziStrokes interaction', () => {
 		expect(writer.quiz).toHaveBeenCalledTimes(2);
 	});
 
-	it('Given_WriterCreated_When_Released_Then_DocumentHasNoOwnAddEventListener', () => {
+	it('Given_NoOwnAddEventListener_When_Wrapped_Then_NoOwnPropertyLeft', () => {
 		// Arrange
 		const up = () => {};
 
@@ -311,5 +311,22 @@ describe('HanziStrokes interaction', () => {
 
 		// Assert
 		expect(Object.hasOwn(document, 'addEventListener')).toBe(false);
+	});
+
+	it('Given_OwnAddEventListener_When_Wrapped_Then_OriginalRestored', () => {
+		// Arrange
+		const own = () => {};
+		Object.defineProperty(document, 'addEventListener', {
+			value: own,
+			configurable: true,
+			writable: true
+		});
+
+		// Act
+		withDocumentListeners(() => 1).release();
+
+		// Assert
+		expect(Object.getOwnPropertyDescriptor(document, 'addEventListener')?.value).toBe(own);
+		delete (document as Partial<Document>).addEventListener;
 	});
 });
