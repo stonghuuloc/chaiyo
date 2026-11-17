@@ -1,4 +1,4 @@
-import type { Attempt, State, WordSaved } from '#lib/study/index.js';
+import type { Attempt, State, StudyEvent, WordSaved } from '#lib/study/index.js';
 
 export type Input = Attempt | WordSaved;
 
@@ -8,7 +8,7 @@ export type Store = {
 };
 
 export type Ledger = {
-	record(input: Input): Promise<void>;
+	record(input: Input): Promise<StudyEvent[]>;
 	state(): State;
 	subscribe(fn: (state: State) => void): () => void;
 	sync(): Promise<void>;

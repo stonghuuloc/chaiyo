@@ -1,11 +1,29 @@
 import { IDBFactory } from 'fake-indexeddb';
 import { describe, expect, it, vi } from 'vitest';
-import { apply, initialState, type Attempt } from '#lib/study/index.js';
+import { CURRICULUM } from '#lib/curriculum/index.js';
+import { apply, initialState, localDate, type Attempt, type StudyEvent } from '#lib/study/index.js';
 import { att, outbox, server, T } from './fixtures';
 import { memoryStore, openLedger } from './index';
 
 const fold = (inputs: Attempt[]) =>
 	inputs.reduce((s, i) => apply(s, i, new Date(i.at)).state, initialState());
+
+const fresh = () =>
+	openLedger({
+		initial: initialState({ curriculum: CURRICULUM }),
+		store: memoryStore(),
+		idb: new IDBFactory()
+	});
+
+const sectionAttempt = (i: number, at: string): Attempt => ({
+	id: `sec-${i}`,
+	at,
+	questionId: `q${i}`,
+	contentSha: 'sha1',
+	correct: true,
+	ms: 1000,
+	step: { kind: 'section', lesson: 'h1-01', section: 'words', run: 'r1', of: 6 }
+});
 
 describe('ledger', () => {
 	it('duplicate replays never create duplicate Attempts', async () => {
@@ -108,7 +126,7 @@ describe('ledger', () => {
 		const store = memoryStore();
 		await store.push([server[0]]);
 		const ledger = await openLedger({ initial: initialState(), store, idb: new IDBFactory() });
-		let late: Promise<void> | undefined;
+		let late: Promise<StudyEvent[]> | undefined;
 		ledger.subscribe(() => {
 			late ??= ledger.record(outbox[0]);
 		});
@@ -186,5 +204,68 @@ describe('ledger', () => {
 		await ledger.sync();
 		expect(ledger.pending()).toBe(0);
 		expect((await openLedger({ initial: initialState(), store, idb })).pending()).toBe(0);
+	});
+
+	it('Given_LastAttemptOfSection_When_Record_Then_ResolvesSectionDoneAndDayCounted', async () => {
+		// Arrange
+		const ledger = await fresh();
+		const at = new Date(T).toISOString();
+		const day = localDate(new Date(at), ledger.state().tz);
+		const got: StudyEvent[][] = [];
+
+		// Act
+		for (let i = 0; i < 6; i += 1) got.push(await ledger.record(sectionAttempt(i, at)));
+
+		// Assert
+		expect(got.slice(0, 5)).toEqual([[], [], [], [], []]);
+		expect(got[5]).toEqual(
+			expect.arrayContaining([
+				{ type: 'SectionDone', lesson: 'h1-01', section: 'words' },
+				{ type: 'DayCounted', day, streak: 1 }
+			])
+		);
+	});
+
+	it('Given_StoredInput_When_RecordAgain_Then_Empty', async () => {
+		// Arrange
+		const ledger = await fresh();
+		const input = sectionAttempt(0, new Date(T).toISOString());
+		await ledger.record(input);
+
+		// Act
+		const again = await ledger.record(input);
+
+		// Assert
+		expect(again).toEqual([]);
+		expect(Object.keys(ledger.state().runs)).toHaveLength(1);
+	});
+
+	it('Given_WordSaved_When_Record_Then_Empty', async () => {
+		// Arrange
+		const ledger = await fresh();
+
+		// Act
+		const events = await ledger.record({
+			kind: 'saved',
+			word: '你',
+			at: new Date(T).toISOString()
+		});
+
+		// Assert
+		expect(events).toEqual([]);
+		expect(ledger.state().lexicon['你'].saved).toBe(true);
+	});
+
+	it('Given_EarlierAt_When_Record_Then_EventsOfItsPlace', async () => {
+		// Arrange
+		const ledger = await fresh();
+		await ledger.record(att('d2', T, '你', 'the', true));
+
+		// Act
+		const events = await ledger.record(att('d1', T - 86_400_000, '好', 'the', true));
+
+		// Assert
+		expect(events).toContainEqual(expect.objectContaining({ type: 'CardScheduled', word: '好' }));
+		expect(events.some((e) => e.type === 'CardScheduled' && e.word === '你')).toBe(false);
 	});
 });

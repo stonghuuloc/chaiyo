@@ -1,0 +1,16 @@
+import type { Component } from 'svelte';
+import type { StepProps } from './types';
+
+export type LessonStep = import('./steps/Choice.svelte').Step;
+
+type View = { default: Component<StepProps<LessonStep>>; kind: string };
+
+const views = import.meta.glob<View>('./steps/*.svelte', { eager: true });
+
+export const viewOf = (kind: LessonStep['kind']) => {
+	const view = Object.entries(views).find(
+		([path]) => path.slice(path.lastIndexOf('/') + 1, -'.svelte'.length).toLowerCase() === kind
+	)?.[1];
+	if (!view) throw new Error(`unknown step kind: ${kind}`);
+	return view;
+};

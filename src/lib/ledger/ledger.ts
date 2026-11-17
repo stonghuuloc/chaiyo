@@ -1,4 +1,4 @@
-import { apply, type State } from '#lib/study/index.js';
+import { apply, type State, type StudyEvent } from '#lib/study/index.js';
 import { all, key, open, put, type Row } from './idb';
 import type { Input, Ledger, Store } from './types';
 
@@ -26,11 +26,19 @@ export async function openLedger(o: {
 		return p;
 	};
 
-	const state = () =>
-		(cache ??= [...rows.values()]
+	const fold = (capture?: string) => {
+		let events: StudyEvent[] = [];
+		const folded = [...rows.values()]
 			.map((r) => r.input)
 			.sort(order)
-			.reduce((s, i) => apply(s, i, new Date(i.at)).state, o.initial));
+			.reduce((s, i) => {
+				const r = apply(s, i, new Date(i.at));
+				if (capture !== undefined && key(i) === capture) events = r.events;
+				return r.state;
+			}, o.initial);
+		return { state: folded, events };
+	};
+	const state = () => (cache ??= fold().state);
 	const pending = () => [...rows.values()].filter((r) => !r.synced).length;
 	const changed = () => {
 		cache = undefined;
@@ -84,12 +92,15 @@ export async function openLedger(o: {
 		record(input) {
 			return serial(async () => {
 				const k = key(input);
-				if (rows.has(k)) return;
+				if (rows.has(k)) return [];
 				const row = { key: k, input, synced: false };
 				await put(db, [row]);
 				rows.set(k, row);
 				if (running) again = true;
-				changed();
+				const r = fold(k);
+				cache = r.state;
+				for (const fn of listeners) fn(r.state);
+				return r.events;
 			});
 		},
 		sync() {
