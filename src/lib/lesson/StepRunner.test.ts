@@ -14,7 +14,13 @@ const steps: LessonStep[] = Array.from({ length: 6 }, (_, i) => ({
 	answer: '好'
 }));
 
-const ledger = { state: () => initialState(), record: async () => [] } as unknown as Ledger;
+const ledger: Ledger = {
+	state: () => initialState(),
+	record: async () => [],
+	subscribe: () => () => {},
+	sync: async () => {},
+	pending: () => 0
+};
 
 const html = () =>
 	render(StepRunner, {

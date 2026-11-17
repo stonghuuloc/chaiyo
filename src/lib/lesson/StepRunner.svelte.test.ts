@@ -44,7 +44,12 @@ const ledgerFor = () =>
 	});
 
 let target: HTMLDivElement | undefined;
-let app: Record<string, unknown> | undefined;
+let app: ReturnType<typeof mount> | undefined;
+
+const need = <T>(v: T | null | undefined): T => {
+	if (v == null) throw new Error('missing test value');
+	return v;
+};
 
 type Runner = {
 	options: () => HTMLButtonElement[];
@@ -71,19 +76,19 @@ const mountRunner = (
 			ledger,
 			onfinish: o.onfinish ?? (() => {})
 		}
-	}) as Record<string, unknown>;
+	});
 	flushSync();
 	return {
-		options: () => [...target!.querySelectorAll<HTMLButtonElement>('.body button')],
-		cta: () => target!.querySelector<HTMLButtonElement>('.actions button')!,
+		options: () => [...need(target).querySelectorAll<HTMLButtonElement>('.body button')],
+		cta: () => need(need(target).querySelector<HTMLButtonElement>('.actions button')),
 		segments: () =>
-			[...target!.querySelectorAll('[data-seg] i')].map((i) => i.getAttribute('data-on')),
-		counter: () => target!.querySelector('.top span')!.textContent
+			[...need(target).querySelectorAll('[data-seg] i')].map((i) => i.getAttribute('data-on')),
+		counter: () => need(need(target).querySelector('.top span')).textContent
 	};
 };
 
 const detach = () => {
-	if (app) unmount(app as never);
+	if (app) unmount(app);
 	target?.remove();
 	target = undefined;
 	app = undefined;
@@ -125,7 +130,7 @@ describe('StepRunner', () => {
 
 		// Assert
 		expect(view.segments()).toEqual(['true', 'false']);
-		expect(target!.textContent).toContain('Câu 2');
+		expect(need(target).textContent).toContain('Câu 2');
 	});
 
 	it('Given_LastStepAnswered_When_Continue_Then_FinishCalledOnce', async () => {
@@ -280,7 +285,7 @@ describe('StepRunner', () => {
 		// Assert
 		expect(view.counter()).toBe('4/6');
 		expect(view.segments()).toEqual(['true', 'true', 'true', 'false', 'false', 'false']);
-		expect(target!.textContent).toContain('Câu 4');
+		expect(need(target).textContent).toContain('Câu 4');
 	});
 
 	it('Given_Resumed_When_LastThreeAnswered_Then_RunClosedWithSix', async () => {
@@ -324,14 +329,14 @@ describe('StepRunner', () => {
 		await vi.waitFor(() => expect(view.counter()).toBe('2/3'));
 		detach();
 		view = mountRunner(ledger, { steps: [q1, q0, q2], onfinish: () => (finished += 1) });
-		expect(target!.textContent).toContain('Câu 2');
+		expect(need(target).textContent).toContain('Câu 2');
 		expect(view.segments()).toEqual(['false', 'true', 'false']);
 
 		// Act
 		pickAndCheck(view);
 		view.cta().click();
 		await vi.waitFor(() => expect(view.counter()).toBe('3/3'));
-		const shown = target!.textContent;
+		const shown = need(target).textContent;
 		pickAndCheck(view);
 		view.cta().click();
 		await vi.waitFor(() => expect(finished).toBe(1));

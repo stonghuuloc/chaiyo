@@ -14,7 +14,12 @@ const step: Step = {
 };
 
 let target: HTMLDivElement | undefined;
-let app: Record<string, unknown> | undefined;
+let app: ReturnType<typeof mount> | undefined;
+
+const need = <T>(v: T | null | undefined): T => {
+	if (v == null) throw new Error('missing test value');
+	return v;
+};
 
 const mountChoice = (props: { mode?: Mode; last?: boolean; step?: Step } = {}) => {
 	const calls: (Answer | undefined)[] = [];
@@ -30,18 +35,18 @@ const mountChoice = (props: { mode?: Mode; last?: boolean; step?: Step } = {}) =
 			cta: (c: Cta) => (cta = c),
 			next: (a?: Answer) => calls.push(a)
 		}
-	}) as Record<string, unknown>;
+	});
 	flushSync();
 	return {
-		options: () => [...target!.querySelectorAll<HTMLButtonElement>('button')],
-		cta: () => cta!,
+		options: () => [...need(target).querySelectorAll<HTMLButtonElement>('button')],
+		cta: () => need(cta),
 		calls
 	};
 };
 
 afterEach(() => {
 	vi.restoreAllMocks();
-	if (app) unmount(app as never);
+	if (app) unmount(app);
 	target?.remove();
 	target = undefined;
 	app = undefined;
@@ -65,7 +70,7 @@ describe('Choice', () => {
 		expect(buttons[0].getAttribute('data-mark')).toBe('wrong');
 		expect(buttons[1].getAttribute('data-mark')).toBe('right');
 		expect(buttons.every((b) => b.disabled)).toBe(true);
-		expect(target!.textContent).toContain(m.lesson_wrong());
+		expect(need(target).textContent).toContain(m.lesson_wrong());
 		expect(cta().label).toBe(m.lesson_continue());
 		expect(cta().hint).toBe(m.lesson_review_hint());
 	});
@@ -83,7 +88,7 @@ describe('Choice', () => {
 
 		// Assert
 		expect(options()[1].getAttribute('data-mark')).toBe('right');
-		expect(target!.textContent).toContain(m.lesson_right());
+		expect(need(target).textContent).toContain(m.lesson_right());
 		expect(cta().hint).toBe('');
 	});
 
@@ -101,7 +106,7 @@ describe('Choice', () => {
 		// Assert
 		expect(calls).toHaveLength(1);
 		expect(calls[0]).toMatchObject({ questionId: 'q1', pick: '你', correct: false });
-		expect(calls[0]!.ms).toBeGreaterThanOrEqual(0);
+		expect(need(calls[0]).ms).toBeGreaterThanOrEqual(0);
 	});
 
 	it('Given_FeedbackReadAfterCheck_When_Continue_Then_MsStopsAtCheck', () => {
@@ -179,6 +184,6 @@ describe('Choice', () => {
 		flushSync();
 
 		// Assert
-		expect(target!.textContent).toContain('Tốt nghĩa là tốt');
+		expect(need(target).textContent).toContain('Tốt nghĩa là tốt');
 	});
 });

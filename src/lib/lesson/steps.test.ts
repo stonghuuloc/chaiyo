@@ -35,7 +35,10 @@ describe('step views', () => {
 		const entries = Object.entries(files);
 		// Act
 		const kinds = entries.map(([path, mod]) => [
-			path.split('/').pop()!.replace('.svelte', '').toLowerCase(),
+			path
+				.slice(path.lastIndexOf('/') + 1)
+				.replace('.svelte', '')
+				.toLowerCase(),
 			mod.kind
 		]);
 		// Assert
@@ -48,6 +51,7 @@ describe('step views', () => {
 	});
 
 	it('Given_UnknownKind_When_ViewOf_Then_Throws', () => {
-		expect(() => viewOf('nope' as never)).toThrow('unknown step kind');
+		// @ts-expect-error unknown kind on purpose
+		expect(() => viewOf('nope')).toThrow('unknown step kind');
 	});
 });
