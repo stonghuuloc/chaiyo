@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 640 584" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="solution-title solution-desc" id="d-3-solution-root">
+<title id="solution-title">Solution: one new module, three small mounts</title><desc id="solution-desc">ReportButton and the report module are new; StepRunner, the Word Page and the app layout each gain one small mount; reports queue in IndexedDB and insert into the new error_reports table.</desc>
+<defs>
+      <style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Noto+Serif:ital@0;1&amp;family=Noto+Sans+KR:wght@400;500;600&amp;family=Noto+Serif+KR:wght@400&amp;family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@400&amp;display=swap');
+      #d-3-solution-root { font-family: 'Geist',system-ui,sans-serif; color: #f5f5f5; }
+      #d-3-solution-root .diagram-container { width:100%;overflow-x:auto }
+      #d-3-solution-root .diagram-container { overflow-x:visible }</style><marker id="d-3-solution-solution-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bfc0c0"/></marker>
+<marker id="d-3-solution-solution-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#f08a59"/></marker></defs>
+<rect width="100%" height="100%" fill="#2d3142"/>
+<path d="M110 72 L110 128" fill="none" stroke="#bfc0c0" stroke-width="1.4" marker-end="url(#d-3-solution-solution-arrow)"/>
+<path d="M320 72 L320 128" fill="none" stroke="#bfc0c0" stroke-width="1.4" marker-end="url(#d-3-solution-solution-arrow)"/>
+<path d="M216 184 L216 240" fill="none" stroke="#bfc0c0" stroke-width="1.4" marker-end="url(#d-3-solution-solution-arrow)"/>
+<rect x="181.0" y="203" width="70" height="16" fill="#2d3142"/><text x="216" y="215" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10" letter-spacing="0.06em" fill="#bfc0c0">REPORT()</text>
+<path d="M530 72 L530 240" fill="none" stroke="#bfc0c0" stroke-width="1.4" marker-end="url(#d-3-solution-solution-arrow)"/>
+<rect x="485.0" y="147" width="90" height="16" fill="#2d3142"/><text x="530" y="159" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10" letter-spacing="0.06em" fill="#bfc0c0">OPENREPORTS</text>
+<path d="M200 296 L200 352" fill="none" stroke="#bfc0c0" stroke-width="1.4" marker-end="url(#d-3-solution-solution-arrow)"/>
+<rect x="168.0" y="315" width="64" height="16" fill="#2d3142"/><text x="200" y="327" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10" letter-spacing="0.06em" fill="#bfc0c0">ADD ROW</text>
+<path d="M480 352 L480 296" fill="none" stroke="#bfc0c0" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#d-3-solution-solution-arrow)"/>
+<rect x="454.0" y="315" width="52" height="16" fill="#2d3142"/><text x="480" y="327" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10" letter-spacing="0.06em" fill="#bfc0c0">FLUSH</text>
+<path d="M200 408 L200 464" fill="none" stroke="#f08a59" stroke-width="1.4" marker-end="url(#d-3-solution-solution-arrow-accent)"/>
+<rect x="136.0" y="427" width="128" height="16" fill="#2d3142"/><text x="200" y="439" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10" letter-spacing="0.06em" fill="#bfc0c0">INSERT · 23505=OK</text>
+<rect x="16" y="16" width="188" height="56" rx="6" fill="#2d3142"/><rect x="16" y="16" width="188" height="56" rx="6" fill="#363b4f" stroke="#f5f5f5" stroke-width="1.2"/>
+<rect x="181.8" y="22" width="16.2" height="14" rx="2" fill="none" stroke="#f5f5f5" stroke-width="0.8"/><text x="189.9" y="32" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f5f5f5">Δ</text>
+<text x="110.0" y="44.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">StepRunner top bar</text>
+<text x="110.0" y="60.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">+1 cell · engine lane</text>
+<rect x="226" y="16" width="188" height="56" rx="6" fill="#2d3142"/><rect x="226" y="16" width="188" height="56" rx="6" fill="#363b4f" stroke="#f5f5f5" stroke-width="1.2"/>
+<rect x="391.8" y="22" width="16.2" height="14" rx="2" fill="none" stroke="#f5f5f5" stroke-width="0.8"/><text x="399.9" y="32" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f5f5f5">Δ</text>
+<text x="320.0" y="44.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">Word Page</text>
+<text x="320.0" y="60.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">word/[id] · words lane</text>
+<rect x="436" y="16" width="188" height="56" rx="6" fill="#2d3142"/><rect x="436" y="16" width="188" height="56" rx="6" fill="#363b4f" stroke="#f5f5f5" stroke-width="1.2"/>
+<rect x="601.8" y="22" width="16.2" height="14" rx="2" fill="none" stroke="#f5f5f5" stroke-width="0.8"/><text x="609.9" y="32" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f5f5f5">Δ</text>
+<text x="530.0" y="44.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">(app)/+layout.ts</text>
+<text x="530.0" y="60.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">+1 line · on load</text>
+<rect x="16" y="128" width="398" height="56" rx="6" fill="#2d3142"/><rect x="16" y="128" width="398" height="56" rx="6" fill="#f08a59" stroke="#f08a59" stroke-width="1.2" fill-opacity="0.12"/>
+<rect x="379.4" y="134" width="28.6" height="14" rx="2" fill="none" stroke="#f08a59" stroke-width="0.8"/><text x="393.7" y="144" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f08a59">NEW</text>
+<text x="215.0" y="156.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">ReportButton.svelte</text>
+<text x="215.0" y="172.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">flag · Sheet · 5 chips · note · Toast</text>
+<rect x="116" y="240" width="508" height="56" rx="6" fill="#2d3142"/><rect x="116" y="240" width="508" height="56" rx="6" fill="#363b4f" stroke="#f5f5f5" stroke-width="1.2"/>
+<rect x="589.4" y="246" width="28.6" height="14" rx="2" fill="none" stroke="#f5f5f5" stroke-width="0.8"/><text x="603.7" y="256" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f5f5f5">NEW</text>
+<text x="370.0" y="268.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">src/lib/report · report() + openReports(session)</text>
+<text x="370.0" y="284.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">per-learner · single-flight flush</text>
+<rect x="16" y="352" width="368" height="56" rx="6" fill="#2d3142"/><rect x="16" y="352" width="368" height="56" rx="6" fill="#363b4f" stroke="#f5f5f5" stroke-width="1.2"/>
+<rect x="349.4" y="358" width="28.6" height="14" rx="2" fill="none" stroke="#f5f5f5" stroke-width="0.8"/><text x="363.7" y="368" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f5f5f5">NEW</text>
+<text x="200.0" y="380.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">IndexedDB chaiyo-reports-&lt;uid&gt;</text>
+<text x="200.0" y="396.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">queue · survives reload</text>
+<rect x="404" y="352" width="220" height="56" rx="6" fill="#2d3142"/><rect x="404" y="352" width="220" height="56" rx="6" fill="#363b4f" stroke="#f5f5f5" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="514.0" y="376.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">window “online”</text>
+<text x="514.0" y="392.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">existing browser event</text>
+<rect x="16" y="464" width="368" height="56" rx="6" fill="#2d3142"/><rect x="16" y="464" width="368" height="56" rx="6" fill="#f08a59" stroke="#f08a59" stroke-width="1.2" fill-opacity="0.12"/>
+<rect x="349.4" y="470" width="28.6" height="14" rx="2" fill="none" stroke="#f08a59" stroke-width="0.8"/><text x="363.7" y="480" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="9" fill="#f08a59">NEW</text>
+<text x="200.0" y="492.0" text-anchor="middle" font-family="Geist, 'Noto Sans TC', sans-serif" font-size="13" font-weight="600" fill="#f5f5f5">Supabase error_reports</text>
+<text x="200.0" y="508.0" text-anchor="middle" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10.5" fill="#bfc0c0">status &#x27;new&#x27; · insert-only RLS</text>
+<line x1="8" y1="544" x2="632" y2="544" stroke="#bfc0c0" stroke-opacity="0.35"/><text x="16" y="568" font-family="'Geist Mono', 'Noto Sans TC', monospace" font-size="10" fill="#bfc0c0">NEW = this slice · Δ = minimal edit in another lane’s file · dashed = existing</text></svg>
