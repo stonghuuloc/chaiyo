@@ -4,7 +4,7 @@ import json
 import shutil
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 from fontTools.ttLib import TTFont
@@ -37,6 +37,9 @@ class GlyphSetTests(unittest.TestCase):
         self.assertEqual(kaishu.glyph_set({'components': ['⺌', '⻊']}), {'⺌', '⻊'})
         self.assertEqual(kaishu.glyph_set({'c': '𰀀'}), {'𰀀'})
         self.assertEqual(kaishu.glyph_set({'c': '\U00031350\U0002EBF0'}), {'\U00031350', '\U0002EBF0'})
+
+    def test_Given_IdsField_Then_Ignored(self):
+        self.assertEqual(kaishu.glyph_set({'ids': '⿰⿰丨丿帀', 'hanzi': '师'}), {'师'})
 
     def test_Given_Keys_Then_Ignored(self):
         self.assertEqual(kaishu.glyph_set({'你': 'x'}), set())
@@ -75,18 +78,18 @@ class BuildTests(unittest.TestCase):
         font = TTFont(str(self.out / 'ukai-h1-01.woff2'))
         self.assertIn('Modified by chaiyo on 2026-11-03', font['name'].getDebugName(10))
 
-    def test_Given_CharMissingInFace0_Then_ErrorAndNothingWritten(self):
+    def test_Given_CharMissingInFace0_Then_WarnAndSubsetWithoutIt(self):
         with tempfile.TemporaryDirectory() as tmp:
             bundle = Path(tmp) / 'bundle'
             shutil.copytree(FIXTURE, bundle)
             p = bundle / 'h1-01.json'
             p.write_text(json.dumps({'bad': '你𠀀'}, ensure_ascii=False), encoding='utf-8')
             fonts = Path(tmp) / 'fonts'
-            with self.assertRaises(SystemExit) as cm:
+            err = io.StringIO()
+            with redirect_stdout(io.StringIO()), redirect_stderr(err):
                 kaishu.build(bundle, fonts, '2026-11-03')
-            self.assertIn('h1-01', str(cm.exception))
-            self.assertIn('U+20000', str(cm.exception))
-            self.assertFalse(fonts.exists() and any(fonts.iterdir()))
+            self.assertIn('h1-01: U+20000', err.getvalue())
+            self.assertEqual(cmap_of(fonts / 'ukai-h1-01.woff2'), {'你'})
 
 
 class RebuildTests(unittest.TestCase):

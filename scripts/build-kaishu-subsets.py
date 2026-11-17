@@ -22,9 +22,13 @@ def _in(c, ranges):
     return any(a <= ord(c) <= b for a, b in ranges)
 
 
+# `ids` holds ideographic description sequences: structure data, never drawn as text.
+SKIP_KEYS = {'ids'}
+
+
 def glyph_set(node):
     if isinstance(node, dict):
-        return set().union(*map(glyph_set, node.values()), set())
+        return set().union(*(glyph_set(v) for k, v in node.items() if k not in SKIP_KEYS), set())
     if isinstance(node, list):
         return set().union(*map(glyph_set, node), set())
     if not isinstance(node, str):
@@ -48,14 +52,11 @@ def build(bundle_dir, fonts_dir, date):
         for lesson in manifest['lessons']
     }
     cmap = TTCollection(str(UKAI)).fonts[0].getBestCmap()
-    errors = [
-        f"{lid}: U+{ord(c):04X} {c} is not in ukai.ttc face 0"
-        for lid, chars in glyphs.items()
-        for c in sorted(chars)
-        if ord(c) not in cmap
-    ]
-    if errors:
-        sys.exit('\n'.join(errors))
+    for lid, chars in glyphs.items():
+        missing = sorted(c for c in chars if ord(c) not in cmap)
+        for c in missing:
+            print(f"warning: {lid}: U+{ord(c):04X} {c} is not in ukai.ttc face 0; it falls back to the system font", file=sys.stderr)
+        chars.difference_update(missing)
     fonts_dir.mkdir(parents=True, exist_ok=True)
     stamp = _stamp()
     options = subset.Options(flavor='woff2', font_number=0)

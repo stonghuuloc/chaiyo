@@ -4,12 +4,15 @@ import { self } from '$app/service-worker';
 import { immutable, assets, prerendered } from '$app/manifest';
 import { version } from '$app/env';
 import { networkFirst } from './network';
+import { appShell } from './shell';
 import { AUDIO_CACHE, audioMessage, isAudio, serveAudio } from './audio';
 import { AUDIO_BASE, SYLLABLE_BASE } from '../lib/audio/base';
 
 const CACHE = `shell-${version}`;
-const SHELL = [...immutable, ...assets, ...prerendered].map(
-	(f) => new URL(f.path, self.registration.scope).pathname
+const SHELL = appShell(
+	[...immutable, ...assets, ...prerendered].map(
+		(f) => new URL(f.path, self.registration.scope).pathname
+	)
 );
 
 self.addEventListener('install', (event) => {
