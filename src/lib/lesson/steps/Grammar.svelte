@@ -99,10 +99,10 @@
 					class="flex size-11 shrink-0 items-center justify-center rounded-pill border border-ruled-line"
 					data-part="play"
 					aria-label={m.grammar_play({ hanzi: ex.hanzi })}
-					onclick={() => void playClip(ex.audio!)}
+					onclick={() => playClip(ex.audio!).catch(() => {})}
 				>
 					<svg class="size-5 fill-current" aria-hidden="true"
-						><use href="#i-bold-volume-loud" /></svg
+						><use href="#i-fill-speaker-high" /></svg
 					>
 				</button>
 			{/if}

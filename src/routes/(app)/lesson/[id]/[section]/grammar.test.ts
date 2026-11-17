@@ -208,6 +208,63 @@ describe('grammarSteps', () => {
 		});
 	});
 
+	it('Given_TransformPattern_When_Build_Then_OneRowPerSide', () => {
+		// Arrange
+		const c = content();
+		c.grammar[1] = { ...c.grammar[1], pattern: 'người + 几 + 岁？ → người + số + 岁' };
+
+		// Act
+		const steps = grammarSteps(c);
+
+		// Assert
+		expect(steps[4]).toMatchObject({
+			rows: [
+				['người', '几', '岁？'],
+				['người', 'số', '岁']
+			]
+		});
+	});
+
+	it('Given_DrillTestsTwoPoints_When_Build_Then_ShownOnceUnderFirst', () => {
+		// Arrange
+		const shared: Question = { ...drills[3], id: 'd7', tests: { grammar: ['g2', 'g1'] } };
+		const base = content();
+		const l = base.lesson as Lesson;
+		const c = content({
+			lesson: {
+				...l,
+				sections: { ...l.sections, grammar: { ids: ['g1', 'g2'], drills: [...drills, shared] } }
+			}
+		});
+
+		// Act
+		const ids = grammarSteps(c).map((s) => s.id);
+
+		// Assert
+		expect(ids.filter((id) => id === 'd7')).toHaveLength(1);
+		expect(ids.indexOf('d7')).toBeLessThan(ids.indexOf('g2'));
+	});
+
+	it('Given_UnsupportedDrill_When_Build_Then_Skipped', () => {
+		// Arrange
+		const audio: Question = { ...dialogue, id: 'd8', tests: { grammar: ['g1'] } };
+		const base = content();
+		const l = base.lesson as Lesson;
+		const c = content({
+			lesson: {
+				...l,
+				sections: { ...l.sections, grammar: { ids: ['g1', 'g2'], drills: [...drills, audio] } }
+			}
+		});
+
+		// Act
+		const steps = grammarSteps(c);
+
+		// Assert
+		expect(steps.map((s) => s.id)).not.toContain('d8');
+		expect(steps[0]).toMatchObject({ drills: 3 });
+	});
+
 	it('Given_NoBlankLine_When_Build_Then_EmptyMore', () => {
 		// Arrange / Act
 		const steps = grammarSteps(content());
@@ -222,14 +279,14 @@ describe('grammarSteps', () => {
 });
 
 describe('grammarSteps on Bài 1', () => {
-	const build = async (): Promise<LessonContent> => {
+	const build = async (id = 'h1-01'): Promise<LessonContent> => {
 		const sink = createMemorySink();
 		const r = await importContent('content', sink, { only: scopeFor('content', PRODUCTION_ROOTS) });
 		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
 		if (!sink.content) throw new Error('import wrote no content');
-		const b = buildBundle(sink.content, 'h1-01');
+		const b = buildBundle(sink.content, id);
 		const source = { current: async () => b.sha, bundle: async () => b };
-		return createCatalog(source).lesson('h1-01');
+		return createCatalog(source).lesson(id);
 	};
 
 	it('Given_Bai1_When_Build_Then_Ac1Ac2Strings', async () => {
@@ -273,4 +330,23 @@ describe('grammarSteps on Bài 1', () => {
 			'Mẫu A + 好 và các câu đáp đã vào phần ôn tập, sẽ quay lại cùng các câu hỏi khác.'
 		);
 	});
+
+	it('Given_EveryHsk1Lesson_When_Build_Then_NoThrowAndUniqueIds', async () => {
+		// Arrange
+		const prev = process.env.CHAIYO_VAULT;
+		process.env.CHAIYO_VAULT = join(tmpdir(), 'no-such-vault');
+
+		// Act
+		const all = [];
+		for (const id of ['h1-01', 'h1-02', 'h1-03', 'h1-04', 'h1-05'])
+			all.push(grammarSteps(await build(id)));
+		if (prev === undefined) delete process.env.CHAIYO_VAULT;
+		else process.env.CHAIYO_VAULT = prev;
+
+		// Assert
+		for (const steps of all) {
+			expect(steps.length).toBeGreaterThan(0);
+			expect(new Set(steps.map((s) => s.id)).size).toBe(steps.length);
+		}
+	}, 60_000);
 });

@@ -4,10 +4,13 @@ import type { Question } from '#lib/content/schemas.js';
 import type { ImportedSentence } from '#lib/content/import/sink.js';
 import type { LessonStep } from '#lib/lesson/steps.js';
 
+// `A → B / C → D` lists reply pairs; `slots → slots` is one sentence turned into another.
 const rowsOf = (pattern: string) =>
-	pattern.includes('→')
-		? pattern.split(' / ').map((pair) => pair.split(' → '))
-		: [pattern.split(' + ')];
+	!pattern.includes('→')
+		? [pattern.split(' + ')]
+		: pattern.includes(' + ')
+			? pattern.split(' → ').map((side) => side.split(' + '))
+			: pattern.split(' / ').map((pair) => pair.split(' → '));
 
 const bare = (hanzi: string) => hanzi.replace(/[\p{P}\s]/gu, '');
 
@@ -21,6 +24,9 @@ const exampleOf = (sentences: ImportedSentence[], id: string) => {
 	const s = findSentence(sentences, id);
 	return { hanzi: s.hanzi, pinyin: s.pinyin, vi: s.vi, ...(s.audio ? { audio: s.audio } : {}) };
 };
+
+const supported = (d: Question) =>
+	(d.type === 'choice' && d.prompt.kind === 'vi') || d.type === 'order';
 
 const drillStep = (d: Question, ask: string, sentences: ImportedSentence[]): LessonStep => {
 	if (d.type === 'choice' && d.prompt.kind === 'vi')
@@ -47,7 +53,10 @@ export function grammarSteps(c: LessonContent): LessonStep[] {
 	ids.forEach((gid, i) => {
 		const g = c.grammar.find((x) => x.id === gid);
 		if (!g) throw new Error(`no grammar point ${gid}`);
-		const mine = drills.filter((d) => d.tests.grammar?.includes(gid) ?? false);
+		// A drill testing several points shows once, under the first of them in lesson order.
+		const mine = drills.filter(
+			(d) => supported(d) && ids.find((id) => d.tests.grammar?.includes(id)) === gid
+		);
 		const [lead, ...rest] = g.explain.split('\n\n');
 
 		steps.push({

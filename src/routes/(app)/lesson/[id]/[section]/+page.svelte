@@ -5,7 +5,8 @@
 	import { sections } from './sections';
 
 	let { data }: PageProps = $props();
-	const View = $derived(sections[page.params.section ?? '']);
+	const id = $derived(page.params.section ?? '');
+	const View = $derived(Object.hasOwn(sections, id) ? sections[id] : undefined);
 </script>
 
 {#if View}
