@@ -48,7 +48,6 @@
 		}
 		if (me !== session) {
 			opened.close();
-			phase = 'short';
 			return;
 		}
 		mic = opened;

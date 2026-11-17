@@ -363,4 +363,39 @@ describe('Speak', () => {
 		expect(getUserMedia).toHaveBeenCalledTimes(1);
 		expect(cta!.label).toBe(m.lesson_speak_release());
 	});
+
+	it('Given_StaleOpenResolvesDuringNewPress_When_Released_Then_NoHotMic', async () => {
+		// Arrange
+		const opens: ((v: unknown) => void)[] = [];
+		const stops: Mock[] = [];
+		setMic({
+			getUserMedia: vi.fn(
+				() =>
+					new Promise((resolve) => {
+						opens.push(resolve);
+					})
+			)
+		});
+		const hold = cta!.hold!;
+		const stream = () => {
+			const stop = vi.fn();
+			stops.push(stop);
+			return { getTracks: () => [{ stop }] };
+		};
+
+		// Act
+		hold.onpress();
+		hold.onrelease();
+		hold.onpress();
+		opens[0](stream());
+		await settle();
+		hold.onrelease();
+		opens[1](stream());
+		await settle();
+
+		// Assert
+		expect(stops.map((s) => s.mock.calls.length)).toEqual([1, 1]);
+		expect(cta!.label).not.toBe(m.lesson_speak_release());
+		expect(target!.querySelector('[data-timer]')).toBeNull();
+	});
 });

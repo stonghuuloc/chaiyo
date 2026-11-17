@@ -520,4 +520,47 @@ describe('StepRunner hold CTA', () => {
 		expect(runs).toHaveLength(1);
 		expect(runs[0].answers).toEqual({ s0: false });
 	});
+
+	it('Given_BlockedMic_When_EnterRepeats_Then_DefaultPreventedAndStepStays', async () => {
+		// Arrange
+		getUserMedia.mockImplementation(async () => {
+			throw new DOMException('denied', 'NotAllowedError');
+		});
+		await mountHold();
+		holdCta().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+		await settle();
+		expect(holdCta().textContent).toContain(m.lesson_speak_skip());
+
+		// Act
+		const repeat = new KeyboardEvent('keydown', {
+			key: 'Enter',
+			repeat: true,
+			bubbles: true,
+			cancelable: true
+		});
+		holdCta().dispatchEvent(repeat);
+
+		// Assert
+		expect(repeat.defaultPrevented).toBe(true);
+		expect(counter()).toBe('1/2');
+	});
+
+	it('Given_SpaceHoldLive_When_WindowBlur_Then_HoldEnds', async () => {
+		// Arrange
+		const stop = vi.fn();
+		getUserMedia.mockImplementation(async () => ({ getTracks: () => [{ stop }] }));
+		await mountHold();
+		key('keydown');
+		await settle();
+		await vi.advanceTimersByTimeAsync(3_100);
+		flushSync();
+
+		// Act
+		window.dispatchEvent(new Event('blur'));
+		flushSync();
+
+		// Assert
+		expect(stop).toHaveBeenCalledTimes(1);
+		expect(holdCta().textContent).toContain(m.lesson_continue());
+	});
 });
