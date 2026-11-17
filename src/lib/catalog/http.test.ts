@@ -7,7 +7,8 @@ const rejection = async (p: Promise<unknown>): Promise<CatalogError> => {
 	try {
 		await p;
 	} catch (e) {
-		return e as CatalogError;
+		if (e instanceof CatalogError) return e;
+		throw e;
 	}
 	throw new Error('expected rejection');
 };
@@ -81,6 +82,41 @@ describe('httpSource', () => {
 		const { sha } = await fakeFetch();
 		const catalog = await load({
 			[`/content/${sha}/h1-01.json`]: () => new Response('not json', { status: 200 })
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_BundleBodyNull_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({ [`/content/${sha}/h1-01.json`]: () => Response.json(null) });
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_BundleHasNoLesson_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({ [`/content/${sha}/h1-01.json`]: () => Response.json({ sha }) });
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_LessonHasNoSections_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () => Response.json({ sha, lesson: { id: 'h1-01' } })
 		});
 		// Act
 		const e = await rejection(catalog.lesson('h1-01'));

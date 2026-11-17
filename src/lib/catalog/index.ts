@@ -43,7 +43,7 @@ export type Catalog = {
 };
 
 const toLessonContent = (b: Bundle): LessonContent => {
-	const lesson = b.lesson as Lesson | Primer;
+	const lesson = b.lesson;
 	const words =
 		'words' in lesson.sections
 			? lesson.sections.words.ids.flatMap((id) => b.words.filter((w) => w.id === id))
@@ -90,6 +90,7 @@ export function createCatalog(source: CatalogSource): Catalog {
 			if (cached?.sha === sha) return toLessonContent(cached);
 			const bundle = await source.bundle(sha, id);
 			if (bundle.sha !== sha || bundle.lesson.id !== id) throw new CatalogError('malformed', id);
+			for (const [key, b] of loaded) if (b.sha !== sha) loaded.delete(key);
 			loaded.set(id, bundle);
 			return toLessonContent(bundle);
 		},

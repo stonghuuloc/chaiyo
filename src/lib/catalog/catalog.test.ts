@@ -6,7 +6,8 @@ const failure = async (p: Promise<unknown>): Promise<CatalogError> => {
 	try {
 		await p;
 	} catch (e) {
-		return e as CatalogError;
+		if (e instanceof CatalogError) return e;
+		throw e;
 	}
 	throw new Error('expected rejection');
 };
@@ -75,6 +76,32 @@ describe('lesson', () => {
 		// Assert
 		expect(bundle).toHaveBeenCalledTimes(2);
 		expect(l.contentSha).toBe(next);
+	});
+
+	it('drops bundles from an older sha when a newer one loads', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const shaA = await inner.current();
+		const shaB = 'b'.repeat(64);
+		const first = await inner.bundle(shaA, 'h1-01');
+		let now = shaA;
+		const source: CatalogSource = {
+			current: async () => now,
+			bundle: async (sha, id) => ({
+				...(id === 'h1-02'
+					? { ...first, lesson: { ...first.lesson, id: 'h1-02' } }
+					: await inner.bundle(shaA, id)),
+				sha
+			})
+		};
+		const catalog = createCatalog(source);
+		await catalog.lesson('h1-02');
+		now = shaB;
+		await catalog.lesson('h1-01');
+		// Act
+		const w = await catalog.word('你好');
+		// Assert
+		expect(w.contentSha).toBe(shaB);
 	});
 
 	it('keeps the loaded bundle for word reads', async () => {
