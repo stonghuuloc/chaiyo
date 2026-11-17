@@ -312,4 +312,35 @@ describe('StepRunner', () => {
 		expect(Object.keys(runs[0].answers)).toHaveLength(6);
 		expect(state.lessons['h1-01'].done).toContain('words');
 	});
+
+	it('Given_ResumedWithAnsweredStepLater_When_Continue_Then_AnsweredStepSkipped', async () => {
+		// Arrange
+		let finished = 0;
+		const [q0, q1, q2] = six;
+		const ledger = await ledgerFor();
+		let view = mountRunner(ledger, { steps: [q0, q1, q2] });
+		pickAndCheck(view);
+		view.cta().click();
+		await vi.waitFor(() => expect(view.counter()).toBe('2/3'));
+		detach();
+		view = mountRunner(ledger, { steps: [q1, q0, q2], onfinish: () => (finished += 1) });
+		expect(target!.textContent).toContain('Câu 2');
+
+		// Act
+		pickAndCheck(view);
+		view.cta().click();
+		await vi.waitFor(() => expect(view.counter()).toBe('3/3'));
+		const shown = target!.textContent;
+		pickAndCheck(view);
+		view.cta().click();
+		await vi.waitFor(() => expect(finished).toBe(1));
+
+		// Assert
+		expect(shown).toContain('Câu 3');
+		expect(shown).not.toContain('Câu 1');
+		const runs = Object.values(ledger.state().runs);
+		expect(runs).toHaveLength(1);
+		expect(runs[0].answers).toEqual({ q0: true, q1: true, q2: true });
+		expect(runs[0].closed).toBe(true);
+	});
 });

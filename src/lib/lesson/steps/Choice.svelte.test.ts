@@ -1,6 +1,6 @@
 import { flushSync, mount, unmount } from 'svelte';
 import { m } from '#lib/paraglide/messages.js';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Answer, Cta, Mode } from '../types';
 import Choice, { type Step } from './Choice.svelte';
 
@@ -40,6 +40,7 @@ const mountChoice = (props: { mode?: Mode; last?: boolean; step?: Step } = {}) =
 };
 
 afterEach(() => {
+	vi.restoreAllMocks();
 	if (app) unmount(app as never);
 	target?.remove();
 	target = undefined;
@@ -101,6 +102,24 @@ describe('Choice', () => {
 		expect(calls).toHaveLength(1);
 		expect(calls[0]).toMatchObject({ questionId: 'q1', pick: '你', correct: false });
 		expect(calls[0]!.ms).toBeGreaterThanOrEqual(0);
+	});
+
+	it('Given_FeedbackReadAfterCheck_When_Continue_Then_MsStopsAtCheck', () => {
+		// Arrange
+		const now = vi.spyOn(performance, 'now').mockReturnValue(1000);
+		const { options, cta, calls } = mountChoice();
+		options()[1].click();
+		flushSync();
+		now.mockReturnValue(3000);
+		cta().onclick();
+		flushSync();
+		now.mockReturnValue(33000);
+
+		// Act
+		cta().onclick();
+
+		// Assert
+		expect(calls[0]).toMatchObject({ questionId: 'q1', correct: true, ms: 2000 });
 	});
 
 	it('Given_NoPick_When_CtaPressed_Then_NothingHappens', () => {

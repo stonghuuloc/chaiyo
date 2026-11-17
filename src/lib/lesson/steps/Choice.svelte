@@ -28,6 +28,7 @@
 
 	const graded = $derived(phase === 'graded' && pick !== null ? grade(step, pick) : null);
 	const ms = () => Math.round(performance.now() - shown);
+	let took: number | null = null;
 
 	$effect(() => {
 		const c = choiceCta({
@@ -42,8 +43,10 @@
 			...c,
 			onclick: () => {
 				if (pick === null) return;
-				if (mode === 'feedback' && phase === 'picking') phase = 'graded';
-				else next(toAnswer(step, pick, ms()));
+				if (mode === 'feedback' && phase === 'picking') {
+					took = ms();
+					phase = 'graded';
+				} else next(toAnswer(step, pick, took ?? ms()));
 			}
 		});
 	});

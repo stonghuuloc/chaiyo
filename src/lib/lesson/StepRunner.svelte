@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	import type { Ledger } from '#lib/ledger/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import Button from '#lib/ui/Button.svelte';
@@ -35,12 +36,16 @@
 		resume(ledger.state(), { lesson, section, ids: steps.map((s) => s.id) })
 	);
 	const run = start.run ?? crypto.randomUUID();
+	const answered = new SvelteSet(
+		untrack(() => Object.keys(ledger.state().runs[run]?.answers ?? {}))
+	);
 	let index = $state(start.index);
 	let current = $state<Cta | null>(null);
 	let busy = false;
 	let done = false;
 
-	const p = $derived(progress(index, steps.length));
+	const p = $derived(progress(answered.size, steps.length));
+	const last = $derived(steps.every((s, i) => i === index || answered.has(s.id)));
 	const View = $derived(viewOf(steps[index].kind).default);
 
 	async function next(answer?: Answer) {
@@ -61,8 +66,10 @@
 			busy = false;
 		}
 		current = null;
-		if (index < steps.length - 1) {
-			index += 1;
+		answered.add(steps[index].id);
+		const following = steps.findIndex((s) => !answered.has(s.id));
+		if (following >= 0) {
+			index = following;
 			return;
 		}
 		done = true;
@@ -99,13 +106,7 @@
 	{/snippet}
 
 	{#key index}
-		<View
-			step={steps[index]}
-			{mode}
-			last={index === steps.length - 1}
-			cta={(c: Cta) => (current = c)}
-			{next}
-		/>
+		<View step={steps[index]} {mode} {last} cta={(c: Cta) => (current = c)} {next} />
 	{/key}
 
 	{#snippet actions()}
