@@ -58,6 +58,10 @@
 	const p = $derived(progress(answered.size, steps.length));
 	const last = $derived(steps.every((s, i) => i === index || answered.has(s.id)));
 	const View = $derived(viewOf(steps[index].kind).default);
+	const word = $derived.by(() => {
+		const s = steps[index];
+		return s.kind === 'choice' ? (s.card?.word ?? null) : null;
+	});
 
 	async function next(answer?: Answer) {
 		if (busy || done) return;
@@ -120,7 +124,7 @@
 				context={{
 					lesson,
 					step: steps[index].id,
-					word: steps[index].card?.word ?? null,
+					word,
 					contentSha
 				}}
 			/>
