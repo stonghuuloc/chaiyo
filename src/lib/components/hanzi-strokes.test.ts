@@ -5,6 +5,7 @@ import messages from '../../../messages/vi.json';
 import {
 	STROKE_COLORS,
 	STROKE_DATA,
+	isCharacterJson,
 	loadStrokes,
 	withRadicals,
 	writerOptions
@@ -90,6 +91,39 @@ describe('loadStrokes', () => {
 		const run = loadStrokes('你', fakeFetch);
 		// Assert
 		await expect(run).rejects.toThrow('404');
+	});
+});
+
+describe('isCharacterJson', () => {
+	it.each([
+		['missing medians', { strokes: ['M0 0'] }],
+		['non-string stroke', { strokes: [1], medians: [] }],
+		['non-number median', { strokes: ['M0 0'], medians: [[['x', 1]]] }],
+		['bad radStrokes', { strokes: ['M0 0'], medians: [[[1, 2]]], radStrokes: ['0'] }],
+		['null', null]
+	])('Given_%s_When_Checked_Then_Rejected', (_, v) => {
+		// Arrange / Act / Assert
+		expect(isCharacterJson(v)).toBe(false);
+	});
+
+	it('Given_ValidShape_When_Checked_Then_Accepted', () => {
+		// Arrange
+		const v = { strokes: ['M0 0'], medians: [[[1, 2]]], radStrokes: [0] };
+
+		// Act / Assert
+		expect(isCharacterJson(v)).toBe(true);
+	});
+
+	it('Given_BadShapeFromCdn_When_LoadStrokes_Then_Rejects', async () => {
+		// Arrange
+		const fakeFetch: typeof fetch = () =>
+			Promise.resolve(new Response(JSON.stringify({ strokes: 'x' })));
+
+		// Act
+		const run = loadStrokes('你', fakeFetch);
+
+		// Assert
+		await expect(run).rejects.toThrow('stroke data shape');
 	});
 });
 

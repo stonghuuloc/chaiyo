@@ -3,7 +3,9 @@
 	import type { CharacterJson, default as HanziWriter } from 'hanzi-writer';
 	import { m } from '#lib/paraglide/messages.js';
 	import {
+		dimensions,
 		loadStrokes,
+		withDocumentListeners,
 		writerOptions,
 		type StrokeMode,
 		type StrokeProgress
@@ -94,29 +96,41 @@
 		busy = false;
 		errored = false;
 		appliedOutline = untrack(() => outline);
+		let release = () => {};
+		let width = target.clientWidth;
+		const resize = new ResizeObserver(() => {
+			if (target.clientWidth === width) return;
+			width = target.clientWidth;
+			writer?.updateDimensions(dimensions(width));
+		});
+		resize.observe(target);
 
 		void import('hanzi-writer').then(
 			({ default: HanziWriter }) => {
 				if (me !== gen) return;
-				writer = HanziWriter.create(target, c, {
-					...writerOptions(appliedOutline, target.clientWidth, load),
-					onLoadCharDataSuccess: (data) => {
-						if (me !== gen) return;
-						total = data.strokes.length;
-						status = 'ready';
-						const wanted = untrack(() => outline);
-						if (wanted !== appliedOutline) {
-							appliedOutline = wanted;
-							if (wanted) void writer?.showOutline();
-							else void writer?.hideOutline();
+				const made = withDocumentListeners(() =>
+					HanziWriter.create(target, c, {
+						...writerOptions(appliedOutline, target.clientWidth, load),
+						onLoadCharDataSuccess: (data) => {
+							if (me !== gen) return;
+							total = data.strokes.length;
+							status = 'ready';
+							const wanted = untrack(() => outline);
+							if (wanted !== appliedOutline) {
+								appliedOutline = wanted;
+								if (wanted) void writer?.showOutline();
+								else void writer?.hideOutline();
+							}
+							if (quiz) startQuiz();
+							emit();
+						},
+						onLoadCharDataError: () => {
+							if (me === gen) fail();
 						}
-						if (quiz) startQuiz();
-						emit();
-					},
-					onLoadCharDataError: () => {
-						if (me === gen) fail();
-					}
-				});
+					})
+				);
+				writer = made.value;
+				release = made.release;
 			},
 			() => {
 				if (me === gen) fail();
@@ -125,7 +139,9 @@
 
 		return () => {
 			gen++;
+			resize.disconnect();
 			writer?.cancelQuiz();
+			release();
 			writer = undefined;
 			target.querySelector('svg')?.remove();
 		};
@@ -138,7 +154,7 @@
 			appliedOutline = on;
 			if (on) void writer.showOutline();
 			else void writer.hideOutline();
-			if (mode === 'quiz') restart();
+			if (mode === 'quiz' && !busy) restart();
 		});
 	});
 
