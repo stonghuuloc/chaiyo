@@ -1,115 +1,149 @@
 # CHY-25 S2 — plan
-ACs: AC1  ·  Spec rev 2  ·  Repo: stonghuuloc/chaiyo  ·  Branch: CHY-25-S2 off main after S1 · run `pnpm install` first
+ACs: AC1  ·  Spec rev 3  ·  Repo: stonghuuloc/chaiyo  ·  Branch: stonghuuloc/CHY-25-S2 (off `CHY-40-S1` = wave-1 stack tip)
+Base: .@a65f4297
+
+Run `pnpm install` first. Node 24 (`source ~/.nvm/nvm.sh && nvm use 24`).
 
 ## Files touched
-- create: `src/lib/catalog/http.ts`
-- edit: `src/lib/catalog/index.ts` (add the `catalog` instance)
-- create: `src/lib/catalog/http.test.ts`
+- create: `src/lib/catalog/http.ts`, `src/lib/catalog/app.ts`, `src/lib/catalog/http.test.ts`, `src/lib/catalog/fixtures/http.ts`
+- create: `src/routes/(app)/lesson/[id]/+layout.ts`, `layout.test.ts`, `+page.ts`, `+page.svelte`
 - create: `vercel.json`
-- create: `src/routes/(app)/lesson/[id]/[section]/+page.ts`
-- edit: `src/routes/(app)/lesson/[id]/[section]/+page.svelte`
-- edit: `.github/workflows/ci.yml` (one `bash scripts/build-content.sh` step before `pnpm build`, `:52`)
-No content, schema, lint or service-worker edit.
+- edit: `.github/workflows/ci.yml` (one step before `:52`)
+- Not touched: `src/lib/catalog/index.ts`, `[section]/*`, `gate/*`, `src/service-worker/**`, `messages/vi.json`, content, schemas, lint.
 
-## Anchors (verified 2026-11-06 on main 23f1db9)
-- `src/routes/(app)/lesson/[id]/[section]/+page.svelte:1-5` placeholder (`m.screen_lesson_section()` only); `src/routes/(app)/word/[id]/+page.svelte:1-5` placeholder (not touched).
-- `src/routes/(app)/+layout.ts:4-8` `load` runs `requireSession`; `src/routes/+layout.ts:7-8` `ssr = false`, so the lesson `load` is browser-side.
-- `package.json:8` `build` = `vite build`; `vite.config.ts:4,25` `adapter` import and `adapter()` from `@sveltejs/adapter-vercel`; there is no `svelte.config.js`.
-- `scripts/build-content.sh:1-5` import into `static/content`, then `pnpm fonts` into `static/fonts/lessons`; `.gitignore:41-42` ignores both. `package.json:19` `import:content`, `:25` `fonts`.
-- `.github/workflows/ci.yml:27-30` Python 3.12 + `pip install -r scripts/requirements-fonts.txt`; `:35` the fixture import; `:52` `pnpm build`. A new step at `:52` (inserted before it) runs `bash scripts/build-content.sh`.
-- `src/lib/content/import/bundle-sink.ts:11-25` `current.json` = `{ sha }`, written last; `:36-46` `<sha>/<id>.json`, `manifest.json`, `audio-manifest.json`.
-- `README.md:37-47` the Vercel project (`chaiyo`, scope `stonghuulocs-projects`, main -> Production, PR -> Preview).
-- S1 on disk after Task 1: `src/lib/catalog/index.ts` exports `createCatalog`, `CatalogSource`, `CatalogError`.
-- Real content at 23f1db9 imports clean (`pnpm -s import:content content --sink memory --only lessons/hsk1` -> sha `7915681c…`, exit 0); `scripts/build-content.sh` then writes the 2 lessons + 2 fonts (verified on the Mac with `~/.capy/work/ft` activated).
+## Anchors (verified 2026-11-16 on a65f4297)
+- `src/lib/catalog/index.ts:6-9` `CatalogSource`; `:11` `CatalogErrorCode`; `:13-20` `class CatalogError(code, id)`; `:22-32` `LessonContent`; `:75` `createCatalog(source)`; `:87-95` `lesson(id)`: `current()` → `bundle(sha, id)` → checks sha + lesson id.
+- `src/lib/catalog/fixtures/source.ts:8` `fixtureSource()`: imports `fixtures/ok`, `current()` = content sha, `bundle()` = `buildBundle(content, id)`; throws `not-found` for an unknown id.
+- `src/lib/catalog/catalog.test.ts:17-40` the AC1 assertion shape (title, level, 10 word ids 你…再见, 64-hex sha).
+- `src/routes/(app)/lesson/[id]/[section]/+page.ts:3`, `gate/+page.ts:3`: `{ shell: { template: 'focus' } }` only. No `lesson/[id]/+layout.ts` or `+page.*`.
+- `src/routes/(app)/pinyin/+page.ts:3-6` load with a typed plain arg + `shell: { template: 'pushed', section: 'roadmap' } satisfies Shell`; `pinyin/chart.test.ts:162-173` calls `load` directly.
+- `src/routes/+layout.ts:8` `ssr = false`; `src/routes/(app)/+layout.ts:5-10` `requireSession`.
+- `src/lib/shell/template.ts:3-6` `Shell` type.
+- `vite.config.ts:4,25` adapter-vercel; `:50-58` vitest `server` project = `src/**/*.test.ts` in node.
+- `scripts/build-content.sh:1-5`; `scripts/requirements-fonts.txt` (fonttools 4.68.0, brotli 1.2.1); `package.json:8` `build`, `:31` `fonts`.
+- `.github/workflows/ci.yml:28-30` setup-python 3.12, no pip install; `:36` fixture import; `:52-53` `pnpm build`.
+- `.gitignore:43-44` ignores `static/content/`, `static/fonts/lessons/`; `.prettierignore` ignores `/static/`.
 
-## Task 1 [AC1] `httpSource` + URL/error tests
-Files: create `src/lib/catalog/http.ts`, `src/lib/catalog/http.test.ts`
-- Test first: the source is built from `await fixtureSource()` and a fake `fetch` over a `Map<string, Response>`:
-  - `current()` requests exactly `/content/current.json` and returns the fixture sha;
-  - `bundle(sha, 'h1-01')` requests exactly `/content/<sha>/h1-01.json`; the resulting `lesson('h1-01')` has title `Xin chào`, level 1, 10 words and the fixture sha;
-  - `current.json` `{ sha: 'abc' }` -> `malformed`, id `current`;
-  - 404 -> `not-found` id `h9-99`;
-  - 500 -> `malformed`; body `not json` -> `malformed`;
-  - a bundle body with `sha: 'f'.repeat(64)` -> `malformed` through S1's validation;
-  - the URL list recorded by the spy is exactly `['/content/current.json', '/content/<sha>/h1-01.json']` for one lesson call.
-- Change:
-  ```ts
-  export function httpSource(fetchFn: typeof fetch = fetch, base = '/content'): CatalogSource {
-    const read = async (url: string, id: string) => {
-      let res: Response;
-      try { res = await fetchFn(url); } catch { throw new CatalogError('offline', id); }
-      if (res.status === 404) throw new CatalogError('not-found', id);
-      if (!res.ok) throw new CatalogError('malformed', id);
-      try { return await res.json(); } catch { throw new CatalogError('malformed', id); }
-    };
-    return {
-      current: async () => {
-        const body = await read(`${base}/current.json`, 'current');
-        const sha = body?.sha;
-        if (typeof sha !== 'string' || !/^[0-9a-f]{64}$/.test(sha)) throw new CatalogError('malformed', 'current');
-        return sha;
-      },
-      bundle: async (sha, id) => read(`${base}/${sha}/${encodeURIComponent(id)}.json`, id)
-    };
-  }
-  ```
-- Verify: `pnpm test -- src/lib/catalog/http.test.ts`.
+## Task 1 [AC1] `httpSource` throws CatalogError itself
+Files: create `src/lib/catalog/fixtures/http.ts`, `src/lib/catalog/http.test.ts`, `src/lib/catalog/http.ts`
+- Fixture: `async fakeFetch(overrides?)` (awaits `fixtureSource()`, `fixtures/source.ts:8`) builds a `Map<url, () => Response | Promise<never>>` from `fixtureSource()`: `/content/current.json` → `{ sha }`, `/content/<sha>/h1-01.json` and `h0-00.json` → `JSON.stringify(bundle)`. Unknown URL → 404. It returns `{ fetch, urls }`; `urls` records every request. Used by Task 1 and Task 3.
+- Test first (`http.test.ts`, Arrange/Act/Assert):
+  - `Given_HttpSource_When_LessonH1_01_Then_XinChao_Level1_TenWords_Sha`: `createCatalog(httpSource(f.fetch)).lesson('h1-01')` → title, level, ids 你…再见, 64-hex sha. `f.urls` = `['/content/current.json', '/content/<sha>/h1-01.json']`.
+  - `…When_BundleFetchRejects_Then_Offline_NamingId`: only `/content/<sha>/h1-01.json` rejects with `TypeError` (`current.json` still answers, since `lesson()` calls `current()` first, `index.ts:88-89`) → `CatalogError` code `offline`, id `h1-01`.
+  - `…When_Bundle404_Then_NotFound_NamingId` → `not-found` `h9-99`.
+  - `…When_Bundle500_Then_Malformed`, `…When_BodyNotJson_Then_Malformed` → `malformed` `h1-01`.
+  - `…When_CurrentShaNotHex_Then_Malformed_Current`: `{ sha: 'abc' }` → `malformed` `current`, `f.urls.length === 1`.
+  - `…When_CurrentRejects_Then_Offline_Current` → `offline` `current`.
+- Change: `http.ts` per the draft below. No `fetchFn` → `globalThis.fetch(url)` at call time.
+- Verify: `pnpm vitest --run src/lib/catalog`.
 
-## Task 2 [AC1] App instance
-File: `src/lib/catalog/index.ts`
-- Test first: `import { catalog } from './index'` in a test does not call `fetch` (the factory creates closures only); the existing catalog tests keep passing.
-- Change: `import { httpSource } from './http'; export const catalog = createCatalog(httpSource());`
-- Verify: `pnpm test -- src/lib/catalog`; `pnpm check` (the module is client-safe: `http.ts` has no `node:` import).
+## Task 2 [AC1] App-wide `catalog`
+File: create `src/lib/catalog/app.ts`
+- Change: `export const catalog = createCatalog(httpSource());`. It sits outside `index.ts` to avoid an `index ↔ http` import cycle.
+- Test: covered by Task 3 (load through the real singleton). Importing `app.ts` makes no request; Task 3 asserts `urls` is empty before `load` runs.
+- Verify: `pnpm check`.
 
-## Task 3 [AC1] Lesson route reads the bundle
-Files: create `src/routes/(app)/lesson/[id]/[section]/+page.ts`; edit `+page.svelte`
-- Test first: none (no component tests in this repo, `vite.config.ts:56-57`); the load is exercised by the browser check below. The Catalog test is the automated proof.
-- Change:
-  ```ts
-  import { catalog } from '#lib/catalog/index.js';
-  import type { PageLoad } from './$types';
-  export const load: PageLoad = async ({ params }) => ({ content: await catalog.lesson(params.id) });
-  ```
-  The page keeps `m.screen_lesson_section()` as the section head, then renders `data.content.lesson.titleHanzi`, `title`, and each word as `hanzi pinyin — hanviet`, with `data-content-sha={data.content.contentSha}` on the root. No other section UI, no progress (CHY-31..35).
-- Verify: `pnpm check` and `pnpm lint` green; the browser check below.
+## Task 3 [AC1] Lesson layout load → `{ lesson: LessonContent }`
+Files: create `src/routes/(app)/lesson/[id]/+layout.ts`, `src/routes/(app)/lesson/[id]/layout.test.ts`
+- Test first (`layout.test.ts`): `vi.stubGlobal('fetch', f.fetch)` FIRST, then `const { load } = await import('./+layout')` (a static import would run before the stub and make the no-request check vacuous); `afterEach(vi.unstubAllGlobals)`.
+  - `Given_FetchServesBundles_When_LoadH1_01_Then_LessonXinChao_WithSha`: `f.urls` is `[]` after import. `await load({ params: { id: 'h1-01' } })` → `lesson.lesson.title === 'Xin chào'`, `lesson.words.length === 10`, `lesson.contentSha` 64-hex.
+  - `…When_LoadUnknownId_Then_RejectsNotFound_h9_99`.
+- Change: `export const load = async ({ params }: { params: { id: string } }) => ({ lesson: await catalog.lesson(params.id) });`. The plain-arg type follows `pinyin/+page.ts:3`, so the test can call it directly. `pnpm check` must still accept it as a `LayoutLoad`.
+- Verify: `pnpm vitest --run "src/routes/(app)/lesson"`.
 
-## Task 4 [AC1] `vercel.json`
+## Task 4 [AC1] Minimal hub proof page
+Files: create `src/routes/(app)/lesson/[id]/+page.ts`, `+page.svelte`
+- `+page.ts`: `export const load = () => ({ shell: { template: 'pushed', section: 'roadmap' } satisfies Shell });`.
+- `+page.svelte` (`<script lang="ts">`, `let { data }: PageProps = $props()`):
+  - root `<section data-content-sha={data.lesson.contentSha}>`;
+  - `<h1>{data.lesson.lesson.titleHanzi} {data.lesson.lesson.title}</h1>`;
+  - `<ol>` of `data.lesson.words` as `{w.hanzi} {w.pinyin} — {w.hanviet}`.
+  - Fields (verified): `Lesson`/`Primer` both have `title`, `titleHanzi` (`schemas.ts:191-192`, `:233-234`); `ImportedWord` (`import/sink.ts:19`) = `Word` with `hanzi`, `pinyin`, optional `hanviet` (`schemas.ts:43-48`) — print `hanviet` only when present.
+  - No new `messages/vi.json` key; CHY-31.S1 replaces this body.
+- Test: no component test (the proof is the browser check in Task 7); `pnpm check` types the `data.lesson` access.
+- Verify: `pnpm check && pnpm lint`.
+
+## Task 5 [AC1] `vercel.json`
 File: create `vercel.json`
-- Test first: `pnpm build` on a tree with `static/content/` present must put the bundles in the adapter output — it already does (the adapter copies `static/`); the new part is the command and headers, verified on a team-authored deploy.
-- Change:
-  ```json
-  {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "buildCommand": "python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build",
-    "headers": [
-      { "source": "/content/current.json", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
-      { "source": "/content/:sha([0-9a-f]{64})/:file", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
-      { "source": "/fonts/lessons/:file", "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }] }
-    ]
-  }
+- Change: draft below. Format it with `pnpm format vercel.json`; do not hand-compress.
+- Verify: `pnpm lint`; `node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8'))"`.
+
+## Task 6 [AC1] CI builds the real content
+File: `.github/workflows/ci.yml`
+- Change: insert before `- run: pnpm build` (`:52`):
+  ```yaml
+      - run: pip install -r scripts/requirements-fonts.txt && bash scripts/build-content.sh
+        if: ${{ !cancelled() }}
   ```
-  `pnpm lint` (prettier) formats the JSON; do not hand-compress it.
-- Verify: `pnpm lint`; `python3 -c "import json; json.load(open('vercel.json'))"`.
+  Python 3.12 is already set up at `:28-30`. The fixture import at `:36` stays.
+- Verify: the PR's `CI / web` job runs the step green and `pnpm build` after it.
 
-## Task 5 [AC1] CI builds the real content
-Files: `.github/workflows/ci.yml`
-- Test first: none (workflow wiring); the proof is CI itself on the PR.
-- Change: insert `- run: bash scripts/build-content.sh` immediately before `pnpm build` (`:52`). Python and fontTools are already installed at `:27-30`; the fixture import at `:35` stays. `scripts/build-content.sh` is `set -euo pipefail`, so a bad content file or a missing glyph fails the step, and `pnpm build` then includes the generated `static/content/` and fonts.
-- Verify: the PR's `ci` job runs the new step green; a deliberate bad content change would fail it (not executed in the PR).
-
-## Task 6 [AC1] Prove it
-- On one tree: `pnpm test`, `pnpm check`, `pnpm lint` green.
-- Mac, with fontTools (`source ~/.capy/work/ft/bin/activate` or a venv with `scripts/requirements-fonts.txt`): `bash scripts/build-content.sh` exits 0; `ls static/content/*/h1-01.json static/fonts/lessons/ukai-h1-01.woff2` finds both; `git status --porcelain` stays clean (both dirs are ignored).
-- `PUBLIC_SUPABASE_URL=http://127.0.0.1:56321 PUBLIC_SUPABASE_PUBLISHABLE_KEY=ci-placeholder pnpm build` exits 0; `ls .vercel/output/static/content/*/h1-01.json` finds the bundle (the adapter copies `static/`).
-- Team-authored Vercel deploy (after a team member merges or pushes this branch): `curl -s https://<deploy>/content/current.json` -> `{ sha }`; `curl -sI .../content/current.json` -> `cache-control: no-store`; `curl -sI .../content/<sha>/h1-01.json` -> `cache-control: public, max-age=31536000, immutable`; `curl -sI .../fonts/lessons/ukai-h1-01.woff2` -> `must-revalidate`; all 200. This is also the proof for Q2. The agent cannot create this deploy (Vercel refuses non-team authors; the PR's `Vercel` check is blocked), so it is recorded as a handoff, not an agent proof.
-- Browser, signed in (local Supabase session from CHY-2, or the hosted preview with the test account): `/lesson/h1-01/tu-moi` shows `你好 Xin chào`, the 10 words in lesson order, and `data-content-sha` = the sha from `current.json`.
+## Task 7 [AC1] Prove it (one run on the final tree)
+- `pnpm test`, `pnpm check`, `pnpm lint`, each green. Run `pnpm lint` raw, not through rtk: rtk hides a prettier failure.
+- Build, with a fontTools venv (`python3 -m venv /tmp/ft && /tmp/ft/bin/pip install -r scripts/requirements-fonts.txt && source /tmp/ft/bin/activate`):
+  - `bash scripts/build-content.sh` exits 0;
+  - `PUBLIC_SUPABASE_URL=http://127.0.0.1:56321 PUBLIC_SUPABASE_PUBLISHABLE_KEY=ci-placeholder pnpm build` exits 0;
+  - `ls .vercel/output/static/content/*/h1-01.json .vercel/output/static/fonts/lessons/ukai-h1-01.woff2` finds both;
+  - `git status --porcelain` shows no new file.
+- Browser: dev server on port 5412 (`--strictPort`), signed in with local Supabase. Open `/lesson/h1-01`.
+  - Screenshot shows `你好 Xin chào` and 10 words, 你 first, 再见 last.
+  - `document.querySelector('[data-content-sha]').dataset.contentSha` equals the sha in `/content/current.json`.
+- Handoff (not an agent proof; Vercel blocks non-team authors): on the first team-authored deploy, `curl -sI` checks the 3 header paths for `no-store`, `immutable` and `must-revalidate`, all 200.
 
 ## Mutation paths covered
-- `current.json` valid / invalid sha / 404 / 500 / not JSON; `bundle` 404 / 500 / not JSON / wrong sha / wrong lesson id; the build command failing at import or at fonts (set -e) so no partial `/content/` is deployed; header rules overlapping (current.json matches only its own rule); a missing `static/content` at `vite build` (the build command creates it first).
-- The route loads only the lesson id from the URL; a section id outside the bundle does not affect the read.
+- Reads only. `current.json`: ok / non-hex sha / 404 / 500 / rejects. Bundle: ok / 404 / 500 / not JSON / rejects. Wrong sha or lesson id inside the bundle: S1 `lesson()` checks (`index.ts:92`).
+- Callers of the seam: hub `+page.svelte` (Task 4). `[section]` and `gate` inherit `data.lesson` without an edit.
+- Build: `set -euo pipefail` (`build-content.sh:2`) fails the deploy before `pnpm build`, so no partial `/content/` ships.
 
 ## Rollback
-Delete `vercel.json`, `src/lib/catalog/http.ts`, `http.test.ts`, the route `+page.ts`, and revert the `+page.svelte` edit; production falls back to the default `pnpm build` (no `/content/` served). S1 stays green.
+Revert this slice's commits. Production then falls back to the default `pnpm build`, which serves no `/content/`. S1 stays green. No migration.
 
 ## Draft code (UNEXECUTED — expect it to be wrong; adapt to what is on disk)
-The `httpSource` and `vercel.json` blocks above are drafts only. A team-authored deploy that fails at `pip install` is reported to the Captain as Q2, not worked around by dropping fonts.
+A self-contradictory fixture must be reported, not hacked around to make tests pass.
+```ts
+// src/lib/catalog/http.ts
+import { CatalogError, type CatalogSource } from './index';
+import type { Bundle } from '../content/import/bundle';
+
+type Fetch = (url: string) => Promise<Response>;
+
+export function httpSource(fetchFn?: Fetch, base = '/content'): CatalogSource {
+	const get: Fetch = fetchFn ?? ((url) => globalThis.fetch(url));
+	const read = async (url: string, id: string): Promise<unknown> => {
+		let res: Response;
+		try {
+			res = await get(url);
+		} catch {
+			throw new CatalogError('offline', id);
+		}
+		if (res.status === 404) throw new CatalogError('not-found', id);
+		if (!res.ok) throw new CatalogError('malformed', id);
+		try {
+			return await res.json();
+		} catch {
+			throw new CatalogError('malformed', id);
+		}
+	};
+	return {
+		async current() {
+			const sha = ((await read(`${base}/current.json`, 'current')) as { sha?: unknown })?.sha;
+			if (typeof sha !== 'string' || !/^[0-9a-f]{64}$/.test(sha))
+				throw new CatalogError('malformed', 'current');
+			return sha;
+		},
+		bundle: async (sha, id) =>
+			(await read(`${base}/${sha}/${encodeURIComponent(id)}.json`, id)) as Bundle
+	};
+}
+```
+```json
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"buildCommand": "python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build",
+	"headers": [
+		{ "source": "/content/current.json", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
+		{ "source": "/content/:sha([0-9a-f]{64})/:file", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+		{ "source": "/fonts/lessons/:file", "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }] }
+	]
+}
+```
