@@ -98,6 +98,24 @@ describe('ReportButton', () => {
 		expect(queue.pending()).toBe(1);
 	});
 
+	it('a double tap on Gửi stores one report', async () => {
+		// Arrange
+		const queue = await mountButton('u-btn-dbl');
+		openSheet();
+		chips()[0].click();
+		flushSync();
+		const send = button(m.report_send());
+
+		// Act
+		send.click();
+		flushSync();
+		send.click();
+
+		// Assert
+		await vi.waitFor(() => expect(sheet()).toBe(null));
+		expect(queue.pending()).toBe(1);
+	});
+
 	it('five chips, one pressed at a time', async () => {
 		// Arrange
 		await mountButton('u-btn-3');
