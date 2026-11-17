@@ -20,6 +20,7 @@ type FakeWriter = {
 	animateCharacter: Mock;
 	hideCharacter: Mock;
 	highlightStroke: Mock;
+	updateDimensions: Mock;
 };
 
 type WriterOptions = {
@@ -44,13 +45,15 @@ const makeWriter = (): FakeWriter => ({
 	hideOutline: vi.fn(() => Promise.resolve()),
 	animateCharacter: vi.fn(() => Promise.resolve()),
 	hideCharacter: vi.fn(() => Promise.resolve()),
-	highlightStroke: vi.fn()
+	highlightStroke: vi.fn(),
+	updateDimensions: vi.fn()
 });
 
 let writer: FakeWriter;
 let options: WriterOptions;
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
+let resized: (() => void) | undefined;
 
 const settle = async () => {
 	flushSync();
@@ -76,6 +79,17 @@ const mountStrokes = async (props: Props = {}) => {
 beforeEach(() => {
 	writer = makeWriter();
 	options = {};
+	resized = undefined;
+	vi.stubGlobal(
+		'ResizeObserver',
+		class {
+			constructor(cb: () => void) {
+				resized = cb;
+			}
+			observe() {}
+			disconnect() {}
+		}
+	);
 	hw.create.mockImplementation((_el: unknown, _char: unknown, o: WriterOptions) => {
 		options = o;
 		return writer;
@@ -83,6 +97,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+	vi.unstubAllGlobals();
 	if (app) unmount(app as never);
 	target?.remove();
 	target = undefined;
@@ -209,5 +224,80 @@ describe('HanziStrokes interaction', () => {
 		expect(writer.quiz).not.toHaveBeenCalled();
 		expect(ui.text()).not.toContain('nét');
 		expect(ui.text()).not.toContain('Xem mẫu');
+	});
+
+	it('Given_WriterAddsDocumentListener_When_Unmounted_Then_ListenerRemoved', async () => {
+		// Arrange
+		const up = vi.fn();
+		hw.create.mockImplementation((_el: unknown, _char: unknown, o: WriterOptions) => {
+			options = o;
+			document.addEventListener('mouseup', up);
+			return writer;
+		});
+		await mountStrokes();
+		document.dispatchEvent(new Event('mouseup'));
+		expect(up).toHaveBeenCalledTimes(1);
+
+		// Act
+		unmount(app as never);
+		app = undefined;
+		document.dispatchEvent(new Event('mouseup'));
+
+		// Assert
+		expect(up).toHaveBeenCalledTimes(1);
+	});
+
+	it('Given_PadResized_When_Observed_Then_WriterDimensionsUpdated', async () => {
+		// Arrange
+		await mountStrokes();
+		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		await settle();
+		const pad = target!.querySelector<HTMLElement>('.touch-none')!;
+		Object.defineProperty(pad, 'clientWidth', { configurable: true, value: 300 });
+
+		// Act
+		resized!();
+		resized!();
+
+		// Assert
+		expect(writer.updateDimensions).toHaveBeenCalledTimes(1);
+		expect(writer.updateDimensions).toHaveBeenCalledWith({ width: 300, height: 300, padding: 24 });
+	});
+
+	it('Given_DemoPlaying_When_OutlineToggled_Then_QuizRestartsOnlyAfterDemo', async () => {
+		// Arrange
+		const demo = Promise.withResolvers<void>();
+		writer.animateCharacter.mockReturnValue(demo.promise);
+		const props = $state({ outline: true });
+		target = document.createElement('div');
+		document.body.append(target);
+		app = mount(HanziStrokes, {
+			target,
+			props: {
+				char: '你',
+				mode: 'quiz',
+				load: () => Promise.resolve(data),
+				get outline() {
+					return props.outline;
+				}
+			}
+		}) as Record<string, unknown>;
+		await settle();
+		options.onLoadCharDataSuccess!({ strokes: data.strokes });
+		await settle();
+		[...target.querySelectorAll('button')].find((b) => b.textContent?.includes('Xem mẫu'))!.click();
+		await settle();
+
+		// Act
+		props.outline = false;
+		await settle();
+		const duringDemo = writer.quiz.mock.calls.length;
+		demo.resolve();
+		await settle();
+
+		// Assert
+		expect(writer.hideOutline).toHaveBeenCalledTimes(1);
+		expect(duringDemo).toBe(1);
+		expect(writer.quiz).toHaveBeenCalledTimes(2);
 	});
 });

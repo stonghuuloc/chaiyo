@@ -21,7 +21,52 @@ export async function loadStrokes(
 ): Promise<CharacterJson> {
 	const res = await fetchFn(`${STROKE_DATA}${char}.json`);
 	if (!res.ok) throw new Error(`stroke data ${res.status}`);
-	return withRadicals(char, (await res.json()) as CharacterJson);
+	const json: unknown = await res.json();
+	if (!isCharacterJson(json)) throw new Error('stroke data shape');
+	return withRadicals(char, json);
+}
+
+const isNumbers = (v: unknown): v is number[] =>
+	Array.isArray(v) && v.every((n) => typeof n === 'number');
+
+export const isCharacterJson = (v: unknown): v is CharacterJson => {
+	if (typeof v !== 'object' || v === null) return false;
+	const { strokes, medians, radStrokes } = v as Record<string, unknown>;
+	return (
+		Array.isArray(strokes) &&
+		strokes.every((s) => typeof s === 'string') &&
+		Array.isArray(medians) &&
+		medians.every((m) => Array.isArray(m) && m.every(isNumbers)) &&
+		(radStrokes === undefined || isNumbers(radStrokes))
+	);
+};
+
+export const dimensions = (size: number) => ({
+	width: size,
+	height: size,
+	padding: Math.round(size * 0.08)
+});
+
+type DocListener = Parameters<typeof document.addEventListener>;
+
+// hanzi-writer adds document mouseup/touchend listeners in its constructor and never removes them
+export function withDocumentListeners<T>(create: () => T): { value: T; release: () => void } {
+	const added: DocListener[] = [];
+	const add = document.addEventListener;
+	document.addEventListener = function (this: Document, ...args: DocListener) {
+		added.push(args);
+		add.apply(this, args);
+	};
+	try {
+		const value = create();
+		return {
+			value,
+			release: () =>
+				added.forEach(([type, fn, opts]) => document.removeEventListener(type, fn, opts))
+		};
+	} finally {
+		document.addEventListener = add;
+	}
 }
 
 export const writerOptions = (
@@ -29,9 +74,7 @@ export const writerOptions = (
 	size: number,
 	load: (char: string) => Promise<CharacterJson>
 ): Partial<HanziWriterOptions> => ({
-	width: size,
-	height: size,
-	padding: Math.round(size * 0.08),
+	...dimensions(size),
 	showCharacter: false,
 	showOutline: outline,
 	strokeColor: STROKE_COLORS.ink,
