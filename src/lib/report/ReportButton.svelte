@@ -24,6 +24,7 @@
 	let category = $state<Category | null>(null);
 	let note = $state('');
 	let sent = $state(false);
+	let sending = $state(false);
 
 	function close() {
 		open = false;
@@ -32,12 +33,15 @@
 	}
 
 	async function submit() {
-		if (!category) return;
+		if (!category || sending) return;
+		sending = true;
 		try {
 			await send(context, category, note);
 		} catch (e) {
 			console.error(e);
 			return;
+		} finally {
+			sending = false;
 		}
 		close();
 		sent = true;
@@ -77,7 +81,7 @@
 			aria-label={m.report_note()}
 			class="w-full rounded-action border border-ruled-line bg-white/50 p-3 text-title text-ink"
 		></textarea>
-		<Button disabled={!category} onclick={submit}>{m.report_send()}</Button>
+		<Button disabled={!category || sending} onclick={submit}>{m.report_send()}</Button>
 		<button type="button" class="min-h-11 rounded-pill text-title text-graphite" onclick={close}>
 			{m.report_cancel()}
 		</button>

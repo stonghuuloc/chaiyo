@@ -167,6 +167,26 @@ describe('report', () => {
 		).rejects.toThrow('signed out');
 	});
 
+	it('offline report with an open queue needs no session', async () => {
+		// Arrange
+		const client = clientWith(() => Promise.reject(new TypeError('offline')), 'u-offline');
+		const idb = new IDBFactory();
+		const queue = await openReports({ user: { id: 'u-offline' } }, { client, idb });
+		vi.spyOn(client.auth, 'getSession').mockResolvedValue({
+			data: { session: null },
+			error: null
+		} as Awaited<ReturnType<typeof client.auth.getSession>>);
+
+		// Act
+		await report({ lesson: 'h1-01', step: 'w03', word: null, contentSha: 'sha1' }, 'audio', '', {
+			client,
+			idb
+		});
+
+		// Assert
+		expect(queue.pending()).toBe(1);
+	});
+
 	it('sign-out drops the cached queue', async () => {
 		// Arrange
 		const client = clientWith(recording().fetch, 'u-drop');
