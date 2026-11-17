@@ -62,10 +62,10 @@ describe('loadStrokes', () => {
 	it('Given_FetchOk_When_LoadStrokes_Then_RequestsCdnUrlAndPatches', async () => {
 		// Arrange
 		const urls: string[] = [];
-		const fakeFetch = (async (url: string) => {
-			urls.push(url);
+		const fakeFetch: typeof fetch = async (url) => {
+			urls.push(String(url));
 			return ok(data());
-		}) as unknown as typeof fetch;
+		};
 		// Act
 		const out = await loadStrokes('再', fakeFetch);
 		// Assert
@@ -75,9 +75,9 @@ describe('loadStrokes', () => {
 
 	it('Given_FetchRejects_When_LoadStrokes_Then_Rejects', async () => {
 		// Arrange
-		const fakeFetch = (async () => {
+		const fakeFetch: typeof fetch = async () => {
 			throw new TypeError('Failed to fetch');
-		}) as unknown as typeof fetch;
+		};
 		// Act
 		const run = loadStrokes('你', fakeFetch);
 		// Assert
@@ -86,7 +86,7 @@ describe('loadStrokes', () => {
 
 	it('Given_404_When_LoadStrokes_Then_Rejects', async () => {
 		// Arrange
-		const fakeFetch = (async () => new Response('', { status: 404 })) as unknown as typeof fetch;
+		const fakeFetch: typeof fetch = async () => new Response('', { status: 404 });
 		// Act
 		const run = loadStrokes('你', fakeFetch);
 		// Assert
@@ -163,7 +163,9 @@ describe('writerOptions', () => {
 		const failing = () => Promise.reject(new Error('boom'));
 		const o = writerOptions(true, 280, failing);
 		// Act
-		const p = o.charDataLoader!(
+		const loader = o.charDataLoader;
+		if (!loader) throw new Error('no charDataLoader');
+		const p = loader(
 			'再',
 			() => {},
 			() => {}
@@ -189,9 +191,7 @@ describe('tokens', () => {
 
 describe('copy', () => {
 	it('Given_ViMessages_When_Read_Then_LoadErrorIsAc6Copy', () => {
-		// Arrange / Act
-		const m = messages as Record<string, string>;
-		// Assert
-		expect(m.strokes_load_error).toBe('Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại.');
+		// Arrange / Act / Assert
+		expect(messages.strokes_load_error).toBe('Chưa tải được nét chữ. Kiểm tra mạng rồi thử lại.');
 	});
 });
