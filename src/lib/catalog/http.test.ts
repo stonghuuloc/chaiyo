@@ -139,6 +139,28 @@ describe('httpSource', () => {
 		expect(e.id).toBe('h1-01');
 	});
 
+	it('Given_HttpSource_When_WordsSectionHasNoIds_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const good = await (
+			await fakeFetch()
+		)
+			.fetch(`/content/${sha}/h1-01.json`)
+			.then((r) => r.json());
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () =>
+				Response.json({
+					...good,
+					lesson: { ...good.lesson, sections: { ...good.lesson.sections, words: {} } }
+				})
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
 	it('Given_HttpSource_When_CurrentShaNotHex_Then_Malformed_Current', async () => {
 		// Arrange
 		const f = await fakeFetch({
