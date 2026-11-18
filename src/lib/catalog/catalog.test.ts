@@ -104,6 +104,36 @@ describe('lesson', () => {
 		expect(w.contentSha).toBe(shaB);
 	});
 
+	it('keeps the newer sha when a load of an older sha finishes last', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const shaA = await inner.current();
+		const shaB = 'b'.repeat(64);
+		let now = shaA;
+		let release = () => {};
+		const gate = new Promise<void>((r) => {
+			release = r;
+		});
+		const source: CatalogSource = {
+			current: async () => now,
+			bundle: async (sha, id) => {
+				if (sha === shaA) await gate;
+				return { ...(await inner.bundle(shaA, id)), sha };
+			}
+		};
+		const catalog = createCatalog(source);
+		const slow = catalog.lesson('h1-01');
+		await new Promise((r) => setTimeout(r, 0));
+		now = shaB;
+		await catalog.lesson('h1-01');
+		release();
+		await slow;
+		// Act
+		const w = await catalog.word('你好');
+		// Assert
+		expect(w.contentSha).toBe(shaB);
+	});
+
 	it('keeps the loaded bundle for word reads', async () => {
 		// Arrange
 		const inner = await fixtureSource();

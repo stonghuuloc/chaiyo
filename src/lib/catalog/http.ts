@@ -13,7 +13,10 @@ const isBundle = (value: unknown): value is Bundle => {
 		typeof field(value, 'sha') === 'string' &&
 		typeof field(lesson, 'id') === 'string' &&
 		typeof sections === 'object' &&
-		sections !== null
+		sections !== null &&
+		['words', 'chars', 'sentences', 'grammar', 'questions', 'thin'].every((k) =>
+			Array.isArray(field(value, k))
+		)
 	);
 };
 
