@@ -74,7 +74,10 @@ const tokenAt = (seg: string[], index: number): { token: string; start: number }
 
 export function createCatalog(source: CatalogSource): Catalog {
 	const loaded = new Map<string, Bundle>();
-	// The sha the latest lesson() call read: a slower load of an older sha must not overwrite it.
+	// The sha read by the most recently started lesson() call. current() answers can arrive out of
+	// order, so a call sets it only if no later-started call has already set it.
+	let started = 0;
+	let newest = 0;
 	let latest = '';
 
 	const find = <T>(pick: (b: Bundle) => T | undefined): { hit: T; sha: string } | undefined => {
@@ -87,8 +90,12 @@ export function createCatalog(source: CatalogSource): Catalog {
 
 	return {
 		async lesson(id) {
+			const ticket = ++started;
 			const sha = await source.current();
-			latest = sha;
+			if (ticket > newest) {
+				newest = ticket;
+				latest = sha;
+			}
 			const cached = loaded.get(id);
 			if (cached?.sha === sha) return toLessonContent(cached);
 			const bundle = await source.bundle(sha, id);

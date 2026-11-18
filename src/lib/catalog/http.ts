@@ -14,6 +14,7 @@ const isBundle = (value: unknown): value is Bundle => {
 		typeof field(lesson, 'id') === 'string' &&
 		typeof sections === 'object' &&
 		sections !== null &&
+		(!('words' in sections) || Array.isArray(field(field(sections, 'words'), 'ids'))) &&
 		['words', 'chars', 'sentences', 'grammar', 'questions', 'thin'].every((k) =>
 			Array.isArray(field(value, k))
 		)

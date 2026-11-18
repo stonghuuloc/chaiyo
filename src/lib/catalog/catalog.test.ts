@@ -127,7 +127,36 @@ describe('lesson', () => {
 		now = shaB;
 		await catalog.lesson('h1-01');
 		release();
-		await slow;
+		expect((await slow).contentSha).toBe(shaA);
+		// Act
+		const w = await catalog.word('你好');
+		// Assert
+		expect(w.contentSha).toBe(shaB);
+	});
+
+	it('keeps the newer sha when an earlier current() answers last', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const shaA = await inner.current();
+		const shaB = 'b'.repeat(64);
+		let releaseA = () => {};
+		const gateA = new Promise<void>((r) => {
+			releaseA = r;
+		});
+		let calls = 0;
+		const source: CatalogSource = {
+			current: async () => {
+				if (++calls > 1) return shaB;
+				await gateA;
+				return shaA;
+			},
+			bundle: async (sha, id) => ({ ...(await inner.bundle(shaA, id)), sha })
+		};
+		const catalog = createCatalog(source);
+		const slow = catalog.lesson('h1-01');
+		await catalog.lesson('h1-01');
+		releaseA();
+		expect((await slow).contentSha).toBe(shaA);
 		// Act
 		const w = await catalog.word('你好');
 		// Assert
