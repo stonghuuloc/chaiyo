@@ -125,6 +125,20 @@ describe('httpSource', () => {
 		expect(e.id).toBe('h1-01');
 	});
 
+	it('Given_HttpSource_When_BundleHasNoWords_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () =>
+				Response.json({ sha, lesson: { id: 'h1-01', sections: { words: { ids: [] } } } })
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
 	it('Given_HttpSource_When_CurrentShaNotHex_Then_Malformed_Current', async () => {
 		// Arrange
 		const f = await fakeFetch({

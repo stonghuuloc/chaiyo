@@ -74,6 +74,8 @@ const tokenAt = (seg: string[], index: number): { token: string; start: number }
 
 export function createCatalog(source: CatalogSource): Catalog {
 	const loaded = new Map<string, Bundle>();
+	// The sha the latest lesson() call read: a slower load of an older sha must not overwrite it.
+	let latest = '';
 
 	const find = <T>(pick: (b: Bundle) => T | undefined): { hit: T; sha: string } | undefined => {
 		for (const b of loaded.values()) {
@@ -86,12 +88,15 @@ export function createCatalog(source: CatalogSource): Catalog {
 	return {
 		async lesson(id) {
 			const sha = await source.current();
+			latest = sha;
 			const cached = loaded.get(id);
 			if (cached?.sha === sha) return toLessonContent(cached);
 			const bundle = await source.bundle(sha, id);
 			if (bundle.sha !== sha || bundle.lesson.id !== id) throw new CatalogError('malformed', id);
-			for (const [key, b] of loaded) if (b.sha !== sha) loaded.delete(key);
-			loaded.set(id, bundle);
+			if (sha === latest) {
+				for (const [key, b] of loaded) if (b.sha !== sha) loaded.delete(key);
+				loaded.set(id, bundle);
+			}
 			return toLessonContent(bundle);
 		},
 		async word(id) {
