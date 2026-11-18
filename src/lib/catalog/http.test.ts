@@ -161,6 +161,14 @@ describe('httpSource', () => {
 		expect(e.id).toBe('h1-01');
 	});
 
+	it('Given_HttpSource_When_PrimerHasNoWordsSection_Then_EmptyWords', async () => {
+		// Act
+		const l = await (await load()).lesson('h0-00');
+		// Assert
+		expect(l.lesson.id).toBe('h0-00');
+		expect(l.words).toEqual([]);
+	});
+
 	it('Given_HttpSource_When_CurrentShaNotHex_Then_Malformed_Current', async () => {
 		// Arrange
 		const f = await fakeFetch({
