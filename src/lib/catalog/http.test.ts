@@ -169,6 +169,32 @@ describe('httpSource', () => {
 		expect(l.words).toEqual([]);
 	});
 
+	it.each([
+		['NullWord', (b: Record<string, unknown>) => ({ ...b, words: [null] })],
+		['NullChar', (b: Record<string, unknown>) => ({ ...b, chars: [null] })],
+		['NullThin', (b: Record<string, unknown>) => ({ ...b, thin: [null] })],
+		[
+			'SentenceSegNotStrings',
+			(b: Record<string, unknown>) => ({ ...b, sentences: [{ id: 's', hanzi: '你', seg: [1] }] })
+		]
+	])('Given_HttpSource_When_Bundle%s_Then_Malformed_NamingId', async (_, mutate) => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const good = await (
+			await fakeFetch()
+		)
+			.fetch(`/content/${sha}/h1-01.json`)
+			.then((r) => r.json());
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () => Response.json(mutate(good))
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
 	it('Given_HttpSource_When_CurrentShaNotHex_Then_Malformed_Current', async () => {
 		// Arrange
 		const f = await fakeFetch({

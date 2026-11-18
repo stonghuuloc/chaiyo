@@ -6,6 +6,26 @@ type Fetch = (url: string) => Promise<Response>;
 const field = (value: unknown, key: string): unknown =>
 	typeof value === 'object' && value !== null ? (value as Record<string, unknown>)[key] : undefined;
 
+const hasString = (key: string) => (item: unknown) => typeof field(item, key) === 'string';
+
+// What the catalog reads from each list entry; grammar and questions only pass through.
+const entryChecks: Record<string, (item: unknown) => boolean> = {
+	words: hasString('id'),
+	chars: hasString('hanzi'),
+	sentences: (s) => {
+		const seg = field(s, 'seg');
+		return (
+			hasString('id')(s) &&
+			hasString('hanzi')(s) &&
+			Array.isArray(seg) &&
+			seg.every((t) => typeof t === 'string')
+		);
+	},
+	thin: hasString('hanzi'),
+	grammar: () => true,
+	questions: () => true
+};
+
 const isBundle = (value: unknown): value is Bundle => {
 	const lesson = field(value, 'lesson');
 	const sections = field(lesson, 'sections');
@@ -15,9 +35,10 @@ const isBundle = (value: unknown): value is Bundle => {
 		typeof sections === 'object' &&
 		sections !== null &&
 		(!('words' in sections) || Array.isArray(field(field(sections, 'words'), 'ids'))) &&
-		['words', 'chars', 'sentences', 'grammar', 'questions', 'thin'].every((k) =>
-			Array.isArray(field(value, k))
-		)
+		Object.entries(entryChecks).every(([k, ok]) => {
+			const list = field(value, k);
+			return Array.isArray(list) && list.every(ok);
+		})
 	);
 };
 
