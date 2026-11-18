@@ -173,6 +173,11 @@ describe('httpSource', () => {
 		['NullWord', (b: Record<string, unknown>) => ({ ...b, words: [null] })],
 		['NullChar', (b: Record<string, unknown>) => ({ ...b, chars: [null] })],
 		['NullThin', (b: Record<string, unknown>) => ({ ...b, thin: [null] })],
+		['NullSentence', (b: Record<string, unknown>) => ({ ...b, sentences: [null] })],
+		[
+			'SentenceWithoutId',
+			(b: Record<string, unknown>) => ({ ...b, sentences: [{ hanzi: '你', seg: ['你'] }] })
+		],
 		[
 			'SentenceSegNotStrings',
 			(b: Record<string, unknown>) => ({ ...b, sentences: [{ id: 's', hanzi: '你', seg: [1] }] })
