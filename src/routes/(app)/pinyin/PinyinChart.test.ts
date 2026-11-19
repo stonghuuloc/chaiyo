@@ -5,7 +5,12 @@ import chart from './chart.json';
 import type { ChartCell } from './chart';
 import PinyinChart from './PinyinChart.svelte';
 
-const cells = chart as ChartCell[];
+const cells: ChartCell[] = chart;
+const cellOf = (syllable: string): ChartCell => {
+	const cell = cells.find((c) => c.syllable === syllable);
+	if (!cell) throw new Error(`no chart cell ${syllable}`);
+	return cell;
+};
 const html = (props: { cells?: ChartCell[]; open: string | null }) =>
 	render(PinyinChart, { props: { cells, ...props } }).body;
 const tbody = (body: string) => body.slice(body.indexOf('<tbody'), body.indexOf('</tbody>'));
@@ -73,7 +78,7 @@ describe('tone sheet', () => {
 
 	it('Given_FixtureTone3KeyNull_When_Render_Then_Tone3DisabledDash', () => {
 		// Arrange
-		const ba = cells.find((c) => c.syllable === 'ba')!;
+		const ba = cellOf('ba');
 		const fixture: ChartCell = {
 			...ba,
 			tones: ba.tones.map((t, i) => (i === 2 ? { ...t, key: null } : t))
