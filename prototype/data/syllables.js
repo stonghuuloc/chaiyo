@@ -6319,7 +6319,7 @@ export const SYL = {
     "py": "shā"
    },
    "2": {
-    "hz": "倽",
+    "hz": "啥",
     "key": "sha2",
     "py": "shá"
    },
@@ -6329,7 +6329,7 @@ export const SYL = {
     "py": "shǎ"
    },
    "4": {
-    "hz": "啥",
+    "hz": "霎",
     "key": "sha4",
     "py": "shà"
    }

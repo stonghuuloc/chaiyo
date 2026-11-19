@@ -1,6 +1,6 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
-	"buildCommand": "python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build",
+	"buildCommand": "bash scripts/vercel-build.sh",
 	"headers": [
 		{
 			"source": "/content/current.json",
