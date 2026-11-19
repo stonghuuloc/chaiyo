@@ -174,6 +174,14 @@ describe('httpSource', () => {
 		['NullChar', (b: Record<string, unknown>) => ({ ...b, chars: [null] })],
 		['NullThin', (b: Record<string, unknown>) => ({ ...b, thin: [null] })],
 		['NullSentence', (b: Record<string, unknown>) => ({ ...b, sentences: [null] })],
+		['NullGrammar', (b: Record<string, unknown>) => ({ ...b, grammar: [null] })],
+		['NullQuestion', (b: Record<string, unknown>) => ({ ...b, questions: [null] })],
+		['WordOnlyId', (b: Record<string, unknown>) => ({ ...b, words: [{ id: 'w' }] })],
+		[
+			'WordWithoutSenses',
+			(b: Record<string, unknown>) => ({ ...b, words: [{ id: 'w', hanzi: '你', pinyin: 'nǐ' }] })
+		],
+		['NoGateCoverage', (b: Record<string, unknown>) => ({ ...b, gateCoverage: undefined })],
 		[
 			'SentenceWithoutId',
 			(b: Record<string, unknown>) => ({ ...b, sentences: [{ hanzi: '你', seg: ['你'] }] })
