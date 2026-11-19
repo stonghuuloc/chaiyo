@@ -16,6 +16,7 @@ export type Cta = {
 	caret?: boolean;
 	hint?: string;
 	onclick: () => void;
+	hold?: { onpress: () => void; onrelease: () => void };
 };
 
 export type StepProps<S> = {
