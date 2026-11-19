@@ -36,26 +36,33 @@ const view = (groups: WordView['groups'], over: Partial<WordView> = {}): WordVie
 });
 
 let target: HTMLElement | undefined;
-let app: Record<string, unknown> | undefined;
+let app: ReturnType<typeof mount> | undefined;
+
+const mounted = (): HTMLElement => {
+	if (!target) throw new Error('nothing rendered');
+	return target;
+};
 
 const render = (v: WordView) => {
-	target = document.createElement('div');
-	document.body.append(target);
-	app = mount(WordEntry, { target, props: { view: v } }) as Record<string, unknown>;
+	const root = document.createElement('div');
+	document.body.append(root);
+	target = root;
+	app = mount(WordEntry, { target: root, props: { view: v } });
 	flushSync();
 	return {
-		text: () => target!.textContent ?? '',
-		toggle: () => target!.querySelector('button')
+		text: () => root.textContent ?? '',
+		toggle: () => root.querySelector('button')
 	};
 };
 
 const click = (el: Element | null) => {
-	(el as HTMLElement).click();
+	if (!(el instanceof HTMLElement)) throw new Error('nothing to click');
+	el.click();
 	flushSync();
 };
 
 afterEach(() => {
-	if (app) unmount(app as never);
+	if (app) unmount(app);
 	target?.remove();
 	app = undefined;
 	target = undefined;
@@ -149,7 +156,7 @@ describe('WordEntry', () => {
 		// Arrange / Act
 		render(view([{ pos: 'adj', senses: [sense({ vi: 'tốt, khỏe, hay' })] }]));
 		// Assert
-		expect(target!.querySelector('h3')?.textContent).toBe(m.word_pos_adj());
+		expect(mounted().querySelector('h3')?.textContent).toBe(m.word_pos_adj());
 		expect(m.word_pos_adj()).toBe('Tính từ');
 	});
 
@@ -164,7 +171,8 @@ describe('WordEntry', () => {
 			])
 		);
 		// Assert
-		const link = target!.querySelector('a')!;
+		const link = mounted().querySelector('a');
+		if (!link) throw new Error('no link');
 		expect(link.getAttribute('href')).toBe('https://tatoeba.org/vi/sentences/show/785298');
 		expect(link.textContent?.trim()).toBe('Tatoeba');
 		expect(link.getAttribute('target')).toBe('_blank');
