@@ -3,9 +3,11 @@ import type { ThinEntry } from '../derive';
 import { bundleSentences } from './assemble';
 import type { ImportedContent, ImportedLesson, ImportedSentence, ImportedWord } from './sink';
 
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+
 export type Bundle = {
 	sha: string;
-	lesson: Omit<ImportedLesson, 'gateCoverage' | 'thin'>;
+	lesson: DistributiveOmit<ImportedLesson, 'gateCoverage' | 'thin'>;
 	sentences: ImportedSentence[];
 	questions: Question[];
 	grammar: GrammarPoint[];
