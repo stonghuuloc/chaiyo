@@ -6,7 +6,8 @@ const failure = async (p: Promise<unknown>): Promise<CatalogError> => {
 	try {
 		await p;
 	} catch (e) {
-		return e as CatalogError;
+		if (e instanceof CatalogError) return e;
+		throw e;
 	}
 	throw new Error('expected rejection');
 };
@@ -75,6 +76,91 @@ describe('lesson', () => {
 		// Assert
 		expect(bundle).toHaveBeenCalledTimes(2);
 		expect(l.contentSha).toBe(next);
+	});
+
+	it('drops bundles from an older sha when a newer one loads', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const shaA = await inner.current();
+		const shaB = 'b'.repeat(64);
+		const first = await inner.bundle(shaA, 'h1-01');
+		let now = shaA;
+		const source: CatalogSource = {
+			current: async () => now,
+			bundle: async (sha, id) => ({
+				...(id === 'h1-02'
+					? { ...first, lesson: { ...first.lesson, id: 'h1-02' } }
+					: await inner.bundle(shaA, id)),
+				sha
+			})
+		};
+		const catalog = createCatalog(source);
+		await catalog.lesson('h1-02');
+		now = shaB;
+		await catalog.lesson('h1-01');
+		// Act
+		const w = await catalog.word('你好');
+		// Assert
+		expect(w.contentSha).toBe(shaB);
+	});
+
+	it('keeps the newer sha when a load of an older sha finishes last', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const shaA = await inner.current();
+		const shaB = 'b'.repeat(64);
+		let now = shaA;
+		let release = () => {};
+		const gate = new Promise<void>((r) => {
+			release = r;
+		});
+		const source: CatalogSource = {
+			current: async () => now,
+			bundle: async (sha, id) => {
+				if (sha === shaA) await gate;
+				return { ...(await inner.bundle(shaA, id)), sha };
+			}
+		};
+		const catalog = createCatalog(source);
+		const slow = catalog.lesson('h1-01');
+		await new Promise((r) => setTimeout(r, 0));
+		now = shaB;
+		await catalog.lesson('h1-01');
+		release();
+		expect((await slow).contentSha).toBe(shaA);
+		// Act
+		const w = await catalog.word('你好');
+		// Assert
+		expect(w.contentSha).toBe(shaB);
+	});
+
+	it('keeps the newer sha when an earlier current() answers last', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const shaA = await inner.current();
+		const shaB = 'b'.repeat(64);
+		let releaseA = () => {};
+		const gateA = new Promise<void>((r) => {
+			releaseA = r;
+		});
+		let calls = 0;
+		const source: CatalogSource = {
+			current: async () => {
+				if (++calls > 1) return shaB;
+				await gateA;
+				return shaA;
+			},
+			bundle: async (sha, id) => ({ ...(await inner.bundle(shaA, id)), sha })
+		};
+		const catalog = createCatalog(source);
+		const slow = catalog.lesson('h1-01');
+		await catalog.lesson('h1-01');
+		releaseA();
+		expect((await slow).contentSha).toBe(shaA);
+		// Act
+		const w = await catalog.word('你好');
+		// Assert
+		expect(w.contentSha).toBe(shaB);
 	});
 
 	it('keeps the loaded bundle for word reads', async () => {

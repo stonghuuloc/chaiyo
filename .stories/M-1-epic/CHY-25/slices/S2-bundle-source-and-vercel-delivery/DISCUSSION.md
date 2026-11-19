@@ -27,6 +27,7 @@ ACs: AC1  ·  rev 2  ·  2026-11-16 (re-run on `CHY-40-S1` tip a65f4297, wave 2 
 |---|---|---|---|---|
 | 1 | Q1 [AC1] | where the lesson load lives | A — `src/routes/(app)/lesson/[id]/+layout.ts` returns `{ lesson: LessonContent }`; `[section]` and `gate` inherit it; minimal hub `+page.svelte` proof, replaced by CHY-31.S1 | Loc via coordinator, 2026-11-16 |
 | rev 1 | D3 [AC1] | Vercel build command | `python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build` | Loc review, 2026-11-06 |
+| rev 2 | D3 [AC1] | Vercel build command | `bash scripts/vercel-build.sh` (fontTools in a venv: the image's uv-managed Python refuses pip, PEP 668) | PR #169 Vercel deploy log, 2026-11-17 |
 | rev 1 | I2 | font cache header | `/fonts/lessons/*` = `public, max-age=0, must-revalidate`; `immutable` only under `/content/<64 hex>/` | Loc, 2026-11-06 |
 | rev 1 | I3 [AC1] | CI builds real content | yes, before `pnpm build` | Loc, 2026-11-06 |
 | rev 1 | I4 | deploy proof | local build + first team-authored deploy; agent commits cannot create Vercel deploys | Loc, 2026-11-06 |
