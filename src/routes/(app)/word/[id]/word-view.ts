@@ -1,4 +1,9 @@
-import { CatalogError, type Catalog, type LessonContent } from '#lib/catalog/index.js';
+import {
+	CatalogError,
+	type Catalog,
+	type CatalogWord,
+	type LessonContent
+} from '#lib/catalog/index.js';
 import type { ImportedSentence, ImportedWord } from '#lib/content/import/sink.js';
 import type { Sentence, Word } from '#lib/content/schemas.js';
 
@@ -77,9 +82,11 @@ export async function loadWord(
 ): Promise<WordView | { notFound: true }> {
 	const content = lesson ? await lessonOrNull(catalog, lesson) : null;
 	const own = (c: LessonContent) => c.words.find((w) => w.id === id);
-	const local = content && own(content);
-	if (content && local) return wordView(local, content.sentences);
-	let word: ImportedWord;
+	if (content) {
+		const local = own(content);
+		if (local) return wordView(local, content.sentences);
+	}
+	let word: CatalogWord;
 	try {
 		word = await catalog.word(id);
 	} catch (e) {
@@ -90,5 +97,9 @@ export async function loadWord(
 	if (!from) return { notFound: true };
 	const taught = from === lesson && content ? content : await lessonOrNull(catalog, from);
 	if (!taught) return { notFound: true };
-	return wordView(own(taught) ?? word, taught.sentences);
+	const fresh = own(taught);
+	if (fresh) return wordView(fresh, taught.sentences);
+	// The word came from an older revision whose taughtIn lesson no longer lists it.
+	if (word.contentSha !== taught.contentSha) return { notFound: true };
+	return wordView(word, taught.sentences);
 }

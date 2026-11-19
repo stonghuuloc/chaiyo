@@ -35,6 +35,13 @@ const syllablesOf = (rows: unknown): string[] => {
 };
 
 describe('chart.json', () => {
+	it('Given_Sha_Then_HanziMatchEachTone', () => {
+		// Act
+		const got = cellOf('sha').tones.map((t) => t.hanzi);
+		// Assert
+		expect(got).toEqual(['杀', '啥', '傻', '霎']);
+	});
+
 	it('Given_ChartJson_Then_KeysMatchAudioKey', () => {
 		// Arrange
 		const rows = syllablesOf(parse(readFileSync('content/syllables.yaml', 'utf8')));
