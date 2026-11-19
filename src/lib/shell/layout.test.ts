@@ -31,7 +31,8 @@ describe('route shell declarations', () => {
 		['routes/(app)/lesson/[id]/gate/+page.ts', 'focus'],
 		['routes/(app)/practice/session/+page.ts', 'focus'],
 		['routes/(app)/word/[id]/+page.ts', 'pushed'],
-		['routes/(app)/settings/+page.ts', 'pushed']
+		['routes/(app)/settings/+page.ts', 'pushed'],
+		['routes/(app)/pinyin/+page.ts', 'pushed']
 	])('Given_%s_Then_DeclaresTemplate_%s', (file, template) => {
 		// Arrange
 		// Act
@@ -42,7 +43,8 @@ describe('route shell declarations', () => {
 
 	it.each([
 		['routes/(app)/word/[id]/+page.ts', 'practice'],
-		['routes/(app)/settings/+page.ts', 'me']
+		['routes/(app)/settings/+page.ts', 'me'],
+		['routes/(app)/pinyin/+page.ts', 'roadmap']
 	])('Given_PushedRoute_%s_Then_LightsTab_%s', (file, section) => {
 		// Arrange
 		// Act
