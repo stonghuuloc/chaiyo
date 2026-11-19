@@ -18,7 +18,7 @@ export type ImportedLesson = (Lesson | Primer) & {
 
 export type ImportedWord = Word & { taughtIn?: string; listedIn: string[] };
 
-export type ImportedSentence = Sentence & { lessonId?: string; seg: string[] };
+export type ImportedSentence = Sentence & { lessonId?: string; seg: string[]; audio?: string };
 
 export type ImportedQuestion = {
 	id: string;

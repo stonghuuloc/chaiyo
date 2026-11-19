@@ -94,3 +94,21 @@ describe('C6 fields', () => {
 		expect(ok('Sentence', s)).toBe(false);
 	});
 });
+
+describe('grammar labels and done', () => {
+	it('Given_GrammarWithLabels_When_Parse_Then_Kept', () => {
+		const g = YAML.parse(read('grammar-point.valid.yaml'));
+		g.labels = ['người được chào', 'luôn có'];
+		expect(ok('GrammarPoint', g)).toBe(true);
+		g.labels = 'x';
+		expect(ok('GrammarPoint', g)).toBe(false);
+	});
+
+	it('Given_GrammarSectionDone_When_Parse_Then_Kept', () => {
+		const l = YAML.parse(read('lesson.valid.yaml'));
+		l.sections.grammar.done = 'Mẫu A + 好 đã vào phần ôn tập.';
+		expect(ok('Lesson', l)).toBe(true);
+		l.sections.grammar.done = 3;
+		expect(ok('Lesson', l)).toBe(false);
+	});
+});

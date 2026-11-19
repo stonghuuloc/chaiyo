@@ -95,6 +95,7 @@ export const GrammarPoint = z.strictObject({
 	std: z.array(z.number()),
 	title: z.string(),
 	pattern: z.string(),
+	labels: z.array(z.string()).optional(),
 	explain: z.string(),
 	examples: z.array(Id),
 	pitfalls: z
@@ -196,7 +197,11 @@ export const Lesson = z.strictObject({
 	sections: z.strictObject({
 		warmup: z.strictObject({ extra: z.array(Id).optional() }),
 		words: z.strictObject({ ids: z.array(z.string()) }),
-		grammar: z.strictObject({ ids: z.array(z.string()), drills: z.array(Question) }),
+		grammar: z.strictObject({
+			ids: z.array(z.string()),
+			drills: z.array(Question),
+			done: z.string().optional()
+		}),
 		dialogue: z.strictObject({
 			parts: z.array(z.strictObject({ title: z.string().optional(), lines: z.array(Id) })),
 			questions: z.array(Question)
