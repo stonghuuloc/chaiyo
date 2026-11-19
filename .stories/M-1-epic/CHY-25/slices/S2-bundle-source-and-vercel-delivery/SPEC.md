@@ -1,46 +1,62 @@
 # CHY-25 S2 — spec
-ACs: AC1  ·  Repo: stonghuuloc/chaiyo  ·  rev 2 (review round 1; anchors on main 23f1db9, re-checked on e9e8437, 2026-11-06)
+ACs: AC1  ·  Repo: stonghuuloc/chaiyo  ·  rev 3 (re-based on a65f4297, 2026-11-16)
+
+## AC1 (verbatim, backlog `chy-25` :30-35)
+> Scenario: Bài 1 loads from the Source chosen in C1 — Given the Source chosen in C1 is configured, When I call lesson("h1-01"), Then the result has title "Xin chào" and level 1, And it lists the 10 Bài 1 words from 你 to 再见, And it carries a non-empty contentSha.
 
 ## Behaviour
-- [AC1] `src/lib/catalog/http.ts` exports `httpSource(fetchFn: typeof fetch = fetch, base = '/content'): CatalogSource` (the interface from S1). `current()` = `GET <base>/current.json`, parsed as `{ sha }`; a sha that is not 64 lowercase hex throws `CatalogError` code `malformed` with id `current`. `bundle(sha, id)` = `GET <base>/<sha>/<id>.json`; a 404 throws `not-found` with the lesson id, another non-ok status or unparsable JSON throws `malformed` with the lesson id, and a rejected `fetch` throws `offline` with the lesson id (the screen for that code is S3).
-- [AC1] `src/lib/catalog/index.ts` exports `catalog = createCatalog(httpSource())`, the app-wide instance. It is created at module load but performs no request until `lesson` is called; tests import the module without touching the network.
-- [AC1] `src/routes/(app)/lesson/[id]/[section]/+page.ts` loads `catalog.lesson(params.id)` and returns `{ content }`; `+page.svelte` renders the lesson's `titleHanzi` and `title` and every word of `content.words` in lesson order as `hanzi pinyin — hanviet`, and puts `data-content-sha={content.contentSha}` on the root element. This is the minimum that proves the bundle read path and the element the S3 verify reads; section bodies, progress and the resume CTA belong to CHY-31..35.
+- [AC1] `src/lib/catalog/http.ts` exports `httpSource(fetchFn?, base = '/content'): CatalogSource`. With no `fetchFn` it calls `globalThis.fetch` at request time (not at import).
+- [AC1] `current()` = `GET <base>/current.json` → `{ sha }`. A sha that is not 64 lowercase hex → `CatalogError('malformed', 'current')`, and no bundle request follows.
+- [AC1] `bundle(sha, id)` = `GET <base>/<sha>/<id>.json`, id URL-encoded.
+- [AC1] Errors, thrown by the Source itself (S1 verify decision, Loc 2026-11-16), for both requests (id = lesson id, or `current` for `current.json`):
+
+  | Response | Throws |
+  |---|---|
+  | `fetch` rejects (no network) | `offline`, id |
+  | 404 | `not-found`, id |
+  | other non-2xx, or body not JSON | `malformed`, id |
+
+- [AC1] `src/lib/catalog/app.ts` (new) exports `catalog = createCatalog(httpSource())`, one app-wide instance (S1's per-session bundle cache lives in it). Importing it makes no request. It is not in `index.ts`: `http.ts` imports `CatalogError` from `index.ts`, and the fixture Source imports `index.ts` too.
+- [AC1] `src/routes/(app)/lesson/[id]/+layout.ts` `load({ params })` returns `{ lesson: await catalog.lesson(params.id) }` (type `LessonContent`). Every child route (`[section]`, `gate`, the hub) reads `data.lesson`; none calls the catalog itself. A `CatalogError` propagates out of `load` (its screens are S3 / parked).
+- [AC1] Hub proof: `lesson/[id]/+page.ts` returns `{ shell: { template: 'pushed', section: 'roadmap' } }`; `+page.svelte` renders `titleHanzi`, `title` and each of `data.lesson.words` in order as `hanzi pinyin — hanviet`, and sets `data-content-sha` on its root. CHY-31.S1 replaces the body; no new `messages/vi.json` key.
 - [AC1] `vercel.json` (new, repo root):
-  - `buildCommand`: `python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build` — the production build writes `static/content/` and `static/fonts/lessons/` before `vite build`. `scripts/build-content.sh` is `set -euo pipefail`, so a failed import or font subset fails the deploy instead of shipping a partial `/content/`.
-  - `headers`: `GET /content/current.json` -> `Cache-Control: no-store`; `GET /content/<64 hex>/<file>` -> `public, max-age=31536000, immutable`; `GET /fonts/lessons/<file>` -> `public, max-age=0, must-revalidate`. The sha folder never changes, so immutable is safe there; `current.json` must not be reused across deploys because it names the current sha. Font names are not content-hashed (`ukai-<lessonId>.woff2`), so an immutable font would stay stale for a year, including through the SW install fetch; hashed font names would allow immutable but are a CHY-13 change.
-- [AC1] `.github/workflows/ci.yml` gains `bash scripts/build-content.sh` immediately before `pnpm build` (`:52`); Python and fontTools are already installed at `:27-30`, and the fixture import stays at `:35`. CI then imports the real `content/` and builds the subset fonts, so a content or font change that breaks the production build fails CI, not only the Vercel deploy.
-- [AC1] At main 23f1db9 the build chain already works on a machine with fontTools: `pnpm -s import:content content --sink memory --only lessons/hsk1` exits 0 with sha `7915681c…`; `bash scripts/build-content.sh` writes `static/content/7915681c…/{h0-00,h1-01,manifest,audio-manifest}.json`, `static/content/current.json`, and `static/fonts/lessons/ukai-{h0-00,h1-01}.woff2`. `pnpm build` copies them to `.vercel/output/static/content/…`. Nothing else is missing on this side.
-- [NFR] No new dependency; `vercel.json` is the only build configuration added (no `svelte.config.js`). The route stays behind the existing `(app)` auth load (`src/routes/(app)/+layout.ts:4-8`), which is browser-side because app pages are SPA (`src/routes/+layout.ts:7-8`).
+  - `buildCommand` = `bash scripts/vercel-build.sh`: fontTools goes into a venv, then `build-content.sh` and `pnpm build`.
+  - `headers` (Cache-Control):
 
-## Fixtures (described, not committed code)
-- `src/lib/catalog/http.test.ts` serves `Response` objects from a map keyed by exact URL: `/content/current.json` -> `{ sha: <fixture sha> }`; `/content/<fixture sha>/h1-01.json` -> the fixture bundle from `fixtures/source.ts`; `/content/<fixture sha>/h0-00.json` -> the Primer. A `fetch` spy records the URLs, so the request shape is asserted, not just the result.
-- No test starts a server and no test reaches the network; the fake fetch is the only transport.
-- Manual fixture: the real content build (`bash scripts/build-content.sh`) produces the same URL shape at `static/content/`, which `pnpm build` carries into `.vercel/output/static/` and a Vercel deploy serves.
+    | Path | Cache-Control |
+    |---|---|
+    | `/content/current.json` | `no-store` |
+    | `/content/<64 hex>/<file>` | `public, max-age=31536000, immutable` |
+    | `/fonts/lessons/<file>` | `public, max-age=0, must-revalidate` |
 
-## Negative controls
-- `current.json` = `{ sha: 'abc' }` -> `malformed` id `current` (no request for a bundle).
-- `GET /content/<sha>/h9-99.json` = 404 -> `not-found` naming `h9-99`.
-- 500, or a body that is not JSON -> `malformed` naming the lesson id.
-- Bundle body with a `sha` different from the URL sha -> `malformed` (S1 validation; exercised here through the HTTP source).
-- Header checks on a team-authored deploy: `current.json` answers `no-store`; a bundle under `/content/<sha>/` answers `immutable`; `/fonts/lessons/<file>` answers `must-revalidate`, not `immutable`; `current.json` is not reused across deploys.
-- Build: a deliberately broken content file makes `scripts/build-content.sh` exit 1 and the deploy fail; the deploy must never publish a `current.json` that points at a missing sha.
+- [AC1] `.github/workflows/ci.yml` web job: before `pnpm build` (`:52`), add a step that runs `pip install -r scripts/requirements-fonts.txt` and then `bash scripts/build-content.sh`. A content or font break fails CI, not only the deploy.
+- [NFR] No new npm dependency. No `svelte.config.js`. No service-worker, content, schema or lint edit.
 
 ## Not this slice
-- The SW precache exclusion, the awaited `current.json` write, the offline error screen and `cần mạng` (S3).
-- The Word Page body (CHY-32), section bodies and lesson hub (CHY-31..35), font `@font-face` loading (CHY-35), audio.
-- Vercel project settings outside `vercel.json`; custom domains; preview redirects (CHY-63).
+- SW precache filter, awaited `current.json`, offline reopen, "cần mạng" screen (S3 — AC5, AC6).
+- A not-found lesson screen: AC4 (S1) proves the catalog error. No AC names a route screen, so this is parked.
+- Hub body: section rows, progress, resume CTA (CHY-31.S1). Section bodies (CHY-32..35). Word Page (CHY-32.S2).
+- Vercel project settings outside `vercel.json`; preview redirects (CHY-63).
 
 ## Seam
-`src/lib/catalog/http.ts` (new), `src/lib/catalog/index.ts` (adds the `catalog` instance), `src/routes/(app)/lesson/[id]/[section]/+page.ts` (new) and `+page.svelte` (body replaced), `vercel.json` (new), `.github/workflows/ci.yml` (one build step). No content, schema, lint or SW edit.
+`src/routes/(app)/lesson/[id]/+layout.ts` load → `{ lesson: LessonContent }`, backed by `catalog` (`src/lib/catalog/app.ts`) over `httpSource` (`src/lib/catalog/http.ts`).
 
 ## Test contract
-- vitest `src/lib/catalog/http.test.ts`: the URL sequence `current.json` then `<sha>/h1-01.json`; the parsed `LessonContent` (title `Xin chào`, level 1, 10 words, sha); every negative control above. `pnpm test -- src/lib/catalog` green.
-- Mac build (manual, one run on the final tree): `source ~/.capy/work/ft/bin/activate` (or a venv with `scripts/requirements-fonts.txt`), then `bash scripts/build-content.sh` exits 0; `ls static/content/*/h1-01.json static/fonts/lessons/ukai-h1-01.woff2` finds both; `PUBLIC_SUPABASE_URL=http://127.0.0.1:56321 PUBLIC_SUPABASE_PUBLISHABLE_KEY=ci-placeholder pnpm build` exits 0 and `.vercel/output/static/content/<sha>/h1-01.json` exists. Both output dirs are git-ignored; `git status` stays clean.
-- Team-authored Vercel deploy (manual, after a team member merges or pushes the branch): the same curls as above show `no-store` on `current.json`, `immutable` on a sha bundle, and `must-revalidate` on a font; all 200. This deploy is also the proof for the Python/fontTools assumption (Q2). The agent cannot run it: Vercel blocks deployments from a non-team author, so the PR's `Vercel` check is blocked and is not a proof.
-- Browser (manual, signed-in session — local Supabase from CHY-2 or the hosted preview with the test account): `/lesson/h1-01/tu-moi` shows `你好 Xin chào`, the 10 words in lesson order, and `data-content-sha` equals the sha from `current.json`.
+- [AC1] vitest `src/lib/catalog/http.test.ts`, fake fetch over a URL map serving the fixture bundles. `catalog.lesson('h1-01')` over `httpSource` returns title `Xin chào`, level 1, the 10 word ids 你…再见 in order, and a 64-hex `contentSha`. The recorded URLs are exactly `['/content/current.json', '/content/<sha>/h1-01.json']`.
+- [AC1] Same file, one negative control per error-table row:
+  - bundle fetch rejects (`current.json` answers) → `offline` `h1-01`; `current.json` fetch rejects → `offline` `current`.
+  - 404 → `not-found` `h9-99`.
+  - 500 → `malformed` `h1-01`; non-JSON body → `malformed` `h1-01`.
+  - `current.json` `{ sha: 'abc' }` → `malformed` `current`, with 1 recorded URL only.
+- [AC1] vitest `src/routes/(app)/lesson/[id]/layout.test.ts`: with `globalThis.fetch` stubbed to the same map, `load({ params: { id: 'h1-01' } })` (module imported after the stub; 0 requests before `load`) returns `lesson.lesson.title === 'Xin chào'` and a 64-hex `lesson.contentSha`. With 404, it rejects with `not-found` `h9-99`. This proves the singleton wiring and the lazy `globalThis.fetch`.
+- [AC1] Manual build, one run on the final tree, with a fontTools venv:
+  - `bash scripts/build-content.sh` exits 0.
+  - `PUBLIC_SUPABASE_URL=… pnpm build` exits 0, and `.vercel/output/static/content/<sha>/h1-01.json` exists.
+  - `git status` stays clean.
+- [AC1] Browser, signed in, `pnpm preview` or dev: `/lesson/h1-01` shows `你好 Xin chào` and the 10 words in order. `data-content-sha` equals the sha in `/content/current.json`.
+- [CHORE] CI: the new web-job step is green on the PR.
+- [AC1] Team-authored Vercel deploy (handoff, not an agent proof — Vercel blocks non-team authors): `curl -sI` on the 3 header paths shows the 3 values above.
 
 ## Open assumptions
-- [AC1] The Vercel build image provides `python3` and `python3 -m pip` (Q2, 80%). Wrong pick: the first team-authored deploy fails at `pip install`; fallback is Q2-B (build fonts in CI) or `installCommand`.
-- [AC1] `headers` in `vercel.json` apply to the static files the adapter copies into the output. Vercel documents header rules as applying to matching requests, including static files; the team deploy curl is the check.
-- [AC1] `pnpm fonts` needs `fontTools` + `brotli` only (`scripts/requirements-fonts.txt`); if the Vercel pip step needs a build tool for `brotli`, the pinned wheels cover linux-x86_64. Verified locally on macOS arm64 only; the team deploy is the linux check.
-- [AC1] The route's `load` runs in the browser (root `ssr = false`); if a later change opts app pages back into SSR, the `catalog` instance must be given the SvelteKit `fetch`.
+- [AC1] The Vercel build image's Python is uv-managed and refuses `pip install` (PEP 668; PR #169 deploy log, 2026-11-17). `scripts/vercel-build.sh` installs fontTools into a venv instead (D3 rev 2).
+- [AC1] `vercel.json` `headers` apply to the static files adapter-vercel emits. The team-deploy curl is the check.
