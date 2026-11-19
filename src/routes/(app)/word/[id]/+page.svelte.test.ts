@@ -21,7 +21,13 @@ const view = (hanzi: string, vi: string): WordView => ({
 
 const pageProps = (id: string, word: WordView): PageProps => ({
 	params: { id },
-	data: { session: null, shell: { template: 'pushed', section: 'practice' }, id, word }
+	data: {
+		session: null,
+		shell: { template: 'pushed', section: 'practice' },
+		id,
+		word,
+		report: null
+	}
 });
 
 const button = (root: HTMLElement): HTMLButtonElement => {
