@@ -94,19 +94,29 @@ const twoLessonSource = async (): Promise<CatalogSource> => {
 };
 
 // h1-01 and h1-02 both list 你好; a bundle's sense text names its revision.
-const revisionSource = async () => {
+const revisionSource = async (moved = false) => {
 	const inner = await fixtureSource();
 	const base = await inner.bundle(await inner.current(), 'h1-01');
 	const revisions = ['a'.repeat(64), 'b'.repeat(64)];
 	let current = revisions[0];
 	const source: CatalogSource = {
 		current: async () => current,
-		bundle: async (sha, id) => ({
-			...base,
-			sha,
-			lesson: { ...base.lesson, id },
-			words: base.words.map((w) => ({ ...w, senses: [{ vi: `rev ${sha[0]}`, pos: 'phrase' }] }))
-		})
+		bundle: async (sha, id) => {
+			// moved: at revision b, 你好 leaves h1-01 and is taught in h1-03.
+			const shift = moved && sha === revisions[1];
+			return {
+				...base,
+				sha,
+				lesson: { ...base.lesson, id },
+				words: base.words
+					.filter((w) => !(shift && id === 'h1-01' && w.id === '你好'))
+					.map((w) => ({
+						...w,
+						taughtIn: shift && w.id === '你好' ? 'h1-03' : w.taughtIn,
+						senses: [{ vi: `rev ${sha[0]}`, pos: 'phrase' }]
+					}))
+			};
+		}
 	};
 	return {
 		source,
@@ -254,18 +264,6 @@ describe('loadWord', () => {
 		expect(view.groups[0].senses[0].example?.hanzi).toBe('你们好！');
 	});
 
-	it('Given_OtherLessonCachedAtOldRevision_When_LoadWithLesson_Then_WordFromRequestedRevision', async () => {
-		// Arrange
-		const { source, bump } = await revisionSource();
-		const catalog = createCatalog(source);
-		await catalog.lesson('h1-02');
-		bump();
-		// Act
-		const view = await loadWord(catalog, '你好', 'h1-01');
-		// Assert
-		expect(view).toMatchObject({ groups: [{ senses: [{ vi: 'rev b' }] }] });
-	});
-
 	it('Given_OtherLessonCachedAtOldRevision_When_LoadViaTaughtIn_Then_WordFromTaughtRevision', async () => {
 		// Arrange
 		const { source, bump } = await revisionSource();
@@ -276,6 +274,18 @@ describe('loadWord', () => {
 		const view = await loadWord(catalog, '你好', null);
 		// Assert
 		expect(view).toMatchObject({ groups: [{ senses: [{ vi: 'rev b' }] }] });
+	});
+
+	it('Given_WordMovedLessonInNewRevision_When_LoadViaStaleTaughtIn_Then_NotFound', async () => {
+		// Arrange
+		const { source, bump } = await revisionSource(true);
+		const catalog = createCatalog(source);
+		await catalog.lesson('h1-02');
+		bump();
+		// Act
+		const view = await loadWord(catalog, '你好', null);
+		// Assert
+		expect(view).toEqual({ notFound: true });
 	});
 
 	it('Given_OfflineSource_When_Load_Then_Throws', async () => {
