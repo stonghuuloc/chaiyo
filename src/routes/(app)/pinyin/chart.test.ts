@@ -19,13 +19,26 @@ import {
 	type Tone
 } from './chart';
 
-const cells = chart as ChartCell[];
+const cells: ChartCell[] = chart;
+const cellOf = (syllable: string): ChartCell => {
+	const cell = findCell(cells, syllable);
+	if (!cell) throw new Error(`no chart cell ${syllable}`);
+	return cell;
+};
+const syllablesOf = (rows: unknown): string[] => {
+	if (!Array.isArray(rows)) throw new Error('syllables.yaml is not a list');
+	return rows.map((r: unknown) => {
+		const s = typeof r === 'object' && r !== null && 'syllable' in r ? r.syllable : undefined;
+		if (typeof s !== 'string') throw new Error('syllables.yaml row without a syllable');
+		return s;
+	});
+};
 
 describe('chart.json', () => {
 	it('Given_ChartJson_Then_KeysMatchAudioKey', () => {
 		// Arrange
-		const rows = parse(readFileSync('content/syllables.yaml', 'utf8')) as { syllable: string }[];
-		const expected = rows.map((r) => r.syllable).filter((s) => !NO_CLIP[s]);
+		const rows = syllablesOf(parse(readFileSync('content/syllables.yaml', 'utf8')));
+		const expected = rows.filter((s) => !NO_CLIP[s]);
 		// Act
 		const got = cells.map((c) => c.syllable);
 		// Assert
@@ -110,7 +123,7 @@ describe('playTone', () => {
 	it('Given_StubPlayer_When_PlayToneTwice_Then_SrcUnderSyllableBase_Rate1Then05', async () => {
 		// Arrange
 		const { el, play } = setup();
-		const tone = findCell(cells, 'ba')!.tones[1];
+		const tone = cellOf('ba').tones[1];
 		const spy = vi.fn(play);
 		// Act
 		await playTone(tone, spy);
