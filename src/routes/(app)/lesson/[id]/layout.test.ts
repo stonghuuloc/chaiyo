@@ -1,3 +1,4 @@
+import { isHttpError } from '@sveltejs/kit';
 import { fakeFetch } from '#lib/catalog/fixtures/http.js';
 import { CatalogError } from '#lib/catalog/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -22,7 +23,7 @@ describe('lesson layout load', () => {
 		expect(f.urls).toEqual(['/content/current.json', `/content/${f.sha}/h1-01.json`]);
 	});
 
-	it('Given_Fetch404s_When_LoadH9_99_Then_RejectsNotFound_h9_99', async () => {
+	it('Given_Fetch404s_When_LoadH9_99_Then_404', async () => {
 		// Arrange
 		const f = await fakeFetch();
 		vi.stubGlobal('fetch', f.fetch);
@@ -35,8 +36,25 @@ describe('lesson layout load', () => {
 			thrown = e;
 		}
 		// Assert
-		expect(thrown).toBeInstanceOf(CatalogError);
-		expect((thrown as CatalogError).code).toBe('not-found');
-		expect((thrown as CatalogError).id).toBe('h9-99');
+		expect(isHttpError(thrown, 404)).toBe(true);
+	});
+
+	it('Given_Fetch500_When_LoadH0_00_Then_MalformedPropagates', async () => {
+		// Arrange
+		const f = await fakeFetch();
+		vi.stubGlobal('fetch', async (url: string) =>
+			url === `/content/${f.sha}/h0-00.json` ? new Response('boom', { status: 500 }) : f.fetch(url)
+		);
+		const { load } = await import('./+layout');
+		// Act
+		let thrown: unknown;
+		try {
+			await load({ params: { id: 'h0-00' } });
+		} catch (e) {
+			thrown = e;
+		}
+		// Assert
+		if (!(thrown instanceof CatalogError)) throw thrown;
+		expect(thrown.code).toBe('malformed');
 	});
 });

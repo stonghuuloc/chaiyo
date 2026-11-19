@@ -11,7 +11,8 @@ export async function fixtureSource(): Promise<CatalogSource> {
 		refs: fixtureRefs
 	});
 	if ('errors' in res) throw new Error(JSON.stringify(res.errors));
-	const content = sink.content!;
+	const content = sink.content;
+	if (!content) throw new Error('fixture import wrote no content');
 	const bundles = new Map(content.lessons.map((l) => [l.id, buildBundle(content, l.id)]));
 	return {
 		current: async () => content.sha,
