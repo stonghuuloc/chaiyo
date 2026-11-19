@@ -8,9 +8,16 @@ const field = (value: unknown, key: string): unknown =>
 
 const hasString = (key: string) => (item: unknown) => typeof field(item, key) === 'string';
 
-// What the catalog reads from each list entry; grammar and questions only pass through.
+const isObject = (item: unknown) =>
+	typeof item === 'object' && item !== null && !Array.isArray(item);
+
+// What the catalog and pages read from each list entry; grammar and questions only pass through.
 const entryChecks: Record<string, (item: unknown) => boolean> = {
-	words: hasString('id'),
+	words: (w) =>
+		hasString('id')(w) &&
+		hasString('hanzi')(w) &&
+		hasString('pinyin')(w) &&
+		Array.isArray(field(w, 'senses')),
 	chars: hasString('hanzi'),
 	sentences: (s) => {
 		const seg = field(s, 'seg');
@@ -22,8 +29,8 @@ const entryChecks: Record<string, (item: unknown) => boolean> = {
 		);
 	},
 	thin: hasString('hanzi'),
-	grammar: () => true,
-	questions: () => true
+	grammar: isObject,
+	questions: isObject
 };
 
 const isBundle = (value: unknown): value is Bundle => {
@@ -35,6 +42,7 @@ const isBundle = (value: unknown): value is Bundle => {
 		typeof sections === 'object' &&
 		sections !== null &&
 		(!('words' in sections) || Array.isArray(field(field(sections, 'words'), 'ids'))) &&
+		isObject(field(value, 'gateCoverage')) &&
 		Object.entries(entryChecks).every(([k, ok]) => {
 			const list = field(value, k);
 			return Array.isArray(list) && list.every(ok);
