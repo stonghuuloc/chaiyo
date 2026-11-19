@@ -7,7 +7,8 @@ const rejection = async (p: Promise<unknown>): Promise<CatalogError> => {
 	try {
 		await p;
 	} catch (e) {
-		return e as CatalogError;
+		if (e instanceof CatalogError) return e;
+		throw e;
 	}
 	throw new Error('expected rejection');
 };
@@ -81,6 +82,124 @@ describe('httpSource', () => {
 		const { sha } = await fakeFetch();
 		const catalog = await load({
 			[`/content/${sha}/h1-01.json`]: () => new Response('not json', { status: 200 })
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_BundleBodyNull_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({ [`/content/${sha}/h1-01.json`]: () => Response.json(null) });
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_BundleHasNoLesson_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({ [`/content/${sha}/h1-01.json`]: () => Response.json({ sha }) });
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_LessonHasNoSections_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () => Response.json({ sha, lesson: { id: 'h1-01' } })
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_BundleHasNoWords_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () =>
+				Response.json({ sha, lesson: { id: 'h1-01', sections: { words: { ids: [] } } } })
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_WordsSectionHasNoIds_Then_Malformed_NamingId', async () => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const good = await (
+			await fakeFetch()
+		)
+			.fetch(`/content/${sha}/h1-01.json`)
+			.then((r) => r.json());
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () =>
+				Response.json({
+					...good,
+					lesson: { ...good.lesson, sections: { ...good.lesson.sections, words: {} } }
+				})
+		});
+		// Act
+		const e = await rejection(catalog.lesson('h1-01'));
+		// Assert
+		expect(e.code).toBe('malformed');
+		expect(e.id).toBe('h1-01');
+	});
+
+	it('Given_HttpSource_When_PrimerHasNoWordsSection_Then_EmptyWords', async () => {
+		// Act
+		const l = await (await load()).lesson('h0-00');
+		// Assert
+		expect(l.lesson.id).toBe('h0-00');
+		expect(l.words).toEqual([]);
+	});
+
+	it.each([
+		['NullWord', (b: Record<string, unknown>) => ({ ...b, words: [null] })],
+		['NullChar', (b: Record<string, unknown>) => ({ ...b, chars: [null] })],
+		['NullThin', (b: Record<string, unknown>) => ({ ...b, thin: [null] })],
+		['NullSentence', (b: Record<string, unknown>) => ({ ...b, sentences: [null] })],
+		['NullGrammar', (b: Record<string, unknown>) => ({ ...b, grammar: [null] })],
+		['NullQuestion', (b: Record<string, unknown>) => ({ ...b, questions: [null] })],
+		['WordOnlyId', (b: Record<string, unknown>) => ({ ...b, words: [{ id: 'w' }] })],
+		[
+			'WordWithoutSenses',
+			(b: Record<string, unknown>) => ({ ...b, words: [{ id: 'w', hanzi: '你', pinyin: 'nǐ' }] })
+		],
+		['NoGateCoverage', (b: Record<string, unknown>) => ({ ...b, gateCoverage: undefined })],
+		[
+			'SentenceWithoutId',
+			(b: Record<string, unknown>) => ({ ...b, sentences: [{ hanzi: '你', seg: ['你'] }] })
+		],
+		[
+			'SentenceSegNotStrings',
+			(b: Record<string, unknown>) => ({ ...b, sentences: [{ id: 's', hanzi: '你', seg: [1] }] })
+		]
+	])('Given_HttpSource_When_Bundle%s_Then_Malformed_NamingId', async (_, mutate) => {
+		// Arrange
+		const { sha } = await fakeFetch();
+		const good = await (
+			await fakeFetch()
+		)
+			.fetch(`/content/${sha}/h1-01.json`)
+			.then((r) => r.json());
+		const catalog = await load({
+			[`/content/${sha}/h1-01.json`]: () => Response.json(mutate(good))
 		});
 		// Act
 		const e = await rejection(catalog.lesson('h1-01'));

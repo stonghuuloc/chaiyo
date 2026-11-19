@@ -43,7 +43,7 @@ export type Catalog = {
 };
 
 const toLessonContent = (b: Bundle): LessonContent => {
-	const lesson = b.lesson as Lesson | Primer;
+	const lesson = b.lesson;
 	const words =
 		'words' in lesson.sections
 			? lesson.sections.words.ids.flatMap((id) => b.words.filter((w) => w.id === id))
@@ -74,6 +74,11 @@ const tokenAt = (seg: string[], index: number): { token: string; start: number }
 
 export function createCatalog(source: CatalogSource): Catalog {
 	const loaded = new Map<string, Bundle>();
+	// The sha read by the most recently started lesson() call. current() answers can arrive out of
+	// order, so a call sets it only if no later-started call has already set it.
+	let started = 0;
+	let newest = 0;
+	let latest = '';
 
 	const find = <T>(pick: (b: Bundle) => T | undefined): { hit: T; sha: string } | undefined => {
 		for (const b of loaded.values()) {
@@ -85,12 +90,20 @@ export function createCatalog(source: CatalogSource): Catalog {
 
 	return {
 		async lesson(id) {
+			const ticket = ++started;
 			const sha = await source.current();
+			if (ticket > newest) {
+				newest = ticket;
+				latest = sha;
+			}
 			const cached = loaded.get(id);
 			if (cached?.sha === sha) return toLessonContent(cached);
 			const bundle = await source.bundle(sha, id);
 			if (bundle.sha !== sha || bundle.lesson.id !== id) throw new CatalogError('malformed', id);
-			loaded.set(id, bundle);
+			if (sha === latest) {
+				for (const [key, b] of loaded) if (b.sha !== sha) loaded.delete(key);
+				loaded.set(id, bundle);
+			}
 			return toLessonContent(bundle);
 		},
 		async word(id) {

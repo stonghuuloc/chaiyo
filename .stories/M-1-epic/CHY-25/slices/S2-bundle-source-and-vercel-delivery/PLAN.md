@@ -139,7 +139,7 @@ export function httpSource(fetchFn?: Fetch, base = '/content'): CatalogSource {
 ```json
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
-	"buildCommand": "python3 -m pip install --quiet -r scripts/requirements-fonts.txt && bash scripts/build-content.sh && pnpm build",
+	"buildCommand": "bash scripts/vercel-build.sh",
 	"headers": [
 		{ "source": "/content/current.json", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
 		{ "source": "/content/:sha([0-9a-f]{64})/:file", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
