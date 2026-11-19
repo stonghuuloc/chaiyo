@@ -76,6 +76,9 @@ export async function loadWord(
 	lesson: string | null
 ): Promise<WordView | { notFound: true }> {
 	const content = lesson ? await lessonOrNull(catalog, lesson) : null;
+	const own = (c: LessonContent) => c.words.find((w) => w.id === id);
+	const local = content && own(content);
+	if (content && local) return wordView(local, content.sentences);
 	let word: ImportedWord;
 	try {
 		word = await catalog.word(id);
@@ -83,10 +86,9 @@ export async function loadWord(
 		if (e instanceof CatalogError && e.code === 'not-found') return { notFound: true };
 		throw e;
 	}
-	if (content?.words.some((w) => w.id === id)) return wordView(word, content.sentences);
 	const from = word.taughtIn;
 	if (!from) return { notFound: true };
 	const taught = from === lesson && content ? content : await lessonOrNull(catalog, from);
 	if (!taught) return { notFound: true };
-	return wordView(word, taught.sentences);
+	return wordView(own(taught) ?? word, taught.sentences);
 }
