@@ -3,7 +3,7 @@ name = "chaiyo-content"
 version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = [
-    "anthropic>=2.8.0",
+    "anthropic>=2.10.0",
     "jieba",
     "opencc",
     "pyyaml",
