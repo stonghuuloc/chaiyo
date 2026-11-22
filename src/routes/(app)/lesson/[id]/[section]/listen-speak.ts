@@ -2,10 +2,10 @@ import type { LessonContent } from '#lib/catalog/index.js';
 import type { LessonStep } from '#lib/lesson/index.js';
 import { m } from '#lib/paraglide/messages.js';
 
-const promptWord = (content: LessonContent, ref: string) =>
+export const promptWord = (content: LessonContent, ref: string) =>
 	content.words.find((w) => w.id === ref || w.hanzi === ref);
 
-const promptClip = (content: LessonContent, ref: string) =>
+export const promptClip = (content: LessonContent, ref: string) =>
 	content.sentences.find((s) => s.id === ref)?.audio ?? promptWord(content, ref)?.audio;
 
 const refOf = (prompt: { ref: string } | object) => ('ref' in prompt ? prompt.ref : '');
