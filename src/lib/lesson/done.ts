@@ -8,7 +8,12 @@ const names: Record<string, () => string> = {
 	dialogue: m.done_section_dialogue,
 	listenSpeak: m.done_section_listenSpeak,
 	writing: m.done_section_writing,
-	warmup: m.warmup_name
+	warmup: m.warmup_name,
+	tones: m.primer_section_tones,
+	finals: m.primer_section_finals,
+	initials: m.primer_section_initials,
+	spelling: m.primer_section_spelling,
+	sandhi: m.primer_section_sandhi
 };
 
 export function dayCounted(events: StudyEvent[]): number | null {

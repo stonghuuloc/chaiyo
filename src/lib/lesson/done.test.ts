@@ -50,11 +50,11 @@ describe('done', () => {
 
 	it('Given_KnownAndUnknownIds_When_SectionName_Then_NameOrId', () => {
 		// Arrange / Act
-		const names = ['words', 'grammar', 'dialogue', 'listenSpeak', 'writing', 'tones'].map(
+		const names = ['words', 'grammar', 'dialogue', 'listenSpeak', 'writing', 'nope'].map(
 			sectionName
 		);
 		// Assert
-		expect(names).toEqual(['Từ mới', 'Ngữ pháp', 'Hội thoại', 'Nghe & nói', 'Luyện viết', 'tones']);
+		expect(names).toEqual(['Từ mới', 'Ngữ pháp', 'Hội thoại', 'Nghe & nói', 'Luyện viết', 'nope']);
 	});
 
 	it('Given_MiddleSection_When_DoneNext_Then_NextLabelAndSection', () => {
@@ -92,5 +92,26 @@ describe('done', () => {
 		const next = nextSection('h9-99', 'warmup');
 		// Assert
 		expect(next).toBeNull();
+	});
+
+	it('Given_PrimerIds_When_SectionName_Then_VietnameseNames', () => {
+		// Arrange
+		const ids = ['tones', 'finals', 'initials', 'spelling', 'sandhi'];
+
+		// Act
+		const names = ids.map(sectionName);
+
+		// Assert
+		expect(names).toEqual(['Thanh điệu', 'Vận mẫu', 'Thanh mẫu', 'Quy tắc viết', 'Biến điệu']);
+	});
+
+	it('Given_Sandhi_When_DoneNext_Then_BackToHub', () => {
+		// Arrange / Act
+		const mid = doneNext('h0-00', 'tones');
+		const last = doneNext('h0-00', 'sandhi');
+
+		// Assert
+		expect(mid).toEqual({ label: m.done_next(), section: 'finals' });
+		expect(last).toEqual({ label: m.done_back(), section: null });
 	});
 });

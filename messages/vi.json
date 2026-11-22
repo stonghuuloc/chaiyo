@@ -312,5 +312,16 @@
 	"warmup_rev": "Chọn từ có nghĩa này",
 	"warmup_miss": "Từ này sẽ quay lại sớm hơn",
 	"warmup_done_miss": "{k}/{total} đúng · từ sai sẽ quay lại sớm hơn",
-	"warmup_done_all": "{k}/{total} đúng · cả sáu từ đều chắc tay"
+	"warmup_done_all": "{k}/{total} đúng · cả sáu từ đều chắc tay",
+	"primer_section_tones": "Thanh điệu",
+	"primer_section_finals": "Vận mẫu",
+	"primer_section_initials": "Thanh mẫu",
+	"primer_section_spelling": "Quy tắc viết",
+	"primer_section_sandhi": "Biến điệu",
+	"primer_hub_meta": "5 phần · không học từ mới · khoảng 25 phút",
+	"primer_hub_gate": "Kiểm tra Nhập môn",
+	"primer_hub_gate_cta": "Làm bài kiểm tra",
+	"primer_drill_ask": "Nghe rồi chọn pinyin đúng",
+	"primer_card_next": "Tiếp tục",
+	"primer_done_score": "{n}/{total} câu luyện đúng"
 }
