@@ -73,7 +73,7 @@ describe('Choice', () => {
 
 		// Assert
 		expect(audio.player.play).toHaveBeenCalledTimes(1);
-		expect(audio.player.play).toHaveBeenCalledWith('words/abc');
+		expect(audio.player.play).toHaveBeenCalledWith('words/abc', { slow: false });
 		expect(target!.querySelector('h2')).toBeNull();
 	});
 
