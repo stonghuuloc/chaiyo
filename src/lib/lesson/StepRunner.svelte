@@ -7,6 +7,7 @@
 	import ReportButton from '#lib/report/ReportButton.svelte';
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
+	import Sheet from '#lib/ui/Sheet.svelte';
 	import { toAttempt } from './attempt';
 	import { progress } from './progress';
 	import { resume } from './resume';
@@ -22,6 +23,9 @@
 		contentSha: string;
 		ledger: Ledger;
 		onfinish: (events: StudyEvent[]) => void;
+		confirmExit?: { label: string; title: string; body: string; leave: string; keep: string };
+		fresh?: boolean;
+		note?: string;
 	};
 	let {
 		steps,
@@ -31,11 +35,16 @@
 		section,
 		contentSha,
 		ledger,
-		onfinish
+		onfinish,
+		confirmExit,
+		fresh = false,
+		note
 	}: Props = $props();
 
 	const start = untrack(() =>
-		resume(ledger.state(), { lesson, section, ids: steps.map((s) => s.id) })
+		fresh
+			? { run: null, index: 0 }
+			: resume(ledger.state(), { lesson, section, ids: steps.map((s) => s.id) })
 	);
 	const run = start.run ?? crypto.randomUUID();
 	const answered = new SvelteSet(
@@ -48,6 +57,7 @@
 	// A hold's own click (pointer up, Space key up) must not press the button it just swapped in.
 	let pressed = false;
 	let swallow = false;
+	let leaving = $state(false);
 
 	function endHold() {
 		if (!pressed) return;
@@ -100,15 +110,28 @@
 <FocusFrame step={index}>
 	{#snippet top()}
 		<div class="grid grid-cols-[44px_1fr_auto_44px] items-center gap-3">
-			<!-- eslint-disable svelte/no-navigation-without-resolve -- callers pass resolve()d paths -->
-			<a
-				href={exit}
-				class="grid size-11 place-items-center rounded-full"
-				aria-label={m.lesson_exit_label()}
-			>
-				<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-regular-x" /></svg>
-			</a>
-			<!-- eslint-enable svelte/no-navigation-without-resolve -->
+			{#if confirmExit}
+				<button
+					type="button"
+					data-part="exit"
+					class="grid size-11 place-items-center rounded-full"
+					aria-label={confirmExit.label}
+					onclick={() => (leaving = true)}
+				>
+					<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-regular-x" /></svg>
+				</button>
+			{:else}
+				<!-- eslint-disable svelte/no-navigation-without-resolve -- callers pass resolve()d paths -->
+				<a
+					href={exit}
+					data-part="exit"
+					class="grid size-11 place-items-center rounded-full"
+					aria-label={m.lesson_exit_label()}
+				>
+					<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-regular-x" /></svg>
+				</a>
+				<!-- eslint-enable svelte/no-navigation-without-resolve -->
+			{/if}
 			<div
 				data-seg
 				class="grid grid-cols-[repeat(var(--n),1fr)] gap-[3px]"
@@ -131,6 +154,9 @@
 				}}
 			/>
 		</div>
+		{#if note}
+			<p data-part="note" class="mt-2 text-center text-label text-graphite">{note}</p>
+		{/if}
 	{/snippet}
 
 	{#key index}
@@ -192,3 +218,13 @@
 		<p class="mt-2 min-h-5 text-center text-label text-graphite">{current?.hint ?? ''}</p>
 	{/snippet}
 </FocusFrame>
+
+{#if confirmExit}
+	<Sheet open={leaving} title={confirmExit.title} onclose={() => (leaving = false)}>
+		<p data-part="exit-body" class="mt-2 text-graphite">{confirmExit.body}</p>
+		<div class="mt-5 grid gap-3">
+			<Button onclick={() => (leaving = false)}>{confirmExit.keep}</Button>
+			<Button variant="outline" href={exit}>{confirmExit.leave}</Button>
+		</div>
+	</Sheet>
+{/if}
