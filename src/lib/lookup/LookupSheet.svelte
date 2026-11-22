@@ -49,11 +49,12 @@
 	);
 
 	async function shrink(hanzi: string) {
+		const from = hit;
 		const char = await find(hanzi).then(
 			(f) => f.char,
 			() => null
 		);
-		shrunk = { hanzi, char };
+		if (hit === from) shrunk = { hanzi, char };
 	}
 
 	async function add() {
