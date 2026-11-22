@@ -5,6 +5,7 @@ import DialogueSection from './DialogueSection.svelte';
 import GrammarSection from './GrammarSection.svelte';
 import ListenSpeak from './ListenSpeak.svelte';
 import WordsSection from './WordsSection.svelte';
+import WritingSection from './WritingSection.svelte';
 
 // One line per section id; an id with no entry keeps the placeholder.
 export const sections: Record<
@@ -14,5 +15,6 @@ export const sections: Record<
 	words: WordsSection,
 	grammar: GrammarSection,
 	dialogue: DialogueSection,
-	listenSpeak: ListenSpeak
+	listenSpeak: ListenSpeak,
+	writing: WritingSection
 };
