@@ -120,6 +120,32 @@ describe('primerSteps', () => {
 		expect(combining).toBeNull();
 	});
 
+	it('Given_TonesDrill_When_Mapped_Then_ToneFromAnswer', () => {
+		// Arrange / Act
+		const d = primerSteps(lesson, 'tones').find((s) => s.id === 'q-h0-00-tones-01');
+
+		// Assert
+		expect(d).toMatchObject({ kind: 'choice', tone: 2 });
+	});
+
+	it('Given_FinalsDrillUnmarkedAnswer_When_Mapped_Then_ToneFromPrompt', () => {
+		// Arrange / Act
+		const d = primerSteps(lesson, 'finals').find((s) => s.id === 'q-h0-00-finals-01');
+
+		// Assert
+		expect(d).toMatchObject({ kind: 'choice', answer: 'an', tone: 1 });
+	});
+
+	it('Given_ViPromptNoAsk_When_Mapped_Then_ReadAsk', () => {
+		// Arrange / Act
+		const d = primerSteps(lesson, 'spelling').find((s) => s.id === 'q-h0-00-spelling-02');
+		const heard = primerSteps(lesson, 'tones').find((s) => s.id === 'q-h0-00-tones-01');
+
+		// Assert
+		expect(d).toMatchObject({ kind: 'choice', ask: 'Chọn pinyin đúng' });
+		expect(heard).toMatchObject({ ask: 'Nghe rồi chọn pinyin đúng' });
+	});
+
 	it('Given_UnknownSection_When_Mapped_Then_Empty', () => {
 		// Arrange / Act / Assert
 		expect(primerSteps(lesson, 'nope')).toEqual([]);
