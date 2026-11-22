@@ -335,5 +335,12 @@
 	"practice_chip_viet": "{n} viết chữ",
 	"practice_start": "Bắt đầu",
 	"practice_clear_title": "Hôm nay xong bài rồi!",
-	"practice_clear_text": "Chưa có từ nào sắp quên. Còn hứng thì luyện thêm một kỹ năng bên dưới."
+	"practice_clear_text": "Chưa có từ nào sắp quên. Còn hứng thì luyện thêm một kỹ năng bên dưới.",
+	"practice_card_hint": "Bấm để xem nghĩa",
+	"practice_card_guide": "Nhớ thì bấm Nhớ, quên thì bấm Quên",
+	"practice_card_remember": "Nhớ",
+	"practice_card_forget": "Quên",
+	"practice_stamp_remember": "NHỚ",
+	"practice_stamp_forget": "QUÊN",
+	"practice_card_play": "Nghe phát âm"
 }
