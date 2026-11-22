@@ -391,5 +391,8 @@
 	"skill_doan_gate": "Mở khi bạn tới HSK 3. Bạn đang ở HSK {level}.",
 	"chy43s2_search": "Tìm trong từ của bạn",
 	"chy43s2_no_match": "Không có từ nào khớp “{q}”.",
-	"chy43s2_back": "Quay lại"
+	"chy43s2_back": "Quay lại",
+	"chy43s2_empty_title": "Chưa có từ nào",
+	"chy43s2_empty_body": "Học Bài 1 để có từ đầu tiên.",
+	"chy43s2_empty_cta": "Học Bài 1"
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildCurriculum } from './build';
-import { CURRICULUM, LESSONS } from './index';
+import { CURRICULUM, LESSONS, firstLessonId } from './index';
 
 const by = (id: string) => {
 	const lesson = LESSONS.find((l) => l.id === id);
@@ -57,5 +57,26 @@ describe('curriculum', () => {
 		]);
 		for (const l of LESSONS) expect(l.sections).not.toContain('warmup');
 		expect(by('h1-01')).not.toHaveProperty('testOut');
+	});
+});
+
+describe('firstLessonId', () => {
+	it('firstLessonId(LESSONS) is h1-01', () => {
+		// Arrange / Act
+		const id = firstLessonId(LESSONS);
+
+		// Assert
+		expect(id).toBe('h1-01');
+	});
+
+	it('a list with no n=1 lesson falls back to the first id', () => {
+		// Arrange
+		const lessons = [{ ...by('h0-00') }, { ...by('h1-02') }];
+
+		// Act
+		const id = firstLessonId(lessons);
+
+		// Assert
+		expect(id).toBe('h0-00');
 	});
 });

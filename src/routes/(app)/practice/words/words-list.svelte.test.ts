@@ -207,4 +207,32 @@ describe('WordsList', () => {
 		const a = el.querySelector('li a')!;
 		expect(decodeURIComponent(a.getAttribute('href')!)).toMatch(/\/word\/都-du1$/);
 	});
+
+	it('0 rows shows Chưa có từ nào, Học Bài 1 để có từ đầu tiên. and a Học Bài 1 link', () => {
+		// Arrange / Act
+		const el = render([]);
+
+		// Assert
+		expect(el.textContent).toContain('Chưa có từ nào');
+		expect(el.textContent).toContain('Học Bài 1 để có từ đầu tiên.');
+		expect(el.querySelector('a')?.textContent?.trim()).toBe('Học Bài 1');
+	});
+
+	it('the link ends /lesson/h1-01', () => {
+		// Arrange / Act
+		const el = render([]);
+
+		// Assert
+		expect(el.querySelector('a')!.getAttribute('href')).toMatch(/\/lesson\/h1-01$/);
+	});
+
+	it('0 rows renders no input, no legend, no count line', () => {
+		// Arrange / Act
+		const el = render([]);
+
+		// Assert
+		expect(el.querySelector('input')).toBeNull();
+		expect(el.textContent).not.toContain('Cột = độ nhớ');
+		expect(el.textContent).not.toContain('đã học và đã lưu');
+	});
 });
