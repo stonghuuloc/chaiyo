@@ -14,7 +14,8 @@ vi.mock('#lib/audio/index.js', async () => {
 		src: '',
 		addEventListener() {},
 		removeEventListener() {},
-		play() {
+		playbackRate: 1,
+		play(this: { playbackRate: number }) {
 			hoisted.rates.push(this.playbackRate);
 			return Promise.resolve();
 		}
