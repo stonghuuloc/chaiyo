@@ -1,11 +1,7 @@
 import { apply, type State, type StudyEvent } from '#lib/study/index.js';
-import { all, key, open, put, type Row } from './idb';
-import type { Input, Ledger, Store } from './types';
-
-const order = (a: Input, b: Input) =>
-	Date.parse(a.at) - Date.parse(b.at) ||
-	('kind' in b ? 1 : 0) - ('kind' in a ? 1 : 0) ||
-	(key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0);
+import { all, open, put, type Row } from './idb';
+import { key, order } from './order';
+import type { Ledger, Store } from './types';
 
 export async function openLedger(o: {
 	initial: State;

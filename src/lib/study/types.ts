@@ -42,7 +42,7 @@ export type State = {
 	lessons: Record<string, LessonProgress>;
 	placed: number;
 	tz: string;
-	streak: { count: number; last?: string; freezes: number; through?: string };
+	streak: { count: number; last?: string; freezes: number; through?: string; best?: number };
 	runs: Record<string, { step: Step; answers: Record<string, boolean>; closed?: true }>;
 	tones: ToneTally;
 };
@@ -52,7 +52,7 @@ export type StudyEvent =
 	| { type: 'SectionDone'; lesson: string; section: string }
 	| { type: 'GatePassed'; lesson: string; score: number }
 	| { type: 'LessonUnlocked'; lesson: string }
-	| { type: 'DayCounted'; day: string; streak: number }
+	| { type: 'DayCounted'; day: string; streak: number; record?: boolean; freezes?: number }
 	| { type: 'FreezeEarned'; freezes: number }
 	| { type: 'FreezeSpent'; day: string; freezes: number }
 	| { type: 'StreakReset'; day: string }

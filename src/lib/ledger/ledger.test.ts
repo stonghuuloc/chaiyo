@@ -2,6 +2,7 @@ import { IDBFactory } from 'fake-indexeddb';
 import { describe, expect, it, vi } from 'vitest';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { apply, initialState, localDate, type Attempt, type StudyEvent } from '#lib/study/index.js';
+import { practice } from '#lib/study/fixtures/streak.js';
 import { att, outbox, server, T } from './fixtures';
 import { memoryStore, openLedger } from './index';
 
@@ -221,7 +222,7 @@ describe('ledger', () => {
 		expect(got[5]).toEqual(
 			expect.arrayContaining([
 				{ type: 'SectionDone', lesson: 'h1-01', section: 'words' },
-				{ type: 'DayCounted', day, streak: 1 }
+				{ type: 'DayCounted', day, streak: 1, record: false, freezes: 0 }
 			])
 		);
 	});
@@ -267,5 +268,35 @@ describe('ledger', () => {
 		// Assert
 		expect(events).toContainEqual(expect.objectContaining({ type: 'CardScheduled', word: '好' }));
 		expect(events.some((e) => e.type === 'CardScheduled' && e.word === '你')).toBe(false);
+	});
+
+	it('Given_TwoRunsSameLocalDay_When_Record_Then_OnlyFirstHasDayCounted', async () => {
+		// Arrange
+		const ledger = await fresh();
+		const first = practice('r-a', ['你'], new Date('2026-11-13T03:00:00Z'))[0];
+		const second = practice('r-b', ['好'], new Date('2026-11-13T09:00:00Z'))[0];
+
+		// Act
+		const firstEvents = await ledger.record(first);
+		const secondEvents = await ledger.record(second);
+
+		// Assert
+		expect(firstEvents.some((e) => e.type === 'DayCounted')).toBe(true);
+		expect(secondEvents.some((e) => e.type === 'DayCounted')).toBe(false);
+	});
+
+	it('Given_NextLocalDay_When_Record_Then_DayCountedAgain', async () => {
+		// Arrange
+		const ledger = await fresh();
+		await ledger.record(practice('r-a', ['你'], new Date('2026-11-13T03:00:00Z'))[0]);
+		await ledger.record(practice('r-b', ['好'], new Date('2026-11-13T09:00:00Z'))[0]);
+
+		// Act
+		const events = await ledger.record(
+			practice('r-c', ['你'], new Date('2026-11-14T03:00:00Z'))[0]
+		);
+
+		// Assert
+		expect(events).toContainEqual(expect.objectContaining({ type: 'DayCounted', streak: 2 }));
 	});
 });

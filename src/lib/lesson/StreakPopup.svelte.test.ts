@@ -59,4 +59,54 @@ describe('StreakPopup', () => {
 		// Assert
 		await expect.poll(() => dialog()).toBeNull();
 	});
+
+	it('Given_AC1Events_When_Mount_Then_FlameHeadlineBodyWeekNoteButton', () => {
+		// Arrange
+		const events: StudyEvent[] = [
+			{ type: 'DayCounted', day: '2026-11-13', streak: 13, record: true, freezes: 1 }
+		];
+
+		// Act
+		const dialog = mountPopup(events);
+
+		// Assert
+		const d = dialog()!;
+		expect(d.querySelector('[data-part="streak-flame"]')).not.toBeNull();
+		expect(d.querySelector('h2')!.textContent).toBe('Kỷ lục mới 13 ngày!');
+		expect(d.querySelector('[data-part="streak-body"]')!.textContent).toContain('thành 14 nha');
+		expect(d.querySelectorAll('[data-part="streak-week"] li')).toHaveLength(7);
+		expect(d.querySelector('li[data-today]')!.textContent).toContain('T6');
+		expect(d.querySelectorAll('li[data-ticked]')).toHaveLength(5);
+		expect(d.querySelector('[data-part="streak-note"]')!.textContent).toContain('Thêm 1 ngày');
+		expect(d.querySelector('button')!.textContent).toContain('Tuyệt!');
+	});
+
+	it('Given_FullFreezes_When_Mount_Then_NoNoteElement', () => {
+		// Arrange
+		const events: StudyEvent[] = [
+			{ type: 'DayCounted', day: '2026-11-13', streak: 6, record: false, freezes: 2 }
+		];
+
+		// Act
+		const dialog = mountPopup(events);
+
+		// Assert
+		expect(dialog()!.querySelector('[data-part="streak-note"]')).toBeNull();
+	});
+
+	it('Given_EarnedEvent_When_Mount_Then_GiftNote', () => {
+		// Arrange
+		const events: StudyEvent[] = [
+			{ type: 'DayCounted', day: '2026-11-14', streak: 14, record: true, freezes: 2 },
+			{ type: 'FreezeEarned', freezes: 2 }
+		];
+
+		// Act
+		const dialog = mountPopup(events);
+
+		// Assert
+		expect(dialog()!.querySelector('[data-part="streak-note"]')!.textContent).toContain(
+			'Được tặng 1 lượt đóng băng!'
+		);
+	});
 });

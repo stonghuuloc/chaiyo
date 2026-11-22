@@ -3,7 +3,7 @@ import type { Attempt, Skill, Step, WordSaved } from '#lib/study/index.js';
 import type { Input, Store } from './types';
 
 const COLS = 'id, at, question_id, content_sha, word, skill, correct, ms, answer, step, tone';
-const PAGE = 1000;
+export const PAGE = 1000;
 
 type Row = {
 	id: string;
@@ -61,6 +61,31 @@ async function paged<T>(query: (from: number) => PromiseLike<Result<T>>): Promis
 	}
 }
 
+export async function pullInputs(client: SupabaseClient, learnerId: string): Promise<Input[]> {
+	const attempts = await paged<Row>((from) =>
+		client
+			.from('attempts')
+			.select(COLS)
+			.eq('learner_id', learnerId)
+			.order('at')
+			.order('id')
+			.range(from, from + PAGE - 1)
+	);
+	const saves = await paged<{ word: string; saved_at: string }>((from) =>
+		client
+			.from('lexicon_saves')
+			.select('word, saved_at')
+			.eq('learner_id', learnerId)
+			.order('saved_at')
+			.order('word')
+			.range(from, from + PAGE - 1)
+	);
+	const out: Input[] = attempts.map(fromRow);
+	for (const s of saves)
+		out.push({ kind: 'saved', word: s.word, at: new Date(s.saved_at).toISOString() });
+	return out;
+}
+
 export function supabaseStore(client: SupabaseClient, learnerId: string): Store {
 	const own = async () => {
 		const { data, error } = await client.auth.getSession();
@@ -92,28 +117,7 @@ export function supabaseStore(client: SupabaseClient, learnerId: string): Store 
 		},
 		async pull() {
 			await own();
-			const attempts = await paged<Row>((from) =>
-				client
-					.from('attempts')
-					.select(COLS)
-					.eq('learner_id', learnerId)
-					.order('at')
-					.order('id')
-					.range(from, from + PAGE - 1)
-			);
-			const saves = await paged<{ word: string; saved_at: string }>((from) =>
-				client
-					.from('lexicon_saves')
-					.select('word, saved_at')
-					.eq('learner_id', learnerId)
-					.order('saved_at')
-					.order('word')
-					.range(from, from + PAGE - 1)
-			);
-			const out: Input[] = attempts.map(fromRow);
-			for (const s of saves)
-				out.push({ kind: 'saved', word: s.word, at: new Date(s.saved_at).toISOString() });
-			return out;
+			return pullInputs(client, learnerId);
 		}
 	};
 }

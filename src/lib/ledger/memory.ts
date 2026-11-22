@@ -1,4 +1,4 @@
-import { key } from './idb';
+import { key } from './order';
 import type { Input, Store } from './types';
 
 export type MemoryStore = Store & { rows(): Input[]; online: boolean; pushes: number };
