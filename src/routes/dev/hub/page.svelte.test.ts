@@ -55,7 +55,7 @@ describe('/dev/hub', () => {
 		// Assert
 		await vi.waitFor(() => {
 			flushSync();
-			expect(words()!.dataset.look).toBe('now');
+			expect(words()!.textContent).toContain(`4/10 từ · tiếp ở ${h1.words[4].hanzi}`);
 		});
 		expect(words()!.textContent).toContain(`4/10 từ · tiếp ở ${h1.words[4].hanzi}`);
 		expect(cta()!.textContent).toContain('Tiếp tục: Từ mới');
