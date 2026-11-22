@@ -7,7 +7,13 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
 
 const ledger = { state: () => initialState(), record: async () => [] } as unknown as Ledger;
-vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
+const learner = vi.hoisted(() => ({ fail: false }));
+vi.mock('#lib/learner/index.js', () => ({
+	learnerLedger: async () => {
+		if (learner.fail) throw new Error('offline');
+		return ledger;
+	}
+}));
 
 const choice = (i: number) => ({
 	id: `q${i}`,
@@ -71,5 +77,21 @@ describe('gate page', () => {
 		// Assert
 		expect(root.textContent).toContain(m.gate_hint());
 		expect(root.querySelector('[data-part="exit"]')?.tagName).toBe('BUTTON');
+	});
+
+	it('Given_LedgerFails_When_Render_Then_Placeholder', async () => {
+		// Arrange
+		learner.fail = true;
+		const data = { lesson: lesson(12), session: { user: { id: 'u1' } } };
+
+		// Act
+		const root = mountPage(data);
+		await new Promise((r) => setTimeout(r, 0));
+		flushSync();
+		learner.fail = false;
+
+		// Assert
+		expect(root.querySelector('h1')?.textContent).toBe(m.screen_gate());
+		expect(root.querySelector('[data-seg]')).toBe(null);
 	});
 });

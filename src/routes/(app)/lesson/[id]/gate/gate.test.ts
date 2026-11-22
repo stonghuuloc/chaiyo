@@ -279,4 +279,59 @@ describe('gateSteps', () => {
 		// Assert
 		expect(steps).toEqual([]);
 	});
+
+	it('Given_EdgePrompts_When_Map_Then_FallbacksApply', () => {
+		// Arrange
+		const pool = [
+			{
+				id: 'a-vi',
+				type: 'choice',
+				tests: {},
+				prompt: { kind: 'audio', ref: '谢谢' },
+				optionKind: 'vi',
+				options: ['cảm ơn', 'tạm biệt'],
+				answer: 0
+			},
+			{
+				id: 't-sentence',
+				type: 'tone',
+				tests: {},
+				prompt: { kind: 'audio', ref: 's-a' },
+				syllable: 0,
+				answer: 4
+			},
+			{
+				id: 't-range',
+				type: 'tone',
+				tests: {},
+				prompt: { kind: 'audio', ref: '没关系' },
+				syllable: 9,
+				answer: 2
+			},
+			{
+				id: 't-text',
+				type: 'tone',
+				tests: {},
+				prompt: { kind: 'vi', text: 'không sao' },
+				syllable: 0,
+				answer: 2
+			}
+		];
+		const base = content(9, pool);
+		const withClip = {
+			...Sentence.parse({ id: 's-a', hanzi: '再见！', pinyin: 'zàijiàn', vi: 'Tạm biệt!' }),
+			seg: [],
+			audio: 'dialogue/s-a'
+		};
+		const c = { ...base, sentences: [...SENTENCES, withClip] };
+
+		// Act
+		const s = byId(gateSteps(c));
+
+		// Assert
+		expect(Object.keys(s).sort()).toEqual(['a-vi', 't-range', 't-sentence']);
+		expect(s['a-vi']).toMatchObject({ ask: m.listen_meaning_ask(), script: 'text' });
+		expect(s['t-sentence']).toMatchObject({ audio: 'dialogue/s-a', syllable: 's-a', hanzi: 's-a' });
+		expect(s['t-range']).toMatchObject({ syllable: 'méi guānxi', hanzi: '没关系', target: 9 });
+	});
 });
