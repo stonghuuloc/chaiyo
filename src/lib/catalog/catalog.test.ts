@@ -369,6 +369,23 @@ describe('find', () => {
 	});
 });
 
+describe('thin', () => {
+	it('Given_LoadedLesson_When_Thin_Then_EntryWithoutBundleRequest', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const bundle = vi.fn(inner.bundle);
+		const catalog = createCatalog({ ...inner, bundle });
+		await catalog.lesson('h1-01');
+		// Act
+		const entry = await catalog.thin('你');
+		const none = await catalog.thin('咖');
+		// Assert
+		expect(entry).toMatchObject({ hanzi: '你', pinyin: 'nǐ' });
+		expect(none).toBeNull();
+		expect(bundle).toHaveBeenCalledTimes(1);
+	});
+});
+
 describe('no network', () => {
 	it('never calls fetch across lesson, word, char and lookup', async () => {
 		// Arrange

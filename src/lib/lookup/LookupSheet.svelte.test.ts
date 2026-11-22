@@ -11,6 +11,8 @@ const held = vi.hoisted(() => ({ release: () => {} }));
 
 vi.mock('#lib/catalog/app.js', () => ({
 	catalog: {
+		thin: async (hanzi: string) =>
+			hanzi === '大' ? { hanzi: '大', pinyin: 'dà', hanviet: 'đại', meaning: 'to, lớn' } : null,
 		find: async (hanzi: string) => {
 			if (hanzi === '错') throw new Error('offline');
 			if (hanzi === '慢') await new Promise<void>((r) => (held.release = r));
@@ -153,14 +155,29 @@ describe('LookupSheet', () => {
 	it('Given_CharWithoutRecord_When_Shrink_Then_NotFoundShown', async () => {
 		// Arrange
 		const ledger = await ledgerWith();
+		await open(hit('咖啡', 'kāfēi', 'cà phê'), ledger);
+		// Act
+		parts('lookup-char')[0].click();
+		await settle();
+		// Assert
+		expect(part('lookup-hanzi')?.textContent).toBe('咖');
+		expect(part('lookup-missing')?.textContent).toBe('Chưa có trong từ điển');
+		expect(part('lookup-back')?.textContent).toBe('← 咖啡');
+	});
+
+	it('Given_CharInLoadedThin_When_Shrink_Then_ThinReadingsAndMeaning', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
 		await open(hit('大家', 'dàjiā', 'mọi người'), ledger);
 		// Act
 		parts('lookup-char')[0].click();
 		await settle();
 		// Assert
 		expect(part('lookup-hanzi')?.textContent).toBe('大');
-		expect(part('lookup-missing')?.textContent).toBe('Chưa có trong từ điển');
-		expect(part('lookup-back')?.textContent).toBe('← 大家');
+		expect(part('lookup-pinyin')?.textContent).toBe('dà');
+		expect(part('lookup-hanviet')?.textContent).toBe('đại');
+		expect(part('lookup-meaning')?.textContent).toBe('to, lớn');
+		expect(part('lookup-missing')).toBeNull();
 	});
 
 	it('Given_CharWithOnlyRareReadings_When_Shrink_Then_FirstReadingShown', async () => {

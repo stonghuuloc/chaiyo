@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { CatalogChar, CatalogWord, LookupHit } from '#lib/catalog/index.js';
+	import type { ThinEntry } from '#lib/content/derive/dictionary.js';
 	import type { Ledger } from '#lib/ledger/index.js';
 	import type { State } from '#lib/study/index.js';
 	import { m } from '#lib/paraglide/messages.js';
@@ -10,11 +11,16 @@
 	type Props = { hit: LookupHit | null; ledger: Ledger; onclose: () => void };
 	let { hit, ledger, onclose }: Props = $props();
 
-	const find = async (hanzi: string) => (await import('#lib/catalog/app.js')).catalog.find(hanzi);
+	const app = async () => (await import('#lib/catalog/app.js')).catalog;
+	const find = async (hanzi: string) => (await app()).find(hanzi);
 
 	let word = $state<CatalogWord | null>(null);
 	let ready = $state(false);
-	let shrunk = $state<{ hanzi: string; char: CatalogChar | null } | null>(null);
+	let shrunk = $state<{
+		hanzi: string;
+		entry: ThinEntry | null;
+		char: CatalogChar | null;
+	} | null>(null);
 	let busy = $state(false);
 	let study = $state<State | null>(null);
 
@@ -45,16 +51,22 @@
 
 	const view = $derived(hit && ready && study ? lookupView(hit, word, study) : null);
 	const reading = $derived(
-		shrunk?.char?.readings.find((r) => !r.rare) ?? shrunk?.char?.readings[0]
+		shrunk?.entry ?? shrunk?.char?.readings.find((r) => !r.rare) ?? shrunk?.char?.readings[0]
 	);
 
 	async function shrink(hanzi: string) {
 		const from = hit;
-		const char = await find(hanzi).then(
-			(f) => f.char,
+		const entry = await app().then(
+			(c) => c.thin(hanzi),
 			() => null
 		);
-		if (hit === from) shrunk = { hanzi, char };
+		const char = entry
+			? null
+			: await find(hanzi).then(
+					(f) => f.char,
+					() => null
+				);
+		if (hit === from) shrunk = { hanzi, entry, char };
 	}
 
 	async function add() {
@@ -76,6 +88,9 @@
 			{#if reading}
 				<p data-part="lookup-pinyin">{reading.pinyin}</p>
 				<p data-part="lookup-hanviet">{reading.hanviet}</p>
+				{#if shrunk.entry?.meaning}
+					<p data-part="lookup-meaning">{shrunk.entry.meaning}</p>
+				{/if}
 			{:else}
 				<p data-part="lookup-missing">{m.lookup_not_found()}</p>
 			{/if}

@@ -41,6 +41,7 @@ export type Catalog = {
 	char(hanzi: string): Promise<CatalogChar>;
 	lookup(sentenceId: string, tapIndex: number): Promise<LookupHit>;
 	find(hanzi: string): Promise<{ word: CatalogWord | null; char: CatalogChar | null }>;
+	thin(hanzi: string): Promise<ThinEntry | null>;
 };
 
 const toLessonContent = (b: Bundle): LessonContent => {
@@ -137,6 +138,9 @@ export function createCatalog(
 			const part = bundle.thin.find((t) => t.hanzi === ch);
 			if (!part) throw miss;
 			return { ...part, contentSha: bundle.sha, sentenceId, start: tapIndex };
+		},
+		async thin(hanzi) {
+			return find((b) => b.thin.find((t) => t.hanzi === hanzi))?.hit ?? null;
 		},
 		async find(hanzi) {
 			const id = teaches(hanzi);
