@@ -4,6 +4,7 @@ import type { LessonContent } from '#lib/catalog/index.js';
 import DialogueSection from './DialogueSection.svelte';
 import GrammarSection from './GrammarSection.svelte';
 import ListenSpeak from './ListenSpeak.svelte';
+import PrimerSection from './PrimerSection.svelte';
 import WordsSection from './WordsSection.svelte';
 import WarmupSection from './WarmupSection.svelte';
 import WritingSection from './WritingSection.svelte';
@@ -18,5 +19,10 @@ export const sections: Record<
 	dialogue: DialogueSection,
 	listenSpeak: ListenSpeak,
 	writing: WritingSection,
-	warmup: WarmupSection
+	warmup: WarmupSection,
+	tones: PrimerSection,
+	finals: PrimerSection,
+	initials: PrimerSection,
+	spelling: PrimerSection,
+	sandhi: PrimerSection
 };
