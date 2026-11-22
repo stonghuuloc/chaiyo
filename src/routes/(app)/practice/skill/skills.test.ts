@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ENTRIES, SKILL_KEYS, skillKey } from './skills';
+import { ENTRIES, SKILL_KEYS, noteFor, skillKey } from './skills';
 
 describe('skill entries', () => {
 	it.each([
@@ -36,5 +36,47 @@ describe('skill entries', () => {
 		const k = skillKey(raw);
 		// Assert
 		expect(k).toBe(expected);
+	});
+});
+
+describe('noteFor', () => {
+	it('Given_DoanLevel1_Then_Ac3Literal', () => {
+		// Arrange
+		// Act
+		const note = noteFor('doan', 1);
+		// Assert
+		expect(note).toBe('Mở khi bạn tới HSK 3. Bạn đang ở HSK 1.');
+	});
+
+	it('Given_DoanLevel2_Then_Hsk2Line', () => {
+		// Arrange
+		// Act
+		const note = noteFor('doan', 2);
+		// Assert
+		expect(note).toBe('Mở khi bạn tới HSK 3. Bạn đang ở HSK 2.');
+	});
+
+	it.each([3, 6])('Given_DoanLevelAtLeast3_%s_Then_DemoNote', (level) => {
+		// Arrange
+		// Act
+		const note = noteFor('doan', level);
+		// Assert
+		expect(note).toBe('Chưa có trong bản demo: cần AI chấm bài viết.');
+	});
+
+	it('Given_DoanNoLevel_Then_DemoNote', () => {
+		// Arrange
+		// Act
+		const note = noteFor('doan');
+		// Assert
+		expect(note).toBe('Chưa có trong bản demo: cần AI chấm bài viết.');
+	});
+
+	it.each(['noi', 'thi'] as const)('Given_OtherKLevel1_%s_Then_S1Note', (k) => {
+		// Arrange
+		// Act
+		const note = noteFor(k, 1);
+		// Assert
+		expect(note).toBe(ENTRIES[k].note());
 	});
 });

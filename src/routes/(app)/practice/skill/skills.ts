@@ -59,3 +59,8 @@ export const ENTRIES: Record<SkillKey, Entry> = {
 		note: m.skill_thi_note
 	}
 };
+
+export const noteFor = (k: SkillKey, level?: number): string =>
+	k === 'doan' && level !== undefined && level < 3
+		? m.skill_doan_gate({ level })
+		: ENTRIES[k].note();
