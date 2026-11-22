@@ -5,8 +5,8 @@
 
 	let { view }: { view: { chips: ThiChip[]; selected: number } } = $props();
 
-	let tap = $state<{ view: typeof view; level: number } | null>(null);
-	const picked = $derived(tap && tap.view === view ? tap.level : view.selected);
+	let tap = $state<number | null>(null);
+	const picked = $derived(tap ?? view.selected);
 
 	const chip = $derived(view.chips.find((c) => c.level === picked) ?? view.chips[0]);
 
@@ -29,7 +29,7 @@
 				data-level={c.level}
 				aria-selected={c.level === picked}
 				class="flex items-center gap-1 rounded-full border border-ruled-line bg-white px-3 py-1"
-				onclick={() => (tap = { view, level: c.level })}
+				onclick={() => (tap = c.level)}
 			>
 				{#if c.lock}
 					<svg data-part="thi-lock" class="size-4 shrink-0 fill-current" aria-hidden="true"
