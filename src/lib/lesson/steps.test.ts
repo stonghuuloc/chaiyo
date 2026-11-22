@@ -69,6 +69,8 @@ describe('step views', () => {
 
 	it('Given_PinyinKind_When_ViewOf_Then_ReturnsPinyin', () => {
 		expect(viewOf('pinyin').default).toBe(Pinyin);
+	});
+
 	it('Given_WordKind_When_ViewOf_Then_ReturnsWord', () => {
 		expect(viewOf('word').default).toBe(Word);
 	});

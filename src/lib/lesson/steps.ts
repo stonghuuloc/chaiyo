@@ -9,6 +9,15 @@ import type { Step as ToneStep } from './steps/Tone.svelte';
 import type { Step as WordStep } from './steps/Word.svelte';
 import type { StepProps } from './types';
 
+export type LessonStep =
+	| ChoiceStep
+	| DialogueStep
+	| GrammarStep
+	| OrderStep
+	| PinyinStep
+	| SpeakStep
+	| ToneStep
+	| WordStep;
 
 type View = { default: Component<StepProps<LessonStep>>; kind: string };
 
