@@ -2,14 +2,13 @@ import { PGlite } from '@electric-sql/pglite';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
 import { fixtureRefs } from '../lint/fixtures/refs';
 import { audioKey, sentenceVoice } from './audio';
 import { importContent } from './import';
 import { createPostgresSink, type SqlClient } from './postgres-sink';
 import { createMemorySink, type ImportedContent, type ImportedLesson } from './sink';
-
-// PGlite boots and migrates in beforeEach; under load the 5 s default test timeout and the 10 s default hook timeout flake.
-vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
 
 const OK = join(__dirname, 'fixtures/ok');
 const MIGRATION = join(
@@ -24,10 +23,15 @@ const client = (db: PGlite): SqlClient => ({
 
 let db: PGlite;
 let sink: ReturnType<typeof createPostgresSink>;
+let template: Promise<PGlite> | undefined;
 beforeEach(async () => {
-	db = new PGlite();
-	await db.exec('create role authenticated');
-	await db.exec(readFileSync(MIGRATION, 'utf8'));
+	template ??= (async () => {
+		const t = new PGlite();
+		await t.exec('create role authenticated');
+		await t.exec(readFileSync(MIGRATION, 'utf8'));
+		return t;
+	})();
+	db = (await (await template).clone()) as PGlite;
 	sink = createPostgresSink(client(db));
 });
 afterEach(() => db.close());

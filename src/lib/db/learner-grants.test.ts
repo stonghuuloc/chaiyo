@@ -1,4 +1,5 @@
 import { PGlite } from '@electric-sql/pglite';
+import { freshDb } from './fresh-db';
 import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -77,8 +78,7 @@ const editGrants = (dir: string, strip: RegExp) => {
 
 let db: PGlite;
 beforeEach(async () => {
-	db = new PGlite();
-	await migrate(db);
+	db = await freshDb();
 	await seed(db);
 });
 afterEach(() => db.close());

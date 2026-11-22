@@ -1,11 +1,10 @@
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { realContent } from '../../../test/real-content.js';
 import { describe, expect, it } from 'vitest';
 import chart from '../../../routes/(app)/pinyin/chart.json';
 import { fixtureRefs } from '../lint/fixtures/refs';
 import { buildBundle } from './bundle';
 import { importContent } from './import';
-import { PRODUCTION_ROOTS, scopeFor } from './scope';
 import { createMemorySink, type ImportedContent } from './sink';
 
 const OK = join(__dirname, 'fixtures/ok');
@@ -111,21 +110,7 @@ describe('buildBundle', () => {
 	});
 });
 
-const loadReal = async (): Promise<ImportedContent> => {
-	const prev = process.env.CHAIYO_VAULT;
-	process.env.CHAIYO_VAULT = join(tmpdir(), 'no-such-vault');
-	try {
-		const sink = createMemorySink();
-		const res = await importContent('content', sink, {
-			only: scopeFor('content', PRODUCTION_ROOTS)
-		});
-		if ('errors' in res) throw new Error(JSON.stringify(res.errors));
-		return sink.content!;
-	} finally {
-		if (prev === undefined) delete process.env.CHAIYO_VAULT;
-		else process.env.CHAIYO_VAULT = prev;
-	}
-};
+const loadReal = (): Promise<ImportedContent> => realContent();
 
 describe('buildBundle clips', () => {
 	it('Given_PrimerBundle_When_Built_Then_EveryChipAndPromptHasClip', async () => {
@@ -156,7 +141,7 @@ describe('buildBundle clips', () => {
 		expect(clips!['mā']).toBe(`pinyin-chart/${mā}`);
 		expect(clips!['nǐ hǎo']).toMatch(/^chips\/[0-9a-f]{64}$/);
 		expect(clips!['ní hǎo']).toMatch(/^chips\//);
-	}, 60_000);
+	});
 
 	it('Given_LessonBundle_When_Built_Then_NoClips', async () => {
 		// Arrange

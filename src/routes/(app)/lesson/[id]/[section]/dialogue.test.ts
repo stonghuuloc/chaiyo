@@ -1,11 +1,8 @@
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 import { createCatalog, type LessonContent } from '#lib/catalog/index.js';
 import { buildBundle } from '#lib/content/import/bundle.js';
-import { importContent } from '#lib/content/import/import.js';
-import { scopeFor, PRODUCTION_ROOTS } from '#lib/content/import/scope.js';
-import { createMemorySink, type ImportedSentence } from '#lib/content/import/sink.js';
+import { type ImportedSentence } from '#lib/content/import/sink.js';
 import type { Lesson, Primer, Question } from '#lib/content/schemas.js';
+import { realContent } from '../../../../../test/real-content.js';
 import { describe, expect, it } from 'vitest';
 import { dialogueSteps } from './dialogue';
 
@@ -177,14 +174,7 @@ describe('dialogueSteps', () => {
 describe('dialogueSteps on Bài 1', () => {
 	it('Given_Bai1_When_Build_Then_TwoPartsAndTheTakinQuestion', async () => {
 		// Arrange
-		const prev = process.env.CHAIYO_VAULT;
-		process.env.CHAIYO_VAULT = join(tmpdir(), 'no-such-vault');
-		const sink = createMemorySink();
-		const r = await importContent('content', sink, { only: scopeFor('content', PRODUCTION_ROOTS) });
-		if (prev === undefined) delete process.env.CHAIYO_VAULT;
-		else process.env.CHAIYO_VAULT = prev;
-		if (!('sha' in r) || !sink.content) throw new Error(JSON.stringify(r));
-		const b = buildBundle(sink.content, 'h1-01');
+		const b = buildBundle(await realContent(), 'h1-01');
 		const c = await createCatalog({ current: async () => b.sha, bundle: async () => b }).lesson(
 			'h1-01'
 		);
@@ -217,5 +207,5 @@ describe('dialogueSteps on Bài 1', () => {
 		const text = drillText(steps);
 		expect(text.length).toBeGreaterThan(0);
 		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
-	}, 60_000);
+	}, 15_000);
 });

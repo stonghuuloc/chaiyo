@@ -1,4 +1,5 @@
 import { PGlite } from '@electric-sql/pglite';
+import { freshDb } from './fresh-db';
 import { cpSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -25,8 +26,7 @@ const INSERT_ATTEMPT =
 
 let db: PGlite;
 beforeEach(async () => {
-	db = new PGlite();
-	await migrate(db);
+	db = await freshDb();
 	await db.exec(`insert into auth.users (id) values ('${LINH}'), ('${NAM}')`);
 	for (const [id, name] of [
 		[LINH, 'Linh'],

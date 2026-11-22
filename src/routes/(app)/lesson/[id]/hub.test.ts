@@ -1,13 +1,9 @@
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 import { createCatalog, type LessonContent } from '#lib/catalog/index.js';
 import { buildBundle } from '#lib/content/import/bundle.js';
-import { importContent } from '#lib/content/import/import.js';
-import { scopeFor, PRODUCTION_ROOTS } from '#lib/content/import/scope.js';
-import { createMemorySink } from '#lib/content/import/sink.js';
 import { fixtureSource } from '#lib/catalog/fixtures/source.js';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
+import { realContent } from '../../../../test/real-content.js';
 import { describe, expect, it } from 'vitest';
 import { gateOpen, hubView } from './hub';
 
@@ -205,15 +201,7 @@ describe('hubView', () => {
 
 	it('Given_RealBai1Content_When_View_Then_MetaTwoGrammarAndSixListenItems', async () => {
 		// Arrange
-		const prev = process.env.CHAIYO_VAULT;
-		process.env.CHAIYO_VAULT = join(tmpdir(), 'no-such-vault');
-		const sink = createMemorySink();
-		const r = await importContent('content', sink, { only: scopeFor('content', PRODUCTION_ROOTS) });
-		if (prev === undefined) delete process.env.CHAIYO_VAULT;
-		else process.env.CHAIYO_VAULT = prev;
-		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
-		if (!sink.content) throw new Error('import wrote no content');
-		const b = buildBundle(sink.content, 'h1-01');
+		const b = buildBundle(await realContent(), 'h1-01');
 		const real: LessonContent = await createCatalog({
 			current: async () => b.sha,
 			bundle: async () => b
@@ -225,7 +213,7 @@ describe('hubView', () => {
 		// Assert
 		expect(v.meta).toBe('10 từ · 2 điểm ngữ pháp · khoảng 70 phút');
 		expect(v.rows.find((row) => row.id === 'listenSpeak')!.sub).toBe('6 bài · cần micro');
-	}, 60_000);
+	});
 });
 
 describe('hubView gate', () => {

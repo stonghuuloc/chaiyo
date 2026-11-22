@@ -1,11 +1,10 @@
+import { realContent } from '../../../../../test/real-content.js';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { m } from '#lib/paraglide/messages.js';
 import { createCatalog, type LessonContent } from '#lib/catalog/index.js';
 import { buildBundle } from '#lib/content/import/bundle.js';
-import { importContent } from '#lib/content/import/import.js';
-import { scopeFor, PRODUCTION_ROOTS } from '#lib/content/import/scope.js';
-import { createMemorySink, type ImportedSentence } from '#lib/content/import/sink.js';
+import { type ImportedSentence } from '#lib/content/import/sink.js';
 import type { GrammarPoint, Lesson, Primer, Question } from '#lib/content/schemas.js';
 import { describe, expect, it } from 'vitest';
 import { grammarSteps } from './grammar';
@@ -293,11 +292,7 @@ describe('grammarSteps', () => {
 
 describe('grammarSteps on Bài 1', () => {
 	const build = async (id = 'h1-01'): Promise<LessonContent> => {
-		const sink = createMemorySink();
-		const r = await importContent('content', sink, { only: scopeFor('content', PRODUCTION_ROOTS) });
-		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
-		if (!sink.content) throw new Error('import wrote no content');
-		const b = buildBundle(sink.content, id);
+		const b = buildBundle(await realContent(), id);
 		const source = { current: async () => b.sha, bundle: async () => b };
 		return createCatalog(source).lesson(id);
 	};
@@ -342,7 +337,7 @@ describe('grammarSteps on Bài 1', () => {
 		expect(('kind' in c.lesson ? '' : c.lesson.sections.grammar.done) ?? '').toBe(
 			'Mẫu A + 好 và các câu đáp đã vào phần ôn tập, sẽ quay lại cùng các câu hỏi khác.'
 		);
-	}, 60_000);
+	}, 15_000);
 
 	it('Given_EveryHsk1Lesson_When_Build_Then_NoThrowAndUniqueIds', async () => {
 		// Arrange
@@ -361,7 +356,7 @@ describe('grammarSteps on Bài 1', () => {
 			expect(steps.length).toBeGreaterThan(0);
 			expect(new Set(steps.map((s) => s.id)).size).toBe(steps.length);
 		}
-	}, 120_000);
+	}, 60_000);
 
 	it('Given_Bai1_When_Build_Then_NoDrillTitleOrOptionHoldsPinyin', async () => {
 		// Arrange
@@ -379,7 +374,7 @@ describe('grammarSteps on Bài 1', () => {
 		expect(pinyin.length).toBeGreaterThan(0);
 		expect(text.length).toBeGreaterThan(0);
 		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
-	}, 15_000);
+	});
 
 	it('Given_Examples_When_Build_Then_EachCarriesItsSentenceId', () => {
 		// Arrange / Act

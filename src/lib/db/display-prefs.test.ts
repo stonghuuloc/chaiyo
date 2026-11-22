@@ -1,6 +1,7 @@
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
+import { freshDb } from './fresh-db';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { asLearner, migrate } from './migrate';
+import { asLearner } from './migrate';
 
 vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
 
@@ -8,8 +9,7 @@ const LINH = '11111111-1111-1111-1111-111111111111';
 
 let db: PGlite;
 beforeEach(async () => {
-	db = new PGlite();
-	await migrate(db);
+	db = await freshDb();
 	await db.exec(`insert into auth.users (id) values ('${LINH}')`);
 });
 afterEach(() => db.close());
