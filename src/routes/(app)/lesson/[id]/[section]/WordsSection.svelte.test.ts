@@ -27,13 +27,15 @@ vi.mock('#lib/audio/index.js', () => ({
 	player: { play: vi.fn(async () => true), url: (k: string) => `/a/${k}.mp3`, element: () => null }
 }));
 
-const lookup = vi.fn(async (sentenceId: string, i: number) => ({
-	hanzi: '您',
-	pinyin: 'nín',
-	hanviet: 'nâm',
-	meaning: 'ngài',
-	sentenceId,
-	start: i
+const { lookup } = vi.hoisted(() => ({
+	lookup: vi.fn(async (sentenceId: string, i: number) => ({
+		hanzi: '您',
+		pinyin: 'nín',
+		hanviet: 'nâm',
+		meaning: 'ngài',
+		sentenceId,
+		start: i
+	}))
 }));
 
 vi.mock('#lib/catalog/app.js', () => ({
