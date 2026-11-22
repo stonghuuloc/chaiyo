@@ -12,6 +12,7 @@ import DialogueSection from './DialogueSection.svelte';
 let recorded: StudyEvent[] = [];
 const ledger = {
 	state: () => initialState(),
+	subscribe: () => () => {},
 	record: async () => recorded
 } as unknown as Ledger;
 
@@ -27,6 +28,19 @@ vi.mock('#lib/supabase.js', () => ({
 }));
 vi.mock('#lib/audio/index.js', () => ({
 	player: { playToEnd: vi.fn(async () => true), pause: vi.fn() }
+}));
+
+const lookup = vi.fn(async (sentenceId: string, i: number) => ({
+	hanzi: '您',
+	pinyin: 'nín',
+	hanviet: 'nâm',
+	meaning: 'ngài',
+	sentenceId,
+	start: i
+}));
+
+vi.mock('#lib/catalog/app.js', () => ({
+	catalog: { lookup, thin: async () => null, find: async () => ({ word: null, char: null }) }
 }));
 
 const session = { user: { id: 'u1' } } as never;
@@ -274,5 +288,18 @@ describe('DialogueSection', () => {
 		// Assert
 		expect(pill('pinyin').getAttribute('aria-pressed')).toBe('false');
 		expect(count('line-pinyin')).toBe(0);
+	});
+
+	it('Given_Section_When_TapHanzi_Then_LookupPanelShown', async () => {
+		// Arrange
+		await mountSection(content());
+		const first = target!.querySelector('[data-part="dialogue-line"] [data-i]')!;
+		// Act
+		first.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+		await new Promise((r) => setTimeout(r, 0));
+		await settle();
+		// Assert
+		expect(lookup).toHaveBeenCalledOnce();
+		expect(document.body.querySelector('[data-part="lookup-panel"]')).not.toBeNull();
 	});
 });

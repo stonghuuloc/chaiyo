@@ -7,6 +7,7 @@
 	import Done from '#lib/lesson/Done.svelte';
 	import { DisplayPrefs, setPrefs } from '#lib/lesson/prefs.svelte.js';
 	import { doneNext, sectionName } from '#lib/lesson/done.js';
+	import LookupHost from '#lib/lookup/LookupHost.svelte';
 	import StepRunner from '#lib/lesson/StepRunner.svelte';
 	import StreakPopup from '#lib/lesson/StreakPopup.svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -64,15 +65,17 @@
 			<Done title={m.done_title({ name: sectionName('grammar') })} text={done} {next} />
 			<StreakPopup {events} />
 		{:else}
-			<StepRunner
-				{steps}
-				ledger={l}
-				lesson={lesson.lesson.id}
-				section="grammar"
-				contentSha={lesson.contentSha}
-				exit={resolve('/(app)/(tabs)/today')}
-				onfinish={(e) => (events = e)}
-			/>
+			<LookupHost ledger={l}>
+				<StepRunner
+					{steps}
+					ledger={l}
+					lesson={lesson.lesson.id}
+					section="grammar"
+					contentSha={lesson.contentSha}
+					exit={resolve('/(app)/(tabs)/today')}
+					onfinish={(e) => (events = e)}
+				/>
+			</LookupHost>
 		{/if}
 	{:catch}
 		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
