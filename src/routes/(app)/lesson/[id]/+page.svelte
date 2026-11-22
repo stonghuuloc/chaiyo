@@ -11,6 +11,7 @@
 
 	$effect(() => {
 		const session = data.session;
+		study = initialState({ curriculum: CURRICULUM });
 		if (!session) return;
 		let live = true;
 		let off = () => {};
