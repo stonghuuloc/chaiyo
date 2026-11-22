@@ -3,6 +3,8 @@ import type { ThinEntry } from '../derive';
 import { bundleSentences } from './assemble';
 import type { ImportedContent, ImportedLesson, ImportedSentence, ImportedWord } from './sink';
 
+export const BUNDLE_FORMAT = 2;
+
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 
 export type Bundle = {
