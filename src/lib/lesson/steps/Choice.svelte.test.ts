@@ -227,6 +227,41 @@ describe('Choice', () => {
 		expect(need(target).textContent).toContain('Tốt nghĩa là tốt');
 	});
 
+	it('Given_PromptHanzi_When_Mount_Then_RendersBigHanzi', () => {
+		// Arrange
+		const withPrompt: Step = { ...step, prompt: { text: '谢谢', hanzi: true } };
+
+		// Act
+		mountChoice({ step: withPrompt });
+
+		// Assert
+		const prompt = need(target).querySelector('[data-part="choice-prompt"]');
+		expect(prompt?.textContent).toBe('谢谢');
+		expect(prompt?.classList.contains('font-hanzi')).toBe(true);
+	});
+
+	it('Given_PromptText_When_Mount_Then_RendersTextFont', () => {
+		// Arrange
+		const withPrompt: Step = { ...step, prompt: { text: 'cảm ơn', hanzi: false } };
+
+		// Act
+		mountChoice({ step: withPrompt });
+
+		// Assert
+		const prompt = need(target).querySelector('[data-part="choice-prompt"]');
+		expect(prompt?.textContent).toBe('cảm ơn');
+		expect(prompt?.classList.contains('font-display')).toBe(true);
+		expect(prompt?.classList.contains('font-hanzi')).toBe(false);
+	});
+
+	it('Given_NoPrompt_When_Mount_Then_NoPromptPart', () => {
+		// Arrange / Act
+		mountChoice();
+
+		// Assert
+		expect(need(target).querySelector('[data-part="choice-prompt"]')).toBeNull();
+	});
+
 	it('Given_PinyinPrefOn_When_Render_Then_NoPinyinBeforeGrading', () => {
 		// Arrange / Act
 		mountChoice({ prefs: new DisplayPrefs({ level: 1, key: 'k' }) });

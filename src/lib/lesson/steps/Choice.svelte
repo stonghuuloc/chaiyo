@@ -14,6 +14,7 @@
 		missHint?: string;
 		card?: { word: string; skill: Skill };
 		audio?: string;
+		prompt?: { text: string; hanzi: boolean };
 	};
 </script>
 
@@ -67,6 +68,14 @@
 {/if}
 {#if step.title}
 	<h2 class="mt-1 font-display text-headline">{step.title}</h2>
+{/if}
+{#if step.prompt}
+	<p
+		data-part="choice-prompt"
+		class="mt-3 {step.prompt.hanzi ? 'font-hanzi text-[56px]' : 'font-display text-headline'}"
+	>
+		{step.prompt.text}
+	</p>
 {/if}
 
 <div class="mt-5 grid gap-2 md:grid-cols-2">
