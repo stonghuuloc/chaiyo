@@ -302,5 +302,15 @@
 	"gate_result_clean": "Không sai câu nào.",
 	"gate_result_you": "Bạn:",
 	"gate_result_home": "Về trang chủ",
-	"gate_result_retry": "Làm lại"
+	"gate_result_retry": "Làm lại",
+	"warmup_name": "Khởi động",
+	"warmup_first": "Ôn lại Bài {n} trước khi học từ mới",
+	"warmup_kicker": "Khởi động · Ôn Bài {n}",
+	"warmup_audio": "Nghe rồi chọn từ đúng",
+	"warmup_mean": "Từ này nghĩa là gì?",
+	"warmup_tone": "Nghe rồi chọn pinyin đúng",
+	"warmup_rev": "Chọn từ có nghĩa này",
+	"warmup_miss": "Từ này sẽ quay lại sớm hơn",
+	"warmup_done_miss": "{k}/{total} đúng · từ sai sẽ quay lại sớm hơn",
+	"warmup_done_all": "{k}/{total} đúng · cả sáu từ đều chắc tay"
 }
