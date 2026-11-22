@@ -328,5 +328,12 @@
 	"primer_gate_testout": "Đã biết pinyin? Làm bài kiểm tra luôn",
 	"primer_gate_cheer": "Chaiyo!",
 	"primer_gate_next": "Học Bài {n}",
-	"primer_gate_review": "Ôn lại các phần"
+	"primer_gate_review": "Ôn lại các phần",
+	"practice_today_title": "Luyện hôm nay · khoảng {min} phút",
+	"practice_chip_the": "{n} thẻ từ",
+	"practice_chip_nghe": "{n} nghe",
+	"practice_chip_viet": "{n} viết chữ",
+	"practice_start": "Bắt đầu",
+	"practice_clear_title": "Hôm nay xong bài rồi!",
+	"practice_clear_text": "Chưa có từ nào sắp quên. Còn hứng thì luyện thêm một kỹ năng bên dưới."
 }
