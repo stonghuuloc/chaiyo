@@ -190,4 +190,69 @@ describe('sync', () => {
 		expect(pulled[0]).toMatchObject({ id: 'p0', at: new Date(T).toISOString() });
 		expect(pulled[0]).not.toHaveProperty('card');
 	});
+
+	describe('tone', () => {
+		const pulledRow = (extra: Record<string, unknown>) => ({
+			id: 'p1',
+			at: new Date(T).toISOString().replace('Z', '+00:00'),
+			question_id: 'q',
+			content_sha: 's',
+			word: null,
+			skill: null,
+			correct: true,
+			ms: 1,
+			answer: null,
+			step: null,
+			...extra
+		});
+		const pullWith = async (row: Record<string, unknown>) => {
+			const fetch = vi.fn(async (input: RequestInfo | URL) =>
+				json(new URL(String(input)).pathname.endsWith('/attempts') ? [row] : [], 200)
+			);
+			return supabaseStore(clientWith(fetch as typeof globalThis.fetch), 'learner-a').pull();
+		};
+
+		it('Given_ToneAttempt_When_Upload_Then_RowHasTone', async () => {
+			// Arrange
+			const posts: Record<string, unknown>[][] = [];
+			const fetch = vi.fn(async (_: RequestInfo | URL, init?: RequestInit) => {
+				if (init?.method === 'POST') posts.push(JSON.parse(String(init.body)));
+				return init?.method === 'POST' ? json(null, 201) : json([], 200);
+			});
+			const store = supabaseStore(clientWith(fetch as typeof globalThis.fetch), 'learner-a');
+			const toned: Attempt = { ...att('a-01', T + MIN, '你', 'the', true), tone: 3 };
+			const plain = att('a-02', T + 2 * MIN, '你', 'the', true);
+
+			// Act
+			await store.push([toned, plain]);
+
+			// Assert
+			expect(posts[0].map((r) => r.tone)).toEqual([3, null]);
+		});
+
+		it('Given_PulledRowTone3_When_Pull_Then_AttemptTone3', async () => {
+			// Arrange
+			const row = pulledRow({ tone: 3 });
+
+			// Act
+			const [got] = await pullWith(row);
+
+			// Assert
+			expect(got).toMatchObject({ id: 'p1', tone: 3 });
+		});
+
+		it('Given_PulledRowToneNull_When_Pull_Then_NoToneKey', async () => {
+			// Arrange
+			const withNull = pulledRow({ tone: null });
+			const withoutKey = pulledRow({});
+
+			// Act
+			const [a] = await pullWith(withNull);
+			const [b] = await pullWith(withoutKey);
+
+			// Assert
+			expect(a).not.toHaveProperty('tone');
+			expect(b).not.toHaveProperty('tone');
+		});
+	});
 });

@@ -27,6 +27,8 @@ export function resultView(i: ResultInput) {
 		pass,
 		best: i.best,
 		n: LESSONS[at]?.n ?? 0,
+		primer: LESSONS[at]?.testOut === true,
+		next: next ? { id: next.id, n: next.n } : null,
 		line: pass ? parts.join(' · ') || null : m.gate_result_fail({ n: next?.n ?? 0 }),
 		art: pass ? 'b1-pass' : 'b1-fail'
 	};

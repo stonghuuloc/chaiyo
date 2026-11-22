@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { gradePinyin, norm, toMarks } from './pinyin';
+import { gradePinyin, norm, toMarks, toneOf } from './pinyin';
 
 describe('pinyin', () => {
 	it.each([
@@ -65,5 +65,36 @@ describe('pinyin', () => {
 
 		// Assert
 		expect(got).toBe(right);
+	});
+});
+
+describe('toneOf', () => {
+	it.each([
+		['mā', 1],
+		['má', 2],
+		['mǎ', 3],
+		['mà', 4],
+		['ǚ', 3],
+		['nǐ hǎo', 3]
+	])('Given_MarkedSyllables_When_ToneOf_Then_OneToFour: %s', (input, tone) => {
+		// Arrange
+		const text = input;
+
+		// Act
+		const got = toneOf(text);
+
+		// Assert
+		expect(got).toBe(tone);
+	});
+
+	it.each(['an', 'ma', ''])('Given_Unmarked_When_ToneOf_Then_Null: "%s"', (input) => {
+		// Arrange
+		const text = input;
+
+		// Act
+		const got = toneOf(text);
+
+		// Assert
+		expect(got).toBeNull();
 	});
 });

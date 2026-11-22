@@ -34,11 +34,11 @@ describe('h0-00 primer', () => {
 		expect(result.ok).toBe(true);
 	});
 
-	it('AC1 has 5 sections, 29 cards, 20 drills and gate draw 10 / pool 24', () => {
+	it('AC1 has 5 sections, 29 cards, 20 drills and gate draw 10 / pool 25', () => {
 		expect(sectionNames.map((s) => primer.sections[s].cards.length)).toEqual([6, 6, 7, 4, 6]);
 		expect(sectionNames.flatMap((s) => primer.sections[s].drills)).toHaveLength(20);
 		expect(primer.gate).toMatchObject({ draw: 10, testOut: true });
-		expect(pool).toHaveLength(24);
+		expect(pool).toHaveLength(25);
 	});
 
 	it('AC1 chips: 105 total, 15 plain, 62 labelled, 28 with hanzi', () => {
@@ -62,9 +62,20 @@ describe('h0-00 primer', () => {
 			expect(primer.sections[s].drills.length).toBeGreaterThanOrEqual(1);
 	});
 
+	it('AC4 gate pool has tones-05 asking hǎo', () => {
+		// Arrange
+		const q = pool.find((x) => x.id === 'q-h0-00-g-tones-05');
+
+		// Act
+		const picked = q && 'options' in q ? q.options[q.answer] : null;
+
+		// Assert
+		expect(picked).toBe('hǎo');
+	});
+
 	it('AC4 pool covers the 5 sections and is at least 2 x draw', () => {
 		const counts = sectionNames.map((s) => pool.filter((q) => q.section === s).length);
-		expect(counts).toEqual([4, 5, 5, 5, 5]);
+		expect(counts).toEqual([5, 5, 5, 5, 5]);
 		expect(pool.length).toBeGreaterThanOrEqual(2 * primer.gate.draw);
 	});
 
@@ -150,7 +161,7 @@ describe('h0-00 primer through lintDir', () => {
 		expect(paths(errors)).toEqual(['sections.sandhi.drills']);
 	});
 
-	it('AC4 one item dropped per section (19, 5 sections) errors only on the count', () => {
+	it('AC4 six items dropped (19, 5 sections) errors only on the count', () => {
 		const errors = lintCopy((d) => {
 			const seen = new Set<string>();
 			const drop = new Set<number>();
@@ -160,13 +171,14 @@ describe('h0-00 primer through lintDir', () => {
 					drop.add(i);
 				}
 			});
+			drop.add(d.gate.pool.findIndex((_, i) => !drop.has(i)));
 			d.gate.pool = d.gate.pool.filter((_, i) => !drop.has(i));
 		});
 		expect(paths(errors)).toEqual(['gate.pool']);
 		expect(errors[0].message).toMatch(/19 questions/);
 	});
 
-	it('AC4 sandhi items retagged tones (24) errors only on missing sandhi', () => {
+	it('AC4 sandhi items retagged tones (25) errors only on missing sandhi', () => {
 		const errors = lintCopy((d) => {
 			for (const q of d.gate.pool as { section: string }[])
 				if (q.section === 'sandhi') q.section = 'tones';

@@ -323,5 +323,10 @@
 	"primer_hub_gate_cta": "Làm bài kiểm tra",
 	"primer_drill_ask": "Nghe rồi chọn pinyin đúng",
 	"primer_card_next": "Tiếp tục",
-	"primer_done_score": "{n}/{total} câu luyện đúng"
+	"primer_done_score": "{n}/{total} câu luyện đúng",
+	"primer_gate_ask_read": "Chọn pinyin đúng",
+	"primer_gate_testout": "Đã biết pinyin? Làm bài kiểm tra luôn",
+	"primer_gate_cheer": "Chaiyo!",
+	"primer_gate_next": "Học Bài {n}",
+	"primer_gate_review": "Ôn lại các phần"
 }

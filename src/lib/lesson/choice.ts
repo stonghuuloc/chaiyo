@@ -18,7 +18,8 @@ export const toAnswer = (step: Step, pick: string, ms: number): Answer => ({
 	pick,
 	correct: pick === step.answer,
 	ms,
-	...(step.card ? { card: step.card } : {})
+	...(step.card ? { card: step.card } : {}),
+	...(step.tone ? { tone: step.tone } : {})
 });
 
 type CtaState = {

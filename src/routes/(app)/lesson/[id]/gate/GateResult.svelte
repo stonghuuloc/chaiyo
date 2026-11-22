@@ -72,6 +72,9 @@
 		<span class="absolute left-[80%] -translate-x-1/2">80%</span>
 	</div>
 
+	{#if view.primer && view.pass}
+		<p data-part="cheer" class="mt-3 font-display text-title font-bold">{m.primer_gate_cheer()}</p>
+	{/if}
 	{#if view.line}
 		<p
 			data-part="line"
@@ -118,7 +121,11 @@
 
 	{#snippet actions()}
 		<div data-part="cta">
-			{#if view.pass}
+			{#if view.primer && view.pass && view.next}
+				<Button href={resolve('/(app)/lesson/[id]', { id: view.next.id })} onclick={onleave}>
+					{m.primer_gate_next({ n: view.next.n })}
+				</Button>
+			{:else if view.pass}
 				<Button href={resolve('/(app)/(tabs)/today')} onclick={onleave}>
 					{m.gate_result_home()}
 				</Button>
@@ -132,7 +139,7 @@
 			class="mt-3 block py-2 text-center font-semibold text-lantern-red-text"
 			onclick={onleave}
 		>
-			{m.gate_back()}
+			{view.primer && !view.pass ? m.primer_gate_review() : m.gate_back()}
 		</a>
 	{/snippet}
 </FocusFrame>

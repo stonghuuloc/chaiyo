@@ -154,4 +154,22 @@ describe('toAnswer', () => {
 		expect(a).toEqual({ questionId: 'q1', pick: '好', correct: true, ms: 5 });
 		expect('card' in a).toBe(false);
 	});
+
+	it('Given_StepWithTone_When_ToAnswer_Then_CopiesTone', () => {
+		// Arrange
+		const s: Step = { ...step, tone: 3 };
+		// Act
+		const a = toAnswer(s, '好', 5);
+		// Assert
+		expect(a.tone).toBe(3);
+	});
+
+	it('Given_StepNoTone_When_ToAnswer_Then_NoToneKey', () => {
+		// Arrange
+		const s: Step = step;
+		// Act
+		const a = toAnswer(s, '好', 5);
+		// Assert
+		expect('tone' in a).toBe(false);
+	});
 });

@@ -2,7 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Attempt, Skill, Step, WordSaved } from '#lib/study/index.js';
 import type { Input, Store } from './types';
 
-const COLS = 'id, at, question_id, content_sha, word, skill, correct, ms, answer, step';
+const COLS = 'id, at, question_id, content_sha, word, skill, correct, ms, answer, step, tone';
 const PAGE = 1000;
 
 type Row = {
@@ -16,6 +16,7 @@ type Row = {
 	ms: number;
 	answer: string | null;
 	step: Step | null;
+	tone?: 1 | 2 | 3 | 4 | null;
 };
 
 const toRow = (a: Attempt) => ({
@@ -28,7 +29,8 @@ const toRow = (a: Attempt) => ({
 	correct: a.correct,
 	ms: a.ms,
 	answer: a.answer ?? null,
-	step: a.step ?? null
+	step: a.step ?? null,
+	tone: a.tone ?? null
 });
 
 const fromRow = (r: Row): Attempt => ({
@@ -40,7 +42,8 @@ const fromRow = (r: Row): Attempt => ({
 	ms: r.ms,
 	...(r.answer !== null && { answer: r.answer }),
 	...(r.word !== null && r.skill !== null && { card: { word: r.word, skill: r.skill } }),
-	...(r.step !== null && { step: r.step })
+	...(r.step !== null && { step: r.step }),
+	...(r.tone != null && { tone: r.tone })
 });
 
 type Result<T> = { data: T[] | null; error: { message: string } | null; status: number };

@@ -22,6 +22,7 @@ export type Attempt = {
 	ms: number;
 	answer?: string;
 	card?: { word: string; skill: Skill };
+	tone?: 1 | 2 | 3 | 4;
 	step?: Step;
 };
 
@@ -30,6 +31,8 @@ export type WordSaved = { kind: 'saved'; word: string; at: string };
 export type Card = { due: string; first: string; fsrs: Record<string, unknown> };
 
 export type LessonProgress = { unlocked: boolean; passed: boolean; done: string[]; best?: number };
+
+export type ToneTally = Record<1 | 2 | 3 | 4, { right: number; total: number }>;
 
 export type State = {
 	badges: Partial<Record<BadgeId, string>>;
@@ -41,6 +44,7 @@ export type State = {
 	tz: string;
 	streak: { count: number; last?: string; freezes: number; through?: string };
 	runs: Record<string, { step: Step; answers: Record<string, boolean>; closed?: true }>;
+	tones: ToneTally;
 };
 
 export type StudyEvent =

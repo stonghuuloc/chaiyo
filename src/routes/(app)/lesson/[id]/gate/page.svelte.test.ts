@@ -85,6 +85,36 @@ describe('gate page', () => {
 		expect(root.querySelector('[data-part="exit"]')?.tagName).toBe('BUTTON');
 	});
 
+	it('Given_PrimerFresh_When_Render_Then_FirstQuestionNotFallback', async () => {
+		// Arrange
+		const sections = ['tones', 'finals', 'initials', 'spelling', 'sandhi'];
+		const pool = sections.flatMap((section) =>
+			[1, 2, 3].map((n) => ({
+				...choice(n),
+				id: `g-${section}-${n}`,
+				section,
+				options: ['ā', 'á'],
+				prompt: { kind: 'vi', text: `Câu ${section} ${n}` },
+				optionKind: 'pinyin'
+			}))
+		);
+		const primer = {
+			contentSha: 'sha',
+			lesson: { kind: 'primer', id: 'h0-00', gate: { pool, draw: 10, testOut: true } },
+			words: [],
+			sentences: []
+		} as unknown as LessonContent;
+		const data = { lesson: primer, session: { user: { id: 'u1' } } };
+
+		// Act
+		const root = mountPage(data);
+		await vi.waitFor(() => expect(root.querySelectorAll('[data-seg] i')).toHaveLength(10));
+
+		// Assert
+		expect(root.querySelector('h1')).toBe(null);
+		expect(root.querySelector('.body button')).not.toBe(null);
+	});
+
 	it('Given_Done_When_Handoff_Then_StoredAndGotoResult', async () => {
 		// Arrange
 		const data = { lesson: lesson(1), session: { user: { id: 'u1' } } };

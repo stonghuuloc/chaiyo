@@ -143,6 +143,25 @@ describe('buildBundle clips', () => {
 		expect(clips!['ní hǎo']).toMatch(/^chips\//);
 	});
 
+	it('Given_PrimerBundle_When_Built_Then_EveryGatePromptHasClip', async () => {
+		// Arrange
+		const c = await loadReal();
+		const primer = c.lessons.find((l) => l.id === 'h0-00')!;
+		if (!('kind' in primer)) throw new Error('h0-00 is not a Primer');
+		const wanted = primer.gate.pool.flatMap((q) =>
+			'prompt' in q && q.prompt.kind === 'syllable' ? [q.prompt.spoken ?? q.prompt.text] : []
+		);
+
+		// Act
+		const { clips } = buildBundle(c, 'h0-00');
+
+		// Assert
+		expect(wanted).toHaveLength(23);
+		expect(wanted.filter((t) => !clips?.[t])).toEqual([]);
+		expect(wanted).toContain('hǎo');
+		expect(wanted).toContain('ní hǎo');
+	});
+
 	it('Given_LessonBundle_When_Built_Then_NoClips', async () => {
 		// Arrange
 		const c = await loadOk();

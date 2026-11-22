@@ -1,10 +1,31 @@
 import type { LessonContent } from '#lib/catalog/index.js';
+import type { Question } from '#lib/content/schemas.js';
+import { toneOf } from '#lib/lesson/pinyin.js';
 import type { Chip } from '#lib/lesson/steps/Card.svelte';
 import type { LessonStep } from '#lib/lesson/steps.js';
 import { m } from '#lib/paraglide/messages.js';
 import type { State } from '#lib/study/index.js';
 
 type Source = string | { say: string; hanzi?: string };
+
+export function drillStep(c: LessonContent, d: Question): LessonStep {
+	if (d.type !== 'choice') throw new Error(`unsupported Primer drill ${d.id}`);
+	const heard = d.prompt.kind === 'syllable' ? (d.prompt.spoken ?? d.prompt.text) : null;
+	const answer = d.options[d.answer];
+	const tone = toneOf(answer) ?? (heard ? toneOf(heard) : null);
+	return {
+		kind: 'choice',
+		id: d.id,
+		ask: d.ask ?? (heard ? m.primer_drill_ask() : m.primer_gate_ask_read()),
+		title: d.prompt.kind === 'vi' ? d.prompt.text : '',
+		options: d.options,
+		answer,
+		script: 'pinyin',
+		...(d.why ? { explain: d.why } : {}),
+		...(heard && c.clips?.[heard] ? { audio: c.clips[heard] } : {}),
+		...(tone ? { tone } : {})
+	};
+}
 
 export function primerSteps(c: LessonContent, section: string): LessonStep[] {
 	const { lesson } = c;
@@ -26,21 +47,7 @@ export function primerSteps(c: LessonContent, section: string): LessonStep[] {
 		pairs: (card.pairs ?? []).map(([a, b]) => [chip(a), chip(b)])
 	}));
 
-	for (const d of drills) {
-		if (d.type !== 'choice') throw new Error(`unsupported Primer drill ${d.id}`);
-		const heard = d.prompt.kind === 'syllable' ? (d.prompt.spoken ?? d.prompt.text) : null;
-		steps.push({
-			kind: 'choice',
-			id: d.id,
-			ask: d.ask ?? m.primer_drill_ask(),
-			title: d.prompt.kind === 'vi' ? d.prompt.text : '',
-			options: d.options,
-			answer: d.options[d.answer],
-			script: 'pinyin',
-			...(d.why ? { explain: d.why } : {}),
-			...(heard && c.clips?.[heard] ? { audio: c.clips[heard] } : {})
-		});
-	}
+	for (const d of drills) steps.push(drillStep(c, d));
 	return steps;
 }
 
