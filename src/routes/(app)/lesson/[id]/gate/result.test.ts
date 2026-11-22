@@ -79,6 +79,53 @@ describe('resultView', () => {
 		expect(v).toMatchObject({ pct: 80, pass: true });
 	});
 
+	it('Given_Primer9of10Unlocked_When_View_Then_90PassLineUnlocked', () => {
+		// Arrange
+		const events: StudyEvent[] = [{ type: 'LessonUnlocked', lesson: 'h1-01' }];
+		const input = { lesson: 'h0-00', answers: answers(9, 10), events, best: 90 };
+
+		// Act
+		const v = resultView(input);
+
+		// Assert
+		expect(v).toMatchObject({ pct: 90, pass: true, primer: true, next: { id: 'h1-01', n: 1 } });
+		expect(v.line).toBe('Đã mở Bài 1');
+	});
+
+	it('Given_Primer7of10_When_View_Then_70FailLine', () => {
+		// Arrange
+		const input = { lesson: 'h0-00', answers: answers(7, 10), events: [], best: 70 };
+
+		// Act
+		const v = resultView(input);
+
+		// Assert
+		expect(v).toMatchObject({ pct: 70, pass: false, primer: true });
+		expect(v.line).toBe('Gần được rồi. Cần 80% để mở Bài 1.');
+	});
+
+	it('Given_Primer8of10_When_View_Then_Pass', () => {
+		// Arrange
+		const input = { lesson: 'h0-00', answers: answers(8, 10), events: [], best: 80 };
+
+		// Act
+		const v = resultView(input);
+
+		// Assert
+		expect(v).toMatchObject({ pct: 80, pass: true, primer: true });
+	});
+
+	it('Given_Bai1_When_View_Then_NotPrimer', () => {
+		// Arrange
+		const input = { lesson: 'h1-01', answers: answers(9, 10), events: PASSED, best: 90 };
+
+		// Act
+		const v = resultView(input);
+
+		// Assert
+		expect(v.primer).toBe(false);
+	});
+
 	it('Given_Best70_Run60_When_View_Then_Best70', () => {
 		// Arrange
 		const input = { lesson: 'h1-01', answers: answers(6, 10), events: [], best: 70 };

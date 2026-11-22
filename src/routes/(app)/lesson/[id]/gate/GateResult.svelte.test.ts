@@ -12,7 +12,9 @@ const PASS: ResultView = {
 	best: 90,
 	n: 1,
 	line: 'Đã mở Bài 2 · +1 ngày chuỗi',
-	art: 'b1-pass'
+	art: 'b1-pass',
+	primer: false,
+	next: { id: 'h1-02', n: 2 }
 };
 const FAIL: ResultView = {
 	...PASS,
@@ -37,12 +39,12 @@ const ROW: ReviewRow = {
 let target: HTMLDivElement | undefined;
 let app: ReturnType<typeof mount> | undefined;
 
-const mountResult = (view: ResultView, rows: ReviewRow[] = []) => {
+const mountResult = (view: ResultView, rows: ReviewRow[] = [], lesson = 'h1-01') => {
 	const onretry = vi.fn();
 	const onleave = vi.fn();
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(GateResult, { target, props: { view, rows, lesson: 'h1-01', onretry, onleave } });
+	app = mount(GateResult, { target, props: { view, rows, lesson, onretry, onleave } });
 	flushSync();
 	const root = target;
 	return {
@@ -75,6 +77,22 @@ afterEach(() => {
 });
 
 const confetti = () => document.querySelector('[data-testid="confetti"]');
+
+const PRIMER_PASS: ResultView = {
+	...PASS,
+	n: 0,
+	line: 'Đã mở Bài 1',
+	primer: true,
+	next: { id: 'h1-01', n: 1 }
+};
+const PRIMER_FAIL: ResultView = {
+	...PRIMER_PASS,
+	pct: 70,
+	right: 7,
+	pass: false,
+	line: 'Gần được rồi. Cần 80% để mở Bài 1.',
+	art: 'b1-fail'
+};
 
 describe('GateResult', () => {
 	it('Given_Pass_When_250ms_Then_ConfettiPassArtHomeCta', () => {
@@ -204,5 +222,51 @@ describe('GateResult', () => {
 		// Assert
 		expect(v.part('wrong-title')?.textContent).toBe('Câu chưa đúng');
 		expect(v.part('clean')?.textContent).toBe('Không sai câu nào.');
+	});
+
+	it('Given_PrimerPass_When_250ms_Then_CheerConfettiHocBai1', () => {
+		// Arrange
+		const v = mountResult(PRIMER_PASS, [], 'h0-00');
+
+		// Act
+		vi.advanceTimersByTime(250);
+
+		// Assert
+		expect(v.part('cheer')?.textContent?.trim()).toBe('Chaiyo!');
+		expect(confetti()).not.toBe(null);
+		expect(v.part('pct')?.textContent).toBe('90%');
+		expect(v.part('line')?.textContent?.trim()).toBe('Đã mở Bài 1');
+		expect(v.root.querySelectorAll('[data-part="cta"] :is(a, button)')).toHaveLength(1);
+		expect(v.cta()?.textContent?.trim()).toBe('Học Bài 1');
+		expect(v.cta()?.getAttribute('href')).toBe('/lesson/h1-01');
+	});
+
+	it('Given_PrimerFail_When_250ms_Then_NoCheerNoConfettiRetryReview', () => {
+		// Arrange
+		const v = mountResult(PRIMER_FAIL, [], 'h0-00');
+
+		// Act
+		vi.advanceTimersByTime(250);
+
+		// Assert
+		expect(v.part('cheer')).toBe(null);
+		expect(v.text()).not.toContain('Chaiyo!');
+		expect(confetti()).toBe(null);
+		expect(v.cta()?.textContent?.trim()).toBe(m.gate_result_retry());
+		expect(v.part('back')?.textContent?.trim()).toBe('Ôn lại các phần');
+		expect(v.part('back')?.getAttribute('href')).toBe('/lesson/h0-00');
+	});
+
+	it('Given_Bai1Pass_When_Render_Then_HomeAndBackUnchangedNoCheer', () => {
+		// Arrange
+		const v = mountResult(PASS);
+
+		// Act
+		const back = v.part('back');
+
+		// Assert
+		expect(v.part('cheer')).toBe(null);
+		expect(v.cta()?.textContent?.trim()).toBe(m.gate_result_home());
+		expect(back?.textContent?.trim()).toBe(m.gate_back());
 	});
 });
