@@ -65,6 +65,16 @@
 				<li>{@render link(row)}</li>
 			{/each}
 		</ol>
+		{#each hub.links ?? [] as link (link.id)}
+			<a
+				data-part="hub-link"
+				href={resolve('/(app)/pinyin')}
+				class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+			>
+				<span class="size-6 shrink-0 rounded-full border-2 border-lantern-red"></span>
+				<b>{link.label}</b>
+			</a>
+		{/each}
 		<a
 			data-part="hub-gate"
 			data-look={hub.gate.locked ? 'locked' : 'todo'}
@@ -83,7 +93,7 @@
 				<span class="size-6 shrink-0 rounded-full border-2 border-lantern-red"></span>
 			{/if}
 			<span class="flex flex-col">
-				<b>{m.hub_gate_name()}</b>
+				<b>{hub.gate.name ?? m.hub_gate_name()}</b>
 				{#if hub.gate.sub}
 					<small class="text-graphite">{hub.gate.sub}</small>
 				{/if}

@@ -26,6 +26,8 @@ const session = { user: { id: 'u1' } };
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
+const primer: LessonContent = await createCatalog(await fixtureSource()).lesson('h0-00');
+
 const mountPage = async (s: typeof session | null = session, content: LessonContent = lesson) => {
 	target = document.createElement('div');
 	document.body.append(target);
@@ -39,6 +41,7 @@ const mountPage = async (s: typeof session | null = session, content: LessonCont
 	flushSync();
 	return {
 		rows: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-row]')],
+		links: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-link]')],
 		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta]'),
 		gate: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-gate]')!
 	};
@@ -217,5 +220,58 @@ describe('lesson hub Khởi động row', () => {
 		// Assert
 		expect(rows()).toHaveLength(5);
 		expect(target!.textContent).not.toContain('Khởi động');
+	});
+});
+
+describe('Primer hub', () => {
+	it('Given_PrimerHub_When_Mounted_Then_PinyinThenGateRows', async () => {
+		// Arrange / Act
+		const { rows, links, gate, cta } = await mountPage(session, primer);
+
+		// Assert
+		const order = [
+			...target!.querySelectorAll('[data-part=hub-row], [data-part=hub-link], [data-part=hub-gate]')
+		];
+		expect(order.map((n) => (n as HTMLElement).dataset.part)).toEqual([
+			...rows().map(() => 'hub-row'),
+			'hub-link',
+			'hub-gate'
+		]);
+		expect(rows()).toHaveLength(5);
+		expect(rows().map((r) => r.textContent)).toEqual([
+			expect.stringContaining('Thanh điệu'),
+			expect.stringContaining('Vận mẫu'),
+			expect.stringContaining('Thanh mẫu'),
+			expect.stringContaining('Quy tắc viết'),
+			expect.stringContaining('Biến điệu')
+		]);
+		expect(links()).toHaveLength(1);
+		expect(links()[0].getAttribute('href')).toMatch(/\/pinyin$/);
+		expect(links()[0].textContent).toContain('Bảng pinyin');
+		expect(gate().getAttribute('href')).toMatch(/\/lesson\/h0-00\/gate$/);
+		expect(gate().textContent).toContain('Kiểm tra Nhập môn');
+		expect(target!.querySelectorAll('[data-part=hub-gate]')).toHaveLength(1);
+		expect(target!.textContent).toContain('5 phần · không học từ mới · khoảng 25 phút');
+		expect(target!.textContent).toContain('0/5 phần');
+		expect(cta()!.textContent).toContain('Bắt đầu: Thanh điệu');
+		expect(cta()!.getAttribute('href')).toMatch(/\/lesson\/h0-00\/tones$/);
+	});
+
+	it('Given_FiveDoneNotPassed_When_Mounted_Then_CtaOpensGateRoute', async () => {
+		// Arrange
+		const s = initialState({ curriculum: CURRICULUM });
+		s.lessons['h0-00'] = {
+			unlocked: true,
+			passed: false,
+			done: ['tones', 'finals', 'initials', 'spelling', 'sandhi']
+		};
+		current = s;
+
+		// Act
+		const { cta } = await mountPage(session, primer);
+
+		// Assert
+		expect(cta()!.textContent).toContain('Làm bài kiểm tra');
+		expect(cta()!.getAttribute('href')).toMatch(/\/lesson\/h0-00\/gate$/);
 	});
 });
