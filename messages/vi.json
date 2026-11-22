@@ -421,5 +421,9 @@
 	"chy41s3_mock_after": "mở khi đỗ thi thử HSK {level}",
 	"chy44s3_thi_passed": "Bạn đã đỗ cấp này, làm lại để giữ phong độ. Chưa có đề trong bản demo.",
 	"chy44s3_thi_current": "Mở khi bạn qua bài cuối của HSK {level}. Chưa có đề trong bản demo.",
-	"chy44s3_thi_next": "Mở khi bạn đỗ thi thử HSK {level}."
+	"chy44s3_thi_next": "Mở khi bạn đỗ thi thử HSK {level}.",
+	"chy47s1_title": "Chạy thử vòng tính chuỗi",
+	"chy47s1_run": "Chạy",
+	"chy47s1_now": "Giờ hiện tại (UTC)",
+	"chy47s1_log_empty": "Chưa chạy lần nào."
 }
