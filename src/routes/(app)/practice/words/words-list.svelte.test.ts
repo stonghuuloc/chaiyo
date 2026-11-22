@@ -17,10 +17,10 @@ const row = (hanzi: string, over: Partial<MyWordRow> = {}): MyWordRow => ({
 	...over
 });
 
-const render = (rows: MyWordRow[]) => {
+const render = (rows: MyWordRow[], query?: string) => {
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(WordsList, { target, props: { rows } }) as Record<string, unknown>;
+	app = mount(WordsList, { target, props: { rows, query } }) as Record<string, unknown>;
 	flushSync();
 	return target;
 };
@@ -130,5 +130,63 @@ describe('WordsList', () => {
 		// Assert
 		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
 		expect(order).toEqual(['学', '你']);
+	});
+
+	it('the search box has placeholder and aria-label Tìm trong từ của bạn', () => {
+		// Arrange / Act
+		const el = render([row('你')]);
+
+		// Assert
+		const input = el.querySelector('input')!;
+		expect(input.getAttribute('placeholder')).toBe('Tìm trong từ của bạn');
+		expect(input.getAttribute('aria-label')).toBe('Tìm trong từ của bạn');
+	});
+
+	it('typing hoc leaves the 学 rows and the count stays 30', () => {
+		// Arrange
+		const rows = [
+			row('学生', { hanViet: 'học sinh' }),
+			row('学', { hanViet: 'học' }),
+			...Array.from({ length: 28 }, (_, i) => row(`字${i}`))
+		];
+		const el = render(rows);
+		const input = el.querySelector('input')!;
+
+		// Act
+		input.value = 'hoc';
+		input.dispatchEvent(new Event('input', { bubbles: true }));
+		flushSync();
+
+		// Assert
+		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
+		expect(order).toEqual(['学生', '学']);
+		expect(el.textContent).toContain('30 từ đã học và đã lưu');
+	});
+
+	it('xyz shows Không có từ nào khớp “xyz”. and no li', () => {
+		// Arrange
+		const el = render([row('你')]);
+		const input = el.querySelector('input')!;
+
+		// Act
+		input.value = ' xyz ';
+		input.dispatchEvent(new Event('input', { bubbles: true }));
+		flushSync();
+
+		// Assert
+		expect(el.querySelector('[data-part="no-match"]')?.textContent).toBe(
+			'Không có từ nào khớp “xyz”.'
+		);
+		expect(el.querySelectorAll('li')).toHaveLength(0);
+	});
+
+	it('an initial query prop filters on mount', () => {
+		// Arrange / Act
+		const el = render([row('你'), row('好')], '好');
+
+		// Assert
+		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
+		expect(order).toEqual(['好']);
+		expect(el.querySelector('input')!.value).toBe('好');
 	});
 });

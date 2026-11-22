@@ -388,5 +388,7 @@
 	"mywords_bars": "Độ nhớ: {bars} trên 3",
 	"mywords_note_due": "cần ôn hôm nay",
 	"mywords_note_never": "chưa ôn",
-	"skill_doan_gate": "Mở khi bạn tới HSK 3. Bạn đang ở HSK {level}."
+	"skill_doan_gate": "Mở khi bạn tới HSK 3. Bạn đang ở HSK {level}.",
+	"chy43s2_search": "Tìm trong từ của bạn",
+	"chy43s2_no_match": "Không có từ nào khớp “{q}”."
 }

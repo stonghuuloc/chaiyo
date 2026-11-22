@@ -1,14 +1,27 @@
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
-	import type { MyWordRow } from '#lib/study/index.js';
+	import { searchWords, type MyWordRow } from '#lib/study/index.js';
 
-	let { rows }: { rows: MyWordRow[] } = $props();
+	let { rows, query = $bindable('') }: { rows: MyWordRow[]; query?: string } = $props();
+	const shown = $derived(searchWords(rows, query));
 </script>
 
 <section class="flex flex-col gap-4 pb-24">
 	<p class="text-graphite">{m.mywords_count({ n: rows.length })}</p>
+	<input
+		type="search"
+		bind:value={query}
+		placeholder={m.chy43s2_search()}
+		aria-label={m.chy43s2_search()}
+		autocomplete="off"
+		spellcheck="false"
+		class="rounded-2xl border border-ruled-line bg-white p-3"
+	/>
+	{#if shown.length === 0 && query.trim()}
+		<p data-part="no-match" class="text-graphite">{m.chy43s2_no_match({ q: query.trim() })}</p>
+	{/if}
 	<ul class="flex flex-col gap-2">
-		{#each rows as row (row.hanzi)}
+		{#each shown as row (row.hanzi)}
 			<li
 				data-part="my-word"
 				class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
