@@ -85,7 +85,11 @@ type Runner = {
 
 const mountRunner = (
 	ledger: Ledger,
-	o: { steps?: LessonStep[]; onfinish?: (events: StudyEvent[]) => void } = {}
+	o: {
+		steps?: LessonStep[];
+		onfinish?: (events: StudyEvent[]) => void;
+		extra?: Record<string, unknown>;
+	} = {}
 ): Runner => {
 	target = document.createElement('div');
 	document.body.append(target);
@@ -99,7 +103,8 @@ const mountRunner = (
 			section: 'words',
 			contentSha: 'sha1',
 			ledger,
-			onfinish: o.onfinish ?? (() => {})
+			onfinish: o.onfinish ?? (() => {}),
+			...o.extra
 		}
 	});
 	flushSync();
@@ -615,5 +620,110 @@ describe('StepRunner hold CTA', () => {
 		// Assert
 		expect(stop).toHaveBeenCalledTimes(1);
 		expect(holdCta().textContent).toContain(m.lesson_continue());
+	});
+
+	describe('gate', () => {
+		const confirmExit = {
+			label: m.gate_exit_label(),
+			title: m.gate_exit_title(),
+			body: m.gate_exit_body(),
+			leave: m.gate_exit_leave(),
+			keep: m.gate_exit_keep()
+		};
+		const gate = { mode: 'test', section: 'gate', confirmExit, fresh: true, note: m.gate_hint() };
+		const exitButton = () => need(need(target).querySelector<HTMLElement>('[data-part="exit"]'));
+		const dialog = () => document.querySelector('[role="dialog"]');
+
+		it('Given_ConfirmExit_When_ClickX_Then_SheetWithGateCopy', async () => {
+			// Arrange
+			const ledger = await ledgerFor();
+			const record = vi.spyOn(ledger, 'record');
+			mountRunner(ledger, { extra: gate });
+
+			// Act
+			exitButton().click();
+			flushSync();
+
+			// Assert
+			expect(exitButton().tagName).toBe('BUTTON');
+			expect(dialog()?.textContent).toContain('Thoát bài kiểm tra?');
+			expect(dialog()?.textContent).toContain('Điểm sẽ không được lưu.');
+			const leave = [...need(dialog()).querySelectorAll('a')].find(
+				(a) => a.textContent?.trim() === 'Thoát'
+			);
+			expect(leave?.getAttribute('href')).toBe('/today');
+			expect(record).not.toHaveBeenCalled();
+		});
+
+		it('Given_SheetOpen_When_Keep_Then_SheetClosedAndStepKept', async () => {
+			// Arrange
+			const ledger = await ledgerFor();
+			mountRunner(ledger, { extra: gate });
+			exitButton().click();
+			flushSync();
+			const keep = [...need(dialog()).querySelectorAll('button')].find(
+				(b) => b.textContent?.trim() === 'Làm tiếp'
+			);
+
+			// Act
+			need(keep).click();
+			flushSync();
+			await vi.waitFor(() => expect(dialog()).toBe(null));
+
+			// Assert
+			expect(need(target).textContent).toContain('Câu 1');
+			expect(need(target).querySelector('[data-part="note"]')?.textContent).toBe(m.gate_hint());
+		});
+
+		it('Given_NoConfirmExit_When_Render_Then_PlainExitLink', async () => {
+			// Arrange
+			const ledger = await ledgerFor();
+
+			// Act
+			mountRunner(ledger);
+
+			// Assert
+			expect(exitButton().tagName).toBe('A');
+			expect(exitButton().getAttribute('href')).toBe('/today');
+			expect(need(target).querySelector('[data-part="note"]')).toBe(null);
+		});
+
+		it('Given_AbandonedGateRun_When_FreshRemount_Then_NewRunFromFirstStep', async () => {
+			// Arrange
+			const ledger = await ledgerFor();
+			let view = mountRunner(ledger, { extra: gate });
+			view.options()[0].click();
+			flushSync();
+			view.cta().click();
+			await vi.waitFor(() => expect(view.counter()).toBe('2/2'));
+			detach();
+
+			// Act
+			view = mountRunner(ledger, { extra: gate });
+
+			// Assert
+			expect(view.counter()).toBe('1/2');
+			expect(view.segments()).toEqual(['false', 'false']);
+			expect(need(target).textContent).toContain('Câu 1');
+		});
+
+		it('Given_TestMode_When_Answer_Then_NoVerdictAndSubmitOnLast', async () => {
+			// Arrange
+			const ledger = await ledgerFor();
+			const view = mountRunner(ledger, { extra: gate });
+
+			// Act
+			view.options()[1].click();
+			flushSync();
+			view.cta().click();
+			await vi.waitFor(() => expect(view.counter()).toBe('2/2'));
+			view.options()[0].click();
+			flushSync();
+
+			// Assert
+			expect(need(target).textContent).not.toContain(m.lesson_right());
+			expect(need(target).textContent).not.toContain(m.lesson_wrong());
+			expect(view.cta().textContent).toContain(m.lesson_submit());
+		});
 	});
 });
