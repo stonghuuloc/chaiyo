@@ -46,12 +46,15 @@ export class DisplayPrefs {
 	async #push(keys: Key[]) {
 		const { client, uid } = this.o;
 		if (!client || !uid) return;
-		const row = Object.fromEntries(keys.map((k) => [col[k], this.stored[k]]));
+		const sent = Object.fromEntries(keys.map((k) => [k, this.stored[k]]));
+		const row = Object.fromEntries(keys.map((k) => [col[k], sent[k]]));
 		const { error } = await client
 			.from('settings')
 			.upsert({ learner_id: uid, ...row }, { onConflict: 'learner_id' });
 		if (error) return;
-		const unsent = (this.stored.unsent ?? []).filter((k) => !keys.includes(k));
+		const unsent = (this.stored.unsent ?? []).filter(
+			(k) => !(keys.includes(k) && this.stored[k] === sent[k])
+		);
 		this.stored = { ...this.stored, unsent };
 		this.#keep();
 	}

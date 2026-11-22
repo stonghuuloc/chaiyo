@@ -8,6 +8,8 @@ const CARDS = 6;
 const ROT = ['audio', 'mean', 'tone', 'rev'] as const;
 type Type = (typeof ROT)[number];
 
+const STEP_ID = /^wu-\d+-(.+)-(?:audio|tone|mean|rev)$/;
+
 const TONE_MARKS = ['̄', '́', '̌', '̀'];
 
 const shuffle = <T>(items: T[], random: () => number): T[] => {
@@ -32,7 +34,18 @@ export function warmupWords(state: State, lessonId: string, now: Date, tz: strin
 	const due = session(state, { now, tz, only: ['the', 'nghe'] })
 		.map((c) => c.word)
 		.filter((w) => ids.includes(w));
-	return [...new Set([...due, ...ids])];
+	const answered = Object.values(state.runs)
+		.filter(
+			(r) =>
+				!r.closed &&
+				r.step.kind === 'section' &&
+				r.step.lesson === lessonId &&
+				r.step.section === 'warmup'
+		)
+		.flatMap((r) => Object.keys(r.answers))
+		.map((id) => id.match(STEP_ID)?.[1])
+		.filter((w): w is string => !!w && ids.includes(w));
+	return [...new Set([...answered, ...due, ...ids])];
 }
 
 export function toneVariants(pinyin: string): string[] {
@@ -72,12 +85,13 @@ const typeFor = (
 	const meaning = w.senses[0]?.vi ?? '';
 	if (want === 'audio' && w.audio) return { ...hanzi, type: 'audio' };
 	if (want === 'tone' && w.audio) {
-		const variants = toneVariants(w.pinyin);
+		const said = w.spoken ?? w.pinyin;
+		const variants = toneVariants(said);
 		if (variants.length >= 3)
 			return {
 				type: 'tone',
-				options: shuffle([w.pinyin, ...variants.slice(0, 3)], random),
-				answer: w.pinyin
+				options: shuffle([said, ...variants.slice(0, 3)], random),
+				answer: said
 			};
 	}
 	if (want === 'mean' || want === 'audio') {
