@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
+	import ReportButton from '#lib/report/ReportButton.svelte';
 	import type { PageProps } from './$types';
 	import WordEntry from './WordEntry.svelte';
 
@@ -14,4 +15,7 @@
 	{#key data.id}
 		<WordEntry view={data.word} />
 	{/key}
+	{#if data.report}
+		<ReportButton context={data.report} />
+	{/if}
 {/if}

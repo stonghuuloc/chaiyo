@@ -64,6 +64,7 @@ export default defineConfig({
 					// Components hold event handlers; svelte/server cannot reach them.
 					name: 'client',
 					environment: 'jsdom',
+					setupFiles: ['./src/test/client-setup.ts'],
 					include: ['src/**/*.svelte.{test,spec}.{js,ts}']
 				}
 			}
