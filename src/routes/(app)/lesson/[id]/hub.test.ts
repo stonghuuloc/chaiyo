@@ -72,6 +72,23 @@ describe('hubView', () => {
 		expect(v.cta).toEqual({ section: 'words', label: 'Tiếp tục: Từ mới' });
 	});
 
+	it('Given_AllWordsAnsweredChecksPending_When_View_Then_WordsNowChecksLeftResume', () => {
+		// Arrange
+		const state = withWordsRun([...wordIds, 'chk-1']);
+		state.runs.r1.step = { kind: 'section', lesson: 'h1-01', section: 'words', run: 'r1', of: 13 };
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.rows[0]).toMatchObject({
+			look: 'now',
+			pct: 100,
+			sub: '10/10 từ · còn kiểm tra nhanh'
+		});
+		expect(v.cta).toEqual({ section: 'words', label: 'Tiếp tục: Từ mới' });
+	});
+
 	it('Given_ClosedWordsRun_When_View_Then_WordsTodo', () => {
 		// Arrange
 		const state = withWordsRun(wordIds.slice(0, 4));

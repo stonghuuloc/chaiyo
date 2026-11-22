@@ -61,9 +61,13 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		if (id === 'words') {
 			const answered = run ? words.filter((w) => Object.hasOwn(run.answers, w.id)) : [];
 			const next = words.find((w) => !answered.includes(w));
-			if (look === 'now' && answered.length > 0 && next) {
+			if (look === 'now' && answered.length > 0) {
 				pct = Math.round((answered.length / words.length) * 100);
-				sub = m.hub_words_now({ n: answered.length, total: words.length, word: next.hanzi });
+				const n = answered.length;
+				const total = words.length;
+				sub = next
+					? m.hub_words_now({ n, total, word: next.hanzi })
+					: m.hub_words_checks({ n, total });
 			} else {
 				if (look === 'now') look = 'todo';
 				sub = m.hub_words_todo({ n: words.length });

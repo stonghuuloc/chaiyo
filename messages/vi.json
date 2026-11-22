@@ -219,6 +219,7 @@
 	"hub_section_writing": "Luyện viết",
 	"hub_words_todo": "{n} từ",
 	"hub_words_now": "{n}/{total} từ · tiếp ở {word}",
+	"hub_words_checks": "{n}/{total} từ · còn kiểm tra nhanh",
 	"hub_dialogue": "{parts} đoạn · {lines} câu",
 	"hub_listen": "{n} bài · cần micro",
 	"hub_writing": "Viết {chars}",
