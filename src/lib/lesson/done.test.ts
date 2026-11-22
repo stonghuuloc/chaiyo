@@ -72,4 +72,25 @@ describe('done', () => {
 		expect(d).toEqual({ label: m.done_back(), section: null });
 		expect(d.label).toBe('Về bài học');
 	});
+
+	it('Given_Warmup_When_SectionName_Then_KhoiDong', () => {
+		// Arrange / Act
+		const name = sectionName('warmup');
+		// Assert
+		expect(name).toBe('Khởi động');
+	});
+
+	it('Given_Warmup_When_DoneNext_Then_NextIsWords', () => {
+		// Arrange / Act
+		const d = doneNext('h1-02', 'warmup');
+		// Assert
+		expect(d).toEqual({ label: 'Phần tiếp theo', section: 'words' });
+	});
+
+	it('Given_WarmupOfUnknownLesson_When_NextSection_Then_Null', () => {
+		// Arrange / Act
+		const next = nextSection('h9-99', 'warmup');
+		// Assert
+		expect(next).toBeNull();
+	});
 });
