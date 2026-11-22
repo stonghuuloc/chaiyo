@@ -27,4 +27,4 @@
 	});
 </script>
 
-<SkillEntry k={data.k} level={study ? currentLevel(study) : undefined} />
+<SkillEntry k={data.k} level={study ? currentLevel(study) : undefined} lv={data.lv} />

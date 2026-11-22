@@ -6,6 +6,9 @@ export type SkillKey = (typeof SKILL_KEYS)[number];
 export const skillKey = (raw: string | null): SkillKey =>
 	SKILL_KEYS.find((k) => k === raw) ?? 'noi';
 
+export const thiLevel = (raw: string | null): number | undefined =>
+	raw !== null && /^[1-6]$/.test(raw) ? Number(raw) : undefined;
+
 type Text = () => string;
 
 export type Entry = {
@@ -60,7 +63,18 @@ export const ENTRIES: Record<SkillKey, Entry> = {
 	}
 };
 
-export const noteFor = (k: SkillKey, level?: number): string =>
-	k === 'doan' && level !== undefined && level < 3
-		? m.skill_doan_gate({ level })
-		: ENTRIES[k].note();
+const thiNote = (level: number, lv = level): string =>
+	lv < level
+		? m.chy44s3_thi_passed()
+		: lv === level
+			? m.chy44s3_thi_current({ level: lv })
+			: m.chy44s3_thi_next({ level: lv - 1 });
+
+export const noteFor = (k: SkillKey, level?: number, lv?: number): string =>
+	level === undefined
+		? ENTRIES[k].note()
+		: k === 'doan' && level < 3
+			? m.skill_doan_gate({ level })
+			: k === 'thi'
+				? thiNote(level, lv)
+				: ENTRIES[k].note();

@@ -48,6 +48,27 @@ describe('dev skill harness', () => {
 			'Mở khi bạn tới HSK 3. Bạn đang ở HSK 2.',
 			'Chưa có trong bản demo: cần AI chấm bài viết.'
 		]);
-		expect(target.querySelectorAll('[data-part="demo-note"]')).toHaveLength(6);
+		expect(target.querySelectorAll('[data-part="demo-note"]')).toHaveLength(10);
+	});
+
+	it('Given_Harness_Then_ThiLevelNotes', () => {
+		// Arrange
+		target = document.createElement('div');
+		document.body.append(target);
+
+		// Act
+		app = mount(Page, { target }) as Record<string, unknown>;
+		flushSync();
+
+		// Assert
+		const notes = [...target.querySelectorAll('section[data-thi] [data-part="demo-note"]')].map(
+			(n) => n.textContent
+		);
+		expect(notes).toEqual([
+			'Mở khi bạn qua bài cuối của HSK 1. Chưa có đề trong bản demo.',
+			'Mở khi bạn đỗ thi thử HSK 1.',
+			'Mở khi bạn đỗ thi thử HSK 2.',
+			'Bạn đã đỗ cấp này, làm lại để giữ phong độ. Chưa có đề trong bản demo.'
+		]);
 	});
 });

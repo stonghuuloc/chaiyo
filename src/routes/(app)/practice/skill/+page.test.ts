@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { load } from './+page';
 
 const run = (search: string) =>
-	(load as unknown as (e: { url: URL }) => { k: string; shell: unknown })({
+	(load as unknown as (e: { url: URL }) => { k: string; shell: unknown; lv?: number })({
 		url: new URL(`http://localhost/practice/skill${search}`)
 	});
 
@@ -30,5 +30,22 @@ describe('practice skill load', () => {
 		const data = run('?k=thi&lv=3&m=noi');
 		// Assert
 		expect(data.k).toBe('thi');
+		expect(data.lv).toBe(3);
+	});
+
+	it('Given_LvOutOfRange_When_Load_Then_LvUndefined', () => {
+		// Arrange
+		// Act
+		const data = run('?k=thi&lv=9');
+		// Assert
+		expect(data.lv).toBeUndefined();
+	});
+
+	it('Given_NoLv_When_Load_Then_LvUndefined', () => {
+		// Arrange
+		// Act
+		const data = run('?k=thi');
+		// Assert
+		expect(data.lv).toBeUndefined();
 	});
 });

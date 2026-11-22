@@ -5,8 +5,16 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
 
 const past = '2026-11-01T00:00:00.000Z';
-const build = (due: Partial<Record<Skill, number>>): State => {
-	const state = initialState({ curriculum: { lessons: [] } });
+const curriculum = {
+	lessons: [
+		{ id: 'a', level: 1, sections: [], words: [] },
+		{ id: 'b', level: 2, sections: [], words: [] },
+		{ id: 'c', level: 3, sections: [], words: [] }
+	]
+};
+const build = (due: Partial<Record<Skill, number>>, unlockedTo = 1): State => {
+	const state = initialState({ curriculum });
+	for (const l of curriculum.lessons) state.lessons[l.id].unlocked = l.level <= unlockedTo;
 	for (const skill of ['the', 'nghe', 'viet'] as Skill[]) {
 		for (let i = 0; i < (due[skill] ?? 0); i++) {
 			const word = `${skill}${i}`;
@@ -57,6 +65,12 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 			[...target!.querySelectorAll('[data-part=skill-tile] small')].map((c) =>
 				c.textContent?.trim()
 			),
+		thiChips: () => target!.querySelectorAll('[data-part=thi-chip]').length,
+		thiLocks: () =>
+			[...target!.querySelectorAll('[data-part=thi-chip]:has([data-part=thi-lock])')].map((c) =>
+				c.getAttribute('data-level')
+			),
+		words: () => target!.querySelector('[data-part=mywords-link]')?.textContent?.trim(),
 		starts: () => target!.querySelectorAll('[data-part=today-start]').length,
 		text: () => target!.textContent
 	};
@@ -207,5 +221,61 @@ describe('/practice', () => {
 		expect(page.text()).toContain('Hôm nay xong bài rồi!');
 		expect(page.tiles()).toBe(5);
 		expect(page.subs()[0]).toBe('Không có từ cần ôn');
+	});
+
+	it('Given_Ledger_When_Mount_Then_SixChipsAndWordsLink', async () => {
+		// Arrange
+		current = build({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.thiChips()).toBe(6);
+		expect(page.words()).toContain('12 từ đã học và đã lưu');
+	});
+
+	it('Given_RejectingLedger_When_Mount_Then_NoChipsNoWordsLink', async () => {
+		// Arrange
+		hoisted.load.mockRejectedValue(new Error('idb'));
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.thiChips()).toBe(0);
+		expect(page.words()).toBeUndefined();
+	});
+
+	it('Given_Level1_When_LedgerEmitsLevel2Unlocked_Then_Hsk2LockGone', async () => {
+		// Arrange
+		current = build({}, 1);
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		expect(page.thiLocks()).toContain('2');
+
+		// Act
+		publish(build({}, 2));
+		await settle();
+
+		// Assert
+		expect(page.thiLocks()).not.toContain('2');
+		expect(page.thiLocks()).toContain('3');
+	});
+
+	it('Given_30Entries_When_LedgerEmits31_Then_31TuDaHoc', async () => {
+		// Arrange
+		current = build({ the: 30 });
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		expect(page.words()).toContain('30 từ đã học và đã lưu');
+
+		// Act
+		publish(build({ the: 31 }));
+		await settle();
+
+		// Assert
+		expect(page.words()).toContain('31 từ đã học và đã lưu');
 	});
 });

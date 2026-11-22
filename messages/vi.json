@@ -412,5 +412,14 @@
 	"chy41s2_none_due": "Không có từ cần ôn",
 	"chy41s2_tile_noi_sub": "Đọc to, app chấm thanh điệu · sắp có",
 	"chy41s2_tile_doan_locked": "Mở từ HSK 3",
-	"chy41s2_tile_doan_open": "Viết câu, đoạn ngắn"
+	"chy41s2_tile_doan_open": "Viết câu, đoạn ngắn",
+	"chy41s3_chip": "HSK {level}",
+	"chy41s3_mock_title": "Thi thử HSK {level}",
+	"chy41s3_mock_passed": "đã đỗ · làm lại bất cứ lúc nào",
+	"chy41s3_mock_next": "mở khi qua Bài {n}",
+	"chy41s3_mock_ready": "đã mở · chưa có đề trong bản demo",
+	"chy41s3_mock_after": "mở khi đỗ thi thử HSK {level}",
+	"chy44s3_thi_passed": "Bạn đã đỗ cấp này, làm lại để giữ phong độ. Chưa có đề trong bản demo.",
+	"chy44s3_thi_current": "Mở khi bạn qua bài cuối của HSK {level}. Chưa có đề trong bản demo.",
+	"chy44s3_thi_next": "Mở khi bạn đỗ thi thử HSK {level}."
 }

@@ -14,4 +14,9 @@
 			<SkillEntry k="doan" {level} />
 		</section>
 	{/each}
+	{#each [[1, 1], [1, 2], [1, 3], [2, 1]] as [level, lv] (`${level}-${lv}`)}
+		<section data-thi={`${level}-${lv}`}>
+			<SkillEntry k="thi" {level} {lv} />
+		</section>
+	{/each}
 </div>

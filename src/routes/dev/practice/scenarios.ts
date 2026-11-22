@@ -24,14 +24,23 @@ export const SCENARIOS = {
 		const state = fresh();
 		state.lexicon.moi = { saved: true, cards: {} };
 		return state;
+	},
+	words: () => {
+		const state = fresh();
+		for (let i = 0; i < 30; i++) state.lexicon[`字${i}`] = { saved: true, cards: {} };
+		return state;
 	}
 } satisfies Record<string, (now: Date) => State>;
 
-export const withLevel = (state: State, level: 1 | 3): State => {
-	const lessons = [1, 2, 3].map((n) => ({ id: `l${n}`, level: n, sections: [], words: [] }));
+export const withLevel = (state: State, level: 1 | 3 | 5, ready = false): State => {
+	const lessons = [1, 2, 3, 4, 5].map((n) => ({ id: `l${n}`, level: n, sections: [], words: [] }));
 	state.curriculum = { lessons };
 	for (const l of lessons)
-		state.lessons[l.id] = { unlocked: l.level <= level, passed: false, done: [] };
+		state.lessons[l.id] = {
+			unlocked: l.level <= level,
+			passed: ready && l.level === level,
+			done: []
+		};
 	return state;
 };
 

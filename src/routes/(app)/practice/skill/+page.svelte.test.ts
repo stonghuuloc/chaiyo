@@ -78,6 +78,15 @@ const mountWithSession = async (k: SkillKey) => {
 	return target;
 };
 
+const mountThi = async (lv?: number, withSession = true) => {
+	target = document.createElement('div');
+	document.body.append(target);
+	const data = withSession ? { k: 'thi', lv, session } : { k: 'thi', lv };
+	app = mount(Page, { target, props: { data } as never }) as Record<string, unknown>;
+	await settle();
+	return target;
+};
+
 const notes = (root: HTMLElement) => [...root.querySelectorAll('[data-part="demo-note"]')];
 
 describe('practice skill entry', () => {
@@ -218,5 +227,92 @@ describe('practice skill entry', () => {
 		// Assert
 		expect(root.querySelectorAll('button, input')).toHaveLength(0);
 		expect(notes(root)).toHaveLength(1);
+	});
+
+	it('Given_ThiHsk1Lv1_Then_OneDashedNoteAc4Lv1Literal', async () => {
+		// Arrange
+		current = atLevel(1);
+		hoisted.load.mockResolvedValue(ledger);
+		// Act
+		const root = await mountThi(1);
+		// Assert
+		const found = notes(root);
+		expect(found).toHaveLength(1);
+		expect(found[0].textContent).toBe(
+			'Mở khi bạn qua bài cuối của HSK 1. Chưa có đề trong bản demo.'
+		);
+		expect(found[0].classList.contains('border-dashed')).toBe(true);
+	});
+
+	it('Given_ThiHsk1Lv2_Then_Ac4Lv2Literal', async () => {
+		// Arrange
+		current = atLevel(1);
+		hoisted.load.mockResolvedValue(ledger);
+		// Act
+		const root = await mountThi(2);
+		// Assert
+		expect(notes(root)[0].textContent).toBe('Mở khi bạn đỗ thi thử HSK 1.');
+	});
+
+	it('Given_ThiHsk1Lv2_When_PublishHsk2_Then_CurrentLineHsk2', async () => {
+		// Arrange
+		current = atLevel(1);
+		hoisted.load.mockResolvedValue(ledger);
+		const root = await mountThi(2);
+		expect(notes(root)[0].textContent).toBe('Mở khi bạn đỗ thi thử HSK 1.');
+		// Act
+		publish(atLevel(2));
+		await settle();
+		// Assert
+		expect(notes(root)).toHaveLength(1);
+		expect(notes(root)[0].textContent).toBe(
+			'Mở khi bạn qua bài cuối của HSK 2. Chưa có đề trong bản demo.'
+		);
+	});
+
+	it('Given_ThiNoSessionLv2_Then_S1ThiNote', async () => {
+		// Arrange
+		// Act
+		const root = await mountThi(2, false);
+		// Assert
+		expect(notes(root)[0].textContent).toBe('Chưa có đề trong bản demo.');
+		expect(hoisted.load).not.toHaveBeenCalled();
+	});
+
+	it('Given_ThiLedgerRejectsLv2_Then_S1ThiNote', async () => {
+		// Arrange
+		hoisted.load.mockRejectedValue(new Error('ledger down'));
+		// Act
+		const root = await mountThi(2);
+		// Assert
+		expect(notes(root)).toHaveLength(1);
+		expect(notes(root)[0].textContent).toBe('Chưa có đề trong bản demo.');
+	});
+
+	it('Given_ThiHsk1Lv2_Then_NoButtonNoInputOneNote', async () => {
+		// Arrange
+		current = atLevel(1);
+		hoisted.load.mockResolvedValue(ledger);
+		// Act
+		const root = await mountThi(2);
+		// Assert
+		expect(root.querySelectorAll('button, input')).toHaveLength(0);
+		expect(notes(root)).toHaveLength(1);
+	});
+
+	it('Given_DoanHsk1Lv3_Then_Ac3Literal', async () => {
+		// Arrange
+		current = atLevel(1);
+		hoisted.load.mockResolvedValue(ledger);
+		target = document.createElement('div');
+		document.body.append(target);
+		app = mount(Page, {
+			target,
+			props: { data: { k: 'doan', lv: 3, session } } as never
+		}) as Record<string, unknown>;
+		// Act
+		await settle();
+		// Assert
+		expect(notes(target)[0].textContent).toBe('Mở khi bạn tới HSK 3. Bạn đang ở HSK 1.');
 	});
 });
