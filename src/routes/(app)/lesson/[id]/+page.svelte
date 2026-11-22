@@ -1,14 +1,32 @@
 <script lang="ts">
+	import { CURRICULUM } from '#lib/curriculum/index.js';
+	import { learnerLedger } from '#lib/learner/index.js';
+	import { initialState, type State } from '#lib/study/index.js';
 	import type { PageProps } from './$types';
+	import Hub from './Hub.svelte';
 
 	let { data }: PageProps = $props();
+
+	let study = $state<State>(initialState({ curriculum: CURRICULUM }));
+
+	$effect(() => {
+		const session = data.session;
+		study = initialState({ curriculum: CURRICULUM });
+		if (!session) return;
+		let live = true;
+		let off = () => {};
+		learnerLedger(session)
+			.then((ledger) => {
+				if (!live) return;
+				study = ledger.state();
+				off = ledger.subscribe((next) => (study = next));
+			})
+			.catch(() => {});
+		return () => {
+			live = false;
+			off();
+		};
+	});
 </script>
 
-<section data-content-sha={data.lesson.contentSha}>
-	<h1>{data.lesson.lesson.titleHanzi} {data.lesson.lesson.title}</h1>
-	<ol>
-		{#each data.lesson.words as w (w.id)}
-			<li>{`${w.hanzi} ${w.pinyin}${w.hanviet ? ` — ${w.hanviet}` : ''}`}</li>
-		{/each}
-	</ol>
-</section>
+<Hub lesson={data.lesson} {study} />
