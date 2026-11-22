@@ -128,4 +128,38 @@ describe('tapLookup', () => {
 		// Assert
 		expect(lookup).toHaveBeenCalledWith('s-1', 0);
 	});
+
+	it('Given_SpanInsideButton_When_Click_Then_ButtonHandlerNotCalled', async () => {
+		// Arrange
+		const button = document.createElement('button');
+		const wrap = document.createElement('span');
+		wrap.innerHTML = '<span data-i="0">谢</span>';
+		button.append(wrap);
+		document.body.append(button);
+		const handler = vi.fn();
+		button.addEventListener('click', handler);
+		tapLookup(wrap, { sentenceId: 's-1', onhit: vi.fn() });
+		// Act
+		click(wrap.querySelector('span')!);
+		await flush();
+		// Assert
+		expect(handler).not.toHaveBeenCalled();
+	});
+
+	it('Given_PlainTextInsideButton_When_Click_Then_ButtonHandlerCalled', async () => {
+		// Arrange
+		const button = document.createElement('button');
+		const wrap = document.createElement('span');
+		wrap.innerHTML = '<span>。</span>';
+		button.append(wrap);
+		document.body.append(button);
+		const handler = vi.fn();
+		button.addEventListener('click', handler);
+		tapLookup(wrap, { sentenceId: 's-1', onhit: vi.fn() });
+		// Act
+		click(wrap.querySelector('span')!);
+		await flush();
+		// Assert
+		expect(handler).toHaveBeenCalledOnce();
+	});
 });

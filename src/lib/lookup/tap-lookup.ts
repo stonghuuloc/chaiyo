@@ -11,6 +11,7 @@ export function tapLookup(node: HTMLElement, params: TapLookup) {
 		if (e.detail !== 1 || getSelection()?.isCollapsed === false) return;
 		const el = (e.target as Element | null)?.closest<HTMLElement>('[data-i]');
 		if (!el || !node.contains(el)) return;
+		e.stopPropagation();
 		const { sentenceId, onhit, onmiss } = params;
 		try {
 			const { catalog } = await import('#lib/catalog/app.js');
