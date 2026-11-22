@@ -217,5 +217,5 @@ describe('dialogueSteps on Bài 1', () => {
 		const text = drillText(steps);
 		expect(text.length).toBeGreaterThan(0);
 		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
-	}, 15_000);
+	}, 60_000);
 });

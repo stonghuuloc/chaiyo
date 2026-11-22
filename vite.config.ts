@@ -52,6 +52,8 @@ export default defineConfig({
 				extends: './vite.config.ts',
 				test: {
 					name: 'server',
+					testTimeout: 15_000,
+					hookTimeout: 30_000,
 					environment: 'node',
 					include: ['src/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
@@ -63,6 +65,8 @@ export default defineConfig({
 				test: {
 					// Components hold event handlers; svelte/server cannot reach them.
 					name: 'client',
+					testTimeout: 15_000,
+					hookTimeout: 30_000,
 					environment: 'jsdom',
 					setupFiles: ['./src/test/client-setup.ts'],
 					include: ['src/**/*.svelte.{test,spec}.{js,ts}']

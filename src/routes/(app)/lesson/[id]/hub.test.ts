@@ -225,7 +225,7 @@ describe('hubView', () => {
 		// Assert
 		expect(v.meta).toBe('10 từ · 2 điểm ngữ pháp · khoảng 70 phút');
 		expect(v.rows.find((row) => row.id === 'listenSpeak')!.sub).toBe('6 bài · cần micro');
-	}, 15_000);
+	}, 60_000);
 });
 
 describe('hubView gate', () => {

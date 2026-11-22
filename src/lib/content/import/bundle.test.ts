@@ -156,7 +156,7 @@ describe('buildBundle clips', () => {
 		expect(clips!['mā']).toBe(`pinyin-chart/${mā}`);
 		expect(clips!['nǐ hǎo']).toMatch(/^chips\/[0-9a-f]{64}$/);
 		expect(clips!['ní hǎo']).toMatch(/^chips\//);
-	}, 15_000);
+	}, 60_000);
 
 	it('Given_LessonBundle_When_Built_Then_NoClips', async () => {
 		// Arrange

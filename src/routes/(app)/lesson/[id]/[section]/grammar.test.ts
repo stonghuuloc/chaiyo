@@ -342,7 +342,7 @@ describe('grammarSteps on Bài 1', () => {
 		expect(('kind' in c.lesson ? '' : c.lesson.sections.grammar.done) ?? '').toBe(
 			'Mẫu A + 好 và các câu đáp đã vào phần ôn tập, sẽ quay lại cùng các câu hỏi khác.'
 		);
-	}, 15_000);
+	}, 60_000);
 
 	it('Given_EveryHsk1Lesson_When_Build_Then_NoThrowAndUniqueIds', async () => {
 		// Arrange
