@@ -21,7 +21,11 @@ const sentence = () => {
 	return node;
 };
 
+const click = (el: Element, detail = 1) =>
+	el.dispatchEvent(new MouseEvent('click', { bubbles: true, detail }));
+
 afterEach(() => {
+	getSelection()?.removeAllRanges();
 	document.body.innerHTML = '';
 	lookup.mockClear();
 });
@@ -33,7 +37,7 @@ describe('tapLookup', () => {
 		const onhit = vi.fn();
 		tapLookup(node, { sentenceId: 's-1', onhit });
 		// Act
-		node.querySelectorAll('span')[1].click();
+		click(node.querySelectorAll('span')[1]);
 		await flush();
 		// Assert
 		expect(lookup).toHaveBeenCalledWith('s-1', 1);
@@ -46,7 +50,7 @@ describe('tapLookup', () => {
 		const onhit = vi.fn();
 		tapLookup(node, { sentenceId: 's-1', onhit });
 		// Act
-		node.querySelectorAll('span')[2].click();
+		click(node.querySelectorAll('span')[2]);
 		await flush();
 		// Assert
 		expect(lookup).not.toHaveBeenCalled();
@@ -61,10 +65,10 @@ describe('tapLookup', () => {
 		const action = tapLookup(node, { sentenceId: 's-1', onhit: first });
 		action.update({ sentenceId: 's-2', onhit: next });
 		// Act
-		node.querySelectorAll('span')[0].click();
+		click(node.querySelectorAll('span')[0]);
 		await flush();
 		action.destroy();
-		node.querySelectorAll('span')[0].click();
+		click(node.querySelectorAll('span')[0]);
 		await flush();
 		// Assert
 		expect(lookup).toHaveBeenCalledTimes(1);
@@ -81,10 +85,47 @@ describe('tapLookup', () => {
 		const onmiss = vi.fn();
 		tapLookup(node, { sentenceId: 's-1', onhit, onmiss });
 		// Act
-		node.querySelectorAll('span')[0].click();
+		click(node.querySelectorAll('span')[0]);
 		await flush();
 		// Assert
 		expect(onhit).not.toHaveBeenCalled();
 		expect(onmiss).toHaveBeenCalledOnce();
+	});
+
+	it('Given_DoubleClick_When_Click_Then_NoLookup', async () => {
+		// Arrange
+		const node = sentence();
+		const onhit = vi.fn();
+		tapLookup(node, { sentenceId: 's-1', onhit });
+		// Act
+		click(node.querySelectorAll('span')[0], 2);
+		await flush();
+		// Assert
+		expect(lookup).not.toHaveBeenCalled();
+	});
+
+	it('Given_TextSelected_When_Click_Then_NoLookup', async () => {
+		// Arrange
+		const node = sentence();
+		const onhit = vi.fn();
+		tapLookup(node, { sentenceId: 's-1', onhit });
+		getSelection()?.selectAllChildren(node);
+		// Act
+		click(node.querySelectorAll('span')[0]);
+		await flush();
+		// Assert
+		expect(lookup).not.toHaveBeenCalled();
+	});
+
+	it('Given_SingleClickCollapsedSelection_When_Click_Then_Lookup', async () => {
+		// Arrange
+		const node = sentence();
+		const onhit = vi.fn();
+		tapLookup(node, { sentenceId: 's-1', onhit });
+		// Act
+		click(node.querySelectorAll('span')[0]);
+		await flush();
+		// Assert
+		expect(lookup).toHaveBeenCalledWith('s-1', 0);
 	});
 });

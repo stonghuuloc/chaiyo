@@ -62,7 +62,7 @@ describe('dev lookup page', () => {
 		hoisted.lookup.mockRejectedValue(new Error('not-found: s-h1-01-01:0'));
 		const root = await mountPage();
 		// Act
-		firstChar(root).click();
+		firstChar(root).dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
 		await settle();
 		// Assert
 		expect(root.textContent).toContain('not-found: s-h1-01-01:0');
@@ -80,7 +80,7 @@ describe('dev lookup page', () => {
 		});
 		const root = await mountPage();
 		// Act
-		firstChar(root).click();
+		firstChar(root).dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
 		await settle();
 		// Assert
 		expect(hoisted.lookup).toHaveBeenCalledWith('s-h1-01-01', 0);

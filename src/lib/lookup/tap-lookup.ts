@@ -8,6 +8,7 @@ export type TapLookup = {
 
 export function tapLookup(node: HTMLElement, params: TapLookup) {
 	const onclick = async (e: MouseEvent) => {
+		if (e.detail !== 1 || getSelection()?.isCollapsed === false) return;
 		const el = (e.target as Element | null)?.closest<HTMLElement>('[data-i]');
 		if (!el || !node.contains(el)) return;
 		const { sentenceId, onhit, onmiss } = params;
