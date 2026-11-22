@@ -77,6 +77,17 @@ const open = async (h: LookupHit | null, ledger: Ledger) => {
 	return props;
 };
 
+const rectOf = (top: number, bottom: number) => ({ top, bottom }) as DOMRect;
+
+const openAnchored = async (h: LookupHit, ledger: Ledger, anchor: DOMRect) => {
+	const props = $state({ hit: h, ledger, anchor, onclose: () => {} });
+	target = document.createElement('div');
+	document.body.append(target);
+	app = mount(LookupSheet, { target, props });
+	await settle();
+	return props;
+};
+
 afterEach(() => {
 	if (app) unmount(app);
 	target?.remove();
@@ -228,5 +239,30 @@ describe('LookupSheet', () => {
 		await open(null, ledger);
 		// Assert
 		expect(part('lookup-hanzi')).toBeNull();
+	});
+
+	it('Given_Anchor_When_Hit_Then_PanelPlacedByRule', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		vi.stubGlobal('innerHeight', 667);
+		// Act
+		await openAnchored(hit('谢谢', 'xièxie', 'cảm ơn'), ledger, rectOf(430, 500));
+		// Assert
+		const panel = part('lookup-panel');
+		expect(panel?.style.top).toBe('8px');
+		expect(panel?.style.maxHeight).toBe('414px');
+		expect(panel?.getAttribute('role')).toBe('dialog');
+		expect(part('lookup-hanzi')?.textContent).toBe('谢谢');
+		vi.unstubAllGlobals();
+	});
+
+	it('Given_NoAnchor_When_Hit_Then_SheetPath', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		// Act
+		await open(hit('谢谢', 'xièxie', 'cảm ơn'), ledger);
+		// Assert
+		expect(part('lookup-panel')).toBeNull();
+		expect(document.body.querySelector('[role="dialog"]')).not.toBeNull();
 	});
 });

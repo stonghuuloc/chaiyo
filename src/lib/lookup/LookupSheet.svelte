@@ -6,10 +6,12 @@
 	import type { State } from '#lib/study/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import Sheet from '#lib/ui/Sheet.svelte';
+	import { modal } from '#lib/ui/modal';
 	import { lookupView } from './lookup';
+	import { place } from './place';
 
-	type Props = { hit: LookupHit | null; ledger: Ledger; onclose: () => void };
-	let { hit, ledger, onclose }: Props = $props();
+	type Props = { hit: LookupHit | null; ledger: Ledger; onclose: () => void; anchor?: DOMRect };
+	let { hit, ledger, onclose, anchor }: Props = $props();
 
 	const app = async () => (await import('#lib/catalog/app.js')).catalog;
 	const find = async (hanzi: string) => (await app()).find(hanzi);
@@ -81,7 +83,7 @@
 	}
 </script>
 
-<Sheet open={hit !== null} title={m.lookup_title()} {onclose}>
+{#snippet body()}
 	{#if hit}
 		{#if shrunk}
 			<p class="mt-4 text-headline" data-part="lookup-hanzi" lang="zh-Hans">{shrunk.hanzi}</p>
@@ -143,4 +145,27 @@
 			{/if}
 		{/if}
 	{/if}
-</Sheet>
+{/snippet}
+
+{#if anchor}
+	{#if hit}
+		{@const p = place(anchor, innerHeight)}
+		<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+		<div class="fixed inset-0 z-50" data-part="lookup-catcher" onclick={() => onclose()}></div>
+		<div
+			class="fixed left-1/2 z-50 w-[min(398px,calc(100%-32px))] -translate-x-1/2 overflow-y-auto overscroll-contain rounded-action border border-ruled-line bg-background px-5 pt-4 pb-5 text-text shadow-overlay"
+			data-part="lookup-panel"
+			role="dialog"
+			aria-label={m.lookup_title()}
+			tabindex="-1"
+			style="top:{p.top}px;max-height:{p.maxHeight}px"
+			use:modal={onclose}
+		>
+			{@render body()}
+		</div>
+	{/if}
+{:else}
+	<Sheet open={hit !== null} title={m.lookup_title()} {onclose}>
+		{@render body()}
+	</Sheet>
+{/if}
