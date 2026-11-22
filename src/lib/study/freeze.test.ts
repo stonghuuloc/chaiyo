@@ -30,7 +30,9 @@ describe('streak freeze', () => {
 		expect(r.state.streak).toMatchObject({ count: 12, freezes: 0 });
 		expect(rollover(r.state, '2026-11-11').events).toEqual([]);
 		const next = finish(r.state, noon('2026-11-12'));
-		expect(own(next.events)).toEqual([{ type: 'DayCounted', day: '2026-11-12', streak: 13 }]);
+		expect(own(next.events)).toEqual([
+			{ type: 'DayCounted', day: '2026-11-12', streak: 13, record: true, freezes: 0 }
+		]);
 		expect(next.state.streak.freezes).toBe(0);
 	});
 
@@ -51,7 +53,7 @@ describe('streak freeze', () => {
 	it('seventh day earns a Freeze', () => {
 		const r = finish(countDays(start(), '2026-11-04', '2026-11-09'), noon('2026-11-10'));
 		expect(own(r.events)).toEqual([
-			{ type: 'DayCounted', day: '2026-11-10', streak: 7 },
+			{ type: 'DayCounted', day: '2026-11-10', streak: 7, record: true, freezes: 1 },
 			{ type: 'FreezeEarned', freezes: 1 }
 		]);
 		expect(r.state.streak.freezes).toBe(1);
@@ -61,7 +63,9 @@ describe('streak freeze', () => {
 		const before = countDays(start(), '2026-10-21', '2026-11-09');
 		expect(before.streak).toMatchObject({ count: 20, freezes: 2 });
 		const r = finish(before, noon('2026-11-10'));
-		expect(own(r.events)).toEqual([{ type: 'DayCounted', day: '2026-11-10', streak: 21 }]);
+		expect(own(r.events)).toEqual([
+			{ type: 'DayCounted', day: '2026-11-10', streak: 21, record: true, freezes: 2 }
+		]);
 		expect(r.state.streak.freezes).toBe(2);
 	});
 
@@ -70,7 +74,7 @@ describe('streak freeze', () => {
 		expect(own(r.events)).toEqual([
 			{ type: 'FreezeSpent', day: '2026-11-13', freezes: 0 },
 			{ type: 'StreakReset', day: '2026-11-14' },
-			{ type: 'DayCounted', day: '2026-11-15', streak: 1 }
+			{ type: 'DayCounted', day: '2026-11-15', streak: 1, record: false, freezes: 0 }
 		]);
 		expect(r.state.streak).toMatchObject({ count: 1, freezes: 0 });
 	});
@@ -93,7 +97,7 @@ describe('streak freeze', () => {
 		const r = finish(a.state, noon('2026-11-15'));
 		expect(own(r.events)).toEqual([
 			{ type: 'FreezeSpent', day: '2026-11-14', freezes: 0 },
-			{ type: 'DayCounted', day: '2026-11-15', streak: 14 },
+			{ type: 'DayCounted', day: '2026-11-15', streak: 14, record: true, freezes: 1 },
 			{ type: 'FreezeEarned', freezes: 1 }
 		]);
 		expect(r.state.streak).toMatchObject({ count: 14, freezes: 1 });

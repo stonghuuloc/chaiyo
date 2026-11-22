@@ -221,7 +221,7 @@ describe('ledger', () => {
 		expect(got[5]).toEqual(
 			expect.arrayContaining([
 				{ type: 'SectionDone', lesson: 'h1-01', section: 'words' },
-				{ type: 'DayCounted', day, streak: 1 }
+				{ type: 'DayCounted', day, streak: 1, record: false, freezes: 0 }
 			])
 		);
 	});

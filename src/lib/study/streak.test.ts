@@ -34,7 +34,8 @@ describe('streak counting', () => {
 			count: 12,
 			last: '2026-11-12',
 			freezes: 1,
-			through: '2026-11-12'
+			through: '2026-11-12',
+			best: 12
 		});
 	});
 

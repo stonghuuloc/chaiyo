@@ -29,15 +29,24 @@ export function countDay(s: State, now: Date): { state: State; events: StudyEven
 	if (s.streak.last && day <= (s.streak.through ?? s.streak.last)) return { state: s, events: [] };
 	const events: StudyEvent[] = [];
 	const closed = closeDays(s.streak, addDays(day, -1), events);
+	const before = closed.best ?? 0;
 	const count = closed.count + 1;
-	events.push({ type: 'DayCounted', day, streak: count });
 	let freezes = closed.freezes;
-	if (count % 7 === 0 && freezes < MAX_FREEZES) {
-		freezes += 1;
-		events.push({ type: 'FreezeEarned', freezes });
-	}
+	const earned = count % 7 === 0 && freezes < MAX_FREEZES;
+	if (earned) freezes += 1;
+	events.push({
+		type: 'DayCounted',
+		day,
+		streak: count,
+		record: before >= 1 && count > before,
+		freezes
+	});
+	if (earned) events.push({ type: 'FreezeEarned', freezes });
 	return {
-		state: { ...s, streak: { count, last: day, freezes, through: day } },
+		state: {
+			...s,
+			streak: { count, last: day, freezes, through: day, best: Math.max(before, count) }
+		},
 		events
 	};
 }
