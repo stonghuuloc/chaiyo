@@ -1,5 +1,5 @@
 import { flushSync, mount, unmount } from 'svelte';
-import type { LookupContext } from '#lib/lookup/context';
+import type { LookupContext } from '#lib/lookup/context.js';
 import WithLookup from '../../../test/WithLookup.svelte';
 import { m } from '#lib/paraglide/messages.js';
 import { play } from '#lib/audio/index.js';

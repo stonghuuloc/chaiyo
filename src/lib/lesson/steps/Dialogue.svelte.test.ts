@@ -3,7 +3,7 @@ import { player } from '#lib/audio/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { DisplayPrefs, PREFS } from '../prefs.svelte';
 import type { Answer, Cta } from '../types';
-import type { LookupContext } from '#lib/lookup/context';
+import type { LookupContext } from '#lib/lookup/context.js';
 import WithLookup from '../../../test/WithLookup.svelte';
 import Dialogue, { type Step } from './Dialogue.svelte';
 

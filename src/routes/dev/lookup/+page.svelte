@@ -46,9 +46,9 @@
 			return;
 		}
 		const lesson = await catalog.lesson('h1-01');
-		dialogue = dialogueSteps(lesson).find((x) => x.kind === 'dialogue');
-		grammar = grammarSteps(lesson).find((x) => x.kind === 'grammar');
-		word = wordSteps(lesson).find((x) => x.kind === 'word' && x.examples.length > 0);
+		dialogue = dialogueSteps(lesson).find((x): x is DialogueStep => x.kind === 'dialogue');
+		grammar = grammarSteps(lesson).find((x): x is GrammarStep => x.kind === 'grammar');
+		word = wordSteps(lesson).find((x): x is WordStep => x.kind === 'word' && x.examples.length > 0);
 		sentences = IDS.flatMap((id) => lesson.sentences.filter((s) => s.id === id));
 		ledger = await openLedger({
 			initial: initialState({ curriculum: CURRICULUM }),

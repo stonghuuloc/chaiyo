@@ -6,7 +6,7 @@
 	import type { State } from '#lib/study/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import Sheet from '#lib/ui/Sheet.svelte';
-	import { modal } from '#lib/ui/modal';
+	import { modal } from '#lib/ui/modal.js';
 	import { lookupView } from './lookup';
 	import { place } from './place';
 
