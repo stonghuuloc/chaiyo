@@ -24,6 +24,7 @@
 
 	const src = $derived(step.answer ?? step);
 	const sample = $derived(src.hanzi && src.pinyin ? sampleTiles(src.hanzi, src.pinyin) : null);
+	const free = $derived(step.answer !== undefined || step.rubric !== undefined);
 
 	let phase = $state<'idle' | 'opening' | 'live' | 'short' | 'blocked' | 'done'>('idle');
 	let levels = $state<number[]>(Array(BARS).fill(0));
@@ -179,3 +180,27 @@
 		<p class="text-center text-label text-graphite">{m.lesson_speak_idle()}</p>
 	{/if}
 </div>
+
+{#if free}
+	{#if phase === 'done' || phase === 'blocked'}
+		<div class="mt-5 border-t border-ruled-line pt-4" data-reveal>
+			<h3 class="text-label font-semibold tracking-wider text-graphite uppercase">
+				{m.speak_reveal_title()}
+			</h3>
+			{#if step.answer}
+				<p class="mt-2 font-hanzi text-[44px] leading-tight">{step.answer.hanzi}</p>
+				<p class="mt-1 text-[18px] font-medium">
+					{step.answer.pinyin} · {step.answer.meaning}
+				</p>
+			{:else}
+				{#each step.rubric ?? [] as line, i (i)}
+					<p class="mt-2 text-title">{line}</p>
+				{/each}
+			{/if}
+		</div>
+	{:else}
+		<p class="mt-4 text-center text-label text-faint-pencil" data-pending>
+			{m.speak_reveal_pending()}
+		</p>
+	{/if}
+{/if}
