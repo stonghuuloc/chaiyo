@@ -10,13 +10,19 @@
 </script>
 
 <script lang="ts">
+	import { prefersReducedMotion } from 'svelte/motion';
 	import { m } from '#lib/paraglide/messages.js';
+	import { cssMs } from '#lib/ui/motion';
+	import { keys } from '#lib/ui/keys';
 
 	type Props = { card: Card; ondecide: (result: { remembered: boolean; ms: number }) => void };
 
-	let { card }: Props = $props();
+	let { card, ondecide }: Props = $props();
 
 	let flipped = $state(false);
+	let deciding = $state<'right' | 'left' | null>(null);
+	let cardNode = $state<HTMLElement>();
+	const shown = performance.now();
 
 	// Loaded on first tap: the player module reads $app/env/public, which this view must not pull in at import time.
 	async function speak(key: string) {
@@ -28,6 +34,28 @@
 	}
 
 	const flip = () => (flipped = true);
+
+	function commit(dir: 'right' | 'left') {
+		if (!flipped || deciding || !cardNode) return;
+		deciding = dir;
+		const sign = dir === 'right' ? 1 : -1;
+		const reduced = prefersReducedMotion.current;
+		const animation = cardNode.animate(
+			reduced
+				? [{ opacity: 1 }, { opacity: 0 }]
+				: [
+						{ transform: 'none', opacity: 1 },
+						{ transform: `translateX(${sign * 120}%) rotate(${sign * 12}deg)`, opacity: 1 }
+					],
+			{
+				duration: reduced ? cssMs('--motion-fade-reduced', 150) : 250,
+				easing: 'ease-out',
+				fill: 'forwards'
+			}
+		);
+		animation.onfinish = () =>
+			ondecide({ remembered: dir === 'right', ms: Math.round(performance.now() - shown) });
+	}
 </script>
 
 {#snippet speaker(clip: string)}
@@ -46,8 +74,15 @@
 	</button>
 {/snippet}
 
-<div class="flex flex-col items-center gap-4">
+<div
+	class="flex flex-col items-center gap-4"
+	use:keys={{
+		space: flip,
+		digit: (n) => (n === 1 ? commit('left') : n === 2 ? commit('right') : undefined)
+	}}
+>
 	<div
+		bind:this={cardNode}
 		data-part="card"
 		class="relative flex min-h-64 w-full flex-col items-center justify-center gap-3 rounded-action border border-ruled-line p-5"
 	>
@@ -84,8 +119,32 @@
 				{@render speaker(card.audio)}
 			{/if}
 		{/if}
+		{#if deciding}
+			<span
+				data-part={deciding === 'right' ? 'stamp-remember' : 'stamp-forget'}
+				class="absolute top-4 rounded-action border-2 px-3 py-1 text-title font-bold {deciding ===
+				'right'
+					? 'right-4 -rotate-12'
+					: 'left-4 rotate-12'}"
+				>{deciding === 'right' ? m.practice_stamp_remember() : m.practice_stamp_forget()}</span
+			>
+		{/if}
 	</div>
 	{#if flipped}
 		<p data-part="guide" class="text-caption text-graphite">{m.practice_card_guide()}</p>
+		<div class="flex w-full gap-3">
+			<button
+				type="button"
+				data-part="forget"
+				class="min-h-11 flex-1 rounded-action border border-ruled-line px-4 py-2"
+				onclick={() => commit('left')}>{m.practice_card_forget()}</button
+			>
+			<button
+				type="button"
+				data-part="remember"
+				class="min-h-11 flex-1 rounded-action border border-ruled-line px-4 py-2"
+				onclick={() => commit('right')}>{m.practice_card_remember()}</button
+			>
+		</div>
 	{/if}
 </div>
