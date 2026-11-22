@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import Choice from './steps/Choice.svelte';
 import Speak from './steps/Speak.svelte';
+import Tone from './steps/Tone.svelte';
 import { viewOf } from './steps';
 
 const files = import.meta.glob<{ kind: string }>('./steps/*.svelte', { eager: true });
@@ -53,6 +54,10 @@ describe('step views', () => {
 
 	it('Given_SpeakKind_When_ViewOf_Then_ReturnsSpeak', () => {
 		expect(viewOf('speak').default).toBe(Speak);
+	});
+
+	it('Given_ToneKind_When_ViewOf_Then_ReturnsTone', () => {
+		expect(viewOf('tone').default).toBe(Tone);
 	});
 
 	it('Given_UnknownKind_When_ViewOf_Then_Throws', () => {
