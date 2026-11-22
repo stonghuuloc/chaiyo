@@ -342,5 +342,8 @@
 	"practice_card_forget": "Quên",
 	"practice_stamp_remember": "NHỚ",
 	"practice_stamp_forget": "QUÊN",
-	"practice_card_play": "Nghe phát âm"
+	"practice_card_play": "Nghe phát âm",
+	"practice_nghe_ask": "Nghe rồi chọn từ đúng",
+	"practice_again": "gặp lại",
+	"practice_requeue_hint": "Từ này sẽ quay lại cuối lượt"
 }
