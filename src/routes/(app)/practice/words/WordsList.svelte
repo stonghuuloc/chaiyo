@@ -35,7 +35,9 @@
 			{#each shown as row (row.hanzi)}
 				<li data-part="my-word">
 					<a
-						href={resolve('/(app)/word/[id]', { id: row.hanzi })}
+						href={row.source === 'lesson'
+							? resolve('/(app)/word/[id]', { id: row.hanzi })
+							: undefined}
 						class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
 					>
 						<span lang="zh" class="font-display text-headline">{row.hanzi}</span>
