@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
 	import { resolve } from '$app/paths';
-	import { ENTRIES, type SkillKey } from './skills';
+	import { ENTRIES, noteFor, type SkillKey } from './skills';
 
-	let { k }: { k: SkillKey } = $props();
+	let { k, level }: { k: SkillKey; level?: number } = $props();
 
 	const entry = $derived(ENTRIES[k]);
 </script>
@@ -37,7 +37,7 @@
 		data-part="demo-note"
 		class="rounded-2xl border border-dashed border-ruled-line p-4 text-graphite"
 	>
-		{entry.note()}
+		{noteFor(k, level)}
 	</p>
 
 	<a
