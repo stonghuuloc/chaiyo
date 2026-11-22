@@ -399,3 +399,98 @@ describe('Speak', () => {
 		expect(target!.querySelector('[data-timer]')).toBeNull();
 	});
 });
+
+const recordFor = async (ms: number) => {
+	await press();
+	await vi.advanceTimersByTimeAsync(ms);
+	flushSync();
+	release();
+};
+
+const tiles = () => [...target!.querySelectorAll<HTMLElement>('[data-tile]')];
+
+describe('Speak sample result', () => {
+	it('Given_Held3s_When_Release_Then_SampleTilesBuKeQiWeakAndCount', async () => {
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		const t = tiles();
+		expect(t.map((x) => x.querySelector('[data-syl]')!.textContent!.trim())).toEqual([
+			'不 bú',
+			'客 kè',
+			'气 qi'
+		]);
+		expect(t.map((x) => x.hasAttribute('data-weak'))).toEqual([false, false, true]);
+		expect(t.map((x) => x.querySelectorAll('[data-check]').length)).toEqual([1, 1, 0]);
+		expect(target!.querySelector('[data-count]')!.textContent).toBe('Đúng 2/3 âm · đủ để qua');
+		expect(target!.querySelector('[data-note]')!.textContent).toBe('Kết quả mẫu (chưa chấm thật)');
+	});
+
+	it('Given_Held3s_When_Release_Then_HintIsSampleHint', async () => {
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(cta!.hint).toBe('Chưa chấm điểm thật · kết quả chỉ là mẫu');
+	});
+
+	it('Given_StepWithoutHanzi_When_Done_Then_NoteNoTiles', async () => {
+		// Arrange
+		mountSpeak({ kind: 'speak', id: 'q-x', ask: 'Nói', title: 'Bạn khoẻ không?' });
+
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(target!.querySelector('[data-count]')).toBeNull();
+		expect(target!.querySelector('[data-note]')).not.toBeNull();
+		expect(cta!.hint).toBe(m.speak_sample_hint());
+	});
+
+	it('Given_MisalignedSentence_When_Done_Then_NoteNoTiles', async () => {
+		// Arrange
+		mountSpeak({ ...step, hanzi: '你好', pinyin: 'nǐ' });
+
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(target!.querySelector('[data-note]')).not.toBeNull();
+	});
+
+	it('Given_Held500ms_When_Release_Then_NoTilesNoSampleHint', async () => {
+		// Act
+		await recordFor(500);
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(target!.querySelector('[data-note]')).toBeNull();
+		expect(cta!.hint).not.toBe(m.speak_sample_hint());
+	});
+
+	it('Given_Live_When_Holding_Then_NoTilesNoSampleHint', async () => {
+		// Act
+		await press();
+		await vi.advanceTimersByTimeAsync(1_000);
+		flushSync();
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(cta!.hint).not.toBe(m.speak_sample_hint());
+	});
+
+	it('Given_Blocked_When_Press_Then_NoSampleHint', async () => {
+		// Arrange
+		setMic(undefined);
+
+		// Act
+		await press();
+
+		// Assert
+		expect(target!.querySelector('[data-note]')).toBeNull();
+		expect(cta!.hint).not.toBe(m.speak_sample_hint());
+	});
+});
