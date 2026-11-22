@@ -19,6 +19,7 @@
 		onprogress?: (p: StrokeProgress) => void;
 		oncomplete?: (p: { mistakes: number }) => void;
 		onerror?: () => void;
+		onpeek?: () => void;
 	};
 
 	let {
@@ -28,7 +29,8 @@
 		load = loadStrokes,
 		onprogress,
 		oncomplete,
-		onerror
+		onerror,
+		onpeek
 	}: Props = $props();
 
 	let pad = $state<HTMLElement>();
@@ -203,7 +205,15 @@
 	</div>
 	{#if mode === 'quiz'}
 		<div class="mt-3 flex flex-wrap gap-2">
-			<button type="button" class={tool} disabled={busy || status !== 'ready'} onclick={play}>
+			<button
+				type="button"
+				class={tool}
+				disabled={busy || status !== 'ready'}
+				onclick={() => {
+					onpeek?.();
+					void play();
+				}}
+			>
 				<svg class="size-5 fill-current" aria-hidden="true"><use href="#i-regular-play" /></svg>
 				{m.strokes_demo()}
 			</button>
@@ -211,13 +221,24 @@
 				type="button"
 				class={tool}
 				disabled={finished || busy || status !== 'ready'}
-				onclick={() => void writer?.highlightStroke(done)}
+				onclick={() => {
+					onpeek?.();
+					void writer?.highlightStroke(done);
+				}}
 			>
 				<svg class="size-5 fill-current" aria-hidden="true"><use href="#i-regular-lightbulb" /></svg
 				>
 				{m.strokes_hint()}
 			</button>
-			<button type="button" class={tool} disabled={busy || status !== 'ready'} onclick={restart}>
+			<button
+				type="button"
+				class={tool}
+				disabled={busy || status !== 'ready'}
+				onclick={() => {
+					onpeek?.();
+					restart();
+				}}
+			>
 				<svg class="size-5 fill-current" aria-hidden="true">
 					<use href="#i-regular-arrow-counter-clockwise" />
 				</svg>

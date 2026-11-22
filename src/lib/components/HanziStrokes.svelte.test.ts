@@ -36,6 +36,7 @@ type Props = {
 	onprogress?: (p: StrokeProgress) => void;
 	oncomplete?: (p: { mistakes: number }) => void;
 	onerror?: () => void;
+	onpeek?: () => void;
 };
 
 const makeWriter = (): FakeWriter => ({
@@ -217,6 +218,42 @@ describe('HanziStrokes interaction', () => {
 
 		// Assert
 		expect(ui.text()).toContain('nét 0/2');
+	});
+
+	it('Given_OnPeek_When_TapDemoHintRedo_Then_FiresOncePerTap', async () => {
+		// Arrange
+		const peeks: number[] = [];
+		const ui = await mountStrokes({ onpeek: () => peeks.push(1) });
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
+		await settle();
+
+		// Act
+		ui.button('Gợi ý').click();
+		await settle();
+		expect(peeks).toHaveLength(1);
+		ui.button('Viết lại').click();
+		await settle();
+		expect(peeks).toHaveLength(2);
+		ui.button('Xem mẫu').click();
+		await settle();
+
+		// Assert
+		expect(peeks).toHaveLength(3);
+	});
+
+	it('Given_NoOnPeek_When_TapTools_Then_NoError', async () => {
+		// Arrange
+		const ui = await mountStrokes();
+		need(options.onLoadCharDataSuccess)({ strokes: data.strokes });
+		await settle();
+
+		// Act / Assert
+		expect(() => {
+			ui.button('Gợi ý').click();
+			ui.button('Viết lại').click();
+			ui.button('Xem mẫu').click();
+		}).not.toThrow();
+		await settle();
 	});
 
 	it('Given_AnimateMode_When_DataLoads_Then_NoQuizAndNoTools', async () => {
