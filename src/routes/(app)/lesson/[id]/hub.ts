@@ -2,6 +2,7 @@ import type { LessonContent } from '#lib/catalog/index.js';
 import { m } from '#lib/paraglide/messages.js';
 import type { State } from '#lib/study/index.js';
 import { warmupWords } from './[section]/warmup';
+import { primerHub } from './primer-hub';
 
 export type Look = 'done' | 'now' | 'todo';
 export type Row = { id: string; name: string; look: Look; pct: number; sub: string };
@@ -17,7 +18,8 @@ export type Hub = {
 	warmup: Row | null;
 	cta: { section: string; label: string } | null;
 	words: { id: string; hanzi: string; pinyin: string; reached: boolean }[];
-	gate: { locked: boolean; sub: string };
+	gate: { locked: boolean; sub: string; name?: string };
+	links?: { id: string; label: string }[];
 };
 
 const MINUTES_PER_WORD = 7;
@@ -127,7 +129,7 @@ export function hubView(
 					: null;
 	const locked = !gateOpen(state, l.id);
 
-	return {
+	const view: Hub = {
 		kicker: 'topic' in l ? m.hub_kicker({ level: l.level, topic: l.topic, order: l.order }) : '',
 		title: l.title,
 		hanzi: l.titleHanzi,
@@ -153,4 +155,5 @@ export function hubView(
 		})),
 		gate: { locked, sub: locked ? m.hub_gate_locked({ n: sections.length }) : '' }
 	};
+	return 'kind' in l ? primerHub(view, state, l.id) : view;
 }

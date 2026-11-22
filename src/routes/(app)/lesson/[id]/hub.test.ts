@@ -157,7 +157,7 @@ describe('hubView', () => {
 		expect(v.cta).toBeNull();
 	});
 
-	it('Given_Primer_When_View_Then_NoKickerNoMeta', async () => {
+	it('Given_Primer_When_View_Then_NoKickerPrimerMeta', async () => {
 		// Arrange
 		const primer = await createCatalog(await fixtureSource()).lesson('h0-00');
 		const ids = CURRICULUM.lessons.find((l) => l.id === 'h0-00')!.sections;
@@ -167,7 +167,7 @@ describe('hubView', () => {
 
 		// Assert
 		expect(v.kicker).toBe('');
-		expect(v.meta).toBe('');
+		expect(v.meta).toBe('5 phần · không học từ mới · khoảng 25 phút');
 		expect(v.rows).toHaveLength(5);
 		expect(v.rows[0]).toMatchObject({ id: 'tones', look: 'todo', sub: '' });
 	});
