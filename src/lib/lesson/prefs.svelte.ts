@@ -58,7 +58,7 @@ export class DisplayPrefs {
 
 	async toggle(k: Key) {
 		this.#touched++;
-		const unsent = [...new Set([...(this.stored.unsent ?? []), k])];
+		const unsent = [...(this.stored.unsent ?? []).filter((u) => u !== k), k];
 		this.stored = { ...this.stored, [k]: !this[k], unsent };
 		this.#keep();
 		await this.#push([k]).catch(() => {});
