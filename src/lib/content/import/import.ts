@@ -4,7 +4,8 @@ import { join } from 'node:path';
 import { parseDictionary, type ThinEntry } from '../derive';
 import { lintDir, type LintError, type LintRefs } from '../lint';
 import { assemble } from './assemble';
-import type { Sink } from './sink';
+import { BUNDLE_FORMAT } from './bundle';
+import type { ImportedContent, Sink } from './sink';
 
 const byLocation = (a: LintError, b: LintError) =>
 	a.file < b.file
@@ -31,6 +32,9 @@ const canonical = (v: unknown): string =>
 			? Object.fromEntries(Object.entries(x).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
 			: x
 	);
+
+export const contentSha = (content: Omit<ImportedContent, 'sha'>, format = BUNDLE_FORMAT) =>
+	createHash('sha256').update(canonical({ format, content })).digest('hex');
 
 const loadDictionary = (
 	dir: string
@@ -60,7 +64,7 @@ export async function importContent(
 	if (!dictionary.ok) return { errors: dictionary.errors.sort(byLocation) };
 	const built = assemble(set, dictionary.value);
 	if ('errors' in built) return { errors: built.errors.sort(byLocation) };
-	const sha = createHash('sha256').update(canonical(built.content)).digest('hex');
+	const sha = contentSha(built.content);
 	if (!(await sink.has(sha))) await sink.write({ ...built.content, sha });
 	return { sha };
 }

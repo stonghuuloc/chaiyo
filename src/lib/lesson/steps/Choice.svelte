@@ -13,10 +13,12 @@
 		explain?: string;
 		missHint?: string;
 		card?: { word: string; skill: Skill };
+		audio?: string;
 	};
 </script>
 
 <script lang="ts">
+	import ClipCast from '../ClipCast.svelte';
 	import { choiceCta, grade, toAnswer } from '../choice';
 	import type { StepProps } from '../types';
 
@@ -60,7 +62,12 @@
 <p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
 	{step.ask}
 </p>
-<h2 class="mt-1 font-display text-headline">{step.title}</h2>
+{#if step.audio}
+	<ClipCast clip={step.audio} label={step.ask} />
+{/if}
+{#if step.title}
+	<h2 class="mt-1 font-display text-headline">{step.title}</h2>
+{/if}
 
 <div class="mt-5 grid gap-2 md:grid-cols-2">
 	{#each step.options as option (option)}

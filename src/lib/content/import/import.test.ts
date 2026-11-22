@@ -11,7 +11,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fixtureRefs } from '../lint/fixtures/refs';
-import { importContent } from './import';
+import { BUNDLE_FORMAT } from './bundle';
+import { contentSha, importContent } from './import';
 import { createMemorySink, type Sink } from './sink';
 
 const OK = join(__dirname, 'fixtures/ok');
@@ -205,6 +206,23 @@ describe('importContent sha [AC2]', () => {
 			writeFileSync(join(d, 'dictionary.json'), JSON.stringify(rows));
 		});
 		expect(await importContent(dict, createMemorySink(), { refs })).not.toEqual(a);
+	});
+
+	it('Given_SameContent_When_BundleFormatChanges_Then_ShaChanges', async () => {
+		// Arrange
+		const sink = createMemorySink();
+		const res = await importContent(OK, sink, { refs });
+		const { sha, ...content } = sink.content!;
+
+		// Act
+		const old = contentSha(content, BUNDLE_FORMAT - 1);
+		const current = contentSha(content, BUNDLE_FORMAT);
+
+		// Assert
+		expect(BUNDLE_FORMAT).toBe(2);
+		expect(res).toEqual({ sha });
+		expect(current).toBe(sha);
+		expect(old).not.toBe(current);
 	});
 
 	it('a missing dictionary.json is an empty Dictionary, not an error', async () => {

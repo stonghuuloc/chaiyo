@@ -4,6 +4,15 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Answer, Cta, Mode } from '../types';
 import Choice, { type Step } from './Choice.svelte';
 
+const audio = vi.hoisted(() => ({
+	player: {
+		play: vi.fn(async () => true),
+		url: (key: string) => `/a/${key}.mp3`,
+		element: () => null
+	}
+}));
+vi.mock('#lib/audio/index.js', () => audio);
+
 const step: Step = {
 	kind: 'choice',
 	id: 'q1',
@@ -53,6 +62,33 @@ afterEach(() => {
 });
 
 describe('Choice', () => {
+	it('Given_StepWithClip_When_Mount_Then_TalkingCastPlaysTheClipOnce', async () => {
+		// Arrange
+		audio.player.play.mockClear();
+		const withClip: Step = { ...step, title: '', audio: 'words/abc' };
+
+		// Act
+		mountChoice({ step: withClip });
+		await vi.waitFor(() => expect(target!.querySelector('[data-part="cast"] img')).not.toBeNull());
+
+		// Assert
+		expect(audio.player.play).toHaveBeenCalledTimes(1);
+		expect(audio.player.play).toHaveBeenCalledWith('words/abc');
+		expect(target!.querySelector('h2')).toBeNull();
+	});
+
+	it('Given_StepWithoutClip_When_Mount_Then_NoCastAndNoPlay', () => {
+		// Arrange
+		audio.player.play.mockClear();
+
+		// Act
+		mountChoice();
+
+		// Assert
+		expect(target!.querySelector('[data-part="cast"]')).toBeNull();
+		expect(audio.player.play).not.toHaveBeenCalled();
+	});
+
 	it('Given_FeedbackWrongPick_When_Check_Then_MarksVerdictAndReviewHint', () => {
 		// Arrange
 		const { options, cta } = mountChoice();
