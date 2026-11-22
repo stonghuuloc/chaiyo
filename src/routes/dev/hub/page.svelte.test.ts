@@ -59,6 +59,30 @@ describe('/dev/hub', () => {
 		});
 		expect(words()!.textContent).toContain(`4/10 từ · tiếp ở ${h1.words[4].hanzi}`);
 		expect(cta()!.textContent).toContain('Tiếp tục: Từ mới');
+		expect(target!.querySelectorAll('[data-part=hub-word][data-reached=true]')).toHaveLength(4);
+	});
+
+	it('Given_FreshDb_When_SeedFiveSections_Then_GateRowOpen', async () => {
+		// Arrange
+		hoisted.lesson.mockResolvedValue(h1);
+		mountPage();
+		const button = () =>
+			[...target!.querySelectorAll('button')].find(
+				(b) => b.textContent === 'seed: 5 sections done'
+			)!;
+		const gate = () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-gate]')!;
+		await vi.waitFor(() => expect(button().disabled).toBe(false));
+		expect(gate().getAttribute('aria-disabled')).toBe('true');
+
+		// Act
+		button().click();
+
+		// Assert
+		await vi.waitFor(() => {
+			flushSync();
+			expect(gate().getAttribute('href')).toMatch(/\/lesson\/h1-01\/gate$/);
+		});
+		expect(target!.querySelectorAll('[data-part=hub-word][data-reached=true]')).toHaveLength(10);
 	});
 
 	it('Given_CatalogFails_When_Mount_Then_AlertNoHub', async () => {
