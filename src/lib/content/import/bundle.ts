@@ -49,6 +49,9 @@ export function buildBundle(content: ImportedContent, id: string): Bundle {
 	const clip = new Map(
 		content.audio.filter((a) => a.kind === 'sentence').map((a) => [a.ref, a.key])
 	);
+	const wordClip = new Map(
+		content.audio.filter((a) => a.kind === 'word').map((a) => [a.ref, a.key])
+	);
 	return {
 		sha: content.sha,
 		lesson,
@@ -57,7 +60,7 @@ export function buildBundle(content: ImportedContent, id: string): Bundle {
 			.map((s) => ({ ...s, audio: clip.get(s.id) })),
 		questions,
 		grammar,
-		words,
+		words: words.map((w) => ({ ...w, audio: wordClip.get(w.id) })),
 		chars: content.chars.filter((c) => hanzi.has(c.hanzi)),
 		gateCoverage,
 		thin

@@ -66,6 +66,20 @@ describe('buildBundle', () => {
 		expect(noSpeaker.audio!.startsWith('examples/')).toBe(true);
 	});
 
+	it('Given_Bundle_When_Build_Then_EveryWordCarriesItsWordClipKey', async () => {
+		// Arrange
+		const c = await loadOk();
+		const keys = new Map(c.audio.filter((a) => a.kind === 'word').map((a) => [a.ref, a.key]));
+
+		// Act
+		const b = buildBundle(c, 'h1-01');
+
+		// Assert
+		expect(b.words.length).toBeGreaterThan(0);
+		for (const w of b.words) expect(w.audio).toBe(keys.get(w.id));
+		expect(b.words.find((w) => w.id === '你好')!.audio!.startsWith('words/')).toBe(true);
+	});
+
 	it('holds the lesson sentences plus the free ones a taught word lists', async () => {
 		const c = await loadOk();
 		const ids = buildBundle(c, 'h1-01').sentences.map((s) => s.id);

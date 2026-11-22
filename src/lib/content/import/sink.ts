@@ -16,7 +16,7 @@ export type ImportedLesson = (Lesson | Primer) & {
 	thin: ThinEntry[];
 };
 
-export type ImportedWord = Word & { taughtIn?: string; listedIn: string[] };
+export type ImportedWord = Word & { taughtIn?: string; listedIn: string[]; audio?: string };
 
 export type ImportedSentence = Sentence & { lessonId?: string; seg: string[]; audio?: string };
 
