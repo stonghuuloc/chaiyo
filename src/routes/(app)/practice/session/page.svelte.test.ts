@@ -30,6 +30,10 @@ const publish = (s: State) => {
 };
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: hoisted.load }));
+vi.mock('#lib/audio/index.js', () => ({
+	play: vi.fn(async () => true),
+	player: { play: vi.fn(async () => true), url: (k: string) => `/a/${k}.mp3`, element: () => null }
+}));
 
 const session = { user: { id: 'u1' } };
 let target: HTMLDivElement | undefined;
@@ -54,10 +58,8 @@ const mountPage = async (
 	await settle();
 	return {
 		h1: () => target!.querySelectorAll('h1').length,
-		skills: () =>
-			[...target!.querySelectorAll('[data-part=session-card]')].map((c) =>
-				c.getAttribute('data-skill')
-			),
+		of: () => target!.querySelector('[data-part=session-run]')?.getAttribute('data-of') ?? null,
+		firstKind: () => target!.querySelector('[data-part=item]')?.getAttribute('data-kind') ?? null,
 		text: () => target!.textContent
 	};
 };
@@ -71,7 +73,7 @@ afterEach(() => {
 });
 
 describe('/practice/session', () => {
-	it('Given_Ledger6_4_2_NoSkill_When_Mount_Then_12CardsInterleaved', async () => {
+	it('Given_Ledger6_4_2_NoSkill_When_Mount_Then_RunOf12FirstThe', async () => {
 		// Arrange
 		current = build({ the: 6, nghe: 4, viet: 2 });
 		hoisted.load.mockResolvedValue(ledger);
@@ -80,11 +82,11 @@ describe('/practice/session', () => {
 		const page = await mountPage();
 
 		// Assert
-		expect(page.skills()).toHaveLength(12);
-		expect(page.skills().slice(0, 6)).toEqual(['the', 'nghe', 'viet', 'the', 'nghe', 'viet']);
+		await vi.waitFor(() => expect(page.firstKind()).toBe('the'));
+		expect(page.of()).toBe('12');
 	});
 
-	it('Given_SkillNghe_When_Mount_Then_4NgheCards', async () => {
+	it('Given_SkillNghe_When_Mount_Then_RunOf4FirstNghe', async () => {
 		// Arrange
 		current = build({ the: 6, nghe: 4, viet: 2 });
 		hoisted.load.mockResolvedValue(ledger);
@@ -93,21 +95,24 @@ describe('/practice/session', () => {
 		const page = await mountPage({ session, skill: 'nghe' });
 
 		// Assert
-		expect(page.skills()).toEqual(['nghe', 'nghe', 'nghe', 'nghe']);
+		await vi.waitFor(() => expect(page.firstKind()).toBe('nghe'));
+		expect(page.of()).toBe('4');
 	});
 
-	it('Given_CardsShown_When_LedgerPublishesEmpty_Then_Still12', async () => {
+	it('Given_RunShown_When_LedgerPublishesEmpty_Then_StillOf12', async () => {
 		// Arrange
 		current = build({ the: 6, nghe: 4, viet: 2 });
 		hoisted.load.mockResolvedValue(ledger);
 		const page = await mountPage();
+		await vi.waitFor(() => expect(page.firstKind()).toBe('the'));
 
 		// Act
 		publish(build({}));
 		await settle();
 
 		// Assert
-		expect(page.skills()).toHaveLength(12);
+		expect(page.of()).toBe('12');
+		expect(page.firstKind()).toBe('the');
 	});
 
 	it('Given_NoSession_When_Mount_Then_OnlyH1', async () => {
@@ -119,7 +124,7 @@ describe('/practice/session', () => {
 
 		// Assert
 		expect(page.h1()).toBe(1);
-		expect(page.skills()).toHaveLength(0);
+		expect(page.of()).toBeNull();
 		expect(page.text()).not.toContain('xong bài rồi');
 	});
 
@@ -132,7 +137,7 @@ describe('/practice/session', () => {
 
 		// Assert
 		expect(page.h1()).toBe(1);
-		expect(page.skills()).toHaveLength(0);
+		expect(page.of()).toBeNull();
 		expect(page.text()).not.toContain('xong bài rồi');
 	});
 
@@ -146,6 +151,6 @@ describe('/practice/session', () => {
 
 		// Assert
 		expect(page.text()).toContain('Hôm nay xong bài rồi!');
-		expect(page.skills()).toHaveLength(0);
+		expect(page.of()).toBeNull();
 	});
 });
