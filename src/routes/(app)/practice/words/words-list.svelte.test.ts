@@ -98,4 +98,37 @@ describe('WordsList', () => {
 		expect(a.textContent).toContain('tự thêm');
 		expect(b.textContent).not.toContain('tự thêm');
 	});
+
+	it('a due row reads cần ôn hôm nay', () => {
+		// Arrange / Act
+		const el = render([row('你', { dueNote: 'due' })]);
+
+		// Assert
+		expect(el.querySelector('[data-part="note"]')?.textContent).toBe('cần ôn hôm nay');
+	});
+
+	it('a never row reads chưa ôn', () => {
+		// Arrange / Act
+		const el = render([row('你', { dueNote: 'never' })]);
+
+		// Assert
+		expect(el.querySelector('[data-part="note"]')?.textContent).toBe('chưa ôn');
+	});
+
+	it('a known row has no note element', () => {
+		// Arrange / Act
+		const el = render([row('你')]);
+
+		// Assert
+		expect(el.querySelector('[data-part="note"]')).toBeNull();
+	});
+
+	it('rows render in the order given', () => {
+		// Arrange / Act
+		const el = render([row('学', { dueNote: 'due' }), row('你')]);
+
+		// Assert
+		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
+		expect(order).toEqual(['学', '你']);
+	});
 });

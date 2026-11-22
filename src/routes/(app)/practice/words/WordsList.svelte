@@ -24,6 +24,11 @@
 					{#if row.nghia}
 						<small data-part="nghia" class="text-graphite">{row.nghia}</small>
 					{/if}
+					{#if row.dueNote}
+						<small data-part="note" class="text-lantern-red">
+							{row.dueNote === 'due' ? m.mywords_note_due() : m.mywords_note_never()}
+						</small>
+					{/if}
 					{#if row.source === 'self'}
 						<small data-part="source" class="text-pencil">{m.mywords_source_self()}</small>
 					{/if}
