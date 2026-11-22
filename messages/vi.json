@@ -345,5 +345,9 @@
 	"practice_card_play": "Nghe phát âm",
 	"practice_nghe_ask": "Nghe rồi chọn từ đúng",
 	"practice_again": "gặp lại",
-	"practice_requeue_hint": "Từ này sẽ quay lại cuối lượt"
+	"practice_requeue_hint": "Từ này sẽ quay lại cuối lượt",
+	"practice_viet_right": "Viết đúng.",
+	"practice_viet_unsure": "Không nhớ chữ này",
+	"practice_viet_wrong": "Chưa đúng. Chữ này sẽ quay lại cuối lượt",
+	"practice_viet_wrong_final": "Chưa đúng."
 }
