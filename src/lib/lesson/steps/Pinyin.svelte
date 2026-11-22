@@ -13,7 +13,7 @@
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
 	import { choiceCta } from '../choice';
-	import { gradePinyin, norm, toMarks } from '../pinyin';
+	import { gradePinyin, marked } from '../pinyin';
 	import type { StepProps } from '../types';
 
 	let { step, last, cta, next }: StepProps<Step> = $props();
@@ -58,5 +58,5 @@
 	bind:value
 />
 <p data-part="pinyin-preview" class="mt-3 min-h-6 text-graphite" aria-live="polite">
-	{#if typed}{m.gate_pinyin_preview({ text: toMarks(norm(value)) })}{/if}
+	{#if typed}{m.gate_pinyin_preview({ text: marked(value) })}{/if}
 </p>

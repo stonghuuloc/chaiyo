@@ -52,7 +52,10 @@ describe('pinyin', () => {
 		['bu4ke4qi', 'bù kèqi', true],
 		['bu2 ke4qi', 'bù kèqi', false],
 		['lv4', 'lǜ', true],
-		['', 'zàijiàn', false]
+		['', 'zàijiàn', false],
+		['xie xie4', 'xièxie', false],
+		['zaijian4', 'zàijiàn', false],
+		['m2', 'm', true]
 	])('Given_%s_When_GradeAgainst_%s_Then_%s', (input, answer, right) => {
 		// Arrange
 		const typed = input;
