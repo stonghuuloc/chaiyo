@@ -399,3 +399,226 @@ describe('Speak', () => {
 		expect(target!.querySelector('[data-timer]')).toBeNull();
 	});
 });
+
+const recordFor = async (ms: number) => {
+	await press();
+	await vi.advanceTimersByTimeAsync(ms);
+	flushSync();
+	release();
+};
+
+const tiles = () => [...target!.querySelectorAll<HTMLElement>('[data-tile]')];
+
+describe('Speak sample result', () => {
+	it('Given_Held3s_When_Release_Then_SampleTilesBuKeQiWeakAndCount', async () => {
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		const t = tiles();
+		expect(t.map((x) => x.querySelector('[data-syl]')!.textContent!.trim())).toEqual([
+			'不 bú',
+			'客 kè',
+			'气 qi'
+		]);
+		expect(t.map((x) => x.hasAttribute('data-weak'))).toEqual([false, false, true]);
+		expect(t.map((x) => x.querySelectorAll('[data-check]').length)).toEqual([1, 1, 0]);
+		expect(target!.querySelector('[data-count]')!.textContent).toBe('Đúng 2/3 âm · đủ để qua');
+		expect(target!.querySelector('[data-note]')!.textContent).toBe('Kết quả mẫu (chưa chấm thật)');
+	});
+
+	it('Given_Held3s_When_Release_Then_HintIsSampleHint', async () => {
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(cta!.hint).toBe('Chưa chấm điểm thật · kết quả chỉ là mẫu');
+	});
+
+	it('Given_StepWithoutHanzi_When_Done_Then_NoteNoTiles', async () => {
+		// Arrange
+		mountSpeak({ kind: 'speak', id: 'q-x', ask: 'Nói', title: 'Bạn khoẻ không?' });
+
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(target!.querySelector('[data-count]')).toBeNull();
+		expect(target!.querySelector('[data-note]')).not.toBeNull();
+		expect(cta!.hint).toBe(m.speak_sample_hint());
+	});
+
+	it('Given_MisalignedSentence_When_Done_Then_NoteNoTiles', async () => {
+		// Arrange
+		mountSpeak({ ...step, hanzi: '你好', pinyin: 'nǐ' });
+
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(target!.querySelector('[data-note]')).not.toBeNull();
+	});
+
+	it('Given_Held500ms_When_Release_Then_NoTilesNoSampleHint', async () => {
+		// Act
+		await recordFor(500);
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(target!.querySelector('[data-note]')).toBeNull();
+		expect(cta!.hint).not.toBe(m.speak_sample_hint());
+	});
+
+	it('Given_Live_When_Holding_Then_NoTilesNoSampleHint', async () => {
+		// Act
+		await press();
+		await vi.advanceTimersByTimeAsync(1_000);
+		flushSync();
+
+		// Assert
+		expect(tiles()).toHaveLength(0);
+		expect(cta!.hint).not.toBe(m.speak_sample_hint());
+	});
+
+	it('Given_Blocked_When_Press_Then_NoSampleHint', async () => {
+		// Arrange
+		setMic(undefined);
+
+		// Act
+		await press();
+
+		// Assert
+		expect(target!.querySelector('[data-note]')).toBeNull();
+		expect(cta!.hint).not.toBe(m.speak_sample_hint());
+	});
+});
+
+const f01: Step = {
+	kind: 'speak',
+	id: 'q-h1-01-f01',
+	ask: 'Nói · trả lời',
+	title: 'Bạn làm đổ trà của bạn mình. Nói gì?',
+	answer: { hanzi: '对不起！', pinyin: 'duìbuqǐ', meaning: 'Xin lỗi!' },
+	rubric: ['Nói 对不起 (xin lỗi) bằng một câu ngắn']
+};
+
+const rubricOnly: Step = {
+	kind: 'speak',
+	id: 'q-h1-02-f01',
+	ask: 'Nói · trả lời',
+	title: 'Giới thiệu tên của bạn.',
+	rubric: ['Nói 我叫 + tên của mình']
+};
+
+const reveal = () => target!.querySelector('[data-reveal]');
+const pending = () => target!.querySelector('[data-pending]');
+
+describe('Speak free-answer reveal', () => {
+	beforeEach(() => mountSpeak(f01));
+
+	it('Given_FreeAnswerIdle_When_Mounted_Then_NoRevealPendingLine', () => {
+		// Assert
+		expect(reveal()).toBeNull();
+		expect(pending()!.textContent).toBe('Đáp án sẽ hiện sau khi bạn nói.');
+		expect(text()).not.toContain('对不起');
+	});
+
+	it('Given_FreeAnswerOpening_When_MicPending_Then_NoReveal', () => {
+		// Arrange
+		setMic({ getUserMedia: vi.fn(() => new Promise(() => {})) });
+
+		// Act
+		cta!.hold!.onpress();
+		flushSync();
+
+		// Assert
+		expect(text()).toContain(m.lesson_speak_opening());
+		expect(reveal()).toBeNull();
+		expect(pending()).not.toBeNull();
+	});
+
+	it('Given_FreeAnswerLive_When_Holding_Then_NoReveal', async () => {
+		// Act
+		await press();
+		await vi.advanceTimersByTimeAsync(1_000);
+		flushSync();
+
+		// Assert
+		expect(cta!.label).toBe(m.lesson_speak_release());
+		expect(reveal()).toBeNull();
+		expect(pending()).not.toBeNull();
+	});
+
+	it('Given_FreeAnswerHeld500ms_When_Release_Then_NoReveal', async () => {
+		// Act
+		await recordFor(500);
+
+		// Assert
+		expect(text()).toContain(m.lesson_speak_short());
+		expect(reveal()).toBeNull();
+		expect(pending()).not.toBeNull();
+	});
+
+	it('Given_FreeAnswerHeld3s_When_Release_Then_RevealDuibuqiXinLoi', async () => {
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		const r = reveal()!;
+		expect(r.textContent).toContain('Có thể nói');
+		expect(r.textContent).toContain('对不起！');
+		expect(r.textContent).toContain('duìbuqǐ · Xin lỗi!');
+		expect(pending()).toBeNull();
+		expect(tiles().map((t) => t.querySelector('[data-syl]')!.textContent!.trim())).toEqual([
+			'对 duì',
+			'不 bu',
+			'起 qǐ'
+		]);
+		expect(target!.querySelector('[data-count]')!.textContent).toBe('Đúng 2/3 âm · đủ để qua');
+	});
+
+	it('Given_FreeAnswerNotAllowed_When_Press_Then_BlockedCopyAndReveal', async () => {
+		// Arrange
+		setMic({
+			getUserMedia: vi.fn(async () => {
+				throw new DOMException('denied', 'NotAllowedError');
+			})
+		});
+
+		// Act
+		await press();
+
+		// Assert
+		expect(text()).toContain(m.lesson_speak_blocked());
+		expect(cta!.label).toBe(m.lesson_speak_skip());
+		expect(reveal()!.textContent).toContain('对不起！');
+		expect(calls).toHaveLength(0);
+	});
+
+	it('Given_RubricOnlyStep_When_Done_Then_RevealRubricNoTiles', async () => {
+		// Arrange
+		mountSpeak(rubricOnly);
+
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(reveal()!.textContent).toContain('Có thể nói');
+		expect(reveal()!.textContent).toContain('Nói 我叫 + tên của mình');
+		expect(tiles()).toHaveLength(0);
+	});
+
+	it('Given_ReadAloudStep_When_Done_Then_NoRevealBlock', async () => {
+		// Arrange
+		mountSpeak(step);
+
+		// Act
+		await recordFor(3_100);
+
+		// Assert
+		expect(reveal()).toBeNull();
+		expect(pending()).toBeNull();
+	});
+});

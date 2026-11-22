@@ -1,14 +1,26 @@
+import { realContent } from '../../../../../test/real-content.js';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { m } from '#lib/paraglide/messages.js';
 import { createCatalog, type LessonContent } from '#lib/catalog/index.js';
 import { buildBundle } from '#lib/content/import/bundle.js';
-import { importContent } from '#lib/content/import/import.js';
-import { scopeFor, PRODUCTION_ROOTS } from '#lib/content/import/scope.js';
-import { createMemorySink, type ImportedSentence } from '#lib/content/import/sink.js';
+import { type ImportedSentence } from '#lib/content/import/sink.js';
 import type { GrammarPoint, Lesson, Primer, Question } from '#lib/content/schemas.js';
 import { describe, expect, it } from 'vitest';
 import { grammarSteps } from './grammar';
+
+const drillText = (steps: { kind: string }[]) =>
+	steps.flatMap((s) => {
+		const d = s as {
+			kind: string;
+			ask?: string;
+			title?: string;
+			options?: string[];
+			tiles?: string[];
+		};
+		if (d.kind !== 'choice' && d.kind !== 'order') return [];
+		return [d.ask ?? '', d.title ?? '', ...(d.options ?? []), ...(d.tiles ?? [])];
+	});
 
 const lesson = (over: Partial<Lesson> = {}): Lesson => ({
 	id: 'h1-99',
@@ -280,11 +292,7 @@ describe('grammarSteps', () => {
 
 describe('grammarSteps on Bài 1', () => {
 	const build = async (id = 'h1-01'): Promise<LessonContent> => {
-		const sink = createMemorySink();
-		const r = await importContent('content', sink, { only: scopeFor('content', PRODUCTION_ROOTS) });
-		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
-		if (!sink.content) throw new Error('import wrote no content');
-		const b = buildBundle(sink.content, id);
+		const b = buildBundle(await realContent(), id);
 		const source = { current: async () => b.sha, bundle: async () => b };
 		return createCatalog(source).lesson(id);
 	};
@@ -349,4 +357,37 @@ describe('grammarSteps on Bài 1', () => {
 			expect(new Set(steps.map((s) => s.id)).size).toBe(steps.length);
 		}
 	}, 60_000);
+
+	it('Given_Bai1_When_Build_Then_NoDrillTitleOrOptionHoldsPinyin', async () => {
+		// Arrange
+		const prev = process.env.CHAIYO_VAULT;
+		process.env.CHAIYO_VAULT = join(tmpdir(), 'no-such-vault');
+		const c = await build();
+		if (prev === undefined) delete process.env.CHAIYO_VAULT;
+		else process.env.CHAIYO_VAULT = prev;
+		const pinyin = c.sentences.map((s) => s.pinyin).filter(Boolean);
+
+		// Act
+		const text = drillText(grammarSteps(c));
+
+		// Assert
+		expect(pinyin.length).toBeGreaterThan(0);
+		expect(text.length).toBeGreaterThan(0);
+		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
+	});
+
+	it('Given_Examples_When_Build_Then_EachCarriesItsSentenceId', () => {
+		// Arrange / Act
+		const steps = grammarSteps(content());
+
+		// Assert
+		const ids = (n: number) => {
+			const s = steps[n];
+			return s.kind === 'grammar' ? s.examples.map((e) => e.id) : [];
+		};
+		expect([ids(0), ids(4)]).toEqual([
+			['s1', 's2'],
+			['s4', 's5']
+		]);
+	});
 });

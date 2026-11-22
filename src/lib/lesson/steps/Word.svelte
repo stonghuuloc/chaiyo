@@ -10,12 +10,13 @@
 		audio?: string;
 		parts: { hanzi: string; pinyin: string; hanviet: string }[];
 		components: string[];
-		examples: { hanzi: string; pinyin: string; vi: string }[];
+		examples: { id: string; hanzi: string; pinyin: string; vi: string }[];
 	};
 </script>
 
 <script lang="ts">
 	import HanziStrokes from '#lib/components/HanziStrokes.svelte';
+	import TapText from '#lib/lookup/TapText.svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { StepProps } from '../types';
 
@@ -130,7 +131,7 @@
 		<ul class="mt-2 flex flex-col gap-2">
 			{#each step.examples as ex, i (i)}
 				<li data-part="example">
-					<p class="font-hanzi text-[20px]">{ex.hanzi}</p>
+					<p class="font-hanzi text-[20px]"><TapText sentenceId={ex.id} hanzi={ex.hanzi} /></p>
 					<p class="text-caption text-graphite">{ex.pinyin}</p>
 					<p>{ex.vi}</p>
 				</li>

@@ -75,6 +75,28 @@ describe('dev gate harness', () => {
 		expect(root.textContent).toContain(m.gate_hint());
 	});
 
+	it('Given_OneStepSubmitted_When_Done_Then_SubmittedLine', async () => {
+		// Arrange
+		hoisted.lesson.mockResolvedValue({
+			...content,
+			lesson: { ...content.lesson, gate: { pool: pool.slice(0, 1), draw: 10 } }
+		});
+		const root = mountPage();
+		await vi.waitFor(() => expect(root.querySelectorAll('[data-seg] i')).toHaveLength(1));
+
+		// Act
+		root.querySelector<HTMLButtonElement>('.body button')!.click();
+		flushSync();
+		root.querySelector<HTMLButtonElement>('.actions button')!.click();
+
+		// Assert
+		await vi.waitFor(() =>
+			expect(root.querySelector('[data-part="submitted"]')?.textContent).toBe(
+				'submitted: 1/1 right'
+			)
+		);
+	});
+
 	it('Given_CatalogFails_When_Load_Then_Alert', async () => {
 		// Arrange
 		hoisted.lesson.mockRejectedValue(new Error('offline'));

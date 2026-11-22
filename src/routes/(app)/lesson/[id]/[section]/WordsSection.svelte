@@ -4,6 +4,7 @@
 	import { learnerLedger } from '#lib/learner/index.js';
 	import Done from '#lib/lesson/Done.svelte';
 	import { doneNext, sectionName } from '#lib/lesson/done.js';
+	import LookupHost from '#lib/lookup/LookupHost.svelte';
 	import StepRunner from '#lib/lesson/StepRunner.svelte';
 	import StreakPopup from '#lib/lesson/StreakPopup.svelte';
 	import { m } from '#lib/paraglide/messages.js';
@@ -42,15 +43,17 @@
 	{#await learnerLedger(session)}
 		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
 	{:then ledger}
-		<StepRunner
-			{steps}
-			{ledger}
-			lesson={lesson.lesson.id}
-			section="words"
-			contentSha={lesson.contentSha}
-			exit={resolve('/(app)/(tabs)/today')}
-			onfinish={(e) => (events = e)}
-		/>
+		<LookupHost {ledger}>
+			<StepRunner
+				{steps}
+				{ledger}
+				lesson={lesson.lesson.id}
+				section="words"
+				contentSha={lesson.contentSha}
+				exit={resolve('/(app)/(tabs)/today')}
+				onfinish={(e) => (events = e)}
+			/>
+		</LookupHost>
 	{:catch}
 		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
 	{/await}

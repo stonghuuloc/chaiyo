@@ -1,6 +1,7 @@
 import { flushSync, mount, unmount } from 'svelte';
 import { m } from '#lib/paraglide/messages.js';
 import { afterEach, describe, expect, it } from 'vitest';
+import { DisplayPrefs, PREFS } from '../prefs.svelte';
 import type { Answer, Cta, Mode } from '../types';
 import Order, { type Step } from './Order.svelte';
 
@@ -16,13 +17,14 @@ const step: Step = {
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
-const mountOrder = (props: { mode?: Mode; last?: boolean } = {}) => {
+const mountOrder = (props: { mode?: Mode; last?: boolean; prefs?: DisplayPrefs } = {}) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Order, {
 		target,
+		context: props.prefs ? new Map([[PREFS, props.prefs]]) : undefined,
 		props: {
 			step,
 			mode: props.mode ?? 'feedback',
@@ -156,5 +158,14 @@ describe('Order', () => {
 		expect(target!.textContent).not.toContain(m.lesson_wrong());
 		expect(calls).toHaveLength(1);
 		expect(calls[0]).toMatchObject({ pick: '你们好', correct: true });
+	});
+
+	it('Given_PinyinPrefOn_When_Render_Then_NoPinyinBeforeGrading', () => {
+		// Arrange / Act
+		mountOrder({ prefs: new DisplayPrefs({ level: 1, key: 'k' }) });
+
+		// Assert
+		expect(target!.querySelectorAll('.font-pinyin')).toHaveLength(0);
+		expect(target!.querySelectorAll('[data-part="pill"]')).toHaveLength(0);
 	});
 });

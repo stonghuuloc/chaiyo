@@ -1,5 +1,7 @@
 import { join } from 'node:path';
+import { realContent } from '../../../test/real-content.js';
 import { describe, expect, it } from 'vitest';
+import chart from '../../../routes/(app)/pinyin/chart.json';
 import { fixtureRefs } from '../lint/fixtures/refs';
 import { buildBundle } from './bundle';
 import { importContent } from './import';
@@ -105,6 +107,51 @@ describe('buildBundle', () => {
 
 	it('throws on an unknown lesson', async () => {
 		expect(() => buildBundle(emptyContent(), 'nope')).toThrow('no lesson nope');
+	});
+});
+
+const loadReal = (): Promise<ImportedContent> => realContent();
+
+describe('buildBundle clips', () => {
+	it('Given_PrimerBundle_When_Built_Then_EveryChipAndPromptHasClip', async () => {
+		// Arrange
+		const c = await loadReal();
+		const primer = c.lessons.find((l) => l.id === 'h0-00')!;
+		if (!('kind' in primer)) throw new Error('h0-00 is not a Primer');
+		const say = (x: string | { say: string }) => (typeof x === 'string' ? x : x.say);
+		const sections = Object.values(primer.sections);
+		const wanted = new Set([
+			...sections.flatMap((s) =>
+				s.cards.flatMap((card) => [...card.syllables, ...(card.pairs ?? []).flat()].map(say))
+			),
+			...sections.flatMap((s) =>
+				s.drills.flatMap((d) =>
+					'prompt' in d && d.prompt.kind === 'syllable' ? [d.prompt.spoken ?? d.prompt.text] : []
+				)
+			)
+		]);
+		const mā = chart.flatMap((r) => r.tones).find((t) => t.text === 'mā')!.key;
+
+		// Act
+		const { clips } = buildBundle(c, 'h0-00');
+
+		// Assert
+		expect(wanted.size).toBeGreaterThan(50);
+		expect([...wanted].filter((t) => !clips?.[t])).toEqual([]);
+		expect(clips!['mā']).toBe(`pinyin-chart/${mā}`);
+		expect(clips!['nǐ hǎo']).toMatch(/^chips\/[0-9a-f]{64}$/);
+		expect(clips!['ní hǎo']).toMatch(/^chips\//);
+	});
+
+	it('Given_LessonBundle_When_Built_Then_NoClips', async () => {
+		// Arrange
+		const c = await loadOk();
+
+		// Act
+		const b = buildBundle(c, 'h1-01');
+
+		// Assert
+		expect(b).not.toHaveProperty('clips');
 	});
 });
 

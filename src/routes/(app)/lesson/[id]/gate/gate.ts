@@ -7,7 +7,7 @@ import { promptClip, promptWord } from '../[section]/listen-speak';
 
 const refOf = (prompt: object) => ('ref' in prompt ? String(prompt.ref) : '');
 const textOf = (prompt: object) => ('text' in prompt ? String(prompt.text) : refOf(prompt));
-const bare = (hanzi: string) => hanzi.replace(/[\p{P}\s]/gu, '');
+export const bare = (hanzi: string) => hanzi.replace(/[\p{P}\s]/gu, '');
 
 function gateStep(q: Question, c: LessonContent): LessonStep | null {
 	switch (q.type) {

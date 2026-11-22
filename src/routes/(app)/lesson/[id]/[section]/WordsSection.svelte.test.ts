@@ -13,6 +13,7 @@ import WordsSection from './WordsSection.svelte';
 let recorded: StudyEvent[] = [];
 const ledger = {
 	state: () => initialState(),
+	subscribe: () => () => {},
 	record: async () => recorded
 } as unknown as Ledger;
 
@@ -24,6 +25,21 @@ vi.mock(
 vi.mock('#lib/audio/index.js', () => ({
 	play: vi.fn(),
 	player: { play: vi.fn(async () => true), url: (k: string) => `/a/${k}.mp3`, element: () => null }
+}));
+
+const { lookup } = vi.hoisted(() => ({
+	lookup: vi.fn(async (sentenceId: string, i: number) => ({
+		hanzi: '您',
+		pinyin: 'nín',
+		hanviet: 'nâm',
+		meaning: 'ngài',
+		sentenceId,
+		start: i
+	}))
+}));
+
+vi.mock('#lib/catalog/app.js', () => ({
+	catalog: { lookup, thin: async () => null, find: async () => ({ word: null, char: null }) }
 }));
 
 const session = { user: { id: 'u1' } } as never;
@@ -139,5 +155,22 @@ describe('WordsSection', () => {
 
 		// Assert
 		expect(target!.textContent).toContain(m.screen_lesson_section());
+	});
+
+	it('Given_Section_When_TapHanzi_Then_LookupPanelShown', async () => {
+		// Arrange
+		const c = content(['你']);
+		c.sentences = [{ id: 's1', hanzi: '您好！', pinyin: 'nín hǎo', vi: 'Chào thầy cô!', seg: [] }];
+		c.words[0].examples = ['s1'];
+		await mountSection(c);
+		// Act
+		target!
+			.querySelector('[data-part="example"] [data-i]')!
+			.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+		for (let i = 0; i < 5; i++) await new Promise((r) => setTimeout(r, 0));
+		flushSync();
+		// Assert
+		expect(lookup).toHaveBeenCalledWith('s1', 0);
+		expect(document.body.querySelector('[data-part="lookup-panel"]')).not.toBeNull();
 	});
 });

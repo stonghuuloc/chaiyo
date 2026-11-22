@@ -23,13 +23,25 @@
 			kind: 'speak',
 			id: 'dev-f01',
 			ask: m.lesson_speak_answer_ask(),
-			title: 'Bạn làm đổ trà của bạn mình. Nói gì?'
+			title: 'Bạn làm đổ trà của bạn mình. Nói gì?',
+			answer: { hanzi: '对不起！', pinyin: 'duìbuqǐ', meaning: 'Xin lỗi!' },
+			rubric: ['Nói 对不起 (xin lỗi) bằng một câu ngắn']
 		},
 		{
 			kind: 'speak',
 			id: 'dev-f02',
 			ask: m.lesson_speak_answer_ask(),
-			title: 'Bạn gặp cô giáo ở cổng trường. Chào cô.'
+			title: 'Bạn gặp cô giáo ở cổng trường. Chào cô.',
+			rubric: ['Chào bằng 您好 (lịch sự), không dùng 你好']
+		},
+		{
+			kind: 'speak',
+			id: 'dev-s02',
+			ask: m.lesson_speak_read_ask(),
+			title: m.lesson_speak_read_title(),
+			hanzi: '你叫什么名字？',
+			pinyin: 'nǐ jiào shénme míngzi?',
+			meaning: 'Bạn tên gì?'
 		}
 	];
 

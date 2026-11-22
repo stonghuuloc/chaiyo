@@ -253,8 +253,53 @@ describe('listenSpeakSteps', () => {
 		expect(step).toMatchObject({
 			kind: 'speak',
 			ask: m.lesson_speak_answer_ask(),
-			title: 'Bạn làm đổ trà của bạn mình. Nói gì?'
+			title: 'Bạn làm đổ trà của bạn mình. Nói gì?',
+			rubric: ['Nói 对不起'],
+			answer: undefined
 		});
+	});
+
+	it('Given_FreeAnswerWithAnswer_When_SpeakSteps_Then_AnswerHanziPinyinMeaning', () => {
+		// Arrange
+		const c = content(
+			[{ ...freeAnswer, answer: 'sf' }],
+			[sentence('sf', '对不起！', 'duìbuqǐ', 'Xin lỗi!')]
+		);
+
+		// Act
+		const [step] = listenSpeakSteps(c);
+
+		// Assert
+		expect(step).toMatchObject({
+			answer: { hanzi: '对不起！', pinyin: 'duìbuqǐ', meaning: 'Xin lỗi!' },
+			rubric: ['Nói 对不起']
+		});
+	});
+
+	it('Given_FreeAnswerAnswerSpoken_When_SpeakSteps_Then_AnswerPinyinIsSpoken', () => {
+		// Arrange
+		const c = content(
+			[{ ...freeAnswer, answer: 'sf' }],
+			[sentence('sf', '你好！', 'nǐ hǎo', 'Chào bạn!', 'ní hǎo')]
+		);
+
+		// Act
+		const [step] = listenSpeakSteps(c) as Extract<LessonStep, { kind: 'speak' }>[];
+
+		// Assert
+		expect(step.answer?.pinyin).toBe('ní hǎo');
+	});
+
+	it('Given_FreeAnswerAnswerIdMissing_When_SpeakSteps_Then_NoAnswerRubricKept', () => {
+		// Arrange
+		const c = content([{ ...freeAnswer, answer: 's-none' }]);
+
+		// Act
+		const [step] = listenSpeakSteps(c) as Extract<LessonStep, { kind: 'speak' }>[];
+
+		// Assert
+		expect(step.answer).toBeUndefined();
+		expect(step.rubric).toEqual(['Nói 对不起']);
 	});
 
 	it('Given_ReadAloudWithoutSpoken_When_SpeakSteps_Then_PinyinFromSentence', () => {

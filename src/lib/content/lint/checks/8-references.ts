@@ -48,6 +48,8 @@ export const references = (set: ContentSet, refs: LintRefs): LintError[] => {
 		if (q.type === 'fill' || q.type === 'readAloud')
 			need(file, [...base, 'sentence'], q.sentence, sentenceIds, 'sentence');
 		if (q.type === 'order') need(file, [...base, 'answer'], q.answer, sentenceIds, 'sentence');
+		if (q.type === 'freeAnswer' && q.answer)
+			need(file, [...base, 'answer'], q.answer, sentenceIds, 'sentence');
 	};
 
 	const pool = (file: string, lesson: Lesson | Primer) => {

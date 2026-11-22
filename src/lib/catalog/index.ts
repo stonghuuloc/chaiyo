@@ -29,6 +29,7 @@ export type LessonContent = {
 	questions: Question[];
 	gateCoverage: Record<string, string[]>;
 	thin: ThinEntry[];
+	clips?: Record<string, string>;
 };
 
 export type CatalogWord = ImportedWord & { contentSha?: string };
@@ -59,7 +60,8 @@ const toLessonContent = (b: Bundle): LessonContent => {
 		grammar: b.grammar,
 		questions: b.questions,
 		gateCoverage: b.gateCoverage,
-		thin: b.thin
+		thin: b.thin,
+		clips: b.clips ?? {}
 	};
 };
 

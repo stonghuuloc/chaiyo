@@ -20,7 +20,10 @@
 
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import TapText from '#lib/lookup/TapText.svelte';
 	import { m } from '#lib/paraglide/messages.js';
+	import Pills from '../Pills.svelte';
+	import { getPrefs } from '../prefs.svelte';
 	import type { StepProps } from '../types';
 
 	type Player = {
@@ -29,6 +32,7 @@
 	};
 
 	let { step, cta, next }: StepProps<Step> = $props();
+	const prefs = getPrefs();
 
 	let player: Player | undefined;
 	let loaded: Promise<Player> | undefined;
@@ -114,6 +118,7 @@
 	{m.dialogue_part({ n: step.part, of: step.of })}
 </p>
 <h2 class="mt-1 font-display text-headline">{step.title}</h2>
+{#if prefs}<Pills {prefs} />{/if}
 
 <ol class="mt-5 flex flex-col gap-2">
 	{#each step.lines as line, i (line.id)}
@@ -130,9 +135,15 @@
 					: 'border-ruled-line bg-white/40'}"
 				onclick={() => void playLine(i)}
 			>
-				<span data-part="line-hanzi" class="block font-hanzi text-[24px]">{line.hanzi}</span>
-				<span class="block text-label text-graphite">{line.pinyin}</span>
-				<span class="block text-label">{line.vi}</span>
+				<span data-part="line-hanzi" class="block font-hanzi text-[24px]"
+					><TapText sentenceId={line.id} hanzi={line.hanzi} /></span
+				>
+				{#if prefs?.pinyin ?? true}
+					<span data-part="line-pinyin" class="block text-label text-graphite">{line.pinyin}</span>
+				{/if}
+				{#if prefs?.meaning ?? true}
+					<span data-part="line-vi" class="block text-label">{line.vi}</span>
+				{/if}
 			</button>
 		</li>
 	{/each}

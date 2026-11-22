@@ -20,6 +20,7 @@
 	let ledger = $state<Ledger>();
 	let snapshot = $state<State>();
 	let failed = $state<string>();
+	let submitted = $state<string>();
 	const summary = $derived(snapshot ? gateSummary(snapshot, id) : null);
 
 	const erase = (name: string) => {
@@ -68,7 +69,8 @@
 <aside class="m-4 text-label text-graphite" data-part="dev-gate">
 	<!-- eslint-disable svelte/no-navigation-without-resolve -- dev-only links need a full reload; resolve() drops the query -->
 	<a href="?reset" data-sveltekit-reload class="underline">reset</a> ·
-	<a href="?" data-sveltekit-reload class="underline">new draw</a>
+	<a href="?" data-sveltekit-reload class="underline">new draw</a> ·
+	<a href="/dev/gate-result" class="underline">result harness</a>
 	<!-- eslint-enable svelte/no-navigation-without-resolve -->
 	<ol data-part="drawn" class="mt-2 list-decimal pl-5">
 		{#each steps as s (s.id)}
@@ -81,10 +83,19 @@
 			{summary.answers}
 		</p>
 	{/if}
+	{#if submitted}
+		<p data-part="submitted">submitted: {submitted} right</p>
+	{/if}
 </aside>
 
 {#if failed}
 	<p class="p-6" role="alert">failed: {failed}</p>
 {:else if lesson && ledger}
-	<GateRun lesson={id} contentSha={lesson.contentSha} {steps} {ledger} />
+	<GateRun
+		lesson={id}
+		contentSha={lesson.contentSha}
+		{steps}
+		{ledger}
+		ondone={(h) => (submitted = `${h.answers.filter((a) => a.correct).length}/${h.answers.length}`)}
+	/>
 {/if}

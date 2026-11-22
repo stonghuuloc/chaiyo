@@ -1,6 +1,7 @@
 import { flushSync, mount, unmount } from 'svelte';
 import { m } from '#lib/paraglide/messages.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { DisplayPrefs, PREFS } from '../prefs.svelte';
 import type { Answer, Cta, Mode } from '../types';
 import Choice, { type Step } from './Choice.svelte';
 
@@ -30,13 +31,16 @@ const need = <T>(v: T | null | undefined): T => {
 	return v;
 };
 
-const mountChoice = (props: { mode?: Mode; last?: boolean; step?: Step } = {}) => {
+const mountChoice = (
+	props: { mode?: Mode; last?: boolean; step?: Step; prefs?: DisplayPrefs } = {}
+) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Choice, {
 		target,
+		context: props.prefs ? new Map([[PREFS, props.prefs]]) : undefined,
 		props: {
 			step: props.step ?? step,
 			mode: props.mode ?? 'feedback',
@@ -221,5 +225,98 @@ describe('Choice', () => {
 
 		// Assert
 		expect(need(target).textContent).toContain('Tốt nghĩa là tốt');
+	});
+
+	it('Given_PromptHanzi_When_Mount_Then_RendersBigHanzi', () => {
+		// Arrange
+		const withPrompt: Step = { ...step, prompt: { text: '谢谢', hanzi: true } };
+
+		// Act
+		mountChoice({ step: withPrompt });
+
+		// Assert
+		const prompt = need(target).querySelector('[data-part="choice-prompt"]');
+		expect(prompt?.textContent).toBe('谢谢');
+		expect(prompt?.classList.contains('font-hanzi')).toBe(true);
+	});
+
+	it('Given_PromptText_When_Mount_Then_RendersTextFont', () => {
+		// Arrange
+		const withPrompt: Step = { ...step, prompt: { text: 'cảm ơn', hanzi: false } };
+
+		// Act
+		mountChoice({ step: withPrompt });
+
+		// Assert
+		const prompt = need(target).querySelector('[data-part="choice-prompt"]');
+		expect(prompt?.textContent).toBe('cảm ơn');
+		expect(prompt?.classList.contains('font-display')).toBe(true);
+		expect(prompt?.classList.contains('font-hanzi')).toBe(false);
+	});
+
+	it('Given_NoPrompt_When_Mount_Then_NoPromptPart', () => {
+		// Arrange / Act
+		mountChoice();
+
+		// Assert
+		expect(need(target).querySelector('[data-part="choice-prompt"]')).toBeNull();
+	});
+
+	it('Given_PinyinPrefOn_When_Render_Then_NoPinyinBeforeGrading', () => {
+		// Arrange / Act
+		mountChoice({ prefs: new DisplayPrefs({ level: 1, key: 'k' }) });
+
+		// Assert
+		expect(target!.querySelectorAll('.font-pinyin')).toHaveLength(0);
+		expect(target!.querySelectorAll('[data-part="pill"]')).toHaveLength(0);
+	});
+
+	it('Given_PinyinScript_When_Mounted_Then_OptionsUseOnest', () => {
+		// Arrange
+		const pinyin: Step = {
+			...step,
+			script: 'pinyin',
+			ask: 'Nghe rồi chọn pinyin đúng',
+			title: 'Đọc nǐ hǎo',
+			options: ['mā', 'má', 'mǎ'],
+			answer: 'má',
+			explain: 'Thanh 2 viết má, không viết mǎ'
+		};
+		const { options, cta } = mountChoice({ step: pinyin });
+
+		// Act
+		const before = options().map((b) => [
+			b.className.includes('font-pinyin'),
+			b.className.includes('font-hanzi')
+		]);
+		options()[1].click();
+		flushSync();
+		cta().onclick();
+		flushSync();
+
+		// Assert
+		expect(before).toEqual([
+			[true, false],
+			[true, false],
+			[true, false]
+		]);
+		const feedback = need(target).querySelector('[aria-live=polite] span')!;
+		expect(feedback.className).not.toContain('font-hanzi');
+		expect([...feedback.querySelectorAll('.font-pinyin')].map((s) => s.textContent)).toEqual([
+			'mǎ'
+		]);
+		expect([...need(target).querySelectorAll('h2 .font-pinyin')].map((s) => s.textContent)).toEqual(
+			['nǐ', 'hǎo']
+		);
+	});
+
+	it('Given_HanziScript_When_Mounted_Then_OptionsUseHanziFont', () => {
+		// Arrange / Act
+		const { options } = mountChoice();
+
+		// Assert
+		expect(options()[0].className).toContain('font-hanzi');
+		expect(options()[0].className).not.toContain('font-pinyin');
+		expect(need(target).querySelectorAll('.font-pinyin')).toHaveLength(0);
 	});
 });

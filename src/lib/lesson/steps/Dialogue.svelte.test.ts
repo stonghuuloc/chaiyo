@@ -1,8 +1,22 @@
 import { flushSync, mount, tick, unmount } from 'svelte';
 import { player } from '#lib/audio/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { DisplayPrefs, PREFS } from '../prefs.svelte';
 import type { Answer, Cta } from '../types';
+import type { LookupContext } from '#lib/lookup/context.js';
+import WithLookup from '../../../test/WithLookup.svelte';
 import Dialogue, { type Step } from './Dialogue.svelte';
+
+const lookup = vi.fn(async (sentenceId: string, i: number) => ({
+	hanzi: '你',
+	pinyin: 'nǐ',
+	hanviet: 'nễ',
+	meaning: 'bạn',
+	sentenceId,
+	start: i
+}));
+
+vi.mock('#lib/catalog/app.js', () => ({ catalog: { lookup } }));
 
 const pending: { key: string; end: (ended: boolean) => void }[] = [];
 
@@ -58,13 +72,14 @@ const settle = async () => {
 	flushSync();
 };
 
-const mountDialogue = async (s: Step = step()) => {
+const mountDialogue = async (s: Step = step(), prefs?: DisplayPrefs) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Dialogue, {
 		target,
+		context: prefs ? new Map([[PREFS, prefs]]) : undefined,
 		props: {
 			step: s,
 			mode: 'feedback',
@@ -94,6 +109,12 @@ const endCurrent = async (ended = true) => {
 	await settle();
 };
 
+const pill = (k: string) =>
+	target!.querySelector<HTMLButtonElement>(`[data-part="pill"][data-pill="${k}"]`)!;
+
+const memory = (init: object): Storage =>
+	({ getItem: () => JSON.stringify(init), setItem: () => {} }) as unknown as Storage;
+
 afterEach(() => {
 	if (app) unmount(app as never);
 	target?.remove();
@@ -102,6 +123,7 @@ afterEach(() => {
 	pending.length = 0;
 	vi.mocked(player.playToEnd).mockClear();
 	vi.mocked(player.pause).mockClear();
+	lookup.mockClear();
 });
 
 describe('Dialogue', () => {
@@ -226,5 +248,132 @@ describe('Dialogue', () => {
 
 		// Assert
 		expect(player.pause).toHaveBeenCalledTimes(1);
+	});
+
+	it('Given_MeaningOff_When_Render_Then_NoLineViAndHanziKept', async () => {
+		// Arrange
+		const storage = memory({ pinyin: null, meaning: false });
+		const prefs = new DisplayPrefs({ level: 1, key: 'k', storage });
+
+		// Act
+		await mountDialogue(step(), prefs);
+
+		// Assert
+		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(0);
+		expect(target!.querySelectorAll('[data-part="line-hanzi"]')).toHaveLength(4);
+		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
+		expect(pill('meaning').getAttribute('aria-pressed')).toBe('false');
+	});
+
+	it('Given_MeaningOn_When_ClickMeaningPillTwice_Then_ViHiddenThenBack', async () => {
+		// Arrange
+		const prefs = new DisplayPrefs({ level: 1, key: 'k' });
+		await mountDialogue(step(), prefs);
+
+		// Act
+		await click(() => pill('meaning').click());
+		const off = {
+			pressed: pill('meaning').getAttribute('aria-pressed'),
+			vi: target!.querySelectorAll('[data-part="line-vi"]').length
+		};
+		await click(() => pill('meaning').click());
+
+		// Assert
+		expect(off).toEqual({ pressed: 'false', vi: 0 });
+		expect(pill('meaning').getAttribute('aria-pressed')).toBe('true');
+		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(4);
+	});
+
+	it('Given_PinyinOffLevel3_When_TapPinyinPill_Then_PinyinSpansEqualLines', async () => {
+		// Arrange
+		const prefs = new DisplayPrefs({ level: 3, key: 'k' });
+		await mountDialogue(step(), prefs);
+		const before = {
+			pressed: pill('pinyin').getAttribute('aria-pressed'),
+			n: target!.querySelectorAll('[data-part="line-pinyin"]').length
+		};
+
+		// Act
+		await click(() => pill('pinyin').click());
+
+		// Assert
+		expect(before).toEqual({ pressed: 'false', n: 0 });
+		expect(pill('pinyin').getAttribute('aria-pressed')).toBe('true');
+		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
+		expect(player.playToEnd).not.toHaveBeenCalled();
+	});
+
+	it('Given_NoPrefsContext_When_Render_Then_PinyinAndViShown', async () => {
+		// Arrange / Act
+		await mountDialogue();
+
+		// Assert
+		expect(target!.querySelectorAll('[data-part="pill"]')).toHaveLength(0);
+		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
+		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(4);
+	});
+
+	describe('with a lookup host', () => {
+		const mountWithLookup = async () => {
+			const ctx: LookupContext = { open: vi.fn(), hit: () => null };
+			target = document.createElement('div');
+			document.body.append(target);
+			app = mount(WithLookup, {
+				target,
+				props: {
+					ctx,
+					view: Dialogue,
+					props: {
+						step: step(),
+						mode: 'feedback',
+						last: false,
+						cta: () => {},
+						next: () => {}
+					}
+				}
+			}) as Record<string, unknown>;
+			await settle();
+			return ctx;
+		};
+
+		const tap = async (el: Element) => {
+			el.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+			await new Promise((r) => setTimeout(r, 0));
+			await settle();
+		};
+
+		const line = (n: number) =>
+			target!.querySelectorAll('[data-part="dialogue-line"]')[n] as HTMLElement;
+
+		it('Given_LineHanzi_When_Tap_Then_LookupNotReplay', async () => {
+			// Arrange
+			const ctx = await mountWithLookup();
+			// Act
+			await tap(line(0).querySelector('[data-i="1"]')!);
+			// Assert
+			expect(lookup).toHaveBeenCalledWith('s1', 1);
+			expect(ctx.open).toHaveBeenCalledOnce();
+			expect(player.playToEnd).not.toHaveBeenCalled();
+		});
+
+		it('Given_LinePinyin_When_Tap_Then_Replays', async () => {
+			// Arrange
+			await mountWithLookup();
+			// Act
+			await tap(line(0).querySelector('[data-part="line-pinyin"]')!);
+			// Assert
+			expect(lookup).not.toHaveBeenCalled();
+			expect(player.playToEnd).toHaveBeenCalledTimes(1);
+		});
+
+		it('Given_Punctuation_When_Tap_Then_Replays', async () => {
+			// Arrange
+			await mountWithLookup();
+			// Act
+			await tap(line(0).querySelector('[lang="zh-Hans"]')!);
+			// Assert
+			expect(lookup).not.toHaveBeenCalled();
+			expect(player.playToEnd).toHaveBeenCalledTimes(1);
+		});
 	});
 });

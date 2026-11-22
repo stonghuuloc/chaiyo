@@ -18,6 +18,12 @@ vi.mock('#lib/catalog/app.js', () => ({
 	}
 }));
 
+vi.mock('#lib/components/HanziStrokes.svelte', () => import('../../../test/FakeStrokes.svelte'));
+vi.mock('#lib/audio/index.js', () => ({
+	play: vi.fn(),
+	player: { playToEnd: vi.fn(async () => true), pause: vi.fn() }
+}));
+
 const { default: Page } = await import('./+page.svelte');
 const h1 = await createCatalog(await fixtureSource()).lesson('h1-01');
 
@@ -54,6 +60,7 @@ afterEach(() => {
 	target?.remove();
 	target = app = undefined;
 	vi.unstubAllGlobals();
+	vi.restoreAllMocks();
 });
 
 describe('dev lookup page', () => {
@@ -85,5 +92,68 @@ describe('dev lookup page', () => {
 		// Assert
 		expect(hoisted.lookup).toHaveBeenCalledWith('s-h1-01-01', 0);
 		expect(document.body.querySelector('[data-part="lookup-hanzi"]')?.textContent).toBe('你好');
+	});
+
+	describe('lesson screens', () => {
+		const hit = {
+			hanzi: '你好',
+			pinyin: 'nǐ hǎo',
+			hanviet: 'nhĩ hảo',
+			meaning: 'xin chào',
+			sentenceId: 's-h1-01-01',
+			start: 0
+		};
+
+		const tap = async (el: Element) => {
+			el.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+			await settle();
+		};
+
+		const panel = () => document.body.querySelector<HTMLElement>('[data-part="lookup-panel"]');
+
+		it('Given_DialogueLine_When_TapHanzi_Then_Panel', async () => {
+			// Arrange
+			hoisted.lookup.mockResolvedValue(hit);
+			const root = await mountPage();
+			// Act
+			await tap(root.querySelector('[data-part="dev-dialogue"] [data-i]')!);
+			// Assert
+			expect(panel()).not.toBeNull();
+		});
+
+		it('Given_GrammarExample_When_TapHanzi_Then_Panel', async () => {
+			// Arrange
+			hoisted.lookup.mockResolvedValue(hit);
+			const root = await mountPage();
+			// Act
+			await tap(root.querySelector('[data-part="dev-grammar"] [data-i]')!);
+			// Assert
+			expect(panel()).not.toBeNull();
+		});
+
+		it('Given_WordExample_When_TapHanzi_Then_Panel', async () => {
+			// Arrange
+			hoisted.lookup.mockResolvedValue(hit);
+			const root = await mountPage();
+			// Act
+			await tap(root.querySelector('[data-part="dev-word"] [data-part="example"] [data-i]')!);
+			// Assert
+			expect(panel()).not.toBeNull();
+		});
+
+		it('Given_Panel_When_Open_Then_DoesNotOverlapLineRect', async () => {
+			// Arrange
+			hoisted.lookup.mockResolvedValue(hit);
+			vi.stubGlobal('innerHeight', 667);
+			const rect = { top: 430, bottom: 500 } as DOMRect;
+			vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue(rect);
+			const root = await mountPage();
+			// Act
+			await tap(root.querySelector('[data-part="dev-dialogue"] [data-i]')!);
+			// Assert
+			const top = parseFloat(panel()!.style.top);
+			const end = top + parseFloat(panel()!.style.maxHeight);
+			expect(end).toBeLessThanOrEqual(rect.top);
+		});
 	});
 });

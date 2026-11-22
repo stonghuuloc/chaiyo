@@ -8,7 +8,7 @@
 		labels: string[];
 		lead: string;
 		more: string;
-		examples: { hanzi: string; pinyin: string; vi: string; audio?: string }[];
+		examples: { id: string; hanzi: string; pinyin: string; vi: string; audio?: string }[];
 		pitfall?: { wrong: string; right: string };
 		drills: number;
 	};
@@ -17,10 +17,14 @@
 </script>
 
 <script lang="ts">
+	import TapText from '#lib/lookup/TapText.svelte';
 	import { m } from '#lib/paraglide/messages.js';
+	import Pills from '../Pills.svelte';
+	import { getPrefs } from '../prefs.svelte';
 	import type { StepProps } from '../types';
 
 	let { step, cta, next }: StepProps<Step> = $props();
+	const prefs = getPrefs();
 
 	// Loaded on first tap: the player module reads $app/env/public, which step views must not pull in at import time.
 	const playClip = async (key: string) => (await import('#lib/audio/index.js')).play(key);
@@ -80,18 +84,25 @@
 	<p id="grammar-more" hidden={!open} class="mt-2 text-graphite">{step.more}</p>
 {/if}
 
+{#if prefs}<Pills {prefs} />{/if}
 <h3 class="mt-6 text-label font-semibold tracking-wider text-graphite uppercase">
 	{m.grammar_examples()}
 </h3>
 <ul class="mt-2 flex flex-col gap-2">
-	{#each step.examples as ex (ex.hanzi)}
+	{#each step.examples as ex (ex.id)}
 		<li
 			class="flex items-center gap-3 rounded-action border border-ruled-line bg-white/40 px-3 py-2"
 		>
 			<div class="flex flex-1 flex-col">
-				<span class="font-hanzi text-[22px]">{ex.hanzi}</span>
-				<span class="font-pinyin text-chip text-graphite">{ex.pinyin}</span>
-				<span class="text-chip text-graphite">{ex.vi}</span>
+				<span class="font-hanzi text-[22px]"><TapText sentenceId={ex.id} hanzi={ex.hanzi} /></span>
+				{#if prefs?.pinyin ?? true}
+					<span data-part="example-pinyin" class="font-pinyin text-chip text-graphite"
+						>{ex.pinyin}</span
+					>
+				{/if}
+				{#if prefs?.meaning ?? true}
+					<span data-part="example-vi" class="text-chip text-graphite">{ex.vi}</span>
+				{/if}
 			</div>
 			{#if ex.audio}
 				<button

@@ -219,7 +219,7 @@ describe('importContent sha [AC2]', () => {
 		const current = contentSha(content, BUNDLE_FORMAT);
 
 		// Assert
-		expect(BUNDLE_FORMAT).toBe(2);
+		expect(BUNDLE_FORMAT).toBe(3);
 		expect(res).toEqual({ sha });
 		expect(current).toBe(sha);
 		expect(old).not.toBe(current);

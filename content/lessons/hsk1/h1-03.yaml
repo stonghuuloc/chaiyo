@@ -149,6 +149,7 @@ sections:
         tests: { words: [ 谁 ], grammar: [ h1-g08 ] }
         prompt: { kind: vi, text: Bạn thấy một người lạ trong ảnh. Hỏi bạn mình người đó là ai. }
         rubric: [ Hỏi bằng 这是谁？ hoặc 那是谁？ ]
+        answer: s-h1-03-01
   writing:
     chars: [ 这, 那, 是 ]
 gate:

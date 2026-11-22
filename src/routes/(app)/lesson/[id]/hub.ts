@@ -1,6 +1,8 @@
 import type { LessonContent } from '#lib/catalog/index.js';
 import { m } from '#lib/paraglide/messages.js';
 import type { State } from '#lib/study/index.js';
+import { warmupWords } from './[section]/warmup';
+import { primerHub } from './primer-hub';
 
 export type Look = 'done' | 'now' | 'todo';
 export type Row = { id: string; name: string; look: Look; pct: number; sub: string };
@@ -13,7 +15,11 @@ export type Hub = {
 	total: number;
 	progress: string;
 	rows: Row[];
+	warmup: Row | null;
 	cta: { section: string; label: string } | null;
+	words: { id: string; hanzi: string; pinyin: string; reached: boolean }[];
+	gate: { locked: boolean; sub: string; name?: string };
+	links?: { id: string; label: string }[];
 };
 
 const MINUTES_PER_WORD = 7;
@@ -23,7 +29,8 @@ const names: Record<string, () => string> = {
 	grammar: m.hub_section_grammar,
 	dialogue: m.hub_section_dialogue,
 	listenSpeak: m.hub_section_listenSpeak,
-	writing: m.hub_section_writing
+	writing: m.hub_section_writing,
+	warmup: m.warmup_name
 };
 
 type Open = { answers: Record<string, boolean>; of: number };
@@ -45,10 +52,22 @@ const openRun = (state: State, lesson: string, section: string) =>
 			undefined
 		);
 
-export function hubView(content: LessonContent, sections: string[], state: State): Hub {
+export const gateOpen = (state: State, lesson: string) => {
+	const meta = state.curriculum.lessons.find((l) => l.id === lesson);
+	const done = state.lessons[lesson]?.done ?? [];
+	return !!meta && (meta.testOut === true || meta.sections.every((s) => done.includes(s)));
+};
+
+export function hubView(
+	content: LessonContent,
+	sections: string[],
+	state: State,
+	at = new Date()
+): Hub {
 	const l = content.lesson;
 	const done = state.lessons[l.id]?.done ?? [];
 	const words = content.words;
+	const answeredIds = new Set(Object.keys(openRun(state, l.id, 'words')?.answers ?? {}));
 
 	const row = (id: string): Row => {
 		const name = names[id]?.() ?? id;
@@ -59,7 +78,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		if (!('topic' in l)) return { id, name, look, pct, sub };
 		const s = l.sections;
 		if (id === 'words') {
-			const answered = run ? words.filter((w) => Object.hasOwn(run.answers, w.id)) : [];
+			const answered = words.filter((w) => answeredIds.has(w.id));
 			const next = words.find((w) => !answered.includes(w));
 			if (look === 'now' && answered.length > 0) {
 				pct = Math.round((answered.length / words.length) * 100);
@@ -90,13 +109,27 @@ export function hubView(content: LessonContent, sections: string[], state: State
 	const count = rows.filter((r) => r.look === 'done').length;
 	const now = rows.find((r) => r.look === 'now');
 	const todo = rows.find((r) => r.look !== 'done');
-	const cta = now
-		? { section: now.id, label: m.hub_resume({ name: now.name }) }
-		: todo
-			? { section: todo.id, label: m.hub_start({ name: todo.name }) }
+	const warmup: Row | null =
+		warmupWords(state, l.id, at, state.tz).length > 0
+			? {
+					id: 'warmup',
+					name: names.warmup(),
+					look: done.includes('warmup') ? 'done' : 'todo',
+					pct: done.includes('warmup') ? 100 : 0,
+					sub: ''
+				}
 			: null;
+	const cta =
+		warmup?.look === 'todo' && count === 0 && !now
+			? { section: warmup.id, label: m.hub_start({ name: warmup.name }) }
+			: now
+				? { section: now.id, label: m.hub_resume({ name: now.name }) }
+				: todo
+					? { section: todo.id, label: m.hub_start({ name: todo.name }) }
+					: null;
+	const locked = !gateOpen(state, l.id);
 
-	return {
+	const view: Hub = {
 		kicker: 'topic' in l ? m.hub_kicker({ level: l.level, topic: l.topic, order: l.order }) : '',
 		title: l.title,
 		hanzi: l.titleHanzi,
@@ -112,6 +145,15 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		total: sections.length,
 		progress: m.hub_progress({ done: count, total: sections.length }),
 		rows,
-		cta
+		warmup,
+		cta,
+		words: words.map((w) => ({
+			id: w.id,
+			hanzi: w.hanzi,
+			pinyin: w.pinyin,
+			reached: done.includes('words') || answeredIds.has(w.id)
+		})),
+		gate: { locked, sub: locked ? m.hub_gate_locked({ n: sections.length }) : '' }
 	};
+	return 'kind' in l ? primerHub(view, state, l.id) : view;
 }

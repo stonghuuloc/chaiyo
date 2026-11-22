@@ -4,7 +4,7 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import type { State } from '#lib/study/index.js';
 	import { resolve } from '$app/paths';
-	import { hubView } from './hub';
+	import { hubView, type Row } from './hub';
 
 	let { lesson, study }: { lesson: LessonContent; study: State } = $props();
 
@@ -13,6 +13,26 @@
 	const hub = $derived(hubView(lesson, sections, study));
 	const href = (section: string) => resolve('/(app)/lesson/[id]/[section]', { id, section });
 </script>
+
+{#snippet link(row: Row)}
+	<a
+		data-part="hub-row"
+		data-look={row.look}
+		href={href(row.id)}
+		class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+	>
+		<span
+			class="size-6 shrink-0 rounded-full border-2 border-lantern-red"
+			style:background="conic-gradient(var(--color-lantern-red) {row.pct}%, transparent 0)"
+		></span>
+		<span class="flex flex-col">
+			<b>{row.name}</b>
+			{#if row.sub}
+				<small class="text-graphite">{row.sub}</small>
+			{/if}
+		</span>
+	</a>
+{/snippet}
 
 <section data-content-sha={lesson.contentSha} class="flex flex-col gap-6 pb-24">
 	<header class="flex flex-col gap-2">
@@ -38,29 +58,77 @@
 	<section class="flex flex-col gap-3">
 		<h2 class="text-lg font-display">{m.hub_sections()}</h2>
 		<ol class="flex flex-col gap-2">
+			{#if hub.warmup}
+				<li>{@render link(hub.warmup)}</li>
+			{/if}
 			{#each hub.rows as row (row.id)}
-				<li>
-					<a
-						data-part="hub-row"
-						data-look={row.look}
-						href={href(row.id)}
-						class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
-					>
-						<span
-							class="size-6 shrink-0 rounded-full border-2 border-lantern-red"
-							style:background="conic-gradient(var(--color-lantern-red) {row.pct}%, transparent 0)"
-						></span>
-						<span class="flex flex-col">
-							<b>{row.name}</b>
-							{#if row.sub}
-								<small class="text-graphite">{row.sub}</small>
-							{/if}
-						</span>
-					</a>
-				</li>
+				<li>{@render link(row)}</li>
 			{/each}
 		</ol>
+		{#each hub.links ?? [] as link (link.id)}
+			<a
+				data-part="hub-link"
+				href={resolve('/(app)/pinyin')}
+				class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+			>
+				<span class="size-6 shrink-0 rounded-full border-2 border-lantern-red"></span>
+				<b>{link.label}</b>
+			</a>
+		{/each}
+		<a
+			data-part="hub-gate"
+			data-look={hub.gate.locked ? 'locked' : 'todo'}
+			href={hub.gate.locked ? undefined : resolve('/(app)/lesson/[id]/gate', { id })}
+			aria-disabled={hub.gate.locked ? 'true' : undefined}
+			class={[
+				'rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3',
+				hub.gate.locked && 'cursor-default text-graphite'
+			]}
+		>
+			{#if hub.gate.locked}
+				<svg class="size-6 shrink-0 fill-current" aria-hidden="true"
+					><use href="#i-fill-lock-simple" /></svg
+				>
+			{:else}
+				<span class="size-6 shrink-0 rounded-full border-2 border-lantern-red"></span>
+			{/if}
+			<span class="flex flex-col">
+				<b>{hub.gate.name ?? m.hub_gate_name()}</b>
+				{#if hub.gate.sub}
+					<small class="text-graphite">{hub.gate.sub}</small>
+				{/if}
+			</span>
+		</a>
 	</section>
+
+	{#if hub.words.length > 0}
+		<section class="flex flex-col gap-3">
+			<div class="flex items-baseline justify-between">
+				<h2 class="text-lg font-display">{m.hub_lesson_words_title()}</h2>
+				<a
+					data-part="hub-lexicon"
+					href={resolve('/(app)/(tabs)/practice')}
+					class="text-sm text-lantern-red">{m.hub_lesson_words_mine()}</a
+				>
+			</div>
+			<ul class="flex flex-wrap gap-2">
+				{#each hub.words as w (w.id)}
+					<li
+						data-part="hub-word"
+						data-reached={String(w.reached)}
+						class={[
+							'rounded-xl flex flex-col items-center border bg-white px-3 py-2',
+							w.reached ? 'border-solid border-ruled-line' : 'border-dashed border-pencil'
+						]}
+					>
+						<span lang="zh" class="text-lg">{w.hanzi}</span>
+						<span class="text-sm text-graphite">{w.pinyin}</span>
+					</li>
+				{/each}
+			</ul>
+			<p data-part="hub-legend" class="text-sm text-pencil">{m.hub_lesson_words_legend()}</p>
+		</section>
+	{/if}
 
 	{#if hub.cta}
 		<a

@@ -8,6 +8,8 @@
 		hanzi?: string;
 		pinyin?: string;
 		meaning?: string;
+		answer?: { hanzi: string; pinyin: string; meaning: string };
+		rubric?: string[];
 	};
 </script>
 
@@ -15,9 +17,14 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import { BARS, clock, held, push } from '../../speak/hold';
 	import { openMic, type Mic } from '../../speak/mic';
+	import { sampleTiles } from '../../speak/sample';
 	import type { StepProps } from '../types';
 
 	let { step, cta, next }: StepProps<Step> = $props();
+
+	const src = $derived(step.answer ?? step);
+	const sample = $derived(src.hanzi && src.pinyin ? sampleTiles(src.hanzi, src.pinyin) : null);
+	const free = $derived(step.answer !== undefined || step.rubric !== undefined);
 
 	let phase = $state<'idle' | 'opening' | 'live' | 'short' | 'blocked' | 'done'>('idle');
 	let levels = $state<number[]>(Array(BARS).fill(0));
@@ -70,7 +77,12 @@
 
 	$effect(() => {
 		if (phase === 'done') {
-			cta({ label: m.lesson_continue(), caret: true, onclick: () => next() });
+			cta({
+				label: m.lesson_continue(),
+				caret: true,
+				hint: m.speak_sample_hint(),
+				onclick: () => next()
+			});
 			return;
 		}
 		if (phase === 'blocked') {
@@ -125,6 +137,41 @@
 			{#if phase === 'live'}
 				· {m.lesson_speak_listening()}{/if}
 		</p>
+		{#if phase === 'done'}
+			{#if sample}
+				<div class="mt-4 flex gap-2">
+					{#each sample.tiles as t, i (i)}
+						<div
+							class={[
+								'relative min-w-0 flex-1 rounded-action px-1 pt-2.5 pb-2 text-center',
+								t.weak
+									? 'border-[1.5px] border-dashed border-pencil bg-shaded-paper'
+									: 'border border-ruled-line bg-white/40'
+							]}
+							data-tile
+							data-weak={t.weak || undefined}
+						>
+							<span data-syl
+								><span class="block font-hanzi text-[38px] leading-tight">{t.hanzi}</span>
+								<b class="mt-0.5 block text-[15px] font-medium">{t.syl}</b></span
+							>
+							{#if !t.weak}
+								<span
+									class="absolute top-1.5 right-1.5 grid size-[18px] place-items-center rounded-full bg-lantern-red text-[10px] text-white"
+									data-check>✓</span
+								>
+							{/if}
+						</div>
+					{/each}
+				</div>
+				<p class="mt-3 text-center text-label font-semibold" data-count>
+					{m.speak_sample_count({ ok: sample.ok, total: sample.total })}
+				</p>
+			{/if}
+			<p class="mt-1 text-center text-[12.5px] text-faint-pencil" data-note>
+				{m.speak_sample_note()}
+			</p>
+		{/if}
 	{:else if phase === 'short'}
 		<p class="text-center text-label text-graphite">{m.lesson_speak_short()}</p>
 	{:else if phase === 'blocked'}
@@ -133,3 +180,27 @@
 		<p class="text-center text-label text-graphite">{m.lesson_speak_idle()}</p>
 	{/if}
 </div>
+
+{#if free}
+	{#if phase === 'done' || phase === 'blocked'}
+		<div class="mt-5 border-t border-ruled-line pt-4" data-reveal>
+			<h3 class="text-label font-semibold tracking-wider text-graphite uppercase">
+				{m.speak_reveal_title()}
+			</h3>
+			{#if step.answer}
+				<p class="mt-2 font-hanzi text-[44px] leading-tight">{step.answer.hanzi}</p>
+				<p class="mt-1 text-[18px] font-medium">
+					{step.answer.pinyin} · {step.answer.meaning}
+				</p>
+			{:else}
+				{#each step.rubric ?? [] as line, i (i)}
+					<p class="mt-2 text-title">{line}</p>
+				{/each}
+			{/if}
+		</div>
+	{:else}
+		<p class="mt-4 text-center text-label text-faint-pencil" data-pending>
+			{m.speak_reveal_pending()}
+		</p>
+	{/if}
+{/if}

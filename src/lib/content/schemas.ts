@@ -180,7 +180,8 @@ export const Question = z.discriminatedUnion('type', [
 		type: z.literal('freeAnswer'),
 		prompt: Prompt,
 		rubric: z.array(z.string()),
-		minChars: z.number().optional()
+		minChars: z.number().optional(),
+		answer: Id.optional()
 	})
 ]);
 
