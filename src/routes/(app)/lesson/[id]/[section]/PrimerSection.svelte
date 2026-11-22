@@ -13,11 +13,16 @@
 	import { page } from '$app/state';
 	import { closedRuns, primerScore, primerSteps } from './primer';
 
-	type Props = { lesson: LessonContent; session: Session | null; ledger?: Promise<Ledger> };
-	let { lesson, session, ledger }: Props = $props();
+	type Props = {
+		lesson: LessonContent;
+		session: Session | null;
+		ledger?: Promise<Ledger>;
+		section?: string;
+	};
+	let { lesson, session, ledger, section: given }: Props = $props();
 
 	const id = $derived(lesson.lesson.id);
-	const section = $derived(page.params.section ?? '');
+	const section = $derived(given ?? page.params.section ?? '');
 	const steps = $derived(primerSteps(lesson, section));
 	const opened = $derived(ledger ?? (session ? learnerLedger(session) : null));
 	let events = $state<StudyEvent[] | null>(null);
