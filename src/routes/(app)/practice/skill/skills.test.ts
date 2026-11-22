@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ENTRIES, SKILL_KEYS, noteFor, skillKey } from './skills';
+import { ENTRIES, SKILL_KEYS, noteFor, skillKey, thiLevel } from './skills';
 
 describe('skill entries', () => {
 	it.each([
@@ -78,5 +78,23 @@ describe('noteFor', () => {
 		const note = noteFor(k, 1);
 		// Assert
 		expect(note).toBe(ENTRIES[k].note());
+	});
+});
+
+describe('thiLevel', () => {
+	it.each(['1', '2', '3', '4', '5', '6'])('Given_ValidLv_%s_Then_Number', (raw) => {
+		// Arrange
+		// Act
+		const lv = thiLevel(raw);
+		// Assert
+		expect(lv).toBe(Number(raw));
+	});
+
+	it.each([null, '', '0', '7', '1.5', 'x', ' 2'])('Given_InvalidLv_%s_Then_Undefined', (raw) => {
+		// Arrange
+		// Act
+		const lv = thiLevel(raw);
+		// Assert
+		expect(lv).toBeUndefined();
 	});
 });

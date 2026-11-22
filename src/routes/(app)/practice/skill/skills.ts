@@ -6,6 +6,9 @@ export type SkillKey = (typeof SKILL_KEYS)[number];
 export const skillKey = (raw: string | null): SkillKey =>
 	SKILL_KEYS.find((k) => k === raw) ?? 'noi';
 
+export const thiLevel = (raw: string | null): number | undefined =>
+	raw !== null && /^[1-6]$/.test(raw) ? Number(raw) : undefined;
+
 type Text = () => string;
 
 export type Entry = {
