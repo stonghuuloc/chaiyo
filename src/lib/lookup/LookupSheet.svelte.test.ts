@@ -7,9 +7,18 @@ import { memoryStore, openLedger, type Ledger } from '#lib/ledger/index.js';
 import { initialState } from '#lib/study/index.js';
 import LookupSheet from './LookupSheet.svelte';
 
+const held = vi.hoisted(() => ({ release: () => {} }));
+
 vi.mock('#lib/catalog/app.js', () => ({
 	catalog: {
 		find: async (hanzi: string) => {
+			if (hanzi === '错') throw new Error('offline');
+			if (hanzi === '慢') await new Promise<void>((r) => (held.release = r));
+			if (hanzi === '家')
+				return {
+					word: null,
+					char: { hanzi: '家', readings: [{ pinyin: 'jiā', hanviet: 'gia', rare: true }] }
+				};
 			if (hanzi === '谢谢') return { word: { id: '谢谢', taughtIn: 'h1-01' }, char: null };
 			if (hanzi === '谢')
 				return {
@@ -57,11 +66,13 @@ const parts = (name: string) => [
 let app: ReturnType<typeof mount> | undefined;
 let target: HTMLElement | undefined;
 
-const open = async (h: LookupHit, ledger: Ledger) => {
+const open = async (h: LookupHit | null, ledger: Ledger) => {
+	const props = $state({ hit: h, ledger, onclose: () => {} });
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(LookupSheet, { target, props: { hit: h, ledger, onclose: () => {} } });
+	app = mount(LookupSheet, { target, props });
 	await settle();
+	return props;
 };
 
 afterEach(() => {
@@ -126,5 +137,79 @@ describe('LookupSheet', () => {
 		// Assert
 		expect(part('lookup-add')).toBeNull();
 		expect(part('lookup-self')).not.toBeNull();
+	});
+
+	it('Given_FindRejects_When_Open_Then_ReadingsWithoutActions', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		// Act
+		await open(hit('错', 'cuò', 'sai'), ledger);
+		// Assert
+		expect(part('lookup-hanzi')?.textContent).toBe('错');
+		expect(part('lookup-add')).toBeNull();
+		expect(part('lookup-detail')).toBeNull();
+	});
+
+	it('Given_CharWithoutRecord_When_Shrink_Then_NotFoundShown', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		await open(hit('大家', 'dàjiā', 'mọi người'), ledger);
+		// Act
+		parts('lookup-char')[0].click();
+		await settle();
+		// Assert
+		expect(part('lookup-hanzi')?.textContent).toBe('大');
+		expect(part('lookup-missing')?.textContent).toBe('Chưa có trong từ điển');
+		expect(part('lookup-back')?.textContent).toBe('← 大家');
+	});
+
+	it('Given_CharWithOnlyRareReadings_When_Shrink_Then_FirstReadingShown', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		await open(hit('大家', 'dàjiā', 'mọi người'), ledger);
+		// Act
+		parts('lookup-char')[1].click();
+		await settle();
+		// Assert
+		expect(part('lookup-pinyin')?.textContent).toBe('jiā');
+	});
+
+	it('Given_ShrinkPending_When_HitChanges_Then_LateCharIgnored', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		const props = await open(hit('慢慢', 'mànman', 'chậm'), ledger);
+		held.release();
+		await settle();
+		parts('lookup-char')[0].click();
+		await settle();
+		// Act
+		props.hit = hit('咖啡', 'kāfēi', 'cà phê');
+		held.release();
+		await settle();
+		// Assert
+		expect(part('lookup-hanzi')?.textContent).toBe('咖啡');
+		expect(part('lookup-back')).toBeNull();
+	});
+
+	it('Given_FindPending_When_HitChanges_Then_StaleWordIgnored', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		const props = await open(hit('慢', 'màn', 'chậm'), ledger);
+		// Act
+		props.hit = hit('谢谢', 'xièxie', 'cảm ơn');
+		await settle();
+		held.release();
+		await settle();
+		// Assert
+		expect(part('lookup-detail')).not.toBeNull();
+	});
+
+	it('Given_NoHit_When_Open_Then_SheetClosed', async () => {
+		// Arrange
+		const ledger = await ledgerWith();
+		// Act
+		await open(null, ledger);
+		// Assert
+		expect(part('lookup-hanzi')).toBeNull();
 	});
 });
