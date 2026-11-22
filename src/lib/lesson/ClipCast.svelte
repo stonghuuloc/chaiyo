@@ -12,8 +12,10 @@
 		// Lazy: the player module reads $app/env/public at load.
 		void import('#lib/audio/index.js').then(({ player: p }) => {
 			if (!live) return;
-			player = p;
-			p.play(key).catch(() => {});
+			// Autoplay stays out of the alternation: tap 1 → 1×, tap 2 → 0.5×.
+			let taps = 0;
+			player = { ...p, play: (k: string) => p.play(k, { slow: taps++ % 2 === 1 }) };
+			p.play(key, { slow: false }).catch(() => {});
 		});
 		return () => {
 			live = false;

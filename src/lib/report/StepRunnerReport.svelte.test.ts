@@ -16,6 +16,7 @@ const UID = 'u-step';
 vi.mock('#lib/supabase.js', () => ({
 	supabase: { auth: { getSession: async () => ({ data: { session: { user: { id: UID } } } }) } }
 }));
+vi.mock('#lib/components/HanziStrokes.svelte', () => import('../../test/FakeStrokes.svelte'));
 
 const steps: LessonStep[] = [
 	{
@@ -68,9 +69,12 @@ const recording = () => {
 
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
+// openReports caches one queue per learner for the module's lifetime, so every test shares its client.
+let shared: ReturnType<typeof recording> | undefined;
 
-const mountRunner = async () => {
-	const net = recording();
+const mountRunner = async (list: LessonStep[] = steps) => {
+	const net = (shared ??= recording());
+	net.posts.length = 0;
 	const idb = new IDBFactory();
 	vi.stubGlobal('indexedDB', idb);
 	await openReports({ user: { id: UID } }, { client: net.client, idb });
@@ -84,7 +88,7 @@ const mountRunner = async () => {
 	app = mount(StepRunner, {
 		target,
 		props: {
-			steps,
+			steps: list,
 			mode: 'feedback',
 			exit: '/today',
 			lesson: 'h1-01',
@@ -145,5 +149,32 @@ describe('StepRunner report button', () => {
 			content_sha: 'sha1',
 			category: 'hanviet'
 		});
+	});
+
+	it('reports the word of a word card', async () => {
+		// Arrange
+		const card: LessonStep = {
+			kind: 'word',
+			id: '再见',
+			hanzi: '再见',
+			pinyin: 'zàijiàn',
+			meaning: 'tạm biệt',
+			parts: [],
+			components: [],
+			examples: []
+		};
+		const net = await mountRunner([card]);
+		await vi.waitFor(() => expect(target!.textContent).toContain('zàijiàn'));
+
+		// Act
+		flag().click();
+		flushSync();
+		chips()[2].click();
+		flushSync();
+		sheetButton(m.report_send()).click();
+
+		// Assert
+		await vi.waitFor(() => expect(net.posts).toHaveLength(1));
+		expect(net.posts[0]).toMatchObject({ step_id: '再见', word_id: '再见' });
 	});
 });

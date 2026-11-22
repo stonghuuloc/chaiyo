@@ -4,7 +4,7 @@ import { self } from '$app/service-worker';
 import { immutable, assets, prerendered } from '$app/manifest';
 import { version } from '$app/env';
 import { networkFirst } from './network';
-import { appShell } from './shell';
+import { APP_SHELL, appShell, cachedPage } from './shell';
 import { AUDIO_CACHE, audioMessage, isAudio, serveAudio } from './audio';
 import { AUDIO_BASE, SYLLABLE_BASE } from '../lib/audio/base';
 
@@ -16,7 +16,7 @@ const SHELL = appShell(
 );
 
 self.addEventListener('install', (event) => {
-	event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
+	event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll([...SHELL, APP_SHELL])));
 });
 
 self.addEventListener('activate', (event) => {
@@ -47,6 +47,15 @@ self.addEventListener('fetch', (event) => {
 	event.respondWith(
 		(async () => {
 			const cache = await caches.open(CACHE);
+			if (event.request.mode === 'navigate') {
+				try {
+					return await networkFirst(event.request, cache, fetch, (p) => event.waitUntil(p));
+				} catch (err) {
+					const page = await cachedPage(cache, event.request, APP_SHELL);
+					if (page) return page;
+					throw err;
+				}
+			}
 			if (SHELL.includes(url.pathname)) {
 				const hit = await cache.match(url.pathname);
 				if (hit) return hit;

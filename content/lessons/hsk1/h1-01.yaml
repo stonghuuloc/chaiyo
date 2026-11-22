@@ -87,6 +87,7 @@ sections:
     questions:
       - id: q-h1-01-d01
         type: choice
+        ask: Gấu Đỏ nên trả lời thế nào?
         tests: { words: [ 没关系 ], grammar: [ h1-g02 ] }
         prompt: { kind: audio, ref: s-h1-01-03 }
         optionKind: hanzi

@@ -84,7 +84,7 @@ describe('Tone', () => {
 			m.listen_tone_neutral()
 		]);
 		expect(options().every((b) => b.querySelector('svg path'))).toBe(true);
-		expect(audio.player.play).toHaveBeenCalledWith('words/hao');
+		expect(audio.player.play).toHaveBeenCalledWith('words/hao', { slow: false });
 	});
 
 	it('Given_NeutralToneStep_When_PickFifth_Then_RightAnswer', () => {
