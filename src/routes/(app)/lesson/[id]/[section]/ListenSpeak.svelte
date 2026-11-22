@@ -2,8 +2,12 @@
 	import type { Session } from '@supabase/supabase-js';
 	import type { LessonContent } from '#lib/catalog/index.js';
 	import { learnerLedger } from '#lib/learner/index.js';
+	import Done from '#lib/lesson/Done.svelte';
+	import { doneNext, sectionName } from '#lib/lesson/done.js';
 	import StepRunner from '#lib/lesson/StepRunner.svelte';
+	import StreakPopup from '#lib/lesson/StreakPopup.svelte';
 	import { m } from '#lib/paraglide/messages.js';
+	import type { StudyEvent } from '#lib/study/index.js';
 	import { resolve } from '$app/paths';
 	import { speakSteps } from './listen-speak';
 
@@ -11,10 +15,23 @@
 	let { lesson, session }: Props = $props();
 
 	const steps = $derived(speakSteps(lesson));
-	let finished = $state(false);
+	let events = $state<StudyEvent[] | null>(null);
+	const next = $derived.by(() => {
+		const id = lesson.lesson.id;
+		const d = doneNext(id, 'listenSpeak');
+		return {
+			label: d.label,
+			href: d.section
+				? resolve('/(app)/lesson/[id]/[section]', { id, section: d.section })
+				: resolve('/(app)/lesson/[id]', { id })
+		};
+	});
 </script>
 
-{#if session === null || steps.length === 0 || finished}
+{#if events}
+	<Done title={m.done_title({ name: sectionName('listenSpeak') })} {next} />
+	<StreakPopup {events} />
+{:else if session === null || steps.length === 0}
 	<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
 {:else}
 	{#await learnerLedger(session)}
@@ -27,7 +44,7 @@
 			section="listenSpeak"
 			contentSha={lesson.contentSha}
 			exit={resolve('/(app)/(tabs)/today')}
-			onfinish={() => (finished = true)}
+			onfinish={(e) => (events = e)}
 		/>
 	{:catch}
 		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>

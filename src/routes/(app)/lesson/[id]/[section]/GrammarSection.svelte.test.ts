@@ -3,14 +3,15 @@ import type { Session } from '@supabase/supabase-js';
 import { m } from '#lib/paraglide/messages.js';
 import type { LessonContent } from '#lib/catalog/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
-import { initialState } from '#lib/study/index.js';
+import { initialState, type StudyEvent } from '#lib/study/index.js';
 import type { Lesson } from '#lib/content/schemas.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import GrammarSection from './GrammarSection.svelte';
 
+let recorded: StudyEvent[] = [];
 const ledger = {
 	state: () => initialState(),
-	record: async () => []
+	record: async () => recorded
 } as unknown as Ledger;
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
@@ -107,7 +108,26 @@ const mountSection = async (c: LessonContent, s: Session | null = session) => {
 	};
 };
 
+const finish = async (cta: () => HTMLButtonElement | null) => {
+	cta()!.click();
+	flushSync();
+	while (target!.querySelector('.actions button')) {
+		const body = [...target!.querySelectorAll<HTMLButtonElement>('.body button')];
+		if (body.length > 0) {
+			body[1].click();
+			flushSync();
+		}
+		const b = target!.querySelector<HTMLButtonElement>('.actions button');
+		if (!b || b.disabled) break;
+		b.click();
+		flushSync();
+		await Promise.resolve();
+		flushSync();
+	}
+};
+
 afterEach(() => {
+	recorded = [];
 	if (app) unmount(app as never);
 	target?.remove();
 	target = undefined;
@@ -139,8 +159,14 @@ describe('GrammarSection', () => {
 		}
 
 		// Assert
-		expect(target!.textContent).toContain(m.grammar_done());
+		expect(target!.querySelector('[data-part="done-title"]')!.textContent).toBe(
+			'Xong phần Ngữ pháp'
+		);
 		expect(target!.textContent).toContain(done);
+		const next = target!.querySelector('[data-part="done-next"] a')!;
+		expect(next.textContent).toContain(m.done_back());
+		expect(next.getAttribute('href')).toBe('/lesson/h1-99');
+		expect(document.querySelector('[role="dialog"]')).toBeNull();
 	});
 
 	it('Given_NoDoneText_When_Finish_Then_TitleOnly', async () => {
@@ -163,8 +189,22 @@ describe('GrammarSection', () => {
 		}
 
 		// Act / Assert
-		expect(target!.textContent).toContain(m.grammar_done());
+		expect(target!.textContent).toContain('Xong phần Ngữ pháp');
+		expect(target!.querySelector('[data-part="done-text"]')).toBeNull();
 		expect(target!.querySelector('.actions')).toBeNull();
+	});
+
+	it('Given_LastRecordHasDayCounted_When_Finish_Then_StreakPopupOverDone', async () => {
+		// Arrange
+		recorded = [{ type: 'DayCounted', day: '2026-11-22', streak: 4 }];
+		const { cta } = await mountSection(content());
+
+		// Act
+		await finish(cta);
+
+		// Assert
+		expect(target!.textContent).toContain('Xong phần Ngữ pháp');
+		expect(document.querySelector('[role="dialog"] h2')!.textContent).toBe('Chuỗi lên 4 ngày!');
 	});
 
 	it('Given_NullSession_When_Mount_Then_PlaceholderNoRunner', async () => {
