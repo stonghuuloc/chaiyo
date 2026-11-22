@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { apply, initialState, type Attempt, type Card, type Skill, type State } from './index';
-import { myWords, type WordMeta } from './my-words';
+import {
+	apply,
+	initialState,
+	myWords,
+	type Attempt,
+	type Card,
+	type Skill,
+	type State,
+	type WordMeta
+} from '#lib/study/index.js';
 
 const NOW = new Date('2026-11-09T02:00:00Z');
 const meta = (h: string): WordMeta | undefined => ({

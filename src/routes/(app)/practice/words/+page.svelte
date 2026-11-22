@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	import { catalog } from '#lib/catalog/app.js';
 	import { CURRICULUM } from '#lib/curriculum/index.js';
 	import { learnerLedger } from '#lib/learner/index.js';
@@ -13,7 +14,7 @@
 
 	let study = $state<State>(initialState({ curriculum: CURRICULUM }));
 	let metas = $state.raw(new Map<string, WordMeta>());
-	const requested = new Set<string>();
+	const requested = new SvelteSet<string>();
 
 	$effect(() => {
 		const session = data.session;
