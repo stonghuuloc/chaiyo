@@ -1,3 +1,4 @@
+import { localDate } from './dates';
 import type { Card, State } from './types';
 
 export type WordMeta = { pinyin: string; hanViet: string; nghia: string };
@@ -26,17 +27,34 @@ export function myWords(
 	meta: (hanzi: string) => WordMeta | undefined,
 	now: Date
 ): MyWordRow[] {
-	void now;
-	return Object.entries(state.lexicon).map(([hanzi, entry]) => {
-		const m = meta(hanzi);
-		return {
-			hanzi,
-			pinyin: m?.pinyin ?? '',
-			hanViet: m?.hanViet ?? '',
-			nghia: m?.nghia ?? '',
-			bars: bars(entry.cards.the),
-			dueNote: null,
-			source: entry.saved === true ? 'self' : 'lesson'
-		};
-	});
+	const today = localDate(now, state.tz);
+	return Object.entries(state.lexicon)
+		.map(([hanzi, entry], index) => {
+			const m = meta(hanzi);
+			const cards = Object.values(entry.cards);
+			const dues = cards
+				.filter((c) => localDate(new Date(c.due), state.tz) <= today)
+				.map((c) => Date.parse(c.due));
+			const due = dues.length ? Math.min(...dues) : undefined;
+			const row: MyWordRow = {
+				hanzi,
+				pinyin: m?.pinyin ?? '',
+				hanViet: m?.hanViet ?? '',
+				nghia: m?.nghia ?? '',
+				bars: bars(entry.cards.the),
+				dueNote: due !== undefined ? 'due' : cards.length ? null : 'never',
+				source: entry.saved === true ? 'self' : 'lesson'
+			};
+			return { row, due, index };
+		})
+		.sort((a, b) =>
+			a.due !== undefined && b.due !== undefined
+				? a.due - b.due || a.index - b.index
+				: a.due !== undefined
+					? -1
+					: b.due !== undefined
+						? 1
+						: a.row.bars - b.row.bars || a.index - b.index
+		)
+		.map((x) => x.row);
 }
