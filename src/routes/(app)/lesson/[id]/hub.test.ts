@@ -9,7 +9,7 @@ import { fixtureSource } from '#lib/catalog/fixtures/source.js';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { describe, expect, it } from 'vitest';
-import { hubView } from './hub';
+import { gateOpen, hubView } from './hub';
 
 const lesson = await createCatalog(await fixtureSource()).lesson('h1-01');
 const sections = CURRICULUM.lessons.find((l) => l.id === 'h1-01')!.sections;
@@ -225,5 +225,76 @@ describe('hubView', () => {
 		// Assert
 		expect(v.meta).toBe('10 từ · 2 điểm ngữ pháp · khoảng 70 phút');
 		expect(v.rows.find((row) => row.id === 'listenSpeak')!.sub).toBe('6 bài · cần micro');
+	});
+});
+
+describe('hubView gate', () => {
+	it('Given_FreshLearner_When_View_Then_GateLockedWithCopy', () => {
+		// Arrange
+		const state = fresh();
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.gate).toEqual({ locked: true, sub: 'Mở khi xong 5 phần · đạt từ 80%' });
+		expect(v.progress).toBe('0/5 phần');
+	});
+
+	it('Given_FourOfFiveDone_When_View_Then_GateLocked', () => {
+		// Arrange
+		const state = withDone(sections.slice(0, 4));
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.gate.locked).toBe(true);
+		expect(v.gate.sub).toBe('Mở khi xong 5 phần · đạt từ 80%');
+	});
+
+	it('Given_PlacedHsk1NoDone_When_View_Then_GateLocked', () => {
+		// Arrange
+		const state = fresh();
+		state.lessons['h1-01'] = { unlocked: true, passed: true, done: [] };
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.gate.locked).toBe(true);
+	});
+
+	it('Given_AllFiveDone_When_View_Then_GateOpen', () => {
+		// Arrange
+		const state = withDone([...sections]);
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.gate).toEqual({ locked: false, sub: '' });
+	});
+
+	it('Given_PrimerTestOut_When_GateOpen_Then_True', () => {
+		// Arrange
+		const state = fresh();
+
+		// Act
+		const open = gateOpen(state, 'h0-00');
+
+		// Assert
+		expect(open).toBe(true);
+	});
+
+	it('Given_UnknownLesson_When_GateOpen_Then_False', () => {
+		// Arrange
+		const state = fresh();
+
+		// Act
+		const open = gateOpen(state, 'h9-99');
+
+		// Assert
+		expect(open).toBe(false);
 	});
 });

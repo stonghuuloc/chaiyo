@@ -14,6 +14,7 @@ export type Hub = {
 	progress: string;
 	rows: Row[];
 	cta: { section: string; label: string } | null;
+	gate: { locked: boolean; sub: string };
 };
 
 const MINUTES_PER_WORD = 7;
@@ -44,6 +45,12 @@ const openRun = (state: State, lesson: string, section: string) =>
 				!best || Object.keys(cur.answers).length > Object.keys(best.answers).length ? cur : best,
 			undefined
 		);
+
+export const gateOpen = (state: State, lesson: string) => {
+	const meta = state.curriculum.lessons.find((l) => l.id === lesson);
+	const done = state.lessons[lesson]?.done ?? [];
+	return !!meta && (meta.testOut === true || meta.sections.every((s) => done.includes(s)));
+};
 
 export function hubView(content: LessonContent, sections: string[], state: State): Hub {
 	const l = content.lesson;
@@ -95,6 +102,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		: todo
 			? { section: todo.id, label: m.hub_start({ name: todo.name }) }
 			: null;
+	const locked = !gateOpen(state, l.id);
 
 	return {
 		kicker: 'topic' in l ? m.hub_kicker({ level: l.level, topic: l.topic, order: l.order }) : '',
@@ -112,6 +120,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		total: sections.length,
 		progress: m.hub_progress({ done: count, total: sections.length }),
 		rows,
-		cta
+		cta,
+		gate: { locked, sub: locked ? m.hub_gate_locked({ n: sections.length }) : '' }
 	};
 }
