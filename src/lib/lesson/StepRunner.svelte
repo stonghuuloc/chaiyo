@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
-	import { SvelteSet } from 'svelte/reactivity';
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 	import type { Ledger } from '#lib/ledger/index.js';
 	import type { StudyEvent } from '#lib/study/index.js';
 	import { m } from '#lib/paraglide/messages.js';
@@ -50,7 +50,7 @@
 	const answered = new SvelteSet(
 		untrack(() => Object.keys(ledger.state().runs[run]?.answers ?? {}))
 	);
-	const picks = new Map<string, Answer>();
+	const picks = new SvelteMap<string, Answer>();
 	let index = $state(start.index);
 	let current = $state<Cta | null>(null);
 	let busy = false;
