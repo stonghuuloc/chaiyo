@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import Choice from './steps/Choice.svelte';
+import Pinyin from './steps/Pinyin.svelte';
 import Speak from './steps/Speak.svelte';
 import Tone from './steps/Tone.svelte';
 import { viewOf } from './steps';
@@ -58,6 +59,10 @@ describe('step views', () => {
 
 	it('Given_ToneKind_When_ViewOf_Then_ReturnsTone', () => {
 		expect(viewOf('tone').default).toBe(Tone);
+	});
+
+	it('Given_PinyinKind_When_ViewOf_Then_ReturnsPinyin', () => {
+		expect(viewOf('pinyin').default).toBe(Pinyin);
 	});
 
 	it('Given_UnknownKind_When_ViewOf_Then_Throws', () => {
