@@ -25,6 +25,7 @@
 	let cardNode = $state<HTMLElement>();
 	let dx = $state(0);
 	let dragging = $state(false);
+	let captured = false;
 	let width = $state(0);
 	let start: { x: number; y: number } | null = null;
 	let samples: { x: number; t: number }[] = [];
@@ -71,15 +72,21 @@
 		start = { x: e.clientX, y: e.clientY };
 		samples = [{ x: e.clientX, t: performance.now() }];
 		suppressClick = false;
+		captured = false;
 		width = cardNode?.getBoundingClientRect().width ?? 0;
-		(e.currentTarget as Element).setPointerCapture?.(e.pointerId);
 	}
 
 	function move(e: PointerEvent) {
 		if (!start || deciding) return;
 		samples.push({ x: e.clientX, t: performance.now() });
 		const moved = e.clientX - start.x;
-		if (Math.abs(moved) >= TAP_SLOP) suppressClick = true;
+		if (Math.abs(moved) >= TAP_SLOP) {
+			suppressClick = true;
+			if (!captured) {
+				captured = true;
+				(e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+			}
+		}
 		if (!flipped) return;
 		dragging = true;
 		dx = moved;

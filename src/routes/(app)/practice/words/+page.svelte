@@ -36,16 +36,22 @@
 	});
 
 	$effect(() => {
-		const missing = Object.keys(study.lexicon).filter((h) => !requested.has(h));
+		const missing = Object.keys(study.lexicon).filter((h) => !untrack(() => requested.has(h)));
 		if (!missing.length) return;
 		for (const h of missing) requested.add(h);
+		const retry = (hs: string[]) => {
+			for (const h of hs) if (!untrack(() => metas.has(h))) requested.delete(h);
+		};
 		loadMeta(
 			catalog,
 			missing,
 			untrack(() => metas)
 		)
-			.then((found) => (metas = new Map([...metas, ...found])))
-			.catch(() => {});
+			.then((found) => {
+				metas = new Map([...metas, ...found]);
+				retry(missing);
+			})
+			.catch(() => retry(missing));
 	});
 
 	const rows = $derived(myWords(study, (h) => metas.get(h), new Date()));
