@@ -3,7 +3,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { memoryStore, openLedger, type Input, type Ledger } from '#lib/ledger/index.js';
 import { m } from '#lib/paraglide/messages.js';
-import { initialState } from '#lib/study/index.js';
+import { initialState, type StudyEvent } from '#lib/study/index.js';
 import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import type { LessonStep } from './steps';
 import StepRunner from './StepRunner.svelte';
@@ -85,7 +85,7 @@ type Runner = {
 
 const mountRunner = (
 	ledger: Ledger,
-	o: { steps?: LessonStep[]; onfinish?: () => void } = {}
+	o: { steps?: LessonStep[]; onfinish?: (events: StudyEvent[]) => void } = {}
 ): Runner => {
 	target = document.createElement('div');
 	document.body.append(target);
@@ -175,6 +175,22 @@ describe('StepRunner', () => {
 
 		// Assert
 		expect(finished).toBe(1);
+	});
+
+	it('Given_FirstRunOfDay_When_LastStepAnswered_Then_FinishGetsLastRecordEvents', async () => {
+		// Arrange
+		const got: StudyEvent[][] = [];
+		const ledger = await ledgerFor();
+		const view = mountRunner(ledger, { steps: steps.slice(0, 1), onfinish: (e) => got.push(e) });
+
+		// Act
+		pickAndCheck(view);
+		view.cta().click();
+		await vi.waitFor(() => expect(got).toHaveLength(1));
+
+		// Assert
+		expect(got[0]).toContainEqual(expect.objectContaining({ type: 'DayCounted', streak: 1 }));
+		expect(got[0]).toContainEqual({ type: 'SectionDone', lesson: 'h1-01', section: 'words' });
 	});
 
 	it('Given_PickedStep_When_CtaRendered_Then_CaretFromStepCta', async () => {

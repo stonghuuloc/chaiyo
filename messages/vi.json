@@ -156,7 +156,6 @@
 	"grammar_order_hint": "Chạm các chữ để xếp theo thứ tự",
 	"grammar_order_place": "Đặt chữ {c}",
 	"grammar_order_remove": "Bỏ chữ {c} ra",
-	"grammar_done": "Xong phần Ngữ pháp",
 	"report_open": "Báo lỗi",
 	"report_title": "Báo lỗi",
 	"report_group": "Loại lỗi",
@@ -192,5 +191,15 @@
 	"lesson_speak_skip": "Bỏ qua",
 	"lesson_speak_read_ask": "Nói · đọc to",
 	"lesson_speak_read_title": "Đọc to câu này",
-	"lesson_speak_answer_ask": "Nói · trả lời"
+	"lesson_speak_answer_ask": "Nói · trả lời",
+	"done_title": "Xong phần {name}",
+	"done_next": "Phần tiếp theo",
+	"done_back": "Về bài học",
+	"done_streak": "Chuỗi lên {n} ngày!",
+	"done_streak_ok": "Tuyệt!",
+	"done_section_words": "Từ mới",
+	"done_section_grammar": "Ngữ pháp",
+	"done_section_dialogue": "Hội thoại",
+	"done_section_listenSpeak": "Nghe & nói",
+	"done_section_writing": "Luyện viết"
 }
