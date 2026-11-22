@@ -97,6 +97,19 @@ describe('GateResult', () => {
 		expect(v.text()).toContain('Kết quả · Bài 1');
 	});
 
+	it('Given_Pass_When_Home_Then_Onleave', () => {
+		// Arrange
+		const v = mountResult(PASS);
+		const home = v.cta()!;
+		home.addEventListener('click', (e) => e.preventDefault());
+
+		// Act
+		home.click();
+
+		// Assert
+		expect(v.onleave).toHaveBeenCalledOnce();
+	});
+
 	it('Given_Pass_When_Unmount_Then_ConfettiStopped', () => {
 		// Arrange
 		mountResult(PASS);

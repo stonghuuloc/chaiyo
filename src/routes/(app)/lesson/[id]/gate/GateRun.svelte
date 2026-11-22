@@ -11,7 +11,7 @@
 		contentSha: string;
 		steps: LessonStep[];
 		ledger: Ledger;
-		ondone?: (h: GateHandoff) => void;
+		ondone: (h: GateHandoff) => void;
 	};
 	let { lesson, contentSha, steps, ledger, ondone }: Props = $props();
 
@@ -36,7 +36,7 @@
 	}}
 	exit={hub}
 	onfinish={(events, answers) =>
-		ondone?.({
+		ondone({
 			lesson,
 			steps,
 			answers,
