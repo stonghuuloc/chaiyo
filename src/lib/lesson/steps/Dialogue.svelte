@@ -31,20 +31,15 @@
 	let { step, cta, next }: StepProps<Step> = $props();
 
 	let player: Player | undefined;
+	let loaded: Promise<Player> | undefined;
 	let playing = $state<number | null>(null);
 	let phase = $state<'idle' | 'all' | 'paused' | 'line'>('idle');
 	let played = $state(false);
 	let token = 0;
 
 	onMount(() => {
-		let live = true;
 		// Lazy: the player module reads $app/env/public at load.
-		void import('#lib/audio/index.js').then(({ player: p }) => {
-			if (live) player = p;
-		});
-		return () => {
-			live = false;
-		};
+		loaded = import('#lib/audio/index.js').then(({ player: p }) => (player = p));
 	});
 
 	onDestroy(() => {
@@ -52,12 +47,13 @@
 		if (phase === 'all' || phase === 'line') player?.pause();
 	});
 
-	const sound = (line: Line, opts?: { slow?: boolean }) =>
-		line.audio && player
-			? opts
-				? player.playToEnd(line.audio, opts)
-				: player.playToEnd(line.audio)
-			: Promise.resolve(true);
+	// Waits for the player, so a tap during cold load plays the clip instead of
+	// counting a missing player as a finished line.
+	const sound = async (line: Line, opts?: { slow?: boolean }) => {
+		if (!line.audio) return true;
+		const p = player ?? (await loaded);
+		return opts ? p?.playToEnd(line.audio, opts) : p?.playToEnd(line.audio);
+	};
 
 	async function playAll(from: number) {
 		const mine = ++token;
