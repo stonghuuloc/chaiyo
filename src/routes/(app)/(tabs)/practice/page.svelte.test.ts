@@ -52,7 +52,12 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 		title: () => target!.querySelector('[data-part=today-title]')?.textContent?.trim(),
 		chips: () =>
 			[...target!.querySelectorAll('[data-part=today-chip]')].map((c) => c.textContent?.trim()),
-		starts: () => target!.querySelectorAll('a').length,
+		tiles: () => target!.querySelectorAll('[data-part=skill-tile]').length,
+		subs: () =>
+			[...target!.querySelectorAll('[data-part=skill-tile] small')].map((c) =>
+				c.textContent?.trim()
+			),
+		starts: () => target!.querySelectorAll('[data-part=today-start]').length,
 		text: () => target!.textContent
 	};
 };
@@ -149,5 +154,58 @@ describe('/practice', () => {
 		// Assert
 		expect(page.title()).toBeUndefined();
 		expect(listeners.size).toBe(0);
+	});
+
+	it('Given_Ledger6_4_2_When_Mount_Then_FiveTiles', async () => {
+		// Arrange
+		current = build({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.tiles()).toBe(5);
+		expect(page.subs().slice(0, 3)).toEqual(['6 từ cần ôn', '4 từ cần ôn', '2 từ cần ôn']);
+	});
+
+	it('Given_RejectingLedger_When_Mount_Then_NoTiles', async () => {
+		// Arrange
+		hoisted.load.mockRejectedValue(new Error('idb'));
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.tiles()).toBe(0);
+	});
+
+	it('Given_TilesShown_When_LedgerEmitsOneFewerNghe_Then_3TuCanOn', async () => {
+		// Arrange
+		current = build({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		expect(page.subs()[1]).toBe('4 từ cần ôn');
+
+		// Act
+		publish(build({ the: 6, nghe: 3, viet: 2 }));
+		await settle();
+
+		// Assert
+		expect(page.subs()[1]).toBe('3 từ cần ôn');
+	});
+
+	it('Given_EmptyState_When_Mount_Then_ClearCopyAndFiveTiles', async () => {
+		// Arrange
+		current = build({});
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.text()).toContain('Hôm nay xong bài rồi!');
+		expect(page.tiles()).toBe(5);
+		expect(page.subs()[0]).toBe('Không có từ cần ôn');
 	});
 });

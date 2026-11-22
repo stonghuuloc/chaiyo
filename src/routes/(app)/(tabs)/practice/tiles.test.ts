@@ -77,9 +77,9 @@ describe('skillTiles', () => {
 		// Arrange
 		const state = build({});
 		// Act
-		const hrefs = skillTiles(state, now).map((t) => t.href);
+		const hrefs = skillTiles(state, now).map((t) => `${t.route}?${t.query}`);
 		// Assert
-		expect(hrefs[0]).toMatch(/\/practice\/session\?skill=the$/);
+		expect(hrefs[0]).toBe('/(app)/practice/session?skill=the');
 		expect(hrefs[1]).toMatch(/\?skill=nghe$/);
 		expect(hrefs[2]).toMatch(/\?skill=viet$/);
 		expect(hrefs[3]).toMatch(/\/practice\/skill\?k=noi$/);

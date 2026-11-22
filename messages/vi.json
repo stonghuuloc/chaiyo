@@ -403,5 +403,14 @@
 	"practice_run_back": "Về Luyện tập",
 	"practice_run_score_the": "Thẻ từ {right}/{total}",
 	"practice_run_score_nghe": "Nghe {right}/{total}",
-	"practice_run_score_viet": "Viết chữ {right}/{total}"
+	"practice_run_score_viet": "Viết chữ {right}/{total}",
+	"chy41s2_tiles_title": "Luyện riêng từng kỹ năng",
+	"chy41s2_tile_the": "Thẻ từ",
+	"chy41s2_tile_nghe": "Nghe",
+	"chy41s2_tile_viet": "Viết chữ",
+	"chy41s2_due_count": "{n} từ cần ôn",
+	"chy41s2_none_due": "Không có từ cần ôn",
+	"chy41s2_tile_noi_sub": "Đọc to, app chấm thanh điệu · sắp có",
+	"chy41s2_tile_doan_locked": "Mở từ HSK 3",
+	"chy41s2_tile_doan_open": "Viết câu, đoạn ngắn"
 }
