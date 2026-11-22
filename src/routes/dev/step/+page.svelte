@@ -5,8 +5,16 @@
 	import sprite from '#lib/assets/icons.svg?raw';
 	import { CURRICULUM } from '#lib/curriculum/index.js';
 	import { openLedger, memoryStore, type Ledger } from '#lib/ledger/index.js';
-	import { StepRunner, type LessonStep } from '#lib/lesson/index.js';
-	import { initialState } from '#lib/study/index.js';
+	import {
+		Done,
+		StepRunner,
+		StreakPopup,
+		doneNext,
+		sectionName,
+		type LessonStep
+	} from '#lib/lesson/index.js';
+	import { m } from '#lib/paraglide/messages.js';
+	import { initialState, type StudyEvent } from '#lib/study/index.js';
 
 	const answers = ['好', '你', '我', '是', '不', '吗'];
 	const steps: LessonStep[] = answers.map((answer, i) => ({
@@ -19,7 +27,14 @@
 	}));
 
 	const mode = $derived(page.url.searchParams.get('mode') === 'test' ? 'test' : 'feedback');
-	let finished = $state(false);
+	let events = $state<StudyEvent[] | null>(null);
+	const d = doneNext('h1-01', 'grammar');
+	const next = {
+		label: d.label,
+		href: d.section
+			? resolve('/(app)/lesson/[id]/[section]', { id: 'h1-01', section: d.section })
+			: resolve('/(app)/lesson/[id]', { id: 'h1-01' })
+	};
 	let ledger = $state<Ledger>();
 
 	const db = 'chaiyo-dev-step';
@@ -67,8 +82,9 @@
 {/if}
 {#if resetFailed}
 	<p class="p-6" role="alert">reset failed: {resetFailed}</p>
-{:else if finished}
-	<p class="p-6">finished</p>
+{:else if events}
+	<Done title={m.done_title({ name: sectionName('grammar') })} {next} />
+	<StreakPopup {events} />
 {:else if ledger}
 	<StepRunner
 		{steps}
@@ -78,6 +94,6 @@
 		section="words"
 		contentSha="dev-1"
 		{ledger}
-		onfinish={() => (finished = true)}
+		onfinish={(e) => (events = e)}
 	/>
 {/if}
