@@ -33,6 +33,13 @@
 		<p>{entry.sample.gloss()}</p>
 	</div>
 
+	<p
+		data-part="demo-note"
+		class="rounded-2xl border border-dashed border-ruled-line p-4 text-graphite"
+	>
+		{entry.note()}
+	</p>
+
 	<a
 		href={resolve('/(app)/(tabs)/practice')}
 		class="rounded-full bg-lantern-red p-4 text-center font-bold text-white">{m.skill_back()}</a

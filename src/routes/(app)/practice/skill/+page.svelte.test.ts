@@ -50,4 +50,49 @@ describe('practice skill entry', () => {
 		expect(back).toHaveLength(1);
 		expect(back[0].getAttribute('href')).toBe('/practice');
 	});
+
+	it.each(SKILL_KEYS)('Given_EachK_%s_Then_NoButtonInputMediaNorStart', (k) => {
+		// Arrange
+		// Act
+		const root = mountPage(k);
+		// Assert
+		expect(root.querySelectorAll('button, input, audio, video')).toHaveLength(0);
+		expect(root.textContent).not.toContain('Bắt đầu');
+	});
+
+	it.each(SKILL_KEYS)('Given_EachK_%s_Then_NoScorePattern', (k) => {
+		// Arrange
+		// Act
+		const root = mountPage(k);
+		// Assert
+		expect(root.textContent).not.toMatch(/\d+\/\d+/);
+		expect(root.querySelectorAll('[data-part="score"]')).toHaveLength(0);
+	});
+
+	it.each([
+		[
+			'noi',
+			'Chưa có trong bản demo: cần máy chấm phát âm (xem kế hoạch chấm điểm Nói trong NOTES).'
+		],
+		['doan', 'Chưa có trong bản demo: cần AI chấm bài viết.'],
+		['thi', 'Chưa có đề trong bản demo.']
+	] as const)('Given_EachK_%s_Then_OneDashedNoteWithLiteral', (k, note) => {
+		// Arrange
+		// Act
+		const root = mountPage(k);
+		// Assert
+		const notes = root.querySelectorAll('[data-part="demo-note"]');
+		expect(notes).toHaveLength(1);
+		expect(notes[0].textContent).toBe(note);
+		expect(notes[0].classList.contains('border-dashed')).toBe(true);
+	});
+
+	it('Given_ThiAndLv1_Then_NoModePicker', () => {
+		// Arrange
+		const root = mountPage('thi');
+		// Act
+		const picker = root.querySelectorAll('[role="group"], [aria-pressed], button');
+		// Assert
+		expect(picker).toHaveLength(0);
+	});
 });
