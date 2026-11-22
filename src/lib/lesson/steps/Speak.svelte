@@ -8,6 +8,8 @@
 		hanzi?: string;
 		pinyin?: string;
 		meaning?: string;
+		answer?: { hanzi: string; pinyin: string; meaning: string };
+		rubric?: string[];
 	};
 </script>
 

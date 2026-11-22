@@ -64,11 +64,14 @@ export function listenSpeakSteps(content: LessonContent): LessonStep[] {
 				meaning: sentence.vi
 			});
 		} else if (item.type === 'freeAnswer') {
+			const s = item.answer ? content.sentences.find((x) => x.id === item.answer) : undefined;
 			steps.push({
 				kind: 'speak',
 				id: item.id,
 				ask: m.lesson_speak_answer_ask(),
-				title: 'text' in item.prompt ? item.prompt.text : item.prompt.ref
+				title: 'text' in item.prompt ? item.prompt.text : item.prompt.ref,
+				answer: s && { hanzi: s.hanzi, pinyin: s.spoken ?? s.pinyin, meaning: s.vi },
+				rubric: item.rubric
 			});
 		}
 	}
