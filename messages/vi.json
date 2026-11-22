@@ -283,5 +283,12 @@
 	"speak_sample_count": "Đúng {ok}/{total} âm · đủ để qua",
 	"speak_sample_hint": "Chưa chấm điểm thật · kết quả chỉ là mẫu",
 	"speak_reveal_title": "Có thể nói",
-	"speak_reveal_pending": "Đáp án sẽ hiện sau khi bạn nói."
+	"speak_reveal_pending": "Đáp án sẽ hiện sau khi bạn nói.",
+	"writing_round1": "Lần 1: viết theo nét mờ",
+	"writing_round2": "Lần 2: tự viết, không có nét mờ",
+	"writing_done_mistakes": "Viết xong · {n} nét sai",
+	"writing_done_clean": "Viết xong · không sai nét nào",
+	"writing_skip": "Bỏ qua chữ này",
+	"writing_done_text": "Bạn đã viết {n} chữ: {chars}",
+	"writing_and": "{rest} và {last}"
 }
