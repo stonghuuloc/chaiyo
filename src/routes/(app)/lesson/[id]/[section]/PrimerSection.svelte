@@ -25,8 +25,12 @@
 	const section = $derived(given ?? page.params.section ?? '');
 	const steps = $derived(primerSteps(lesson, section));
 	const opened = $derived(ledger ?? (session ? learnerLedger(session) : null));
-	let events = $state<StudyEvent[] | null>(null);
-	let score = $state<{ n: number; total: number } | null>(null);
+	let result = $state<{
+		section: string;
+		events: StudyEvent[];
+		score: { n: number; total: number };
+	} | null>(null);
+	const finished = $derived(result?.section === section ? result : null);
 	const next = $derived.by(() => {
 		const d = doneNext(id, section);
 		return {
@@ -39,37 +43,38 @@
 
 	const finish = (l: Ledger, before: Set<string>, e: StudyEvent[]) => {
 		const drills = steps.filter((s) => s.kind === 'choice').map((s) => s.id);
-		score = primerScore(l.state(), before, id, section, drills);
-		events = e;
+		result = { section, events: e, score: primerScore(l.state(), before, id, section, drills) };
 	};
 </script>
 
-{#if opened === null || steps.length === 0}
-	<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
-{:else}
-	{#await opened}
+{#key section}
+	{#if opened === null || steps.length === 0}
 		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
-	{:then l}
-		{@const before = closedRuns(l.state(), id, section)}
-		{#if events}
-			<Done
-				title={m.done_title({ name: sectionName(section) })}
-				text={score ? m.primer_done_score(score) : undefined}
-				{next}
-			/>
-			<StreakPopup {events} />
-		{:else}
-			<StepRunner
-				{steps}
-				ledger={l}
-				lesson={id}
-				{section}
-				contentSha={lesson.contentSha}
-				exit={resolve('/(app)/(tabs)/today')}
-				onfinish={(e) => finish(l, before, e)}
-			/>
-		{/if}
-	{:catch}
-		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
-	{/await}
-{/if}
+	{:else}
+		{#await opened}
+			<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
+		{:then l}
+			{@const before = closedRuns(l.state(), id, section)}
+			{#if finished}
+				<Done
+					title={m.done_title({ name: sectionName(section) })}
+					text={m.primer_done_score(finished.score)}
+					{next}
+				/>
+				<StreakPopup events={finished.events} />
+			{:else}
+				<StepRunner
+					{steps}
+					ledger={l}
+					lesson={id}
+					{section}
+					contentSha={lesson.contentSha}
+					exit={resolve('/(app)/(tabs)/today')}
+					onfinish={(e) => finish(l, before, e)}
+				/>
+			{/if}
+		{:catch}
+			<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
+		{/await}
+	{/if}
+{/key}

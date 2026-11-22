@@ -67,18 +67,25 @@ const settle = async () => {
 	flushSync();
 };
 
+let props: {
+	lesson: LessonContent;
+	session: never | null;
+	ledger?: Promise<Ledger>;
+	section?: string;
+};
+
 const mountSection = async (ledger: Ledger | null, section = 'tones') => {
 	hoisted.section.value = section;
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(PrimerSection, {
-		target,
-		props: {
-			lesson,
-			session: ledger ? session : null,
-			ledger: ledger ? Promise.resolve(ledger) : undefined
-		}
-	}) as Record<string, unknown>;
+	const live = $state({
+		lesson,
+		session: ledger ? session : null,
+		ledger: ledger ? Promise.resolve(ledger) : undefined,
+		section
+	});
+	props = live;
+	app = mount(PrimerSection, { target, props: live }) as Record<string, unknown>;
 	await settle();
 };
 
@@ -164,5 +171,26 @@ describe('PrimerSection', () => {
 		// Assert
 		expect(target!.querySelector('h1')!.textContent).toBe('Phần học');
 		expect(target!.querySelector('.actions')).toBeNull();
+	});
+
+	it('Given_TonesDone_When_SectionPropMovesToFinals_Then_FreshRunnerNotOldDone', async () => {
+		// Arrange
+		const ledger = await openMemory();
+		await mountSection(ledger);
+		await play('tones', 3);
+		expect(target!.querySelector('[data-part=done-title]')).not.toBeNull();
+
+		const first = primerSteps(lesson, 'finals')[0];
+		if (first.kind !== 'card') throw new Error('finals starts with a card');
+
+		// Act
+		props.section = 'finals';
+		hoisted.section.value = 'finals';
+		await settle();
+
+		// Assert
+		expect(target!.querySelector('[data-part=done-title]')).toBeNull();
+		expect(target!.querySelector('[data-seg]')).not.toBeNull();
+		expect(target!.querySelector('h2')!.textContent).toBe(first.title);
 	});
 });
