@@ -39,9 +39,17 @@ const mountPage = async (s: typeof session | null = session) => {
 	flushSync();
 	return {
 		rows: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-row]')],
-		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta]')
+		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta]'),
+		gate: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-gate]')!
 	};
 };
+
+const withDone = (done: string[]): State => {
+	const s = initialState({ curriculum: CURRICULUM });
+	s.lessons['h1-01'] = { unlocked: true, passed: false, done };
+	return s;
+};
+const sections = CURRICULUM.lessons.find((l) => l.id === 'h1-01')!.sections;
 
 const wordsRun = (answered: string[]): State => {
 	const s = initialState({ curriculum: CURRICULUM });
@@ -115,5 +123,39 @@ describe('lesson hub page', () => {
 		expect(rows()).toHaveLength(5);
 		expect(rows().every((r) => r.dataset.look === 'todo')).toBe(true);
 		expect(cta()!.textContent).toContain('Bắt đầu: Từ mới');
+	});
+});
+
+describe('lesson hub Gate row', () => {
+	it('Given_FourOfFiveDone_When_Open_Then_GateLockedNoHref', async () => {
+		// Arrange
+		current = withDone(sections.slice(0, 4));
+
+		// Act
+		const { rows, gate } = await mountPage();
+
+		// Assert
+		expect(target!.querySelectorAll('[data-part=hub-gate]')).toHaveLength(1);
+		expect(gate().getAttribute('aria-disabled')).toBe('true');
+		expect(gate().hasAttribute('href')).toBe(false);
+		expect(gate().querySelector('use[href="#i-fill-lock-simple"]')).not.toBeNull();
+		expect(gate().textContent).toContain('Kiểm tra cuối bài');
+		expect(gate().textContent).toContain('Mở khi xong 5 phần · đạt từ 80%');
+		expect(rows()).toHaveLength(5);
+	});
+
+	it('Given_FourDone_When_LedgerFifthSectionDone_Then_GateOpensToGateRoute', async () => {
+		// Arrange
+		current = withDone(sections.slice(0, 4));
+		const { gate } = await mountPage();
+
+		// Act
+		publish(withDone([...sections]));
+		flushSync();
+
+		// Assert
+		expect(gate().getAttribute('href')).toMatch(/\/lesson\/h1-01\/gate$/);
+		expect(gate().hasAttribute('aria-disabled')).toBe(false);
+		expect(gate().querySelector('use[href="#i-fill-lock-simple"]')).toBeNull();
 	});
 });

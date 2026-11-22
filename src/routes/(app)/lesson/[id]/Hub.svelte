@@ -60,6 +60,30 @@
 				</li>
 			{/each}
 		</ol>
+		<a
+			data-part="hub-gate"
+			data-look={hub.gate.locked ? 'locked' : 'todo'}
+			href={hub.gate.locked ? undefined : resolve('/(app)/lesson/[id]/gate', { id })}
+			aria-disabled={hub.gate.locked ? 'true' : undefined}
+			class={[
+				'rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3',
+				hub.gate.locked && 'cursor-default text-graphite'
+			]}
+		>
+			{#if hub.gate.locked}
+				<svg class="size-6 shrink-0 fill-current" aria-hidden="true"
+					><use href="#i-fill-lock-simple" /></svg
+				>
+			{:else}
+				<span class="size-6 shrink-0 rounded-full border-2 border-lantern-red"></span>
+			{/if}
+			<span class="flex flex-col">
+				<b>{m.hub_gate_name()}</b>
+				{#if hub.gate.sub}
+					<small class="text-graphite">{hub.gate.sub}</small>
+				{/if}
+			</span>
+		</a>
 	</section>
 
 	{#if hub.cta}
