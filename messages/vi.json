@@ -425,5 +425,14 @@
 	"chy47s1_title": "Chạy thử vòng tính chuỗi",
 	"chy47s1_run": "Chạy",
 	"chy47s1_now": "Giờ hiện tại (UTC)",
-	"chy47s1_log_empty": "Chưa chạy lần nào."
+	"chy47s1_log_empty": "Chưa chạy lần nào.",
+	"chy45s1_cta_reviews": "Luyện hôm nay",
+	"chy45s1_cta_lesson": "Tiếp tục Bài {n}",
+	"chy45s1_cta_thi": "Thi thử HSK {level}",
+	"chy45s1_cta_done": "Xong hôm nay",
+	"chy45s1_alt_reviews_due": "Gấu Đỏ ngồi bên bàn gỗ, giơ một tấm thẻ ôn tập",
+	"chy45s1_alt_lesson_next": "Gấu Trúc bước ra cửa nhà, sẵn sàng đi trên con đường nhỏ",
+	"chy45s1_alt_day_done": "Nai con ngủ say trong chiếc võng giữa vườn hoa lúc hoàng hôn",
+	"chy45s1_alt_streak_at_risk": "Bò con lo lắng ngồi bên bàn học khi đồng hồ sắp điểm nửa đêm",
+	"chy45s1_alt_freeze_used": "Bốn bạn thú quây quần bên bàn sưởi ấm trong ngày tuyết rơi"
 }
