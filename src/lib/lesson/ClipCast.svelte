@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TalkingCast from '#lib/components/TalkingCast.svelte';
-	import type { TalkingCastPlayer } from '#lib/components/talking-cast';
+	import type { TalkingCastPlayer } from '#lib/components/talking-cast.js';
 
 	let { clip, label }: { clip: string; label: string } = $props();
 
