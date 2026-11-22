@@ -1,0 +1,61 @@
+<script lang="ts">
+	import type { Session } from '@supabase/supabase-js';
+	import type { LessonContent } from '#lib/catalog/index.js';
+	import { learnerLedger } from '#lib/learner/index.js';
+	import type { Ledger } from '#lib/ledger/index.js';
+	import Done from '#lib/lesson/Done.svelte';
+	import { doneNext, sectionName } from '#lib/lesson/done.js';
+	import StepRunner from '#lib/lesson/StepRunner.svelte';
+	import StreakPopup from '#lib/lesson/StreakPopup.svelte';
+	import { m } from '#lib/paraglide/messages.js';
+	import type { StudyEvent } from '#lib/study/index.js';
+	import { resolve } from '$app/paths';
+	import { dialogueSteps } from './dialogue';
+
+	type Props = { lesson: LessonContent; session: Session | null; ledger?: Promise<Ledger> };
+	let { lesson, session, ledger }: Props = $props();
+
+	const steps = $derived(dialogueSteps(lesson));
+	const parts = $derived(steps.filter((s) => s.kind === 'dialogue').length);
+	const opened = $derived(ledger ?? (session ? learnerLedger(session) : null));
+	let events = $state<StudyEvent[] | null>(null);
+	const next = $derived.by(() => {
+		const id = lesson.lesson.id;
+		const d = doneNext(id, 'dialogue');
+		return {
+			label: d.label,
+			href: d.section
+				? resolve('/(app)/lesson/[id]/[section]', { id, section: d.section })
+				: resolve('/(app)/lesson/[id]', { id })
+		};
+	});
+</script>
+
+{#if opened === null || steps.length === 0}
+	<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
+{:else}
+	{#await opened}
+		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
+	{:then l}
+		{#if events}
+			<Done
+				title={m.done_title({ name: sectionName('dialogue') })}
+				text={m.dialogue_done_text({ n: parts })}
+				{next}
+			/>
+			<StreakPopup {events} />
+		{:else}
+			<StepRunner
+				{steps}
+				ledger={l}
+				lesson={lesson.lesson.id}
+				section="dialogue"
+				contentSha={lesson.contentSha}
+				exit={resolve('/(app)/(tabs)/today')}
+				onfinish={(e) => (events = e)}
+			/>
+		{/if}
+	{:catch}
+		<h1 class="mt-5 font-display text-headline">{m.screen_lesson_section()}</h1>
+	{/await}
+{/if}

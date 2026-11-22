@@ -1,6 +1,7 @@
 import type { Component } from 'svelte';
 import type { Session } from '@supabase/supabase-js';
 import type { LessonContent } from '#lib/catalog/index.js';
+import DialogueSection from './DialogueSection.svelte';
 import GrammarSection from './GrammarSection.svelte';
 import ListenSpeak from './ListenSpeak.svelte';
 
@@ -10,5 +11,6 @@ export const sections: Record<
 	Component<{ lesson: LessonContent; session: Session | null }>
 > = {
 	grammar: GrammarSection,
+	dialogue: DialogueSection,
 	listenSpeak: ListenSpeak
 };
