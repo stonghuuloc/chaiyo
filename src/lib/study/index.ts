@@ -5,7 +5,7 @@ export { localDate } from './dates';
 export { currentLevel } from './level';
 export { rollover } from './streak';
 export { minutes, session } from './session';
-export { myWords } from './my-words';
+export { myWords, searchWords } from './my-words';
 export type { MyWordRow, WordMeta } from './my-words';
 export type {
 	Attempt,

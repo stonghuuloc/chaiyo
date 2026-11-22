@@ -3,8 +3,10 @@ import {
 	apply,
 	initialState,
 	myWords,
+	searchWords,
 	type Attempt,
 	type Card,
+	type MyWordRow,
 	type Skill,
 	type State,
 	type WordMeta
@@ -246,5 +248,104 @@ describe('myWords due and order', () => {
 
 		// Assert
 		expect(notes).toEqual(['due', 'never', null]);
+	});
+});
+
+describe('searchWords', () => {
+	const row = (hanzi: string, pinyin: string, hanViet: string, nghia: string): MyWordRow => ({
+		hanzi,
+		pinyin,
+		hanViet,
+		nghia,
+		bars: 1,
+		dueNote: null,
+		source: 'lesson'
+	});
+	const rows = [
+		row('学生', 'xuésheng', 'học sinh', 'học sinh'),
+		row('学', 'xué', 'học', 'học'),
+		row('你好', 'nǐ hǎo', 'nhĩ hảo', 'xin chào'),
+		row('对', 'duì', 'đối', 'đúng'),
+		row('绿', 'lǜ', 'lục', 'xanh lá')
+	];
+	const hanzi = (q: string) => searchWords(rows, q).map((r) => r.hanzi);
+
+	it('"hoc" keeps 学生 and 学 in input order', () => {
+		// Arrange
+		const q = 'hoc';
+
+		// Act
+		const result = hanzi(q);
+
+		// Assert
+		expect(result).toEqual(['学生', '学']);
+	});
+
+	it('"HỌC" and "  hoc " give the same rows', () => {
+		// Arrange
+		const expected = hanzi('hoc');
+
+		// Act
+		const upper = hanzi('HỌC');
+		const spaced = hanzi('  hoc ');
+
+		// Assert
+		expect(upper).toEqual(expected);
+		expect(spaced).toEqual(expected);
+	});
+
+	it('"dung" matches 对 by nghĩa đúng', () => {
+		// Arrange
+		const q = 'dung';
+
+		// Act
+		const result = hanzi(q);
+
+		// Assert
+		expect(result).toEqual(['对']);
+	});
+
+	it('"lu" matches 绿 by pinyin lǜ', () => {
+		// Arrange
+		const q = 'lu';
+
+		// Act
+		const result = hanzi(q);
+
+		// Assert
+		expect(result).toEqual(['绿']);
+	});
+
+	it('"学" matches by hanzi', () => {
+		// Arrange
+		const q = '学';
+
+		// Act
+		const result = hanzi(q);
+
+		// Assert
+		expect(result).toEqual(['学生', '学']);
+	});
+
+	it('"" and "  " return all 5', () => {
+		// Arrange
+		const queries = ['', '  '];
+
+		// Act
+		const results = queries.map(hanzi);
+
+		// Assert
+		expect(results.map((r) => r.length)).toEqual([5, 5]);
+	});
+
+	it('"xyz" returns []', () => {
+		// Arrange
+		const q = 'xyz';
+
+		// Act
+		const result = hanzi(q);
+
+		// Assert
+		expect(result).toEqual([]);
 	});
 });
