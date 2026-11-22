@@ -3,7 +3,7 @@ import type { Attempt, Skill, Step, WordSaved } from '#lib/study/index.js';
 import type { Input, Store } from './types';
 
 const COLS = 'id, at, question_id, content_sha, word, skill, correct, ms, answer, step, tone';
-const PAGE = 1000;
+export const PAGE = 1000;
 
 type Row = {
 	id: string;
