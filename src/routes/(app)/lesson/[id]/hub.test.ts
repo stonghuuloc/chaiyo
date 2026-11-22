@@ -298,3 +298,79 @@ describe('hubView gate', () => {
 		expect(open).toBe(false);
 	});
 });
+
+describe('hubView words', () => {
+	const reached = (s: State) => hubView(lesson, sections, s).words.map((w) => w.reached);
+
+	it('Given_FreshLearner_When_View_Then_TenWordsNoneReached', () => {
+		// Arrange
+		const state = fresh();
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.words.map((w) => w.id)).toEqual(wordIds);
+		expect(v.words).toHaveLength(10);
+		expect(v.words[0]).toEqual({ id: wordIds[0], hanzi: '你', pinyin: 'nǐ', reached: false });
+		expect(v.words.some((w) => w.reached)).toBe(false);
+	});
+
+	it('Given_OpenWordsRunFourAnswered_When_View_Then_FirstFourReached', () => {
+		// Arrange
+		const state = withWordsRun(wordIds.slice(0, 4));
+
+		// Act
+		const r = reached(state);
+
+		// Assert
+		expect(r).toEqual([...Array(4).fill(true), ...Array(6).fill(false)]);
+	});
+
+	it('Given_WordsDone_When_View_Then_AllTenReached', () => {
+		// Arrange
+		const state = withDone(['words']);
+
+		// Act
+		const r = reached(state);
+
+		// Assert
+		expect(r).toEqual(Array(10).fill(true));
+	});
+
+	it('Given_PlacedHsk1NoDone_When_View_Then_NoWordsReached', () => {
+		// Arrange
+		const state = fresh();
+		state.lessons['h1-01'] = { unlocked: true, passed: true, done: [] };
+
+		// Act
+		const r = reached(state);
+
+		// Assert
+		expect(r).toEqual(Array(10).fill(false));
+	});
+
+	it('Given_ClosedWordsRunNotDone_When_View_Then_NoWordsReached', () => {
+		// Arrange
+		const state = withWordsRun(wordIds.slice(0, 4));
+		state.runs.r1.closed = true;
+
+		// Act
+		const r = reached(state);
+
+		// Assert
+		expect(r).toEqual(Array(10).fill(false));
+	});
+
+	it('Given_Primer_When_View_Then_NoWordsSection', async () => {
+		// Arrange
+		const primer = await createCatalog(await fixtureSource()).lesson('h0-00');
+		const ids = CURRICULUM.lessons.find((l) => l.id === 'h0-00')!.sections;
+
+		// Act
+		const v = hubView(primer, ids, fresh());
+
+		// Assert
+		expect(v.words).toEqual([]);
+	});
+});

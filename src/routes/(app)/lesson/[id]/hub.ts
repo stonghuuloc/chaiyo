@@ -14,6 +14,7 @@ export type Hub = {
 	progress: string;
 	rows: Row[];
 	cta: { section: string; label: string } | null;
+	words: { id: string; hanzi: string; pinyin: string; reached: boolean }[];
 	gate: { locked: boolean; sub: string };
 };
 
@@ -56,6 +57,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 	const l = content.lesson;
 	const done = state.lessons[l.id]?.done ?? [];
 	const words = content.words;
+	const answeredIds = new Set(Object.keys(openRun(state, l.id, 'words')?.answers ?? {}));
 
 	const row = (id: string): Row => {
 		const name = names[id]?.() ?? id;
@@ -66,7 +68,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		if (!('topic' in l)) return { id, name, look, pct, sub };
 		const s = l.sections;
 		if (id === 'words') {
-			const answered = run ? words.filter((w) => Object.hasOwn(run.answers, w.id)) : [];
+			const answered = words.filter((w) => answeredIds.has(w.id));
 			const next = words.find((w) => !answered.includes(w));
 			if (look === 'now' && answered.length > 0) {
 				pct = Math.round((answered.length / words.length) * 100);
@@ -121,6 +123,12 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		progress: m.hub_progress({ done: count, total: sections.length }),
 		rows,
 		cta,
+		words: words.map((w) => ({
+			id: w.id,
+			hanzi: w.hanzi,
+			pinyin: w.pinyin,
+			reached: done.includes('words') || answeredIds.has(w.id)
+		})),
 		gate: { locked, sub: locked ? m.hub_gate_locked({ n: sections.length }) : '' }
 	};
 }
