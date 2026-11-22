@@ -12,7 +12,7 @@ const bare = (hanzi: string) => hanzi.replace(/[\p{P}\s]/gu, '');
 function gateStep(q: Question, c: LessonContent): LessonStep | null {
 	switch (q.type) {
 		case 'choice': {
-			const script = q.optionKind === 'hanzi' ? 'hanzi' : 'text';
+			const script: 'hanzi' | 'text' = q.optionKind === 'hanzi' ? 'hanzi' : 'text';
 			const base = { kind: 'choice' as const, id: q.id, options: q.options, script };
 			const answer = q.options[q.answer];
 			if (q.prompt.kind === 'audio') {
