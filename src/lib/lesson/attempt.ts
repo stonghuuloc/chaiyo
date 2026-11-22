@@ -22,6 +22,7 @@ export const toAttempt = (
 		ms: answer?.ms ?? 0,
 		...(answer?.pick == null ? {} : { answer: answer.pick }),
 		...(answer?.card ? { card: answer.card } : {}),
+		...(answer?.tone ? { tone: answer.tone } : {}),
 		step
 	};
 };

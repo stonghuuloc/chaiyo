@@ -22,6 +22,7 @@ export type Attempt = {
 	ms: number;
 	answer?: string;
 	card?: { word: string; skill: Skill };
+	tone?: 1 | 2 | 3 | 4;
 	step?: Step;
 };
 

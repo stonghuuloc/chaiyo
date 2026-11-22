@@ -69,4 +69,26 @@ describe('toAttempt', () => {
 		expect(attempt.questionId).toBe('q1');
 		expect(Object.hasOwn(attempt, 'answer')).toBe(false);
 	});
+
+	it('Given_AnswerWithTone_When_ToAttempt_Then_Tone', () => {
+		// Arrange
+		const answer = { questionId: 'q1', pick: 'hǎo', correct: true, ms: 40, tone: 3 as const };
+
+		// Act
+		const attempt = toAttempt(answer, 'q1', ctx, ids);
+
+		// Assert
+		expect(attempt.tone).toBe(3);
+	});
+
+	it('Given_AnswerNoTone_When_ToAttempt_Then_NoToneKey', () => {
+		// Arrange
+		const answer = { questionId: 'q1', pick: '你', correct: true, ms: 40 };
+
+		// Act
+		const attempt = toAttempt(answer, 'q1', ctx, ids);
+
+		// Assert
+		expect(Object.hasOwn(attempt, 'tone')).toBe(false);
+	});
 });

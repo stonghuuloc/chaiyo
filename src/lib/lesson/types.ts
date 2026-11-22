@@ -8,6 +8,7 @@ export type Answer = {
 	correct: boolean | null;
 	ms: number;
 	card?: { word: string; skill: Skill };
+	tone?: 1 | 2 | 3 | 4;
 };
 
 export type Cta = {

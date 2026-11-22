@@ -13,6 +13,7 @@
 		explain?: string;
 		missHint?: string;
 		card?: { word: string; skill: Skill };
+		tone?: 1 | 2 | 3 | 4;
 		audio?: string;
 		prompt?: { text: string; hanzi: boolean };
 	};
