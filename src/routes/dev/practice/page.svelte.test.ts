@@ -27,6 +27,45 @@ describe('/dev/practice', () => {
 
 		// Assert
 		expect(target.textContent).toContain('Hôm nay xong bài rồi!');
-		expect(target.querySelector('a')).toBeNull();
+		expect(target.querySelector('[data-part=today-start]')).toBeNull();
+	});
+
+	const mountPage = () => {
+		target = document.createElement('div');
+		document.body.append(target);
+		app = mount(Page, { target }) as Record<string, unknown>;
+		flushSync();
+		return target;
+	};
+	const press = (root: HTMLElement, part: string, text: string) => {
+		[...root.querySelectorAll<HTMLButtonElement>(`[data-part=${part}]`)]
+			.find((b) => b.textContent === text)!
+			.click();
+		flushSync();
+	};
+
+	it('Given_Mix_When_PickNghe_Then_4SessionCards', () => {
+		// Arrange
+		const root = mountPage();
+		expect(root.querySelectorAll('[data-part=session-card]')).toHaveLength(12);
+
+		// Act
+		press(root, 'skill', 'nghe');
+
+		// Assert
+		expect(root.querySelectorAll('[data-part=session-card]')).toHaveLength(4);
+		expect(root.querySelectorAll('[data-part=skill-tile]')).toHaveLength(5);
+	});
+
+	it('Given_Level3_When_Toggle_Then_DoanOpenText', () => {
+		// Arrange
+		const root = mountPage();
+		expect(root.textContent).toContain('Mở từ HSK 3');
+
+		// Act
+		press(root, 'level', '3');
+
+		// Assert
+		expect(root.textContent).toContain('Viết câu, đoạn ngắn');
 	});
 });
