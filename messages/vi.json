@@ -324,5 +324,6 @@
 	"primer_drill_ask": "Nghe rồi chọn pinyin đúng",
 	"primer_card_next": "Tiếp tục",
 	"primer_done_score": "{n}/{total} câu luyện đúng",
-	"primer_gate_ask_read": "Chọn pinyin đúng"
+	"primer_gate_ask_read": "Chọn pinyin đúng",
+	"primer_gate_testout": "Đã biết pinyin? Làm bài kiểm tra luôn"
 }

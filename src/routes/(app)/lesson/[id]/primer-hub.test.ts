@@ -59,6 +59,28 @@ describe('hubView on the Primer', () => {
 		expect(v.cta).toEqual({ section: 'tones', label: 'Bắt đầu: Thanh điệu' });
 	});
 
+	it('Given_FreshPrimer_When_HubView_Then_TestOutLink', () => {
+		// Arrange
+		const state = fresh();
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.testOut).toEqual({ label: 'Đã biết pinyin? Làm bài kiểm tra luôn' });
+	});
+
+	it('Given_Passed_When_HubView_Then_NoTestOut', () => {
+		// Arrange
+		const state = withDone(sections, true);
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.testOut).toBeNull();
+	});
+
 	it('Given_OpenFinalsRun_When_HubView_Then_ResumeVanMau', () => {
 		// Arrange
 		const state = fresh();

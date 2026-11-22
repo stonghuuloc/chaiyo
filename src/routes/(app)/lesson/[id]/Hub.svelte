@@ -99,6 +99,13 @@
 				{/if}
 			</span>
 		</a>
+		{#if hub.testOut}
+			<a
+				data-part="hub-testout"
+				href={resolve('/(app)/lesson/[id]/gate', { id })}
+				class="py-2 text-center font-semibold text-lantern-red-text">{hub.testOut.label}</a
+			>
+		{/if}
 	</section>
 
 	{#if hub.words.length > 0}

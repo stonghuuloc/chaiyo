@@ -287,6 +287,17 @@ describe('hubView gate', () => {
 	});
 });
 
+it('Given_Bai1_When_HubView_Then_NoTestOut', () => {
+	// Arrange
+	const state = fresh();
+
+	// Act
+	const v = hubView(lesson, sections, state);
+
+	// Assert
+	expect(v).not.toHaveProperty('testOut');
+});
+
 describe('hubView words', () => {
 	const reached = (s: State) => hubView(lesson, sections, s).words.map((w) => w.reached);
 

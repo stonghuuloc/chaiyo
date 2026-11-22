@@ -43,7 +43,8 @@ const mountPage = async (s: typeof session | null = session, content: LessonCont
 		rows: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-row]')],
 		links: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-link]')],
 		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta]'),
-		gate: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-gate]')!
+		gate: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-gate]')!,
+		testOut: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-testout]')
 	};
 };
 
@@ -255,6 +256,18 @@ describe('Primer hub', () => {
 		expect(target!.textContent).toContain('0/5 phần');
 		expect(cta()!.textContent).toContain('Bắt đầu: Thanh điệu');
 		expect(cta()!.getAttribute('href')).toMatch(/\/lesson\/h0-00\/tones$/);
+	});
+
+	it('Given_PrimerFresh_When_Mounted_Then_TestOutHrefGate', async () => {
+		// Arrange
+		current = initialState({ curriculum: CURRICULUM });
+
+		// Act
+		const { testOut } = await mountPage(session, primer);
+
+		// Assert
+		expect(testOut()!.getAttribute('href')).toMatch(/\/lesson\/h0-00\/gate$/);
+		expect(testOut()!.textContent).toContain('Đã biết pinyin? Làm bài kiểm tra luôn');
 	});
 
 	it('Given_FiveDoneNotPassed_When_Mounted_Then_CtaOpensGateRoute', async () => {

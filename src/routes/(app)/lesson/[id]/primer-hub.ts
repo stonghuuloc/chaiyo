@@ -20,6 +20,7 @@ export function primerHub(hub: Hub, state: State, id: string): Hub {
 		rows,
 		cta,
 		links: [{ id: 'pinyin', label: m.pinyin_title() }],
+		testOut: state.lessons[id]?.passed ? null : { label: m.primer_gate_testout() },
 		gate: { ...hub.gate, name: m.primer_hub_gate() }
 	};
 }

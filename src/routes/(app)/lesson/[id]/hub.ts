@@ -20,6 +20,7 @@ export type Hub = {
 	words: { id: string; hanzi: string; pinyin: string; reached: boolean }[];
 	gate: { locked: boolean; sub: string; name?: string };
 	links?: { id: string; label: string }[];
+	testOut?: { label: string } | null;
 };
 
 const MINUTES_PER_WORD = 7;
