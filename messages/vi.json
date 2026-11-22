@@ -260,5 +260,12 @@
 	"dialogue_next": "Tiếp",
 	"dialogue_answer": "Trả lời câu hỏi",
 	"dialogue_ask": "Câu hỏi",
-	"dialogue_done_text": "Bạn đã nghe {n} đoạn hội thoại và thử một tình huống thật."
+	"dialogue_done_text": "Bạn đã nghe {n} đoạn hội thoại và thử một tình huống thật.",
+	"words_parts": "Từng chữ",
+	"words_components": "Cấu tạo",
+	"words_examples": "Ví dụ",
+	"words_next": "Tiếp",
+	"words_listen": "Nghe",
+	"words_check": "Kiểm tra nhanh",
+	"words_done_text": "{n} từ đã vào Từ của tôi. Ôn lại trong Luyện tập nhé."
 }
