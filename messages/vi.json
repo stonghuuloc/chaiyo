@@ -208,6 +208,7 @@
 	"listen_tone_answer": "thanh {n} ({pinyin})",
 	"listen_word_ask": "Nghe và chọn từ",
 	"listen_meaning_ask": "Nghe và chọn nghĩa",
+<<<<<<< HEAD
 	"hub_kicker": "HSK{level} · {topic} · Bài {order}",
 	"hub_meta": "{words} từ · {grammar} điểm ngữ pháp · khoảng {min} phút",
 	"hub_progress": "{done}/{total} phần",
@@ -250,4 +251,17 @@
 	"gate_exit_body": "Điểm sẽ không được lưu.",
 	"gate_exit_leave": "Thoát",
 	"gate_exit_keep": "Làm tiếp"
+=======
+	"dialogue_part": "Đoạn {n}/{of}",
+	"dialogue_play": "Nghe đoạn hội thoại",
+	"dialogue_play_hint": "Hoặc bấm vào từng câu để nghe",
+	"dialogue_playing": "Đang phát {n}/{of}",
+	"dialogue_paused": "Tạm dừng {n}/{of}",
+	"dialogue_pause_hint": "Bấm để tạm dừng",
+	"dialogue_resume_hint": "Bấm để nghe tiếp",
+	"dialogue_next": "Tiếp",
+	"dialogue_answer": "Trả lời câu hỏi",
+	"dialogue_ask": "Câu hỏi",
+	"dialogue_done_text": "Bạn đã nghe {n} đoạn hội thoại và thử một tình huống thật."
+>>>>>>> 3c7051d1 (feat(lesson): dialogue step plays lines in turn, pauses, plays one tapped line (CHY-33))
 }
