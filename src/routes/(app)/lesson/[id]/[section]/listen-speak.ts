@@ -18,18 +18,22 @@ export function listenSpeakSteps(content: LessonContent): LessonStep[] {
 	for (const item of lesson.sections.listenSpeak.items) {
 		if (item.type === 'tone') {
 			const ref = refOf(item.prompt);
+			const clip = promptClip(content, ref);
+			if (!clip) continue;
 			const word = promptWord(content, ref);
 			const pinyin = word ? (word.spoken ?? word.pinyin) : ref;
 			steps.push({
 				kind: 'tone',
 				id: item.id,
 				ask: m.listen_tone_ask(),
-				audio: promptClip(content, ref) ?? '',
+				audio: clip,
 				answer: item.answer,
 				syllable: pinyin.split(/\s+/)[item.syllable] ?? pinyin
 			});
 		} else if (item.type === 'choice') {
 			const vi = item.optionKind === 'vi';
+			const audio = promptClip(content, refOf(item.prompt));
+			if (item.prompt.kind === 'audio' && !audio) continue;
 			steps.push({
 				kind: 'choice',
 				id: item.id,
@@ -43,7 +47,7 @@ export function listenSpeakSteps(content: LessonContent): LessonStep[] {
 				options: item.options,
 				answer: item.options[item.answer],
 				script: item.optionKind === 'hanzi' ? 'hanzi' : 'text',
-				audio: promptClip(content, refOf(item.prompt))
+				audio
 			});
 		} else if (item.type === 'readAloud') {
 			const sentence = content.sentences.find((s) => s.id === item.sentence);

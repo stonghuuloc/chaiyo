@@ -46,7 +46,9 @@ const bundle = (
 
 const content = (
 	items: unknown[],
-	sentences = [sentence('s1', '不客气。', 'bù kèqi', 'Không có gì.', 'bú kèqi')]
+	sentences = [
+		{ ...sentence('s1', '不客气。', 'bù kèqi', 'Không có gì.', 'bú kèqi'), audio: 'dialogue/s1' }
+	]
 ) =>
 	bundle(
 		Lesson.parse({
@@ -207,14 +209,19 @@ describe('listenSpeakSteps', () => {
 		expect(step).toMatchObject({ kind: 'choice', title: 'Không có gì.', audio: undefined });
 	});
 
-	it('Given_PromptRefWithNoClip_When_ListenSpeakSteps_Then_ChoiceWithoutAudio', () => {
+	it('Given_AudioPromptsWithNoClip_When_ListenSpeakSteps_Then_ItemsSkipped', () => {
+		// Arrange
+		const items = [
+			{ ...tone, prompt: { kind: 'audio', ref: '再见' } },
+			{ ...wordChoice, prompt: { kind: 'audio', ref: '再见' } },
+			readAloud
+		];
+
 		// Act
-		const [step] = listenSpeakSteps(
-			content([{ ...wordChoice, prompt: { kind: 'audio', ref: '再见' } }])
-		);
+		const ids = listenSpeakSteps(content(items)).map((s) => s.id);
 
 		// Assert
-		expect(step).toMatchObject({ kind: 'choice', audio: undefined });
+		expect(ids).toEqual(['q-s01']);
 	});
 
 	it('Given_ReadAloud_When_SpeakSteps_Then_SentenceHanziSpokenPinyinMeaning', () => {
