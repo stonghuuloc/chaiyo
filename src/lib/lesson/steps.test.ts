@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import Card from './steps/Card.svelte';
 import Choice from './steps/Choice.svelte';
 import Pinyin from './steps/Pinyin.svelte';
 import Dialogue from './steps/Dialogue.svelte';
@@ -78,6 +79,10 @@ describe('step views', () => {
 
 	it('Given_WriteKind_When_ViewOf_Then_ReturnsWrite', () => {
 		expect(viewOf('write').default).toBe(Write);
+	});
+
+	it('Given_CardKind_When_ViewOf_Then_ReturnsCard', () => {
+		expect(viewOf('card').default).toBe(Card);
 	});
 
 	it('Given_UnknownKind_When_ViewOf_Then_Throws', () => {

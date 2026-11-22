@@ -1,4 +1,5 @@
 import type { Component } from 'svelte';
+import type { Step as CardStep } from './steps/Card.svelte';
 import type { Step as ChoiceStep } from './steps/Choice.svelte';
 import type { Step as DialogueStep } from './steps/Dialogue.svelte';
 import type { Step as GrammarStep } from './steps/Grammar.svelte';
@@ -19,7 +20,8 @@ export type LessonStep =
 	| SpeakStep
 	| ToneStep
 	| WordStep
-	| WriteStep;
+	| WriteStep
+	| CardStep;
 
 type View = { default: Component<StepProps<LessonStep>>; kind: string };
 
