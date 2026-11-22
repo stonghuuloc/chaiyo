@@ -20,6 +20,7 @@
 
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import TapText from '#lib/lookup/TapText.svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import Pills from '../Pills.svelte';
 	import { getPrefs } from '../prefs.svelte';
@@ -134,7 +135,9 @@
 					: 'border-ruled-line bg-white/40'}"
 				onclick={() => void playLine(i)}
 			>
-				<span data-part="line-hanzi" class="block font-hanzi text-[24px]">{line.hanzi}</span>
+				<span data-part="line-hanzi" class="block font-hanzi text-[24px]"
+					><TapText sentenceId={line.id} hanzi={line.hanzi} /></span
+				>
 				{#if prefs?.pinyin ?? true}
 					<span data-part="line-pinyin" class="block text-label text-graphite">{line.pinyin}</span>
 				{/if}

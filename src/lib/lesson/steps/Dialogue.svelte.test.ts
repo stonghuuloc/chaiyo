@@ -3,7 +3,20 @@ import { player } from '#lib/audio/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { DisplayPrefs, PREFS } from '../prefs.svelte';
 import type { Answer, Cta } from '../types';
+import type { LookupContext } from '#lib/lookup/context';
+import WithLookup from '../../../test/WithLookup.svelte';
 import Dialogue, { type Step } from './Dialogue.svelte';
+
+const lookup = vi.fn(async (sentenceId: string, i: number) => ({
+	hanzi: '你',
+	pinyin: 'nǐ',
+	hanviet: 'nễ',
+	meaning: 'bạn',
+	sentenceId,
+	start: i
+}));
+
+vi.mock('#lib/catalog/app.js', () => ({ catalog: { lookup } }));
 
 const pending: { key: string; end: (ended: boolean) => void }[] = [];
 
@@ -110,6 +123,7 @@ afterEach(() => {
 	pending.length = 0;
 	vi.mocked(player.playToEnd).mockClear();
 	vi.mocked(player.pause).mockClear();
+	lookup.mockClear();
 });
 
 describe('Dialogue', () => {
@@ -297,5 +311,69 @@ describe('Dialogue', () => {
 		expect(target!.querySelectorAll('[data-part="pill"]')).toHaveLength(0);
 		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
 		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(4);
+	});
+
+	describe('with a lookup host', () => {
+		const mountWithLookup = async () => {
+			const ctx: LookupContext = { open: vi.fn(), hit: () => null };
+			target = document.createElement('div');
+			document.body.append(target);
+			app = mount(WithLookup, {
+				target,
+				props: {
+					ctx,
+					view: Dialogue,
+					props: {
+						step: step(),
+						mode: 'feedback',
+						last: false,
+						cta: () => {},
+						next: () => {}
+					}
+				}
+			}) as Record<string, unknown>;
+			await settle();
+			return ctx;
+		};
+
+		const tap = async (el: Element) => {
+			el.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }));
+			await new Promise((r) => setTimeout(r, 0));
+			await settle();
+		};
+
+		const line = (n: number) =>
+			target!.querySelectorAll('[data-part="dialogue-line"]')[n] as HTMLElement;
+
+		it('Given_LineHanzi_When_Tap_Then_LookupNotReplay', async () => {
+			// Arrange
+			const ctx = await mountWithLookup();
+			// Act
+			await tap(line(0).querySelector('[data-i="1"]')!);
+			// Assert
+			expect(lookup).toHaveBeenCalledWith('s1', 1);
+			expect(ctx.open).toHaveBeenCalledOnce();
+			expect(player.playToEnd).not.toHaveBeenCalled();
+		});
+
+		it('Given_LinePinyin_When_Tap_Then_Replays', async () => {
+			// Arrange
+			await mountWithLookup();
+			// Act
+			await tap(line(0).querySelector('[data-part="line-pinyin"]')!);
+			// Assert
+			expect(lookup).not.toHaveBeenCalled();
+			expect(player.playToEnd).toHaveBeenCalledTimes(1);
+		});
+
+		it('Given_Punctuation_When_Tap_Then_Replays', async () => {
+			// Arrange
+			await mountWithLookup();
+			// Act
+			await tap(line(0).querySelector('[lang="zh-Hans"]')!);
+			// Assert
+			expect(lookup).not.toHaveBeenCalled();
+			expect(player.playToEnd).toHaveBeenCalledTimes(1);
+		});
 	});
 });
