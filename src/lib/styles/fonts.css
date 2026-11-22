@@ -36,7 +36,7 @@
 @font-face {
 	font-family: 'Onest';
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 	font-weight: 400;
 	src: url('../assets/fonts/onest-pinyin-400.woff2') format('woff2');
 }
@@ -44,7 +44,7 @@
 @font-face {
 	font-family: 'Onest';
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 	font-weight: 500;
 	src: url('../assets/fonts/onest-pinyin-500.woff2') format('woff2');
 }
@@ -52,7 +52,7 @@
 @font-face {
 	font-family: 'Onest';
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 	font-weight: 600;
 	src: url('../assets/fonts/onest-pinyin-600.woff2') format('woff2');
 }

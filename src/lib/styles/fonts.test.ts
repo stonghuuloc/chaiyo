@@ -66,15 +66,17 @@ describe('self-hosted fonts', () => {
 		expect(wanted.filter((w) => !declared.has(w))).toEqual([]);
 	});
 
-	it('Given_FontFaces_Then_LatinFacesSwapAndKaishuBlocks', () => {
+	it('Given_FontFaces_Then_OnestAndKaishuBlockOtherLatinSwap', () => {
 		// Arrange
 		const kaishu = faces.filter((f) => f.family === 'AR PL UKai CN');
-		const latin = faces.filter((f) => f.family !== 'AR PL UKai CN');
+		const onest = faces.filter((f) => f.family === 'Onest');
+		const other = faces.filter((f) => f.family !== 'AR PL UKai CN' && f.family !== 'Onest');
 		// Act
-		const wrong = latin.filter((f) => f.display !== 'swap');
+		const wrong = other.filter((f) => f.display !== 'swap');
 		// Assert
 		expect(kaishu.map((f) => f.display)).toEqual(['block']);
-		expect(latin.length).toBeGreaterThanOrEqual(5);
+		expect(onest.map((f) => f.display)).toEqual(['block', 'block', 'block']);
+		expect(other.map((f) => f.family)).toEqual(['Literata', 'Literata']);
 		expect(wrong).toEqual([]);
 	});
 
