@@ -394,5 +394,14 @@
 	"chy43s2_back": "Quay lại",
 	"chy43s2_empty_title": "Chưa có từ nào",
 	"chy43s2_empty_body": "Học Bài 1 để có từ đầu tiên.",
-	"chy43s2_empty_cta": "Học Bài 1"
+	"chy43s2_empty_cta": "Học Bài 1",
+	"practice_run_great": "Ngon lành cành đào!",
+	"practice_run_ok": "Xong buổi luyện rồi!",
+	"practice_run_hard": "Hôm nay hơi khó nhằn ha",
+	"practice_run_again": "Hẹn mai gặp lại",
+	"practice_run_known": "Thuộc rồi",
+	"practice_run_back": "Về Luyện tập",
+	"practice_run_score_the": "Thẻ từ {right}/{total}",
+	"practice_run_score_nghe": "Nghe {right}/{total}",
+	"practice_run_score_viet": "Viết chữ {right}/{total}"
 }
