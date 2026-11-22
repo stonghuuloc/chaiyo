@@ -2,6 +2,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import { m } from '#lib/paraglide/messages.js';
 import { play } from '#lib/audio/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { DisplayPrefs, PREFS, type Stored } from '../prefs.svelte';
 import type { Answer, Cta, Mode } from '../types';
 import Grammar, { type Step } from './Grammar.svelte';
 
@@ -27,13 +28,14 @@ const step: Step = {
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
-const mountGrammar = (props: { mode?: Mode; step?: Step } = {}) => {
+const mountGrammar = (props: { mode?: Mode; step?: Step; prefs?: DisplayPrefs } = {}) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Grammar, {
 		target,
+		context: props.prefs ? new Map([[PREFS, props.prefs]]) : undefined,
 		props: {
 			step: props.step ?? step,
 			mode: props.mode ?? 'feedback',
@@ -50,6 +52,14 @@ const mountGrammar = (props: { mode?: Mode; step?: Step } = {}) => {
 		calls
 	};
 };
+
+const prefsWith = (init: Stored) =>
+	new DisplayPrefs({
+		level: 1,
+		key: 'k',
+		storage: { getItem: () => JSON.stringify(init), setItem: () => {} } as unknown as Storage
+	});
+const count = (part: string) => target!.querySelectorAll(`[data-part="${part}"]`).length;
 
 afterEach(() => {
 	if (app) unmount(app as never);
@@ -132,5 +142,54 @@ describe('Grammar', () => {
 		expect(cta().caret).toBe(true);
 		expect(calls).toHaveLength(1);
 		expect(calls[0]).toBeUndefined();
+	});
+
+	it('Given_MeaningOff_When_Render_Then_NoExampleVi', () => {
+		// Arrange
+		const prefs = prefsWith({ pinyin: null, meaning: false });
+
+		// Act
+		mountGrammar({ prefs });
+
+		// Assert
+		expect(count('example-vi')).toBe(0);
+		expect(count('example-pinyin')).toBe(2);
+		expect(count('pill')).toBe(2);
+	});
+
+	it('Given_PinyinOff_When_Render_Then_NoExamplePinyin', () => {
+		// Arrange
+		const prefs = prefsWith({ pinyin: false, meaning: null });
+
+		// Act
+		mountGrammar({ prefs });
+
+		// Assert
+		expect(count('example-pinyin')).toBe(0);
+		expect(count('example-vi')).toBe(2);
+	});
+
+	it('Given_PinyinOn_When_Render_Then_SlotsHaveNoPinyin', () => {
+		// Arrange
+		const prefs = prefsWith({ pinyin: true, meaning: true });
+
+		// Act
+		mountGrammar({ prefs });
+
+		// Assert
+		const slots = [...target!.querySelectorAll('[data-part="slot"]')].map((e) =>
+			e.textContent!.replace(/\s+/g, ' ').trim()
+		);
+		expect(slots).toEqual(['你 / 您 / 你们 người được chào', '好 luôn có']);
+		expect(target!.querySelectorAll('[data-part="slot"] .font-pinyin')).toHaveLength(0);
+		expect(count('example-pinyin')).toBe(2);
+	});
+
+	it('Given_NoPrefsContext_When_Render_Then_ExamplePinyinAndViShown', () => {
+		// Arrange / Act
+		mountGrammar();
+
+		// Assert
+		expect([count('pill'), count('example-pinyin'), count('example-vi')]).toEqual([0, 2, 2]);
 	});
 });

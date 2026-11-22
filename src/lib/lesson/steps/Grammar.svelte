@@ -18,9 +18,12 @@
 
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
+	import Pills from '../Pills.svelte';
+	import { getPrefs } from '../prefs.svelte';
 	import type { StepProps } from '../types';
 
 	let { step, cta, next }: StepProps<Step> = $props();
+	const prefs = getPrefs();
 
 	// Loaded on first tap: the player module reads $app/env/public, which step views must not pull in at import time.
 	const playClip = async (key: string) => (await import('#lib/audio/index.js')).play(key);
@@ -80,6 +83,7 @@
 	<p id="grammar-more" hidden={!open} class="mt-2 text-graphite">{step.more}</p>
 {/if}
 
+{#if prefs}<Pills {prefs} />{/if}
 <h3 class="mt-6 text-label font-semibold tracking-wider text-graphite uppercase">
 	{m.grammar_examples()}
 </h3>
@@ -90,8 +94,14 @@
 		>
 			<div class="flex flex-1 flex-col">
 				<span class="font-hanzi text-[22px]">{ex.hanzi}</span>
-				<span class="font-pinyin text-chip text-graphite">{ex.pinyin}</span>
-				<span class="text-chip text-graphite">{ex.vi}</span>
+				{#if prefs?.pinyin ?? true}
+					<span data-part="example-pinyin" class="font-pinyin text-chip text-graphite"
+						>{ex.pinyin}</span
+					>
+				{/if}
+				{#if prefs?.meaning ?? true}
+					<span data-part="example-vi" class="text-chip text-graphite">{ex.vi}</span>
+				{/if}
 			</div>
 			{#if ex.audio}
 				<button
