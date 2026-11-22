@@ -124,11 +124,13 @@ sections:
         tests: { words: [ 对不起 ], grammar: [ h1-g02 ] }
         prompt: { kind: vi, text: Bạn làm đổ trà của bạn mình. Nói gì? }
         rubric: [ Nói 对不起 (xin lỗi) bằng một câu ngắn ]
+        answer: s-h1-01-03
       - id: q-h1-01-f02
         type: freeAnswer
         tests: { words: [ 您 ], grammar: [ h1-g01 ] }
         prompt: { kind: vi, text: Bạn gặp cô giáo ở cổng trường. Chào cô. }
         rubric: [ Chào bằng 您好 (lịch sự), không dùng 你好 ]
+        answer: s-h1-01-08
   writing:
     chars: [ 你, 好, 们 ]
 gate:

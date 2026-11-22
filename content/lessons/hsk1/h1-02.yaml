@@ -148,6 +148,7 @@ sections:
         tests: { words: [ 什么 ], grammar: [ h1-g05 ] }
         prompt: { kind: vi, text: Hỏi tên một bạn mới. }
         rubric: [ Hỏi bằng 你叫什么名字？ ]
+        answer: s-h1-02-10
   writing:
     chars: [ 我, 他, 叫 ]
 gate:
