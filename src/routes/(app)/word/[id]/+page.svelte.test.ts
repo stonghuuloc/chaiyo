@@ -1,8 +1,18 @@
 import { flushSync, mount, unmount } from 'svelte';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { PageProps } from './$types';
 import type { WordView } from './word-view';
 import Page from './+page.svelte';
+
+const nav = vi.hoisted(() => {
+	const after: ((n: unknown) => void)[] = [];
+	return {
+		after,
+		afterNavigate: (fn: (n: unknown) => void) => after.push(fn),
+		snapshot: vi.fn()
+	};
+});
+vi.mock('$app/navigation', () => nav);
 
 const view = (hanzi: string, vi: string): WordView => ({
 	hanzi,
@@ -49,6 +59,8 @@ let target: HTMLElement | undefined;
 let app: ReturnType<typeof mount> | undefined;
 
 afterEach(() => {
+	nav.after.length = 0;
+	vi.restoreAllMocks();
 	if (app) unmount(app);
 	target?.remove();
 	app = undefined;
@@ -82,5 +94,61 @@ describe('word page', () => {
 		flushSync();
 		// Assert
 		expect(toggle().textContent?.trim()).toBe('Xem thêm 1 nghĩa ít gặp');
+	});
+
+	it('back link reads Quay lại and points at /practice/words', () => {
+		// Arrange / Act
+		const { root } = mountPage(pageProps('好', view('好', 'tốt')));
+
+		// Assert
+		const a = root.querySelector('a')!;
+		expect(a.textContent?.trim()).toBe('Quay lại');
+		expect(a.getAttribute('href')).toMatch(/\/practice\/words$/);
+	});
+
+	it('after an in-app navigation, click calls history.back once and prevents default', () => {
+		// Arrange
+		const back = vi.spyOn(history, 'back').mockImplementation(() => {});
+		const { root } = mountPage(pageProps('好', view('好', 'tốt')));
+		nav.after[0]({ from: {}, type: 'link' });
+		const click = new MouseEvent('click', { bubbles: true, cancelable: true });
+
+		// Act
+		root.querySelector('a')!.dispatchEvent(click);
+
+		// Assert
+		expect(back).toHaveBeenCalledTimes(1);
+		expect(click.defaultPrevented).toBe(true);
+	});
+
+	it('after a direct load (from null), click does not call history.back', () => {
+		// Arrange
+		const back = vi.spyOn(history, 'back').mockImplementation(() => {});
+		const { root } = mountPage(pageProps('好', view('好', 'tốt')));
+		nav.after[0]({ from: null, type: 'enter' });
+		const click = new MouseEvent('click', { bubbles: true, cancelable: true });
+		click.preventDefault = vi.fn();
+
+		// Act
+		root.querySelector('a')!.dispatchEvent(click);
+
+		// Assert
+		expect(back).not.toHaveBeenCalled();
+		expect(click.preventDefault).not.toHaveBeenCalled();
+	});
+
+	it('a popstate arrival does not call history.back', () => {
+		// Arrange
+		const back = vi.spyOn(history, 'back').mockImplementation(() => {});
+		const { root } = mountPage(pageProps('好', view('好', 'tốt')));
+		nav.after[0]({ from: {}, type: 'popstate' });
+		const click = new MouseEvent('click', { bubbles: true, cancelable: true });
+		click.preventDefault = vi.fn();
+
+		// Act
+		root.querySelector('a')!.dispatchEvent(click);
+
+		// Assert
+		expect(back).not.toHaveBeenCalled();
 	});
 });
