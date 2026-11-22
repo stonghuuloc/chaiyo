@@ -7,6 +7,7 @@ import type { Step as OrderStep } from './steps/Order.svelte';
 import type { Step as PinyinStep } from './steps/Pinyin.svelte';
 import type { Step as SpeakStep } from './steps/Speak.svelte';
 import type { Step as ToneStep } from './steps/Tone.svelte';
+import type { Step as VietStep } from './steps/Viet.svelte';
 import type { Step as WordStep } from './steps/Word.svelte';
 import type { Step as WriteStep } from './steps/Write.svelte';
 import type { StepProps } from './types';
@@ -19,6 +20,7 @@ export type LessonStep =
 	| PinyinStep
 	| SpeakStep
 	| ToneStep
+	| VietStep
 	| WordStep
 	| WriteStep
 	| CardStep;
