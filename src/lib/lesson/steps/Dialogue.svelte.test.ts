@@ -1,6 +1,7 @@
 import { flushSync, mount, tick, unmount } from 'svelte';
 import { player } from '#lib/audio/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { DisplayPrefs, PREFS } from '../prefs.svelte';
 import type { Answer, Cta } from '../types';
 import Dialogue, { type Step } from './Dialogue.svelte';
 
@@ -58,13 +59,14 @@ const settle = async () => {
 	flushSync();
 };
 
-const mountDialogue = async (s: Step = step()) => {
+const mountDialogue = async (s: Step = step(), prefs?: DisplayPrefs) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Dialogue, {
 		target,
+		context: prefs ? new Map([[PREFS, prefs]]) : undefined,
 		props: {
 			step: s,
 			mode: 'feedback',
@@ -93,6 +95,12 @@ const endCurrent = async (ended = true) => {
 	pending.shift()!.end(ended);
 	await settle();
 };
+
+const pill = (k: string) =>
+	target!.querySelector<HTMLButtonElement>(`[data-part="pill"][data-pill="${k}"]`)!;
+
+const memory = (init: object): Storage =>
+	({ getItem: () => JSON.stringify(init), setItem: () => {} }) as unknown as Storage;
 
 afterEach(() => {
 	if (app) unmount(app as never);
@@ -226,5 +234,68 @@ describe('Dialogue', () => {
 
 		// Assert
 		expect(player.pause).toHaveBeenCalledTimes(1);
+	});
+
+	it('Given_MeaningOff_When_Render_Then_NoLineViAndHanziKept', async () => {
+		// Arrange
+		const storage = memory({ pinyin: null, meaning: false });
+		const prefs = new DisplayPrefs({ level: 1, key: 'k', storage });
+
+		// Act
+		await mountDialogue(step(), prefs);
+
+		// Assert
+		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(0);
+		expect(target!.querySelectorAll('[data-part="line-hanzi"]')).toHaveLength(4);
+		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
+		expect(pill('meaning').getAttribute('aria-pressed')).toBe('false');
+	});
+
+	it('Given_MeaningOn_When_ClickMeaningPillTwice_Then_ViHiddenThenBack', async () => {
+		// Arrange
+		const prefs = new DisplayPrefs({ level: 1, key: 'k' });
+		await mountDialogue(step(), prefs);
+
+		// Act
+		await click(() => pill('meaning').click());
+		const off = {
+			pressed: pill('meaning').getAttribute('aria-pressed'),
+			vi: target!.querySelectorAll('[data-part="line-vi"]').length
+		};
+		await click(() => pill('meaning').click());
+
+		// Assert
+		expect(off).toEqual({ pressed: 'false', vi: 0 });
+		expect(pill('meaning').getAttribute('aria-pressed')).toBe('true');
+		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(4);
+	});
+
+	it('Given_PinyinOffLevel3_When_TapPinyinPill_Then_PinyinSpansEqualLines', async () => {
+		// Arrange
+		const prefs = new DisplayPrefs({ level: 3, key: 'k' });
+		await mountDialogue(step(), prefs);
+		const before = {
+			pressed: pill('pinyin').getAttribute('aria-pressed'),
+			n: target!.querySelectorAll('[data-part="line-pinyin"]').length
+		};
+
+		// Act
+		await click(() => pill('pinyin').click());
+
+		// Assert
+		expect(before).toEqual({ pressed: 'false', n: 0 });
+		expect(pill('pinyin').getAttribute('aria-pressed')).toBe('true');
+		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
+		expect(player.playToEnd).not.toHaveBeenCalled();
+	});
+
+	it('Given_NoPrefsContext_When_Render_Then_PinyinAndViShown', async () => {
+		// Arrange / Act
+		await mountDialogue();
+
+		// Assert
+		expect(target!.querySelectorAll('[data-part="pill"]')).toHaveLength(0);
+		expect(target!.querySelectorAll('[data-part="line-pinyin"]')).toHaveLength(4);
+		expect(target!.querySelectorAll('[data-part="line-vi"]')).toHaveLength(4);
 	});
 });
