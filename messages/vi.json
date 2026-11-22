@@ -207,5 +207,21 @@
 	"listen_tone_neutral": "Thanh nhẹ",
 	"listen_tone_answer": "thanh {n} ({pinyin})",
 	"listen_word_ask": "Nghe và chọn từ",
-	"listen_meaning_ask": "Nghe và chọn nghĩa"
+	"listen_meaning_ask": "Nghe và chọn nghĩa",
+	"hub_kicker": "HSK{level} · {topic} · Bài {order}",
+	"hub_meta": "{words} từ · {grammar} điểm ngữ pháp · khoảng {min} phút",
+	"hub_progress": "{done}/{total} phần",
+	"hub_sections": "Các phần",
+	"hub_section_words": "Từ mới",
+	"hub_section_grammar": "Ngữ pháp",
+	"hub_section_dialogue": "Hội thoại",
+	"hub_section_listenSpeak": "Nghe & nói",
+	"hub_section_writing": "Luyện viết",
+	"hub_words_todo": "{n} từ",
+	"hub_words_now": "{n}/{total} từ · tiếp ở {word}",
+	"hub_dialogue": "{parts} đoạn · {lines} câu",
+	"hub_listen": "{n} bài · cần micro",
+	"hub_writing": "Viết {chars}",
+	"hub_resume": "Tiếp tục: {name}",
+	"hub_start": "Bắt đầu: {name}"
 }
