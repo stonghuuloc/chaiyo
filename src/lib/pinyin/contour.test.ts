@@ -2,6 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { CONTOUR } from './contour';
 
 describe('CONTOUR', () => {
+	it('Given_NeutralTone_When_ReadContour_Then_ADot', () => {
+		// Act
+		const d = CONTOUR[5];
+
+		// Assert
+		expect(d).toBe('M20 14h0.01');
+	});
+
 	it('Given_FourTones_When_ReadContour_Then_EachIsAnSvgPath', () => {
 		// Arrange
 		const tones = [1, 2, 3, 4] as const;

@@ -25,7 +25,7 @@ const step: Step = {
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
-const mountTone = () => {
+const mountTone = (s: Step = step) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
@@ -33,7 +33,7 @@ const mountTone = () => {
 	app = mount(Tone, {
 		target,
 		props: {
-			step,
+			step: s,
 			mode: 'feedback',
 			last: false,
 			cta: (c: Cta) => (cta = c),
@@ -65,7 +65,7 @@ afterEach(() => {
 });
 
 describe('Tone', () => {
-	it('Given_ToneStep_When_Mount_Then_FourContourOptionsAndClipPlays', async () => {
+	it('Given_ToneStep_When_Mount_Then_FiveContourOptionsAndClipPlays', async () => {
 		// Arrange
 		audio.player.play.mockClear();
 
@@ -78,10 +78,28 @@ describe('Tone', () => {
 			m.listen_tone_option({ n: 1 }),
 			m.listen_tone_option({ n: 2 }),
 			m.listen_tone_option({ n: 3 }),
-			m.listen_tone_option({ n: 4 })
+			m.listen_tone_option({ n: 4 }),
+			m.listen_tone_neutral()
 		]);
 		expect(options().every((b) => b.querySelector('svg path'))).toBe(true);
 		expect(audio.player.play).toHaveBeenCalledWith('words/hao');
+	});
+
+	it('Given_NeutralToneStep_When_PickFifth_Then_RightAnswer', () => {
+		// Arrange
+		const ui = mountTone({ ...step, answer: 5, syllable: 'ma' });
+
+		// Act
+		ui.options()[4].click();
+		flushSync();
+		ui.cta().onclick();
+		flushSync();
+
+		// Assert
+		expect(ui.options()[4].getAttribute('data-mark')).toBe('right');
+		expect(target!.textContent).toContain(m.lesson_right());
+		ui.cta().onclick();
+		expect(ui.calls).toEqual([expect.objectContaining({ pick: '5', correct: true })]);
 	});
 
 	it('Given_RightTone_When_CheckAndContinue_Then_NextGetsCorrectAnswer', () => {

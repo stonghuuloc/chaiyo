@@ -20,7 +20,7 @@
 
 	let { step, mode, last, cta, next }: StepProps<Step> = $props();
 
-	const tones = [1, 2, 3, 4] as const;
+	const tones = [1, 2, 3, 4, 5] as const;
 	let pick = $state<number | null>(null);
 	let phase = $state<'picking' | 'graded'>('picking');
 	const shown = performance.now();
@@ -59,7 +59,7 @@
 	<ClipCast clip={step.audio} label={step.ask} />
 {/if}
 
-<div class="mt-5 grid grid-cols-2 gap-2 md:grid-cols-4">
+<div class="mt-5 grid grid-cols-2 gap-2 md:grid-cols-5">
 	{#each tones as tone (tone)}
 		{@const mark = graded?.marks[tone]}
 		<button
@@ -88,7 +88,7 @@
 					stroke-linejoin="round"
 				/>
 			</svg>
-			<span>{m.listen_tone_option({ n: tone })}</span>
+			<span>{tone === 5 ? m.listen_tone_neutral() : m.listen_tone_option({ n: tone })}</span>
 		</button>
 	{/each}
 </div>
