@@ -1,0 +1,75 @@
+import { flushSync, mount, unmount } from 'svelte';
+import type { LessonContent } from '#lib/catalog/index.js';
+import type { Ledger } from '#lib/ledger/index.js';
+import { m } from '#lib/paraglide/messages.js';
+import { initialState } from '#lib/study/index.js';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import Page from './+page.svelte';
+
+const ledger = { state: () => initialState(), record: async () => [] } as unknown as Ledger;
+vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
+
+const choice = (i: number) => ({
+	id: `q${i}`,
+	type: 'choice',
+	tests: {},
+	prompt: { kind: 'vi', text: `Câu ${i}` },
+	optionKind: 'hanzi',
+	options: ['好', '你'],
+	answer: 0
+});
+
+const lesson = (n: number) =>
+	({
+		contentSha: 'sha',
+		lesson: {
+			id: 'h1-01',
+			gate: { pool: Array.from({ length: n }, (_, i) => choice(i)), draw: 10 }
+		},
+		words: [],
+		sentences: []
+	}) as unknown as LessonContent;
+
+let target: HTMLDivElement | undefined;
+let app: ReturnType<typeof mount> | undefined;
+
+const mountPage = (data: { lesson: LessonContent; session: unknown }) => {
+	target = document.createElement('div');
+	document.body.append(target);
+	app = mount(Page, { target, props: { data, params: { id: 'h1-01' } } as never });
+	flushSync();
+	return target;
+};
+
+afterEach(() => {
+	if (app) unmount(app);
+	target?.remove();
+	target = undefined;
+	app = undefined;
+});
+
+describe('gate page', () => {
+	it('Given_NoSession_When_Render_Then_Placeholder', () => {
+		// Arrange
+		const data = { lesson: lesson(12), session: null };
+
+		// Act
+		const root = mountPage(data);
+
+		// Assert
+		expect(root.querySelector('h1')?.textContent).toBe(m.screen_gate());
+	});
+
+	it('Given_PoolOf12_When_Render_Then_TenStepRunInTestMode', async () => {
+		// Arrange
+		const data = { lesson: lesson(12), session: { user: { id: 'u1' } } };
+
+		// Act
+		const root = mountPage(data);
+		await vi.waitFor(() => expect(root.querySelectorAll('[data-seg] i')).toHaveLength(10));
+
+		// Assert
+		expect(root.textContent).toContain(m.gate_hint());
+		expect(root.querySelector('[data-part="exit"]')?.tagName).toBe('BUTTON');
+	});
+});
