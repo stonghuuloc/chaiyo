@@ -5,6 +5,7 @@ import type { LessonContent } from '#lib/catalog/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
 import { initialState, type StudyEvent } from '#lib/study/index.js';
 import type { Lesson, Primer } from '#lib/content/schemas.js';
+import { DisplayPrefs } from '#lib/lesson/prefs.svelte.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import DialogueSection from './DialogueSection.svelte';
 
@@ -15,6 +16,15 @@ const ledger = {
 } as unknown as Ledger;
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
+let serverRow: { show_pinyin: boolean | null; show_meaning: boolean | null } | null = null;
+vi.mock('#lib/supabase.js', () => ({
+	supabase: {
+		from: () => ({
+			select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: serverRow }) }) }),
+			upsert: async () => ({ error: null })
+		})
+	}
+}));
 vi.mock('#lib/audio/index.js', () => ({
 	player: { playToEnd: vi.fn(async () => true), pause: vi.fn() }
 }));
@@ -93,7 +103,7 @@ const settle = async () => {
 
 const mountSection = async (
 	c: LessonContent,
-	props: { session?: Session | null; ledger?: Promise<Ledger> } = {}
+	props: { session?: Session | null; ledger?: Promise<Ledger>; prefs?: DisplayPrefs } = {}
 ) => {
 	target = document.createElement('div');
 	document.body.append(target);
@@ -111,7 +121,13 @@ const press = async () => {
 	await settle();
 };
 
+const pill = (k: string) =>
+	target!.querySelector<HTMLButtonElement>(`[data-part="pill"][data-pill="${k}"]`)!;
+const count = (part: string) => target!.querySelectorAll(`[data-part="${part}"]`).length;
+
 afterEach(() => {
+	serverRow = null;
+	localStorage.clear();
 	recorded = [];
 	if (app) unmount(app as never);
 	target?.remove();
@@ -195,5 +211,68 @@ describe('DialogueSection', () => {
 		// Assert
 		expect(target!.textContent).toContain(m.screen_lesson_section());
 		expect(target!.querySelector('.actions')).toBeNull();
+	});
+
+	it('Given_MeaningOffOnPart1_When_Continue_Then_Part2MeaningPillUnpressed', async () => {
+		// Arrange
+		await mountSection(content());
+		pill('meaning').click();
+		flushSync();
+
+		// Act
+		await press();
+		await press();
+
+		// Assert
+		expect(target!.textContent).toContain('Đoạn 2/2');
+		expect(pill('meaning').getAttribute('aria-pressed')).toBe('false');
+		expect(count('line-vi')).toBe(0);
+		expect(count('line-hanzi')).toBe(1);
+	});
+
+	it('Given_Level3Content_When_Mount_Then_PinyinPillUnpressedAndNoPinyin', async () => {
+		// Arrange
+		const c = content();
+		c.lesson = { ...(c.lesson as Lesson), level: 3 };
+		await mountSection(c);
+		const before = [pill('pinyin').getAttribute('aria-pressed'), count('line-pinyin')];
+
+		// Act
+		pill('pinyin').click();
+		flushSync();
+
+		// Assert
+		expect(before).toEqual(['false', 0]);
+		expect(pill('meaning').getAttribute('aria-pressed')).toBe('true');
+		expect(count('line-pinyin')).toBe(count('line-hanzi'));
+		expect(count('line-pinyin')).toBe(2);
+	});
+
+	it('Given_ServerMeaningOff_When_Mount_Then_MeaningHiddenAndStoredForLearner', async () => {
+		// Arrange
+		serverRow = { show_pinyin: null, show_meaning: false };
+
+		// Act
+		await mountSection(content());
+
+		// Assert
+		expect(count('line-vi')).toBe(0);
+		expect(JSON.parse(localStorage.getItem('chaiyo-prefs-u1')!)).toEqual({
+			pinyin: null,
+			meaning: false
+		});
+	});
+
+	it('Given_InjectedPrefs_When_Mount_Then_SectionUsesThem', async () => {
+		// Arrange
+		const prefs = new DisplayPrefs({ level: 1, key: 'k' });
+		await prefs.toggle('pinyin');
+
+		// Act
+		await mountSection(content(), { session: null, ledger: Promise.resolve(ledger), prefs });
+
+		// Assert
+		expect(pill('pinyin').getAttribute('aria-pressed')).toBe('false');
+		expect(count('line-pinyin')).toBe(0);
 	});
 });

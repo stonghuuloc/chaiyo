@@ -1,19 +1,42 @@
 <script lang="ts">
 	import type { Session } from '@supabase/supabase-js';
+	import { onMount, untrack } from 'svelte';
 	import type { LessonContent } from '#lib/catalog/index.js';
 	import { learnerLedger } from '#lib/learner/index.js';
 	import type { Ledger } from '#lib/ledger/index.js';
 	import Done from '#lib/lesson/Done.svelte';
+	import { DisplayPrefs, setPrefs } from '#lib/lesson/prefs.svelte.js';
 	import { doneNext, sectionName } from '#lib/lesson/done.js';
 	import StepRunner from '#lib/lesson/StepRunner.svelte';
 	import StreakPopup from '#lib/lesson/StreakPopup.svelte';
 	import { m } from '#lib/paraglide/messages.js';
+	import { supabase } from '#lib/supabase.js';
 	import type { StudyEvent } from '#lib/study/index.js';
 	import { resolve } from '$app/paths';
 	import { dialogueSteps } from './dialogue';
 
-	type Props = { lesson: LessonContent; session: Session | null; ledger?: Promise<Ledger> };
-	let { lesson, session, ledger }: Props = $props();
+	type Props = {
+		lesson: LessonContent;
+		session: Session | null;
+		ledger?: Promise<Ledger>;
+		prefs?: DisplayPrefs;
+	};
+	let { lesson, session, ledger, prefs: given }: Props = $props();
+	const prefs = untrack(() => {
+		const uid = session?.user.id;
+		return (
+			given ??
+			new DisplayPrefs({
+				level: lesson.lesson.level,
+				key: `chaiyo-prefs-${uid ?? 'local'}`,
+				uid,
+				client: uid ? supabase : undefined,
+				storage: localStorage
+			})
+		);
+	});
+	setPrefs(prefs);
+	onMount(() => void prefs.load());
 
 	const steps = $derived(dialogueSteps(lesson));
 	const parts = $derived(steps.filter((s) => s.kind === 'dialogue').length);

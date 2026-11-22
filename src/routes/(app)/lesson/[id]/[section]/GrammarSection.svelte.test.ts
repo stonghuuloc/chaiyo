@@ -15,6 +15,14 @@ const ledger = {
 } as unknown as Ledger;
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
+vi.mock('#lib/supabase.js', () => ({
+	supabase: {
+		from: () => ({
+			select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: null }) }) }),
+			upsert: async () => ({ error: null })
+		})
+	}
+}));
 
 const session = { user: { id: 'u1' } } as never;
 
@@ -91,12 +99,16 @@ const content = (over: Partial<Lesson> = {}, done?: string): LessonContent => {
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
-const mountSection = async (c: LessonContent, s: Session | null = session) => {
+const mountSection = async (
+	c: LessonContent,
+	s: Session | null = session,
+	more: { ledger?: Promise<Ledger> } = {}
+) => {
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(GrammarSection, {
 		target,
-		props: { lesson: c, session: s }
+		props: { lesson: c, session: s, ...more }
 	}) as Record<string, unknown>;
 	flushSync();
 	await tick();
@@ -127,6 +139,7 @@ const finish = async (cta: () => HTMLButtonElement | null) => {
 };
 
 afterEach(() => {
+	localStorage.clear();
 	recorded = [];
 	if (app) unmount(app as never);
 	target?.remove();
@@ -227,5 +240,32 @@ describe('GrammarSection', () => {
 		// Assert
 		expect(target!.textContent).toContain(m.screen_lesson_section());
 		expect(target!.querySelector('.actions')).toBeNull();
+	});
+
+	it('Given_Level1Content_When_Mount_Then_ExamplePinyinShown', async () => {
+		// Arrange
+		const c = content();
+		c.grammar[0].examples = ['s1'];
+		c.sentences = [
+			{ id: 's1', hanzi: '您好！', pinyin: 'nín hǎo', vi: 'Chào thầy cô!', seg: [] }
+		] as LessonContent['sentences'];
+
+		// Act
+		await mountSection(c);
+
+		// Assert
+		const pinyin = [...target!.querySelectorAll('[data-part="example-pinyin"]')];
+		expect(pinyin.map((e) => e.textContent)).toEqual(['nín hǎo']);
+		expect(
+			target!.querySelector('[data-part="pill"][data-pill="pinyin"]')!.getAttribute('aria-pressed')
+		).toBe('true');
+	});
+
+	it('Given_NullSessionWithLedger_When_Mount_Then_RunnerUsesThatLedger', async () => {
+		// Arrange / Act
+		const { cta } = await mountSection(content(), null, { ledger: Promise.resolve(ledger) });
+
+		// Assert
+		expect(cta()!.textContent).toContain(m.grammar_start());
 	});
 });
