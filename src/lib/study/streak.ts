@@ -1,7 +1,7 @@
 import { localDate } from './dates';
 import type { State, StudyEvent } from './types';
 
-const MAX_FREEZES = 2;
+export const MAX_FREEZES = 2;
 
 const addDays = (day: string, n: number) => {
 	const [y, m, d] = day.split('-').map(Number);
