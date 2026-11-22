@@ -1,6 +1,7 @@
+import { key } from './order';
 import type { Input } from './types';
 
-export const key = (i: Input) => ('kind' in i ? `s:${i.word}` : `a:${i.id}`);
+export { key };
 
 export type Row = { key: string; input: Input; synced: boolean };
 
