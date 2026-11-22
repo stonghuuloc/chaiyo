@@ -68,4 +68,33 @@ describe('/dev/practice', () => {
 		// Assert
 		expect(root.textContent).toContain('Viết câu, đoạn ngắn');
 	});
+
+	it('Given_Level3_When_Toggle_Then_Hsk1DaDo', () => {
+		// Arrange
+		const root = mountPage();
+		expect(root.querySelectorAll('[data-part=thi-lock]')).toHaveLength(5);
+
+		// Act
+		press(root, 'level', '3');
+		root.querySelector<HTMLButtonElement>('[data-part=thi-chip][data-level="1"]')!.click();
+		flushSync();
+
+		// Assert
+		expect(root.querySelector('[data-part=thi-row]')?.textContent).toContain(
+			'đã đỗ · làm lại bất cứ lúc nào'
+		);
+	});
+
+	it('Given_Words_When_Pick_Then_30TuDaHoc', () => {
+		// Arrange
+		const root = mountPage();
+
+		// Act
+		press(root, 'scenario', 'words');
+
+		// Assert
+		expect(root.querySelector('[data-part=mywords-link]')?.textContent).toContain(
+			'30 từ đã học và đã lưu'
+		);
+	});
 });
