@@ -249,6 +249,35 @@ describe('check 8 References', () => {
 			F,
 			'sections.listenSpeak.items[0].sentence'
 		));
+	it('flags an unknown freeAnswer answer sentence', () =>
+		only(
+			run((s) => {
+				lesson(s).sections.listenSpeak.items[0] = {
+					id: 'q-h1-01-f01',
+					type: 'freeAnswer',
+					prompt: { kind: 'vi', text: 'x' },
+					rubric: ['x'],
+					tests: {},
+					answer: 's-xx'
+				};
+			}),
+			8,
+			F,
+			'sections.listenSpeak.items[0].answer'
+		));
+	it('passes a freeAnswer whose answer names a sentence', () =>
+		expect(
+			run((s) => {
+				lesson(s).sections.listenSpeak.items[0] = {
+					id: 'q-h1-01-f01',
+					type: 'freeAnswer',
+					prompt: { kind: 'vi', text: 'x' },
+					rubric: ['x'],
+					tests: {},
+					answer: 's-h1-01-01'
+				};
+			})
+		).toEqual([]));
 	it('flags a duplicate sentence id', () =>
 		only(
 			run((s) =>
