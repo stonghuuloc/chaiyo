@@ -46,7 +46,7 @@ const bundle = (
 
 const content = (
 	items: unknown[],
-	sentences = [
+	sentences: LessonContent['sentences'] = [
 		{ ...sentence('s1', '不客气。', 'bù kèqi', 'Không có gì.', 'bú kèqi'), audio: 'dialogue/s1' }
 	]
 ) =>

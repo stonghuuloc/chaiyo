@@ -27,7 +27,7 @@ const content = {
 						id: 'q-h1-01-l02',
 						type: 'choice',
 						tests: {},
-						prompt: { kind: 'audio', ref: '你好' },
+						prompt: { kind: 'vi', text: 'Chọn từ đúng' },
 						optionKind: 'hanzi',
 						options: ['你好', '你们'],
 						answer: 0
