@@ -30,4 +30,22 @@ describe('attemptLines', () => {
 			{ id: 'b', step: 'q-h1-01-l02', pick: '你好', correct: true }
 		]);
 	});
+
+	it('Given_AttemptWithoutAnswer_When_AttemptLines_Then_PickIsNull', () => {
+		// Arrange
+		const input = {
+			id: 'c',
+			at: '2026-11-22T10:00:03Z',
+			questionId: 'q-h1-01-s01',
+			contentSha: 'sha',
+			correct: true,
+			ms: 10
+		};
+
+		// Act
+		const [line] = attemptLines([{ key: 'a:c', synced: false, input }]);
+
+		// Assert
+		expect(line.pick).toBeNull();
+	});
 });
