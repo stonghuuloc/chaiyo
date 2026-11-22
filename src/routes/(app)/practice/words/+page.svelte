@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
+	import { snapshot } from '$app/navigation';
 	import { SvelteSet } from 'svelte/reactivity';
 	import { catalog } from '#lib/catalog/app.js';
 	import { CURRICULUM } from '#lib/curriculum/index.js';
@@ -13,22 +14,37 @@
 	let { data }: PageProps = $props();
 
 	let study = $state<State>(initialState({ curriculum: CURRICULUM }));
+	let query = $state('');
+	let ready = $state(false);
+	snapshot({
+		capture: () => query,
+		restore: (value) => {
+			query = value;
+		}
+	});
 	let metas = $state.raw(new Map<string, WordMeta>());
 	const requested = new SvelteSet<string>();
 
 	$effect(() => {
 		const session = data.session;
 		study = initialState({ curriculum: CURRICULUM });
-		if (!session) return;
+		ready = false;
+		if (!session) {
+			ready = true;
+			return;
+		}
 		let live = true;
 		let off = () => {};
 		learnerLedger(session)
 			.then((ledger) => {
 				if (!live) return;
 				study = ledger.state();
+				ready = true;
 				off = ledger.subscribe((next) => (study = next));
 			})
-			.catch(() => {});
+			.catch(() => {
+				ready = true;
+			});
 		return () => {
 			live = false;
 			off();
@@ -58,4 +74,6 @@
 </script>
 
 <h1>{m.mywords_title()}</h1>
-<WordsList {rows} />
+{#if ready}
+	<WordsList {rows} bind:query />
+{/if}

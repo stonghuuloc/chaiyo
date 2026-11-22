@@ -39,7 +39,13 @@ const publish = (s: State) => {
 	for (const fn of listeners) fn(s);
 };
 
-vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
+const gate = vi.hoisted(() => ({ next: null as Promise<unknown> | null }));
+const nav = vi.hoisted(() => ({ snapshot: vi.fn() }));
+
+vi.mock('$app/navigation', () => nav);
+vi.mock('#lib/learner/index.js', () => ({
+	learnerLedger: async () => (gate.next ? gate.next : ledger)
+}));
 
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
@@ -67,6 +73,8 @@ afterEach(() => {
 	catalogCalls.find.length = 0;
 	catalogCalls.fail = false;
 	listeners.clear();
+	gate.next = null;
+	nav.snapshot.mockClear();
 });
 
 describe('practice words page', () => {
@@ -83,7 +91,7 @@ describe('practice words page', () => {
 		expect(el.querySelector('h1')?.textContent).toBe('Từ của tôi');
 	});
 
-	it('no session renders "0 từ đã học và đã lưu"', async () => {
+	it('no session renders Chưa có từ nào and Học Bài 1', async () => {
 		// Arrange
 		current = withWords(['你']);
 
@@ -91,7 +99,8 @@ describe('practice words page', () => {
 		const el = await mountPage(null);
 
 		// Assert
-		expect(el.textContent).toContain('0 từ đã học và đã lưu');
+		expect(el.textContent).toContain('Chưa có từ nào');
+		expect(el.textContent).toContain('Học Bài 1');
 		expect(catalogCalls.find).toEqual([]);
 	});
 
@@ -121,5 +130,57 @@ describe('practice words page', () => {
 		// Assert
 		expect(el.textContent).toContain('1 từ đã học và đã lưu');
 		expect(el.querySelector('[lang="zh"]')?.textContent).toBe('你');
+	});
+
+	it('a held ledger renders neither the empty state nor rows, then 30 rows after resolve', async () => {
+		// Arrange
+		current = withWords(Array.from({ length: 30 }, (_, i) => `字${i}`));
+		let release: (l: Ledger) => void = () => {};
+		gate.next = new Promise<Ledger>((r) => (release = r));
+
+		// Act
+		const el = await mountPage({ user: { id: 'u1' } });
+
+		// Assert
+		expect(el.textContent).not.toContain('Chưa có từ nào');
+		expect(el.querySelectorAll('li')).toHaveLength(0);
+		release(ledger);
+		await settle();
+		expect(el.querySelectorAll('li')).toHaveLength(30);
+		expect(el.textContent).not.toContain('Chưa có từ nào');
+	});
+
+	it('a rejected ledger renders the empty state', async () => {
+		// Arrange
+		gate.next = Promise.reject(new Error('offline'));
+
+		// Act
+		const el = await mountPage({ user: { id: 'u1' } });
+
+		// Assert
+		expect(el.textContent).toContain('Chưa có từ nào');
+	});
+
+	it('snapshot capture returns the typed query and restore("hoc") refilters', async () => {
+		// Arrange
+		current = withWords(['学生', '你']);
+		const el = await mountPage({ user: { id: 'u1' } });
+		const { capture, restore } = nav.snapshot.mock.calls[0][0] as {
+			capture: () => string;
+			restore: (v: string) => void;
+		};
+		const input = el.querySelector('input')!;
+
+		// Act
+		input.value = '你';
+		input.dispatchEvent(new Event('input', { bubbles: true }));
+		flushSync();
+		const captured = capture();
+		restore('学');
+		flushSync();
+
+		// Assert
+		expect(captured).toBe('你');
+		expect([...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent)).toEqual(['学生']);
 	});
 });
