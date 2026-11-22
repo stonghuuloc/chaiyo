@@ -224,5 +224,11 @@
 	"hub_listen": "{n} bài · cần micro",
 	"hub_writing": "Viết {chars}",
 	"hub_resume": "Tiếp tục: {name}",
-	"hub_start": "Bắt đầu: {name}"
+	"hub_start": "Bắt đầu: {name}",
+	"lookup_title": "Tra nhanh",
+	"lookup_detail": "Xem chi tiết",
+	"lookup_add": "Thêm vào từ của tôi",
+	"lookup_self_added": "tự thêm",
+	"lookup_back": "← {word}",
+	"lookup_not_found": "Chưa có trong từ điển"
 }
