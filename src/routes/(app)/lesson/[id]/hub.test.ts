@@ -89,6 +89,25 @@ describe('hubView', () => {
 		expect(v.cta).toEqual({ section: 'words', label: 'Tiếp tục: Từ mới' });
 	});
 
+	it('Given_TwoOpenWordsRuns_When_View_Then_RunWithMostAnswersWins', () => {
+		// Arrange
+		const state = withWordsRun(wordIds.slice(0, 2));
+		state.runs.r0 = {
+			step: { kind: 'section', lesson: 'h1-01', section: 'words', run: 'r0', of: 11 },
+			answers: Object.fromEntries(wordIds.slice(0, 6).map((id) => [id, true]))
+		};
+		state.runs.r9 = {
+			step: { kind: 'section', lesson: 'h1-01', section: 'words', run: 'r9', of: 11 },
+			answers: { [wordIds[0]]: true }
+		};
+
+		// Act
+		const v = hubView(lesson, sections, state);
+
+		// Assert
+		expect(v.rows[0]).toMatchObject({ look: 'now', pct: 60 });
+	});
+
 	it('Given_ClosedWordsRun_When_View_Then_WordsTodo', () => {
 		// Arrange
 		const state = withWordsRun(wordIds.slice(0, 4));
