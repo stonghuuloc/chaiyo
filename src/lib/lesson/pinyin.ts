@@ -32,6 +32,13 @@ const toneLast = (run: string, tone: number) => {
 export const toMarks = (s: string) =>
 	s.replace(/([a-zü]+)([1-5])/g, (_, run: string, t: string) => toneLast(run, Number(t)));
 
+const MARK: Record<string, 1 | 2 | 3 | 4> = { '\u0304': 1, '\u0301': 2, '\u030c': 3, '\u0300': 4 };
+
+export const toneOf = (s: string): 1 | 2 | 3 | 4 | null => {
+	for (const ch of (s.trim().split(/\s+/)[0] ?? '').normalize('NFD')) if (MARK[ch]) return MARK[ch];
+	return null;
+};
+
 export const marked = (input: string) => unspaced(toMarks(lower(input)));
 
 export const gradePinyin = (input: string, answer: string) => marked(input) === norm(answer);
