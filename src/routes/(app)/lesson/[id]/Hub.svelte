@@ -4,7 +4,7 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import type { State } from '#lib/study/index.js';
 	import { resolve } from '$app/paths';
-	import { hubView } from './hub';
+	import { hubView, type Row } from './hub';
 
 	let { lesson, study }: { lesson: LessonContent; study: State } = $props();
 
@@ -13,6 +13,26 @@
 	const hub = $derived(hubView(lesson, sections, study));
 	const href = (section: string) => resolve('/(app)/lesson/[id]/[section]', { id, section });
 </script>
+
+{#snippet link(row: Row)}
+	<a
+		data-part="hub-row"
+		data-look={row.look}
+		href={href(row.id)}
+		class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+	>
+		<span
+			class="size-6 shrink-0 rounded-full border-2 border-lantern-red"
+			style:background="conic-gradient(var(--color-lantern-red) {row.pct}%, transparent 0)"
+		></span>
+		<span class="flex flex-col">
+			<b>{row.name}</b>
+			{#if row.sub}
+				<small class="text-graphite">{row.sub}</small>
+			{/if}
+		</span>
+	</a>
+{/snippet}
 
 <section data-content-sha={lesson.contentSha} class="flex flex-col gap-6 pb-24">
 	<header class="flex flex-col gap-2">
@@ -38,26 +58,11 @@
 	<section class="flex flex-col gap-3">
 		<h2 class="text-lg font-display">{m.hub_sections()}</h2>
 		<ol class="flex flex-col gap-2">
+			{#if hub.warmup}
+				<li>{@render link(hub.warmup)}</li>
+			{/if}
 			{#each hub.rows as row (row.id)}
-				<li>
-					<a
-						data-part="hub-row"
-						data-look={row.look}
-						href={href(row.id)}
-						class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
-					>
-						<span
-							class="size-6 shrink-0 rounded-full border-2 border-lantern-red"
-							style:background="conic-gradient(var(--color-lantern-red) {row.pct}%, transparent 0)"
-						></span>
-						<span class="flex flex-col">
-							<b>{row.name}</b>
-							{#if row.sub}
-								<small class="text-graphite">{row.sub}</small>
-							{/if}
-						</span>
-					</a>
-				</li>
+				<li>{@render link(row)}</li>
 			{/each}
 		</ol>
 		<a

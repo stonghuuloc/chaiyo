@@ -374,3 +374,101 @@ describe('hubView words', () => {
 		expect(v.words).toEqual([]);
 	});
 });
+
+describe('hubView warmup', () => {
+	const at = new Date('2026-11-22T05:00:00Z');
+	const lesson2: LessonContent = { ...lesson, lesson: { ...lesson.lesson, id: 'h1-02' } };
+	const sections2 = CURRICULUM.lessons.find((l) => l.id === 'h1-02')!.sections;
+	const prevWords = CURRICULUM.lessons.find((l) => l.id === 'h1-01')!.words;
+
+	const learned = (n: number): State => {
+		const s = fresh();
+		for (const w of prevWords.slice(0, n)) s.lexicon[w] = { saved: false, cards: {} };
+		return s;
+	};
+
+	it('Given_PrevWordsInLexicon_When_Hub_Then_WarmupRowAndCta', () => {
+		// Arrange
+		const state = learned(3);
+
+		// Act
+		const v = hubView(lesson2, sections2, state, at);
+
+		// Assert
+		expect(v.warmup).toEqual({ id: 'warmup', name: 'Khởi động', look: 'todo', pct: 0, sub: '' });
+		expect(v.rows.map((r) => r.id)).not.toContain('warmup');
+		expect(v.total).toBe(5);
+		expect(v.progress).toBe('0/5 phần');
+		expect(v.cta).toEqual({ section: 'warmup', label: 'Bắt đầu: Khởi động' });
+	});
+
+	it('Given_WarmupDone_When_Hub_Then_CtaWords', () => {
+		// Arrange
+		const state = learned(3);
+		state.lessons['h1-02'] = { unlocked: true, passed: false, done: ['warmup'] };
+
+		// Act
+		const v = hubView(lesson2, sections2, state, at);
+
+		// Assert
+		expect(v.warmup).toMatchObject({ look: 'done', pct: 100 });
+		expect(v.total).toBe(5);
+		expect(v.done).toBe(0);
+		expect(v.progress).toBe('0/5 phần');
+		expect(v.cta).toEqual({ section: 'words', label: 'Bắt đầu: Từ mới' });
+	});
+
+	it('Given_WordsInProgress_When_Hub_Then_CtaResumeWords', () => {
+		// Arrange
+		const state = learned(3);
+		state.runs.r1 = {
+			step: { kind: 'section', lesson: 'h1-02', section: 'words', run: 'r1', of: 11 },
+			answers: { [wordIds[0]]: true }
+		};
+
+		// Act
+		const v = hubView(lesson2, sections2, state, at);
+
+		// Assert
+		expect(v.warmup?.look).toBe('todo');
+		expect(v.total).toBe(5);
+		expect(v.cta).toEqual({ section: 'words', label: 'Tiếp tục: Từ mới' });
+	});
+
+	it('Given_SectionDoneWarmupTodo_When_Hub_Then_CtaNextSection', () => {
+		// Arrange
+		const state = learned(3);
+		state.lessons['h1-02'] = { unlocked: true, passed: false, done: ['words'] };
+
+		// Act
+		const v = hubView(lesson2, sections2, state, at);
+
+		// Assert
+		expect(v.warmup?.look).toBe('todo');
+		expect(v.cta).toEqual({ section: 'grammar', label: 'Bắt đầu: Ngữ pháp' });
+	});
+
+	it('Given_H1_01_When_Hub_Then_NoWarmupRow', () => {
+		// Arrange
+		const state = learned(10);
+
+		// Act
+		const v = hubView(lesson, sections, state, at);
+
+		// Assert
+		expect(v.warmup).toBeNull();
+		expect(v.total).toBe(5);
+		expect(v.cta).toEqual({ section: 'words', label: 'Bắt đầu: Từ mới' });
+	});
+
+	it('Given_NoPrevWordsInLexicon_When_Hub_Then_NoWarmupRow', () => {
+		// Arrange
+		const state = fresh();
+
+		// Act
+		const v = hubView(lesson2, sections2, state, at);
+
+		// Assert
+		expect(v.warmup).toBeNull();
+	});
+});

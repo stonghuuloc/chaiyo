@@ -26,12 +26,12 @@ const session = { user: { id: 'u1' } };
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
-const mountPage = async (s: typeof session | null = session) => {
+const mountPage = async (s: typeof session | null = session, content: LessonContent = lesson) => {
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Page, {
 		target,
-		props: { data: { lesson, session: s }, params: { id: 'h1-01' } } as never
+		props: { data: { lesson: content, session: s }, params: { id: content.lesson.id } } as never
 	}) as Record<string, unknown>;
 	flushSync();
 	await tick();
@@ -185,5 +185,37 @@ describe('lesson hub word Tiles', () => {
 		const mine = target!.querySelector<HTMLAnchorElement>('[data-part=hub-lexicon]')!;
 		expect(mine.textContent).toContain('Từ của tôi');
 		expect(mine.getAttribute('href')).toMatch(/\/practice$/);
+	});
+});
+
+describe('lesson hub Khởi động row', () => {
+	it('Given_PrevWordsLearned_When_Open_Then_WarmupRowFirstAndFiveSegments', async () => {
+		// Arrange
+		const lesson2: LessonContent = { ...lesson, lesson: { ...lesson.lesson, id: 'h1-02' } };
+		const state = initialState({ curriculum: CURRICULUM });
+		for (const w of CURRICULUM.lessons.find((l) => l.id === 'h1-01')!.words.slice(0, 3))
+			state.lexicon[w] = { saved: false, cards: {} };
+		current = state;
+
+		// Act
+		const { rows, cta } = await mountPage(session, lesson2);
+
+		// Assert
+		expect(rows()).toHaveLength(6);
+		expect(rows()[0].textContent).toContain('Khởi động');
+		expect(rows()[0].getAttribute('href')).toMatch(/\/lesson\/h1-02\/warmup$/);
+		expect(rows()[1].textContent).toContain('Từ mới');
+		expect(target!.querySelectorAll('[data-seg], header i')).toHaveLength(5);
+		expect(target!.textContent).toContain('0/5 phần');
+		expect(cta()!.textContent).toContain('Bắt đầu: Khởi động');
+	});
+
+	it('Given_FreshLearner_When_OpenH1_01_Then_NoWarmupRow', async () => {
+		// Arrange / Act
+		const { rows } = await mountPage();
+
+		// Assert
+		expect(rows()).toHaveLength(5);
+		expect(target!.textContent).not.toContain('Khởi động');
 	});
 });

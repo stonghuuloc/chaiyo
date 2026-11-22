@@ -1,6 +1,7 @@
 import type { LessonContent } from '#lib/catalog/index.js';
 import { m } from '#lib/paraglide/messages.js';
 import type { State } from '#lib/study/index.js';
+import { warmupWords } from './[section]/warmup';
 
 export type Look = 'done' | 'now' | 'todo';
 export type Row = { id: string; name: string; look: Look; pct: number; sub: string };
@@ -13,6 +14,7 @@ export type Hub = {
 	total: number;
 	progress: string;
 	rows: Row[];
+	warmup: Row | null;
 	cta: { section: string; label: string } | null;
 	words: { id: string; hanzi: string; pinyin: string; reached: boolean }[];
 	gate: { locked: boolean; sub: string };
@@ -25,7 +27,8 @@ const names: Record<string, () => string> = {
 	grammar: m.hub_section_grammar,
 	dialogue: m.hub_section_dialogue,
 	listenSpeak: m.hub_section_listenSpeak,
-	writing: m.hub_section_writing
+	writing: m.hub_section_writing,
+	warmup: m.warmup_name
 };
 
 type Open = { answers: Record<string, boolean>; of: number };
@@ -53,7 +56,12 @@ export const gateOpen = (state: State, lesson: string) => {
 	return !!meta && (meta.testOut === true || meta.sections.every((s) => done.includes(s)));
 };
 
-export function hubView(content: LessonContent, sections: string[], state: State): Hub {
+export function hubView(
+	content: LessonContent,
+	sections: string[],
+	state: State,
+	at = new Date()
+): Hub {
 	const l = content.lesson;
 	const done = state.lessons[l.id]?.done ?? [];
 	const words = content.words;
@@ -99,11 +107,24 @@ export function hubView(content: LessonContent, sections: string[], state: State
 	const count = rows.filter((r) => r.look === 'done').length;
 	const now = rows.find((r) => r.look === 'now');
 	const todo = rows.find((r) => r.look !== 'done');
-	const cta = now
-		? { section: now.id, label: m.hub_resume({ name: now.name }) }
-		: todo
-			? { section: todo.id, label: m.hub_start({ name: todo.name }) }
+	const warmup: Row | null =
+		warmupWords(state, l.id, at, state.tz).length > 0
+			? {
+					id: 'warmup',
+					name: names.warmup(),
+					look: done.includes('warmup') ? 'done' : 'todo',
+					pct: done.includes('warmup') ? 100 : 0,
+					sub: ''
+				}
 			: null;
+	const cta =
+		warmup?.look === 'todo' && count === 0 && !now
+			? { section: warmup.id, label: m.hub_start({ name: warmup.name }) }
+			: now
+				? { section: now.id, label: m.hub_resume({ name: now.name }) }
+				: todo
+					? { section: todo.id, label: m.hub_start({ name: todo.name }) }
+					: null;
 	const locked = !gateOpen(state, l.id);
 
 	return {
@@ -122,6 +143,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 		total: sections.length,
 		progress: m.hub_progress({ done: count, total: sections.length }),
 		rows,
+		warmup,
 		cta,
 		words: words.map((w) => ({
 			id: w.id,
