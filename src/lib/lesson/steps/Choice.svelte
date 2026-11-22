@@ -9,7 +9,7 @@
 		title: string;
 		options: string[];
 		answer: string;
-		script?: 'hanzi' | 'text';
+		script?: 'hanzi' | 'text' | 'pinyin';
 		explain?: string;
 		missHint?: string;
 		card?: { word: string; skill: Skill };
@@ -21,6 +21,7 @@
 <script lang="ts">
 	import ClipCast from '../ClipCast.svelte';
 	import { choiceCta, grade, toAnswer } from '../choice';
+	import { pinyinRuns } from '../pinyin-runs';
 	import type { StepProps } from '../types';
 
 	let { step, mode, last, cta, next }: StepProps<Step> = $props();
@@ -60,14 +61,24 @@
 	};
 </script>
 
+{#snippet prose(text: string)}
+	{#if step.script === 'pinyin'}
+		{#each pinyinRuns(text) as run, i (i)}
+			{#if run.pinyin}<span class="font-pinyin">{run.text}</span>{:else}{run.text}{/if}
+		{/each}
+	{:else}
+		{text}
+	{/if}
+{/snippet}
+
 <p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
-	{step.ask}
+	{@render prose(step.ask)}
 </p>
 {#if step.audio}
 	<ClipCast clip={step.audio} label={step.ask} />
 {/if}
 {#if step.title}
-	<h2 class="mt-1 font-display text-headline">{step.title}</h2>
+	<h2 class="mt-1 font-display text-headline">{@render prose(step.title)}</h2>
 {/if}
 {#if step.prompt}
 	<p
@@ -86,7 +97,9 @@
 			class="relative flex min-h-14 items-center justify-between gap-3 rounded-action border px-4 py-3 text-left {step.script ===
 			'text'
 				? ''
-				: 'font-hanzi text-[28px]'} {mark === 'right'
+				: step.script === 'pinyin'
+					? 'font-pinyin text-[24px]'
+					: 'font-hanzi text-[28px]'} {mark === 'right'
 				? 'border-2 border-ink bg-white'
 				: mark === 'wrong'
 					? 'border-2 border-lantern-red bg-white'
@@ -111,6 +124,8 @@
 <p class="mt-4 min-h-6" aria-live="polite">
 	{#if graded}
 		<b>{graded.verdict}</b>
-		<span class={step.script === 'text' ? '' : 'font-hanzi'}>{step.explain ?? step.answer}</span>
+		<span class={step.script === 'text' || step.script === 'pinyin' ? '' : 'font-hanzi'}
+			>{@render prose(step.explain ?? step.answer)}</span
+		>
 	{/if}
 </p>

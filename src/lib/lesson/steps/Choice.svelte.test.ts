@@ -270,4 +270,53 @@ describe('Choice', () => {
 		expect(target!.querySelectorAll('.font-pinyin')).toHaveLength(0);
 		expect(target!.querySelectorAll('[data-part="pill"]')).toHaveLength(0);
 	});
+
+	it('Given_PinyinScript_When_Mounted_Then_OptionsUseOnest', () => {
+		// Arrange
+		const pinyin: Step = {
+			...step,
+			script: 'pinyin',
+			ask: 'Nghe rồi chọn pinyin đúng',
+			title: 'Đọc nǐ hǎo',
+			options: ['mā', 'má', 'mǎ'],
+			answer: 'má',
+			explain: 'Thanh 2 viết má, không viết mǎ'
+		};
+		const { options, cta } = mountChoice({ step: pinyin });
+
+		// Act
+		const before = options().map((b) => [
+			b.className.includes('font-pinyin'),
+			b.className.includes('font-hanzi')
+		]);
+		options()[1].click();
+		flushSync();
+		cta().onclick();
+		flushSync();
+
+		// Assert
+		expect(before).toEqual([
+			[true, false],
+			[true, false],
+			[true, false]
+		]);
+		const feedback = need(target).querySelector('[aria-live=polite] span')!;
+		expect(feedback.className).not.toContain('font-hanzi');
+		expect([...feedback.querySelectorAll('.font-pinyin')].map((s) => s.textContent)).toEqual([
+			'mǎ'
+		]);
+		expect([...need(target).querySelectorAll('h2 .font-pinyin')].map((s) => s.textContent)).toEqual(
+			['nǐ', 'hǎo']
+		);
+	});
+
+	it('Given_HanziScript_When_Mounted_Then_OptionsUseHanziFont', () => {
+		// Arrange / Act
+		const { options } = mountChoice();
+
+		// Assert
+		expect(options()[0].className).toContain('font-hanzi');
+		expect(options()[0].className).not.toContain('font-pinyin');
+		expect(need(target).querySelectorAll('.font-pinyin')).toHaveLength(0);
+	});
 });
