@@ -2,6 +2,7 @@
 	import { untrack } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
 	import type { Ledger } from '#lib/ledger/index.js';
+	import type { StudyEvent } from '#lib/study/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import ReportButton from '#lib/report/ReportButton.svelte';
 	import Button from '#lib/ui/Button.svelte';
@@ -20,7 +21,7 @@
 		section: string;
 		contentSha: string;
 		ledger: Ledger;
-		onfinish: () => void;
+		onfinish: (events: StudyEvent[]) => void;
 	};
 	let {
 		steps,
@@ -66,8 +67,9 @@
 	async function next(answer?: Answer) {
 		if (busy || done) return;
 		busy = true;
+		let events: StudyEvent[];
 		try {
-			await ledger.record(
+			events = await ledger.record(
 				toAttempt(
 					answer,
 					steps[index].id,
@@ -88,7 +90,7 @@
 			return;
 		}
 		done = true;
-		onfinish();
+		onfinish(events);
 	}
 </script>
 
