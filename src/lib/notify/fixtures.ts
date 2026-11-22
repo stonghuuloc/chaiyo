@@ -1,5 +1,5 @@
-import type { Input } from '#lib/ledger/index';
-import { practice } from '#lib/study/fixtures/streak';
+import type { Input } from '#lib/ledger/index.js';
+import { practice } from '#lib/study/fixtures/streak.js';
 
 const DAY = 86_400_000;
 

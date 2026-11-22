@@ -1,7 +1,7 @@
 import { apply, type State, type StudyEvent } from '#lib/study/index.js';
 import { all, open, put, type Row } from './idb';
 import { key, order } from './order';
-import type { Input, Ledger, Store } from './types';
+import type { Ledger, Store } from './types';
 
 export async function openLedger(o: {
 	initial: State;

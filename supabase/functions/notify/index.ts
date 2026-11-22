@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import lessons from '#lib/curriculum/curriculum.json' with { type: 'json' };
-import { handle } from '#lib/notify/handler';
-import { supabaseDeps } from '#lib/notify/supabase';
-import { noRemind, tick } from '#lib/notify/tick';
+import { handle } from '#lib/notify/handler.js';
+import { supabaseDeps } from '#lib/notify/supabase.js';
+import { noRemind, tick } from '#lib/notify/tick.js';
 
 Deno.serve((req) =>
 	handle(req, {

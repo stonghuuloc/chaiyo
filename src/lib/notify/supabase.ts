@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { PAGE, pullInputs } from '#lib/ledger/supabase';
+import { PAGE, pullInputs } from '#lib/ledger/supabase.js';
 import type { Curriculum } from '#lib/study/index.js';
 import type { Deps, Learner } from './tick';
 

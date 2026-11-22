@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
-import { CURRICULUM } from '#lib/study/fixtures/curriculum';
+import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { supabaseDeps } from './supabase';
 import { noRemind, type Rolled } from './tick';
 

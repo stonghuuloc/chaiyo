@@ -1,6 +1,6 @@
 import { IDBFactory } from 'fake-indexeddb';
 import { describe, expect, it } from 'vitest';
-import { memoryStore, openLedger } from '#lib/ledger/index';
+import { memoryStore, openLedger } from '#lib/ledger/index.js';
 import { initialState } from '#lib/study/index.js';
 import { foldInputs, yesterday } from './fold';
 import { studied } from './fixtures';

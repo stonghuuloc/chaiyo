@@ -1,4 +1,4 @@
-import type { Input } from '#lib/ledger/types';
+import type { Input } from '#lib/ledger/types.js';
 import {
 	initialState,
 	rollover,

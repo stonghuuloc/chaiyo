@@ -1,5 +1,5 @@
-import { order } from '#lib/ledger/order';
-import type { Input } from '#lib/ledger/types';
+import { order } from '#lib/ledger/order.js';
+import type { Input } from '#lib/ledger/types.js';
 import { apply, localDate, type State } from '#lib/study/index.js';
 
 export const foldInputs = (initial: State, inputs: Input[]): State =>

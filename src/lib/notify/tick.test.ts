@@ -1,7 +1,7 @@
 import { IDBFactory } from 'fake-indexeddb';
 import { describe, expect, it } from 'vitest';
-import { memoryStore, openLedger, type Input } from '#lib/ledger/index';
-import { CURRICULUM } from '#lib/study/fixtures/curriculum';
+import { memoryStore, openLedger, type Input } from '#lib/ledger/index.js';
+import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { initialState, rollover } from '#lib/study/index.js';
 import { studied } from './fixtures';
 import { tick, type Deps, type Learner, type Rolled } from './tick';
