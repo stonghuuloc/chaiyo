@@ -1,7 +1,7 @@
 import { flushSync, mount, unmount } from 'svelte';
 import { m } from '#lib/paraglide/messages.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { Answer, Cta } from '../types';
+import type { Answer, Cta, Mode } from '../types';
 import Tone, { type Step } from './Tone.svelte';
 
 const audio = vi.hoisted(() => ({
@@ -25,7 +25,7 @@ const step: Step = {
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
-const mountTone = (s: Step = step) => {
+const mountTone = (s: Step = step, mode: Mode = 'feedback', last = false) => {
 	const calls: (Answer | undefined)[] = [];
 	let cta: Cta | undefined;
 	target = document.createElement('div');
@@ -34,8 +34,8 @@ const mountTone = (s: Step = step) => {
 		target,
 		props: {
 			step: s,
-			mode: 'feedback',
-			last: false,
+			mode,
+			last,
 			cta: (c: Cta) => (cta = c),
 			next: (a?: Answer) => calls.push(a)
 		}
@@ -133,6 +133,24 @@ describe('Tone', () => {
 		expect(ui.options()[1].getAttribute('data-mark')).toBe('wrong');
 		expect(ui.options()[2].getAttribute('data-mark')).toBe('right');
 		ui.cta().onclick();
+		expect(ui.calls).toEqual([expect.objectContaining({ pick: '2', correct: false })]);
+	});
+
+	it('Given_TestMode_When_PickAndSubmit_Then_NoVerdictAndAnswerSent', () => {
+		// Arrange
+		const ui = mountTone(step, 'test', true);
+
+		// Act
+		ui.options()[1].click();
+		flushSync();
+		const label = ui.cta().label;
+		ui.cta().onclick();
+		flushSync();
+
+		// Assert
+		expect(label).toBe(m.lesson_submit());
+		expect(target!.textContent).not.toContain(m.lesson_wrong());
+		expect(ui.options()[2].getAttribute('data-mark')).toBe(null);
 		expect(ui.calls).toEqual([expect.objectContaining({ pick: '2', correct: false })]);
 	});
 });
