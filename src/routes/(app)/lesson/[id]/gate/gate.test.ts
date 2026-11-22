@@ -269,15 +269,29 @@ describe('gateSteps', () => {
 		expect(step).toMatchObject({ kind: 'pinyin', title: '', hanzi: '猫' });
 	});
 
-	it('Given_Primer_When_Draw_Then_NoSteps', () => {
+	it('Given_Primer_When_GateSteps_Then_Ten', () => {
 		// Arrange
-		const c = { ...content(1), lesson: { kind: 'primer' } } as unknown as LessonContent;
+		const names = ['tones', 'finals', 'initials', 'spelling', 'sandhi'];
+		const item = (section: string, n: number) => ({
+			id: `g-${section}-${n}`,
+			type: 'choice',
+			section,
+			prompt: { kind: 'vi', text: 'đọc' },
+			options: ['a', 'b'],
+			answer: 0
+		});
+		const pool = names.flatMap((s) => [1, 2, 3].map((n) => item(s, n)));
+		const c = {
+			...content(10),
+			lesson: { kind: 'primer', id: 'h0-00', gate: { draw: 10, pool } }
+		} as unknown as LessonContent;
 
 		// Act
 		const steps = gateSteps(c);
 
 		// Assert
-		expect(steps).toEqual([]);
+		expect(steps).toHaveLength(10);
+		expect(new Set(steps.map((s) => s.id)).size).toBe(10);
 	});
 
 	it('Given_EdgePrompts_When_Map_Then_FallbacksApply', () => {

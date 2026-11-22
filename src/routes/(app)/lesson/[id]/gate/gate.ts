@@ -4,6 +4,7 @@ import type { LessonStep } from '#lib/lesson/index.js';
 import { m } from '#lib/paraglide/messages.js';
 import { shuffle } from '#lib/placement/shuffle.js';
 import { promptClip, promptWord } from '../[section]/listen-speak';
+import { primerGate } from './primer-gate';
 
 const refOf = (prompt: object) => ('ref' in prompt ? String(prompt.ref) : '');
 const textOf = (prompt: object) => ('text' in prompt ? String(prompt.text) : refOf(prompt));
@@ -82,7 +83,7 @@ function gateStep(q: Question, c: LessonContent): LessonStep | null {
 }
 
 export function gateSteps(c: LessonContent, random: () => number = Math.random): LessonStep[] {
-	if ('kind' in c.lesson) return [];
+	if ('kind' in c.lesson) return primerGate(c, random);
 	const { pool, draw } = c.lesson.gate;
 	const steps = pool.map((q) => gateStep(q, c)).filter((s) => s !== null);
 	return shuffle(steps, random).slice(0, draw);
