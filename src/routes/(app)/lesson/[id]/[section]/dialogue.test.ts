@@ -9,6 +9,19 @@ import type { Lesson, Primer, Question } from '#lib/content/schemas.js';
 import { describe, expect, it } from 'vitest';
 import { dialogueSteps } from './dialogue';
 
+const drillText = (steps: { kind: string }[]) =>
+	steps.flatMap((s) => {
+		const d = s as {
+			kind: string;
+			ask?: string;
+			title?: string;
+			options?: string[];
+			tiles?: string[];
+		};
+		if (d.kind !== 'choice' && d.kind !== 'order') return [];
+		return [d.ask ?? '', d.title ?? '', ...(d.options ?? []), ...(d.tiles ?? [])];
+	});
+
 const sentence = (
 	id: string,
 	hanzi: string,
@@ -200,5 +213,9 @@ describe('dialogueSteps on Bài 1', () => {
 			explain: 'méi guānxi · Không sao.',
 			audio: p1.lines[2].audio
 		});
+		const pinyin = c.sentences.map((s) => s.pinyin).filter(Boolean);
+		const text = drillText(steps);
+		expect(text.length).toBeGreaterThan(0);
+		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
 	}, 15_000);
 });

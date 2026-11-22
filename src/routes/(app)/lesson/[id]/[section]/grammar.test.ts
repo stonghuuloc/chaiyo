@@ -10,6 +10,19 @@ import type { GrammarPoint, Lesson, Primer, Question } from '#lib/content/schema
 import { describe, expect, it } from 'vitest';
 import { grammarSteps } from './grammar';
 
+const drillText = (steps: { kind: string }[]) =>
+	steps.flatMap((s) => {
+		const d = s as {
+			kind: string;
+			ask?: string;
+			title?: string;
+			options?: string[];
+			tiles?: string[];
+		};
+		if (d.kind !== 'choice' && d.kind !== 'order') return [];
+		return [d.ask ?? '', d.title ?? '', ...(d.options ?? []), ...(d.tiles ?? [])];
+	});
+
 const lesson = (over: Partial<Lesson> = {}): Lesson => ({
 	id: 'h1-99',
 	level: 1,
@@ -349,4 +362,22 @@ describe('grammarSteps on Bài 1', () => {
 			expect(new Set(steps.map((s) => s.id)).size).toBe(steps.length);
 		}
 	}, 60_000);
+
+	it('Given_Bai1_When_Build_Then_NoDrillTitleOrOptionHoldsPinyin', async () => {
+		// Arrange
+		const prev = process.env.CHAIYO_VAULT;
+		process.env.CHAIYO_VAULT = join(tmpdir(), 'no-such-vault');
+		const c = await build();
+		if (prev === undefined) delete process.env.CHAIYO_VAULT;
+		else process.env.CHAIYO_VAULT = prev;
+		const pinyin = c.sentences.map((s) => s.pinyin).filter(Boolean);
+
+		// Act
+		const text = drillText(grammarSteps(c));
+
+		// Assert
+		expect(pinyin.length).toBeGreaterThan(0);
+		expect(text.length).toBeGreaterThan(0);
+		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
+	}, 15_000);
 });
