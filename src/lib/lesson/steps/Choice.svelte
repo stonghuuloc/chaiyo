@@ -16,6 +16,7 @@
 		tone?: 1 | 2 | 3 | 4;
 		audio?: string;
 		prompt?: { text: string; hanzi: boolean };
+		instant?: true;
 	};
 </script>
 
@@ -59,6 +60,10 @@
 	const choose = (option: string) => {
 		if (phase === 'graded') return;
 		pick = option;
+		if (step.instant && mode === 'feedback') {
+			took = ms();
+			phase = 'graded';
+		}
 	};
 </script>
 

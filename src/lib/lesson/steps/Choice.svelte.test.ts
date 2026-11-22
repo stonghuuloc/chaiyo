@@ -319,4 +319,50 @@ describe('Choice', () => {
 		expect(options()[0].className).not.toContain('font-pinyin');
 		expect(need(target).querySelectorAll('.font-pinyin')).toHaveLength(0);
 	});
+
+	it('Given_InstantWrongPick_When_Tap_Then_HintShownAfterOneTap', () => {
+		// Arrange
+		const { options, cta } = mountChoice({
+			step: { ...step, instant: true, missHint: 'Từ này sẽ quay lại cuối lượt' }
+		});
+
+		// Act
+		options()[0].click();
+		flushSync();
+
+		// Assert
+		expect(options()[0].getAttribute('data-mark')).toBe('wrong');
+		expect(options()[1].getAttribute('data-mark')).toBe('right');
+		expect(cta().label).toBe(m.lesson_continue());
+		expect(cta().hint).toBe('Từ này sẽ quay lại cuối lượt');
+	});
+
+	it('Given_InstantRightPick_When_Tap_Then_NoHint', () => {
+		// Arrange
+		const { options, cta, calls } = mountChoice({
+			step: { ...step, instant: true, missHint: 'Từ này sẽ quay lại cuối lượt' }
+		});
+
+		// Act
+		options()[1].click();
+		flushSync();
+		cta().onclick();
+
+		// Assert
+		expect(cta().hint).toBe('');
+		expect(calls[0]).toMatchObject({ pick: '好', correct: true });
+	});
+
+	it('Given_NoInstant_When_Tap_Then_NotGradedUntilCheck', () => {
+		// Arrange
+		const { options, cta } = mountChoice();
+
+		// Act
+		options()[0].click();
+		flushSync();
+
+		// Assert
+		expect(options()[0].getAttribute('data-mark')).toBe(null);
+		expect(cta().label).toBe(m.lesson_check());
+	});
 });
