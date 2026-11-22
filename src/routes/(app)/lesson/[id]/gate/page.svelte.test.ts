@@ -5,6 +5,10 @@ import { m } from '#lib/paraglide/messages.js';
 import { initialState } from '#lib/study/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
+import { readGateResult } from './handoff';
+
+const nav = vi.hoisted(() => ({ goto: vi.fn() }));
+vi.mock('$app/navigation', () => nav);
 
 const ledger = { state: () => initialState(), record: async () => [] } as unknown as Ledger;
 const learner = vi.hoisted(() => ({ fail: false }));
@@ -48,6 +52,8 @@ const mountPage = (data: { lesson: LessonContent; session: unknown }) => {
 };
 
 afterEach(() => {
+	sessionStorage.clear();
+	nav.goto.mockClear();
 	if (app) unmount(app);
 	target?.remove();
 	target = undefined;
@@ -77,6 +83,25 @@ describe('gate page', () => {
 		// Assert
 		expect(root.textContent).toContain(m.gate_hint());
 		expect(root.querySelector('[data-part="exit"]')?.tagName).toBe('BUTTON');
+	});
+
+	it('Given_Done_When_Handoff_Then_StoredAndGotoResult', async () => {
+		// Arrange
+		const data = { lesson: lesson(1), session: { user: { id: 'u1' } } };
+		const root = mountPage(data);
+		await vi.waitFor(() => expect(root.querySelectorAll('[data-seg] i')).toHaveLength(1));
+
+		// Act
+		root.querySelector<HTMLButtonElement>('.body button')!.click();
+		flushSync();
+		root.querySelector<HTMLButtonElement>('.actions button')!.click();
+		await vi.waitFor(() => expect(nav.goto).toHaveBeenCalledOnce());
+
+		// Assert
+		expect(nav.goto).toHaveBeenCalledWith('/lesson/h1-01/gate/result', { replace: true });
+		const h = readGateResult(sessionStorage, 'h1-01');
+		expect(h?.answers).toEqual([expect.objectContaining({ questionId: 'q0', correct: true })]);
+		expect(h?.steps.map((s) => s.id)).toEqual(['q0']);
 	});
 
 	it('Given_LedgerFails_When_Render_Then_Placeholder', async () => {
