@@ -196,6 +196,17 @@ describe('wordSteps', () => {
 		expect(kinds(steps)).toEqual(['word:a', 'word:b', 'choice:chk-a']);
 	});
 
+	it('Given_WordWithoutSenses_When_Build_Then_EmptyMeaning', () => {
+		// Arrange
+		const c = content(['a'], [word('a', { senses: [] })]);
+
+		// Act
+		const [card] = wordSteps(c);
+
+		// Assert
+		expect(card).toMatchObject({ kind: 'word', meaning: '' });
+	});
+
 	it('Given_IdMissingFromWords_When_Build_Then_Skipped', () => {
 		// Arrange
 		const c = content(['a', 'ghost'], [word('a')]);
@@ -275,6 +286,11 @@ describe('wordSteps on Bài 1', () => {
 		);
 		expect(cards[0]).toMatchObject({ hanzi: '你', pinyin: 'nǐ', hanviet: 'nhĩ' });
 		expect(Object.keys(ledger.state().lexicon).sort()).toEqual(cards.map((s) => s.id).sort());
-		expect(steps.filter((s) => s.kind === 'choice').length).toBeLessThanOrEqual(4);
+		expect(steps.filter((s) => s.kind === 'choice').map((s) => s.id)).toEqual([
+			'chk-您',
+			'chk-对不起',
+			'chk-不客气',
+			'chk-再见'
+		]);
 	});
 });

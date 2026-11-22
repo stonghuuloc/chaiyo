@@ -33,8 +33,11 @@
 	async function animate() {
 		if (running) return;
 		running = true;
-		for (const pad of pads) await pad?.play();
-		running = false;
+		try {
+			for (const pad of pads) await pad?.play();
+		} finally {
+			running = false;
+		}
 	}
 
 	const onready = (i: number) => {

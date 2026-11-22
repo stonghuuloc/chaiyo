@@ -153,4 +153,31 @@ describe('Word', () => {
 			}
 		]);
 	});
+
+	it('Given_AnimationRunning_When_TappedTwice_Then_OnePassOnly', async () => {
+		// Arrange
+		const v = await mountWord();
+		await vi.waitFor(() => expect(animated).toHaveLength(2));
+
+		// Act
+		v.part('strokes')?.click();
+		v.part('strokes')?.click();
+		await settle();
+
+		// Assert
+		expect(animated).toEqual(['你', '好', '你', '好']);
+	});
+
+	it('Given_NoPartsNoComponents_When_Mount_Then_NeitherSection', async () => {
+		// Arrange
+		const s: Step = { ...step, parts: [], components: [] };
+
+		// Act
+		const v = await mountWord(s);
+
+		// Assert
+		expect(v.part('hanviet')?.textContent).toBe('nhĩ hảo');
+		expect(v.part('parts')).toBeNull();
+		expect(v.part('components')).toBeNull();
+	});
 });
