@@ -349,5 +349,10 @@
 	"practice_viet_right": "Viết đúng.",
 	"practice_viet_unsure": "Không nhớ chữ này",
 	"practice_viet_wrong": "Chưa đúng. Chữ này sẽ quay lại cuối lượt",
-	"practice_viet_wrong_final": "Chưa đúng."
+	"practice_viet_wrong_final": "Chưa đúng.",
+	"mywords_title": "Từ của tôi",
+	"mywords_count": "{n} từ đã học và đã lưu",
+	"mywords_legend": "Cột = độ nhớ trên thẻ từ. Luyện đúng thì cột tăng, quên thì từ quay lại sớm hơn.",
+	"mywords_source_self": "tự thêm",
+	"mywords_bars": "Độ nhớ: {bars} trên 3"
 }
