@@ -7,6 +7,7 @@ import type { Step as PinyinStep } from './steps/Pinyin.svelte';
 import type { Step as SpeakStep } from './steps/Speak.svelte';
 import type { Step as ToneStep } from './steps/Tone.svelte';
 import type { Step as WordStep } from './steps/Word.svelte';
+import type { Step as WriteStep } from './steps/Write.svelte';
 import type { StepProps } from './types';
 
 export type LessonStep =
@@ -17,7 +18,8 @@ export type LessonStep =
 	| PinyinStep
 	| SpeakStep
 	| ToneStep
-	| WordStep;
+	| WordStep
+	| WriteStep;
 
 type View = { default: Component<StepProps<LessonStep>>; kind: string };
 
