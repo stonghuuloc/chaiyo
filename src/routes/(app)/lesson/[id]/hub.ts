@@ -26,17 +26,20 @@ const names: Record<string, () => string> = {
 	writing: m.hub_section_writing
 };
 
+type Open = { answers: Record<string, boolean>; of: number };
+
 const openRun = (state: State, lesson: string, section: string) =>
 	Object.values(state.runs)
-		.filter(
-			(r) =>
-				!r.closed &&
-				r.step.kind === 'section' &&
-				r.step.lesson === lesson &&
-				r.step.section === section &&
-				Object.keys(r.answers).length < r.step.of
+		.flatMap(({ step, answers, closed }): Open[] =>
+			!closed &&
+			step.kind === 'section' &&
+			step.lesson === lesson &&
+			step.section === section &&
+			Object.keys(answers).length < step.of
+				? [{ answers, of: step.of }]
+				: []
 		)
-		.reduce<State['runs'][string] | undefined>(
+		.reduce<Open | undefined>(
 			(best, cur) =>
 				!best || Object.keys(cur.answers).length > Object.keys(best.answers).length ? cur : best,
 			undefined
@@ -67,8 +70,7 @@ export function hubView(content: LessonContent, sections: string[], state: State
 			}
 			return { id, name, look, pct, sub };
 		}
-		if (look === 'now' && run)
-			pct = Math.round((Object.keys(run.answers).length / run.step.of) * 100);
+		if (look === 'now' && run) pct = Math.round((Object.keys(run.answers).length / run.of) * 100);
 		if (id === 'grammar') sub = content.grammar.find((g) => g.id === s.grammar.ids[0])?.title ?? '';
 		if (id === 'dialogue')
 			sub = m.hub_dialogue({
