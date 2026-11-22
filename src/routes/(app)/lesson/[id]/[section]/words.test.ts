@@ -127,8 +127,8 @@ describe('wordSteps', () => {
 			],
 			components: [],
 			examples: [
-				{ hanzi: '你好！', pinyin: 'nǐ hǎo', vi: 'Xin chào!' },
-				{ hanzi: '你们好！', pinyin: 'nǐmen hǎo', vi: 'Chào các bạn!' }
+				{ id: 's1', hanzi: '你好！', pinyin: 'nǐ hǎo', vi: 'Xin chào!' },
+				{ id: 's2', hanzi: '你们好！', pinyin: 'nǐmen hǎo', vi: 'Chào các bạn!' }
 			]
 		});
 		expect(second).toMatchObject({ parts: [], components: ['亻 nhân đứng · người'] });

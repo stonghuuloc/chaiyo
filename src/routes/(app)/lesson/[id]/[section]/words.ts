@@ -29,7 +29,7 @@ const card = (w: ImportedWord, content: LessonContent): LessonStep => {
 		examples: w.examples
 			.flatMap((id) => {
 				const s = byId.get(id);
-				return s ? [{ hanzi: s.hanzi, pinyin: s.pinyin, vi: s.vi }] : [];
+				return s ? [{ id: s.id, hanzi: s.hanzi, pinyin: s.pinyin, vi: s.vi }] : [];
 			})
 			.slice(0, 2)
 	};
