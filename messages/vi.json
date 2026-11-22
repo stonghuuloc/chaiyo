@@ -278,5 +278,10 @@
 	"hub_lesson_words_legend": "Viền đứt: chưa học tới.",
 	"pills_label": "Hiển thị",
 	"pills_pinyin": "Pinyin",
-	"pills_meaning": "Nghĩa"
+	"pills_meaning": "Nghĩa",
+	"speak_sample_note": "Kết quả mẫu (chưa chấm thật)",
+	"speak_sample_count": "Đúng {ok}/{total} âm · đủ để qua",
+	"speak_sample_hint": "Chưa chấm điểm thật · kết quả chỉ là mẫu",
+	"speak_reveal_title": "Có thể nói",
+	"speak_reveal_pending": "Đáp án sẽ hiện sau khi bạn nói."
 }
