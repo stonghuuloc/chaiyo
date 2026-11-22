@@ -5,6 +5,8 @@ import { progress } from './progress';
 import { countDay } from './streak';
 import type { Attempt, Curriculum, State, StudyEvent, WordSaved } from './types';
 
+const zero = () => ({ right: 0, total: 0 });
+
 export const initialState = (
 	o: { curriculum?: Curriculum; tz?: string; badges?: Partial<Record<BadgeId, string>> } = {}
 ): State => {
@@ -20,7 +22,8 @@ export const initialState = (
 		placed: 0,
 		tz: o.tz ?? 'Asia/Ho_Chi_Minh',
 		streak: { count: 0, freezes: 0 },
-		runs: {}
+		runs: {},
+		tones: { 1: zero(), 2: zero(), 3: zero(), 4: zero() }
 	};
 };
 
@@ -50,6 +53,20 @@ function schedule(state: State, input: Attempt, now: Date): { state: State; even
 	};
 }
 
+const tally = (s: State, a: Attempt): State =>
+	!a.tone || a.correct === null
+		? s
+		: {
+				...s,
+				tones: {
+					...s.tones,
+					[a.tone]: {
+						right: s.tones[a.tone].right + (a.correct ? 1 : 0),
+						total: s.tones[a.tone].total + 1
+					}
+				}
+			};
+
 function step(
 	state: State,
 	input: Attempt | WordSaved,
@@ -65,9 +82,9 @@ function step(
 	const scheduled = schedule(state, input, now);
 	if (!input.step || input.step.kind === 'mock') return scheduled;
 	const stepped = progress(scheduled.state, input.step, input);
-	const counted = stepped.counts
-		? countDay(stepped.state, now)
-		: { state: stepped.state, events: [] };
+	const accepted = stepped.state.runs !== scheduled.state.runs;
+	const toned = accepted ? tally(stepped.state, input) : stepped.state;
+	const counted = stepped.counts ? countDay(toned, now) : { state: toned, events: [] };
 	return {
 		state: counted.state,
 		events: [...scheduled.events, ...stepped.events, ...counted.events]

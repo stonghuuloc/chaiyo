@@ -8,6 +8,8 @@ import {
 	type StudyEvent
 } from '#lib/study/index.js';
 import { T, bai1 } from '#lib/study/fixtures/bai1.js';
+import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
+import { feed, gateRun } from '#lib/study/fixtures/runs.js';
 
 const DAY = 86_400_000;
 const scheduled = (events: StudyEvent[]) => events.filter((e) => e.type === 'CardScheduled');
@@ -132,5 +134,112 @@ describe('apply', () => {
 		apply(s, attempt('你', 'the', true), T);
 		apply(s, attempt('新词', 'viet', false), T);
 		expect(JSON.stringify(s)).toBe(before);
+	});
+});
+
+describe('tones tally', () => {
+	const gate = { kind: 'gate', lesson: 'h0-00', run: 'g1', of: 10 } as const;
+	const toned = (id: string, correct: boolean | null, tone?: 1 | 2 | 3 | 4): Attempt => ({
+		id: `a:${id}`,
+		at: T.toISOString(),
+		questionId: id,
+		contentSha: 'fixture',
+		correct,
+		ms: 1000,
+		...(tone ? { tone } : {}),
+		step: gate
+	});
+	const fresh = () => initialState({ curriculum: CURRICULUM });
+	const none = { right: 0, total: 0 };
+
+	it('Given_New_When_Initial_Then_FourTonesZero', () => {
+		// Arrange
+		const s = initialState();
+
+		// Act
+		const got = s.tones;
+
+		// Assert
+		expect(got).toEqual({ 1: none, 2: none, 3: none, 4: none });
+	});
+
+	it('Given_WrongTone2RightTone3_When_Apply_Then_Tally01And11', () => {
+		// Arrange
+		const list = [toned('tones-02', false, 2), toned('tones-03', true, 3)];
+
+		// Act
+		const got = feed(fresh(), list).tones;
+
+		// Assert
+		expect(got).toEqual({ 1: none, 2: { right: 0, total: 1 }, 3: { right: 1, total: 1 }, 4: none });
+	});
+
+	it('Given_CardAttemptNullCorrect_When_Apply_Then_TonesSame', () => {
+		// Arrange
+		const card = toned('card-1', null, 2);
+
+		// Act
+		const got = feed(fresh(), [card]).tones;
+
+		// Assert
+		expect(got).toEqual(fresh().tones);
+	});
+
+	it('Given_NoToneAttempt_When_Apply_Then_TonesSame', () => {
+		// Arrange
+		const plain = toned('spelling-05', true);
+
+		// Act
+		const got = feed(fresh(), [plain]).tones;
+
+		// Assert
+		expect(got).toEqual(fresh().tones);
+	});
+
+	it('Given_Bai1Attempt_When_Apply_Then_TonesSame', () => {
+		// Arrange
+		const bai1Attempt: Attempt = {
+			...toned('t01', true),
+			step: { kind: 'gate', lesson: 'h1-01', run: 'g9', of: 10 }
+		};
+
+		// Act
+		const got = feed(fresh(), [bai1Attempt]).tones;
+
+		// Assert
+		expect(got).toEqual(fresh().tones);
+	});
+
+	it('Given_SameQuestionTwiceInRun_When_Apply_Then_CountedOnce', () => {
+		// Arrange
+		const list = [toned('tones-02', true, 2), { ...toned('tones-02', false, 2), id: 'a:again' }];
+
+		// Act
+		const got = feed(fresh(), list).tones;
+
+		// Assert
+		expect(got[2]).toEqual({ right: 1, total: 1 });
+	});
+
+	it('Given_TenPrimerGateAttempts_When_Apply_Then_LexiconEmptyNoCardScheduled', () => {
+		// Arrange
+		const list = gateRun('h0-00', 'g1', 9, T).map((a) => ({ ...a, tone: 1 as const }));
+		let s = fresh();
+		const events: StudyEvent[] = [];
+
+		// Act
+		for (const a of list) {
+			const r = apply(s, a, new Date(a.at));
+			s = r.state;
+			events.push(...r.events);
+		}
+
+		// Assert
+		expect(s.lexicon).toEqual({});
+		expect(scheduled(events)).toEqual([]);
+		expect(events.map((e) => e.type)).toContain('GatePassed');
+		expect(events).toContainEqual({ type: 'LessonUnlocked', lesson: 'h1-01' });
+		expect(s.lessons['h1-01'].unlocked).toBe(true);
+		expect(s.tones[1]).toEqual({ right: 9, total: 10 });
 	});
 });
