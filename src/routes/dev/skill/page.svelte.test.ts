@@ -27,6 +27,27 @@ describe('dev skill harness', () => {
 		// Assert
 		const ks = [...target.querySelectorAll('section[data-k]')].map((s) => s.getAttribute('data-k'));
 		expect(ks).toEqual(['noi', 'doan', 'thi']);
-		expect(target.querySelectorAll('[data-part="demo-note"]')).toHaveLength(3);
+		expect(target.querySelectorAll('section[data-k] [data-part="demo-note"]')).toHaveLength(3);
+	});
+
+	it('Given_Harness_Then_DoanLevelNotes', () => {
+		// Arrange
+		target = document.createElement('div');
+		document.body.append(target);
+
+		// Act
+		app = mount(Page, { target }) as Record<string, unknown>;
+		flushSync();
+
+		// Assert
+		const notes = [
+			...target.querySelectorAll('section[data-doan-level] [data-part="demo-note"]')
+		].map((n) => n.textContent);
+		expect(notes).toEqual([
+			'Mở khi bạn tới HSK 3. Bạn đang ở HSK 1.',
+			'Mở khi bạn tới HSK 3. Bạn đang ở HSK 2.',
+			'Chưa có trong bản demo: cần AI chấm bài viết.'
+		]);
+		expect(target.querySelectorAll('[data-part="demo-note"]')).toHaveLength(6);
 	});
 });

@@ -58,4 +58,33 @@ describe('dev my-words harness', () => {
 		expect(el.textContent).toContain('chưa ôn');
 		expect(el.textContent).toContain('tự thêm');
 	});
+
+	it('?q=你 keeps only rows containing 你', () => {
+		// Arrange / Act
+		const el = render('?q=你');
+
+		// Assert
+		const hanzi = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
+		expect(hanzi.length).toBeGreaterThan(0);
+		expect(hanzi.every((h) => h?.includes('你'))).toBe(true);
+		expect(el.querySelector('input')!.value).toBe('你');
+	});
+
+	it('?q=xyz shows the no-match line', () => {
+		// Arrange / Act
+		const el = render('?q=xyz');
+
+		// Assert
+		expect(el.textContent).toContain('Không có từ nào khớp “xyz”.');
+		expect(el.querySelectorAll('li')).toHaveLength(0);
+	});
+
+	it('?empty shows Chưa có từ nào', () => {
+		// Arrange / Act
+		const el = render('?empty');
+
+		// Assert
+		expect(el.textContent).toContain('Chưa có từ nào');
+		expect(el.querySelectorAll('li')).toHaveLength(0);
+	});
 });

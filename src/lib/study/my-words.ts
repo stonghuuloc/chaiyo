@@ -58,3 +58,18 @@ export function myWords(
 		)
 		.map((x) => x.row);
 }
+
+const fold = (s: string) =>
+	s
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase()
+		.replace(/đ/g, 'd');
+
+export function searchWords(rows: MyWordRow[], q: string): MyWordRow[] {
+	const f = fold(q.trim());
+	if (!f) return rows;
+	return rows.filter((r) =>
+		[r.hanzi, r.pinyin, r.hanViet, r.nghia].some((x) => fold(x).includes(f))
+	);
+}

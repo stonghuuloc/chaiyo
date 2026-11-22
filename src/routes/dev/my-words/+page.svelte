@@ -16,6 +16,7 @@
 
 	const rows = $derived.by(() => {
 		const state = bai1();
+		if (page.url.searchParams.has('empty')) state.lexicon = {};
 		if (page.url.searchParams.has('extra'))
 			state.lexicon = {
 				...state.lexicon,
@@ -27,4 +28,4 @@
 </script>
 
 <h1>/dev/my-words</h1>
-<WordsList {rows} />
+<WordsList {rows} query={page.url.searchParams.get('q') ?? ''} />

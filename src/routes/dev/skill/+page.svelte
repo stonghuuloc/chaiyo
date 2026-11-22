@@ -9,4 +9,9 @@
 			<SkillEntry {k} />
 		</section>
 	{/each}
+	{#each [1, 2, 3] as level (level)}
+		<section data-doan-level={level}>
+			<SkillEntry k="doan" {level} />
+		</section>
+	{/each}
 </div>

@@ -27,4 +27,12 @@ export const SCENARIOS = {
 	}
 } satisfies Record<string, (now: Date) => State>;
 
+export const withLevel = (state: State, level: 1 | 3): State => {
+	const lessons = [1, 2, 3].map((n) => ({ id: `l${n}`, level: n, sections: [], words: [] }));
+	state.curriculum = { lessons };
+	for (const l of lessons)
+		state.lessons[l.id] = { unlocked: l.level <= level, passed: false, done: [] };
+	return state;
+};
+
 export type ScenarioKey = keyof typeof SCENARIOS;

@@ -17,10 +17,10 @@ const row = (hanzi: string, over: Partial<MyWordRow> = {}): MyWordRow => ({
 	...over
 });
 
-const render = (rows: MyWordRow[]) => {
+const render = (rows: MyWordRow[], query?: string) => {
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(WordsList, { target, props: { rows } }) as Record<string, unknown>;
+	app = mount(WordsList, { target, props: { rows, query } }) as Record<string, unknown>;
 	flushSync();
 	return target;
 };
@@ -130,5 +130,109 @@ describe('WordsList', () => {
 		// Assert
 		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
 		expect(order).toEqual(['学', '你']);
+	});
+
+	it('the search box has placeholder and aria-label Tìm trong từ của bạn', () => {
+		// Arrange / Act
+		const el = render([row('你')]);
+
+		// Assert
+		const input = el.querySelector('input')!;
+		expect(input.getAttribute('placeholder')).toBe('Tìm trong từ của bạn');
+		expect(input.getAttribute('aria-label')).toBe('Tìm trong từ của bạn');
+	});
+
+	it('typing hoc leaves the 学 rows and the count stays 30', () => {
+		// Arrange
+		const rows = [
+			row('学生', { hanViet: 'học sinh' }),
+			row('学', { hanViet: 'học' }),
+			...Array.from({ length: 28 }, (_, i) => row(`字${i}`))
+		];
+		const el = render(rows);
+		const input = el.querySelector('input')!;
+
+		// Act
+		input.value = 'hoc';
+		input.dispatchEvent(new Event('input', { bubbles: true }));
+		flushSync();
+
+		// Assert
+		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
+		expect(order).toEqual(['学生', '学']);
+		expect(el.textContent).toContain('30 từ đã học và đã lưu');
+	});
+
+	it('xyz shows Không có từ nào khớp “xyz”. and no li', () => {
+		// Arrange
+		const el = render([row('你')]);
+		const input = el.querySelector('input')!;
+
+		// Act
+		input.value = ' xyz ';
+		input.dispatchEvent(new Event('input', { bubbles: true }));
+		flushSync();
+
+		// Assert
+		expect(el.querySelector('[data-part="no-match"]')?.textContent).toBe(
+			'Không có từ nào khớp “xyz”.'
+		);
+		expect(el.querySelectorAll('li')).toHaveLength(0);
+	});
+
+	it('an initial query prop filters on mount', () => {
+		// Arrange / Act
+		const el = render([row('你'), row('好')], '好');
+
+		// Assert
+		const order = [...el.querySelectorAll('li [lang="zh"]')].map((x) => x.textContent);
+		expect(order).toEqual(['好']);
+		expect(el.querySelector('input')!.value).toBe('好');
+	});
+
+	it('row 学生 links to /word/学生', () => {
+		// Arrange / Act
+		const el = render([row('学生')]);
+
+		// Assert
+		const a = el.querySelector('li a')!;
+		expect(decodeURIComponent(a.getAttribute('href')!)).toMatch(/\/word\/学生$/);
+	});
+
+	it('row key 都-du1 links to /word/都-du1', () => {
+		// Arrange / Act
+		const el = render([row('都-du1')]);
+
+		// Assert
+		const a = el.querySelector('li a')!;
+		expect(decodeURIComponent(a.getAttribute('href')!)).toMatch(/\/word\/都-du1$/);
+	});
+
+	it('0 rows shows Chưa có từ nào, Học Bài 1 để có từ đầu tiên. and a Học Bài 1 link', () => {
+		// Arrange / Act
+		const el = render([]);
+
+		// Assert
+		expect(el.textContent).toContain('Chưa có từ nào');
+		expect(el.textContent).toContain('Học Bài 1 để có từ đầu tiên.');
+		expect(el.querySelector('a')?.textContent?.trim()).toBe('Học Bài 1');
+	});
+
+	it('the link ends /lesson/h1-01', () => {
+		// Arrange / Act
+		const el = render([]);
+
+		// Assert
+		expect(el.querySelector('a')!.getAttribute('href')).toMatch(/\/lesson\/h1-01$/);
+	});
+
+	it('0 rows renders no input, no legend, no count line', () => {
+		// Arrange / Act
+		const el = render([]);
+
+		// Assert
+		expect(el.querySelector('input')).toBeNull();
+		expect(el.textContent).not.toContain('Cột = độ nhớ');
+		expect(el.textContent).not.toContain('đã học và đã lưu');
 	});
 });
