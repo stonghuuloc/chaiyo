@@ -40,6 +40,7 @@ export type Catalog = {
 	word(id: string): Promise<CatalogWord>;
 	char(hanzi: string): Promise<CatalogChar>;
 	lookup(sentenceId: string, tapIndex: number): Promise<LookupHit>;
+	find(hanzi: string): Promise<{ word: CatalogWord | null; char: CatalogChar | null }>;
 };
 
 const toLessonContent = (b: Bundle): LessonContent => {
@@ -72,7 +73,10 @@ const tokenAt = (seg: string[], index: number): { token: string; start: number }
 	return undefined;
 };
 
-export function createCatalog(source: CatalogSource): Catalog {
+export function createCatalog(
+	source: CatalogSource,
+	teaches: (hanzi: string) => string | undefined = () => undefined
+): Catalog {
 	const loaded = new Map<string, Bundle>();
 	// The sha read by the most recently started lesson() call. current() answers can arrive out of
 	// order, so a call sets it only if no later-started call has already set it.
@@ -88,7 +92,7 @@ export function createCatalog(source: CatalogSource): Catalog {
 		return undefined;
 	};
 
-	return {
+	const catalog: Catalog = {
 		async lesson(id) {
 			const ticket = ++started;
 			const sha = await source.current();
@@ -133,6 +137,17 @@ export function createCatalog(source: CatalogSource): Catalog {
 			const part = bundle.thin.find((t) => t.hanzi === ch);
 			if (!part) throw miss;
 			return { ...part, contentSha: bundle.sha, sentenceId, start: tapIndex };
+		},
+		async find(hanzi) {
+			const id = teaches(hanzi);
+			if (id !== undefined) await catalog.lesson(id);
+			const w = find((b) => b.words.find((x) => x.id === hanzi));
+			const c = find((b) => b.chars.find((x) => x.hanzi === hanzi));
+			return {
+				word: w ? { ...w.hit, contentSha: w.sha } : null,
+				char: c ? { ...c.hit, contentSha: c.sha } : null
+			};
 		}
 	};
+	return catalog;
 }

@@ -333,6 +333,42 @@ describe('lookup', () => {
 	});
 });
 
+describe('find', () => {
+	const teaches = (hanzi: string) => (['谢谢', '你'].includes(hanzi) ? 'h1-01' : undefined);
+
+	it('Given_WordTaughtInUnloadedLesson_When_Find_Then_LoadsThatLessonAndReturnsWord', async () => {
+		// Arrange
+		const catalog = createCatalog(await fixtureSource(), teaches);
+		await catalog.lesson('h0-00');
+		// Act
+		const found = await catalog.find('谢谢');
+		// Assert
+		expect(found.word?.taughtIn).toBe('h1-01');
+		expect(found.char).toBeNull();
+	});
+
+	it('Given_TaughtChar_When_Find_Then_ReturnsCharReadings', async () => {
+		// Arrange
+		const catalog = createCatalog(await fixtureSource(), teaches);
+		// Act
+		const found = await catalog.find('你');
+		// Assert
+		expect(found.char).toMatchObject({ hanzi: '你' });
+	});
+
+	it('Given_UntaughtWord_When_Find_Then_NullsWithoutBundleRequest', async () => {
+		// Arrange
+		const inner = await fixtureSource();
+		const bundle = vi.fn(inner.bundle);
+		const catalog = createCatalog({ ...inner, bundle }, teaches);
+		// Act
+		const found = await catalog.find('咖啡');
+		// Assert
+		expect(found).toEqual({ word: null, char: null });
+		expect(bundle).not.toHaveBeenCalled();
+	});
+});
+
 describe('no network', () => {
 	it('never calls fetch across lesson, word, char and lookup', async () => {
 		// Arrange
