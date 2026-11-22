@@ -21,14 +21,14 @@
 	};
 	let { chars, lesson, contentSha, ledger, exit, next }: Props = $props();
 
-	const steps = untrack(() => {
+	const skipped = untrack(() => {
 		const state = ledger.state();
 		const ids = writingSteps(chars, new Set()).map((s) => s.id);
 		const open = resume(state, { lesson, section: 'writing', ids });
-		const answers = open.run ? state.runs[open.run].answers : {};
-		return writingSteps(chars, new SvelteSet(skippedFrom(answers, chars)));
+		return new SvelteSet(skippedFrom(open.run ? state.runs[open.run].answers : {}, chars));
 	});
-	const list = $derived(practised(chars, steps[0]?.skipped ?? new Set()));
+	const steps = untrack(() => writingSteps(chars, skipped));
+	const list = $derived(practised(chars, skipped));
 	let events = $state<StudyEvent[] | null>(null);
 </script>
 
