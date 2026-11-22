@@ -71,6 +71,7 @@
 	const View = $derived(viewOf(steps[index].kind).default);
 	const word = $derived.by(() => {
 		const s = steps[index];
+		if (s.kind === 'word') return s.id;
 		return s.kind === 'choice' ? (s.card?.word ?? null) : null;
 	});
 
