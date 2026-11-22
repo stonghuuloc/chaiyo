@@ -290,5 +290,17 @@
 	"writing_done_clean": "Viết xong · không sai nét nào",
 	"writing_skip": "Bỏ qua chữ này",
 	"writing_done_text": "Bạn đã viết {n} chữ: {chars}",
-	"writing_and": "{rest} và {last}"
+	"writing_and": "{rest} và {last}",
+	"gate_result_title": "Kết quả · Bài {n}",
+	"gate_result_score": "{right}/{of} câu đúng · cần 80%",
+	"gate_result_unlocked": "Đã mở Bài {n}",
+	"gate_result_streak": "+1 ngày chuỗi",
+	"gate_result_fail": "Gần được rồi. Cần 80% để mở Bài {n}.",
+	"gate_result_best": "Điểm cao nhất: {pct}%",
+	"gate_result_wrong": "Câu chưa đúng ({n})",
+	"gate_result_wrong_none": "Câu chưa đúng",
+	"gate_result_clean": "Không sai câu nào.",
+	"gate_result_you": "Bạn:",
+	"gate_result_home": "Về trang chủ",
+	"gate_result_retry": "Làm lại"
 }
