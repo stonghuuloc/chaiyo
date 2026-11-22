@@ -275,5 +275,8 @@
 	"hub_gate_locked": "Mở khi xong {n} phần · đạt từ 80%",
 	"hub_lesson_words_title": "Từ trong bài",
 	"hub_lesson_words_mine": "Từ của tôi",
-	"hub_lesson_words_legend": "Viền đứt: chưa học tới."
+	"hub_lesson_words_legend": "Viền đứt: chưa học tới.",
+	"pills_label": "Hiển thị",
+	"pills_pinyin": "Pinyin",
+	"pills_meaning": "Nghĩa"
 }
