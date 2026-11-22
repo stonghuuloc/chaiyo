@@ -22,7 +22,7 @@
 		section: string;
 		contentSha: string;
 		ledger: Ledger;
-		onfinish: (events: StudyEvent[]) => void;
+		onfinish: (events: StudyEvent[], answers: Answer[]) => void;
 		confirmExit?: { label: string; title: string; body: string; leave: string; keep: string };
 		fresh?: boolean;
 		note?: string;
@@ -50,6 +50,7 @@
 	const answered = new SvelteSet(
 		untrack(() => Object.keys(ledger.state().runs[run]?.answers ?? {}))
 	);
+	const picks = new Map<string, Answer>();
 	let index = $state(start.index);
 	let current = $state<Cta | null>(null);
 	let busy = false;
@@ -94,6 +95,7 @@
 			busy = false;
 		}
 		current = null;
+		if (answer) picks.set(steps[index].id, answer);
 		answered.add(steps[index].id);
 		const following = steps.findIndex((s) => !answered.has(s.id));
 		if (following >= 0) {
@@ -101,7 +103,10 @@
 			return;
 		}
 		done = true;
-		onfinish(events);
+		onfinish(
+			events,
+			steps.flatMap((s) => picks.get(s.id) ?? [])
+		);
 	}
 </script>
 

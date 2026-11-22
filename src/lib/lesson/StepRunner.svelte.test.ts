@@ -6,6 +6,7 @@ import { m } from '#lib/paraglide/messages.js';
 import { initialState, type StudyEvent } from '#lib/study/index.js';
 import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import type { LessonStep } from './steps';
+import type { Answer } from './types';
 import StepRunner from './StepRunner.svelte';
 
 const steps: LessonStep[] = [
@@ -87,7 +88,7 @@ const mountRunner = (
 	ledger: Ledger,
 	o: {
 		steps?: LessonStep[];
-		onfinish?: (events: StudyEvent[]) => void;
+		onfinish?: (events: StudyEvent[], answers: Answer[]) => void;
 		extra?: Record<string, unknown>;
 	} = {}
 ): Runner => {
@@ -196,6 +197,30 @@ describe('StepRunner', () => {
 		// Assert
 		expect(got[0]).toContainEqual(expect.objectContaining({ type: 'DayCounted', streak: 1 }));
 		expect(got[0]).toContainEqual({ type: 'SectionDone', lesson: 'h1-01', section: 'words' });
+	});
+
+	it('Given_TwoStepsAnswered_When_Finish_Then_AnswersInStepOrder', async () => {
+		// Arrange
+		const got: Answer[][] = [];
+		const ledger = await ledgerFor();
+		const view = mountRunner(ledger, { onfinish: (_, a) => got.push(a) });
+
+		// Act
+		view.options()[1].click();
+		flushSync();
+		view.cta().click();
+		flushSync();
+		view.cta().click();
+		await vi.waitFor(() => expect(view.counter()).toBe('2/2'));
+		pickAndCheck(view);
+		view.cta().click();
+		await vi.waitFor(() => expect(got).toHaveLength(1));
+
+		// Assert
+		expect(got[0].map((a) => [a.questionId, a.pick, a.correct])).toEqual([
+			['q0', '你', false],
+			['q1', '好', true]
+		]);
 	});
 
 	it('Given_PickedStep_When_CtaRendered_Then_CaretFromStepCta', async () => {
