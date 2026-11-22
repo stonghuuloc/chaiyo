@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { apply, initialState, type Attempt } from '#lib/study/index.js';
 import { att, T } from './fixtures';
 import { memoryStore, openLedger, supabaseStore, syncWhenOnline } from './index';
+import { pullInputs } from './supabase';
 
 const MIN = 60_000;
 const fold = (inputs: Attempt[]) =>
@@ -189,6 +190,42 @@ describe('sync', () => {
 		expect(a[2]).toContain('offset=2000&limit=1000');
 		expect(pulled[0]).toMatchObject({ id: 'p0', at: new Date(T).toISOString() });
 		expect(pulled[0]).not.toHaveProperty('card');
+	});
+
+	describe('pullInputs', () => {
+		it('Given_OneAttemptAndOneSave_When_PullInputs_Then_SameAsStorePullWithoutOwnerCheck', async () => {
+			// Arrange
+			const attempt = {
+				id: 'p1',
+				at: new Date(T).toISOString().replace('Z', '+00:00'),
+				question_id: 'q',
+				content_sha: 's',
+				word: null,
+				skill: null,
+				correct: true,
+				ms: 1,
+				answer: null,
+				step: null
+			};
+			const save = { word: '你', saved_at: new Date(T + MIN).toISOString() };
+			const fetch = vi.fn(async (input: RequestInfo | URL) =>
+				json(new URL(String(input)).pathname.endsWith('/attempts') ? [attempt] : [save], 200)
+			);
+			const client = clientWith(fetch as typeof globalThis.fetch);
+			const viaStore = await supabaseStore(client, 'learner-a').pull();
+			vi.spyOn(client.auth, 'getSession').mockResolvedValue({
+				data: { session: { user: { id: 'someone-else' } } },
+				error: null
+			} as Awaited<ReturnType<typeof client.auth.getSession>>);
+
+			// Act
+			const direct = await pullInputs(client, 'learner-a');
+
+			// Assert
+			expect(direct).toEqual(viaStore);
+			expect(direct).toHaveLength(2);
+			await expect(supabaseStore(client, 'learner-a').pull()).rejects.toThrow('another learner');
+		});
 	});
 
 	describe('tone', () => {
