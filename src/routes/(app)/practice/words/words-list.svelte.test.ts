@@ -189,4 +189,22 @@ describe('WordsList', () => {
 		expect(order).toEqual(['好']);
 		expect(el.querySelector('input')!.value).toBe('好');
 	});
+
+	it('row 学生 links to /word/学生', () => {
+		// Arrange / Act
+		const el = render([row('学生')]);
+
+		// Assert
+		const a = el.querySelector('li a')!;
+		expect(decodeURIComponent(a.getAttribute('href')!)).toMatch(/\/word\/学生$/);
+	});
+
+	it('row key 都-du1 links to /word/都-du1', () => {
+		// Arrange / Act
+		const el = render([row('都-du1')]);
+
+		// Assert
+		const a = el.querySelector('li a')!;
+		expect(decodeURIComponent(a.getAttribute('href')!)).toMatch(/\/word\/都-du1$/);
+	});
 });

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { m } from '#lib/paraglide/messages.js';
 	import { searchWords, type MyWordRow } from '#lib/study/index.js';
 
@@ -22,43 +23,45 @@
 	{/if}
 	<ul class="flex flex-col gap-2">
 		{#each shown as row (row.hanzi)}
-			<li
-				data-part="my-word"
-				class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
-			>
-				<span lang="zh" class="font-display text-headline">{row.hanzi}</span>
-				<span class="flex flex-1 flex-col">
-					{#if row.pinyin}
-						<span data-part="py">{row.pinyin}</span>
-					{/if}
-					{#if row.hanViet}
-						<small data-part="hv" class="text-graphite">{row.hanViet}</small>
-					{/if}
-					{#if row.nghia}
-						<small data-part="nghia" class="text-graphite">{row.nghia}</small>
-					{/if}
-					{#if row.dueNote}
-						<small data-part="note" class="text-lantern-red">
-							{row.dueNote === 'due' ? m.mywords_note_due() : m.mywords_note_never()}
-						</small>
-					{/if}
-					{#if row.source === 'self'}
-						<small data-part="source" class="text-pencil">{m.mywords_source_self()}</small>
-					{/if}
-				</span>
-				<span
-					role="img"
-					aria-label={m.mywords_bars({ bars: row.bars })}
-					class="flex items-end gap-0.5"
+			<li data-part="my-word">
+				<a
+					href={resolve('/(app)/word/[id]', { id: row.hanzi })}
+					class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
 				>
-					{#each [1, 2, 3] as level (level)}
-						<i
-							data-filled={level <= row.bars}
-							class="w-1.5 rounded-full {level <= row.bars ? 'bg-lantern-red' : 'bg-ruled-line'}"
-							style:height="{level * 6 + 6}px"
-						></i>
-					{/each}
-				</span>
+					<span lang="zh" class="font-display text-headline">{row.hanzi}</span>
+					<span class="flex flex-1 flex-col">
+						{#if row.pinyin}
+							<span data-part="py">{row.pinyin}</span>
+						{/if}
+						{#if row.hanViet}
+							<small data-part="hv" class="text-graphite">{row.hanViet}</small>
+						{/if}
+						{#if row.nghia}
+							<small data-part="nghia" class="text-graphite">{row.nghia}</small>
+						{/if}
+						{#if row.dueNote}
+							<small data-part="note" class="text-lantern-red">
+								{row.dueNote === 'due' ? m.mywords_note_due() : m.mywords_note_never()}
+							</small>
+						{/if}
+						{#if row.source === 'self'}
+							<small data-part="source" class="text-pencil">{m.mywords_source_self()}</small>
+						{/if}
+					</span>
+					<span
+						role="img"
+						aria-label={m.mywords_bars({ bars: row.bars })}
+						class="flex items-end gap-0.5"
+					>
+						{#each [1, 2, 3] as level (level)}
+							<i
+								data-filled={level <= row.bars}
+								class="w-1.5 rounded-full {level <= row.bars ? 'bg-lantern-red' : 'bg-ruled-line'}"
+								style:height="{level * 6 + 6}px"
+							></i>
+						{/each}
+					</span>
+				</a>
 			</li>
 		{/each}
 	</ul>
