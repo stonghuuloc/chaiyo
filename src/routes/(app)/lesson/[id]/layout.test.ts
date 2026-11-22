@@ -57,4 +57,23 @@ describe('lesson layout load', () => {
 		if (!(thrown instanceof CatalogError)) throw thrown;
 		expect(thrown.code).toBe('malformed');
 	});
+	it('Given_BundleFetchRejects_When_LoadH0_00_Then_503Offline', async () => {
+		// Arrange
+		const f = await fakeFetch({
+			[`/content/${(await fakeFetch()).sha}/h0-00.json`]: () => {
+				throw new TypeError('Failed to fetch');
+			}
+		});
+		vi.stubGlobal('fetch', f.fetch);
+		const { load } = await import('./+layout');
+		// Act
+		let thrown: unknown;
+		try {
+			await load({ params: { id: 'h0-00' } });
+		} catch (e) {
+			thrown = e;
+		}
+		// Assert
+		expect(isHttpError(thrown, 503)).toBe(true);
+	});
 });

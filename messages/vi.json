@@ -267,5 +267,8 @@
 	"words_next": "Tiếp",
 	"words_listen": "Nghe",
 	"words_check": "Kiểm tra nhanh",
-	"words_done_text": "{n} từ đã vào Từ của tôi. Ôn lại trong Luyện tập nhé."
+	"words_done_text": "{n} từ đã vào Từ của tôi. Ôn lại trong Luyện tập nhé.",
+	"lesson_offline": "Bài này cần mạng.",
+	"lesson_offline_hint": "Kết nối mạng rồi mở lại bài.",
+	"lesson_offline_home": "Về Hôm nay"
 }
