@@ -650,6 +650,22 @@ gate:
       answer: 3
       why: thanh 4 rơi mạnh
       section: tones
+    - id: q-h0-00-g-tones-05
+      type: choice
+      tests:
+        tone: true
+      prompt:
+        kind: syllable
+        text: hǎo
+      optionKind: pinyin
+      options:
+        - hāo
+        - háo
+        - hǎo
+        - hào
+      answer: 2
+      why: thanh 3 xuống thấp rồi lên
+      section: tones
     - id: q-h0-00-g-finals-01
       type: choice
       tests: {}
