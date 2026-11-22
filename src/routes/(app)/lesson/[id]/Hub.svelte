@@ -86,6 +86,35 @@
 		</a>
 	</section>
 
+	{#if hub.words.length > 0}
+		<section class="flex flex-col gap-3">
+			<div class="flex items-baseline justify-between">
+				<h2 class="text-lg font-display">{m.hub_lesson_words_title()}</h2>
+				<a
+					data-part="hub-lexicon"
+					href={resolve('/(app)/(tabs)/practice')}
+					class="text-sm text-lantern-red">{m.hub_lesson_words_mine()}</a
+				>
+			</div>
+			<ul class="flex flex-wrap gap-2">
+				{#each hub.words as w (w.id)}
+					<li
+						data-part="hub-word"
+						data-reached={String(w.reached)}
+						class={[
+							'rounded-xl flex flex-col items-center border bg-white px-3 py-2',
+							w.reached ? 'border-solid border-ruled-line' : 'border-dashed border-pencil'
+						]}
+					>
+						<span lang="zh" class="text-lg">{w.hanzi}</span>
+						<span class="text-sm text-graphite">{w.pinyin}</span>
+					</li>
+				{/each}
+			</ul>
+			<p data-part="hub-legend" class="text-sm text-pencil">{m.hub_lesson_words_legend()}</p>
+		</section>
+	{/if}
+
 	{#if hub.cta}
 		<a
 			data-part="hub-cta"

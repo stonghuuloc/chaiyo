@@ -159,3 +159,31 @@ describe('lesson hub Gate row', () => {
 		expect(gate().querySelector('use[href="#i-fill-lock-simple"]')).toBeNull();
 	});
 });
+
+describe('lesson hub word Tiles', () => {
+	it('Given_OpenWordsRunAtWord5_When_Open_Then_FourSolidSixDashedTiles', async () => {
+		// Arrange
+		current = wordsRun(lesson.words.slice(0, 4).map((w) => w.id));
+
+		// Act
+		await mountPage();
+
+		// Assert
+		const tiles = [...target!.querySelectorAll<HTMLElement>('[data-part=hub-word]')];
+		expect(tiles).toHaveLength(10);
+		expect(tiles.map((t) => t.dataset.reached)).toEqual([
+			...Array(4).fill('true'),
+			...Array(6).fill('false')
+		]);
+		expect(tiles[5].classList.contains('border-dashed')).toBe(true);
+		expect(tiles[0].classList.contains('border-dashed')).toBe(false);
+		expect(tiles[0].textContent).toContain('你');
+		expect(tiles[0].textContent).toContain('nǐ');
+		expect(target!.querySelector('[data-part=hub-legend]')!.textContent).toBe(
+			'Viền đứt: chưa học tới.'
+		);
+		const mine = target!.querySelector<HTMLAnchorElement>('[data-part=hub-lexicon]')!;
+		expect(mine.textContent).toContain('Từ của tôi');
+		expect(mine.getAttribute('href')).toMatch(/\/practice$/);
+	});
+});
