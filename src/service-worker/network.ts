@@ -1,4 +1,4 @@
-const BUNDLE = /^\/content\/[0-9a-f]{64}\/[^/]+\.json$/;
+const BUNDLE = /^\/content\/(current|[0-9a-f]{64}\/[^/]+)\.json$/;
 
 export async function networkFirst(
 	request: Request,

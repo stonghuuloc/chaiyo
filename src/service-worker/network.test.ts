@@ -49,9 +49,30 @@ describe('networkFirst', () => {
 		expect(await res.text()).toBe('ok');
 	});
 
+	it('Given_CurrentJson_When_NetworkFirst_Then_PutAwaitedBeforeResolve', async () => {
+		// Arrange
+		let written = false;
+		const cache = {
+			put: vi.fn(async () => {
+				await new Promise((r) => setTimeout(r, 10));
+				written = true;
+			}),
+			match: vi.fn()
+		};
+		const waitUntil = vi.fn();
+		const current = new Request('https://example.test/content/current.json');
+
+		// Act
+		await networkFirst(current, cache, async () => new Response('{}'), waitUntil);
+
+		// Assert
+		expect(written).toBe(true);
+		expect(waitUntil).not.toHaveBeenCalled();
+	});
+
 	it.each([
-		'https://example.test/content/current.json',
-		'https://example.test/content/abc/h1-01.json'
+		'https://example.test/content/abc/h1-01.json',
+		'https://example.test/content/other.json'
 	])('treats %s as a non-bundle', async (url) => {
 		const cache = { put: vi.fn().mockResolvedValue(undefined), match: vi.fn() };
 		const waitUntil = vi.fn();
