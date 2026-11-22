@@ -7,6 +7,8 @@
 		audio: string;
 		answer: 1 | 2 | 3 | 4 | 5;
 		syllable: string;
+		hanzi: string;
+		target: number;
 	};
 </script>
 
@@ -57,6 +59,21 @@
 </p>
 {#if step.audio}
 	<ClipCast clip={step.audio} label={step.ask} />
+{/if}
+{#if [...step.hanzi].length > 1}
+	<p data-part="tone-word" class="mt-3 text-center font-hanzi text-[40px] text-graphite">
+		{#each [...step.hanzi] as char, i (i)}
+			{#if i === step.target}
+				<b
+					data-part="tone-target"
+					class="text-ink underline decoration-lantern-red decoration-4 underline-offset-8"
+					>{char}</b
+				>
+			{:else}
+				<span>{char}</span>
+			{/if}
+		{/each}
+	</p>
 {/if}
 
 <div class="mt-5 grid grid-cols-2 gap-2 md:grid-cols-5">

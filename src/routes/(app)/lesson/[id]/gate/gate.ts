@@ -48,7 +48,9 @@ function gateStep(q: Question, c: LessonContent): LessonStep | null {
 				ask: m.listen_tone_ask(),
 				audio,
 				answer: q.answer,
-				syllable: pinyin.split(/\s+/)[q.syllable] ?? pinyin
+				syllable: pinyin.split(/\s+/)[q.syllable] ?? pinyin,
+				hanzi: word?.hanzi ?? ref,
+				target: q.syllable
 			};
 		}
 		case 'trueFalse': {

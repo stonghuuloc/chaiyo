@@ -9,7 +9,9 @@ const step: Step = {
 	ask: 'Nghe và chọn thanh điệu',
 	audio: 'words/hao',
 	answer: 3,
-	syllable: 'hǎo'
+	syllable: 'hǎo',
+	hanzi: '好',
+	target: 0
 };
 
 describe('tone', () => {

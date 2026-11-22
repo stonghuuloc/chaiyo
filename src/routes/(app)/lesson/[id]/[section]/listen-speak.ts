@@ -28,7 +28,9 @@ export function listenSpeakSteps(content: LessonContent): LessonStep[] {
 				ask: m.listen_tone_ask(),
 				audio: clip,
 				answer: item.answer,
-				syllable: pinyin.split(/\s+/)[item.syllable] ?? pinyin
+				syllable: pinyin.split(/\s+/)[item.syllable] ?? pinyin,
+				hanzi: word?.hanzi ?? ref,
+				target: item.syllable
 			});
 		} else if (item.type === 'choice') {
 			const vi = item.optionKind === 'vi';

@@ -19,7 +19,9 @@ const step: Step = {
 	ask: 'Nghe và chọn thanh điệu',
 	audio: 'words/hao',
 	answer: 3,
-	syllable: 'hǎo'
+	syllable: 'hǎo',
+	hanzi: '好',
+	target: 0
 };
 
 let target: HTMLDivElement | undefined;
@@ -152,5 +154,37 @@ describe('Tone', () => {
 		expect(target!.textContent).not.toContain(m.lesson_wrong());
 		expect(ui.options()[2].getAttribute('data-mark')).toBe(null);
 		expect(ui.calls).toEqual([expect.objectContaining({ pick: '2', correct: false })]);
+	});
+
+	it('Given_SingleCharPrompt_When_Mount_Then_NoTargetShown', () => {
+		// Arrange
+		mountTone();
+
+		// Act
+		const shown = target!.querySelector('[data-part="tone-word"]');
+
+		// Assert
+		expect(shown).toBe(null);
+	});
+
+	it('Given_X18MultiSyllableWord_When_Mount_Then_TargetCharMarkedWithoutTone', () => {
+		// Arrange
+		const x18: Step = {
+			...step,
+			id: 'q-h1-01-x18',
+			audio: 'words/meiguanxi',
+			answer: 2,
+			syllable: 'méi',
+			hanzi: '没关系',
+			target: 0
+		};
+
+		// Act
+		mountTone(x18);
+
+		// Assert
+		expect(target!.querySelector('[data-part="tone-word"]')?.textContent?.trim()).toBe('没关系');
+		expect(target!.querySelector('[data-part="tone-target"]')?.textContent).toBe('没');
+		expect(target!.textContent).not.toContain('méi');
 	});
 });

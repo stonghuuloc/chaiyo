@@ -151,7 +151,9 @@ describe('listenSpeakSteps', () => {
 			ask: m.listen_tone_ask(),
 			audio: 'words/hao',
 			answer: 3,
-			syllable: 'hǎo'
+			syllable: 'hǎo',
+			hanzi: '好',
+			target: 0
 		});
 	});
 

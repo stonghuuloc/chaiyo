@@ -229,7 +229,9 @@ describe('gateSteps', () => {
 			ask: m.listen_tone_ask(),
 			audio: 'words/meiguanxi',
 			answer: 2,
-			syllable: 'méi'
+			syllable: 'méi',
+			hanzi: '没关系',
+			target: 0
 		});
 		expect(s['x-true']).toMatchObject({
 			kind: 'choice',
