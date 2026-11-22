@@ -25,6 +25,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+	vi.restoreAllMocks();
 	if (app) unmount(app as never);
 	target?.remove();
 	target = app = undefined;
@@ -267,5 +268,175 @@ describe('Flashcard decide', () => {
 		expect(target!.querySelector('[data-part="stamp-remember"]')?.textContent).toBe(
 			m.practice_stamp_remember()
 		);
+	});
+});
+
+describe('Flashcard drag', () => {
+	let clock = 1000;
+	beforeEach(() => {
+		clock = 1000;
+		vi.spyOn(performance, 'now').mockImplementation(() => clock);
+		vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+			width: 340,
+			height: 256,
+			x: 0,
+			y: 0,
+			top: 0,
+			left: 0,
+			right: 340,
+			bottom: 256,
+			toJSON: () => ({})
+		});
+	});
+
+	const stage = () => target!.querySelector<HTMLElement>('[data-part="stage"]')!;
+	const cardEl = () => target!.querySelector<HTMLElement>('[data-part="card"]')!;
+	const fire = (type: string, x: number, y = 0) => {
+		stage().dispatchEvent(
+			new PointerEvent(type, {
+				pointerId: 1,
+				clientX: x,
+				clientY: y,
+				bubbles: true,
+				cancelable: true
+			})
+		);
+		flushSync();
+	};
+	const drag = (dx: number, ms: number, dy = 0) => {
+		fire('pointerdown', 100);
+		clock += ms / 2;
+		fire('pointermove', 100 + dx / 2, dy / 2);
+		clock += ms / 2;
+		fire('pointermove', 100 + dx, dy);
+		fire('pointerup', 100 + dx, dy);
+	};
+
+	it('Given_Back_When_DragRight120_Then_DecidesRemembered', async () => {
+		// Arrange
+		const ondecide = vi.fn();
+		render({ ondecide });
+		flip();
+
+		// Act
+		drag(120, 600);
+
+		// Assert
+		await vi.waitFor(() => expect(ondecide).toHaveBeenCalledTimes(1));
+		expect(ondecide).toHaveBeenCalledWith(expect.objectContaining({ remembered: true }));
+	});
+
+	it('Given_Back_When_DragLeft120_Then_DecidesForgotten', async () => {
+		// Arrange
+		const ondecide = vi.fn();
+		render({ ondecide });
+		flip();
+
+		// Act
+		drag(-120, 600);
+
+		// Assert
+		await vi.waitFor(() => expect(ondecide).toHaveBeenCalledTimes(1));
+		expect(ondecide).toHaveBeenCalledWith(expect.objectContaining({ remembered: false }));
+	});
+
+	it('Given_Back_When_SlowDrag60_Then_SpringsBackWithoutDecide', async () => {
+		// Arrange
+		const ondecide = vi.fn();
+		render({ ondecide });
+		flip();
+
+		// Act
+		drag(60, 600);
+		await Promise.resolve();
+		await Promise.resolve();
+
+		// Assert
+		expect(ondecide).not.toHaveBeenCalled();
+		expect(cardEl().style.transform).toMatch(/^(|none|translateX\(0(px)?\).*)$/);
+	});
+
+	it('Given_Back_When_Pointercancel_Then_SpringsBack', async () => {
+		// Arrange
+		const ondecide = vi.fn();
+		render({ ondecide });
+		flip();
+
+		// Act
+		fire('pointerdown', 100);
+		clock += 600;
+		fire('pointermove', 220);
+		fire('pointercancel', 220);
+		await Promise.resolve();
+
+		// Assert
+		expect(ondecide).not.toHaveBeenCalled();
+		expect(cardEl().style.transform).toMatch(/^(|none|translateX\(0(px)?\).*)$/);
+	});
+
+	it('Given_Front_When_Drag120_Then_NoDecideAndStaysFront', async () => {
+		// Arrange
+		const ondecide = vi.fn();
+		render({ ondecide });
+
+		// Act
+		drag(120, 100);
+		await Promise.resolve();
+		await Promise.resolve();
+
+		// Assert
+		expect(ondecide).not.toHaveBeenCalled();
+		expect(text()).toContain(m.practice_card_hint());
+	});
+
+	it('Given_Front_When_Drag120ThenClick_Then_DoesNotFlip', () => {
+		// Arrange
+		render();
+
+		// Act
+		drag(120, 100);
+		flipButton().click();
+		flushSync();
+
+		// Assert
+		expect(text()).not.toContain('xuéshēng');
+	});
+
+	it('Given_Front_When_TapWithoutMove_Then_StillFlips', () => {
+		// Arrange
+		render();
+
+		// Act
+		fire('pointerdown', 100);
+		fire('pointerup', 100);
+		flipButton().click();
+		flushSync();
+
+		// Assert
+		expect(text()).toContain('xuéshēng');
+	});
+
+	it('Given_Back_When_DraggingHalfThreshold_Then_StampOpacityIsHalf', () => {
+		// Arrange
+		render();
+		flip();
+
+		// Act
+		fire('pointerdown', 100);
+		clock += 600;
+		fire('pointermove', 100 + (0.28 * 340) / 2);
+
+		// Assert
+		const stamp = target!.querySelector<HTMLElement>('[data-part="stamp-remember"]')!;
+		expect(Number(stamp.style.opacity)).toBeCloseTo(0.5, 5);
+	});
+
+	it('Given_Stage_When_Render_Then_TouchActionIsPanY', () => {
+		// Arrange
+		// Act
+		render();
+
+		// Assert
+		expect(stage().style.touchAction).toBe('pan-y');
 	});
 });
