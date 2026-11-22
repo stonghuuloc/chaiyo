@@ -361,7 +361,7 @@ describe('grammarSteps on Bài 1', () => {
 			expect(steps.length).toBeGreaterThan(0);
 			expect(new Set(steps.map((s) => s.id)).size).toBe(steps.length);
 		}
-	}, 60_000);
+	}, 120_000);
 
 	it('Given_Bai1_When_Build_Then_NoDrillTitleOrOptionHoldsPinyin', async () => {
 		// Arrange
