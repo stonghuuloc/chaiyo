@@ -4,7 +4,7 @@ import { createPlayer } from './player';
 
 type Seen = { rate: number; pitch: boolean; src: string };
 
-class FakeAudio {
+class FakeAudio extends EventTarget {
 	src = '';
 	playbackRate = 1;
 	defaultPlaybackRate = 1;
@@ -15,6 +15,7 @@ class FakeAudio {
 		this.seen.push({ rate: this.playbackRate, pitch: this.preservesPitch, src: this.src });
 		return Promise.resolve();
 	});
+	pause = vi.fn();
 }
 
 function setup(base?: string) {
@@ -201,5 +202,106 @@ describe('iOS gesture', () => {
 		expect('Audio' in globalThis).toBe(false);
 		vi.resetModules();
 		await expect(import('./player')).resolves.toHaveProperty('play');
+	});
+});
+
+describe('playToEnd', () => {
+	it('Given_AClip_When_ItEnds_Then_ResolvesTrue', async () => {
+		// Arrange
+		const { el, playToEnd } = setup('/clips');
+
+		// Act
+		const done = playToEnd('a');
+		await Promise.resolve();
+		el.dispatchEvent(new Event('ended'));
+
+		// Assert
+		expect(await done).toBe(true);
+		expect(el.src).toBe('/clips/a.mp3');
+	});
+
+	it('Given_AClipThatFailsToLoad_When_Error_Then_ResolvesTrue', async () => {
+		// Arrange
+		const { el, playToEnd } = setup();
+
+		// Act
+		const done = playToEnd('a');
+		el.dispatchEvent(new Event('error'));
+
+		// Assert
+		expect(await done).toBe(true);
+	});
+
+	it('Given_PlayRejects_When_PlayToEnd_Then_ResolvesTrue', async () => {
+		// Arrange
+		const { el, playToEnd } = setup();
+		el.play.mockImplementationOnce(() => Promise.reject(new Error('blocked')));
+
+		// Act / Assert
+		expect(await playToEnd('a')).toBe(true);
+	});
+
+	it('Given_APlayingClip_When_Pause_Then_ElementPausedAndResolvesFalse', async () => {
+		// Arrange
+		const { el, playToEnd, pause } = setup();
+		const done = playToEnd('a');
+
+		// Act
+		pause();
+
+		// Assert
+		expect(el.pause).toHaveBeenCalledTimes(1);
+		expect(await done).toBe(false);
+	});
+
+	it('Given_APlayingClip_When_AnotherPlayStarts_Then_ResolvesFalse', async () => {
+		// Arrange
+		const { el, playToEnd, play } = setup();
+		const first = playToEnd('a');
+
+		// Act
+		const second = playToEnd('b');
+		await play('c');
+		el.dispatchEvent(new Event('ended'));
+
+		// Assert
+		expect(await first).toBe(false);
+		expect(await second).toBe(false);
+	});
+
+	it('Given_PauseThenResume_When_SlowFalse_Then_SameLineAtRate1', async () => {
+		// Arrange
+		const { el, playToEnd, pause } = setup();
+		void playToEnd('a', { slow: false });
+		pause();
+
+		// Act
+		void playToEnd('a', { slow: false });
+
+		// Assert
+		expect(rates(el)).toEqual([1, 1]);
+	});
+
+	it('Given_TheSameLineTappedTwice_When_DefaultRule_Then_SecondAtHalfRate', async () => {
+		// Arrange
+		const { el, playToEnd } = setup();
+
+		// Act
+		void playToEnd('a');
+		void playToEnd('a');
+
+		// Assert
+		expect(rates(el)).toEqual([1, 0.5]);
+	});
+
+	it('Given_NoClipYet_When_Pause_Then_NoThrow', () => {
+		// Arrange
+		const { pause, element } = setup();
+
+		// Act
+		pause();
+
+		// Assert
+		expect(element()).toBe(null);
 	});
 });
