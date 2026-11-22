@@ -22,7 +22,13 @@ const findSentence = (sentences: ImportedSentence[], id: string): ImportedSenten
 
 const exampleOf = (sentences: ImportedSentence[], id: string) => {
 	const s = findSentence(sentences, id);
-	return { hanzi: s.hanzi, pinyin: s.pinyin, vi: s.vi, ...(s.audio ? { audio: s.audio } : {}) };
+	return {
+		id: s.id,
+		hanzi: s.hanzi,
+		pinyin: s.pinyin,
+		vi: s.vi,
+		...(s.audio ? { audio: s.audio } : {})
+	};
 };
 
 const supported = (d: Question) =>

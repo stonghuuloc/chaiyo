@@ -380,4 +380,19 @@ describe('grammarSteps on Bài 1', () => {
 		expect(text.length).toBeGreaterThan(0);
 		for (const t of text) for (const py of pinyin) expect(t).not.toContain(py);
 	}, 15_000);
+
+	it('Given_Examples_When_Build_Then_EachCarriesItsSentenceId', () => {
+		// Arrange / Act
+		const steps = grammarSteps(content());
+
+		// Assert
+		const ids = (n: number) => {
+			const s = steps[n];
+			return s.kind === 'grammar' ? s.examples.map((e) => e.id) : [];
+		};
+		expect([ids(0), ids(4)]).toEqual([
+			['s1', 's2'],
+			['s4', 's5']
+		]);
+	});
 });

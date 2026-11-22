@@ -8,7 +8,7 @@
 		labels: string[];
 		lead: string;
 		more: string;
-		examples: { hanzi: string; pinyin: string; vi: string; audio?: string }[];
+		examples: { id: string; hanzi: string; pinyin: string; vi: string; audio?: string }[];
 		pitfall?: { wrong: string; right: string };
 		drills: number;
 	};
@@ -17,6 +17,7 @@
 </script>
 
 <script lang="ts">
+	import TapText from '#lib/lookup/TapText.svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import Pills from '../Pills.svelte';
 	import { getPrefs } from '../prefs.svelte';
@@ -88,12 +89,12 @@
 	{m.grammar_examples()}
 </h3>
 <ul class="mt-2 flex flex-col gap-2">
-	{#each step.examples as ex (ex.hanzi)}
+	{#each step.examples as ex (ex.id)}
 		<li
 			class="flex items-center gap-3 rounded-action border border-ruled-line bg-white/40 px-3 py-2"
 		>
 			<div class="flex flex-1 flex-col">
-				<span class="font-hanzi text-[22px]">{ex.hanzi}</span>
+				<span class="font-hanzi text-[22px]"><TapText sentenceId={ex.id} hanzi={ex.hanzi} /></span>
 				{#if prefs?.pinyin ?? true}
 					<span data-part="example-pinyin" class="font-pinyin text-chip text-graphite"
 						>{ex.pinyin}</span
