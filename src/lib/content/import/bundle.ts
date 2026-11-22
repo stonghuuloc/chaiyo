@@ -46,10 +46,15 @@ export function buildBundle(content: ImportedContent, id: string): Bundle {
 		).map((s) => s.id)
 	);
 	const hanzi = new Set(words.flatMap((w) => [...w.hanzi]));
+	const clip = new Map(
+		content.audio.filter((a) => a.kind === 'sentence').map((a) => [a.ref, a.key])
+	);
 	return {
 		sha: content.sha,
 		lesson,
-		sentences: content.sentences.filter((s) => s.lessonId === id || picked.has(s.id)),
+		sentences: content.sentences
+			.filter((s) => s.lessonId === id || picked.has(s.id))
+			.map((s) => ({ ...s, audio: clip.get(s.id) })),
 		questions,
 		grammar,
 		words,
