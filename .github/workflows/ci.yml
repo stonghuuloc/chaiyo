@@ -49,6 +49,8 @@ jobs:
           name: coverage
           path: coverage/
           if-no-files-found: ignore
+      - run: pip install -r scripts/requirements-fonts.txt && bash scripts/build-content.sh
+        if: ${{ !cancelled() }}
       - run: pnpm build
         if: ${{ !cancelled() }}
 

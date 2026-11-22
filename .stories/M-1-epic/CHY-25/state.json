@@ -14,10 +14,11 @@
         "AC7"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "plan",
-      "reviews": 0,
-      "note": "review round 1 (Loc, 2026-11-06) addressed; awaiting re-review",
-      "jira": ""
+      "stage": "done",
+      "reviews": 2,
+      "note": "verified 2026-11-16, VERIFY.md",
+      "jira": "",
+      "pr": "#169"
     },
     {
       "id": "S2",
@@ -26,10 +27,11 @@
         "AC1"
       ],
       "repo": "stonghuuloc/chaiyo",
-      "stage": "plan",
-      "reviews": 0,
-      "note": "review round 1 (Loc, 2026-11-06) addressed; awaiting re-review",
-      "jira": ""
+      "stage": "done",
+      "reviews": 1,
+      "note": "design run done on a65f4297: 7 tasks, advisor r1 fixed; awaiting Loc review of spec+plan+picture",
+      "jira": "",
+      "pr": "#169"
     },
     {
       "id": "S3",
@@ -46,7 +48,11 @@
     }
   ],
   "locked": [],
-  "prs": [],
+  "prs": [
+    "#155",
+    "#164",
+    "#169"
+  ],
   "branch": "agent/chy-25-design-slice-18d36a30eaa8",
   "log": [
     "2026-11-06 init",
@@ -55,7 +61,21 @@
     "2026-11-06 +S3 Offline reopen and c\u1ea7n m\u1ea1ng [AC5,AC6]",
     "2026-11-06 S1 \u2192 plan",
     "2026-11-06 S2 \u2192 plan",
-    "2026-11-06 S3 \u2192 plan"
+    "2026-11-06 S3 \u2192 plan",
+    "2026-11-13 S1 \u2192 plan",
+    "2026-11-13 S1 \u2192 plan",
+    "2026-11-13 S1 \u2192 picture",
+    "2026-11-14 S1 \u2192 execute",
+    "2026-11-14 S1 \u2192 execute",
+    "2026-11-14 S1 \u2192 execute",
+    "2026-11-16 S1 \u2192 done",
+    "2026-11-16 S2 \u2192 discuss",
+    "2026-11-16 S2 \u2192 spec",
+    "2026-11-16 S2 \u2192 plan",
+    "2026-11-16 S2 \u2192 picture",
+    "2026-11-16 S2 \u2192 picture",
+    "2026-11-17 S1 \u2192 done",
+    "2026-11-17 S2 \u2192 done"
   ],
-  "updated": "2026-11-06T13:51:00+07:00"
+  "updated": "2026-11-17T11:03:06+07:00"
 }
