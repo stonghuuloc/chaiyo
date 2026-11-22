@@ -26,13 +26,16 @@ const word = (id: string) => ({
 	pos: ['n'],
 	senses: [{ vi: `vi-${id}` }],
 	examples: [],
-	listedIn: ['h1-01']
+	listedIn: ['h1-01'],
+	audio: `word/${id}`
 });
+
+const ids = ['你', '好', '您', '你们', '你好', '对不起', '没关系', '谢谢', '不客气', '再见'];
 
 const content = {
 	contentSha: 'sha-1',
-	lesson: { id: 'h1-01', sections: { words: { ids: ['你'] } } },
-	words: [word('你')],
+	lesson: { id: 'h1-01', sections: { words: { ids } } },
+	words: ids.map(word),
 	chars: [],
 	sentences: [],
 	grammar: [],
@@ -64,28 +67,42 @@ const render = () => {
 };
 
 describe('dev words harness', () => {
-	it('Given_Bai1_When_FinishCard_Then_DoneAndWordInLexicon', async () => {
+	it('Given_Bai1_When_WalkCardsAndChecks_Then_DoneAndEveryWordInLexicon', async () => {
 		// Arrange
 		hoisted.lesson.mockResolvedValue(content);
 		render();
-		const cta = await vi.waitFor(() => {
-			const b = [...target!.querySelectorAll('button')].find(
-				(x) => x.textContent?.trim() === m.words_next()
-			);
-			if (!b) throw new Error('no cta');
-			return b;
-		});
+		const button = (label: string) =>
+			[...target!.querySelectorAll('button')].find((x) => x.textContent?.trim() === label);
+		const press = async (label: string) => {
+			const b = await vi.waitFor(() => {
+				const x = button(label);
+				if (!x || x.disabled) throw new Error(`no ${label}`);
+				return x;
+			});
+			b.click();
+			flushSync();
+		};
+		const counter = () => target!.querySelector('.tabular-nums')?.textContent?.trim();
 
 		// Act
-		cta.click();
+		for (let n = 1; n <= 14; n++) {
+			await vi.waitFor(() => expect(counter()).toBe(`${n}/14`));
+			if (button(m.words_next())) await press(m.words_next());
+			else {
+				target!.querySelector<HTMLButtonElement>('.body button[aria-pressed]')!.click();
+				flushSync();
+				await press(m.lesson_check());
+				await press(m.lesson_continue());
+			}
+		}
 
 		// Assert
 		await vi.waitFor(() =>
 			expect(target!.querySelector('[data-part="done-text"]')?.textContent).toBe(
-				m.words_done_text({ n: 1 })
+				m.words_done_text({ n: 10 })
 			)
 		);
-		expect(target!.querySelector('[data-part="lexicon"]')!.textContent).toContain('你');
+		expect(target!.querySelector('[data-part="lexicon"]')!.textContent).toContain(ids.join(' '));
 		expect(hoisted.lesson).toHaveBeenCalledWith('h1-01');
 	});
 

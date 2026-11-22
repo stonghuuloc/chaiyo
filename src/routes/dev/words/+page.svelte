@@ -21,7 +21,7 @@
 
 	let events = $state<StudyEvent[] | null>(null);
 	let ledger = $state<Ledger>();
-	let steps = $state<LessonStep[]>([]);
+	let steps = $state.raw<LessonStep[]>([]);
 	let contentSha = $state('');
 	let failure = $state('');
 	let lexicon = $state<string[]>([]);
