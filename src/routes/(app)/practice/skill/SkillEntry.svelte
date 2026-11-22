@@ -3,7 +3,7 @@
 	import { resolve } from '$app/paths';
 	import { ENTRIES, noteFor, type SkillKey } from './skills';
 
-	let { k, level }: { k: SkillKey; level?: number } = $props();
+	let { k, level, lv }: { k: SkillKey; level?: number; lv?: number } = $props();
 
 	const entry = $derived(ENTRIES[k]);
 </script>
@@ -37,7 +37,7 @@
 		data-part="demo-note"
 		class="rounded-2xl border border-dashed border-ruled-line p-4 text-graphite"
 	>
-		{noteFor(k, level)}
+		{noteFor(k, level, lv)}
 	</p>
 
 	<a
