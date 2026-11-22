@@ -2,19 +2,40 @@ import type { LessonContent } from '#lib/catalog/index.js';
 import type { LessonStep } from '#lib/lesson/index.js';
 import { m } from '#lib/paraglide/messages.js';
 import { describe, expect, it } from 'vitest';
-import { Lesson, Primer, Sentence } from '#lib/content/schemas.js';
-import { speakSteps } from './listen-speak';
+import { Lesson, Primer, Sentence, Word } from '#lib/content/schemas.js';
+import { listenSpeakSteps } from './listen-speak';
 
 const sentence = (id: string, hanzi: string, pinyin: string, vi: string, spoken?: string) => ({
 	...Sentence.parse({ id, hanzi, pinyin, spoken, vi }),
 	seg: [hanzi]
 });
 
-const bundle = (lesson: LessonContent['lesson'], sentences: LessonContent['sentences']) =>
+const word = (id: string, pinyin: string, audio: string, spoken?: string) => ({
+	...Word.parse({
+		id,
+		hanzi: id,
+		pinyin,
+		spoken,
+		level: 1,
+		pos: ['adj'],
+		senses: [{ vi: 'x' }],
+		examples: []
+	}),
+	listedIn: ['h1-01'],
+	audio
+});
+
+const WORDS = [word('你好', 'nǐ hǎo', 'words/nihao', 'ní hǎo'), word('好', 'hǎo', 'words/hao')];
+
+const bundle = (
+	lesson: LessonContent['lesson'],
+	sentences: LessonContent['sentences'],
+	words: LessonContent['words'] = WORDS
+) =>
 	({
 		contentSha: 'sha',
 		lesson,
-		words: [],
+		words,
 		chars: [],
 		sentences,
 		grammar: [],
@@ -51,6 +72,33 @@ const content = (
 		sentences
 	);
 
+const tone = {
+	id: 'q-l01',
+	type: 'tone',
+	tests: { words: ['好'], tone: true },
+	prompt: { kind: 'audio', ref: '好' },
+	syllable: 0,
+	answer: 3
+};
+const wordChoice = {
+	id: 'q-l02',
+	type: 'choice',
+	tests: { words: ['你好'] },
+	prompt: { kind: 'audio', ref: '你好' },
+	optionKind: 'hanzi',
+	options: ['你好', '你们', '您', '再见'],
+	answer: 0
+};
+const meaningChoice = {
+	id: 'q-l03',
+	type: 'choice',
+	tests: { words: ['不客气'] },
+	prompt: { kind: 'audio', ref: 's1' },
+	optionKind: 'vi',
+	options: ['Không có gì.', 'Xin lỗi!', 'Cảm ơn!', 'Tạm biệt!'],
+	answer: 0
+};
+
 const readAloud = { id: 'q-s01', type: 'readAloud', tests: { words: ['不客气'] }, sentence: 's1' };
 const freeAnswer = {
 	id: 'q-f01',
@@ -60,18 +108,13 @@ const freeAnswer = {
 	rubric: ['Nói 对不起']
 };
 
-describe('speakSteps', () => {
-	it('Given_H1_01_When_SpeakSteps_Then_ThreeSpeakSteps', () => {
+describe('listenSpeakSteps', () => {
+	it('Given_H1_01_When_ListenSpeakSteps_Then_SixStepsInYamlOrder', () => {
 		// Arrange
 		const c = content([
-			{
-				id: 'q-l01',
-				type: 'tone',
-				tests: { words: ['好'], tone: true },
-				prompt: { kind: 'audio', ref: '好' },
-				syllable: 0,
-				answer: 3
-			},
+			tone,
+			wordChoice,
+			meaningChoice,
 			readAloud,
 			freeAnswer,
 			{
@@ -82,16 +125,104 @@ describe('speakSteps', () => {
 		]);
 
 		// Act
-		const steps = speakSteps(c);
+		const steps = listenSpeakSteps(c);
 
 		// Assert
-		expect(steps.map((s) => s.id)).toEqual(['q-s01', 'q-f01', 'q-f02']);
-		expect(steps.every((s) => s.kind === 'speak')).toBe(true);
+		expect(steps.map((s) => [s.id, s.kind])).toEqual([
+			['q-l01', 'tone'],
+			['q-l02', 'choice'],
+			['q-l03', 'choice'],
+			['q-s01', 'speak'],
+			['q-f01', 'speak'],
+			['q-f02', 'speak']
+		]);
+	});
+
+	it('Given_ToneItem_When_ListenSpeakSteps_Then_WordClipAnswerAndSyllablePinyin', () => {
+		// Act
+		const [step] = listenSpeakSteps(content([tone]));
+
+		// Assert
+		expect(step).toEqual({
+			kind: 'tone',
+			id: 'q-l01',
+			ask: m.listen_tone_ask(),
+			audio: 'words/hao',
+			answer: 3,
+			syllable: 'hǎo'
+		});
+	});
+
+	it('Given_ToneOnTwoSyllableWord_When_ListenSpeakSteps_Then_SpokenSyllableAtIndex', () => {
+		// Act
+		const [step] = listenSpeakSteps(
+			content([{ ...tone, prompt: { kind: 'audio', ref: '你好' }, syllable: 0, answer: 2 }])
+		);
+
+		// Assert
+		expect(step).toMatchObject({ audio: 'words/nihao', syllable: 'ní' });
+	});
+
+	it('Given_WordChoice_When_ListenSpeakSteps_Then_HanziOptionsWithWordClip', () => {
+		// Act
+		const [step] = listenSpeakSteps(content([wordChoice]));
+
+		// Assert
+		expect(step).toEqual({
+			kind: 'choice',
+			id: 'q-l02',
+			ask: m.listen_word_ask(),
+			title: '',
+			options: ['你好', '你们', '您', '再见'],
+			answer: '你好',
+			script: 'hanzi',
+			audio: 'words/nihao'
+		});
+	});
+
+	it('Given_MeaningChoice_When_ListenSpeakSteps_Then_TextOptionsWithSentenceClip', () => {
+		// Arrange
+		const s1 = { ...sentence('s1', '不客气。', 'bù kèqi', 'Không có gì.'), audio: 'dialogue/s1' };
+
+		// Act
+		const [step] = listenSpeakSteps(content([meaningChoice], [s1]));
+
+		// Assert
+		expect(step).toMatchObject({
+			kind: 'choice',
+			ask: m.listen_meaning_ask(),
+			answer: 'Không có gì.',
+			script: 'text',
+			audio: 'dialogue/s1'
+		});
+	});
+
+	it('Given_ChoiceWithTextPrompt_When_ListenSpeakSteps_Then_TitleIsPromptText', () => {
+		// Act
+		const [step] = listenSpeakSteps(
+			content([{ ...meaningChoice, prompt: { kind: 'vi', text: 'Không có gì.' } }])
+		);
+
+		// Assert
+		expect(step).toMatchObject({ kind: 'choice', title: 'Không có gì.', audio: undefined });
+	});
+
+	it('Given_PromptRefWithNoClip_When_ListenSpeakSteps_Then_ChoiceWithoutAudio', () => {
+		// Act
+		const [step] = listenSpeakSteps(
+			content([{ ...wordChoice, prompt: { kind: 'audio', ref: '再见' } }])
+		);
+
+		// Assert
+		expect(step).toMatchObject({ kind: 'choice', audio: undefined });
 	});
 
 	it('Given_ReadAloud_When_SpeakSteps_Then_SentenceHanziSpokenPinyinMeaning', () => {
 		// Act
-		const [step] = speakSteps(content([readAloud])) as Extract<LessonStep, { kind: 'speak' }>[];
+		const [step] = listenSpeakSteps(content([readAloud])) as Extract<
+			LessonStep,
+			{ kind: 'speak' }
+		>[];
 
 		// Assert
 		expect(step).toMatchObject({
@@ -107,7 +238,7 @@ describe('speakSteps', () => {
 
 	it('Given_FreeAnswer_When_SpeakSteps_Then_TitleIsPromptText', () => {
 		// Act
-		const [step] = speakSteps(content([freeAnswer]));
+		const [step] = listenSpeakSteps(content([freeAnswer]));
 
 		// Assert
 		expect(step).toMatchObject({
@@ -122,7 +253,7 @@ describe('speakSteps', () => {
 		const c = content([readAloud], [sentence('s1', '谢谢。', 'xièxie', 'Cảm ơn.')]);
 
 		// Act
-		const [step] = speakSteps(c) as Extract<LessonStep, { kind: 'speak' }>[];
+		const [step] = listenSpeakSteps(c) as Extract<LessonStep, { kind: 'speak' }>[];
 
 		// Assert
 		expect(step.pinyin).toBe('xièxie');
@@ -133,7 +264,7 @@ describe('speakSteps', () => {
 		const c = content([{ ...readAloud, sentence: 's9' }, freeAnswer]);
 
 		// Act / Assert
-		expect(speakSteps(c).map((s) => s.id)).toEqual(['q-f01']);
+		expect(listenSpeakSteps(c).map((s) => s.id)).toEqual(['q-f01']);
 	});
 
 	it('Given_FreeAnswerAudioPrompt_When_SpeakSteps_Then_TitleIsPromptRef', () => {
@@ -141,7 +272,7 @@ describe('speakSteps', () => {
 		const c = content([{ ...freeAnswer, prompt: { kind: 'audio', ref: '你好吗？' } }]);
 
 		// Act
-		const [step] = speakSteps(c);
+		const [step] = listenSpeakSteps(c);
 
 		// Assert
 		expect(step).toMatchObject({ title: '你好吗？' });
@@ -169,6 +300,6 @@ describe('speakSteps', () => {
 		});
 
 		// Act / Assert
-		expect(speakSteps(bundle(primer, []))).toEqual([]);
+		expect(listenSpeakSteps(bundle(primer, [], []))).toEqual([]);
 	});
 });

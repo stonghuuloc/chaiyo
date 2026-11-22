@@ -55,7 +55,9 @@
 <p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
 	{step.ask}
 </p>
-<ClipCast clip={step.audio} label={step.ask} />
+{#if step.audio}
+	<ClipCast clip={step.audio} label={step.ask} />
+{/if}
 
 <div class="mt-5 grid grid-cols-2 gap-2 md:grid-cols-4">
 	{#each tones as tone (tone)}

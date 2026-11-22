@@ -9,12 +9,12 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import type { StudyEvent } from '#lib/study/index.js';
 	import { resolve } from '$app/paths';
-	import { speakSteps } from './listen-speak';
+	import { listenSpeakSteps } from './listen-speak';
 
 	type Props = { lesson: LessonContent; session: Session | null };
 	let { lesson, session }: Props = $props();
 
-	const steps = $derived(speakSteps(lesson));
+	const steps = $derived(listenSpeakSteps(lesson));
 	let events = $state<StudyEvent[] | null>(null);
 	const next = $derived.by(() => {
 		const id = lesson.lesson.id;
