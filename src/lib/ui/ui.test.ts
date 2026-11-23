@@ -329,11 +329,39 @@ describe('Toast', () => {
 		// Arrange
 		const effect = source('Toast.svelte').match(/\$effect\(\(\) => \{[\s\S]*?\n\t\}\);/)?.[0] ?? '';
 		// Act
-		const tracked = ['open', 'message', 'actionLabel', 'duration'].map((p) =>
+		const tracked = ['open', 'message', 'actionLabel', 'nonce', 'duration'].map((p) =>
 			new RegExp(`\\b${p}\\b`).test(effect)
 		);
 		// Assert
-		expect(tracked).toEqual([true, true, true, true]);
+		expect(tracked).toEqual([true, true, true, true, true]);
+	});
+
+	it('Given_TopWithIcon_When_Render_Then_TopClassAndLockUse', () => {
+		// Arrange
+		// Act
+		const out = html(Toast, {
+			open: true,
+			message: 'Qua Bài 1 để mở Bài 2',
+			placement: 'top',
+			icon: 'fill-lock-simple'
+		});
+		// Assert
+		expect(out).toContain('top-[calc(env(safe-area-inset-top,0px)+--spacing(4))]');
+		expect(out).not.toContain('bottom-[calc(');
+		expect(out).toContain('ps-(--nav-inset,0px)');
+		expect(out).toContain('py-2.5');
+		expect(out).toContain('<use href="#i-fill-lock-simple">');
+	});
+
+	it('Given_Default_When_Render_Then_BottomNoIcon', () => {
+		// Arrange
+		// Act
+		const out = html(Toast, { open: true, message: 'Done' });
+		// Assert
+		expect(out).toContain('bottom-[calc(env(safe-area-inset-bottom,0px)+--spacing(5))]');
+		expect(out).toContain('gap-3 rounded-pill bg-ink py-1 pr-1.5 pl-4');
+		expect(out).not.toContain('<svg');
+		expect(out).not.toContain('top-[calc(');
 	});
 
 	it('Given_Open_When_Render_Then_CentredOnContentArea', () => {

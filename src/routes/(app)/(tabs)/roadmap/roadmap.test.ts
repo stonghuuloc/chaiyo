@@ -1,7 +1,7 @@
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { describe, expect, it } from 'vitest';
-import { roadmapLevel } from './roadmap';
+import { examToast, lockToast, roadmapLevel } from './roadmap';
 
 const reference = (): State => {
 	const state = initialState({ curriculum: CURRICULUM });
@@ -139,25 +139,138 @@ describe('roadmapLevel', () => {
 		expect(row(view, 'h0-00').best).toBeUndefined();
 	});
 
-	it('Given_UnbuiltH106_When_Level1_Then_LockedWithoutUnlockNote', () => {
+	it('Given_ReferenceLearner_When_Level1_Then_H102LockAfterAndH106LockDraft', () => {
 		// Arrange / Act
 		const view = roadmapLevel(reference(), 1);
 
 		// Assert
-		expect(row(view, 'h1-06')).toMatchObject({ n: 6, status: 'locked' });
+		expect(row(view, 'h1-02')).toMatchObject({ n: 2, status: 'locked', after: 1, lock: 'after' });
+		expect(row(view, 'h1-06')).toMatchObject({ n: 6, status: 'locked', lock: 'draft' });
 		expect(row(view, 'h1-06')).not.toHaveProperty('after');
-		expect(row(view, 'h1-40')).toMatchObject({ n: 40, status: 'locked' });
+		expect(row(view, 'h1-40')).toMatchObject({ n: 40, status: 'locked', lock: 'draft' });
 		expect(row(view, 'h1-40')).not.toHaveProperty('after');
+		expect(row(view, 'h1-01')).not.toHaveProperty('lock');
+		expect(row(view, 'h0-00')).not.toHaveProperty('lock');
 	});
 
-	it('Given_NoOutline_When_Level2_Then_EmptyNoCard', () => {
+	it('Given_ReferenceLearner_When_Level2_Then_LockedLevelView', () => {
 		// Arrange / Act
 		const view = roadmapLevel(reference(), 2);
 
 		// Assert
-		expect(view).toMatchObject({ level: 2, empty: true, groups: [] });
+		expect(view.empty).toBe(false);
+		expect(view.header).toEqual({ passed: 0, total: 27, words: 500 });
 		expect(view.card).toBeUndefined();
-		expect(view.header).toBeUndefined();
+		expect(view.groups.map((g) => g.open)).toEqual([true, false, false, false, false, false]);
+		expect(view.groups[0].title).toBe('Thói quen hằng ngày');
+		const rows = view.groups.flatMap((g) => g.rows);
+		expect(rows).toHaveLength(27);
+		expect(rows.every((r) => r.status === 'locked' && r.lock === 'level')).toBe(true);
 		expect(view.strip.map((c) => c.current)).toEqual([false, true, false, false, false]);
+		expect(view.strip[0].progress).toBe(0);
+	});
+
+	it('Given_TwoHsk1Passed_When_Level1_Then_StripProgress2of40', () => {
+		// Arrange
+		const state = reference();
+		state.lessons['h1-01'] = { unlocked: true, passed: true, done: [] };
+		state.lessons['h1-02'] = { unlocked: true, passed: true, done: [] };
+
+		// Act
+		const view = roadmapLevel(state, 1);
+
+		// Assert
+		expect(view.strip.map((c) => c.progress)).toEqual([2 / 40, 0, 0, 0, 0]);
+	});
+
+	it('Given_Level1_When_View_Then_OneLockedExamLast40', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 1);
+
+		// Assert
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 1, last: 5, status: 'locked' }] });
+	});
+
+	it('Given_Level3_When_View_Then_VietAndNoiLast26WithNote', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 3);
+
+		// Assert
+		expect(view.exams).toEqual({
+			note: true,
+			rows: [
+				{ part: 'viet', level: 3, last: 1, status: 'locked' },
+				{ part: 'noi', level: 3, last: 1, status: 'locked' }
+			]
+		});
+	});
+
+	it('Given_Level2_When_View_Then_OneExamNoNote', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 2);
+
+		// Assert
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 2, last: 1, status: 'locked' }] });
+	});
+
+	it('Given_AllHsk1OutlinePassed_When_Level1_Then_ExamOpen', () => {
+		// Arrange
+		const state = reference();
+		for (let i = 1; i <= 40; i++)
+			state.lessons[`h1-${String(i).padStart(2, '0')}`] = {
+				unlocked: true,
+				passed: true,
+				done: []
+			};
+
+		// Act
+		const view = roadmapLevel(state, 1);
+
+		// Assert
+		expect(view.exams?.rows).toEqual([{ level: 1, last: 5, status: 'open' }]);
+	});
+
+	it('Given_Hsk1LastPassedButLevelAbove_When_Level2_Then_ExamLocked', () => {
+		// Arrange
+		const state = reference();
+		state.lessons['h2-27'] = { unlocked: false, passed: true, done: [] };
+
+		// Act
+		const view = roadmapLevel(state, 2);
+
+		// Assert
+		expect(view.exams?.rows[0].status).toBe('locked');
+	});
+
+	it('Given_LockReasons_When_LockToast_Then_ThreeCopies', () => {
+		// Arrange
+		const one = roadmapLevel(reference(), 1);
+		const two = roadmapLevel(reference(), 2);
+
+		// Act
+		const copies = [
+			lockToast(one, row(one, 'h1-02')),
+			lockToast(one, row(one, 'h1-06')),
+			lockToast(two, row(two, 'h2-01'))
+		];
+
+		// Assert
+		expect(copies).toEqual([
+			'Qua Bài 1 để mở Bài 2',
+			'Bài 6 đang được soạn.',
+			'Học xong HSK 1 để mở HSK 2'
+		]);
+	});
+
+	it('Given_ExamRows_When_ExamToast_Then_LockedAndSoonCopies', () => {
+		// Arrange
+		const locked = { level: 1, last: 5, status: 'locked' } as const;
+		const open = { part: 'noi', level: 3, last: 1, status: 'open' } as const;
+
+		// Act
+		const copies = [examToast(locked), examToast(open)];
+
+		// Assert
+		expect(copies).toEqual(['Qua Bài 5 để mở thi thử HSK 1', 'Thi thử HSK 3 sắp ra mắt.']);
 	});
 });

@@ -542,5 +542,22 @@
 	"chy49s1_now": "Đang học · phần {part}",
 	"chy49s1_after": "Mở khi qua Bài {n}",
 	"chy49s1_row_n": "Bài {n}",
-	"chy49s1_row_title": "· {title}"
+	"chy49s1_row_title": "· {title}",
+	"chy49s2_lock_after": "Qua Bài {k} để mở Bài {n}",
+	"chy49s2_lock_level": "Học xong HSK {prev} để mở HSK {level}",
+	"chy49s2_lock_draft": "Bài {n} đang được soạn.",
+	"chy49s2_note_level": "Mở khi học xong HSK {prev}",
+	"chy49s2_note_draft": "Đang soạn",
+	"chy49s2_browse_note": "Mở khi học xong HSK {prev}. Xem trước các bài bên dưới.",
+	"chy49s2_exams": "Cuối cấp",
+	"chy49s2_mock": "Thi thử HSK {level}",
+	"chy49s2_mock_part": "Thi thử HSK {level} · {part}",
+	"chy49s2_part_viet": "Viết",
+	"chy49s2_part_noi": "Nói",
+	"chy49s2_sub_viet": "nghe · đọc · viết",
+	"chy49s2_sub_noi": "nhắc lại · tả tranh · trả lời câu hỏi",
+	"chy49s2_mock_after": "{sub} · mở khi qua Bài {last}",
+	"chy49s2_mock_toast": "Qua Bài {last} để mở thi thử HSK {level}",
+	"chy49s2_mock_soon": "Thi thử HSK {level} sắp ra mắt.",
+	"chy49s2_exam_note": "Từ HSK 3, đỗ cấp cần đỗ cả phần Viết và phần Nói."
 }
