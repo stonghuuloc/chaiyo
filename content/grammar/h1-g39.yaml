@@ -1,0 +1,17 @@
+id: h1-g39
+level: 1
+std:
+  - 3
+title: "Muốn: 想 · 要"
+pattern: 想 / 要 + động từ
+explain: |-
+  想 (tưởng, xiǎng) + động từ nghĩa là “muốn làm gì”: 我想喝茶 = Tớ muốn uống trà. Phủ định: 我不想喝茶.
+
+  要 (yếu, yào) đứng trước danh từ nghĩa là “muốn, lấy”: 我要一杯茶 = Cho tớ một cốc trà. Hỏi: 你要牛奶吗？
+examples:
+  - s-h1-17-02
+  - s-h1-17-13
+pitfalls:
+  - wrong: 我喝想茶
+    right: 我想喝茶
+    why: 想 đứng trước động từ.

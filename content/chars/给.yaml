@@ -1,0 +1,16 @@
+hanzi: 给
+readings:
+  - pinyin: gěi
+    hanviet: cấp
+  - pinyin: jǐ
+    hanviet: cấp
+    rare: true
+radical: 糸
+ids: ⿰纟合
+strokes: 9
+mnemonic:
+  hinh: sợi tơ (纟) buộc khép lại (合) thành một bó để trao sang tay người khác — cho, cấp
+  am: âm Hán-Việt cấp — học viên đã dùng trong cung cấp (供给), cấp cho (给予); phần 合 đọc hé gần gěi
+  doiThat: nút 发给 (gửi cho) khi chuyển tiền/gửi file trong WeChat; câu 给我 khi gọi món, thanh toán
+  tuongPhan: "≠ 结 (jié, kết) = 纟 + 吉. Cùng bộ 纟 bên trái, phải khác: 合→给, 吉→结"
+  kind: etymology

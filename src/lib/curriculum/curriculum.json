@@ -154,6 +154,51 @@
 		"words": ["昨天", "明天", "了", "没", "来", "回", "去年", "明年"]
 	},
 	{
+		"id": "h1-17",
+		"level": 1,
+		"n": 17,
+		"title": "Đồ uống",
+		"titleHanzi": "喝",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["想", "要", "喝", "茶", "水", "牛奶", "渴", "饿"]
+	},
+	{
+		"id": "h1-18",
+		"level": 1,
+		"n": 18,
+		"title": "Món ăn",
+		"titleHanzi": "吃",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["吃", "饭", "菜", "肉", "鸡蛋", "面包", "面条儿", "和"]
+	},
+	{
+		"id": "h1-19",
+		"level": 1,
+		"n": 19,
+		"title": "Nhà hàng",
+		"titleHanzi": "饭店",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["在", "请", "饭店", "给", "好吃", "米饭", "等", "进"]
+	},
+	{
+		"id": "h1-20",
+		"level": 1,
+		"n": 20,
+		"title": "Giá tiền",
+		"titleHanzi": "钱",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["买", "多少-duo1shao5", "钱", "块", "元", "毛", "贵", "票"]
+	},
+	{
+		"id": "h1-21",
+		"level": 1,
+		"n": 21,
+		"title": "Trái cây",
+		"titleHanzi": "水果",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["喜欢", "爱", "最", "水果", "唱歌", "打球", "玩儿", "电影"]
+	},
+	{
 		"id": "h2-01",
 		"level": 2,
 		"n": 41,

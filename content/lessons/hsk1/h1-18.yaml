@@ -1,0 +1,697 @@
+id: h1-18
+level: 1
+topic: Ăn uống
+order: 18
+title: Món ăn
+titleHanzi: 吃
+goal: Nói ăn gì; nối món bằng 和; hỏi chọn bằng 还是
+scene:
+  file: lessons/h1-18.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They sit at a picnic table with a plate of noodles, a boiled egg and a loaf of bread; the red panda points at the noodles.
+sentences:
+  - id: s-h1-18-01
+    hanzi: 你想吃什么？
+    pinyin: nǐ xiǎng chī shénme?
+    vi: Cậu muốn ăn gì?
+    speaker: takin
+  - id: s-h1-18-02
+    hanzi: 我想吃面条儿。
+    pinyin: wǒ xiǎng chī miàntiáor.
+    vi: Tớ muốn ăn mì.
+    speaker: redpanda
+  - id: s-h1-18-03
+    hanzi: 你吃肉吗？
+    pinyin: nǐ chī ròu ma?
+    vi: Cậu ăn thịt không?
+    speaker: takin
+  - id: s-h1-18-04
+    hanzi: 吃，我吃肉和菜。
+    pinyin: chī, wǒ chī ròu hé cài.
+    vi: Có, tớ ăn thịt và rau.
+    speaker: redpanda
+  - id: s-h1-18-05
+    hanzi: 我吃鸡蛋和面包。
+    pinyin: wǒ chī jīdàn hé miànbāo.
+    vi: Tớ ăn trứng và bánh mì.
+    speaker: takin
+  - id: s-h1-18-06
+    hanzi: 你早上吃饭还是吃面包？
+    pinyin: nǐ zǎoshang chī fàn háishi chī miànbāo?
+    vi: Buổi sáng cậu ăn cơm hay ăn bánh mì?
+    speaker: redpanda
+  - id: s-h1-18-07
+    hanzi: 我早上吃面包。你呢？
+    pinyin: wǒ zǎoshang chī miànbāo. nǐ ne?
+    vi: Sáng tớ ăn bánh mì. Còn cậu?
+    speaker: takin
+  - id: s-h1-18-08
+    hanzi: 我早上吃鸡蛋和面包。
+    pinyin: wǒ zǎoshang chī jīdàn hé miànbāo.
+    vi: Sáng tớ ăn trứng và bánh mì.
+    speaker: redpanda
+  - id: s-h1-18-09
+    hanzi: 你中午吃饭还是吃面条儿？
+    pinyin: nǐ zhōngwǔ chī fàn háishi chī miàntiáor?
+    vi: Trưa cậu ăn cơm hay ăn mì?
+    speaker: takin
+  - id: s-h1-18-10
+    hanzi: 我中午吃面条儿，晚上吃饭。
+    pinyin: wǒ zhōngwǔ chī miàntiáor, wǎnshang chī fàn.
+    vi: Trưa tớ ăn mì, tối ăn cơm.
+    speaker: redpanda
+  - id: s-h1-18-11
+    hanzi: 我吃肉和鸡蛋。
+    pinyin: wǒ chī ròu hé jīdàn.
+    vi: Tôi ăn thịt và trứng.
+  - id: s-h1-18-12
+    hanzi: 他不吃肉。
+    pinyin: tā bù chī ròu.
+    vi: Anh ấy không ăn thịt.
+  - id: s-h1-18-13
+    hanzi: 你吃饭还是吃面包？
+    pinyin: nǐ chī fàn háishi chī miànbāo?
+    vi: Bạn ăn cơm hay ăn bánh mì?
+  - id: s-h1-18-14
+    hanzi: 我和朋友吃面条儿。
+    pinyin: wǒ hé péngyou chī miàntiáor.
+    vi: Tôi và bạn ăn mì.
+  - id: s-h1-18-15
+    hanzi: 他吃菜和肉。
+    pinyin: tā chī cài hé ròu.
+    vi: Anh ấy ăn rau và thịt.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 吃
+      - 饭
+      - 菜
+      - 肉
+      - 鸡蛋
+      - 面包
+      - 面条儿
+      - 和
+  grammar:
+    ids:
+      - h1-g40
+      - h1-g41
+    drills:
+      - id: q-h1-18-g01
+        type: choice
+        tests:
+          words:
+            - 肉
+            - 菜
+            - 和
+          grammar:
+            - h1-g40
+        prompt:
+          kind: vi
+          text: Tớ ăn thịt và rau.
+        optionKind: hanzi
+        options:
+          - 我吃肉和菜
+          - 我吃和肉菜
+          - 和我吃肉菜
+        answer: 0
+      - id: q-h1-18-g02
+        type: order
+        tests:
+          words:
+            - 菜
+            - 肉
+            - 和
+          grammar:
+            - h1-g40
+        tiles:
+          - 他
+          - 吃
+          - 菜
+          - 和
+          - 肉
+        answer: s-h1-18-15
+      - id: q-h1-18-g03
+        type: trueFalse
+        tests:
+          words:
+            - 和
+          grammar:
+            - h1-g40
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我吃饭和喝茶。
+        answer: false
+      - id: q-h1-18-g04
+        type: choice
+        tests:
+          words:
+            - 和
+            - 面条儿
+          grammar:
+            - h1-g40
+        prompt:
+          kind: vi
+          text: Tớ và bạn ăn mì.
+        optionKind: hanzi
+        options:
+          - 我和朋友吃面条儿
+          - 我和吃朋友面条儿
+          - 和我朋友吃面条儿
+        answer: 0
+      - id: q-h1-18-g05
+        type: choice
+        tests:
+          words:
+            - 饭
+            - 面包
+            - 还是
+          grammar:
+            - h1-g41
+        prompt:
+          kind: vi
+          text: Cậu ăn cơm hay ăn bánh mì?
+        optionKind: hanzi
+        options:
+          - 你吃饭还是吃面包
+          - 你吃饭和吃面包
+          - 你吃还是饭面包
+        answer: 0
+      - id: q-h1-18-g06
+        type: trueFalse
+        tests:
+          words:
+            - 饭
+            - 面包
+          grammar:
+            - h1-g41
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你吃饭和面包？
+        answer: false
+      - id: q-h1-18-g07
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 面包
+          grammar:
+            - h1-g41
+        prompt:
+          kind: audio
+          ref: s-h1-18-06
+        optionKind: hanzi
+        options:
+          - 我早上吃面包。
+          - 我吃肉和菜。
+          - 我想喝茶。
+        answer: 0
+      - id: q-h1-18-g08
+        type: choice
+        tests:
+          words:
+            - 饭
+            - 面条儿
+          grammar:
+            - h1-g41
+        prompt:
+          kind: vi
+          text: Trưa cậu ăn cơm hay ăn mì?
+        optionKind: hanzi
+        options:
+          - 你中午吃饭还是吃面条儿
+          - 你中午吃饭和吃面条儿
+          - 你中午还是吃饭吃面条儿
+        answer: 0
+  dialogue:
+    parts:
+      - title: Ăn gì?
+        lines:
+          - s-h1-18-01
+          - s-h1-18-02
+          - s-h1-18-03
+          - s-h1-18-04
+          - s-h1-18-05
+      - title: Cơm hay bánh mì?
+        lines:
+          - s-h1-18-06
+          - s-h1-18-07
+          - s-h1-18-08
+          - s-h1-18-09
+          - s-h1-18-10
+    questions:
+      - id: q-h1-18-d01
+        type: choice
+        ask: Gấu trúc đỏ ăn gì?
+        tests:
+          words:
+            - 肉
+            - 菜
+          grammar:
+            - h1-g40
+        prompt:
+          kind: audio
+          ref: s-h1-18-04
+        optionKind: vi
+        options:
+          - thịt và rau
+          - trứng và bánh mì
+          - mì
+        answer: 0
+      - id: q-h1-18-d02
+        type: choice
+        ask: Buổi sáng takin ăn gì?
+        tests:
+          words:
+            - 面包
+          grammar:
+            - h1-g41
+        prompt:
+          kind: audio
+          ref: s-h1-18-07
+        optionKind: vi
+        options:
+          - bánh mì
+          - cơm
+          - mì
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-18-l01
+        type: tone
+        tests:
+          words:
+            - 吃
+          tone: true
+        prompt:
+          kind: audio
+          ref: 吃
+        syllable: 0
+        answer: 1
+      - id: q-h1-18-l02
+        type: choice
+        tests:
+          words:
+            - 鸡蛋
+        prompt:
+          kind: audio
+          ref: 鸡蛋
+        optionKind: hanzi
+        options:
+          - 鸡蛋
+          - 面包
+          - 面条儿
+          - 肉
+        answer: 0
+      - id: q-h1-18-l03
+        type: choice
+        tests:
+          words:
+            - 饭
+        prompt:
+          kind: audio
+          ref: 饭
+        optionKind: hanzi
+        options:
+          - 饭
+          - 菜
+          - 肉
+          - 和
+        answer: 0
+      - id: q-h1-18-s01
+        type: readAloud
+        tests:
+          words:
+            - 吃
+            - 饭
+            - 面包
+          grammar:
+            - h1-g41
+          tone: true
+        sentence: s-h1-18-06
+      - id: q-h1-18-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 和
+            - 鸡蛋
+          grammar:
+            - h1-g40
+        prompt:
+          kind: vi
+          text: Nói buổi sáng bạn ăn gì.
+        rubric:
+          - Dùng 我早上吃 + A 和 B
+        answer: s-h1-18-08
+      - id: q-h1-18-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 饭
+            - 面条儿
+          grammar:
+            - h1-g41
+        prompt:
+          kind: vi
+          text: Hỏi một bạn trưa ăn cơm hay ăn mì.
+        rubric:
+          - Dùng 你中午吃饭还是吃面条儿？
+        answer: s-h1-18-09
+  writing:
+    chars:
+      - 吃
+      - 饭
+      - 菜
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-18-x01
+      type: choice
+      tests:
+        words:
+          - 吃
+      prompt:
+        kind: hanzi
+        ref: 吃
+      optionKind: vi
+      options:
+        - ăn
+        - uống
+        - mua
+        - nói
+      answer: 0
+    - id: q-h1-18-x02
+      type: choice
+      tests:
+        words:
+          - 饭
+      prompt:
+        kind: vi
+        text: cơm, bữa ăn
+      optionKind: hanzi
+      options:
+        - 饭
+        - 菜
+        - 肉
+        - 吃
+      answer: 0
+    - id: q-h1-18-x03
+      type: choice
+      tests:
+        words:
+          - 菜
+      prompt:
+        kind: audio
+        ref: 菜
+      optionKind: vi
+      options:
+        - món ăn
+        - thịt
+        - cơm
+        - trứng
+      answer: 0
+    - id: q-h1-18-x04
+      type: typePinyin
+      tests:
+        words:
+          - 肉
+      prompt:
+        kind: hanzi
+        ref: 肉
+      answer: ròu
+    - id: q-h1-18-x05
+      type: choice
+      tests:
+        words:
+          - 鸡蛋
+      prompt:
+        kind: hanzi
+        ref: 鸡蛋
+      optionKind: vi
+      options:
+        - trứng gà
+        - bánh mì
+        - mì
+        - thịt
+      answer: 0
+    - id: q-h1-18-x06
+      type: choice
+      tests:
+        words:
+          - 面包
+      prompt:
+        kind: vi
+        text: bánh mì
+      optionKind: hanzi
+      options:
+        - 面包
+        - 面条儿
+        - 鸡蛋
+        - 肉
+      answer: 0
+    - id: q-h1-18-x07
+      type: choice
+      tests:
+        words:
+          - 面条儿
+      prompt:
+        kind: audio
+        ref: 面条儿
+      optionKind: vi
+      options:
+        - mì
+        - bánh mì
+        - cơm
+        - thịt
+      answer: 0
+    - id: q-h1-18-x08
+      type: choice
+      tests:
+        words:
+          - 和
+      prompt:
+        kind: hanzi
+        ref: 和
+      optionKind: vi
+      options:
+        - và
+        - hay là
+        - không
+        - cũng
+      answer: 0
+    - id: q-h1-18-x09
+      type: choice
+      tests:
+        words:
+          - 肉
+          - 菜
+          - 和
+        grammar:
+          - h1-g40
+      prompt:
+        kind: vi
+        text: Tớ ăn thịt và rau.
+      optionKind: hanzi
+      options:
+        - 我吃肉和菜
+        - 我吃和肉菜
+        - 和我吃肉菜
+      answer: 0
+    - id: q-h1-18-x10
+      type: trueFalse
+      tests:
+        words:
+          - 和
+        grammar:
+          - h1-g40
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我吃饭和喝茶。
+      answer: false
+    - id: q-h1-18-x11
+      type: order
+      tests:
+        words:
+          - 菜
+          - 肉
+          - 和
+        grammar:
+          - h1-g40
+      tiles:
+        - 他
+        - 吃
+        - 菜
+        - 和
+        - 肉
+      answer: s-h1-18-15
+    - id: q-h1-18-x12
+      type: choice
+      tests:
+        words:
+          - 和
+          - 面条儿
+        grammar:
+          - h1-g40
+      prompt:
+        kind: vi
+        text: Tớ và bạn ăn mì.
+      optionKind: hanzi
+      options:
+        - 我和朋友吃面条儿
+        - 我和吃朋友面条儿
+        - 和我朋友吃面条儿
+      answer: 0
+    - id: q-h1-18-x13
+      type: choice
+      tests:
+        words:
+          - 饭
+          - 面包
+          - 还是
+        grammar:
+          - h1-g41
+      prompt:
+        kind: vi
+        text: Cậu ăn cơm hay ăn bánh mì?
+      optionKind: hanzi
+      options:
+        - 你吃饭还是吃面包
+        - 你吃饭和吃面包
+        - 你吃还是饭面包
+      answer: 0
+    - id: q-h1-18-x14
+      type: trueFalse
+      tests:
+        words:
+          - 饭
+          - 面包
+        grammar:
+          - h1-g41
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你吃饭和面包？
+      answer: false
+    - id: q-h1-18-x15
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 面包
+        grammar:
+          - h1-g41
+      prompt:
+        kind: audio
+        ref: s-h1-18-06
+      optionKind: hanzi
+      options:
+        - 我早上吃面包。
+        - 我吃肉和菜。
+        - 我想喝茶。
+      answer: 0
+    - id: q-h1-18-x16
+      type: choice
+      tests:
+        words:
+          - 饭
+          - 面条儿
+        grammar:
+          - h1-g41
+      prompt:
+        kind: vi
+        text: Trưa cậu ăn cơm hay ăn mì?
+      optionKind: hanzi
+      options:
+        - 你中午吃饭还是吃面条儿
+        - 你中午吃饭和吃面条儿
+        - 你中午还是吃饭吃面条儿
+      answer: 0
+    - id: q-h1-18-x17
+      type: choice
+      tests:
+        words:
+          - 吃
+          - 面条儿
+      prompt:
+        kind: audio
+        ref: s-h1-18-02
+      optionKind: vi
+      options:
+        - Tớ muốn ăn mì
+        - Tớ muốn uống trà
+        - Tớ muốn ăn thịt
+      answer: 0
+    - id: q-h1-18-x18
+      type: tone
+      tests:
+        words:
+          - 饭
+        tone: true
+      prompt:
+        kind: audio
+        ref: 饭
+      syllable: 0
+      answer: 4
+    - id: q-h1-18-x19
+      type: choice
+      tests:
+        words:
+          - 肉
+          - 吃
+      prompt:
+        kind: vi
+        text: Anh ấy không ăn thịt.
+      optionKind: hanzi
+      options:
+        - 他不吃肉
+        - 他吃不肉
+        - 他不肉吃
+      answer: 0
+    - id: q-h1-18-x20
+      type: trueFalse
+      tests:
+        words:
+          - 菜
+      prompt:
+        kind: hanzi
+        ref: 菜
+      statement: 菜 nghĩa là “món ăn”.
+      answer: true
+    - id: q-h1-18-x21
+      type: choice
+      tests:
+        words:
+          - 鸡蛋
+          - 面包
+          - 和
+        grammar:
+          - h1-g40
+      prompt:
+        kind: vi
+        text: Tớ ăn trứng và bánh mì.
+      optionKind: hanzi
+      options:
+        - 我吃鸡蛋和面包
+        - 我吃鸡蛋还是面包
+        - 我吃和鸡蛋面包
+      answer: 0
+    - id: q-h1-18-x22
+      type: choice
+      tests:
+        words:
+          - 吃
+          - 饭
+      prompt:
+        kind: vi
+        text: Tớ muốn ăn cơm.
+      optionKind: hanzi
+      options:
+        - 我想吃饭
+        - 我吃想饭
+        - 想我吃饭
+      answer: 0

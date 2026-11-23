@@ -1,0 +1,22 @@
+hanzi: 和
+readings:
+  - pinyin: hé
+    hanviet: hoà
+  - pinyin: hè
+    hanviet: hoạ
+    rare: true
+  - pinyin: huó
+    hanviet: hoà
+    rare: true
+  - pinyin: huò
+    hanviet: hoà
+    rare: true
+radical: 口
+ids: ⿰禾口
+strokes: 8
+mnemonic:
+  hinh: cây lúa (禾) đủ đầy đưa vào miệng (口) ăn no — no thì lòng mới hòa thuận
+  am: âm Hán-Việt hòa — học viên đã dùng trong hòa bình (和平), hòa giải (和解); phần 禾 đọc trùng hé
+  doiThat: biển 和风 (phong cách Nhật) trên menu quán ăn; câu 你和我 trong tin nhắn, lời giới thiệu
+  tuongPhan: "≠ 何 (hé, sao, gì) = 亻+ 可. Cùng âm hé, khác nghĩa hoàn toàn: 和 = và/hòa, 何 = gì/sao"
+  kind: etymology

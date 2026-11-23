@@ -1,0 +1,17 @@
+id: h1-g44
+level: 1
+std:
+  - 43
+title: "Nói tiền: 块 · 毛 · 元"
+pattern: số + 块 / 元 + số + 毛
+explain: |-
+  块 (khối, kuài) là “đồng” khi nói, 元 (nguyên, yuán) là “đồng” khi viết, 毛 (mao, máo) là “hào”, bằng một phần mười đồng. 一块五毛 = 一块五 = 1,5 đồng; 十二块 = 12 đồng.
+
+  Số 2 trước 块 nói 两: 两块.
+examples:
+  - s-h1-20-04
+  - s-h1-20-12
+pitfalls:
+  - wrong: 二块
+    right: 两块
+    why: Số 2 trước 块 nói 两.

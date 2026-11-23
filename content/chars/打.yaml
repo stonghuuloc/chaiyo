@@ -1,0 +1,16 @@
+hanzi: 打
+readings:
+  - pinyin: dǎ
+    hanviet: đả
+  - pinyin: dá
+    hanviet: tá
+    rare: true
+radical: 手
+ids: ⿰扌丁
+strokes: 5
+mnemonic:
+  hinh: 扌 tay + 丁 gợi âm → tay gõ, đánh
+  am: đả — "đả kích", "đả đảo"
+  doiThat: 打球, 打电话
+  tuongPhan: "≠ 丁 (dīng): 打 thêm 扌 thành đánh"
+  kind: etymology

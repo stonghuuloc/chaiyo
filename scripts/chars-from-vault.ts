@@ -488,11 +488,267 @@ const rows: Record<string, Row> = {
 	},
 	来: { readings: [r('lái', 'lai')], radical: '木', ids: '来', strokes: 7, kind: 'invented' },
 	回: { readings: [r('huí', 'hồi')], radical: '囗', ids: '⿴囗口', strokes: 6, kind: 'etymology' },
-	去: { readings: [r('qù', 'khứ')], radical: '厶', ids: '⿱土厶', strokes: 5, kind: 'invented' }
+	去: { readings: [r('qù', 'khứ')], radical: '厶', ids: '⿱土厶', strokes: 5, kind: 'invented' },
+	想: {
+		readings: [r('xiǎng', 'tưởng')],
+		radical: '心',
+		ids: '⿱相心',
+		strokes: 13,
+		kind: 'etymology'
+	},
+	要: {
+		readings: [r('yào', 'yếu'), r('yāo', 'yêu', true)],
+		radical: '襾',
+		ids: '⿱覀女',
+		strokes: 9,
+		kind: 'invented'
+	},
+	喝: { readings: [r('hē', 'hát')], radical: '口', ids: '⿰口曷', strokes: 12, kind: 'etymology' },
+	茶: {
+		readings: [r('chá', 'trà')],
+		radical: '艸',
+		ids: '⿳艹人朩',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	水: { readings: [r('shuǐ', 'thuỷ')], radical: '水', ids: '水', strokes: 4, kind: 'etymology' },
+	牛: { readings: [r('niú', 'ngưu')], radical: '牛', ids: '牛', strokes: 4, kind: 'etymology' },
+	奶: { readings: [r('nǎi', 'nãi')], radical: '女', ids: '⿰女乃', strokes: 5, kind: 'etymology' },
+	渴: { readings: [r('kě', 'khát')], radical: '水', ids: '⿰氵曷', strokes: 12, kind: 'etymology' },
+	饿: { readings: [r('è', 'ngạ')], radical: '食', ids: '⿰饣我', strokes: 10, kind: 'etymology' },
+	吃: { readings: [r('chī', 'cật')], radical: '口', ids: '⿰口乞', strokes: 6, kind: 'etymology' },
+	饭: { readings: [r('fàn', 'phạn')], radical: '食', ids: '⿰饣反', strokes: 7, kind: 'etymology' },
+	菜: {
+		readings: [r('cài', 'thái')],
+		radical: '艸',
+		ids: '⿱艹采',
+		strokes: 11,
+		kind: 'etymology'
+	},
+	肉: { readings: [r('ròu', 'nhục')], radical: '肉', ids: '肉', strokes: 6, kind: 'etymology' },
+	鸡: { readings: [r('jī', 'kê')], radical: '鸟', ids: '⿰又鸟', strokes: 7, kind: 'etymology' },
+	蛋: { readings: [r('dàn', 'đản')], radical: '虫', ids: '⿱疋虫', strokes: 11, kind: 'invented' },
+	面: {
+		readings: [r('miàn', 'diện'), r('miàn', 'miến', true)],
+		radical: '面',
+		ids: '⿱丆囬',
+		strokes: 9,
+		kind: 'invented'
+	},
+	包: { readings: [r('bāo', 'bao')], radical: '勹', ids: '⿹勹巳', strokes: 5, kind: 'etymology' },
+	条: { readings: [r('tiáo', 'điều')], radical: '木', ids: '⿱夂朩', strokes: 7, kind: 'invented' },
+	和: {
+		readings: [r('hé', 'hoà'), r('hè', 'hoạ', true), r('huó', 'hoà', true), r('huò', 'hoà', true)],
+		radical: '口',
+		ids: '⿰禾口',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	请: {
+		readings: [r('qǐng', 'thỉnh')],
+		radical: '言',
+		ids: '⿰讠青',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	店: {
+		readings: [r('diàn', 'điếm')],
+		radical: '广',
+		ids: '⿸广占',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	给: {
+		readings: [r('gěi', 'cấp'), r('jǐ', 'cấp', true)],
+		radical: '糸',
+		ids: '⿰纟合',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	米: { readings: [r('mǐ', 'mễ')], radical: '米', ids: '米', strokes: 6, kind: 'etymology' },
+	等: {
+		readings: [r('děng', 'đẳng')],
+		radical: '竹',
+		ids: '⿱竹寺',
+		strokes: 12,
+		kind: 'etymology'
+	},
+	进: { readings: [r('jìn', 'tiến')], radical: '辵', ids: '⿺辶井', strokes: 7, kind: 'etymology' },
+	买: { readings: [r('mǎi', 'mãi')], radical: '大', ids: '⿱乛头', strokes: 6, kind: 'invented' },
+	多: { readings: [r('duō', 'đa')], radical: '夕', ids: '⿱夕夕', strokes: 6, kind: 'etymology' },
+	少: {
+		readings: [r('shǎo', 'thiểu'), r('shào', 'thiếu', true)],
+		radical: '小',
+		ids: '⿱小丿',
+		strokes: 4,
+		kind: 'invented'
+	},
+	钱: {
+		readings: [r('qián', 'tiền')],
+		radical: '金',
+		ids: '⿰钅戋',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	块: {
+		readings: [r('kuài', 'khối')],
+		radical: '土',
+		ids: '⿰土夬',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	元: {
+		readings: [r('yuán', 'nguyên')],
+		radical: '儿',
+		ids: '⿱一兀',
+		strokes: 4,
+		kind: 'invented'
+	},
+	毛: {
+		readings: [r('máo', 'mao')],
+		radical: '毛',
+		ids: '⿱丿⿻二乚',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	贵: { readings: [r('guì', 'quý')], radical: '贝', ids: '⿱𠀐贝', strokes: 9, kind: 'etymology' },
+	票: {
+		readings: [r('piào', 'phiếu')],
+		radical: '示',
+		ids: '⿱覀示',
+		strokes: 11,
+		kind: 'invented'
+	},
+	喜: { readings: [r('xǐ', 'hỷ')], radical: '口', ids: '⿱壴口', strokes: 12, kind: 'etymology' },
+	欢: {
+		readings: [r('huān', 'hoan')],
+		radical: '欠',
+		ids: '⿰又欠',
+		strokes: 6,
+		kind: 'etymology'
+	},
+	爱: {
+		readings: [r('ài', 'ái')],
+		radical: '爪',
+		ids: '⿱⿱爫冖友',
+		strokes: 10,
+		kind: 'invented'
+	},
+	最: { readings: [r('zuì', 'tối')], radical: '曰', ids: '⿱日取', strokes: 12, kind: 'etymology' },
+	果: { readings: [r('guǒ', 'quả')], radical: '木', ids: '⿻日木', strokes: 8, kind: 'etymology' },
+	唱: {
+		readings: [r('chàng', 'xướng')],
+		radical: '口',
+		ids: '⿰口昌',
+		strokes: 11,
+		kind: 'etymology'
+	},
+	歌: { readings: [r('gē', 'ca')], radical: '欠', ids: '⿰哥欠', strokes: 14, kind: 'etymology' },
+	打: {
+		readings: [r('dǎ', 'đả'), r('dá', 'tá', true)],
+		radical: '手',
+		ids: '⿰扌丁',
+		strokes: 5,
+		kind: 'etymology'
+	},
+	球: { readings: [r('qiú', 'cầu')], radical: '玉', ids: '⿰王求', strokes: 11, kind: 'etymology' },
+	玩: {
+		readings: [r('wán', 'ngoạn')],
+		radical: '玉',
+		ids: '⿰王元',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	电: { readings: [r('diàn', 'điện')], radical: '田', ids: '⿻日乚', strokes: 5, kind: 'invented' },
+	影: { readings: [r('yǐng', 'ảnh')], radical: '彡', ids: '⿰景彡', strokes: 15, kind: 'etymology' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists
 const local: Record<string, Mnemonic> = {
+	渴: {
+		hinh: '氵 nước + 曷 gợi âm → thiếu nước = khát',
+		am: 'khát — "khát", "khát nước"',
+		doiThat: '口渴, 渴了',
+		tuongPhan: '≠ 喝 (hē): cùng 曷, 渴 có 氵 (nước), 喝 có 口 (miệng)'
+	},
+	鸡: {
+		hinh: '鸟 chim + 又 giản lược → con gà, loài chim nuôi trong nhà',
+		am: 'kê — "kê đản" (trứng gà)',
+		doiThat: '鸡蛋, 鸡肉',
+		tuongPhan: '≠ 鸟 (niǎo, chim): 鸡 thêm 又 thành con gà'
+	},
+	蛋: {
+		hinh: '虫 sinh vật nhỏ + 疋 ở trên → nhớ như quả trứng có vỏ bọc, nở ra con vật',
+		am: 'đản — "kê đản" (trứng gà)',
+		doiThat: '鸡蛋, 蛋糕',
+		tuongPhan: '≠ 虫 (chóng, sâu bọ): 蛋 có thêm 疋 ở trên'
+	},
+	包: {
+		hinh: '勹 bao bọc + 巳 → bọc lấy thứ bên trong = gói, bao',
+		am: 'bao — "bao bì", "bao gồm"',
+		doiThat: '面包, 书包',
+		tuongPhan: '≠ 已 (yǐ): 包 có 勹 bọc ngoài'
+	},
+	店: {
+		hinh: '广 mái che + 占 gợi âm → cửa hàng dưới mái hiên',
+		am: 'điếm — "tửu điếm", "thư điếm"',
+		doiThat: '饭店, 商店',
+		tuongPhan: '≠ 点 (diǎn): gần âm, 店 có 广 mái che'
+	},
+	块: {
+		hinh: '土 đất + 夬 gợi âm → cục đất, miếng, khối',
+		am: 'khối — "khối", "khối lượng"',
+		doiThat: '一块钱, 一块肉',
+		tuongPhan: '≠ 快 (kuài, nhanh): đồng âm kuài, 块 có 土'
+	},
+	毛: {
+		hinh: 'hình sợi lông mọc ra → lông; mượn làm "hào" (một phần mười đồng)',
+		am: 'mao — "lông mao"',
+		doiThat: '一毛钱, 羽毛',
+		tuongPhan: '≠ 手 (shǒu, tay): 毛 có nét cong ở dưới'
+	},
+	票: {
+		hinh: '覀 + 示 → tờ giấy báo hiệu có quyền, tức vé, phiếu',
+		am: 'phiếu — "phiếu", "bỏ phiếu"',
+		doiThat: '车票, 门票',
+		tuongPhan: '≠ 示 (shì): 票 thêm 覀 ở trên'
+	},
+	唱: {
+		hinh: '口 miệng + 昌 gợi âm → mở miệng hát',
+		am: 'xướng — "đề xướng", "xướng ngôn viên"',
+		doiThat: '唱歌',
+		tuongPhan: '≠ 昌 (chāng): 唱 thêm 口 thành hát'
+	},
+	歌: {
+		hinh: '哥 gợi âm + 欠 há miệng → há miệng hát = bài ca',
+		am: 'ca — "ca sĩ", "ca khúc"',
+		doiThat: '唱歌, 歌手',
+		tuongPhan: '≠ 哥 (gē, anh): đồng âm gē, 歌 có 欠'
+	},
+	打: {
+		hinh: '扌 tay + 丁 gợi âm → tay gõ, đánh',
+		am: 'đả — "đả kích", "đả đảo"',
+		doiThat: '打球, 打电话',
+		tuongPhan: '≠ 丁 (dīng): 打 thêm 扌 thành đánh'
+	},
+	球: {
+		hinh: '王 (ngọc) + 求 gợi âm → viên ngọc tròn = quả cầu',
+		am: 'cầu — "địa cầu", "bóng cầu"',
+		doiThat: '打球, 足球',
+		tuongPhan: '≠ 求 (qiú): đồng âm qiú, 球 có 王'
+	},
+	电: {
+		hinh: 'giản lược của 電: tia chớp trong cơn mưa → điện',
+		am: 'điện — "điện thoại", "điện ảnh"',
+		doiThat: '电影, 电话',
+		tuongPhan: '≠ 由 (yóu): 电 có nét móc cong ở dưới'
+	},
+	影: {
+		hinh: '景 cảnh + 彡 nét vẽ → bóng, hình ảnh',
+		am: 'ảnh — "điện ảnh", "ảnh hưởng"',
+		doiThat: '电影',
+		tuongPhan: '≠ 景 (jǐng): 影 thêm 彡 thành bóng, hình'
+	},
 	页: {
 		hinh: '页 giản lược của 頁, gốc nghĩa là "cái đầu"; nay mượn để chỉ trang sách',
 		am: 'hiệt — hiếm gặp, neo bằng nghĩa "trang"',
