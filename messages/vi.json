@@ -628,5 +628,14 @@
 	"chy50s2_goal_next": "Mốc tiếp theo: {exam} sau Bài {last}, đỗ là mở HSK {next}.",
 	"chy50s2_goal_cert": "Mốc tiếp theo: {exam} sau Bài {last}, đỗ là mở chứng chỉ.",
 	"chy50s2_joined": "Học từ tháng {month}/{year}",
-	"chy50s2_edit": "Sửa hồ sơ"
+	"chy50s2_edit": "Sửa hồ sơ",
+	"chy51s2_sub_earned": "Bấm vào để xem hoặc khoe với bạn bè.",
+	"chy51s2_sub_soon": "Bấm vào để xem cách mở.",
+	"chy51s2_close": "Đóng",
+	"chy51s2_got": "Đã có từ ngày {date}",
+	"chy51s2_at": "Đang ở {have}/{need}",
+	"chy51s2_closed": "Chưa mở",
+	"chy51s2_share": "Khoe với bạn bè",
+	"chy51s2_copied": "Đã sao chép link",
+	"chy51s2_copy_failed": "Chưa sao chép được, thử lại nhé"
 }
