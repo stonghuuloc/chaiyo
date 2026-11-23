@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { SvelteSet } from 'svelte/reactivity';
 	import { m } from '#lib/paraglide/messages.js';
 	import { searchLearners, setFollow, type FoundLearner } from '#lib/social/follow.js';
 	import { supabase } from '#lib/supabase.js';
@@ -17,7 +18,7 @@
 	let failed = $state(false);
 	let toast = $state({ open: false, message: '', nonce: 0 });
 	const say = (message: string) => (toast = { open: true, message, nonce: toast.nonce + 1 });
-	const pending = new Set<string>();
+	const pending = new SvelteSet<string>();
 	let seq = 0;
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
@@ -55,7 +56,7 @@
 		const on = !r.following;
 		r.following = on;
 		pending.add(r.handle);
-		let ok = false;
+		let ok: boolean;
 		try {
 			ok = await setFollow(client, r.handle, on);
 		} catch {
