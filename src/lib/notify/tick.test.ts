@@ -3,7 +3,10 @@ import { describe, expect, it } from 'vitest';
 import { memoryStore, openLedger, type Input } from '#lib/ledger/index.js';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { initialState, rollover } from '#lib/study/index.js';
+import { fakeChannel } from './fake-channel';
 import { studied } from './fixtures';
+import { memoryMarks } from './marks';
+import { sendReminders } from './remind';
 import { tick, type Deps, type Learner, type Rolled } from './tick';
 
 const HCM = 'Asia/Ho_Chi_Minh';
@@ -149,5 +152,34 @@ describe('tick', () => {
 		// Assert
 		expect(result).toEqual({ rolled: [], failed: [] });
 		expect(log).toEqual(['remind ']);
+	});
+
+	it('Given_MinhNotStudiedToday_When_TickRuns4TimesIn1Hour_Then_OneReminderPerChannel', async () => {
+		// Arrange
+		const minh = {
+			id: 'minh',
+			tz: HCM,
+			channels: ['push', 'email'] as Learner['channels'],
+			remindAt: '20:00'
+		};
+		const inputs = studied('2026-11-10', '2026-11-22', HCM);
+		const push = fakeChannel('push');
+		const email = fakeChannel('email');
+		const telegram = fakeChannel('telegram');
+		const marks = memoryMarks();
+		const deps: Deps = {
+			...depsFor([minh], { minh: inputs }),
+			remind: (now, r) =>
+				sendReminders(now, r, [push, email, telegram], marks).then(() => undefined)
+		};
+
+		// Act
+		for (const t of ['13:00', '13:15', '13:30', '13:45']) {
+			await tick(new Date(`2026-11-23T${t}:00Z`), deps);
+		}
+
+		// Assert
+		expect([push.sent.length, email.sent.length, telegram.sent.length]).toEqual([1, 1, 0]);
+		expect([...marks.keys]).toEqual(['minh|2026-11-23']);
 	});
 });
