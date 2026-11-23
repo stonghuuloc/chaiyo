@@ -568,5 +568,15 @@
 	"chy49s3_tracks_sum": "{total} chuyên đề · {open} đã mở · học song song với HSK",
 	"chy49s3_track_need": "Cần HSK {need} · {count} bài",
 	"chy49s3_track_need_lock": "Cần HSK {need} · {count} bài",
-	"chy49s3_jump": "Bài {n} đang học"
+	"chy49s3_jump": "Bài {n} đang học",
+	"chy50s1_lessons": "Bài học",
+	"chy50s1_words": "Từ vựng",
+	"chy50s1_have_need": "{have}/{need}",
+	"chy50s1_streak_days": "{n} ngày liền",
+	"chy50s1_freezes": "Còn {n} lượt đóng băng",
+	"chy50s1_best": "Kỷ lục {n} ngày",
+	"chy50s1_mem_title": "Độ nhớ theo kỹ năng",
+	"chy50s1_mem_sub": "Kỹ năng nào bar ngắn là đang đuối, luyện thêm nhé.",
+	"chy50s1_mem_counts": "{firm} nhớ chắc · {shaky} còn lơ mơ · {unseen} chưa luyện",
+	"chy50s1_mem_label": "{skill}: {firm} nhớ chắc, {shaky} còn lơ mơ, {unseen} chưa luyện"
 }
