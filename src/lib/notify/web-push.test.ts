@@ -21,7 +21,7 @@ function inMemory(initial: Record<string, PushSub[]>) {
 }
 
 const script = (statuses: Record<string, number | Error>) =>
-	vi.fn(async (s: PushSub) => {
+	vi.fn(async (s: PushSub, _body: string) => {
 		const v = statuses[s.endpoint] ?? 201;
 		if (v instanceof Error) throw v;
 		return v;

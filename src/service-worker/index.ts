@@ -7,6 +7,7 @@ import { networkFirst } from './network';
 import { APP_SHELL, appShell, cachedPage } from './shell';
 import { AUDIO_CACHE, audioMessage, isAudio, serveAudio } from './audio';
 import { AUDIO_BASE, SYLLABLE_BASE } from '../lib/audio/base';
+import { clickTarget, notificationFrom } from './push';
 
 const CACHE = `shell-${version}`;
 const SHELL = appShell(
@@ -84,6 +85,25 @@ self.addEventListener('message', (event) => {
 					event.ports[0]?.postMessage({ type: 'audio-precached', ok: 0, failed: urls.length });
 				}
 			}
+		})()
+	);
+});
+
+self.addEventListener('push', (event) => {
+	const { title, options } = notificationFrom(event.data?.text() ?? null);
+	event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+	event.notification.close();
+	const url: string = event.notification.data?.url ?? '/today';
+	event.waitUntil(
+		(async () => {
+			const open = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+			const target = clickTarget(open as WindowClient[]);
+			if (!target) return void (await self.clients.openWindow(url));
+			await target.focus();
+			await target.navigate(url);
 		})()
 	);
 });
