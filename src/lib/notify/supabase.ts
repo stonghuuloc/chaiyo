@@ -1,6 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { PAGE, pullInputs } from '#lib/ledger/supabase.js';
 import type { Curriculum } from '#lib/study/index.js';
+import { CHANNEL_NAMES } from './channel';
 import type { Deps, Learner } from './tick';
 
 export function supabaseDeps(
@@ -15,12 +16,24 @@ export function supabaseDeps(
 			for (let from = 0; ; from += PAGE) {
 				const { data, error } = await client
 					.from('settings')
-					.select('learner_id, tz')
+					.select('learner_id, tz, remind_push, remind_email, remind_telegram')
 					.order('learner_id')
 					.range(from, from + PAGE - 1);
 				if (error) throw new Error(error.message);
-				const rows = (data ?? []) as { learner_id: string; tz: string }[];
-				out.push(...rows.map((r) => ({ id: r.learner_id, tz: r.tz, channels: [] })));
+				const rows = (data ?? []) as {
+					learner_id: string;
+					tz: string;
+					remind_push: boolean;
+					remind_email: boolean;
+					remind_telegram: boolean;
+				}[];
+				out.push(
+					...rows.map((r) => ({
+						id: r.learner_id,
+						tz: r.tz,
+						channels: CHANNEL_NAMES.filter((n) => r[`remind_${n}`])
+					}))
+				);
 				if (rows.length < PAGE) return out;
 			}
 		},
