@@ -15,7 +15,7 @@ export type MyWordRow = {
 
 const BAR_DAYS = [7, 21];
 
-function bars(card?: Card): MyWordRow['bars'] {
+export function bars(card?: Card): MyWordRow['bars'] {
 	if (!card) return 0;
 	const s = card.fsrs.stability;
 	if (typeof s !== 'number') return 1;
