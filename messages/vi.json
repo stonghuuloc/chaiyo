@@ -446,5 +446,12 @@
 	"chy46s1_d4": "T5",
 	"chy46s1_d5": "T6",
 	"chy46s1_d6": "T7",
-	"chy46s1_d7": "CN"
+	"chy46s1_d7": "CN",
+	"chy47s2_title": "Nhắc học",
+	"chy47s2_now": "Bây giờ",
+	"chy47s2_run": "Chạy",
+	"chy47s2_empty": "Chưa chạy",
+	"chy47s2_sent": "{id}: đã gửi",
+	"chy47s2_skipped": "{id}: bỏ qua ({reason})",
+	"chy47s2_channel": "{name}: {n}"
 }
