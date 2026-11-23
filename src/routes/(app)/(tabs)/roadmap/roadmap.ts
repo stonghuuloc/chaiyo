@@ -1,4 +1,5 @@
 import { LESSONS, LEVELS } from '#lib/curriculum/index.js';
+import { m } from '#lib/paraglide/messages.js';
 import { currentLevel, roadRows, type Road, type State } from '#lib/study/index.js';
 
 type Item = { id: string; n: number; title: string; hanzi: string };
@@ -131,3 +132,15 @@ export function roadmapLevel(state: State, level: number): LevelView {
 		}
 	};
 }
+
+export const lockToast = (view: LevelView, row: LevelRow) =>
+	row.lock === 'level'
+		? m.chy49s2_lock_level({ prev: view.level - 1, level: view.level })
+		: row.lock === 'after'
+			? m.chy49s2_lock_after({ k: row.after ?? 0, n: row.n })
+			: m.chy49s2_lock_draft({ n: row.n });
+
+export const examToast = (row: ExamRow) =>
+	row.status === 'open'
+		? m.chy49s2_mock_soon({ level: row.level })
+		: m.chy49s2_mock_toast({ last: row.last, level: row.level });

@@ -2,16 +2,27 @@
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { currentLevel, type State } from '#lib/study/index.js';
+	import Toast from '#lib/ui/Toast.svelte';
 	import type { PageProps } from './$types';
+	import ExamGroup from './ExamGroup.svelte';
 	import LevelStrip from './LevelStrip.svelte';
 	import NowCard from './NowCard.svelte';
-	import { roadmapLevel } from './roadmap';
+	import { examToast, lockToast, roadmapLevel } from './roadmap';
 	import TopicGroups from './TopicGroups.svelte';
 
 	let { data }: PageProps = $props();
 
 	let study = $state<State | null>(null);
 	const view = $derived(study ? roadmapLevel(study, currentLevel(study)) : null);
+
+	let open = $state(false);
+	let message = $state('');
+	let taps = $state(0);
+	const onlocked = (text: string) => {
+		message = text;
+		open = true;
+		taps += 1;
+	};
 
 	$effect(() => {
 		const session = data.session;
@@ -58,6 +69,22 @@
 		{#if view.card}
 			<NowCard card={view.card} />
 		{/if}
-		<TopicGroups groups={view.groups} />
+		<TopicGroups
+			groups={view.groups}
+			level={view.level}
+			onlocked={(row) => onlocked(lockToast(view, row))}
+		/>
+		{#if view.exams}
+			<ExamGroup exams={view.exams} ontap={(row) => onlocked(examToast(row))} />
+		{/if}
 	{/if}
 {/if}
+<Toast
+	placement="top"
+	icon="fill-lock-simple"
+	duration={2200}
+	{open}
+	{message}
+	nonce={taps}
+	onclose={() => (open = false)}
+/>

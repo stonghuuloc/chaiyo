@@ -1,7 +1,7 @@
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { describe, expect, it } from 'vitest';
-import { roadmapLevel } from './roadmap';
+import { examToast, lockToast, roadmapLevel } from './roadmap';
 
 const reference = (): State => {
 	const state = initialState({ curriculum: CURRICULUM });
@@ -236,5 +236,37 @@ describe('roadmapLevel', () => {
 
 		// Assert
 		expect(view.exams?.rows[0].status).toBe('locked');
+	});
+
+	it('Given_LockReasons_When_LockToast_Then_ThreeCopies', () => {
+		// Arrange
+		const one = roadmapLevel(reference(), 1);
+		const two = roadmapLevel(reference(), 2);
+
+		// Act
+		const copies = [
+			lockToast(one, row(one, 'h1-02')),
+			lockToast(one, row(one, 'h1-06')),
+			lockToast(two, row(two, 'h2-01'))
+		];
+
+		// Assert
+		expect(copies).toEqual([
+			'Qua Bài 1 để mở Bài 2',
+			'Bài 6 đang được soạn.',
+			'Đỗ thi thử HSK 1 để mở HSK 2'
+		]);
+	});
+
+	it('Given_ExamRows_When_ExamToast_Then_LockedAndSoonCopies', () => {
+		// Arrange
+		const locked = { level: 1, last: 40, status: 'locked' } as const;
+		const open = { part: 'noi', level: 3, last: 26, status: 'open' } as const;
+
+		// Act
+		const copies = [examToast(locked), examToast(open)];
+
+		// Assert
+		expect(copies).toEqual(['Qua Bài 40 để mở thi thử HSK 1', 'Thi thử HSK 3 sắp ra mắt.']);
 	});
 });

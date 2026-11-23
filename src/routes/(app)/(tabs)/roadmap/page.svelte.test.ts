@@ -64,6 +64,7 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 		open: () => all('[data-part=topic][open] [data-part=topic-title]').map(text),
 		rowTitle: (id: string) => text(row(id)?.querySelector('[data-part=level-title]')),
 		rowNote: (id: string) => text(row(id)?.querySelector('[data-part=level-note]')),
+		toast: () => text(document.querySelector('[role=status] span')),
 		row
 	};
 };
@@ -146,7 +147,8 @@ describe('/roadmap', () => {
 		expect(page.open()).toEqual(['Chủ đề 1 · Chào hỏi']);
 		const titles = page.all('[data-part=topic-title]').map(text);
 		expect(titles.slice(0, 3)).toEqual(['Khởi đầu', 'Chủ đề 1 · Chào hỏi', 'Chủ đề 2 · Gia đình']);
-		expect(titles).toHaveLength(10);
+		expect(titles).toHaveLength(11);
+		expect(titles.at(-1)).toBe('Cuối cấp');
 		expect(text(page.all('[data-part=topic-count]')[0])).toBe('1/1');
 	});
 
@@ -196,7 +198,7 @@ describe('/roadmap', () => {
 		expect(page.rowNote('h1-03')).toBeUndefined();
 	});
 
-	it('Given_LockedRow_When_Render_Then_NoAnchor', async () => {
+	it('Given_LockedRow_When_Render_Then_ButtonNoAnchor', async () => {
 		// Arrange
 		hoisted.load.mockResolvedValue(ledger);
 
@@ -207,7 +209,67 @@ describe('/roadmap', () => {
 		const locked = page.all('[data-part=level-row][data-status=locked]');
 		expect(locked.length).toBeGreaterThan(0);
 		expect(locked.every((r) => r.querySelector('a') === null)).toBe(true);
-		expect(locked.every((r) => !r.hasAttribute('role') && !r.hasAttribute('tabindex'))).toBe(true);
+		const buttons = locked.map((r) => r.querySelector('button[data-part=level-row-btn]'));
+		expect(buttons.every((b) => b?.getAttribute('type') === 'button')).toBe(true);
+		expect(
+			page.row('h1-02')!.querySelector('use[href="#i-regular-caret-right"]')
+		).not.toBeNull();
+	});
+
+	it('Given_ReferenceLearner_When_TapBai2_Then_ToastAndNoNavigation', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const href = location.href;
+
+		// Act
+		page.row('h1-02')!.querySelector<HTMLButtonElement>('button')!.click();
+		flushSync();
+
+		// Assert
+		expect(page.toast()).toBe('Qua Bài 1 để mở Bài 2');
+		expect(location.href).toBe(href);
+	});
+
+	it('Given_ReferenceLearner_When_TapH106_Then_DraftToastAndNote', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		page.row('h1-06')!.querySelector<HTMLButtonElement>('button')!.click();
+		flushSync();
+
+		// Assert
+		expect(page.toast()).toBe('Bài 6 đang được soạn.');
+		expect(page.rowNote('h1-06')).toBe('Đang soạn');
+	});
+
+	it('Given_ReferenceLearner_When_OpenCuoiCap_Then_ThiThuHsk1Row', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const exams = page.one('[data-part=exams]')!;
+
+		// Act
+		exams.querySelector('summary')!.click();
+		flushSync();
+		const rows = [...exams.querySelectorAll('[data-part=exam-row]')];
+		rows[0].querySelector<HTMLButtonElement>('button')!.click();
+		flushSync();
+
+		// Assert
+		expect(exams.hasAttribute('open')).toBe(true);
+		expect(text(exams.querySelector('[data-part=topic-title]'))).toBe('Cuối cấp');
+		expect(text(exams.querySelector('[data-part=topic-count]'))).toBe('0/1');
+		expect(rows.map((r) => text(r.querySelector('[data-part=exam-title]')))).toEqual([
+			'Thi thử HSK 1'
+		]);
+		expect(text(rows[0].querySelector('[data-part=exam-note]'))).toBe(
+			'nghe · đọc · viết · mở khi qua Bài 40'
+		);
+		expect(exams.querySelector('[data-part=exam-end]')).toBeNull();
+		expect(page.toast()).toBe('Qua Bài 40 để mở thi thử HSK 1');
 	});
 
 	it('Given_NextStatePublished_When_Render_Then_TextsUpdate', async () => {

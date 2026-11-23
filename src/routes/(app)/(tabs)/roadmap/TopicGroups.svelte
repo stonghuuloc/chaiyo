@@ -4,7 +4,15 @@
 	import { resolve } from '$app/paths';
 	import type { LevelGroup, LevelRow } from './roadmap';
 
-	let { groups }: { groups: LevelGroup[] } = $props();
+	let {
+		groups,
+		level,
+		onlocked
+	}: {
+		groups: LevelGroup[];
+		level: number;
+		onlocked: (row: LevelRow) => void;
+	} = $props();
 
 	const note = (row: LevelRow) =>
 		row.status === 'done'
@@ -13,9 +21,13 @@
 				: m.chy49s1_done_best({ score: row.best })
 			: row.status === 'now'
 				? m.chy49s1_now({ part: row.part ?? 1 })
-				: row.status === 'locked' && row.after !== undefined
+				: row.lock === 'after' && row.after !== undefined
 					? m.chy49s1_after({ n: row.after })
-					: '';
+					: row.lock === 'level'
+						? m.chy49s2_note_level({ prev: level - 1 })
+						: row.lock === 'draft'
+							? m.chy49s2_note_draft()
+							: '';
 
 	const rail = (rows: LevelRow[], k: number) => {
 		const row = rows[k];
@@ -58,9 +70,14 @@
 						)}"
 					>
 						{#if row.status === 'locked'}
-							<div class="grid min-h-[60px] grid-cols-[36px_1fr_16px] items-center gap-3 py-2">
+							<button
+								type="button"
+								data-part="level-row-btn"
+								class="grid min-h-[60px] w-full cursor-pointer grid-cols-[36px_1fr_16px] items-center gap-3 py-2 text-left"
+								onclick={() => onlocked(row)}
+							>
 								{@render line(row)}
-							</div>
+							</button>
 						{:else}
 							<a
 								href={resolve('/(app)/lesson/[id]', { id: row.id })}
@@ -98,10 +115,8 @@
 			<small data-part="level-note" class="mt-0.5 block text-label text-muted">{note(row)}</small>
 		{/if}
 	</span>
-	{#if row.status !== 'locked'}
-		<svg
-			class="size-4 fill-current {row.status === 'now' ? 'text-primary' : 'text-faint-pencil'}"
-			aria-hidden="true"><use href="#i-regular-caret-right" /></svg
-		>
-	{/if}
+	<svg
+		class="size-4 fill-current {row.status === 'now' ? 'text-primary' : 'text-faint-pencil'}"
+		aria-hidden="true"><use href="#i-regular-caret-right" /></svg
+	>
 {/snippet}
