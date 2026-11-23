@@ -45,10 +45,7 @@
 </script>
 
 {#if !auto}
-	<p
-		data-part="round"
-		class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase"
-	>
+	<p data-part="round" class="mt-5 text-label text-pencil">
 		{step.round === 1 ? m.writing_round1() : m.writing_round2()}
 	</p>
 	<div class="mt-3">
