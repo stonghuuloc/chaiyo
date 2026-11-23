@@ -34,7 +34,8 @@ describe('route shell declarations', () => {
 		['routes/(app)/practice/skill/+page.ts', 'pushed'],
 		['routes/(app)/settings/+page.ts', 'pushed'],
 		['routes/(app)/pinyin/+page.ts', 'pushed'],
-		['routes/(app)/u/[handle]/+page.ts', 'pushed']
+		['routes/(app)/u/[handle]/+page.ts', 'pushed'],
+		['routes/(app)/me/friends/+page.ts', 'pushed']
 	])('Given_%s_Then_DeclaresTemplate_%s', (file, template) => {
 		// Arrange
 		// Act
@@ -48,7 +49,8 @@ describe('route shell declarations', () => {
 		['routes/(app)/practice/skill/+page.ts', 'practice'],
 		['routes/(app)/settings/+page.ts', 'me'],
 		['routes/(app)/pinyin/+page.ts', 'roadmap'],
-		['routes/(app)/u/[handle]/+page.ts', 'me']
+		['routes/(app)/u/[handle]/+page.ts', 'me'],
+		['routes/(app)/me/friends/+page.ts', 'me']
 	])('Given_PushedRoute_%s_Then_LightsTab_%s', (file, section) => {
 		// Arrange
 		// Act

@@ -637,5 +637,16 @@
 	"chy51s2_closed": "Chưa mở",
 	"chy51s2_share": "Khoe với bạn bè",
 	"chy51s2_copied": "Đã sao chép link",
-	"chy51s2_copy_failed": "Chưa sao chép được, thử lại nhé"
+	"chy51s2_copy_failed": "Chưa sao chép được, thử lại nhé",
+	"chy52s2_title": "Bạn bè",
+	"chy52s2_lead": "Bạn đứng ở bảng của {n} người bạn theo dõi.",
+	"chy52s2_rank_by": "Xếp hạng theo",
+	"chy52s2_streak": "Chuỗi ngày",
+	"chy52s2_week": "Từ trong tuần",
+	"chy52s2_rank": "Hạng {n}",
+	"chy52s2_you": "Bạn",
+	"chy52s2_days": "ngày",
+	"chy52s2_words": "từ",
+	"chy52s2_empty_title": "Chưa có ai trong bảng",
+	"chy52s2_empty_body": "Học một mình hơi buồn, rủ bạn vào đua cho vui nhé!"
 }
