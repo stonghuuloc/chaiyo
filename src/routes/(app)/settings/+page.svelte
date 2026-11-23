@@ -7,16 +7,22 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import { supabase } from '#lib/supabase.js';
 	import Toast from '#lib/ui/Toast.svelte';
+	import { applyHanziStyle } from '#lib/shell/hanzi-style.js';
 	import { avatarDataUrl } from '#lib/welcome/photo.js';
+	import HanziStyleSection, { type HanziStyleDeps } from './HanziStyleSection.svelte';
 	import PrivacySection, { type PrivacyDeps } from './PrivacySection.svelte';
 	import ProfileSection, { type ProfileDeps } from './ProfileSection.svelte';
 	import { loadProfile, saveProfile, type Profile } from './profile';
+	import { savePrefs, toPrefs } from './prefs';
 	import ReminderChannels, { type Deps } from './ReminderChannels.svelte';
+	import ReminderTimeSection, { type ReminderTimeDeps } from './ReminderTimeSection.svelte';
 	import { pushPermission } from './push-state';
 
 	let deps = $state<Deps>();
 	let profileDeps = $state<ProfileDeps>();
 	let privacyDeps = $state<PrivacyDeps>();
+	let timeDeps = $state<ReminderTimeDeps>();
+	let hanziDeps = $state<HanziStyleDeps>();
 	let toast = $state({ open: false, message: '', nonce: 0 });
 
 	const notify = (message: string) => {
@@ -29,7 +35,11 @@
 		if (!uid) return;
 		const link = telegramLink(supabase, uid);
 		const [settings, linked, profile] = await Promise.all([
-			supabase.from('settings').select('remind_push').eq('learner_id', uid).maybeSingle(),
+			supabase
+				.from('settings')
+				.select('remind_push, reminder_time, hanzi_style')
+				.eq('learner_id', uid)
+				.maybeSingle(),
 			link.isLinked(),
 			loadProfile(supabase, uid)
 		]);
@@ -42,6 +52,18 @@
 			notify
 		};
 		privacyDeps = { hidden: profile.hidden, save, notify };
+		const prefs = toPrefs(settings.data);
+		timeDeps = {
+			time: prefs.time,
+			save: (time) => savePrefs(supabase, uid, { time }),
+			notify
+		};
+		hanziDeps = {
+			style: prefs.hanzi,
+			save: (hanzi) => savePrefs(supabase, uid, { hanzi }),
+			apply: applyHanziStyle,
+			notify
+		};
 		const registration = () => navigator.serviceWorker.ready;
 		const here =
 			'serviceWorker' in navigator
@@ -89,7 +111,12 @@
 </header>
 <div class="pb-12">
 	{#if profileDeps}<ProfileSection deps={profileDeps} />{/if}
-	{#if deps}<ReminderChannels {deps} />{/if}
+	{#if timeDeps}
+		<ReminderTimeSection deps={timeDeps}>
+			{#if deps}<ReminderChannels {deps} />{/if}
+		</ReminderTimeSection>
+	{/if}
+	{#if hanziDeps}<HanziStyleSection deps={hanziDeps} />{/if}
 	{#if privacyDeps}<PrivacySection deps={privacyDeps} />{/if}
 </div>
 <Toast

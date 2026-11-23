@@ -5,8 +5,15 @@ import { learnerLedger } from './index';
 
 type Hook = { fire?: (e: string, s?: { user: { id: string } } | null) => void };
 
-function stub(tz: string | null, signedOut: Hook = {}, who = '', tables: string[] = []) {
+function stub(
+	tz: string | null,
+	signedOut: Hook = {},
+	who = '',
+	tables: string[] = [],
+	rpc = vi.fn(async () => ({ data: true, error: null }))
+) {
 	return {
+		rpc,
 		from: (table: string) => (
 			tables.push(table),
 			{
@@ -89,5 +96,33 @@ describe('learnerLedger', () => {
 		window.dispatchEvent(new Event('online'));
 		expect(sync).not.toHaveBeenCalled();
 		expect(await learnerLedger({ user: { id: 'u-d' } }, { client, idb })).not.toBe(a);
+	});
+
+	it('Given_Open_When_SyncDone_Then_PublishStatsOnce', async () => {
+		const rpc = vi.fn(async () => ({ data: true, error: null }));
+		const client = stub('Asia/Tokyo', {}, 'u-h', [], rpc);
+		await learnerLedger({ user: { id: 'u-h' } }, { client, idb: new IDBFactory() });
+		await vi.waitFor(() => expect(rpc).toHaveBeenCalledTimes(1));
+		expect(rpc).toHaveBeenCalledWith('publish_stats', expect.objectContaining({ p_streak: 0 }));
+	});
+
+	it('Given_SignOut_Then_NoPublishAfter', async () => {
+		const rpc = vi.fn(async () => ({ data: true, error: null }));
+		const hook: Hook = {};
+		const client = stub('Asia/Tokyo', hook, 'u-i', [], rpc);
+		const a = await learnerLedger({ user: { id: 'u-i' } }, { client, idb: new IDBFactory() });
+		await vi.waitFor(() => expect(rpc).toHaveBeenCalledTimes(1));
+		hook.fire?.('SIGNED_OUT');
+		await a.record({
+			id: 'y',
+			at: '2026-11-11T02:00:00Z',
+			questionId: 'q',
+			contentSha: 's',
+			correct: true,
+			ms: 1,
+			card: { word: '你', skill: 'the' }
+		});
+		await new Promise((r) => setTimeout(r, 2100));
+		expect(rpc).toHaveBeenCalledTimes(1);
 	});
 });

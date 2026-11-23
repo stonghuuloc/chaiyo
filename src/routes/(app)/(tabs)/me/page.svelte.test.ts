@@ -3,6 +3,7 @@ import type { Ledger } from '#lib/ledger/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { flushSync, mount, tick, unmount } from 'svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { outlineIds } from '../roadmap/roadmap';
 import Page from './+page.svelte';
 
 const TODAY = '2026-11-23';
@@ -14,7 +15,7 @@ const learner = (words: number, passed: string[] = []): State => {
 	return state;
 };
 
-const hoisted = vi.hoisted(() => ({ load: vi.fn() }));
+const hoisted = vi.hoisted(() => ({ load: vi.fn(), profile: vi.fn() }));
 let current: State = learner(12);
 const listeners = new Set<(s: State) => void>();
 const ledger = {
@@ -27,8 +28,25 @@ const publish = (s: State) => {
 };
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: hoisted.load }));
+vi.mock('#lib/supabase.js', () => ({ supabase: {} }));
+vi.mock('../../settings/profile', () => ({ loadProfile: hoisted.profile }));
 
-const session = { user: { id: 'u1' } };
+type Session = {
+	user: {
+		id: string;
+		email?: string;
+		created_at: string;
+		user_metadata: Record<string, string>;
+	};
+};
+const session: Session = {
+	user: {
+		id: 'u1',
+		email: 'loc@example.com',
+		created_at: '2026-10-05T03:00:00Z',
+		user_metadata: { full_name: 'Google Name' }
+	}
+};
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
@@ -39,7 +57,7 @@ const settle = async () => {
 	flushSync();
 };
 
-const mountPage = async (data: { session: typeof session | null } = { session }) => {
+const mountPage = async (data: { session: Session | null } = { session }) => {
 	target = document.createElement('div');
 	document.body.append(target);
 	app = mount(Page, { target, props: { data } as never }) as Record<string, unknown>;
@@ -47,6 +65,11 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 	return {
 		h1: () => target!.querySelectorAll('h1').length,
 		h1Text: () => target!.querySelector('h1')?.textContent?.trim(),
+		goal: () =>
+			target!.querySelector('[data-part=me-goal]')?.textContent?.replace(/\s+/g, ' ').trim(),
+		title: () => target!.querySelector('[data-part=me-level] h2')?.textContent?.trim(),
+		line: () => target!.querySelector('[data-part=me-line]')?.textContent?.trim(),
+		joined: () => target!.querySelector('h1 + p')?.textContent?.trim(),
 		hero: () => target!.querySelector('[data-part=me-hero]'),
 		memory: () => target!.querySelector('[data-part=me-memory]'),
 		prog: () =>
@@ -61,6 +84,7 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 };
 
 beforeEach(() => {
+	hoisted.profile.mockResolvedValue({ name: 'Tống Lộc', photo: null, hidden: false });
 	vi.useFakeTimers({ toFake: ['Date'] });
 	vi.setSystemTime(new Date('2026-11-23T10:00:00+07:00'));
 });
@@ -71,6 +95,7 @@ afterEach(() => {
 	target = app = undefined;
 	listeners.clear();
 	hoisted.load.mockReset();
+	hoisted.profile.mockReset();
 	vi.useRealTimers();
 });
 
@@ -164,5 +189,92 @@ describe('/me', () => {
 		// Assert
 		expect(page.memory()).not.toBeNull();
 		expect(page.memory()!.querySelectorAll('li')).toHaveLength(3);
+	});
+
+	it('Given_Profile_When_Open_Then_NameAndJoined', async () => {
+		// Arrange
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.h1()).toBe(1);
+		expect(page.h1Text()).toBe('Tống Lộc');
+		expect(page.joined()).toBe('Học từ tháng 10/2026');
+	});
+
+	it('Given_EmptyProfileName_When_Open_Then_MetadataName', async () => {
+		// Arrange
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+		hoisted.profile.mockResolvedValue({ name: '', photo: null, hidden: false });
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.h1Text()).toBe('Google Name');
+	});
+
+	it('Given_ProfileLoadRejects_When_Open_Then_MetadataNameAndHero', async () => {
+		// Arrange
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+		hoisted.profile.mockRejectedValue(new Error('boom'));
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.h1Text()).toBe('Google Name');
+		expect(page.hero()).not.toBeNull();
+		expect(page.title()).toBe('HSK 1 · 0%');
+	});
+
+	it('Given_NoNames_When_Open_Then_EmailLocalPart', async () => {
+		// Arrange
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+		hoisted.profile.mockResolvedValue({ name: '', photo: null, hidden: false });
+
+		// Act
+		const page = await mountPage({ session: { user: { ...session.user, user_metadata: {} } } });
+
+		// Assert
+		expect(page.h1Text()).toBe('loc');
+	});
+
+	it('Given_ReferenceLearner_When_Open_Then_TitlePct0AndLine1', async () => {
+		// Arrange
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.title()).toBe('HSK 1 · 0%');
+		expect(page.line()).toBe('Vừa vào cấp, đang học Bài 1. Khởi đầu ngon rồi đó!');
+		expect(page.goal()).toBe('Mốc tiếp theo: Thi thử HSK 1 sau Bài 40, đỗ là mở HSK 2.');
+	});
+
+	it('Given_TenPassedPublished_When_Render_Then_Line2Pct25', async () => {
+		// Arrange
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const next = learner(12);
+		for (const id of outlineIds(1).slice(0, 10))
+			next.lessons[id] = { unlocked: true, passed: true, done: [] };
+
+		// Act
+		publish(next);
+		flushSync();
+
+		// Assert
+		expect(page.title()).toBe('HSK 1 · 25%');
+		expect(page.line()).toBe('Đang học Bài 11. Đi được một đoạn rồi, cứ đều đều nhé.');
 	});
 });

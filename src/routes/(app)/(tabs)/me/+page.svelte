@@ -2,21 +2,40 @@
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { State } from '#lib/study/index.js';
+	import { supabase } from '#lib/supabase.js';
+	import { fromUser } from '#lib/welcome/welcome.js';
 	import type { PageProps } from './$types';
+	import { loadProfile, type Profile } from '../../settings/profile';
 	import MeHero from './MeHero.svelte';
+	import MeProfile from './MeProfile.svelte';
 	import SkillMemory from './SkillMemory.svelte';
+	import { joinedMonth, meLevel } from './level';
 	import { meStats } from './me';
 
 	let { data }: PageProps = $props();
 
 	let study = $state<State | null>(null);
+	let profile = $state<Profile | null>(null);
+
+	const who = $derived.by(() => {
+		const user = data.session?.user;
+		const meta = fromUser(user);
+		return {
+			name: profile?.name || meta.name || (user?.email ?? '').split('@')[0],
+			photo: profile?.photo ?? meta.photo
+		};
+	});
 
 	$effect(() => {
 		const session = data.session;
 		study = null;
+		profile = null;
 		if (!session) return;
 		let live = true;
 		let off = () => {};
+		loadProfile(supabase, session.user.id)
+			.then((p) => live && (profile = p))
+			.catch(() => {});
 		learnerLedger(session)
 			.then((ledger) => {
 				if (!live) return;
@@ -31,9 +50,11 @@
 	});
 </script>
 
-<h1 class="sr-only">{m.tab_me()}</h1>
-{#if study}
+{#if study && data.session}
 	{@const s = meStats(study, new Date())}
-	<MeHero stats={s} />
+	<MeProfile {...who} {...joinedMonth(data.session.user.created_at, study.tz)} />
+	<MeHero stats={s} lv={meLevel(study)} />
 	<SkillMemory skills={s.skills} />
+{:else}
+	<h1 class="sr-only">{m.tab_me()}</h1>
 {/if}
