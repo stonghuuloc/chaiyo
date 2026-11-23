@@ -40,7 +40,7 @@ const LEVEL_COUNT = 5;
 const SPEAKING_FROM = 3;
 const NUMS = outlineNumbers(LEVELS);
 
-const outlineIds = (level: number) =>
+export const outlineIds = (level: number) =>
 	(LEVELS.find((o) => o.level === level)?.topics ?? []).flatMap((t) => t.lessons.map((l) => l.id));
 
 const progressOf = (state: State, level: number) => {
