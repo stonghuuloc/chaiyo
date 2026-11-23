@@ -115,7 +115,7 @@ describe('ReminderTimeSection', () => {
 		await settle();
 		finishes[1]!();
 		await settle();
-		expect(deps.save.mock.calls.map((c) => c[0])).toEqual(['07:00', '12:30']);
+		expect(vi.mocked(deps.save).mock.calls.map((c) => c[0])).toEqual(['07:00', '12:30']);
 		expect(pressedNow()).toEqual(['12:30']);
 	});
 

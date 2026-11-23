@@ -92,7 +92,7 @@ describe('HanziStyleSection', () => {
 		tile('Hành thư').click();
 		await settle();
 		expect(tile('Khải thư').getAttribute('aria-checked')).toBe('true');
-		expect(deps.apply.mock.calls.map((c) => c[0])).toEqual(['xing', 'kai']);
+		expect(vi.mocked(deps.apply).mock.calls.map((c) => c[0])).toEqual(['xing', 'kai']);
 		expect(deps.notify).toHaveBeenCalledExactlyOnceWith('Chưa lưu được. Bạn thử lại nhé.');
 	});
 

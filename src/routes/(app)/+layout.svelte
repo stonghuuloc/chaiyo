@@ -1,14 +1,36 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import sprite from '#lib/assets/icons.svg?raw';
 	import { m } from '#lib/paraglide/messages.js';
 	import AppNav from '#lib/shell/AppNav.svelte';
+	import { bootHanziStyle } from '#lib/shell/hanzi-style.js';
 	import { navFor } from '#lib/shell/template.js';
+	import { supabase } from '#lib/supabase.js';
 	import { page } from '$app/state';
+	import { toPrefs } from './settings/prefs';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
 	const nav = $derived(navFor(page.data.shell, page.url.pathname));
 	let main: HTMLElement | undefined = $state();
+
+	onMount(() =>
+		bootHanziStyle({
+			storage: localStorage,
+			doc: document,
+			read: async () => {
+				const uid = page.data.session?.user.id;
+				if (!uid) return null;
+				const { data, error } = await supabase
+					.from('settings')
+					.select('hanzi_style')
+					.eq('learner_id', uid)
+					.maybeSingle();
+				if (error) throw error;
+				return toPrefs(data).hanzi;
+			}
+		})
+	);
 
 	function skip(event: MouseEvent) {
 		event.preventDefault();
