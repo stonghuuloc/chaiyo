@@ -19,10 +19,10 @@ const NGOC = {
 
 const run = async (handle: string, query = '') => {
 	const { load } = await import('./+page');
-	return load({
+	return (await load({
 		params: { handle },
 		url: new URL(`https://chaiyo.app/u/${handle}${query}`)
-	} as Parameters<typeof load>[0]);
+	} as Parameters<typeof load>[0])) as { badge: string | null };
 };
 
 beforeEach(() => rpc.mockReset());
