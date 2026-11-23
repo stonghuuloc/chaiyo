@@ -18,6 +18,12 @@ export type LevelGroup = {
 	open: boolean;
 };
 export type LevelCell = { level: number; locked: boolean; current: boolean; progress: number };
+export type ExamRow = {
+	part?: 'viet' | 'noi';
+	level: number;
+	last: number;
+	status: 'locked' | 'open';
+};
 export type LevelView = {
 	level: number;
 	empty: boolean;
@@ -25,9 +31,11 @@ export type LevelView = {
 	header?: { passed: number; total: number; words: number };
 	card?: LevelRow & { next: number };
 	groups: LevelGroup[];
+	exams?: { rows: ExamRow[]; note: boolean };
 };
 
 const LEVEL_COUNT = 5;
+const SPEAKING_FROM = 3;
 
 const outlineIds = (level: number) =>
 	(LEVELS.find((o) => o.level === level)?.topics ?? []).flatMap((t) => t.lessons.map((l) => l.id));
@@ -102,6 +110,10 @@ export function roadmapLevel(state: State, level: number): LevelView {
 
 	const now = holder?.rows.find((r) => r.status === 'now');
 	const outlined = groups.filter((g) => g.kind === 'topic');
+	const lastId = outlineIds(level).at(-1);
+	const status: ExamRow['status'] =
+		level <= top && lastId && state.lessons[lastId]?.passed ? 'open' : 'locked';
+	const parts = level >= SPEAKING_FROM ? (['viet', 'noi'] as const) : [undefined];
 	return {
 		level,
 		empty: false,
@@ -112,6 +124,10 @@ export function roadmapLevel(state: State, level: number): LevelView {
 			words: outline.words
 		},
 		card: now ? { ...now, next: now.n + 1 } : undefined,
-		groups
+		groups,
+		exams: {
+			note: level >= SPEAKING_FROM,
+			rows: parts.map((part) => ({ ...(part ? { part } : {}), level, last: n, status }))
+		}
 	};
 }

@@ -182,4 +182,59 @@ describe('roadmapLevel', () => {
 		// Assert
 		expect(view.strip.map((c) => c.progress)).toEqual([2 / 40, 0, 0, 0, 0]);
 	});
+
+	it('Given_Level1_When_View_Then_OneLockedExamLast40', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 1);
+
+		// Assert
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 1, last: 40, status: 'locked' }] });
+	});
+
+	it('Given_Level3_When_View_Then_VietAndNoiLast26WithNote', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 3);
+
+		// Assert
+		expect(view.exams).toEqual({
+			note: true,
+			rows: [
+				{ part: 'viet', level: 3, last: 26, status: 'locked' },
+				{ part: 'noi', level: 3, last: 26, status: 'locked' }
+			]
+		});
+	});
+
+	it('Given_Level2_When_View_Then_OneExamNoNote', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 2);
+
+		// Assert
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 2, last: 27, status: 'locked' }] });
+	});
+
+	it('Given_AllHsk1OutlinePassed_When_Level1_Then_ExamOpen', () => {
+		// Arrange
+		const state = reference();
+		for (let i = 1; i <= 40; i++)
+			state.lessons[`h1-${String(i).padStart(2, '0')}`] = { unlocked: true, passed: true, done: [] };
+
+		// Act
+		const view = roadmapLevel(state, 1);
+
+		// Assert
+		expect(view.exams?.rows).toEqual([{ level: 1, last: 40, status: 'open' }]);
+	});
+
+	it('Given_Hsk1LastPassedButLevelAbove_When_Level2_Then_ExamLocked', () => {
+		// Arrange
+		const state = reference();
+		state.lessons['h2-27'] = { unlocked: false, passed: true, done: [] };
+
+		// Act
+		const view = roadmapLevel(state, 2);
+
+		// Assert
+		expect(view.exams?.rows[0].status).toBe('locked');
+	});
 });
