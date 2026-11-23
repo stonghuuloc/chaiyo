@@ -12,123 +12,123 @@ topics:
         std: [ 5, 31 ]
         grammar: "Đại từ: 你 / 您 / 你们 + 好 · Câu không chủ ngữ + câu đáp (谢谢 → 不客气, 对不起 → 没关系)"
       - id: h1-02
-        title: "Bạn tên gì?"
-        titleHanzi: 你叫什么名字
+        title: "Hỏi tên"
+        titleHanzi: 名字
         std: [ 24, 25, 26, 29, 32, 46 ]
         grammar: "Câu S + V + O (我叫…) · Hỏi bằng 什么 (từ hỏi ở vị trí đáp án)"
   - title: Gia đình
     lessons:
       - id: h1-03
-        title: "Đây là ai?"
-        titleHanzi: 这是谁
+        title: "Hỏi người"
+        titleHanzi: 谁
         std: [ 6, 36, 46 ]
         grammar: "这/那 · Câu chữ 是 (đồng nhất) · Hỏi bằng 谁"
       - id: h1-04
         title: "Gia đình"
-        titleHanzi: 我的家
+        titleHanzi: 家
         std: [ 20, 27, 13 ]
         grammar: "的 sở hữu (我的妈妈 / 我妈妈) · 也"
       - id: h1-05
-        title: "Bạn mấy tuổi?"
-        titleHanzi: 你几岁
+        title: "Tuổi tác"
+        titleHanzi: 岁
         std: [ 7, 22, 45, 33 ]
         grammar: "Số 0–99 · 几 + lượng từ · Câu hỏi 吗 / 呢 (你呢？)"
       - id: h1-06
-        title: "Nhà bạn có mấy người?"
-        titleHanzi: 你家有几口人
+        title: "Số người trong nhà"
+        titleHanzi: 口
         std: [ 37, 8, 23 ]
         grammar: "有 sở hữu · Số + lượng từ + danh từ (三口人, 两个) · 两 vs 二"
       - id: h1-07
-        title: "Bố mẹ làm nghề gì?"
-        titleHanzi: 做什么工作
+        title: "Nghề nghiệp"
+        titleHanzi: 工作
         std: [ 14, 10 ]
         grammar: "Phủ định 不 · 都"
   - title: Quốc tịch và ngôn ngữ
     lessons:
       - id: h1-08
-        title: "Bạn là người nước nào?"
-        titleHanzi: 你是哪国人
+        title: "Quốc tịch"
+        titleHanzi: 国
         std: [ 4 ]
         grammar: "哪 + danh từ · 是 mô tả · 不是"
       - id: h1-09
-        title: "Tôi biết nói tiếng Trung"
-        titleHanzi: 我会说汉语
+        title: "Ngôn ngữ"
+        titleHanzi: 汉语
         std: [ 2, 48, 33 ]
         grammar: "会 / 能 · Câu hỏi chính phản 会不会 / 是不是"
       - id: h1-10
-        title: "Cô giáo tiếng Trung"
-        titleHanzi: 汉语老师
+        title: "Giáo viên"
+        titleHanzi: 老师
         std: [ 27, 17 ]
         grammar: "Danh từ làm định ngữ không 的 (汉语老师) · 跟 + người + V (跟老师学)"
       - id: h1-11
-        title: "Rất vui được gặp bạn"
-        titleHanzi: 认识你很高兴
+        title: "Làm quen"
+        titleHanzi: 高兴
         std: [ 30, 9 ]
         grammar: "Câu vị ngữ tính từ (我很好, không dùng 是) · 很 / 非常 / 真"
   - title: Số và thời gian
     lessons:
       - id: h1-12
         title: "Số đếm"
-        titleHanzi: 一二三
+        titleHanzi: 十
         std: [ 7, 8, 23 ]
         grammar: "Số đến 百 · lượng từ 个 / 本 / 杯 · 半"
       - id: h1-13
-        title: "Hôm nay ngày mấy?"
-        titleHanzi: 今天几号
+        title: "Ngày tháng"
+        titleHanzi: 号
         std: [ 44, 28 ]
         grammar: "Năm, tháng, ngày · Thời gian đứng trước động từ"
       - id: h1-14
-        title: "Thứ mấy?"
-        titleHanzi: 星期几
+        title: "Thứ trong tuần"
+        titleHanzi: 星期
         std: [ 44, 47, 33 ]
         grammar: "星期 + số · Câu hỏi lựa chọn 还是"
       - id: h1-15
-        title: "Bây giờ mấy giờ?"
-        titleHanzi: 现在几点
+        title: "Giờ giấc"
+        titleHanzi: 点
         std: [ 44, 7 ]
         grammar: "Giờ: 点 / 分 / 半 · Thời gian làm trạng ngữ"
       - id: h1-16
-        title: "Hôm qua, ngày mai"
-        titleHanzi: 昨天明天
+        title: "Hôm qua và ngày mai"
+        titleHanzi: 昨天
         std: [ 21, 41 ]
         grammar: "了1 việc đã xong (我昨天去了…) · không dùng 了 với 没"
   - title: Ăn uống
     lessons:
       - id: h1-17
-        title: "Tôi muốn uống trà"
-        titleHanzi: 我想喝茶
+        title: "Đồ uống"
+        titleHanzi: 喝
         std: [ 3 ]
         grammar: "想 / 要 + V"
       - id: h1-18
-        title: "Bạn ăn gì?"
-        titleHanzi: 你吃什么
+        title: "Món ăn"
+        titleHanzi: 吃
         std: [ 19 ]
         grammar: "和 nối danh từ (茶和水) · 还是 trong câu hỏi"
       - id: h1-19
-        title: "Ở nhà hàng"
-        titleHanzi: 在饭馆
+        title: "Nhà hàng"
+        titleHanzi: 饭店
         std: [ 16, 34 ]
         grammar: "在 + nơi chốn + V · Câu cầu khiến 请…"
       - id: h1-20
-        title: "Bao nhiêu tiền?"
-        titleHanzi: 多少钱
+        title: "Giá tiền"
+        titleHanzi: 钱
         std: [ 43, 4 ]
         grammar: "Cách nói tiền (块 / 毛 / 分) · 多少 vs 几"
       - id: h1-21
-        title: "Tôi thích ăn táo"
-        titleHanzi: 我喜欢吃苹果
+        title: "Trái cây"
+        titleHanzi: 水果
         std: [ 9, 35 ]
         grammar: "喜欢 + V · 最 · Câu cảm thán 太…了！"
   - title: Nơi chốn
     lessons:
       - id: h1-22
-        title: "Ở đâu?"
-        titleHanzi: 在哪儿
+        title: "Vị trí"
+        titleHanzi: 在
         std: [ 1, 6, 36 ]
         grammar: "在 làm động từ (书在桌子上) · Phương vị 上/下/里/外, 前边/后边 · 这儿/那儿"
       - id: h1-23
-        title: "Tôi ngồi đây được không?"
-        titleHanzi: 我能坐这儿吗
+        title: "Chỗ ngồi"
+        titleHanzi: 坐
         std: [ 2, 14, 34 ]
         grammar: "能 xin phép · 别 + V (cấm)"
       - id: h1-24
@@ -137,57 +137,57 @@ topics:
         std: [ 37, 36 ]
         grammar: "有 tồn tại (学校里有…) · 是 tồn tại (前边是…)"
       - id: h1-25
-        title: "Đi bệnh viện"
-        titleHanzi: 去医院
+        title: "Bệnh viện"
+        titleHanzi: 医院
         std: [ 29, 15, 11, 12 ]
         grammar: "去 + nơi + V (nhiều động từ) · 从 · 先…再…"
       - id: h1-26
-        title: "Ở nhà"
-        titleHanzi: 在家
+        title: "Nhà"
+        titleHanzi: 家
         std: [ 13, 11, 12 ]
         grammar: "还 · 有时 / 常常 · Phương vị 里边"
   - title: Thời tiết và đi lại
     lessons:
       - id: h1-27
-        title: "Thời tiết ngày mai"
-        titleHanzi: 明天天气
+        title: "Thời tiết"
+        titleHanzi: 天气
         std: [ 22, 40, 31 ]
         grammar: "了2 thay đổi (下雨了) · Câu không chủ ngữ về thời tiết"
       - id: h1-28
-        title: "Trời nóng, trời lạnh"
-        titleHanzi: 很热很冷
+        title: "Nóng và lạnh"
+        titleHanzi: 热
         std: [ 18, 38 ]
         grammar: "比: A 比 B + tính từ · A 没有 B + tính từ"
       - id: h1-29
-        title: "Đi máy bay"
-        titleHanzi: 坐飞机
+        title: "Máy bay"
+        titleHanzi: 飞机
         std: [ 17, 10 ]
         grammar: "和 / 跟 + người + 一起 / 一块儿 + V"
       - id: h1-30
-        title: "Đi taxi"
-        titleHanzi: 坐出租车
+        title: "Taxi"
+        titleHanzi: 出租车
         std: [ 22 ]
         grammar: "吧 gợi ý (我们走吧) · Câu cầu khiến"
       - id: h1-31
-        title: "Bạn đi bằng gì?"
-        titleHanzi: 你怎么去
+        title: "Phương tiện"
+        titleHanzi: 车
         std: [ 4, 46 ]
         grammar: "怎么 + V (hỏi cách thức) · 坐/开 + phương tiện"
   - title: Mua sắm
     lessons:
       - id: h1-32
-        title: "Mua quần áo"
-        titleHanzi: 买衣服
+        title: "Quần áo"
+        titleHanzi: 衣服
         std: [ 19, 47, 48 ]
         grammar: "还是 · câu hỏi chính phản 要不要"
       - id: h1-33
-        title: "Cái này đẹp"
-        titleHanzi: 这个很漂亮
+        title: "Miêu tả đồ vật"
+        titleHanzi: 漂亮
         std: [ 6, 27, 9 ]
         grammar: "这个 / 那个 + danh từ · Tính từ + 的 làm định ngữ (漂亮的衣服)"
       - id: h1-34
-        title: "Mua bao nhiêu?"
-        titleHanzi: 买多少
+        title: "Mua bao nhiêu"
+        titleHanzi: 多
         std: [ 8, 23, 4 ]
         grammar: "Lượng từ 块 / 本 / 杯 / 页 · 多 + tính từ (多大)"
       - id: h1-35
@@ -198,27 +198,27 @@ topics:
   - title: Sinh hoạt
     lessons:
       - id: h1-36
-        title: "Gọi điện thoại"
-        titleHanzi: 打电话
+        title: "Điện thoại"
+        titleHanzi: 电话
         std: [ 12, 11 ]
         grammar: "再 làm lại / sau đó · 马上"
       - id: h1-37
-        title: "Nấu món Trung"
-        titleHanzi: 做中国菜
+        title: "Nấu ăn"
+        titleHanzi: 做
         std: [ 39, 20 ]
         grammar: "一边…一边… · 地 (tính từ + 地 + V)"
       - id: h1-38
         title: "Xem phim"
-        titleHanzi: 看电影
+        titleHanzi: 电影
         std: [ 39 ]
         grammar: "Câu ghép 也 (不用 / 用 từ nối) · chính phản"
       - id: h1-39
-        title: "Đi ngủ"
-        titleHanzi: 睡觉
+        title: "Buổi tối"
+        titleHanzi: 睡
         std: [ 40, 22 ]
         grammar: "了2 sắp / đã đổi (我要睡觉了) · 马上"
       - id: h1-40
-        title: "Bạn đang làm gì?"
-        titleHanzi: 你在做什么呢
+        title: "Hoạt động hằng ngày"
+        titleHanzi: 忙
         std: [ 11, 42, 22 ]
         grammar: "Tiếp diễn 在 / 正在 / 正 + V (+ 呢)"

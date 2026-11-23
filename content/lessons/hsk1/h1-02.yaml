@@ -3,8 +3,8 @@ id: h1-02
 level: 1
 topic: Chào hỏi
 order: 2
-title: Bạn tên gì?
-titleHanzi: 你叫什么名字
+title: Hỏi tên
+titleHanzi: 名字
 goal: Giới thiệu tên mình, hỏi tên người khác
 scene:
   file: lessons/h1-02.png

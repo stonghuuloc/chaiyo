@@ -22,8 +22,8 @@
 		"id": "h1-02",
 		"level": 1,
 		"n": 2,
-		"title": "Bạn tên gì?",
-		"titleHanzi": "你叫什么名字",
+		"title": "Hỏi tên",
+		"titleHanzi": "名字",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["我", "他", "她", "我们", "他们", "她们", "叫", "什么", "名字"]
 	},
@@ -31,8 +31,8 @@
 		"id": "h1-03",
 		"level": 1,
 		"n": 3,
-		"title": "Đây là ai?",
-		"titleHanzi": "这是谁",
+		"title": "Hỏi người",
+		"titleHanzi": "谁",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["这", "那", "是", "谁", "爸爸", "妈妈", "哥哥", "姐姐", "朋友", "老师"]
 	},
@@ -41,7 +41,7 @@
 		"level": 1,
 		"n": 4,
 		"title": "Gia đình",
-		"titleHanzi": "我的家",
+		"titleHanzi": "家",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["的", "也", "家", "弟弟", "妹妹", "同学", "学生", "医生"]
 	},
@@ -49,8 +49,8 @@
 		"id": "h1-05",
 		"level": 1,
 		"n": 5,
-		"title": "Bạn mấy tuổi?",
-		"titleHanzi": "你几岁",
+		"title": "Tuổi tác",
+		"titleHanzi": "岁",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "几", "岁", "吗", "呢"]
 	},

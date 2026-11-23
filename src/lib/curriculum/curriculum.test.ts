@@ -81,7 +81,7 @@ describe('levels', () => {
 			title: 'Chào hỏi',
 			lessons: [
 				{ id: 'h1-01', title: 'Xin chào', titleHanzi: '你好' },
-				{ id: 'h1-02', title: 'Bạn tên gì?', titleHanzi: '你叫什么名字' }
+				{ id: 'h1-02', title: 'Hỏi tên', titleHanzi: '名字' }
 			]
 		});
 	});

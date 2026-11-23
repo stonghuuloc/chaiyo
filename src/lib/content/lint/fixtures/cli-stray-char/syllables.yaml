@@ -1,0 +1,8 @@
+- { syllable: a, initial: '', final: a }
+- { syllable: o, initial: '', final: o }
+- { syllable: e, initial: '', final: e }
+- { syllable: ma, initial: 'm', final: a }
+- { syllable: men, initial: 'm', final: en }
+- { syllable: ni, initial: 'n', final: i }
+- { syllable: nin, initial: 'n', final: in }
+- { syllable: hao, initial: 'h', final: ao }

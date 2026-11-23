@@ -3,8 +3,8 @@ id: h1-03
 level: 1
 topic: Gia đình
 order: 3
-title: Đây là ai?
-titleHanzi: 这是谁
+title: Hỏi người
+titleHanzi: 谁
 goal: Giới thiệu người trong nhà và bạn bè, hỏi ai là ai
 scene:
   file: lessons/h1-03.png
