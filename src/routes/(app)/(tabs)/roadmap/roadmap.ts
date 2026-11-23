@@ -1,4 +1,5 @@
 import { LESSONS, LEVELS } from '#lib/curriculum/index.js';
+import { outlineNumbers } from '#lib/curriculum/numbers.js';
 import { m } from '#lib/paraglide/messages.js';
 import { currentLevel, roadRows, type Road, type State } from '#lib/study/index.js';
 
@@ -37,6 +38,7 @@ export type LevelView = {
 
 const LEVEL_COUNT = 5;
 const SPEAKING_FROM = 3;
+const NUMS = outlineNumbers(LEVELS);
 
 const outlineIds = (level: number) =>
 	(LEVELS.find((o) => o.level === level)?.topics ?? []).flatMap((t) => t.lessons.map((l) => l.id));
@@ -63,9 +65,13 @@ export function roadmapLevel(state: State, level: number): LevelView {
 		title: l.title,
 		hanzi: l.titleHanzi
 	}));
-	let n = 0;
 	const topics: Item[][] = outline.topics.map((t) =>
-		t.lessons.map((l) => ({ id: l.id, n: ++n, title: l.title, hanzi: l.titleHanzi ?? '' }))
+		t.lessons.map((l) => ({
+			id: l.id,
+			n: NUMS.get(l.id)!,
+			title: l.title,
+			hanzi: l.titleHanzi ?? ''
+		}))
 	);
 	const rows = roadRows(state, [...primer, ...topics.flat()]).map((r): LevelRow => {
 		const p = state.lessons[r.id];
@@ -125,7 +131,7 @@ export function roadmapLevel(state: State, level: number): LevelView {
 		strip,
 		header: {
 			passed: outlined.reduce((s, g) => s + g.passed, 0),
-			total: n,
+			total: ids.length,
 			words: outline.words
 		},
 		card: now ? { ...now, next: now.n + 1 } : undefined,
@@ -135,11 +141,19 @@ export function roadmapLevel(state: State, level: number): LevelView {
 			rows: parts.map((part) => ({
 				...(part ? { part } : {}),
 				level,
-				last: lastLive || n,
+				last: NUMS.get(ids[lastLive - 1] ?? ids.at(-1)!)!,
 				status
 			}))
 		}
 	};
+}
+
+export function jumpTarget(state: State): { level: number; id: string; n: number } | undefined {
+	for (let level = 1; level <= LEVEL_COUNT; level++) {
+		const card = roadmapLevel(state, level).card;
+		if (card) return { level, id: card.id, n: card.n };
+	}
+	return undefined;
 }
 
 export const lockToast = (view: LevelView, row: LevelRow) =>

@@ -57,7 +57,7 @@
 	{
 		"id": "h2-01",
 		"level": 2,
-		"n": 6,
+		"n": 41,
 		"title": "Mấy giờ bạn dậy?",
 		"titleHanzi": "你几点起床",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
@@ -79,7 +79,7 @@
 	{
 		"id": "h3-01",
 		"level": 3,
-		"n": 7,
+		"n": 68,
 		"title": "Kỳ thi sắp đến",
 		"titleHanzi": "考试就要到了",
 		"sections": ["words", "grammar", "dialogue", "reading", "listenSpeak", "writing"],
@@ -102,7 +102,7 @@
 	{
 		"id": "h4-01",
 		"level": 4,
-		"n": 8,
+		"n": 94,
 		"title": "Bạn bè thân thiết",
 		"titleHanzi": "亲密的朋友",
 		"sections": ["words", "grammar", "dialogue", "reading", "listenSpeak", "writing"],
@@ -127,7 +127,7 @@
 	{
 		"id": "h5-01",
 		"level": 5,
-		"n": 9,
+		"n": 116,
 		"title": "Thành thị và nông thôn",
 		"titleHanzi": "城市与乡村",
 		"sections": ["words", "grammar", "dialogue", "reading", "listenSpeak", "writing"],
