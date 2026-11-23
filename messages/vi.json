@@ -461,5 +461,10 @@
 	"chy45s2_line_counted": "Hôm nay đã tính rồi, chuỗi {n} ngày. Mai gặp lại nha!",
 	"chy45s2_mark_tick": "đã học",
 	"chy45s2_mark_freeze": "đóng băng",
-	"chy45s2_mark_today": "hôm nay"
+	"chy45s2_mark_today": "hôm nay",
+	"chy46s2_title": "Chuỗi vẫn còn nguyên!",
+	"chy46s2_body": "Hôm {day} bạn nghỉ, 1 lượt đóng băng đã tự giữ chuỗi {n} ngày cho bạn. Hôm nay học để chuỗi chạy tiếp nhé.",
+	"chy46s2_note_left": "Còn {f} lượt. Học đủ 7 ngày liền được tặng thêm 1.",
+	"chy46s2_note_none": "Hết lượt rồi. Học đủ 7 ngày liền được tặng thêm 1.",
+	"chy46s2_ok": "Học ngay thôi"
 }
