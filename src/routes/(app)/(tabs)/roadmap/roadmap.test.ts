@@ -139,13 +139,15 @@ describe('roadmapLevel', () => {
 		expect(row(view, 'h0-00').best).toBeUndefined();
 	});
 
-	it('Given_UnbuiltH106_When_Level1_Then_LockedAfter5', () => {
+	it('Given_UnbuiltH106_When_Level1_Then_LockedWithoutUnlockNote', () => {
 		// Arrange / Act
 		const view = roadmapLevel(reference(), 1);
 
 		// Assert
-		expect(row(view, 'h1-06')).toMatchObject({ n: 6, status: 'locked', after: 5 });
-		expect(row(view, 'h1-40')).toMatchObject({ n: 40, status: 'locked', after: 39 });
+		expect(row(view, 'h1-06')).toMatchObject({ n: 6, status: 'locked' });
+		expect(row(view, 'h1-06')).not.toHaveProperty('after');
+		expect(row(view, 'h1-40')).toMatchObject({ n: 40, status: 'locked' });
+		expect(row(view, 'h1-40')).not.toHaveProperty('after');
 	});
 
 	it('Given_NoOutline_When_Level2_Then_EmptyNoCard', () => {

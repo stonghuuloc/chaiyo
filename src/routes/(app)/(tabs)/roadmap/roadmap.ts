@@ -48,8 +48,11 @@ export function roadmapLevel(state: State, level: number): LevelView {
 	const rows = roadRows(state, [...primer, ...topics.flat()]).map((r): LevelRow => {
 		const p = state.lessons[r.id];
 		const sections = LESSONS.find((l) => l.id === r.id)?.sections.length ?? 1;
+		const { after, ...rest } = r;
+		const published = LESSONS.some((l) => l.id === r.id);
 		return {
-			...r,
+			...rest,
+			...(published && after !== undefined ? { after } : {}),
 			best: p?.passed ? p.best : undefined,
 			part: r.status === 'now' ? Math.min((p?.done.length ?? 0) + 1, sections) : undefined
 		};
