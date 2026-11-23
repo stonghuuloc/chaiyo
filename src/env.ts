@@ -11,5 +11,7 @@ export const variables = defineEnvVars({
 	// Public base URL of the audio clips bucket (R2 r2.dev or custom domain); unset serves /audio on the app origin.
 	PUBLIC_AUDIO_BASE_URL: { public: true, static: true, schema: optional },
 	// Deployment name (production, preview, development) set by Vercel at build; local builds fall back to development.
-	VERCEL_ENV: { public: true, static: true, schema: optional }
+	VERCEL_ENV: { public: true, static: true, schema: optional },
+	// VAPID public key (base64url) for Web Push subscriptions; unset disables enabling push. Generate with scripts/vapid-keys.ts.
+	PUBLIC_VAPID_PUBLIC_KEY: { public: true, static: true, schema: optional }
 });

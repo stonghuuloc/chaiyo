@@ -1,9 +1,10 @@
 import { flushSync, mount, tick, unmount } from 'svelte';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
-import { initialState, type State } from '#lib/study/index.js';
+import { initialState, type Skill, type State } from '#lib/study/index.js';
 import { countDays } from '#lib/study/fixtures/streak.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { controlName, controls, FREEZE_ACTION } from '../../../../test/controls';
 import Page from './+page.svelte';
 
 const past = '2026-11-01T00:00:00.000Z';
@@ -13,6 +14,18 @@ const build = (due: number): State => {
 	state.lessons['h1-01'].unlocked = true;
 	for (let i = 0; i < due; i++) {
 		state.lexicon[`w${i}`] = { saved: false, cards: { the: { due: past, first: past, fsrs: {} } } };
+	}
+	return state;
+};
+
+const buildMix = (n: Partial<Record<Skill, number>>): State => {
+	const state = build(0);
+	for (const skill of ['the', 'nghe', 'viet'] as Skill[]) {
+		for (let i = 0; i < (n[skill] ?? 0); i++) {
+			const word = `${skill}${i}`;
+			state.lexicon[word] ??= { saved: false, cards: {} };
+			state.lexicon[word].cards[skill] = { due: past, first: past, fsrs: {} };
+		}
 	}
 	return state;
 };
@@ -60,7 +73,22 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 			),
 		line: () => target!.querySelector('[data-part=streak-line]')?.textContent?.trim(),
 		strips: () => target!.querySelectorAll('[data-part=week-strip]').length,
-		dialog: () => document.querySelector('[role=dialog]')
+		dialog: () => document.querySelector('[role=dialog]'),
+		practice: () => target!.querySelectorAll('[data-part=practice-row]').length,
+		practiceTitle: () => target!.querySelector('[data-part=practice-title]')?.textContent?.trim(),
+		roadmap: () => target!.querySelectorAll('[data-part=roadmap]').length,
+		now: () => target!.querySelector('[data-part=road-row][data-status=now]')?.textContent?.trim(),
+		friends: () => target!.querySelectorAll('[data-part=friends]').length,
+		order: () =>
+			[
+				...target!.querySelectorAll(
+					'[data-part=next-cta], [data-part=practice-row], [data-part=roadmap], [data-part=week-strip]'
+				)
+			].map((e) => e.getAttribute('data-part')),
+		click: (part: string) => {
+			target!.querySelector<HTMLElement>(`[data-part=${part}]`)!.click();
+			flushSync();
+		}
 	};
 };
 
@@ -97,6 +125,8 @@ describe('/today', () => {
 		expect(page.h1()).toBe(1);
 		expect(page.scenes()).toBe(0);
 		expect(page.ctas()).toBe(0);
+		expect(page.practice()).toBe(0);
+		expect(page.roadmap()).toBe(0);
 		expect(hoisted.load).not.toHaveBeenCalled();
 	});
 
@@ -126,6 +156,50 @@ describe('/today', () => {
 		// Assert
 		expect(page.cta()).toBe('Tiếp tục Bài 1');
 		expect(page.scene()).toBe('lesson-next');
+	});
+});
+
+describe('/today rows', () => {
+	it('Given_Ledger6The4Nghe2Viet_When_Mount_Then_PracticeRowUnderCta', async () => {
+		// Arrange
+		current = buildMix({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.practiceTitle()).toBe('Luyện hôm nay · khoảng 3 phút');
+		expect(page.order()).toEqual(['next-cta', 'practice-row', 'roadmap', 'week-strip']);
+	});
+
+	it('Given_PracticeRow_When_EmitEmptiesSession_Then_RowGone', async () => {
+		// Arrange
+		current = buildMix({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		expect(page.practice()).toBe(1);
+
+		// Act
+		publish(build(0));
+		await settle();
+
+		// Assert
+		expect(page.practice()).toBe(0);
+	});
+
+	it('Given_Ac6State_When_Mount_Then_RoadmapBai1NowAndNoFriends', async () => {
+		// Arrange
+		current = build(0);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.roadmap()).toBe(1);
+		expect(page.now()).toMatch(/^Bài 1/);
+		expect(page.friends()).toBe(0);
 	});
 });
 
@@ -281,5 +355,182 @@ describe('/today freeze card', () => {
 
 		// Assert
 		expect(page.dialog()).not.toBeNull();
+	});
+});
+
+describe('/today rules sheet', () => {
+	const ac4 = (): State => {
+		const state = build(0);
+		state.streak = {
+			count: 11,
+			last: '2026-11-17',
+			through: '2026-11-17',
+			freezes: 2,
+			best: 11
+		};
+		return countDays(state, '2026-11-19', '2026-11-19');
+	};
+	const hieuRoi = () =>
+		[...document.querySelectorAll<HTMLElement>('[role=dialog] button')].find(
+			(b) => b.textContent?.trim() === 'Hiểu rồi'
+		)!;
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-20T03:00:00Z'));
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+		localStorage.clear();
+		document.body.querySelectorAll('[role=dialog]').forEach((d) => d.remove());
+	});
+
+	it.each(['streak-chip', 'week-info', 'freeze-rules-link'])(
+		'Given_Ac4_When_Click_%s_Then_RulesSheet1of2And4Rules',
+		async (part) => {
+			// Arrange
+			const page = await mountPage();
+			expect(page.dialog()).toBeNull();
+
+			// Act
+			page.click(part);
+
+			// Assert
+			const d = page.dialog()!;
+			expect(d.querySelector('h2')?.textContent).toBe('Lượt đóng băng là gì?');
+			expect(d.textContent).toContain('Bạn đang có 1/2 lượt');
+			expect(d.querySelectorAll('[data-part=freeze-rule]')).toHaveLength(4);
+		}
+	);
+
+	it('Given_OpenSheet_When_ClickHieuRoi_Then_Closed', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.click('streak-chip');
+
+		// Act
+		hieuRoi().click();
+
+		// Assert
+		await expect.poll(() => page.dialog()).toBeNull();
+	});
+
+	it('Given_OpenSheet_When_Escape_Then_Closed', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.click('streak-chip');
+		expect(page.dialog()).not.toBeNull();
+
+		// Act
+		window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+		flushSync();
+
+		// Assert
+		await expect.poll(() => page.dialog()).toBeNull();
+	});
+
+	it('Given_OpenThenClose_When_Read_Then_ChipMarksLineUnchanged', async () => {
+		// Arrange
+		const page = await mountPage();
+		const before = { chip: page.chip(), marks: page.marks(), line: page.line() };
+
+		// Act
+		page.click('streak-chip');
+		hieuRoi().click();
+		await expect.poll(() => page.dialog()).toBeNull();
+
+		// Assert
+		expect({ chip: page.chip(), marks: page.marks(), line: page.line() }).toEqual(before);
+	});
+
+	it('Given_Ac4WithSheetOpen_When_ScanControls_Then_NoFreezeAction', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.click('streak-chip');
+
+		// Act
+		const names = controls(document.body).map(controlName);
+
+		// Assert
+		expect(names.length).toBeGreaterThan(0);
+		expect(names.filter((n) => FREEZE_ACTION.test(n))).toEqual([]);
+	});
+
+	it('Given_Ac4_When_ControlsNameDongBang_Then_ExactlyThe3TriggersAndEachOpensSheet', async () => {
+		// Arrange
+		const page = await mountPage();
+		const named = () => controls(target!).filter((el) => /đóng băng/i.test(controlName(el)));
+
+		// Act
+		const parts = named().map((el) => el.getAttribute('data-part'));
+
+		// Assert
+		expect(parts.sort()).toEqual(['freeze-rules-link', 'streak-chip', 'week-info']);
+		for (const el of named()) {
+			el.click();
+			flushSync();
+			expect(page.dialog()!.querySelector('h2')?.textContent).toBe('Lượt đóng băng là gì?');
+			hieuRoi().click();
+			await expect.poll(() => page.dialog()).toBeNull();
+		}
+	});
+
+	it('Given_Ac4_When_ClickEveryFreezeControl_Then_StateSameAndFreezesUnchanged', async () => {
+		// Arrange
+		const page = await mountPage();
+		const before = current;
+		const freezes = before.streak.freezes;
+
+		// Act
+		for (const part of ['streak-chip', 'week-info', 'freeze-rules-link']) {
+			page.click(part);
+			hieuRoi().click();
+			await expect.poll(() => page.dialog()).toBeNull();
+		}
+
+		// Assert
+		expect(ledger.state()).toBe(before);
+		expect(ledger.state().streak.freezes).toBe(freezes);
+	});
+});
+
+describe('/today freeze card controls', () => {
+	const frozen = (): State => ({
+		...build(0),
+		streak: { count: 12, last: '2026-11-10', through: '2026-11-10', freezes: 2, best: 12 }
+	});
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-12T02:00:00Z'));
+		current = frozen();
+		hoisted.load.mockResolvedValue(ledger);
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+		localStorage.clear();
+		document.body.querySelectorAll('[role=dialog]').forEach((d) => d.remove());
+	});
+
+	it('Given_FreezeCardOpen_When_ScanControls_Then_NoFreezeActionAndHocNgayCloses', async () => {
+		// Arrange
+		const page = await mountPage();
+		const card = page.dialog()!;
+		const before = current;
+
+		// Act
+		const names = controls(card as HTMLElement).map(controlName);
+		(card.querySelector('button') as HTMLElement).click();
+		flushSync();
+
+		// Assert
+		expect(names).toEqual(['Học ngay thôi']);
+		expect(names.filter((n) => FREEZE_ACTION.test(n))).toEqual([]);
+		await expect.poll(() => page.dialog()).toBeNull();
+		expect(ledger.state()).toBe(before);
 	});
 });

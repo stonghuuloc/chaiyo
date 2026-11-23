@@ -1,14 +1,17 @@
 import { localDate } from '#lib/study/index.js';
 import type { Channel } from './channel';
+import { isDue } from './due';
+import type { Marks } from './marks';
 import type { Rolled } from './tick';
 
-export type Skip = { id: string; reason: 'counted' | 'no-channel' };
+export type Skip = { id: string; reason: 'counted' | 'no-channel' | 'not-due' | 'already-sent' };
 export type RemindResult = { sent: string[]; skipped: Skip[] };
 
 export async function sendReminders(
 	now: Date,
 	rolled: Rolled[],
-	channels: Channel[]
+	channels: Channel[],
+	marks: Marks
 ): Promise<RemindResult> {
 	const sent: string[] = [];
 	const skipped: Skip[] = [];
@@ -23,7 +26,24 @@ export async function sendReminders(
 			skipped.push({ id: learner.id, reason: 'no-channel' });
 			continue;
 		}
-		for (const c of usable) await c.send({ learnerId: learner.id, day });
+		if (!isDue(now, learner.tz, learner.remindAt)) {
+			skipped.push({ id: learner.id, reason: 'not-due' });
+			continue;
+		}
+		if (!(await marks.claim(learner.id, day))) {
+			skipped.push({ id: learner.id, reason: 'already-sent' });
+			continue;
+		}
+		let delivered = 0;
+		try {
+			for (const c of usable) {
+				await c.send({ learnerId: learner.id, day });
+				delivered++;
+			}
+		} catch (e) {
+			if (delivered === 0) await marks.release(learner.id, day).catch(() => {});
+			throw e;
+		}
 		sent.push(learner.id);
 	}
 	return { sent, skipped };

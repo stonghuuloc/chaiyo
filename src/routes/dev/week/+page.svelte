@@ -1,10 +1,13 @@
 <script lang="ts">
+	import FreezeRules from '../../(app)/(tabs)/today/FreezeRules.svelte';
 	import StreakChip from '../../(app)/(tabs)/today/StreakChip.svelte';
 	import WeekStrip from '../../(app)/(tabs)/today/WeekStrip.svelte';
+	import { freezeRules } from '../../(app)/(tabs)/today/rules';
 	import { weekView } from '../../(app)/(tabs)/today/week';
 	import { SCENARIOS, type ScenarioKey } from './scenarios';
 
 	let key = $state<ScenarioKey>('ac4');
+	let rules = $state(false);
 
 	const view = $derived.by(() => {
 		const { state, now } = SCENARIOS[key]();
@@ -20,7 +23,8 @@
 			>
 		{/each}
 	</div>
-	<StreakChip {view} />
-	<WeekStrip {view} />
+	<StreakChip {view} onrules={() => (rules = true)} />
+	<WeekStrip {view} onrules={() => (rules = true)} />
+	<FreezeRules open={rules} view={freezeRules(view)} onclose={() => (rules = false)} />
 	<pre data-part="state">{JSON.stringify(view, null, 2)}</pre>
 </div>

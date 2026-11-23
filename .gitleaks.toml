@@ -4,7 +4,7 @@
 [extend]
 useDefault = true
 
-[allowlist]
+[[allowlists]]
 description = "sha256 clip ids in content data use the field name key"
 condition = "AND"
 paths = [
@@ -14,3 +14,7 @@ paths = [
 ]
 regexTarget = "match"
 regexes = ['''[0-9a-f]{32,}''']
+
+[[allowlists]]
+description = "invented VAPID public key used as a test fixture"
+paths = ['''src/lib/notify/subscribe\.test\.ts''']

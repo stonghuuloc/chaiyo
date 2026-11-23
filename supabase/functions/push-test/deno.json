@@ -1,0 +1,10 @@
+{
+	"unstable": ["sloppy-imports"],
+	"imports": {
+		"#lib/": "../../../src/lib/",
+		"ts-fsrs": "npm:ts-fsrs@^6.0.0",
+		"zod": "npm:zod@^4.6.7",
+		"@supabase/supabase-js": "npm:@supabase/supabase-js@^2.119.0",
+		"@negrel/webpush": "jsr:@negrel/webpush@^0.5"
+	}
+}

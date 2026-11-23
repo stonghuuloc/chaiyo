@@ -3,7 +3,10 @@ import { describe, expect, it } from 'vitest';
 import { memoryStore, openLedger, type Input } from '#lib/ledger/index.js';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { initialState, rollover } from '#lib/study/index.js';
+import { fakeChannel } from './fake-channel';
 import { studied } from './fixtures';
+import { memoryMarks } from './marks';
+import { sendReminders } from './remind';
 import { tick, type Deps, type Learner, type Rolled } from './tick';
 
 const HCM = 'Asia/Ho_Chi_Minh';
@@ -32,7 +35,7 @@ const depsFor = (
 describe('tick', () => {
 	it('Given_Streak12With1Freeze_When_MissedDay_Then_FreezeSpentAndEqualsPhone', async () => {
 		// Arrange
-		const a = { id: 'a', tz: HCM, channels: [] };
+		const a = { id: 'a', tz: HCM, channels: [], remindAt: '21:00' };
 		const inputs = studied('2026-11-01', '2026-11-12', HCM);
 		const recorded: Rolled[] = [];
 		const ledger = await openLedger({
@@ -55,7 +58,7 @@ describe('tick', () => {
 
 	it('Given_StudiedYesterday_When_Tick_Then_NoEventsAndStreakKept', async () => {
 		// Arrange
-		const a = { id: 'a', tz: HCM, channels: [] };
+		const a = { id: 'a', tz: HCM, channels: [], remindAt: '21:00' };
 		const inputs = studied('2026-11-01', '2026-11-13', HCM);
 		const recorded: Rolled[] = [];
 
@@ -70,8 +73,8 @@ describe('tick', () => {
 	it('Given_TwoTimezones_When_Tick_Then_EachRollsItsOwnYesterday', async () => {
 		// Arrange
 		const learners = [
-			{ id: 'hcm', tz: HCM, channels: [] },
-			{ id: 'ny', tz: 'America/New_York', channels: [] }
+			{ id: 'hcm', tz: HCM, channels: [], remindAt: '21:00' },
+			{ id: 'ny', tz: 'America/New_York', channels: [], remindAt: '21:00' }
 		];
 		const recorded: Rolled[] = [];
 
@@ -88,8 +91,8 @@ describe('tick', () => {
 	it('Given_TwoLearners_When_Tick_Then_RecordsAllBeforeOneRemind', async () => {
 		// Arrange
 		const learners = [
-			{ id: 'a', tz: HCM, channels: [] },
-			{ id: 'b', tz: HCM, channels: [] }
+			{ id: 'a', tz: HCM, channels: [], remindAt: '21:00' },
+			{ id: 'b', tz: HCM, channels: [], remindAt: '21:00' }
 		];
 		const log: string[] = [];
 
@@ -102,7 +105,7 @@ describe('tick', () => {
 
 	it('Given_MissedYesterdayNoFreeze_When_Tick_Then_StreakResetRecordedBeforeRemind', async () => {
 		// Arrange
-		const a = { id: 'a', tz: HCM, channels: [] };
+		const a = { id: 'a', tz: HCM, channels: [], remindAt: '21:00' };
 		const inputs = studied('2026-11-17', '2026-11-21', HCM);
 		const log: string[] = [];
 		const recorded: Rolled[] = [];
@@ -126,8 +129,8 @@ describe('tick', () => {
 	it('Given_InputsThrowForB_When_Tick_Then_BFailedAndRemindGetsOnlyA', async () => {
 		// Arrange
 		const learners = [
-			{ id: 'a', tz: HCM, channels: [] },
-			{ id: 'b', tz: HCM, channels: [] }
+			{ id: 'a', tz: HCM, channels: [], remindAt: '21:00' },
+			{ id: 'b', tz: HCM, channels: [], remindAt: '21:00' }
 		];
 		const log: string[] = [];
 
@@ -149,5 +152,34 @@ describe('tick', () => {
 		// Assert
 		expect(result).toEqual({ rolled: [], failed: [] });
 		expect(log).toEqual(['remind ']);
+	});
+
+	it('Given_MinhNotStudiedToday_When_TickRuns4TimesIn1Hour_Then_OneReminderPerChannel', async () => {
+		// Arrange
+		const minh = {
+			id: 'minh',
+			tz: HCM,
+			channels: ['push', 'email'] as Learner['channels'],
+			remindAt: '20:00'
+		};
+		const inputs = studied('2026-11-10', '2026-11-22', HCM);
+		const push = fakeChannel('push');
+		const email = fakeChannel('email');
+		const telegram = fakeChannel('telegram');
+		const marks = memoryMarks();
+		const deps: Deps = {
+			...depsFor([minh], { minh: inputs }),
+			remind: (now, r) =>
+				sendReminders(now, r, [push, email, telegram], marks).then(() => undefined)
+		};
+
+		// Act
+		for (const t of ['13:00', '13:15', '13:30', '13:45']) {
+			await tick(new Date(`2026-11-23T${t}:00Z`), deps);
+		}
+
+		// Assert
+		expect([push.sent.length, email.sent.length, telegram.sent.length]).toEqual([1, 1, 0]);
+		expect([...marks.keys]).toEqual(['minh|2026-11-23']);
 	});
 });

@@ -1,6 +1,7 @@
 import { flushSync, mount, unmount } from 'svelte';
 import type { StudyEvent } from '#lib/study/index.js';
 import { afterEach, describe, expect, it } from 'vitest';
+import { controlName, controls } from '../../test/controls';
 import StreakPopup from './StreakPopup.svelte';
 
 const original = window.matchMedia;
@@ -147,5 +148,18 @@ describe('StreakPopup', () => {
 		// Assert
 		await expect.poll(() => dialog()).toBeNull();
 		expect(document.querySelectorAll('[data-part="particle"]')).toHaveLength(0);
+	});
+
+	it('Given_AC1Events_When_ScanControls_Then_OnlyTuyet', () => {
+		// Arrange
+		const events: StudyEvent[] = [
+			{ type: 'DayCounted', day: '2026-11-13', streak: 13, record: true, freezes: 1 }
+		];
+
+		// Act
+		const dialog = mountPopup(events);
+
+		// Assert
+		expect(controls(dialog() as HTMLElement).map(controlName)).toEqual(['Tuyệt!']);
 	});
 });

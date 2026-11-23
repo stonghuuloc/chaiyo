@@ -2,14 +2,15 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import type { WeekView } from './week';
 
-	let { view }: { view: WeekView } = $props();
+	let { view, onrules }: { view: WeekView; onrules: () => void } = $props();
 </script>
 
-<div
+<button
+	type="button"
 	data-part="streak-chip"
-	role="img"
 	aria-label={m.chy45s2_chip_label({ n: view.count, f: view.freezes })}
-	class="text-caption flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-text"
+	onclick={onrules}
+	class="text-caption flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-text"
 >
 	<svg class="size-[18px] fill-current text-primary" aria-hidden="true"
 		><use href="#i-fill-fire" /></svg
@@ -20,4 +21,4 @@
 		><use href="#i-regular-snowflake" /></svg
 	>
 	<span>{view.freezes}</span>
-</div>
+</button>
