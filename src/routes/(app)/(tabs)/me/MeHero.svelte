@@ -15,7 +15,7 @@
 <div data-part="me-hero" class="mt-5 rounded-[24px] bg-white p-5">
 	<div data-part="me-prog" class="mt-4 grid gap-3">
 		{#each rows as r (r.label)}
-			<div class="grid grid-cols-[1fr_auto] gap-y-1.5 text-[14px]">
+			<div class="grid grid-cols-[1fr_auto] gap-y-1.5 text-[14px] leading-[18px]">
 				<span class="text-graphite">{r.label}</span>
 				<b class="font-semibold tabular-nums"
 					>{m.chy50s1_have_need({ have: r.have, need: r.need })}</b
@@ -31,7 +31,7 @@
 	</div>
 	<div
 		data-part="me-streak"
-		class="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-ruled-line pt-3 text-[13.5px] text-pencil"
+		class="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-ruled-line pt-3 text-[13.5px] leading-[18px] text-pencil"
 	>
 		<span class="inline-flex items-center gap-1.5">
 			<svg

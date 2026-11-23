@@ -32,12 +32,12 @@
 			></a
 		>
 	</div>
-	<p class="mt-0.5 text-[14px] text-pencil">{m.chy50s1_mem_sub()}</p>
+	<p class="mt-0.5 text-[14px] leading-[18px] text-pencil">{m.chy50s1_mem_sub()}</p>
 	<ul class="mt-4 grid gap-3">
 		{#each skills as s (s.skill)}
 			{@const counts = { firm: s.firm, shaky: s.shaky, unseen: s.unseen }}
 			<li class="grid grid-cols-[88px_minmax(0,1fr)] items-center gap-3">
-				<span class="flex items-center gap-1.5 text-[14.5px] font-semibold">
+				<span class="flex items-center gap-1.5 text-[14.5px] leading-[19px] font-semibold">
 					<svg class="size-[17px] fill-current text-pencil" aria-hidden="true"
 						><use href="#i-{icon[s.skill]}" /></svg
 					>{label[s.skill]()}
@@ -53,7 +53,7 @@
 						style:width="{pct(s.shaky, s.size)}%"
 					></i>
 				</span>
-				<small class="col-start-2 -mt-1.5 text-[12.5px] text-pencil"
+				<small class="col-start-2 -mt-1.5 text-[12.5px] leading-4 text-pencil"
 					>{m.chy50s1_mem_counts(counts)}</small
 				>
 			</li>
