@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import { REMINDER_PUSH, webPushChannel, type PushSub, type PushSubs } from './web-push';
+import {
+	REMINDER_PUSH,
+	webPushChannel,
+	type PushPost,
+	type PushSub,
+	type PushSubs
+} from './web-push';
 
 const sub = (endpoint: string): PushSub => ({
 	endpoint,
@@ -21,7 +27,7 @@ function inMemory(initial: Record<string, PushSub[]>) {
 }
 
 const script = (statuses: Record<string, number | Error>) =>
-	vi.fn(async (s: PushSub, _body: string) => {
+	vi.fn<PushPost>(async (s) => {
 		const v = statuses[s.endpoint] ?? 201;
 		if (v instanceof Error) throw v;
 		return v;

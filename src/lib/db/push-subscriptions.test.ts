@@ -25,9 +25,10 @@ const insert = (learner: string, endpoint: string) =>
 	);
 const count = (learner: string) =>
 	db
-		.query<{ n: number }>('select count(*)::int as n from push_subscriptions where learner_id = $1', [
-			learner
-		])
+		.query<{ n: number }>(
+			'select count(*)::int as n from push_subscriptions where learner_id = $1',
+			[learner]
+		)
 		.then((r) => r.rows[0].n);
 
 describe('push_subscriptions', () => {

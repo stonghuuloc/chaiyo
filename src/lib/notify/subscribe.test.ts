@@ -36,7 +36,9 @@ function fakeRegistration(existing = false) {
 		}),
 		unsubscribe
 	};
-	const subscribe = vi.fn(async (_o: PushSubscriptionOptionsInit) => subscription);
+	const subscribe = vi.fn<(o: PushSubscriptionOptionsInit) => Promise<typeof subscription>>(
+		async () => subscription
+	);
 	const getSubscription = vi.fn(async () => (existing ? subscription : null));
 	const registration = {
 		pushManager: { subscribe, getSubscription }
