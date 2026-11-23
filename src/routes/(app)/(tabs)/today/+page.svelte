@@ -7,7 +7,6 @@
 		readFreezeSeen,
 		type FreezeUsedView
 	} from '#lib/lesson/index.js';
-	import { m } from '#lib/paraglide/messages.js';
 	import type { State } from '#lib/study/index.js';
 	import { todayView } from '../practice/today';
 	import type { PageProps } from './$types';
@@ -64,18 +63,24 @@
 	});
 </script>
 
-<div class="flex items-center justify-between">
-	<h1 class="text-display">{m.tab_today()}</h1>
+<NextCard view={study && now ? todayState(study, now) : null}>
+	{#snippet chip()}
+		{#if study && now}
+			<StreakChip view={weekView(study, now)} onrules={() => (rules = true)} />
+		{/if}
+	{/snippet}
 	{#if study && now}
-		<StreakChip view={weekView(study, now)} onrules={() => (rules = true)} />
+		<PracticeRow view={todayView(study, now)} />
 	{/if}
-</div>
+</NextCard>
 {#if study && now}
-	<NextCard view={todayState(study, now)} />
-	<PracticeRow view={todayView(study, now)} />
-	<RoadmapSlice rows={roadmapSlice(study)} />
-	<WeekStrip view={weekView(study, now)} onrules={() => (rules = true)} />
-	<FriendsStrip friends={[]} />
+	<div class="main">
+		<RoadmapSlice rows={roadmapSlice(study)} />
+	</div>
+	<aside class="aside xl:pt-5">
+		<WeekStrip view={weekView(study, now)} onrules={() => (rules = true)} />
+		<FriendsStrip friends={[]} />
+	</aside>
 	{#if freeze}
 		<FreezePopup view={freeze} />
 	{/if}
