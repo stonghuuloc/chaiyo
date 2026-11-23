@@ -83,8 +83,8 @@
 				onkeydown={arrow}
 			>
 				<span lang="zh-Hans" class="text-[54px] leading-[1.2] text-ink {t.font}">你好</span>
-				<b class="text-[15px] font-semibold">{t.label()}</b>
-				<small class="text-[12.5px] text-pencil">{t.sub()}</small>
+				<b class="text-[15px] leading-[normal] font-semibold">{t.label()}</b>
+				<small class="text-[12.5px] leading-[normal] text-pencil">{t.sub()}</small>
 			</button>
 		{/each}
 	</div>

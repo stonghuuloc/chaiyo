@@ -75,7 +75,7 @@
 <section class="mt-6 border-t border-ruled-line pt-5">
 	<h2 class="font-display text-[19px] leading-[1.25] font-semibold">{m.chy53s2_reminder()}</h2>
 	<p class="mt-0.5 text-[14px] leading-[normal] text-pencil">{m.chy53s2_reminder_sub()}</p>
-	<p class="mt-4 text-label font-semibold text-pencil">{m.welcome_time_label()}</p>
+	<p class="mt-4 text-label leading-[normal] font-semibold text-pencil">{m.welcome_time_label()}</p>
 	<div class="mt-2 grid grid-cols-3 gap-2" role="group" aria-label={m.welcome_time_label()}>
 		{#each TIMES as [t, label] (t)}
 			<button
@@ -85,7 +85,7 @@
 				onclick={() => tap(t)}
 			>
 				<b class="font-display text-[19px] font-semibold tabular-nums">{t}</b>
-				<small class="text-[12.5px] text-pencil">{label}</small>
+				<small class="text-[12.5px] leading-[normal] text-pencil">{label}</small>
 			</button>
 		{/each}
 	</div>
@@ -94,7 +94,7 @@
 			? 'mt-2 flex min-h-12 items-center gap-3 rounded-cell border-2 border-ink bg-white px-[15px]'
 			: 'mt-2 flex min-h-12 items-center gap-3 rounded-cell border border-ruled-line bg-white/40 px-4'}
 	>
-		<span class="flex-1 text-[15px] text-graphite">{m.welcome_time_other()}</span>
+		<span class="flex-1 text-[15px] leading-[normal] text-graphite">{m.welcome_time_other()}</span>
 		<input
 			type="time"
 			aria-label={m.chy53s2_other_aria()}
