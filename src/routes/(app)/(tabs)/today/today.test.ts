@@ -128,7 +128,7 @@ describe('todayState', () => {
 		expect(view.cta.kind).toBe('reviews');
 	});
 
-	it('Given_H1_05PassedH2_01Unlocked_When_TodayState_Then_LessonN6', () => {
+	it('Given_H1_05PassedH2_01Unlocked_When_TodayState_Then_LessonN41', () => {
 		// Arrange
 		const state = build({
 			passed: ['h0-00', 'h1-01', 'h1-02', 'h1-03', 'h1-04', 'h1-05'],
@@ -139,7 +139,7 @@ describe('todayState', () => {
 		const view = todayState(state, NOW);
 
 		// Assert
-		expect(view.cta).toEqual({ kind: 'lesson', id: 'h2-01', n: 6 });
+		expect(view.cta).toEqual({ kind: 'lesson', id: 'h2-01', n: 41 });
 	});
 
 	it('Given_LevelNotFinishedNoOpenLesson_When_TodayState_Then_Done', () => {

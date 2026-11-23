@@ -1,0 +1,70 @@
+level: 2
+words: 500
+topics:
+  - title: Thói quen hằng ngày
+    lessons:
+      - id: h2-01
+        title: "Mấy giờ bạn dậy?"
+        titleHanzi: 你几点起床
+      - id: h2-02
+        title: "Đi học bằng xe buýt"
+      - id: h2-03
+        title: "Buổi sáng ăn gì?"
+      - id: h2-04
+        title: "Cuối tuần làm gì?"
+      - id: h2-05
+        title: "Tôi đang tập thể dục"
+  - title: Sức khỏe
+    lessons:
+      - id: h2-06
+        title: "Bạn bị làm sao?"
+      - id: h2-07
+        title: "Uống thuốc"
+      - id: h2-08
+        title: "Đi khám bác sĩ"
+      - id: h2-09
+        title: "Ngủ sớm dậy sớm"
+  - title: Sở thích
+    lessons:
+      - id: h2-10
+        title: "Bạn thích môn thể thao nào?"
+      - id: h2-11
+        title: "Chơi bóng đá"
+      - id: h2-12
+        title: "Nghe nhạc, hát"
+      - id: h2-13
+        title: "Đọc sách"
+      - id: h2-14
+        title: "Chụp ảnh"
+  - title: So sánh
+    lessons:
+      - id: h2-15
+        title: "Cao hơn, thấp hơn"
+      - id: h2-16
+        title: "Cái nào rẻ hơn?"
+      - id: h2-17
+        title: "Hôm nay lạnh hơn hôm qua"
+      - id: h2-18
+        title: "Giống nhau và khác nhau"
+  - title: Du lịch
+    lessons:
+      - id: h2-19
+        title: "Bạn đã đến Bắc Kinh chưa?"
+      - id: h2-20
+        title: "Đặt phòng khách sạn"
+      - id: h2-21
+        title: "Hỏi đường"
+      - id: h2-22
+        title: "Mua vé tàu"
+      - id: h2-23
+        title: "Chuyến đi vui không?"
+  - title: Công việc
+    lessons:
+      - id: h2-24
+        title: "Đi làm muộn"
+      - id: h2-25
+        title: "Gặp đồng nghiệp"
+      - id: h2-26
+        title: "Nghỉ phép"
+      - id: h2-27
+        title: "Công việc mới"

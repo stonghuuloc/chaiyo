@@ -90,7 +90,7 @@ describe('roadmapSlice', () => {
 		// Assert
 		expect(rows.map((r) => r.id)).toEqual(['h2-01', 'h3-01', 'h4-01', 'h5-01']);
 		expect(rows.map((r) => r.status)).toEqual(['done', 'done', 'now', 'locked']);
-		expect(rows[3].after).toBe(8);
+		expect(rows[3].after).toBe(94);
 	});
 
 	it('Given_PlacementUnlockedTwo_When_Slice_Then_SecondIsOpen', () => {
