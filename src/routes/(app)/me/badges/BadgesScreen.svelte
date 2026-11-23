@@ -66,7 +66,7 @@
 
 <div>
 	<div
-		class="sticky top-0 z-10 -mx-[var(--gutter)] grid grid-cols-[44px_1fr_44px] items-center bg-notebook-paper px-3 py-2"
+		class="sticky top-0 z-10 -mx-[var(--gutter)] grid grid-cols-[44px_1fr_44px] items-center bg-notebook-paper px-3 py-2 lg:-mx-2 lg:px-0"
 	>
 		<a
 			href={resolve('/(app)/(tabs)/me')}
