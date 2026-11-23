@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import { openLedger, supabaseStore, syncWhenOnline, type Ledger } from '#lib/ledger/index.js';
 import { initialState } from '#lib/study/index.js';
+import { publishOnChange } from '#lib/social/stats.js';
 import { supabase } from '#lib/supabase.js';
 
 const opened = new Map<string, Promise<Ledger>>();
@@ -33,13 +34,16 @@ export function learnerLedger(
 			idb
 		});
 		let stop = () => {};
+		let unpublish = () => {};
 		const { data: auth } = client.auth.onAuthStateChange((event, next) => {
 			if (event !== 'SIGNED_OUT' && (!next || next.user.id === uid)) return;
 			stop();
+			unpublish();
 			opened.delete(uid);
 			auth.subscription.unsubscribe();
 		});
 		stop = syncWhenOnline(l);
+		unpublish = publishOnChange(l, client);
 		return l;
 	})();
 	opened.set(uid, ledger);
