@@ -1,5 +1,5 @@
 import { IDBFactory } from 'fake-indexeddb';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { memoryStore, openLedger, type Input } from '#lib/ledger/index.js';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { initialState, rollover } from '#lib/study/index.js';
@@ -8,6 +8,7 @@ import { fakeChannel } from './fake-channel';
 import { studied } from './fixtures';
 import { memoryMarks } from './marks';
 import { sendReminders, type RemindResult } from './remind';
+import { telegramChannel } from './telegram';
 import { tick, type Deps, type Learner, type Rolled } from './tick';
 
 const HCM = 'Asia/Ho_Chi_Minh';
@@ -225,5 +226,40 @@ describe('tick', () => {
 			ok: false,
 			error: 'telegram: 400'
 		});
+	});
+
+	it('Given_MinhTelegramOnly_When_Tick_Then_OneSendMessageToChat', async () => {
+		// Arrange
+		const minh = {
+			id: 'minh',
+			tz: HCM,
+			channels: ['telegram'] as Learner['channels'],
+			remindAt: '20:00'
+		};
+		const inputs = studied('2026-11-10', '2026-11-22', HCM);
+		const fetch = vi.fn(async () => new Response(JSON.stringify({ ok: true }), { status: 200 }));
+		const telegram = telegramChannel({
+			token: '123:abc',
+			chatOf: async () => 777000111,
+			fetch: fetch as unknown as typeof globalThis.fetch
+		});
+		const results: RemindResult[] = [];
+		const deps: Deps = {
+			...depsFor([minh], { minh: inputs }),
+			remind: (now, r) =>
+				sendReminders(now, r, [telegram], memoryMarks()).then((x) => {
+					results.push(x);
+				})
+		};
+
+		// Act
+		await tick(new Date('2026-11-23T13:00:00Z'), deps);
+
+		// Assert
+		expect(results[0].sent).toEqual(['minh']);
+		expect(fetch).toHaveBeenCalledTimes(1);
+		const [url, init] = fetch.mock.calls[0] as unknown as [string, RequestInit];
+		expect(url).toBe('https://api.telegram.org/bot123:abc/sendMessage');
+		expect(JSON.parse(init.body as string).chat_id).toBe(777000111);
 	});
 });

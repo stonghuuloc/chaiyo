@@ -7,6 +7,8 @@ import { handle } from '#lib/notify/handler.js';
 import { supabasePushSubs } from '#lib/notify/push-store.js';
 import { sendReminders } from '#lib/notify/remind.js';
 import { supabaseDeps, supabaseMarks } from '#lib/notify/supabase.js';
+import { supabaseTelegram } from '#lib/notify/telegram-store.js';
+import { telegramFromEnv } from '#lib/notify/telegram.js';
 import { tick } from '#lib/notify/tick.js';
 import { webPushChannel } from '#lib/notify/web-push.js';
 import { pushPost } from '../_shared/push-post.ts';
@@ -25,6 +27,9 @@ Deno.serve((req) =>
 				push: post ? webPushChannel({ subs: supabasePushSubs(client), post }) : null,
 				email: emailFromEnv((k) => Deno.env.get(k), {
 					addressOf: supabaseAddresses(client).addressOf
+				}),
+				telegram: telegramFromEnv((k) => Deno.env.get(k), {
+					chatOf: supabaseTelegram(client).chatOf
 				})
 			});
 			return tick(

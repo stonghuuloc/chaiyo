@@ -430,6 +430,12 @@ verify_jwt = true
 [functions.email-test]
 verify_jwt = true
 
+[functions.telegram-bot]
+verify_jwt = false
+
+[functions.telegram-test]
+verify_jwt = true
+
 [analytics]
 enabled = false
 port = 56327
