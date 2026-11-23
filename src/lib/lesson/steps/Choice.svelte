@@ -77,7 +77,7 @@
 	{/if}
 {/snippet}
 
-<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+<p class="mt-5 text-label text-pencil">
 	{@render prose(step.ask)}
 </p>
 {#if step.audio}

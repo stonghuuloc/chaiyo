@@ -45,7 +45,7 @@
 			onclick={reset}>Chơi lại</button
 		>
 	{/if}
-	<ul data-part="log" class="text-caption text-graphite">
+	<ul data-part="log" class="text-label text-graphite">
 		{#each log as line, i (i)}
 			<li>{line}</li>
 		{/each}

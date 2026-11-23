@@ -69,9 +69,9 @@
 	}
 </script>
 
-<main class="max-w-xl mx-auto p-4 font-body">
-	<h1 class="text-xl">/dev/ledger</h1>
-	<button class="rounded my-2 border px-3 py-2" onclick={complete} disabled={!ledger}
+<main class="mx-auto max-w-column p-4 font-body">
+	<h1 class="text-headline">/dev/ledger</h1>
+	<button class="my-2 rounded-cell border px-3 py-2" onclick={complete} disabled={!ledger}
 		>Hoàn thành Từ mới</button
 	>
 	<p data-testid="tu-moi">{view.tuMoi}</p>

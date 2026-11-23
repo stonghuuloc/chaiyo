@@ -28,19 +28,19 @@
 </script>
 
 <section aria-label="Syllables">
-	<h2 class="text-lg mt-4">Syllables</h2>
+	<h2 class="mt-4 text-headline">Syllables</h2>
 	<p data-testid="syllable-readout">{readout}</p>
 	{#if current}
 		<div class="my-2 flex gap-2" role="group" aria-label={`Tones of ${current.syllable}`}>
 			{#each current.clips as clip, i (clip.label)}
 				<button
-					class="rounded border px-3 py-2"
+					class="rounded-cell border px-3 py-2"
 					data-clip={clip.label}
 					title={TONE_CONTOURS[i]}
 					onclick={() => tap(clip.label, clip.key, SYLLABLE_BASE)}
 				>
 					{i + 1}
-					<span class="text-sm opacity-60">{TONE_CONTOURS[i]}</span>
+					<span class="text-label opacity-60">{TONE_CONTOURS[i]}</span>
 				</button>
 			{/each}
 		</div>
@@ -50,7 +50,7 @@
 		<div class="flex flex-wrap gap-1">
 			{#each group as cell (cell.syllable)}
 				<button
-					class="rounded border px-2 py-1"
+					class="rounded-cell border px-2 py-1"
 					aria-pressed={selected === cell.syllable}
 					onclick={() => (selected = cell.syllable)}>{cell.syllable}</button
 				>
@@ -58,11 +58,11 @@
 		</div>
 	{/each}
 
-	<h2 class="text-lg mt-4">Words</h2>
+	<h2 class="mt-4 text-headline">Words</h2>
 	<div class="flex flex-wrap gap-1">
 		{#each chips as chip (chip.key)}
 			<button
-				class="rounded border px-2 py-1"
+				class="rounded-cell border px-2 py-1"
 				data-clip={chip.text}
 				onclick={() => tap(chip.text, chip.key)}>{chip.text}</button
 			>

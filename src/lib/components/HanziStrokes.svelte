@@ -173,12 +173,12 @@
 	}
 
 	const tool =
-		'inline-flex items-center gap-1.5 rounded-full border border-ruled-line px-3 py-2 text-sm text-ink disabled:opacity-40';
+		'inline-flex items-center gap-1.5 rounded-full border border-ruled-line px-3 py-2 text-label text-ink disabled:opacity-40';
 </script>
 
 <div class="w-full">
 	{#if mode === 'quiz'}
-		<p class="text-sm mb-2 text-ink" aria-live="polite">
+		<p class="mb-2 text-label text-ink" aria-live="polite">
 			{m.strokes_count({ done, total: status === 'ready' ? total : '–' })}
 		</p>
 	{/if}

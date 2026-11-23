@@ -106,7 +106,7 @@
 	});
 </script>
 
-<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+<p class="mt-5 text-label text-pencil">
 	{step.ask}
 </p>
 <h2 class="mt-1 font-display text-headline">{step.title}</h2>
@@ -129,7 +129,7 @@
 	{:else if phase === 'live' || phase === 'done'}
 		<div class="flex h-16 items-end justify-center gap-[3px]">
 			{#each levels as l, i (i)}
-				<i class="rounded-sm w-1 bg-lantern-red" data-bar style="height:{3 + l * 58}px"></i>
+				<i class="w-1 rounded-pill bg-lantern-red" data-bar style="height:{3 + l * 58}px"></i>
 			{/each}
 		</div>
 		<p class="mt-2 text-center text-label text-graphite">
@@ -184,7 +184,7 @@
 {#if free}
 	{#if phase === 'done' || phase === 'blocked'}
 		<div class="mt-5 border-t border-ruled-line pt-4" data-reveal>
-			<h3 class="text-label font-semibold tracking-wider text-graphite uppercase">
+			<h3 class="font-sans text-label font-semibold text-pencil">
 				{m.speak_reveal_title()}
 			</h3>
 			{#if step.answer}

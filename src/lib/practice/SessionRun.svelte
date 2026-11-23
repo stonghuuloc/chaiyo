@@ -77,7 +77,7 @@
 	}
 </script>
 
-<section data-part="session-run" data-of={of} class="max-w-sm mx-auto w-full">
+<section data-part="session-run" data-of={of} class="mx-auto w-full max-w-column">
 	{#if infos === null}
 		<span class="sr-only" aria-busy="true"></span>
 	{:else if finished(queue)}

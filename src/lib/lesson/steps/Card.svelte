@@ -50,7 +50,7 @@
 	</button>
 {/snippet}
 
-<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+<p class="mt-5 text-label text-pencil">
 	{step.kicker}
 </p>
 <h2 class="mt-1 font-display text-headline">{@render prose(step.title)}</h2>

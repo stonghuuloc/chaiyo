@@ -103,7 +103,7 @@
 </script>
 
 <section>
-	<h2>{m.chy48s3_heading()}</h2>
+	<h2 class="text-headline">{m.chy48s3_heading()}</h2>
 	<ul>
 		<li>
 			<span>
@@ -117,7 +117,7 @@
 				aria-label={m.chy48s3_push()}
 				disabled={blocked}
 				onclick={togglePush}
-				class="group bg-gray-300 aria-checked:bg-green-500 relative inline-block h-7 w-12 shrink-0 rounded-full transition-colors disabled:opacity-40"
+				class="group relative inline-block h-7 w-12 shrink-0 rounded-full bg-ruled-line transition-colors disabled:opacity-40 aria-checked:bg-ink"
 			>
 				<span
 					class="absolute top-0.5 left-0.5 size-6 rounded-full bg-white transition-transform group-aria-checked:translate-x-5"

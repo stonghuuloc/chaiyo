@@ -26,7 +26,7 @@
 			aria-label={m.chy43s2_search()}
 			autocomplete="off"
 			spellcheck="false"
-			class="rounded-2xl border border-ruled-line bg-white p-3"
+			class="rounded-cell border border-ruled-line bg-white p-3"
 		/>
 		{#if shown.length === 0 && query.trim()}
 			<p data-part="no-match" class="text-graphite">{m.chy43s2_no_match({ q: query.trim() })}</p>
@@ -38,7 +38,7 @@
 						href={row.source === 'lesson'
 							? resolve('/(app)/word/[id]', { id: row.hanzi })
 							: undefined}
-						class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+						class="flex items-center gap-3 rounded-cell border border-ruled-line bg-white p-3"
 					>
 						<span lang="zh" class="font-display text-headline">{row.hanzi}</span>
 						<span class="flex flex-1 flex-col">
@@ -79,6 +79,6 @@
 				</li>
 			{/each}
 		</ul>
-		<p class="text-sm text-graphite">{m.mywords_legend()}</p>
+		<p class="text-label text-graphite">{m.mywords_legend()}</p>
 	</section>
 {/if}

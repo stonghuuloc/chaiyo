@@ -54,7 +54,7 @@
 	};
 </script>
 
-<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+<p class="mt-5 text-label text-pencil">
 	{step.ask}
 </p>
 {#if step.audio}
