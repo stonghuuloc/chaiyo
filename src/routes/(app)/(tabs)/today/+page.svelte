@@ -1,5 +1,12 @@
 <script lang="ts">
 	import { learnerLedger } from '#lib/learner/index.js';
+	import {
+		FreezePopup,
+		freezeUsedView,
+		markFreezeSeen,
+		readFreezeSeen,
+		type FreezeUsedView
+	} from '#lib/lesson/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { State } from '#lib/study/index.js';
 	import type { PageProps } from './$types';
@@ -13,10 +20,12 @@
 
 	let study = $state<State | null>(null);
 	const now = $derived(study ? new Date() : null);
+	let freeze = $state<FreezeUsedView | null>(null);
 
 	$effect(() => {
 		const session = data.session;
 		study = null;
+		freeze = null;
 		if (!session) return;
 		let live = true;
 		let off = () => {};
@@ -24,6 +33,15 @@
 			.then((ledger) => {
 				if (!live) return;
 				study = ledger.state();
+				const view = freezeUsedView(
+					study,
+					new Date(),
+					readFreezeSeen(localStorage, session.user.id)
+				);
+				if (view) {
+					markFreezeSeen(localStorage, session.user.id, view.day);
+					freeze = view;
+				}
 				off = ledger.subscribe((next) => (study = next));
 			})
 			.catch(() => {});
@@ -43,4 +61,7 @@
 {#if study && now}
 	<NextCard view={todayState(study, now)} />
 	<WeekStrip view={weekView(study, now)} />
+	{#if freeze}
+		<FreezePopup view={freeze} />
+	{/if}
 {/if}
