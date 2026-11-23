@@ -15,7 +15,7 @@ const clientWith = (fetch: typeof globalThis.fetch) =>
 		global: { fetch }
 	});
 const rolled = {
-	learner: { id: 'learner-a', tz: 'Asia/Ho_Chi_Minh', channels: [] },
+	learner: { id: 'learner-a', tz: 'Asia/Ho_Chi_Minh', channels: [], remindAt: '21:00' },
 	day: '2026-11-22',
 	state: { streak: { count: 0, freezes: 0 } },
 	events: [{ type: 'StreakReset', day: '2026-11-22' }]

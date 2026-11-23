@@ -1,4 +1,5 @@
 import { fakeChannel } from '#lib/notify/fake-channel.js';
+import { memoryMarks } from '#lib/notify/marks.js';
 import { sendReminders, type RemindResult } from '#lib/notify/remind.js';
 import type { ChannelName, Reminder } from '#lib/notify/channel.js';
 import type { Rolled } from '#lib/notify/tick.js';
@@ -15,8 +16,13 @@ export async function runReminders(
 	now: Date
 ): Promise<{ result: RemindResult; messages: Record<ChannelName, Reminder[]> }> {
 	const today = localDate(now, TZ);
-	const rolledFor = (id: string, last: string, channels: ChannelName[]): Rolled => ({
-		learner: { id, tz: TZ, channels },
+	const rolledFor = (
+		id: string,
+		last: string,
+		channels: ChannelName[],
+		remindAt = '20:00'
+	): Rolled => ({
+		learner: { id, tz: TZ, channels, remindAt },
 		day: shift(today, -1),
 		state: { ...initialState({ tz: TZ }), streak: { count: 3, last, freezes: 0 } },
 		events: []
@@ -34,7 +40,8 @@ export async function runReminders(
 			rolledFor('huy', shift(today, -1), []),
 			rolledFor('nam', today, [])
 		],
-		[fakes.push, fakes.email, fakes.telegram]
+		[fakes.push, fakes.email, fakes.telegram],
+		memoryMarks()
 	);
 	return {
 		result,
