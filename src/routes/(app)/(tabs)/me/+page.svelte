@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
-	import type { State } from '#lib/study/index.js';
+	import { badgesView, type State } from '#lib/study/index.js';
 	import { supabase } from '#lib/supabase.js';
 	import { fromUser } from '#lib/welcome/welcome.js';
 	import type { PageProps } from './$types';
 	import { loadProfile, type Profile } from '../../settings/profile';
+	import MeBadges from './MeBadges.svelte';
 	import MeHero from './MeHero.svelte';
+	import MeMenu from './MeMenu.svelte';
 	import MeProfile from './MeProfile.svelte';
 	import SkillMemory from './SkillMemory.svelte';
+	import { isAdmin } from './admin';
 	import { joinedMonth, meLevel } from './level';
 	import { meStats } from './me';
 
@@ -55,6 +58,8 @@
 	<MeProfile {...who} {...joinedMonth(data.session.user.created_at, study.tz)} />
 	<MeHero stats={s} lv={meLevel(study)} />
 	<SkillMemory skills={s.skills} />
+	<MeBadges view={badgesView(study)} />
+	<MeMenu admin={isAdmin(data.session.user.email)} />
 {:else}
 	<h1 class="sr-only">{m.tab_me()}</h1>
 {/if}
