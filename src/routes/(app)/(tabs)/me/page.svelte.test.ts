@@ -16,6 +16,7 @@ const learner = (words: number, passed: string[] = []): State => {
 };
 
 const hoisted = vi.hoisted(() => ({ load: vi.fn(), profile: vi.fn() }));
+const env = vi.hoisted(() => ({ admins: undefined as string | undefined }));
 let current: State = learner(12);
 const listeners = new Set<(s: State) => void>();
 const ledger = {
@@ -28,7 +29,12 @@ const publish = (s: State) => {
 };
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: hoisted.load }));
-vi.mock('#lib/supabase.js', () => ({ supabase: {} }));
+vi.mock('#lib/supabase.js', () => ({ supabase: { auth: { signOut: vi.fn() } } }));
+vi.mock('$app/env/public', () => ({
+	get PUBLIC_ADMIN_EMAILS() {
+		return env.admins;
+	}
+}));
 vi.mock('../../settings/profile', () => ({ loadProfile: hoisted.profile }));
 
 type Session = {
@@ -72,6 +78,14 @@ const mountPage = async (data: { session: Session | null } = { session }) => {
 		joined: () => target!.querySelector('h1 + p')?.textContent?.trim(),
 		hero: () => target!.querySelector('[data-part=me-hero]'),
 		memory: () => target!.querySelector('[data-part=me-memory]'),
+		parts: () =>
+			[...target!.querySelectorAll('[data-part]')]
+				.map((e) => (e as HTMLElement).dataset.part)
+				.filter((p) => ['me-memory', 'me-badges', 'me-menu'].includes(p!)),
+		badgesSub: () => target!.querySelector('[data-part=me-badges] > p')?.textContent?.trim(),
+		menuTitles: () =>
+			[...target!.querySelectorAll('[data-part=me-menu] li b')].map((b) => b.textContent?.trim()),
+		controls: () => [...target!.querySelectorAll('a, button, [role=button]')],
 		prog: () =>
 			[...target!.querySelectorAll('[data-part=me-prog] > div')].map((r) =>
 				[r.children[0], r.children[1]].map((e) => e.textContent?.trim())
@@ -90,6 +104,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+	env.admins = undefined;
 	if (app) unmount(app as never);
 	target?.remove();
 	target = app = undefined;
@@ -161,6 +176,70 @@ describe('/me', () => {
 			['Bài học', '3/40'],
 			['Từ vựng', '40/300']
 		]);
+	});
+
+	it('Given_ReferenceLearner_When_Open_Then_BadgesAfterMemoryThenMenu', async () => {
+		// Arrange
+		current = learner(12);
+		current.badges.first = '2026-11-01T03:00:00Z';
+		current.badges.streak7 = '2026-11-02T03:00:00Z';
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.parts()).toEqual(['me-memory', 'me-badges', 'me-menu']);
+		expect(page.badgesSub()).toBe('Có 2/9. Cái tiếp theo: Chuỗi 30 ngày.');
+		expect(page.menuTitles()).toEqual(['Bạn bè', 'Cài đặt']);
+	});
+
+	it('Given_Streak30EarnedPublished_When_Render_Then_Sub3of9', async () => {
+		// Arrange
+		current = learner(12);
+		current.badges.first = '2026-11-01T03:00:00Z';
+		current.badges.streak7 = '2026-11-02T03:00:00Z';
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		const next = learner(12);
+		next.badges = { ...current.badges, streak30: '2026-11-23T03:00:00Z' };
+		publish(next);
+		flushSync();
+
+		// Assert
+		expect(page.badgesSub()).toMatch(/^Có 3\/9\. Cái tiếp theo: /);
+	});
+
+	it('Given_AdminEmail_When_Open_Then_FourMenuRows', async () => {
+		// Arrange
+		env.admins = 'x@example.com, LOC@example.com';
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.menuTitles()).toEqual(['Bạn bè', 'Cài đặt', 'Báo lỗi nội dung', 'Số liệu sử dụng']);
+	});
+
+	it('Given_AdminPage_When_Open_Then_NoRedPrimaryControl', async () => {
+		// Arrange
+		env.admins = 'loc@example.com';
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+		const red = new Set(['bg-lantern-red', 'shadow-lift', 'inset-shadow-lift']);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		const controls = page.controls();
+		expect(controls.length).toBeGreaterThan(10);
+		const offenders = controls.filter((c) => [...c.classList].some((t) => red.has(t)));
+		expect(offenders).toEqual([]);
 	});
 
 	it('Given_NoSession_When_Open_Then_OnlyHiddenHeading', async () => {

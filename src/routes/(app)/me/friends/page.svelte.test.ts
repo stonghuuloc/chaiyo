@@ -6,7 +6,12 @@ import type { BoardRow } from '#lib/social/board.js';
 import { initialState } from '#lib/study/index.js';
 import Page from './+page.svelte';
 
-const nav = vi.hoisted(() => ({ afterNavigate: vi.fn(), snapshot: vi.fn() }));
+const nav = vi.hoisted(() => ({
+	afterNavigate: vi.fn(),
+	invalidateAll: vi.fn(),
+	snapshot: vi.fn()
+}));
+vi.mock('#lib/supabase.js', () => ({ supabase: { rpc: vi.fn() } }));
 vi.mock('$app/navigation', () => nav);
 
 const ledger = {
@@ -170,5 +175,15 @@ describe('friends board page', () => {
 		expect(opened).toHaveBeenCalledTimes(1);
 		expect(names(root)).toEqual(['Minh', 'Huy', 'Lan', 'LinhBạn']);
 		expect(values(root)[3]).toBe('0 ngày');
+	});
+
+	it('Given_Page_Then_SearchSectionUnderBoard', async () => {
+		const root = await render(BOARD);
+		const section = root.querySelector('section')!;
+		expect(text(section.querySelector('h2'))).toBe('Theo dõi thêm');
+		expect(
+			root.querySelector('ul')!.compareDocumentPosition(section) & Node.DOCUMENT_POSITION_FOLLOWING
+		).toBeTruthy();
+		expect(section.querySelector('ul')).toBeNull();
 	});
 });

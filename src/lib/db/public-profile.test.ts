@@ -69,15 +69,22 @@ describe('leaderboard join', () => {
 		).rows;
 
 	it('Given_LinhFollowsHiddenNam_When_JoinFollowsProfiles_Then_ZeroRows', async () => {
+		await asOwner(db);
+		await db.query('insert into follows (follower_id, followee_id) values ($1, $2)', [LINH, NAM]);
 		await asLearner(db, LINH);
-		await db.query('insert into follows (followee_id) values ($1)', [NAM]);
 		expect(await joined()).toHaveLength(0);
 	});
 
-	it('Given_NamUnhidden_When_JoinFollowsProfiles_Then_OneRow', async () => {
+	it('Given_HiddenNam_When_LinhInsertsFollowDirectly_Then_42501', async () => {
 		await asLearner(db, LINH);
-		await db.query('insert into follows (followee_id) values ($1)', [NAM]);
+		expect(await code(db.query('insert into follows (followee_id) values ($1)', [NAM]))).toBe(
+			'42501'
+		);
+	});
+
+	it('Given_NamUnhidden_When_JoinFollowsProfiles_Then_OneRow', async () => {
 		await asOwner(db);
+		await db.query('insert into follows (follower_id, followee_id) values ($1, $2)', [LINH, NAM]);
 		await db.query('update profiles set hidden = false where learner_id = $1', [NAM]);
 		await asLearner(db, LINH);
 		expect(await joined()).toHaveLength(1);

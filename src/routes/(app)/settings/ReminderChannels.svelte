@@ -12,6 +12,10 @@
 		isLinked(): Promise<boolean>;
 		testTelegram(): Promise<{ error: { message: string } | null }>;
 		unlink(): Promise<void>;
+		email: string;
+		emailOn: boolean;
+		saveEmail(on: boolean): Promise<void>;
+		notify(message: string): void;
 	};
 </script>
 
@@ -19,6 +23,8 @@
 	import { untrack } from 'svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import Sheet from '#lib/ui/Sheet.svelte';
+	import Switch from '#lib/ui/Switch.svelte';
+	import { serial } from './prefs';
 	import { pushBlocked } from './push-state';
 
 	let { deps }: { deps: Deps } = $props();
@@ -30,6 +36,10 @@
 	let token = $state('');
 	let note = $state('');
 	let pushError = $state('');
+	let emailOn = $state(untrack(() => deps.emailOn));
+	let savedEmail = untrack(() => deps.emailOn);
+	let inflight = 0;
+	const run = serial();
 	const blocked = $derived(pushBlocked(permission));
 
 	const fail = (e: unknown) =>
@@ -53,6 +63,21 @@
 		}
 	};
 
+	const flipEmail = async () => {
+		const next = !emailOn;
+		emailOn = next;
+		inflight++;
+		try {
+			await run(() => deps.saveEmail(next));
+			savedEmail = next;
+		} catch {
+			if (inflight === 1) emailOn = savedEmail;
+			deps.notify(m.welcome_save_error());
+		} finally {
+			inflight--;
+		}
+	};
+
 	const connect = async () => {
 		note = '';
 		try {
@@ -69,6 +94,7 @@
 				linked = true;
 				sheetOpen = false;
 				note = '';
+				deps.notify(m.chy53s3_tg_on());
 			} else {
 				note = m.chy48s3_tg_not_yet();
 			}
@@ -96,70 +122,116 @@
 			await deps.unlink();
 			linked = false;
 			note = '';
+			deps.notify(m.chy53s3_tg_off());
 		} catch (e) {
 			note = fail(e);
 		}
 	};
+
+	const flipTelegram = () => (linked ? unlink() : connect());
 </script>
 
-<section>
-	<h2 class="text-headline">{m.chy48s3_heading()}</h2>
-	<ul>
-		<li>
-			<span>
-				<b>{m.chy48s3_push()}</b>
-				<small>{blocked ? m.chy48s3_push_blocked() : m.chy48s3_push_here()}</small>
-			</span>
-			<button
-				type="button"
-				role="switch"
-				aria-checked={pushOn}
-				aria-label={m.chy48s3_push()}
-				disabled={blocked}
-				onclick={togglePush}
-				class="group relative inline-block h-7 w-12 shrink-0 rounded-full bg-ruled-line transition-colors disabled:opacity-40 aria-checked:bg-ink"
+<p class="mt-4 text-label leading-[normal] font-semibold text-pencil">{m.chy48s3_heading()}</p>
+<ul
+	class="mt-2 overflow-hidden rounded-[18px] border border-ruled-line bg-white/55 [&>li+li]:border-t [&>li+li]:border-ruled-line"
+>
+	<li class="grid min-h-16 grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2">
+		<span class="grid size-10 place-items-center rounded-cell bg-shaded-paper text-ink [--duo:.3]">
+			<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-fill-bell" /></svg>
+		</span>
+		<span class="min-w-0">
+			<b class="block text-[16px] leading-[normal] font-semibold">{m.chy48s3_push()}</b>
+			{#if blocked}
+				<small
+					class="mt-px block text-[13px] leading-[normal] [overflow-wrap:anywhere] text-lantern-red-text"
+					>{m.chy48s3_push_blocked()}</small
+				>
+			{:else}
+				<small class="mt-px block text-[13px] leading-[normal] [overflow-wrap:anywhere] text-pencil"
+					>{m.chy48s3_push_here()}</small
+				>
+			{/if}
+			{#if pushError}<p role="alert" class="mt-1 text-[13px] text-graphite">{pushError}</p>{/if}
+		</span>
+		<Switch checked={pushOn} label={m.chy48s3_push()} onchange={togglePush} />
+	</li>
+	<li class="grid min-h-16 grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2">
+		<span class="grid size-10 place-items-center rounded-cell bg-shaded-paper text-ink [--duo:.3]">
+			<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-fill-letter" /></svg>
+		</span>
+		<span class="min-w-0">
+			<b class="block text-[16px] leading-[normal] font-semibold">{m.chy53s3_email()}</b>
+			<small class="mt-px block text-[13px] leading-[normal] [overflow-wrap:anywhere] text-pencil"
+				>{deps.email}</small
 			>
-				<span
-					class="absolute top-0.5 left-0.5 size-6 rounded-full bg-white transition-transform group-aria-checked:translate-x-5"
-				></span>
-			</button>
-			{#if pushError}<p role="alert">{pushError}</p>{/if}
-		</li>
-		{#if deps.bot}
-			<li>
-				<span>
-					<b>{m.chy48s3_tg()}</b>
-					<small>
-						{linked
-							? m.chy48s3_tg_linked({ bot: deps.bot })
-							: m.chy48s3_tg_unlinked({ bot: deps.bot })}
-					</small>
-				</span>
+		</span>
+		<Switch checked={emailOn} label={m.chy53s3_email()} onchange={flipEmail} />
+	</li>
+	{#if deps.bot}
+		<li class="grid min-h-16 grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2">
+			<span
+				class="grid size-10 place-items-center rounded-cell bg-shaded-paper text-ink [--duo:.3]"
+			>
+				<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-fill-plain" /></svg>
+			</span>
+			<span class="min-w-0">
+				<b class="block text-[16px] leading-[normal] font-semibold">{m.chy48s3_tg()}</b>
+				<small
+					class="mt-px block text-[13px] leading-[normal] [overflow-wrap:anywhere] text-pencil"
+				>
+					{linked
+						? m.chy48s3_tg_linked({ bot: deps.bot })
+						: m.chy48s3_tg_unlinked({ bot: deps.bot })}
+				</small>
 				{#if linked}
-					<button type="button" onclick={test}>{m.chy48s3_tg_test()}</button>
-					<button type="button" onclick={unlink}>{m.chy48s3_tg_unlink()}</button>
-				{:else}
-					<button type="button" onclick={connect}>{m.chy48s3_tg_connect()}</button>
+					<button
+						type="button"
+						class="mt-1 min-h-11 text-[13px] font-semibold text-graphite"
+						onclick={test}>{m.chy48s3_tg_test()}</button
+					>
 				{/if}
-				{#if note && !sheetOpen}<p role="status">{note}</p>{/if}
-			</li>
-		{/if}
-	</ul>
-</section>
+				{#if note && !sheetOpen}<p role="status" class="text-[13px] text-graphite">{note}</p>{/if}
+			</span>
+			<Switch checked={linked} label={m.chy48s3_tg()} onchange={flipTelegram} />
+		</li>
+	{/if}
+</ul>
+{#if !pushOn && !emailOn && !linked}
+	<p class="mt-2 text-[13px] leading-[1.45] text-pencil">{m.chy53s3_none()}</p>
+{/if}
 
 {#if deps.bot}
 	<Sheet open={sheetOpen} title={m.chy48s3_tg_connect()} onclose={later}>
-		<p>{m.chy48s3_tg_intro()}</p>
-		<ol>
-			<li>{m.chy48s3_tg_step1()}</li>
-			<li>{m.chy48s3_tg_step2({ bot: deps.bot })}</li>
-			<li>{m.chy48s3_tg_step3()}</li>
+		<p class="mt-2 text-[15px] leading-[1.45] text-graphite">{m.chy48s3_tg_intro()}</p>
+		<ol class="mt-4 grid gap-3">
+			{#each [m.chy48s3_tg_step1(), m.chy48s3_tg_step2( { bot: deps.bot } ), m.chy48s3_tg_step3()] as step, i (i)}
+				<li class="grid grid-cols-[28px_1fr] items-start gap-3 leading-[1.45]">
+					<span
+						aria-hidden="true"
+						class="grid size-7 place-items-center rounded-full bg-shaded-paper font-display text-[14px] font-semibold"
+						>{i + 1}</span
+					>
+					<span>{step}</span>
+				</li>
+			{/each}
 		</ol>
-		<a href="https://t.me/{deps.bot}?start={token}" target="_blank" rel="noopener"
+		<a
+			href="https://t.me/{deps.bot}?start={token}"
+			target="_blank"
+			rel="noopener"
+			class="mt-3 flex h-[52px] w-full items-center justify-center rounded-action bg-ink font-display text-[17px] font-semibold text-notebook-paper"
 			>{m.chy48s3_tg_open()}</a
 		>
-		<button type="button" onclick={done}>{m.chy48s3_tg_done()}</button>
-		<button type="button" onclick={later}>{m.chy48s3_tg_later()}</button>
-		{#if note}<p role="status">{note}</p>{/if}
+		<button
+			type="button"
+			class="mt-3 flex h-[52px] w-full items-center justify-center rounded-action border border-ruled-line bg-white/50 font-display text-[17px] font-semibold text-ink"
+			onclick={done}>{m.chy48s3_tg_done()}</button
+		>
+		<button
+			type="button"
+			class="mt-2 min-h-11 w-full text-[15px] font-semibold text-pencil"
+			onclick={later}>{m.chy48s3_tg_later()}</button
+		>
+		{#if note}<p role="status" class="mt-2 text-[13px] leading-[1.45] text-graphite">{note}</p>{/if}
 	</Sheet>
 {/if}
