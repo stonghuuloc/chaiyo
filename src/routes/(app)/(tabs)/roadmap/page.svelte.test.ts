@@ -19,7 +19,10 @@ const next = (): State => {
 	return state;
 };
 
-const hoisted = vi.hoisted(() => ({ load: vi.fn() }));
+const hoisted = vi.hoisted(() => ({
+	load: vi.fn(),
+	replace: vi.fn((url: string) => history.replaceState(null, '', url))
+}));
 let current: State = reference();
 const listeners = new Set<(s: State) => void>();
 const ledger = {
@@ -32,6 +35,9 @@ const publish = (s: State) => {
 };
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: hoisted.load }));
+vi.mock('$app/navigation', () => ({ replaceState: hoisted.replace }));
+
+const at = (hash: string) => history.replaceState(null, '', `${location.pathname}${hash}`);
 
 const session = { user: { id: 'u1' } };
 let target: HTMLDivElement | undefined;
@@ -75,6 +81,8 @@ afterEach(() => {
 	target = app = undefined;
 	listeners.clear();
 	hoisted.load.mockReset();
+	hoisted.replace.mockClear();
+	at('');
 	current = reference();
 });
 
@@ -311,7 +319,6 @@ describe('/roadmap', () => {
 		hoisted.load.mockResolvedValue(ledger);
 		const page = await mountPage();
 		const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
-		const href = location.href;
 		const y = window.scrollY;
 
 		// Act
@@ -335,8 +342,60 @@ describe('/roadmap', () => {
 		expect(page.rowNote('h2-01')).toBe('Mở khi học xong HSK 1');
 		expect(scroll).not.toHaveBeenCalled();
 		expect(window.scrollY).toBe(y);
-		expect(location.href).toBe(href);
+		expect(hoisted.replace).toHaveBeenCalledWith('#lv2', {});
+		expect(location.hash).toBe('#lv2');
 		scroll.mockRestore();
+	});
+
+	it('Given_HashLv3_When_Open_Then_Hsk3AndCell3Pressed', async () => {
+		// Arrange
+		at('#lv3');
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.sum()).toBe('HSK 3 · 0/26 bài · 1000 từ mới');
+		expect(page.cells().map((c) => c.getAttribute('aria-pressed'))).toEqual([
+			'false',
+			'false',
+			'true',
+			'false',
+			'false'
+		]);
+		expect(page.one('[data-part=lock-note]')).not.toBeNull();
+		expect(page.one('[data-part=now-card]')).toBeNull();
+		expect(hoisted.replace).not.toHaveBeenCalled();
+	});
+
+	it.each(['#lv0', '#lv9', '#x'])('Given_BadHash_%s_When_Open_Then_Hsk1', async (hash) => {
+		// Arrange
+		at(hash);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.sum()).toBe('HSK 1 · 0/40 bài · 300 từ mới');
+		expect(location.hash).toBe(hash);
+		expect(hoisted.replace).not.toHaveBeenCalled();
+	});
+
+	it('Given_Open_When_HashChangesToLv4_Then_Hsk4', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		at('#lv4');
+		window.dispatchEvent(new HashChangeEvent('hashchange'));
+		flushSync();
+
+		// Assert
+		expect(page.sum()).toBe('HSK 4 · 0/22 bài · 1200 từ mới');
+		expect(page.cells()[3].getAttribute('aria-pressed')).toBe('true');
 	});
 
 	it('Given_Hsk2Shown_When_TapBai1_Then_LevelToast', async () => {

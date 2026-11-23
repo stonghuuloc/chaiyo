@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { replaceState } from '$app/navigation';
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { currentLevel, type State } from '#lib/study/index.js';
@@ -13,12 +14,28 @@
 	let { data }: PageProps = $props();
 
 	let study = $state<State | null>(null);
-	let picked = $state<number | null>(null);
+	let mode = $state<'hsk' | 'tracks'>('hsk');
+	let hashLevel = $state<number | null>(null);
 	const top = $derived(study ? currentLevel(study) : 1);
-	const view = $derived(study ? roadmapLevel(study, picked ?? top) : null);
+	const view = $derived(study ? roadmapLevel(study, hashLevel ?? top) : null);
 	const onpick = (level: number) => {
-		if (level !== view?.level) picked = level;
+		if (level === view?.level) return;
+		hashLevel = level;
+		replaceState(`#lv${level}`, {});
 	};
+
+	const readHash = () => {
+		const hash = location.hash;
+		if (hash === '#tracks') {
+			mode = 'tracks';
+			return;
+		}
+		const lv = /^#lv([1-5])$/.exec(hash);
+		mode = 'hsk';
+		hashLevel = lv ? Number(lv[1]) : null;
+	};
+
+	$effect(readHash);
 
 	let open = $state(false);
 	let message = $state('');
@@ -51,6 +68,8 @@
 		};
 	});
 </script>
+
+<svelte:window onhashchange={readHash} />
 
 <h1 class="pt-[calc(env(safe-area-inset-top,0px)+54px)] text-display">{m.tab_roadmap()}</h1>
 {#if view}
