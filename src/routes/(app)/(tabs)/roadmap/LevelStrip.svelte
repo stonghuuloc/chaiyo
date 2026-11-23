@@ -30,7 +30,7 @@
 					<span class="rounded-xs h-1 w-3/5 overflow-hidden bg-ruled-line">
 						<i
 							class="block h-full bg-primary"
-							style:width="{Math.max(4, cell.current ? progress * 100 : 0)}%"
+							style:width="{cell.current ? Math.max(4, progress * 100) : 100}%"
 						></i>
 					</span>
 				{/if}

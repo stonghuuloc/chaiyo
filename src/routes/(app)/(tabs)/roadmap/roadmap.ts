@@ -72,7 +72,8 @@ export function roadmapLevel(state: State, level: number): LevelView {
 		...outline.topics.map((t, k) => group('topic', k + 1, t.title, topics[k].length))
 	];
 	const holder = groups.find((g) => g.rows.some((r) => r.status === 'now'));
-	(holder ?? groups.find((g) => g.kind === 'topic'))!.open = true;
+	const first = holder ?? groups.find((g) => g.kind === 'topic');
+	if (first) first.open = true;
 
 	const now = holder?.rows.find((r) => r.status === 'now');
 	const outlined = groups.filter((g) => g.kind === 'topic');

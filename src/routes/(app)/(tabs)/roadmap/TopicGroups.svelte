@@ -98,8 +98,10 @@
 			<small data-part="level-note" class="mt-0.5 block text-label text-muted">{note(row)}</small>
 		{/if}
 	</span>
-	<svg
-		class="size-4 fill-current {row.status === 'now' ? 'text-primary' : 'text-faint-pencil'}"
-		aria-hidden="true"><use href="#i-regular-caret-right" /></svg
-	>
+	{#if row.status !== 'locked'}
+		<svg
+			class="size-4 fill-current {row.status === 'now' ? 'text-primary' : 'text-faint-pencil'}"
+			aria-hidden="true"><use href="#i-regular-caret-right" /></svg
+		>
+	{/if}
 {/snippet}
