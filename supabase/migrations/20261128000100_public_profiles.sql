@@ -52,3 +52,26 @@ create unique index profiles_handle on public.profiles (handle);
 
 revoke execute on function public.profile_handle(text, uuid) from public, anon, authenticated;
 revoke execute on function public.profiles_set_handle() from public, anon, authenticated;
+
+create function public.public_profile(p_handle text)
+returns table (status text, display_name text, photo_url text, handle text, streak int,
+	words_week int, words_known int, hsk smallint, lesson smallint, badges text[])
+language plpgsql stable security definer set search_path = '' as $$
+#variable_conflict use_column
+declare p public.profiles;
+begin
+	select * into p from public.profiles where profiles.handle = lower(p_handle);
+	if not found then
+		return query select 'missing'::text, null::text, null::text, null::text, null::int, null::int,
+			null::int, null::smallint, null::smallint, null::text[];
+	elsif p.hidden and p.learner_id is distinct from auth.uid() then
+		return query select 'hidden'::text, null::text, null::text, null::text, null::int, null::int,
+			null::int, null::smallint, null::smallint, null::text[];
+	else
+		return query select 'visible'::text, p.display_name, p.photo_url, p.handle, p.streak,
+			p.words_week, p.words_known, p.hsk, p.lesson, p.badges;
+	end if;
+end $$;
+
+revoke execute on function public.public_profile(text) from public, anon;
+grant execute on function public.public_profile(text) to authenticated;

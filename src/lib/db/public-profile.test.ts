@@ -183,3 +183,63 @@ describe('handle', () => {
 		rmSync(dir, { recursive: true });
 	});
 });
+
+describe('public_profile', () => {
+	type Row = Record<string, unknown>;
+	const call = async (handle: string) =>
+		(await db.query<Row>('select * from public.public_profile($1)', [handle])).rows;
+
+	it('Given_Linh_When_PublicProfileLoc_Then_HiddenAllNull', async () => {
+		await asLearner(db, LINH);
+		const rows = await call('loc');
+		expect(rows).toHaveLength(1);
+		const { status, ...rest } = rows[0];
+		expect(status).toBe('hidden');
+		expect(Object.values(rest).every((v) => v === null)).toBe(true);
+		expect(Object.keys(rest)).toHaveLength(9);
+	});
+
+	it('Given_Linh_When_PublicProfileLinh_Then_VisibleFields', async () => {
+		await asLearner(db, LINH);
+		const rows = await call('linh');
+		expect(rows).toEqual([
+			{
+				status: 'visible',
+				display_name: 'Linh',
+				photo_url: null,
+				handle: 'linh',
+				streak: 0,
+				words_week: 0,
+				words_known: 0,
+				hsk: 1,
+				lesson: 0,
+				badges: []
+			}
+		]);
+	});
+
+	it('Given_Linh_When_PublicProfileKhongco_Then_Missing', async () => {
+		await asLearner(db, LINH);
+		const rows = await call('khongco');
+		expect(rows).toHaveLength(1);
+		const { status, ...rest } = rows[0];
+		expect(status).toBe('missing');
+		expect(Object.values(rest).every((v) => v === null)).toBe(true);
+	});
+
+	it('Given_Upper_When_PublicProfileLOC_Then_SameAsLoc', async () => {
+		await asLearner(db, LINH);
+		expect(await call('LOC')).toEqual(await call('loc'));
+	});
+
+	it('Given_Nam_When_PublicProfileOwnHidden_Then_Visible', async () => {
+		await asLearner(db, NAM);
+		const rows = await call('loc');
+		expect(rows[0]).toMatchObject({ status: 'visible', display_name: 'Tống Lộc', handle: 'loc' });
+	});
+
+	it('Given_Anon_When_PublicProfile_Then_42501', async () => {
+		await db.exec('set role anon');
+		expect(await code(call('loc'))).toBe('42501');
+	});
+});
