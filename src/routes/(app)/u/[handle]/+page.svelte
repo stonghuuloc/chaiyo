@@ -102,7 +102,7 @@
 		<h1 class="mt-3 font-display text-[26px] leading-[1.15] font-semibold text-ink">{p.name}</h1>
 		<span
 			data-part="chip"
-			class="mt-2 inline-block rounded-full bg-shaded-paper px-3 py-1 text-[13.5px] font-semibold text-graphite"
+			class="mt-2 inline-block rounded-full bg-shaded-paper px-3 py-1 text-[13.5px] leading-[normal] font-semibold text-graphite"
 			>{m.chy52s4_hsk({ n: p.hsk })}</span
 		>
 	</div>
@@ -110,14 +110,14 @@
 		data-part="stats"
 		class="mt-5 grid grid-cols-3 divide-x divide-ruled-line rounded-[18px] border border-ruled-line bg-white"
 	>
-		<div class="px-2 py-4 text-center">
+		<div class="px-2 py-4 text-center leading-[normal]">
 			<b
 				class="inline-flex items-center justify-center gap-1 font-display text-[24px] leading-[1.1] font-semibold tabular-nums"
 				>{m.chy52s4_lesson({ n: p.lesson })}</b
 			>
 			<span class="mt-1 block text-[13px] text-pencil">{m.chy52s4_learning()}</span>
 		</div>
-		<div class="px-2 py-4 text-center">
+		<div class="px-2 py-4 text-center leading-[normal]">
 			<b
 				class="inline-flex items-center justify-center gap-1 font-display text-[24px] leading-[1.1] font-semibold tabular-nums"
 				><svg class="size-5 fill-current text-lantern-red" aria-hidden="true"
@@ -126,7 +126,7 @@
 			>
 			<span class="mt-1 block text-[13px] text-pencil">{m.chy52s2_streak()}</span>
 		</div>
-		<div class="px-2 py-4 text-center">
+		<div class="px-2 py-4 text-center leading-[normal]">
 			<b
 				class="inline-flex items-center justify-center gap-1 font-display text-[24px] leading-[1.1] font-semibold tabular-nums"
 				>{p.wordsKnown}</b
@@ -149,7 +149,7 @@
 		<h2 class="font-display text-[19px] leading-[1.2] font-semibold text-ink">
 			{m.chy52s4_badges()}
 		</h2>
-		<p class="mt-0.5 text-[14px] text-pencil">
+		<p class="mt-0.5 text-[14px] leading-[normal] text-pencil">
 			{p.badges.length > 0
 				? m.chy52s4_badges_count({ name: p.name, n: p.badges.length })
 				: m.chy52s4_badges_none({ name: p.name })}
@@ -158,7 +158,7 @@
 			<div
 				bind:this={strip}
 				data-part="strip"
-				class="-mx-(--gutter) mt-3 flex [scrollbar-width:none] gap-2 overflow-x-auto px-(--gutter)"
+				class="-mx-(--gutter) mt-2 -mb-1 flex [scrollbar-width:none] gap-2 overflow-x-auto px-(--gutter) py-1"
 			>
 				{#each p.badges as id (id)}
 					<div

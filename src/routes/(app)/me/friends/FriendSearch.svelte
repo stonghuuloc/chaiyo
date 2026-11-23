@@ -183,7 +183,7 @@
 			type="button"
 			data-part="invite"
 			onclick={copyInvite}
-			class="mt-4 grid min-h-16 w-full cursor-pointer grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 rounded-[18px] border border-ruled-line bg-white/55 px-4 py-2 text-left"
+			class="mt-4 grid min-h-16 w-full cursor-pointer grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 rounded-[18px] border border-ruled-line bg-white/55 px-4 py-2 text-left leading-[normal]"
 		>
 			<span class="grid size-10 place-items-center rounded-[12px] bg-shaded-paper">
 				<svg class="size-[22px] fill-current text-graphite" aria-hidden="true"
@@ -191,7 +191,7 @@
 				>
 			</span>
 			<span class="min-w-0">
-				<b class="font-semibold text-ink">{m.chy52s4_invite()}</b>
+				<b class="block font-semibold text-ink">{m.chy52s4_invite()}</b>
 				<small class="mt-px block truncate text-[13px] text-pencil"
 					>{invite.replace(/^https?:\/\//, '')}</small
 				>
