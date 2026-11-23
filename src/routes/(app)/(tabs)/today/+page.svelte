@@ -32,17 +32,20 @@
 		learnerLedger(session)
 			.then((ledger) => {
 				if (!live) return;
-				study = ledger.state();
-				const view = freezeUsedView(
-					study,
-					new Date(),
-					readFreezeSeen(localStorage, session.user.id)
-				);
-				if (view) {
-					markFreezeSeen(localStorage, session.user.id, view.day);
-					freeze = view;
-				}
-				off = ledger.subscribe((next) => (study = next));
+				const show = (next: State) => {
+					study = next;
+					const view = freezeUsedView(
+						next,
+						new Date(),
+						readFreezeSeen(localStorage, session.user.id)
+					);
+					if (view) {
+						markFreezeSeen(localStorage, session.user.id, view.day);
+						freeze = view;
+					}
+				};
+				show(ledger.state());
+				off = ledger.subscribe(show);
 			})
 			.catch(() => {});
 		return () => {

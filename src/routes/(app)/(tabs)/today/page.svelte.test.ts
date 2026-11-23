@@ -258,6 +258,20 @@ describe('/today freeze card', () => {
 		expect(page.dialog()).toBeNull();
 	});
 
+	it('Given_SyncPublishesFreezeAfterMount_When_Publish_Then_FreezeCard', async () => {
+		// Arrange
+		current = build(0);
+		const page = await mountPage();
+		expect(page.dialog()).toBeNull();
+
+		// Act
+		publish(frozen());
+		await settle();
+
+		// Assert
+		expect(page.dialog()).not.toBeNull();
+	});
+
 	it('Given_OtherLearnerSeen_When_Mount_Then_FreezeCard', async () => {
 		// Arrange
 		localStorage.setItem('chaiyo.freeze-seen.u2', '2026-11-11');
