@@ -13,7 +13,12 @@
 	let { data }: PageProps = $props();
 
 	let study = $state<State | null>(null);
-	const view = $derived(study ? roadmapLevel(study, currentLevel(study)) : null);
+	let picked = $state<number | null>(null);
+	const top = $derived(study ? currentLevel(study) : 1);
+	const view = $derived(study ? roadmapLevel(study, picked ?? top) : null);
+	const onpick = (level: number) => {
+		if (level !== view?.level) picked = level;
+	};
 
 	let open = $state(false);
 	let message = $state('');
@@ -54,10 +59,7 @@
 			? m.chy49s1_header({ level: view.level, ...view.header })
 			: m.chy49s1_header_bare({ level: view.level })}
 	</p>
-	<LevelStrip
-		cells={view.strip}
-		progress={view.header ? view.header.passed / view.header.total : 0}
-	/>
+	<LevelStrip cells={view.strip} {onpick} />
 	{#if view.empty}
 		<p
 			data-part="drafting"
@@ -66,6 +68,17 @@
 			{m.chy49s1_drafting({ level: view.level })}
 		</p>
 	{:else}
+		{#if view.level > top}
+			<p
+				data-part="lock-note"
+				class="mt-4 flex items-center gap-2 rounded-cell bg-shaded-paper px-4 py-3 text-toast text-graphite"
+			>
+				<svg class="size-[15px] flex-none fill-current text-muted" aria-hidden="true"
+					><use href="#i-fill-lock-simple" /></svg
+				>
+				{m.chy49s2_browse_note({ prev: view.level - 1 })}
+			</p>
+		{/if}
 		{#if view.card}
 			<NowCard card={view.card} />
 		{/if}

@@ -107,12 +107,13 @@ describe('/roadmap', () => {
 			true,
 			true
 		]);
-		expect(cells.map((c) => c.getAttribute('aria-current'))).toEqual([
+		expect(cells.map((c) => c.tagName)).toEqual(Array(5).fill('BUTTON'));
+		expect(cells.map((c) => c.getAttribute('aria-pressed'))).toEqual([
 			'true',
-			null,
-			null,
-			null,
-			null
+			'false',
+			'false',
+			'false',
+			'false'
 		]);
 		expect(page.one('[data-part=level-strip]')!.querySelectorAll('.bg-lantern-red')).toHaveLength(
 			0
@@ -288,7 +289,7 @@ describe('/roadmap', () => {
 		expect(page.rowNote('h1-03')).toBe('Mở khi qua Bài 2');
 	});
 
-	it('Given_NoOutlineLevel_When_Open_Then_DraftingLine', async () => {
+	it('Given_PlacedHsk2_When_Open_Then_Hsk2Outline', async () => {
 		// Arrange
 		current = reference();
 		for (const id of ['h1-01', 'h1-02', 'h1-03', 'h1-04', 'h1-05'])
@@ -300,11 +301,148 @@ describe('/roadmap', () => {
 		const page = await mountPage();
 
 		// Assert
-		expect(page.sum()).toBe('HSK 2');
-		expect(text(page.one('[data-part=drafting]'))).toBe('Lộ trình HSK 2 đang được soạn.');
-		expect(page.cells()).toHaveLength(5);
+		expect(page.sum()).toBe('HSK 2 · 0/27 bài · 500 từ mới');
+		expect(page.one('[data-part=drafting]')).toBeNull();
+		expect(page.one('[data-part=lock-note]')).toBeNull();
+		expect(page.cardTitle()).toBe('Bài 1 · Mấy giờ bạn dậy? 你几点起床');
+		expect(page.open()).toEqual(['Chủ đề 1 · Thói quen hằng ngày']);
+	});
+
+	it('Given_ReferenceLearner_When_TapCell2_Then_Hsk2BrowseInPlace', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+		const href = location.href;
+		const y = window.scrollY;
+
+		// Act
+		(page.cells()[1] as HTMLButtonElement).click();
+		flushSync();
+
+		// Assert
+		expect(page.sum()).toBe('HSK 2 · 0/27 bài · 500 từ mới');
+		expect(text(page.one('[data-part=lock-note]'))).toBe(
+			'Mở khi đỗ thi thử HSK 1. Xem trước các bài bên dưới.'
+		);
 		expect(page.one('[data-part=now-card]')).toBeNull();
-		expect(page.all('[data-part=topic]')).toHaveLength(0);
+		expect(page.open()).toEqual(['Chủ đề 1 · Thói quen hằng ngày']);
+		expect(page.cells().map((c) => c.getAttribute('aria-pressed'))).toEqual([
+			'false',
+			'true',
+			'false',
+			'false',
+			'false'
+		]);
+		expect(page.rowNote('h2-01')).toBe('Mở khi đỗ thi thử HSK 1');
+		expect(scroll).not.toHaveBeenCalled();
+		expect(window.scrollY).toBe(y);
+		expect(location.href).toBe(href);
+		scroll.mockRestore();
+	});
+
+	it('Given_Hsk2Shown_When_TapBai1_Then_LevelToast', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		(page.cells()[1] as HTMLButtonElement).click();
+		flushSync();
+
+		// Act
+		page.row('h2-01')!.querySelector<HTMLButtonElement>('button')!.click();
+		flushSync();
+
+		// Assert
+		expect(page.toast()).toBe('Đỗ thi thử HSK 1 để mở HSK 2');
+	});
+
+	it('Given_Hsk2Shown_When_StatePublished_Then_StaysHsk2', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		(page.cells()[1] as HTMLButtonElement).click();
+		flushSync();
+
+		// Act
+		publish(next());
+		flushSync();
+
+		// Assert
+		expect(page.sum()).toBe('HSK 2 · 0/27 bài · 500 từ mới');
+		expect(page.cells()[1].getAttribute('aria-pressed')).toBe('true');
+	});
+
+	it('Given_ReferenceLearner_When_TapCell3OpenCuoiCap_Then_VietNoiAndNote', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		(page.cells()[2] as HTMLButtonElement).click();
+		flushSync();
+		const exams = page.one('[data-part=exams]')!;
+		exams.querySelector('summary')!.click();
+		flushSync();
+
+		// Assert
+		const rows = [...exams.querySelectorAll('[data-part=exam-row]')];
+		expect(text(exams.querySelector('[data-part=topic-count]'))).toBe('0/2');
+		expect(rows.map((r) => text(r.querySelector('[data-part=exam-title]')))).toEqual([
+			'Thi thử HSK 3 · Viết',
+			'Thi thử HSK 3 · Nói'
+		]);
+		expect(rows.map((r) => text(r.querySelector('[data-part=exam-note]')))).toEqual([
+			'nghe · đọc · viết · mở khi qua Bài 26',
+			'nhắc lại · tả tranh · trả lời câu hỏi · mở khi qua Bài 26'
+		]);
+		expect(rows.map((r) => r.querySelector('use')?.getAttribute('href'))).toEqual([
+			'#i-regular-diploma',
+			'#i-regular-microphone'
+		]);
+		expect(text(exams.querySelector('[data-part=exam-end]'))).toBe(
+			'Từ HSK 3, đỗ cấp cần đỗ cả phần Viết và phần Nói.'
+		);
+	});
+
+	it('Given_ShownCell_When_Tap_Then_NoChange', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const before = target!.innerHTML;
+
+		// Act
+		(page.cells()[0] as HTMLButtonElement).click();
+		flushSync();
+
+		// Assert
+		expect(target!.innerHTML).toBe(before);
+	});
+
+	it('Given_Toast_When_SameRowRetappedAt2000_Then_ShownUntil4200', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+		const tap = () => {
+			page.row('h1-02')!.querySelector<HTMLButtonElement>('button')!.click();
+			flushSync();
+		};
+
+		// Act
+		tap();
+		vi.advanceTimersByTime(2000);
+		tap();
+		vi.advanceTimersByTime(2100);
+		const at4100 = page.toast();
+		vi.advanceTimersByTime(100);
+		flushSync();
+		await Promise.resolve();
+		flushSync();
+		vi.useRealTimers();
+
+		// Assert
+		expect(at4100).toBe('Qua Bài 1 để mở Bài 2');
+		expect(document.querySelector('[role=status]')).toBeNull();
 	});
 
 	it('Given_NoSession_When_Open_Then_OnlyTitle', async () => {
