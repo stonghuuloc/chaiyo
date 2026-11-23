@@ -21,10 +21,13 @@ const LABELS = [
 	m.chy46s1_d7
 ];
 
-const addDays = (day: string, n: number) => {
+export const addDays = (day: string, n: number) => {
 	const [y, mo, d] = day.split('-').map(Number);
 	return new Date(Date.UTC(y, mo - 1, d + n)).toISOString().slice(0, 10);
 };
+
+export const weekday = (day: string) =>
+	LABELS[(new Date(`${day}T00:00:00Z`).getUTCDay() + 6) % 7]();
 
 function weekOf(day: string, n: number): WeekCell[] {
 	const monday = addDays(day, -((new Date(`${day}T00:00:00Z`).getUTCDay() + 6) % 7));

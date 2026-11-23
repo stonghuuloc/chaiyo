@@ -4,5 +4,7 @@ export { default as StreakPopup } from './StreakPopup.svelte';
 export { dayCounted, doneNext, nextSection, sectionName } from './done';
 export { dayCountedView } from './streak-popup';
 export type { DayCountedView, WeekCell } from './streak-popup';
+export { freezeUsedView, markFreezeSeen, readFreezeSeen } from './freeze-popup';
+export type { FreezeUsedView } from './freeze-popup';
 export type { LessonStep } from './steps';
 export type { Answer, Cta, Mode, StepProps } from './types';
