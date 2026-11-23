@@ -616,5 +616,17 @@
 	"chy53s1_hide": "Ẩn hồ sơ công khai",
 	"chy53s1_hide_hint": "Bật thì người khác không tìm thấy và không xem được hồ sơ của bạn.",
 	"chy53s1_hidden_on": "Hồ sơ đã ẩn",
-	"chy53s1_hidden_off": "Hồ sơ đã hiện lại"
+	"chy53s1_hidden_off": "Hồ sơ đã hiện lại",
+	"chy50s2_seal": "HSK",
+	"chy50s2_kicker": "Cấp đang học",
+	"chy50s2_title": "HSK {level} · {pct}%",
+	"chy50s2_line_1": "Vừa vào cấp, đang học Bài {cur}. Khởi đầu ngon rồi đó!",
+	"chy50s2_line_2": "Đang học Bài {cur}. Đi được một đoạn rồi, cứ đều đều nhé.",
+	"chy50s2_line_3": "Đang học Bài {cur}. Gần tới đích rồi!",
+	"chy50s2_line_4": "Học xong cả cấp, giờ chỉ còn thi thử thôi!",
+	"chy50s2_goal_exam": "Thi thử HSK {level}",
+	"chy50s2_goal_next": "Mốc tiếp theo: {exam} sau Bài {last}, đỗ là mở HSK {next}.",
+	"chy50s2_goal_cert": "Mốc tiếp theo: {exam} sau Bài {last}, đỗ là mở chứng chỉ.",
+	"chy50s2_joined": "Học từ tháng {month}/{year}",
+	"chy50s2_edit": "Sửa hồ sơ"
 }
