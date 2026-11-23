@@ -37,7 +37,7 @@
 		const [settings, linked, profile] = await Promise.all([
 			supabase
 				.from('settings')
-				.select('remind_push, reminder_time, hanzi_style')
+				.select('remind_push, reminder_time, hanzi_style, remind_email')
 				.eq('learner_id', uid)
 				.maybeSingle(),
 			link.isLinked(),
@@ -90,7 +90,11 @@
 			issueToken: link.issueToken,
 			isLinked: link.isLinked,
 			testTelegram: () => supabase.functions.invoke('telegram-test'),
-			unlink: link.unlink
+			unlink: link.unlink,
+			email: data.session?.user.email ?? '',
+			emailOn: prefs.email,
+			saveEmail: (email) => savePrefs(supabase, uid, { email }),
+			notify
 		};
 	});
 </script>
