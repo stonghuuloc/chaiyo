@@ -104,7 +104,7 @@ describe('telegramChannel', () => {
 			fetch: fetch as never,
 			skipUnlinked: true
 		});
-		await expect(channel.send(minh)).resolves.toBeUndefined();
+		await expect(channel.send(minh)).resolves.toBe('skipped');
 		expect(fetch).not.toHaveBeenCalled();
 	});
 

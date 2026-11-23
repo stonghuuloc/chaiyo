@@ -117,7 +117,12 @@
 				aria-label={m.chy48s3_push()}
 				disabled={blocked}
 				onclick={togglePush}
-			></button>
+				class="group bg-gray-300 aria-checked:bg-green-500 relative inline-block h-7 w-12 shrink-0 rounded-full transition-colors disabled:opacity-40"
+			>
+				<span
+					class="absolute top-0.5 left-0.5 size-6 rounded-full bg-white transition-transform group-aria-checked:translate-x-5"
+				></span>
+			</button>
 			{#if pushError}<p role="alert">{pushError}</p>{/if}
 		</li>
 		{#if deps.bot}

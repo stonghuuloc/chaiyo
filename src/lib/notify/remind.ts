@@ -58,18 +58,25 @@ export async function sendReminders(
 		const settled = await Promise.allSettled(
 			usable.map((c) => c.send({ learnerId: learner.id, day }))
 		);
-		const mine = settled.map((s, i): Delivery =>
+		const mine = settled.flatMap((s, i): Delivery[] =>
 			s.status === 'fulfilled'
-				? { id: learner.id, channel: usable[i].name, ok: true }
-				: {
-						id: learner.id,
-						channel: usable[i].name,
-						ok: false,
-						error: s.reason instanceof Error ? s.reason.message : String(s.reason)
-					}
+				? s.value === 'skipped'
+					? []
+					: [{ id: learner.id, channel: usable[i].name, ok: true }]
+				: [
+						{
+							id: learner.id,
+							channel: usable[i].name,
+							ok: false,
+							error: s.reason instanceof Error ? s.reason.message : String(s.reason)
+						}
+					]
 		);
 		deliveries.push(...mine);
-		if (mine.some((d) => d.ok)) sent.push(learner.id);
+		if (mine.length === 0) {
+			skipped.push({ id: learner.id, reason: 'no-channel' });
+			await marks.release(learner.id, day).catch(() => {});
+		} else if (mine.some((d) => d.ok)) sent.push(learner.id);
 		else {
 			failed.push(learner.id);
 			await marks.release(learner.id, day).catch(() => {});

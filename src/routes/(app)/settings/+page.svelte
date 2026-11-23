@@ -20,10 +20,17 @@
 			link.isLinked()
 		]);
 		const registration = () => navigator.serviceWorker.ready;
+		const here =
+			'serviceWorker' in navigator
+				? await Promise.race([
+						registration().then((r) => r.pushManager?.getSubscription() ?? null),
+						new Promise<null>((done) => setTimeout(() => done(null), 3000))
+					]).catch(() => null)
+				: null;
 		deps = {
 			bot: PUBLIC_TELEGRAM_BOT,
 			permission: pushPermission(window),
-			pushOn: settings.data?.remind_push === true,
+			pushOn: settings.data?.remind_push === true && here !== null,
 			linked,
 			enablePush: async () =>
 				enablePush({

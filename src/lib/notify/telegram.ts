@@ -39,7 +39,7 @@ export function telegramChannel(o: TelegramDeps & { token: string }): Channel {
 		async send({ learnerId }) {
 			const chat = await o.chatOf(learnerId);
 			if (chat === null) {
-				if (o.skipUnlinked) return;
+				if (o.skipUnlinked) return 'skipped';
 				throw new Error('telegram: not linked');
 			}
 			await send(chat, REMINDER_TELEGRAM);

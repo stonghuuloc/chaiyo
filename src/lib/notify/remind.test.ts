@@ -610,5 +610,48 @@ describe('sendReminders', () => {
 			expect(next.sent).toEqual(['minh']);
 			expect(f.email.sent).toHaveLength(1);
 		});
+
+		it('Given_TelegramSkippedAndEmailThrows_When_NextTick_Then_RetriesAndSends', async () => {
+			// Arrange
+			const marks = memoryMarks();
+			const rolled = [rolledFor('minh', '2026-11-22', ['telegram', 'email'])];
+			const unlinked: Channel = { name: 'telegram', send: async () => 'skipped' };
+			const down: Channel = {
+				name: 'email',
+				send: async () => {
+					throw new Error('429');
+				}
+			};
+			const first = await sendReminders(NOW, rolled, [unlinked, down], marks);
+			const f = fakes();
+
+			// Act
+			const next = await sendReminders(
+				new Date('2026-11-23T13:15:00Z'),
+				rolled,
+				[unlinked, f.email],
+				marks
+			);
+
+			// Assert
+			expect(first.failed).toEqual(['minh']);
+			expect(first.sent).toEqual([]);
+			expect(next.sent).toEqual(['minh']);
+			expect(f.email.sent).toHaveLength(1);
+		});
+
+		it('Given_OnlyTelegramSkipped_When_SendReminders_Then_NoChannelAndNotSent', async () => {
+			// Arrange
+			const rolled = [rolledFor('minh', '2026-11-22', ['telegram'])];
+			const unlinked: Channel = { name: 'telegram', send: async () => 'skipped' };
+
+			// Act
+			const result = await sendReminders(NOW, rolled, [unlinked], memoryMarks());
+
+			// Assert
+			expect(result.sent).toEqual([]);
+			expect(result.failed).toEqual([]);
+			expect(result.skipped).toEqual([{ id: 'minh', reason: 'no-channel' }]);
+		});
 	});
 });
