@@ -96,6 +96,18 @@ describe('telegramChannel', () => {
 		expect(fetch).not.toHaveBeenCalled();
 	});
 
+	it('Given_NotLinkedAndSkipUnlinked_When_Send_Then_ResolvesNoFetch', async () => {
+		const fetch = vi.fn();
+		const channel = telegramChannel({
+			token: '123:abc',
+			chatOf: async () => null,
+			fetch: fetch as never,
+			skipUnlinked: true
+		});
+		await expect(channel.send(minh)).resolves.toBeUndefined();
+		expect(fetch).not.toHaveBeenCalled();
+	});
+
 	it('Given_FetchThrowsWithToken_When_Send_Then_RejectsTelegramNetworkWithoutToken', async () => {
 		const fetch = vi.fn(async () => {
 			throw new TypeError('fetch failed https://api.telegram.org/bot123:abc/sendMessage');

@@ -129,16 +129,16 @@ describe('telegramLink', () => {
 		await telegramLink(clientWith(fetch), UID).unlink();
 
 		expect(requests).toHaveLength(2);
-		expect(requests[0].method).toBe('DELETE');
-		expect(requests[0].url.pathname).toBe('/rest/v1/telegram_links');
-		expect(requests[0].url.searchParams.get('user_id')).toBe(`eq.${UID}`);
-		expect(requests[1].method).toBe('POST');
-		expect(requests[1].url.pathname).toBe('/rest/v1/settings');
-		expect(requests[1].url.searchParams.get('on_conflict')).toBe('learner_id');
-		expect(requests[1].body).toEqual({ learner_id: UID, remind_telegram: false });
+		expect(requests[0].method).toBe('POST');
+		expect(requests[0].url.pathname).toBe('/rest/v1/settings');
+		expect(requests[0].url.searchParams.get('on_conflict')).toBe('learner_id');
+		expect(requests[0].body).toEqual({ learner_id: UID, remind_telegram: false });
+		expect(requests[1].method).toBe('DELETE');
+		expect(requests[1].url.pathname).toBe('/rest/v1/telegram_links');
+		expect(requests[1].url.searchParams.get('user_id')).toBe(`eq.${UID}`);
 	});
 
-	it('Given_DeleteError_When_Unlink_Then_ThrowsWithoutFlagWrite', async () => {
+	it('Given_FlagWriteError_When_Unlink_Then_ThrowsWithoutDelete', async () => {
 		const fetch = vi.fn(async () => json({ message: 'locked' }, 500));
 		await expect(telegramLink(clientWith(fetch), UID).unlink()).rejects.toThrow('locked');
 		expect(fetch).toHaveBeenCalledTimes(1);

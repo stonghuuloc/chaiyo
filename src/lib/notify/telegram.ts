@@ -7,6 +7,7 @@ export const REMINDER_TELEGRAM = `${REMINDER_PUSH.body}\n${REMINDER_EMAIL.url}`;
 type TelegramDeps = {
 	chatOf(learnerId: string): Promise<number | null>;
 	fetch?: typeof globalThis.fetch;
+	skipUnlinked?: boolean;
 };
 
 export function telegramSend(token: string, f: typeof globalThis.fetch = globalThis.fetch) {
@@ -37,7 +38,10 @@ export function telegramChannel(o: TelegramDeps & { token: string }): Channel {
 		name: 'telegram',
 		async send({ learnerId }) {
 			const chat = await o.chatOf(learnerId);
-			if (chat === null) throw new Error('telegram: not linked');
+			if (chat === null) {
+				if (o.skipUnlinked) return;
+				throw new Error('telegram: not linked');
+			}
 			await send(chat, REMINDER_TELEGRAM);
 		}
 	};

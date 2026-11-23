@@ -29,7 +29,8 @@ Deno.serve((req) =>
 					addressOf: supabaseAddresses(client).addressOf
 				}),
 				telegram: telegramFromEnv((k) => Deno.env.get(k), {
-					chatOf: supabaseTelegram(client).chatOf
+					chatOf: supabaseTelegram(client).chatOf,
+					skipUnlinked: true
 				})
 			});
 			return tick(

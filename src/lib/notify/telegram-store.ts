@@ -43,12 +43,12 @@ export function telegramLink(client: SupabaseClient, uid: string) {
 			return data !== null;
 		},
 		async unlink(): Promise<void> {
-			check(await client.from('telegram_links').delete().eq('user_id', uid));
 			check(
 				await client
 					.from('settings')
 					.upsert({ learner_id: uid, remind_telegram: false }, { onConflict: 'learner_id' })
 			);
+			check(await client.from('telegram_links').delete().eq('user_id', uid));
 		}
 	};
 }
