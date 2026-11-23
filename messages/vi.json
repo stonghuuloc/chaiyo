@@ -540,5 +540,7 @@
 	"chy49s1_done_best": "Đã xong · điểm cao nhất {score}%",
 	"chy49s1_done": "Đã xong",
 	"chy49s1_now": "Đang học · phần {part}",
-	"chy49s1_after": "Mở khi qua Bài {n}"
+	"chy49s1_after": "Mở khi qua Bài {n}",
+	"chy49s1_row_n": "Bài {n}",
+	"chy49s1_row_title": "· {title}"
 }

@@ -36,7 +36,7 @@
 	});
 </script>
 
-<h1 class="text-display">{m.tab_roadmap()}</h1>
+<h1 class="pt-[calc(env(safe-area-inset-top,0px)+54px)] text-display">{m.tab_roadmap()}</h1>
 {#if view}
 	<p data-part="roadmap-sum" class="mt-3 text-label text-muted">
 		{view.header

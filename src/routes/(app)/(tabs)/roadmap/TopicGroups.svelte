@@ -87,7 +87,10 @@
 					? 'text-graphite'
 					: 'text-ink'}"
 		>
-			{m.chy49s1_lesson({ n: row.n, title: row.title })}
+			{m.chy49s1_row_n({ n: row.n })}
+			<span class="font-medium {row.status === 'now' ? 'text-lantern-red-text' : 'text-muted'}"
+				>{m.chy49s1_row_title({ title: row.title })}</span
+			>
 			{#if row.hanzi}<span lang="zh" class="text-[15px] font-normal text-graphite">{row.hanzi}</span
 				>{/if}
 		</b>
