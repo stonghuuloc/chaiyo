@@ -12,7 +12,7 @@
 	<p class="mt-3 text-body text-graphite">{m.chy46s3_intro()}</p>
 	<div data-part="freeze-have" class="mt-4 flex items-center gap-3 rounded-[14px] bg-white p-3">
 		<span class="flex gap-1">
-			{#each { length: view.max } as _, i (i)}
+			{#each { length: view.max }, i (i)}
 				<svg
 					data-part="freeze-slot"
 					data-held={i < view.held ? '' : undefined}
@@ -28,7 +28,7 @@
 	</div>
 	<ol class="mt-4 grid gap-3">
 		{#each view.rules as r, i (i)}
-			<li data-part="freeze-rule" class="text-body flex gap-3 text-graphite">
+			<li data-part="freeze-rule" class="flex gap-3 text-body text-graphite">
 				<span
 					class="text-caption grid size-6 shrink-0 place-items-center rounded-full bg-white text-text"
 					>{i + 1}</span
