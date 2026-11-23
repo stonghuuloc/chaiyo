@@ -466,5 +466,7 @@
 	"chy46s2_body": "Hôm {day} bạn nghỉ, 1 lượt đóng băng đã tự giữ chuỗi {n} ngày cho bạn. Hôm nay học để chuỗi chạy tiếp nhé.",
 	"chy46s2_note_left": "Còn {f} lượt. Học đủ 7 ngày liền được tặng thêm 1.",
 	"chy46s2_note_none": "Hết lượt rồi. Học đủ 7 ngày liền được tặng thêm 1.",
-	"chy46s2_ok": "Học ngay thôi"
+	"chy46s2_ok": "Học ngay thôi",
+	"chy47s3_ticks": "Chạy 4 lượt 20:00-20:45",
+	"chy47s3_tick": "{at}: gửi {sent}; bỏ qua {skipped}"
 }
