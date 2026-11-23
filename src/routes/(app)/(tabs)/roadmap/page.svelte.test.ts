@@ -45,6 +45,17 @@ const level3 = (): State => {
 	return state;
 };
 
+const placed = (): State => {
+	const state = reference();
+	for (const id of ['h1-01', 'h1-02', 'h1-03', 'h1-04', 'h1-05'])
+		state.lessons[id] = { unlocked: true, passed: true, done: [] };
+	state.lessons['h2-01'].unlocked = true;
+	return state;
+};
+
+const originalMatchMedia = window.matchMedia;
+const originalInto = Element.prototype.scrollIntoView;
+
 const at = (hash: string) => history.replaceState(null, '', `${location.pathname}${hash}`);
 
 const session = { user: { id: 'u1' } };
@@ -81,6 +92,10 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 		toast: () => text(document.querySelector('[role=status] span')),
 		tabs: () => all('[role=tab]') as HTMLButtonElement[],
 		tracks: () => all('[data-part=track]') as HTMLDetailsElement[],
+		chip: () => {
+			const el = one('[data-part=jump]') as HTMLButtonElement | null;
+			return el && !el.inert ? text(el) : null;
+		},
 		row
 	};
 };
@@ -93,6 +108,10 @@ afterEach(() => {
 	hoisted.load.mockReset();
 	hoisted.replace.mockClear();
 	at('');
+	window.matchMedia = originalMatchMedia;
+	Element.prototype.scrollIntoView = originalInto;
+	vi.unstubAllGlobals();
+	vi.restoreAllMocks();
 	current = reference();
 });
 
@@ -647,6 +666,157 @@ describe('/roadmap', () => {
 		expect(hoisted.replace).not.toHaveBeenCalled();
 		expect(scroll).not.toHaveBeenCalled();
 		scroll.mockRestore();
+	});
+
+	it('Given_HashLv3_When_Open_Then_ChipBai1', async () => {
+		// Arrange
+		at('#lv3');
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.chip()).toBe('Bài 1 đang học');
+		expect(page.one('[data-part=jump]')!.hasAttribute('aria-label')).toBe(false);
+		expect(page.one('[data-part=jump] use')?.getAttribute('href')).toBe('#i-regular-target');
+	});
+
+	it('Given_Lv1AtTop_When_Open_Then_NoChip', async () => {
+		// Arrange
+		at('#lv1');
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.chip()).toBeNull();
+	});
+
+	it('Given_HashLv3_When_TapChip_Then_Lv1AndScrollCentre', async () => {
+		// Arrange
+		at('#lv3');
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const into = vi.fn();
+		Element.prototype.scrollIntoView = into;
+		window.matchMedia = ((media: string) => ({ matches: false, media })) as typeof matchMedia;
+
+		// Act
+		(page.one('[data-part=jump]') as HTMLButtonElement).click();
+		await settle();
+
+		// Assert
+		expect(hoisted.replace).toHaveBeenCalledWith('#lv1', {});
+		expect(page.sum()).toBe('HSK 1 · 0/40 bài · 300 từ mới');
+		expect(into).toHaveBeenCalledTimes(1);
+		expect(into.mock.contexts[0]).toBe(page.row('h1-01'));
+		expect(into).toHaveBeenCalledWith({ block: 'center', behavior: 'smooth' });
+		expect(page.row('h1-01')!.closest('details')!.open).toBe(true);
+	});
+
+	it('Given_ReducedMotion_When_TapChip_Then_AutoScroll', async () => {
+		// Arrange
+		at('#lv3');
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const into = vi.fn();
+		Element.prototype.scrollIntoView = into;
+		window.matchMedia = ((media: string) => ({ matches: true, media })) as typeof matchMedia;
+
+		// Act
+		(page.one('[data-part=jump]') as HTMLButtonElement).click();
+		await settle();
+
+		// Assert
+		expect(into).toHaveBeenCalledWith({ block: 'center', behavior: 'auto' });
+	});
+
+	it('Given_Tracks_When_Open_Then_Chip', async () => {
+		// Arrange
+		at('#tracks');
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.chip()).toBe('Bài 1 đang học');
+	});
+
+	it('Given_StubbedIoOffscreen_When_Lv1_Then_Chip', async () => {
+		// Arrange
+		const observed: Element[] = [];
+		vi.stubGlobal(
+			'IntersectionObserver',
+			class {
+				constructor(private cb: IntersectionObserverCallback) {}
+				observe(el: Element) {
+					observed.push(el);
+					this.cb(
+						[{ target: el, isIntersecting: false } as unknown as IntersectionObserverEntry],
+						this as unknown as IntersectionObserver
+					);
+				}
+				disconnect() {}
+			}
+		);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+		flushSync();
+
+		// Assert
+		expect(observed).toContain(page.one('[data-part=now-card]'));
+		expect(observed).toContain(page.row('h1-01'));
+		expect(page.chip()).toBe('Bài 1 đang học');
+	});
+
+	it('Given_PlacedHsk2_When_HashLv1_Then_ChipBai41', async () => {
+		// Arrange
+		at('#lv1');
+		current = placed();
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.chip()).toBe('Bài 41 đang học');
+	});
+
+	it('Given_AllPassed_When_Lv2_Then_NoChip', async () => {
+		// Arrange
+		at('#lv2');
+		current = initialState({ curriculum: CURRICULUM });
+		for (const l of CURRICULUM.lessons)
+			current.lessons[l.id] = { unlocked: true, passed: true, done: [] };
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.chip()).toBeNull();
+	});
+
+	it('Given_PlacedHsk2_When_TapH202_Then_DraftToastBai42', async () => {
+		// Arrange
+		current = placed();
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		page.row('h2-02')!.querySelector<HTMLButtonElement>('button')!.click();
+		flushSync();
+
+		// Assert
+		expect(page.cardLine()).toContain('để mở Bài 42');
+		expect(text(page.one('[data-part=now-card] a'))).toBe('Tiếp tục Bài 41');
+		expect(page.rowNote('h2-02')).toBe('Đang soạn');
+		expect(page.toast()).toBe('Bài 42 đang được soạn.');
 	});
 
 	it('Given_NoSession_When_Open_Then_OnlyTitle', async () => {

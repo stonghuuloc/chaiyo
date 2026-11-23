@@ -4,12 +4,14 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import { currentLevel, type State } from '#lib/study/index.js';
 	import Toast from '#lib/ui/Toast.svelte';
+	import { tick } from 'svelte';
 	import type { PageProps } from './$types';
 	import ExamGroup from './ExamGroup.svelte';
+	import JumpChip from './JumpChip.svelte';
 	import LevelStrip from './LevelStrip.svelte';
 	import ModeSwitch from './ModeSwitch.svelte';
 	import NowCard from './NowCard.svelte';
-	import { examToast, lockToast, roadmapLevel } from './roadmap';
+	import { examToast, jumpTarget, lockToast, roadmapLevel } from './roadmap';
 	import TopicGroups from './TopicGroups.svelte';
 	import TrackList from './TrackList.svelte';
 	import { trackToast, trackView } from './tracks';
@@ -33,6 +35,49 @@
 		mode = next;
 		replaceState(next === 'tracks' ? '#tracks' : `#lv${view?.level ?? top}`, {});
 		scrollTo({ top: 0 });
+	};
+
+	const target = $derived(study ? jumpTarget(study) : undefined);
+	let offscreen = $state(false);
+	const show = $derived(
+		!!target && (mode === 'tracks' || view?.level !== target.level || offscreen)
+	);
+	const rowOf = (id: string) =>
+		document.querySelector<HTMLElement>(`[data-part=level-row][data-id="${id}"]`);
+
+	$effect(() => {
+		offscreen = false;
+		if (typeof IntersectionObserver === 'undefined' || !target || mode !== 'hsk') return;
+		if (view?.level !== target.level) return;
+		const els = [document.querySelector('[data-part=now-card]'), rowOf(target.id)].filter(
+			(el) => el !== null
+		);
+		const seen = new Set<Element>();
+		const io = new IntersectionObserver((entries) => {
+			for (const e of entries) {
+				if (e.isIntersecting) seen.add(e.target);
+				else seen.delete(e.target);
+			}
+			offscreen = seen.size === 0;
+		});
+		for (const el of els) io.observe(el);
+		return () => io.disconnect();
+	});
+
+	const onjump = async () => {
+		if (!target) return;
+		mode = 'hsk';
+		hashLevel = target.level;
+		replaceState(`#lv${target.level}`, {});
+		await tick();
+		const row = rowOf(target.id);
+		if (!row) return;
+		const group = row.closest('details');
+		if (group) group.open = true;
+		row.scrollIntoView({
+			block: 'center',
+			behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+		});
 	};
 
 	const readHash = () => {
@@ -128,6 +173,9 @@
 			{/if}
 		{/if}
 	{/if}
+{/if}
+{#if target}
+	<JumpChip n={target.n} {show} {onjump} />
 {/if}
 <Toast
 	placement="top"

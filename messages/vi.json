@@ -567,5 +567,6 @@
 	"chy49s3_mode_tracks": "Chuyên đề",
 	"chy49s3_tracks_sum": "{total} chuyên đề · {open} đã mở · học song song với HSK",
 	"chy49s3_track_need": "Cần HSK {need} · {count} bài",
-	"chy49s3_track_need_lock": "Đỗ thi thử HSK {need} để mở {title} · {count} bài"
+	"chy49s3_track_need_lock": "Đỗ thi thử HSK {need} để mở {title} · {count} bài",
+	"chy49s3_jump": "Bài {n} đang học"
 }
