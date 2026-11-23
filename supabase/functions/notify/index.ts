@@ -1,9 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 import lessons from '#lib/curriculum/curriculum.json' with { type: 'json' };
+import { supabaseAddresses } from '#lib/notify/address.js';
+import { failedLines, reminderChannels } from '#lib/notify/channels.js';
+import { emailFromEnv } from '#lib/notify/email.js';
 import { handle } from '#lib/notify/handler.js';
+import { supabasePushSubs } from '#lib/notify/push-store.js';
 import { sendReminders } from '#lib/notify/remind.js';
 import { supabaseDeps, supabaseMarks } from '#lib/notify/supabase.js';
 import { tick } from '#lib/notify/tick.js';
+import { webPushChannel } from '#lib/notify/web-push.js';
+import { pushPost } from '../_shared/push-post.ts';
+
+const post = await pushPost();
 
 Deno.serve((req) =>
 	handle(req, {
@@ -13,10 +21,18 @@ Deno.serve((req) =>
 				Deno.env.get('SUPABASE_URL')!,
 				Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 			);
+			const channels = reminderChannels({
+				push: post ? webPushChannel({ subs: supabasePushSubs(client), post }) : null,
+				email: emailFromEnv((k) => Deno.env.get(k), {
+					addressOf: supabaseAddresses(client).addressOf
+				})
+			});
 			return tick(
 				now,
 				supabaseDeps(client, { lessons }, (at, rolled) =>
-					sendReminders(at, rolled, [], supabaseMarks(client)).then(() => undefined)
+					sendReminders(at, rolled, channels, supabaseMarks(client)).then((r) =>
+						failedLines(r).forEach((l) => console.warn(l))
+					)
 				)
 			);
 		}
