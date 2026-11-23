@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { m } from '#lib/paraglide/messages.js';
+	import RoadMark from '#lib/ui/RoadMark.svelte';
 	import { resolve } from '$app/paths';
 	import type { RoadRow } from './roadmap';
 
@@ -38,7 +39,7 @@
 			>
 				{#if row.status === 'locked'}
 					<div class="grid grid-cols-[28px_1fr] items-center gap-3 px-4 py-3">
-						{@render mark(row)}
+						<RoadMark status={row.status} />
 						{@render body(row)}
 					</div>
 				{:else}
@@ -46,7 +47,7 @@
 						href={resolve('/(app)/lesson/[id]', { id: row.id })}
 						class="grid grid-cols-[28px_1fr_auto] items-center gap-3 px-4 py-3"
 					>
-						{@render mark(row)}
+						<RoadMark status={row.status} />
 						{@render body(row)}
 						<svg class="size-4 fill-current text-muted" aria-hidden="true"
 							><use href="#i-regular-caret-right" /></svg
@@ -57,24 +58,6 @@
 		{/each}
 	</ol>
 </section>
-
-{#snippet mark(row: RoadRow)}
-	<span
-		class="grid size-7 place-items-center rounded-full {row.status === 'done'
-			? 'bg-primary text-white'
-			: row.status === 'locked'
-				? 'bg-shaded-paper text-muted'
-				: 'border-[1.5px] border-primary text-primary'}"
-	>
-		{#if row.status === 'locked'}
-			<svg class="size-4 fill-current" aria-hidden="true"><use href="#i-fill-lock-simple" /></svg>
-		{:else if row.status === 'done'}
-			<svg class="size-4 fill-current" aria-hidden="true"><use href="#i-bold-check" /></svg>
-		{:else}
-			<i class="size-2 rounded-full bg-primary"></i>
-		{/if}
-	</span>
-{/snippet}
 
 {#snippet body(row: RoadRow)}
 	<span>
