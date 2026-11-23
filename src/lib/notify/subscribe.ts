@@ -50,7 +50,7 @@ export async function disablePush(o: {
 	client: SupabaseClient;
 	uid: string;
 }): Promise<void> {
-	const subscription = await o.registration.pushManager.getSubscription();
+	const subscription = await o.registration.pushManager?.getSubscription();
 	if (subscription) {
 		await subscription.unsubscribe();
 		check(

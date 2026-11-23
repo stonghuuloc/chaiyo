@@ -103,7 +103,11 @@ self.addEventListener('notificationclick', (event) => {
 			const target = clickTarget(open as WindowClient[]);
 			if (!target) return void (await self.clients.openWindow(url));
 			await target.focus();
-			await target.navigate(url);
+			try {
+				await target.navigate(url);
+			} catch {
+				await self.clients.openWindow(url);
+			}
 		})()
 	);
 });
