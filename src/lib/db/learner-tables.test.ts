@@ -92,6 +92,22 @@ describe('learner tables', () => {
 		expect(await ids('profiles')).toEqual([LINH]);
 	});
 
+	it('Given_ClientUpsertHidden_When_OtherSelects_Then_RowGone', async () => {
+		await asLearner(db, NAM);
+		await db.query(
+			'insert into profiles (learner_id, hidden) values ($1, true) on conflict (learner_id) do update set hidden = excluded.hidden',
+			[NAM]
+		);
+		await asLearner(db, LINH);
+		expect(await ids('profiles')).toEqual([LINH]);
+		await asLearner(db, NAM);
+		const own = await db.query<{ display_name: string; hidden: boolean }>(
+			'select display_name, hidden from profiles where learner_id = $1',
+			[NAM]
+		);
+		expect(own.rows).toEqual([{ display_name: 'Nam', hidden: true }]);
+	});
+
 	it("a learner cannot write to another learner's rows", async () => {
 		const snapshot = async () => ({
 			settings: (await db.query('select * from settings where learner_id = $1', [NAM])).rows,
