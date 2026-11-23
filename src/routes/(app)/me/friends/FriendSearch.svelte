@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { SvelteSet } from 'svelte/reactivity';
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 	import { m } from '#lib/paraglide/messages.js';
 	import { searchLearners, setFollow, type FoundLearner } from '#lib/social/follow.js';
 	import { supabase } from '#lib/supabase.js';
@@ -19,6 +19,7 @@
 	let toast = $state({ open: false, message: '', nonce: 0 });
 	const say = (message: string) => (toast = { open: true, message, nonce: toast.nonce + 1 });
 	const pending = new SvelteSet<string>();
+	const chosen = new SvelteMap<string, boolean>();
 	let seq = 0;
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
@@ -42,7 +43,9 @@
 			const found = await searchLearners(client, term);
 			if (n !== seq) return;
 			asked = term;
-			rows = found;
+			rows = found.map((f) =>
+				chosen.has(f.handle) ? { ...f, following: chosen.get(f.handle)! } : f
+			);
 			failed = false;
 		} catch {
 			if (n !== seq) return;
@@ -55,6 +58,7 @@
 		if (pending.has(r.handle)) return;
 		const on = !r.following;
 		r.following = on;
+		chosen.set(r.handle, on);
 		pending.add(r.handle);
 		let ok: boolean;
 		try {
@@ -64,6 +68,9 @@
 		}
 		pending.delete(r.handle);
 		if (!ok) {
+			chosen.delete(r.handle);
+			const cur = rows?.find((x) => x.handle === r.handle);
+			if (cur) cur.following = !on;
 			r.following = !on;
 			say(m.chy52s3_follow_failed());
 			return;

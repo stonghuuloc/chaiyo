@@ -123,6 +123,27 @@ describe('friend search section', () => {
 		expect(rpc).toHaveBeenCalledWith('search_learners', { p_q: 'ngoc' });
 	});
 
+	it('Given_FollowInFlight_When_StaleSearchLands_Then_ButtonStaysFollowing', async () => {
+		let releaseFollow: (v: unknown) => void = () => {};
+		let searches = 0;
+		rpc.mockImplementation((fn: string) => {
+			if (fn === 'set_follow') return new Promise((r) => (releaseFollow = r));
+			searches++;
+			return Promise.resolve({ data: [{ ...NGOC }], error: null });
+		});
+		const root = await render();
+		await type(root, 'ngoc');
+		await wait(250);
+		btn(root).click();
+		flushSync();
+		await type(root, 'ngoc ');
+		await wait(250);
+		expect(searches).toBe(2);
+		releaseFollow({ data: true, error: null });
+		await settle();
+		expect(btn(root).textContent).toContain('Đang theo dõi');
+	});
+
 	it('Given_OldAnswerLate_Then_NewerListKept', async () => {
 		let release: (v: unknown) => void = () => {};
 		rpc.mockImplementationOnce(() => new Promise((r) => (release = r)));
