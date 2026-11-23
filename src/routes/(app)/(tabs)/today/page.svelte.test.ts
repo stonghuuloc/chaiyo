@@ -445,4 +445,92 @@ describe('/today rules sheet', () => {
 		// Assert
 		expect({ chip: page.chip(), marks: page.marks(), line: page.line() }).toEqual(before);
 	});
+
+	it('Given_Ac4WithSheetOpen_When_ScanControls_Then_NoFreezeAction', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.click('streak-chip');
+
+		// Act
+		const names = controls(document.body).map(controlName);
+
+		// Assert
+		expect(names.length).toBeGreaterThan(0);
+		expect(names.filter((n) => FREEZE_ACTION.test(n))).toEqual([]);
+	});
+
+	it('Given_Ac4_When_ControlsNameDongBang_Then_ExactlyThe3TriggersAndEachOpensSheet', async () => {
+		// Arrange
+		const page = await mountPage();
+		const named = () => controls(target!).filter((el) => /đóng băng/i.test(controlName(el)));
+
+		// Act
+		const parts = named().map((el) => el.getAttribute('data-part'));
+
+		// Assert
+		expect(parts.sort()).toEqual(['freeze-rules-link', 'streak-chip', 'week-info']);
+		for (const el of named()) {
+			el.click();
+			flushSync();
+			expect(page.dialog()!.querySelector('h2')?.textContent).toBe('Lượt đóng băng là gì?');
+			hieuRoi().click();
+			await expect.poll(() => page.dialog()).toBeNull();
+		}
+	});
+
+	it('Given_Ac4_When_ClickEveryFreezeControl_Then_StateSameAndFreezesUnchanged', async () => {
+		// Arrange
+		const page = await mountPage();
+		const before = current;
+		const freezes = before.streak.freezes;
+
+		// Act
+		for (const part of ['streak-chip', 'week-info', 'freeze-rules-link']) {
+			page.click(part);
+			hieuRoi().click();
+			await expect.poll(() => page.dialog()).toBeNull();
+		}
+
+		// Assert
+		expect(ledger.state()).toBe(before);
+		expect(ledger.state().streak.freezes).toBe(freezes);
+	});
+});
+
+describe('/today freeze card controls', () => {
+	const frozen = (): State => ({
+		...build(0),
+		streak: { count: 12, last: '2026-11-10', through: '2026-11-10', freezes: 2, best: 12 }
+	});
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-12T02:00:00Z'));
+		current = frozen();
+		hoisted.load.mockResolvedValue(ledger);
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+		localStorage.clear();
+		document.body.querySelectorAll('[role=dialog]').forEach((d) => d.remove());
+	});
+
+	it('Given_FreezeCardOpen_When_ScanControls_Then_NoFreezeActionAndHocNgayCloses', async () => {
+		// Arrange
+		const page = await mountPage();
+		const card = page.dialog()!;
+		const before = current;
+
+		// Act
+		const names = controls(card as HTMLElement).map(controlName);
+		(card.querySelector('button') as HTMLElement).click();
+		flushSync();
+
+		// Assert
+		expect(names).toEqual(['Học ngay thôi']);
+		expect(names.filter((n) => FREEZE_ACTION.test(n))).toEqual([]);
+		await expect.poll(() => page.dialog()).toBeNull();
+		expect(ledger.state()).toBe(before);
+	});
 });

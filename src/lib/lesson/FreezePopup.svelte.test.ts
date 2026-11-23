@@ -1,5 +1,6 @@
 import { flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it } from 'vitest';
+import { controlName, controls } from '../../test/controls';
 import FreezePopup from './FreezePopup.svelte';
 import type { FreezeUsedView } from './freeze-popup';
 
@@ -88,5 +89,13 @@ describe('FreezePopup', () => {
 			false
 		);
 		expect(particles()).toHaveLength(0);
+	});
+
+	it('Given_AC3View_When_ScanControls_Then_OnlyHocNgayThoi', () => {
+		// Arrange / Act
+		const dialog = mountPopup();
+
+		// Assert
+		expect(controls(dialog() as HTMLElement).map(controlName)).toEqual(['Học ngay thôi']);
 	});
 });
