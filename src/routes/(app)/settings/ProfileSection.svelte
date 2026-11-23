@@ -57,7 +57,7 @@
 
 <section class="mt-2">
 	<h2 class="font-display text-[19px] leading-[1.25] font-semibold">{m.chy53s1_profile()}</h2>
-	<p class="mt-0.5 text-[14px] text-pencil">{m.chy53s1_profile_sub()}</p>
+	<p class="mt-0.5 text-[14px] leading-[normal] text-pencil">{m.chy53s1_profile_sub()}</p>
 	<div class="mt-4 grid grid-cols-[88px_minmax(0,1fr)] items-center gap-4">
 		<div class="relative size-22">
 			{#if photo}
@@ -101,7 +101,7 @@
 				onchange={rename}
 				class="h-12 w-full rounded-cell border border-ruled-line bg-white/60 px-4 text-[16px] font-medium text-ink outline-0 focus:border-ink"
 			/>
-			<small class="text-[12.5px] text-pencil">{deps.email}</small>
+			<small class="text-[12.5px] leading-[normal] text-pencil">{deps.email}</small>
 		</label>
 	</div>
 	{#if photo}

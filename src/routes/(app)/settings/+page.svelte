@@ -74,7 +74,7 @@
 </script>
 
 <header
-	class="sticky top-0 z-10 grid grid-cols-[44px_1fr_44px] items-center bg-background px-3 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2"
+	class="sticky top-0 z-10 grid -mx-(--gutter) grid-cols-[44px_1fr_44px] items-center bg-background px-3 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2"
 >
 	<a
 		href={resolve('/(app)/(tabs)/me')}
@@ -87,7 +87,7 @@
 	</a>
 	<h1 class="text-center font-display text-title">{m.screen_settings()}</h1>
 </header>
-<div class="px-5 pb-12">
+<div class="pb-12">
 	{#if profileDeps}<ProfileSection deps={profileDeps} />{/if}
 	{#if deps}<ReminderChannels {deps} />{/if}
 	{#if privacyDeps}<PrivacySection deps={privacyDeps} />{/if}
