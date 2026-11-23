@@ -59,7 +59,7 @@
 	};
 </script>
 
-<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+<p class="mt-5 text-label text-pencil">
 	{step.ask}
 </p>
 <h2 class="mt-1 font-display text-headline">{step.title}</h2>
