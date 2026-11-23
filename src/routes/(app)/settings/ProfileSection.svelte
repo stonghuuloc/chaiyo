@@ -37,12 +37,15 @@
 		}
 	};
 
-	let saves = 0;
+	let intent = 0;
+	let chain: Promise<unknown> = Promise.resolve();
 	const setPhoto = async (next: string | null) => {
-		const mine = ++saves;
+		const mine = ++intent;
+		const run = chain.then(() => deps.save({ photo: next }));
+		chain = run.catch(() => {});
 		try {
-			await deps.save({ photo: next });
-			if (mine !== saves) return;
+			await run;
+			if (mine !== intent) return;
 			photo = next;
 			if (next) deps.notify(m.chy53s1_photo_ok());
 		} catch {
@@ -54,7 +57,12 @@
 		const file = e.currentTarget.files?.[0];
 		e.currentTarget.value = '';
 		if (!file) return;
-		void picker.pick(file, setPhoto, () => deps.notify(m.welcome_photo_error()));
+		const at = ++intent;
+		void picker.pick(
+			file,
+			(p) => at === intent && setPhoto(p),
+			() => deps.notify(m.welcome_photo_error())
+		);
 	};
 </script>
 

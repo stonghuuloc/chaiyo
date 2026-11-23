@@ -49,7 +49,7 @@ end $$;
 alter table public.profiles
 	alter column handle set not null,
 	add constraint handle_format check (handle ~ '^[a-z0-9]{1,40}$'),
-	add constraint photo_url_data check (photo_url is null or photo_url ~ '^data:image/(jpeg|png|webp);base64,');
+	add constraint photo_url_data check (photo_url is null or photo_url ~ '^(data:image/(jpeg|png|webp);base64,|https://[a-z0-9-]+\.googleusercontent\.com/)');
 
 create function public.profiles_keep_handle() returns trigger
 language plpgsql set search_path = '' as $$
