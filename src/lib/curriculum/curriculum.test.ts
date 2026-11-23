@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildCurriculum } from './build';
-import { CURRICULUM, LESSONS, firstLessonId } from './index';
+import { buildCurriculum, buildLevels } from './build';
+import { CURRICULUM, LESSONS, LEVELS, firstLessonId } from './index';
 
 const by = (id: string) => {
 	const lesson = LESSONS.find((l) => l.id === id);
@@ -57,6 +57,33 @@ describe('curriculum', () => {
 		]);
 		for (const l of LESSONS) expect(l.sections).not.toContain('warmup');
 		expect(by('h1-01')).not.toHaveProperty('testOut');
+	});
+});
+
+describe('levels', () => {
+	it('Given_Content_When_BuildLevels_Then_MatchesLevelsJson', () => {
+		// Arrange / Act
+		const built = buildLevels('content');
+
+		// Assert
+		expect(built).toEqual(LEVELS);
+	});
+
+	it('Given_Hsk1_When_BuildLevels_Then_40LessonsIn9TopicsAnd300Words', () => {
+		// Arrange / Act
+		const hsk1 = buildLevels('content').find((l) => l.level === 1)!;
+
+		// Assert
+		expect(hsk1.words).toBe(300);
+		expect(hsk1.topics).toHaveLength(9);
+		expect(hsk1.topics.flatMap((t) => t.lessons)).toHaveLength(40);
+		expect(hsk1.topics[0]).toEqual({
+			title: 'Chào hỏi',
+			lessons: [
+				{ id: 'h1-01', title: 'Xin chào', titleHanzi: '你好' },
+				{ id: 'h1-02', title: 'Bạn tên gì?', titleHanzi: '你叫什么名字' }
+			]
+		});
 	});
 });
 

@@ -2,6 +2,7 @@
 # Lesson outline for HSK1. std = GF 0025-2021 items each lesson must teach (new items only; h1-32 is a review lesson and lists the items it reviews).
 # Every item 1–48 appears at least once. Checked by src/lib/content/levels.test.ts.
 level: 1
+words: 300
 topics:
   - title: Chào hỏi
     lessons:

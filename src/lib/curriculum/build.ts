@@ -1,3 +1,6 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import YAML from 'yaml';
 import { loadContentDir } from '#lib/content/lint/load.js';
 import type { Lesson, Primer } from '#lib/content/schemas.js';
 import type { Curriculum } from '#lib/study/index.js';
@@ -6,6 +9,13 @@ export type CurriculumLesson = Curriculum['lessons'][number] & {
 	n: number;
 	title: string;
 	titleHanzi: string;
+};
+
+export type LevelLesson = { id: string; title: string; titleHanzi?: string };
+export type LevelOutline = {
+	level: number;
+	words: number;
+	topics: { title: string; lessons: LevelLesson[] }[];
 };
 
 const ORDER: (keyof Lesson['sections'] | keyof Primer['sections'])[] = [
@@ -42,4 +52,24 @@ export function buildCurriculum(contentDir: string): CurriculumLesson[] {
 			words: 'words' in l.sections ? l.sections.words.ids : [],
 			...('kind' in l ? { testOut: true as const } : {})
 		}));
+}
+
+export function buildLevels(contentDir: string): LevelOutline[] {
+	const dir = join(contentDir, 'levels');
+	return readdirSync(dir)
+		.filter((f) => /^hsk\d+\.yaml$/.test(f))
+		.map((f) => YAML.parse(readFileSync(join(dir, f), 'utf8')) as LevelOutline)
+		.map((o) => ({
+			level: o.level,
+			words: o.words,
+			topics: o.topics.map((t) => ({
+				title: t.title,
+				lessons: t.lessons.map((l) => ({
+					id: l.id,
+					title: l.title,
+					...(l.titleHanzi ? { titleHanzi: l.titleHanzi } : {})
+				}))
+			}))
+		}))
+		.sort((a, b) => a.level - b.level);
 }

@@ -1,0 +1,93 @@
+[
+	{
+		"level": 1,
+		"words": 300,
+		"topics": [
+			{
+				"title": "Chào hỏi",
+				"lessons": [
+					{ "id": "h1-01", "title": "Xin chào", "titleHanzi": "你好" },
+					{ "id": "h1-02", "title": "Bạn tên gì?", "titleHanzi": "你叫什么名字" }
+				]
+			},
+			{
+				"title": "Gia đình",
+				"lessons": [
+					{ "id": "h1-03", "title": "Đây là ai?", "titleHanzi": "这是谁" },
+					{ "id": "h1-04", "title": "Gia đình", "titleHanzi": "我的家" },
+					{ "id": "h1-05", "title": "Bạn mấy tuổi?", "titleHanzi": "你几岁" },
+					{ "id": "h1-06", "title": "Nhà bạn có mấy người?", "titleHanzi": "你家有几口人" },
+					{ "id": "h1-07", "title": "Bố mẹ làm nghề gì?", "titleHanzi": "做什么工作" }
+				]
+			},
+			{
+				"title": "Quốc tịch và ngôn ngữ",
+				"lessons": [
+					{ "id": "h1-08", "title": "Bạn là người nước nào?", "titleHanzi": "你是哪国人" },
+					{ "id": "h1-09", "title": "Tôi biết nói tiếng Trung", "titleHanzi": "我会说汉语" },
+					{ "id": "h1-10", "title": "Cô giáo tiếng Trung", "titleHanzi": "汉语老师" },
+					{ "id": "h1-11", "title": "Rất vui được gặp bạn", "titleHanzi": "认识你很高兴" }
+				]
+			},
+			{
+				"title": "Số và thời gian",
+				"lessons": [
+					{ "id": "h1-12", "title": "Số đếm", "titleHanzi": "一二三" },
+					{ "id": "h1-13", "title": "Hôm nay ngày mấy?", "titleHanzi": "今天几号" },
+					{ "id": "h1-14", "title": "Thứ mấy?", "titleHanzi": "星期几" },
+					{ "id": "h1-15", "title": "Bây giờ mấy giờ?", "titleHanzi": "现在几点" },
+					{ "id": "h1-16", "title": "Hôm qua, ngày mai", "titleHanzi": "昨天明天" }
+				]
+			},
+			{
+				"title": "Ăn uống",
+				"lessons": [
+					{ "id": "h1-17", "title": "Tôi muốn uống trà", "titleHanzi": "我想喝茶" },
+					{ "id": "h1-18", "title": "Bạn ăn gì?", "titleHanzi": "你吃什么" },
+					{ "id": "h1-19", "title": "Ở nhà hàng", "titleHanzi": "在饭馆" },
+					{ "id": "h1-20", "title": "Bao nhiêu tiền?", "titleHanzi": "多少钱" },
+					{ "id": "h1-21", "title": "Tôi thích ăn táo", "titleHanzi": "我喜欢吃苹果" }
+				]
+			},
+			{
+				"title": "Nơi chốn",
+				"lessons": [
+					{ "id": "h1-22", "title": "Ở đâu?", "titleHanzi": "在哪儿" },
+					{ "id": "h1-23", "title": "Tôi ngồi đây được không?", "titleHanzi": "我能坐这儿吗" },
+					{ "id": "h1-24", "title": "Trường học", "titleHanzi": "学校" },
+					{ "id": "h1-25", "title": "Đi bệnh viện", "titleHanzi": "去医院" },
+					{ "id": "h1-26", "title": "Ở nhà", "titleHanzi": "在家" }
+				]
+			},
+			{
+				"title": "Thời tiết và đi lại",
+				"lessons": [
+					{ "id": "h1-27", "title": "Thời tiết ngày mai", "titleHanzi": "明天天气" },
+					{ "id": "h1-28", "title": "Trời nóng, trời lạnh", "titleHanzi": "很热很冷" },
+					{ "id": "h1-29", "title": "Đi máy bay", "titleHanzi": "坐飞机" },
+					{ "id": "h1-30", "title": "Đi taxi", "titleHanzi": "坐出租车" },
+					{ "id": "h1-31", "title": "Bạn đi bằng gì?", "titleHanzi": "你怎么去" }
+				]
+			},
+			{
+				"title": "Mua sắm",
+				"lessons": [
+					{ "id": "h1-32", "title": "Mua quần áo", "titleHanzi": "买衣服" },
+					{ "id": "h1-33", "title": "Cái này đẹp", "titleHanzi": "这个很漂亮" },
+					{ "id": "h1-34", "title": "Mua bao nhiêu?", "titleHanzi": "买多少" },
+					{ "id": "h1-35", "title": "Cửa hàng", "titleHanzi": "商店" }
+				]
+			},
+			{
+				"title": "Sinh hoạt",
+				"lessons": [
+					{ "id": "h1-36", "title": "Gọi điện thoại", "titleHanzi": "打电话" },
+					{ "id": "h1-37", "title": "Nấu món Trung", "titleHanzi": "做中国菜" },
+					{ "id": "h1-38", "title": "Xem phim", "titleHanzi": "看电影" },
+					{ "id": "h1-39", "title": "Đi ngủ", "titleHanzi": "睡觉" },
+					{ "id": "h1-40", "title": "Bạn đang làm gì?", "titleHanzi": "你在做什么呢" }
+				]
+			}
+		]
+	}
+]
