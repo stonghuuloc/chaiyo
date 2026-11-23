@@ -54,6 +54,6 @@ describe('trackView', () => {
 		const copies = [trackToast(locked), trackToast(open)];
 
 		// Assert
-		expect(copies).toEqual(['Đỗ thi thử HSK 2 để mở Du lịch', 'Chuyên đề Du lịch sắp ra mắt.']);
+		expect(copies).toEqual(['Học xong HSK 2 để mở Du lịch', 'Chuyên đề Du lịch sắp ra mắt.']);
 	});
 });

@@ -555,7 +555,7 @@ describe('/roadmap', () => {
 		expect(page.tracks().some((t) => t.open)).toBe(false);
 		expect(page.sum()).toBe('5 chuyên đề · 0 đã mở · học song song với HSK');
 		expect(text(page.tracks()[0].querySelector('[data-part=track-need]'))).toBe(
-			'Đỗ thi thử HSK 2 để mở Du lịch · 8 bài'
+			'Cần HSK 2 · 8 bài'
 		);
 		expect(page.tracks()[0].querySelector('[data-part=track-need] use')?.getAttribute('href')).toBe(
 			'#i-fill-lock-simple'
@@ -628,7 +628,7 @@ describe('/roadmap', () => {
 			'Bài 7 · Mặc cả ở chợ',
 			'Bài 8 · Chụp ảnh giúp tôi'
 		]);
-		expect(page.toast()).toBe('Đỗ thi thử HSK 2 để mở Du lịch');
+		expect(page.toast()).toBe('Học xong HSK 2 để mở Du lịch');
 		expect(location.hash).toBe('#tracks');
 	});
 

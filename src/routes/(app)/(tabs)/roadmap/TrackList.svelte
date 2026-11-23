@@ -39,11 +39,7 @@
 							<svg class="size-[11px] flex-none fill-current text-muted" aria-hidden="true"
 								><use href="#i-fill-lock-simple" /></svg
 							>
-							{m.chy49s3_track_need_lock({
-								need: item.need,
-								title: item.title,
-								count: item.lessons.length
-							})}
+							{m.chy49s3_track_need_lock({ need: item.need, count: item.lessons.length })}
 						{:else}
 							{m.chy49s3_track_need({ need: item.need, count: item.lessons.length })}
 						{/if}
