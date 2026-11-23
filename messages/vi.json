@@ -659,5 +659,11 @@
 	"chy53s2_kai_sub": "Nét rõ, dễ tập viết",
 	"chy53s2_xing": "Hành thư",
 	"chy53s2_xing_sub": "Xem trước",
-	"chy53s2_hanzi_hint": "Hành thư chỉ là bản xem trước, đang dùng font gần giống. Máy bạn chưa có thì sẽ hiện nét tay bình thường."
+	"chy53s2_hanzi_hint": "Hành thư chỉ là bản xem trước, đang dùng font gần giống. Máy bạn chưa có thì sẽ hiện nét tay bình thường.",
+	"chy50s3_all": "Xem hết",
+	"chy50s3_sub_next": "Có {have}/{total}. Cái tiếp theo: {next}.",
+	"chy50s3_sub_all": "Có {have}/{total}. Đủ bộ rồi!",
+	"chy50s3_how_first": "Qua Bài 0",
+	"chy50s3_how_hsk1": "Qua thi thử HSK 1",
+	"chy50s3_how_hsk2": "Qua thi thử HSK 2"
 }
