@@ -4,6 +4,7 @@ import type { Channel, ChannelName } from './channel';
 import { fakeChannel } from './fake-channel';
 import { memoryMarks } from './marks';
 import { sendReminders } from './remind';
+import { webPushChannel } from './web-push';
 import type { Rolled } from './tick';
 
 const HCM = 'Asia/Ho_Chi_Minh';
@@ -576,6 +577,38 @@ describe('sendReminders', () => {
 			expect(result.deliveries).toEqual([
 				{ id: 'minh', channel: 'push', ok: false, error: 'plain' }
 			]);
+		});
+
+		it('Given_PushHasNoDeviceAndEmailThrows_When_NextTick_Then_RetriesAndSends', async () => {
+			// Arrange
+			const marks = memoryMarks();
+			const rolled = [rolledFor('minh', '2026-11-22', ['push', 'email'])];
+			const push = webPushChannel({
+				subs: { list: async () => [], remove: async () => {} },
+				post: async () => 201
+			});
+			const down: Channel = {
+				name: 'email',
+				send: async () => {
+					throw new Error('429');
+				}
+			};
+			const first = await sendReminders(NOW, rolled, [push, down], marks);
+			const f = fakes();
+
+			// Act
+			const next = await sendReminders(
+				new Date('2026-11-23T13:15:00Z'),
+				rolled,
+				[push, f.email],
+				marks
+			);
+
+			// Assert
+			expect(first.failed).toEqual(['minh']);
+			expect(first.sent).toEqual([]);
+			expect(next.sent).toEqual(['minh']);
+			expect(f.email.sent).toHaveLength(1);
 		});
 	});
 });

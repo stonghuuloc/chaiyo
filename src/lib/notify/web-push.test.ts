@@ -50,12 +50,12 @@ describe('webPushChannel', () => {
 		expect(list.mock.calls).toEqual([['lan']]);
 	});
 
-	it('Given_NoSubs_When_Send_Then_Resolves', async () => {
+	it('Given_NoSubs_When_Send_Then_RejectsNoDeviceReached', async () => {
 		const { subs } = inMemory({});
 		const post = script({});
 		await expect(
 			webPushChannel({ subs, post }).send({ ...reminder, learnerId: 'huy' })
-		).resolves.toBeUndefined();
+		).rejects.toThrow('push: no device reached');
 		expect(post).not.toHaveBeenCalled();
 	});
 
@@ -72,7 +72,9 @@ describe('webPushChannel', () => {
 
 	it('Given_404_When_Send_Then_Removed', async () => {
 		const { subs, remove } = inMemory({ lan: [sub('e1')] });
-		await webPushChannel({ subs, post: script({ e1: 404 }) }).send(reminder);
+		await expect(
+			webPushChannel({ subs, post: script({ e1: 404 }) }).send(reminder)
+		).rejects.toThrow('push: no device reached');
 		expect(remove.mock.calls).toEqual([['lan', ep('e1')]]);
 	});
 
@@ -117,7 +119,9 @@ describe('webPushChannel', () => {
 		});
 		const post = script({});
 
-		await expect(webPushChannel({ subs, post }).send(reminder)).resolves.toBeUndefined();
+		await expect(webPushChannel({ subs, post }).send(reminder)).rejects.toThrow(
+			'push: no device reached'
+		);
 
 		expect(post).not.toHaveBeenCalled();
 		expect(remove.mock.calls.map(([, e]) => e)).toEqual(bad);

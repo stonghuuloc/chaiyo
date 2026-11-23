@@ -57,7 +57,10 @@ export function webPushChannel(o: {
 				else if (status === 0 || status >= 400) failed++;
 				else ok++;
 			}
-			if (failed && !ok) throw new Error(`push: ${failed} of ${all.length} failed`);
+			if (!ok)
+				throw new Error(
+					failed ? `push: ${failed} of ${all.length} failed` : 'push: no device reached'
+				);
 		}
 	};
 }
