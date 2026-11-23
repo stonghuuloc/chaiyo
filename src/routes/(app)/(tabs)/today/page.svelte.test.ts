@@ -1,7 +1,7 @@
 import { flushSync, mount, tick, unmount } from 'svelte';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
-import { initialState, type State } from '#lib/study/index.js';
+import { initialState, type Skill, type State } from '#lib/study/index.js';
 import { countDays } from '#lib/study/fixtures/streak.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
@@ -13,6 +13,18 @@ const build = (due: number): State => {
 	state.lessons['h1-01'].unlocked = true;
 	for (let i = 0; i < due; i++) {
 		state.lexicon[`w${i}`] = { saved: false, cards: { the: { due: past, first: past, fsrs: {} } } };
+	}
+	return state;
+};
+
+const buildMix = (n: Partial<Record<Skill, number>>): State => {
+	const state = build(0);
+	for (const skill of ['the', 'nghe', 'viet'] as Skill[]) {
+		for (let i = 0; i < (n[skill] ?? 0); i++) {
+			const word = `${skill}${i}`;
+			state.lexicon[word] ??= { saved: false, cards: {} };
+			state.lexicon[word].cards[skill] = { due: past, first: past, fsrs: {} };
+		}
 	}
 	return state;
 };
@@ -60,7 +72,18 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 			),
 		line: () => target!.querySelector('[data-part=streak-line]')?.textContent?.trim(),
 		strips: () => target!.querySelectorAll('[data-part=week-strip]').length,
-		dialog: () => document.querySelector('[role=dialog]')
+		dialog: () => document.querySelector('[role=dialog]'),
+		practice: () => target!.querySelectorAll('[data-part=practice-row]').length,
+		practiceTitle: () => target!.querySelector('[data-part=practice-title]')?.textContent?.trim(),
+		roadmap: () => target!.querySelectorAll('[data-part=roadmap]').length,
+		now: () => target!.querySelector('[data-part=road-row][data-status=now]')?.textContent?.trim(),
+		friends: () => target!.querySelectorAll('[data-part=friends]').length,
+		order: () =>
+			[
+				...target!.querySelectorAll(
+					'[data-part=next-cta], [data-part=practice-row], [data-part=roadmap], [data-part=week-strip]'
+				)
+			].map((e) => e.getAttribute('data-part'))
 	};
 };
 
@@ -97,6 +120,8 @@ describe('/today', () => {
 		expect(page.h1()).toBe(1);
 		expect(page.scenes()).toBe(0);
 		expect(page.ctas()).toBe(0);
+		expect(page.practice()).toBe(0);
+		expect(page.roadmap()).toBe(0);
 		expect(hoisted.load).not.toHaveBeenCalled();
 	});
 
@@ -126,6 +151,50 @@ describe('/today', () => {
 		// Assert
 		expect(page.cta()).toBe('Tiếp tục Bài 1');
 		expect(page.scene()).toBe('lesson-next');
+	});
+});
+
+describe('/today rows', () => {
+	it('Given_Ledger6The4Nghe2Viet_When_Mount_Then_PracticeRowUnderCta', async () => {
+		// Arrange
+		current = buildMix({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.practiceTitle()).toBe('Luyện hôm nay · khoảng 3 phút');
+		expect(page.order()).toEqual(['next-cta', 'practice-row', 'roadmap', 'week-strip']);
+	});
+
+	it('Given_PracticeRow_When_EmitEmptiesSession_Then_RowGone', async () => {
+		// Arrange
+		current = buildMix({ the: 6, nghe: 4, viet: 2 });
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		expect(page.practice()).toBe(1);
+
+		// Act
+		publish(build(0));
+		await settle();
+
+		// Assert
+		expect(page.practice()).toBe(0);
+	});
+
+	it('Given_Ac6State_When_Mount_Then_RoadmapBai1NowAndNoFriends', async () => {
+		// Arrange
+		current = build(0);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.roadmap()).toBe(1);
+		expect(page.now()).toMatch(/^Bài 1/);
+		expect(page.friends()).toBe(0);
 	});
 });
 

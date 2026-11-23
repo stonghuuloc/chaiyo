@@ -9,8 +9,13 @@
 	} from '#lib/lesson/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import type { State } from '#lib/study/index.js';
+	import { todayView } from '../practice/today';
 	import type { PageProps } from './$types';
+	import FriendsStrip from './FriendsStrip.svelte';
 	import NextCard from './NextCard.svelte';
+	import PracticeRow from './PracticeRow.svelte';
+	import RoadmapSlice from './RoadmapSlice.svelte';
+	import { roadmapSlice } from './roadmap';
 	import StreakChip from './StreakChip.svelte';
 	import { todayState } from './today';
 	import WeekStrip from './WeekStrip.svelte';
@@ -63,7 +68,10 @@
 </div>
 {#if study && now}
 	<NextCard view={todayState(study, now)} />
+	<PracticeRow view={todayView(study, now)} />
+	<RoadmapSlice rows={roadmapSlice(study)} />
 	<WeekStrip view={weekView(study, now)} />
+	<FriendsStrip friends={[]} />
 	{#if freeze}
 		<FreezePopup view={freeze} />
 	{/if}
