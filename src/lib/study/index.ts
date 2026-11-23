@@ -1,6 +1,8 @@
 export { apply, initialState } from './apply';
 export { BADGES } from './badges';
 export type { BadgeId } from './badges';
+export { BADGE_ART, badgesView } from './badges-view';
+export type { BadgesView, EarnedBadge, LockedBadge } from './badges-view';
 export { localDate } from './dates';
 export { currentLevel } from './level';
 export { roadAnchor, roadRows } from './road';
