@@ -48,7 +48,7 @@
 	>
 		<div
 			class="pointer-events-auto flex max-w-[calc(100%-40px)] items-center {placement === 'top'
-				? 'gap-2 rounded-pill bg-ink px-4 py-2.5'
+				? 'gap-2 rounded-pill bg-ink px-4 py-2.5 leading-[normal]'
 				: 'gap-3 rounded-pill bg-ink py-1 pr-1.5 pl-4'} text-toast text-notebook-paper"
 			role="status"
 			transition:toastRise={{ reduced, from: placement === 'top' ? 'above' : 'below' }}

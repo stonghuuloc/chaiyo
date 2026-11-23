@@ -30,7 +30,7 @@
 							><use href="#i-fill-lock-simple" /></svg
 						>
 					{:else}
-						<span class="rounded-xs h-1 w-3/5 overflow-hidden bg-ruled-line">
+						<span class="h-1 w-3/5 overflow-hidden rounded-[2px] bg-ruled-line">
 							<i class="block h-full bg-primary" style:width="{Math.max(4, cell.progress * 100)}%"
 							></i>
 						</span>

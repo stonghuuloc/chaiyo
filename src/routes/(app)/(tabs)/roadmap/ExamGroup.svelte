@@ -68,7 +68,7 @@
 			</li>
 		{/each}
 		{#if exams.note}
-			<li data-part="exam-end" class="pt-1 pl-12 text-[13px] text-muted">
+			<li data-part="exam-end" class="pt-1 pl-12 text-[13px] leading-[normal] text-muted">
 				{m.chy49s2_exam_note()}
 			</li>
 		{/if}

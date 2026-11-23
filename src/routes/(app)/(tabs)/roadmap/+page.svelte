@@ -71,7 +71,7 @@
 		{#if view.level > top}
 			<p
 				data-part="lock-note"
-				class="mt-4 flex items-center gap-2 rounded-cell bg-shaded-paper px-4 py-3 text-toast text-graphite"
+				class="mt-4 flex items-center gap-2 rounded-cell bg-shaded-paper px-4 py-3 text-toast leading-[normal] text-graphite"
 			>
 				<svg class="size-[15px] flex-none fill-current text-muted" aria-hidden="true"
 					><use href="#i-fill-lock-simple" /></svg
