@@ -41,8 +41,8 @@ describe('icon sprite generator', () => {
 		const ids = symbols.map((s) => s.id).sort();
 		// Assert
 		expect(ids).toEqual(listed);
-		expect(ids).toHaveLength(58);
-		expect(new Set(ids).size).toBe(58);
+		expect(ids).toHaveLength(63);
+		expect(new Set(ids).size).toBe(63);
 	});
 
 	it('Given_Sprite_Then_StartsWithGeneratedComment', () => {

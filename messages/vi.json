@@ -559,5 +559,14 @@
 	"chy49s2_mock_after": "{sub} · mở khi qua Bài {last}",
 	"chy49s2_mock_toast": "Qua Bài {last} để mở thi thử HSK {level}",
 	"chy49s2_mock_soon": "Thi thử HSK {level} sắp ra mắt.",
-	"chy49s2_exam_note": "Từ HSK 3, đỗ cấp cần đỗ cả phần Viết và phần Nói."
+	"chy49s2_exam_note": "Từ HSK 3, đỗ cấp cần đỗ cả phần Viết và phần Nói.",
+	"chy49s3_track_lock": "Học xong HSK {need} để mở {title}",
+	"chy49s3_track_soon": "Chuyên đề {title} sắp ra mắt.",
+	"chy49s3_mode_label": "Loại lộ trình",
+	"chy49s3_mode_hsk": "HSK",
+	"chy49s3_mode_tracks": "Chuyên đề",
+	"chy49s3_tracks_sum": "{total} chuyên đề · {open} đã mở · học song song với HSK",
+	"chy49s3_track_need": "Cần HSK {need} · {count} bài",
+	"chy49s3_track_need_lock": "Cần HSK {need} · {count} bài",
+	"chy49s3_jump": "Bài {n} đang học"
 }
