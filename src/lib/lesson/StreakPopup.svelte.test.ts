@@ -3,6 +3,7 @@ import type { StudyEvent } from '#lib/study/index.js';
 import { afterEach, describe, expect, it } from 'vitest';
 import StreakPopup from './StreakPopup.svelte';
 
+const original = window.matchMedia;
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
@@ -21,6 +22,7 @@ afterEach(() => {
 	target?.remove();
 	target = undefined;
 	app = undefined;
+	window.matchMedia = original;
 	flushSync();
 });
 
@@ -108,5 +110,42 @@ describe('StreakPopup', () => {
 		expect(dialog()!.querySelector('[data-part="streak-note"]')!.textContent).toContain(
 			'Được tặng 1 lượt đóng băng!'
 		);
+	});
+
+	it('Given_MotionAllowed_When_DayCounted_Then_FlameFlickersAnd18Embers', () => {
+		// Arrange / Act
+		const dialog = mountPopup([{ type: 'DayCounted', day: '2026-11-22', streak: 4 }]);
+
+		// Assert
+		expect(dialog()!.querySelector('[data-part="streak-flame"]')!.getAttribute('data-motion')).toBe(
+			'flicker'
+		);
+		expect(document.querySelectorAll('[data-part="particle"][data-kind="ember"]')).toHaveLength(18);
+	});
+
+	it('Given_ReducedMotion_When_DayCounted_Then_NoParticlesAndStillFlame', () => {
+		// Arrange
+		window.matchMedia = ((media: string) => ({ matches: true, media })) as typeof matchMedia;
+
+		// Act
+		const dialog = mountPopup([{ type: 'DayCounted', day: '2026-11-22', streak: 4 }]);
+
+		// Assert
+		const flame = dialog()!.querySelector('[data-part="streak-flame"]')!;
+		expect(flame.hasAttribute('data-motion')).toBe(false);
+		expect(document.querySelectorAll('[data-part="particle"]')).toHaveLength(0);
+	});
+
+	it('Given_Open_When_ClickTuyet_Then_ParticlesRemoved', async () => {
+		// Arrange
+		const dialog = mountPopup([{ type: 'DayCounted', day: '2026-11-22', streak: 4 }]);
+
+		// Act
+		dialog()!.querySelector('button')!.click();
+		flushSync();
+
+		// Assert
+		await expect.poll(() => dialog()).toBeNull();
+		expect(document.querySelectorAll('[data-part="particle"]')).toHaveLength(0);
 	});
 });
