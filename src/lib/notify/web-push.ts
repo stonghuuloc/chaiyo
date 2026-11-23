@@ -46,6 +46,7 @@ export function webPushChannel(o: {
 		async send({ learnerId }) {
 			const all = await o.subs.list(learnerId);
 			let failed = 0;
+			let ok = 0;
 			for (const s of all) {
 				if (!isPushEndpoint(s.endpoint)) {
 					await o.subs.remove(learnerId, s.endpoint);
@@ -54,8 +55,12 @@ export function webPushChannel(o: {
 				const status = await o.post(s, body).catch(() => 0);
 				if (status === 404 || status === 410) await o.subs.remove(learnerId, s.endpoint);
 				else if (status === 0 || status >= 400) failed++;
+				else ok++;
 			}
-			if (failed) throw new Error(`push: ${failed} of ${all.length} failed`);
+			if (!ok)
+				throw new Error(
+					failed ? `push: ${failed} of ${all.length} failed` : 'push: no device reached'
+				);
 		}
 	};
 }

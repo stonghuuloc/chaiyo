@@ -502,5 +502,8 @@
 	"chy46s3_r4": "thì chuỗi về 0. Huy hiệu đã có vẫn giữ.",
 	"chy46s3_ok": "Hiểu rồi",
 	"chy46s3_link": "Đóng băng là gì?",
-	"chy46s3_week_label": "Tuần này, xem lượt đóng băng"
+	"chy46s3_week_label": "Tuần này, xem lượt đóng băng",
+	"chy48s2_title": "Thử Email",
+	"chy48s2_test": "Gửi thử email",
+	"chy48s2_result": "Kết quả: {state}"
 }

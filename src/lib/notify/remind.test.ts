@@ -4,6 +4,7 @@ import type { Channel, ChannelName } from './channel';
 import { fakeChannel } from './fake-channel';
 import { memoryMarks } from './marks';
 import { sendReminders } from './remind';
+import { webPushChannel } from './web-push';
 import type { Rolled } from './tick';
 
 const HCM = 'Asia/Ho_Chi_Minh';
@@ -45,7 +46,12 @@ describe('sendReminders', () => {
 		);
 
 		// Assert
-		expect(result).toEqual({ sent: [], skipped: [{ id: 'lan', reason: 'counted' }] });
+		expect(result).toEqual({
+			sent: [],
+			skipped: [{ id: 'lan', reason: 'counted' }],
+			failed: [],
+			deliveries: []
+		});
 		expect(counts(f)).toEqual([0, 0, 0]);
 	});
 
@@ -102,7 +108,15 @@ describe('sendReminders', () => {
 		);
 
 		// Assert
-		expect(result).toEqual({ sent: ['minh'], skipped: [] });
+		expect(result).toEqual({
+			sent: ['minh'],
+			skipped: [],
+			failed: [],
+			deliveries: [
+				{ id: 'minh', channel: 'push', ok: true },
+				{ id: 'minh', channel: 'email', ok: true }
+			]
+		});
 		expect(counts(f)).toEqual([1, 1, 0]);
 	});
 
@@ -119,7 +133,12 @@ describe('sendReminders', () => {
 		);
 
 		// Assert
-		expect(result).toEqual({ sent: [], skipped: [{ id: 'huy', reason: 'no-channel' }] });
+		expect(result).toEqual({
+			sent: [],
+			skipped: [{ id: 'huy', reason: 'no-channel' }],
+			failed: [],
+			deliveries: []
+		});
 		expect(counts(f)).toEqual([0, 0, 0]);
 	});
 
@@ -177,11 +196,11 @@ describe('sendReminders', () => {
 		const result = await sendReminders(NOW, [], all(f), memoryMarks());
 
 		// Assert
-		expect(result).toEqual({ sent: [], skipped: [] });
+		expect(result).toEqual({ sent: [], skipped: [], failed: [], deliveries: [] });
 		expect(counts(f)).toEqual([0, 0, 0]);
 	});
 
-	it('Given_SendThrows_When_SendReminders_Then_Rejects', async () => {
+	it('Given_SendThrows_When_SendReminders_Then_FailedNotRejected', async () => {
 		// Arrange
 		const boom: Channel = {
 			name: 'push',
@@ -199,7 +218,7 @@ describe('sendReminders', () => {
 		);
 
 		// Assert
-		await expect(act).rejects.toThrow('boom');
+		await expect(act).resolves.toMatchObject({ sent: [], failed: ['minh'] });
 	});
 
 	it('Given_MinhHcmHuyNy_When_SendAt1300Z_Then_OnlyMinhSent', async () => {
@@ -214,7 +233,12 @@ describe('sendReminders', () => {
 		const result = await sendReminders(NOW, rolled, all(f), memoryMarks());
 
 		// Assert
-		expect(result).toEqual({ sent: ['minh'], skipped: [{ id: 'huy', reason: 'not-due' }] });
+		expect(result).toEqual({
+			sent: ['minh'],
+			skipped: [{ id: 'huy', reason: 'not-due' }],
+			failed: [],
+			deliveries: [{ id: 'minh', channel: 'push', ok: true }]
+		});
 		expect(f.push.sent.map((r) => r.learnerId)).toEqual(['minh']);
 	});
 
@@ -249,9 +273,22 @@ describe('sendReminders', () => {
 		}
 
 		// Assert
-		expect(results[0]).toEqual({ sent: ['minh'], skipped: [] });
+		expect(results[0]).toEqual({
+			sent: ['minh'],
+			skipped: [],
+			failed: [],
+			deliveries: [
+				{ id: 'minh', channel: 'push', ok: true },
+				{ id: 'minh', channel: 'email', ok: true }
+			]
+		});
 		for (const r of results.slice(1)) {
-			expect(r).toEqual({ sent: [], skipped: [{ id: 'minh', reason: 'already-sent' }] });
+			expect(r).toEqual({
+				sent: [],
+				skipped: [{ id: 'minh', reason: 'already-sent' }],
+				failed: [],
+				deliveries: []
+			});
 		}
 		expect(counts(f)).toEqual([1, 1, 0]);
 	});
@@ -315,7 +352,8 @@ describe('sendReminders', () => {
 				throw new Error('boom');
 			}
 		};
-		await expect(sendReminders(NOW, rolled, [boom], marks)).rejects.toThrow('boom');
+		const first = await sendReminders(NOW, rolled, [boom], marks);
+		expect(first.failed).toEqual(['minh']);
 		const f = fakes();
 
 		// Act
@@ -337,7 +375,9 @@ describe('sendReminders', () => {
 				throw new Error('boom');
 			}
 		};
-		await expect(sendReminders(NOW, rolled, [f.push, boom], marks)).rejects.toThrow('boom');
+		const first = await sendReminders(NOW, rolled, [f.push, boom], marks);
+		expect(first.sent).toEqual(['minh']);
+		expect(first.deliveries[1]).toEqual({ id: 'minh', channel: 'email', ok: false, error: 'boom' });
 
 		// Act
 		const result = await sendReminders(
@@ -350,5 +390,225 @@ describe('sendReminders', () => {
 		// Assert
 		expect(result.skipped).toEqual([{ id: 'minh', reason: 'already-sent' }]);
 		expect(f.push.sent).toHaveLength(1);
+	});
+
+	describe('fan-out isolation', () => {
+		const throwing = (name: ChannelName, message: string): Channel => ({
+			name,
+			send: async () => {
+				throw new Error(message);
+			}
+		});
+		const minh3 = () => rolledFor('minh', '2026-11-22', ['push', 'email', 'telegram']);
+
+		it('Given_TelegramThrows_When_SendReminders_Then_PushAndEmailDelivered', async () => {
+			// Arrange
+			const f = fakes();
+
+			// Act
+			const result = await sendReminders(
+				NOW,
+				[minh3()],
+				[f.push, f.email, throwing('telegram', 'telegram: 400')],
+				memoryMarks()
+			);
+
+			// Assert
+			expect(result).toEqual({
+				sent: ['minh'],
+				skipped: [],
+				failed: [],
+				deliveries: [
+					{ id: 'minh', channel: 'push', ok: true },
+					{ id: 'minh', channel: 'email', ok: true },
+					{ id: 'minh', channel: 'telegram', ok: false, error: 'telegram: 400' }
+				]
+			});
+			expect(counts(f)).toEqual([1, 1, 0]);
+		});
+
+		it('Given_TelegramThrows_When_NextTick_Then_AlreadySent', async () => {
+			// Arrange
+			const f = fakes();
+			const marks = memoryMarks();
+			const channels = [f.push, f.email, throwing('telegram', 'telegram: 400')];
+			await sendReminders(NOW, [minh3()], channels, marks);
+
+			// Act
+			const next = await sendReminders(
+				new Date('2026-11-23T13:15:00Z'),
+				[minh3()],
+				channels,
+				marks
+			);
+
+			// Assert
+			expect(next.skipped).toEqual([{ id: 'minh', reason: 'already-sent' }]);
+			expect(f.push.sent).toHaveLength(1);
+		});
+
+		it('Given_AllChannelsThrow_When_SendReminders_Then_FailedAndClaimReleased', async () => {
+			// Arrange
+			const marks = memoryMarks();
+			const rolled = [rolledFor('minh', '2026-11-22', ['push'])];
+
+			// Act
+			const first = await sendReminders(NOW, rolled, [throwing('push', 'boom')], marks);
+			const keysAfterFail = marks.keys.size;
+			const f = fakes();
+			const retry = await sendReminders(new Date('2026-11-23T13:15:00Z'), rolled, all(f), marks);
+
+			// Assert
+			expect(first).toEqual({
+				sent: [],
+				skipped: [],
+				failed: ['minh'],
+				deliveries: [{ id: 'minh', channel: 'push', ok: false, error: 'boom' }]
+			});
+			expect(keysAfterFail).toBe(0);
+			expect(retry.sent).toEqual(['minh']);
+			expect(f.push.sent).toHaveLength(1);
+		});
+
+		it('Given_ReleaseThrows_When_AllFail_Then_ResolvesFailed', async () => {
+			// Arrange
+			const marks = {
+				claim: async () => true,
+				release: async () => {
+					throw new Error('release down');
+				}
+			};
+
+			// Act
+			const result = await sendReminders(
+				NOW,
+				[rolledFor('minh', '2026-11-22', ['push'])],
+				[throwing('push', 'boom')],
+				marks
+			);
+
+			// Assert
+			expect(result.failed).toEqual(['minh']);
+		});
+
+		it('Given_MinhFailsLanOk_When_SendReminders_Then_LanSent', async () => {
+			// Arrange
+			const f = fakes();
+			const rolled = [
+				rolledFor('minh', '2026-11-22', ['push']),
+				rolledFor('lan', '2026-11-22', ['email'])
+			];
+
+			// Act
+			const result = await sendReminders(
+				NOW,
+				rolled,
+				[throwing('push', 'boom'), f.email],
+				memoryMarks()
+			);
+
+			// Assert
+			expect(result.failed).toEqual(['minh']);
+			expect(result.sent).toEqual(['lan']);
+			expect(f.email.sent).toHaveLength(1);
+		});
+
+		it('Given_ClaimThrows_When_SendReminders_Then_FailedAndNextLearnerSent', async () => {
+			// Arrange
+			const f = fakes();
+			const marks = {
+				claim: async (id: string) => {
+					if (id === 'minh') throw new Error('db down');
+					return true;
+				},
+				release: async () => {}
+			};
+			const rolled = [
+				rolledFor('minh', '2026-11-22', ['push']),
+				rolledFor('lan', '2026-11-22', ['email'])
+			];
+
+			// Act
+			const result = await sendReminders(NOW, rolled, all(f), marks);
+
+			// Assert
+			expect(result.failed).toEqual(['minh']);
+			expect(result.sent).toEqual(['lan']);
+			expect(result.deliveries).toEqual([
+				{ id: 'minh', channel: 'claim', ok: false, error: 'db down' },
+				{ id: 'lan', channel: 'email', ok: true }
+			]);
+			expect(f.push.sent).toHaveLength(0);
+		});
+
+		it('Given_FourLearners_When_SendReminders_Then_DeliveriesOnlyForMinh', async () => {
+			// Arrange
+			const f = fakes();
+			const rolled = [
+				rolledFor('lan', '2026-11-23', ['email']),
+				rolledFor('minh', '2026-11-22', ['push', 'email']),
+				rolledFor('huy', '2026-11-22', []),
+				rolledFor('nam', '2026-11-23', [])
+			];
+
+			// Act
+			const result = await sendReminders(NOW, rolled, all(f), memoryMarks());
+
+			// Assert
+			expect(result.deliveries.map((d) => d.id)).toEqual(['minh', 'minh']);
+		});
+
+		it('Given_NonErrorReason_When_Rejects_Then_ErrorIsString', async () => {
+			// Arrange
+			const odd: Channel = {
+				name: 'push',
+				send: () => Promise.reject('plain')
+			};
+
+			// Act
+			const result = await sendReminders(
+				NOW,
+				[rolledFor('minh', '2026-11-22', ['push'])],
+				[odd],
+				memoryMarks()
+			);
+
+			// Assert
+			expect(result.deliveries).toEqual([
+				{ id: 'minh', channel: 'push', ok: false, error: 'plain' }
+			]);
+		});
+
+		it('Given_PushHasNoDeviceAndEmailThrows_When_NextTick_Then_RetriesAndSends', async () => {
+			// Arrange
+			const marks = memoryMarks();
+			const rolled = [rolledFor('minh', '2026-11-22', ['push', 'email'])];
+			const push = webPushChannel({
+				subs: { list: async () => [], remove: async () => {} },
+				post: async () => 201
+			});
+			const down: Channel = {
+				name: 'email',
+				send: async () => {
+					throw new Error('429');
+				}
+			};
+			const first = await sendReminders(NOW, rolled, [push, down], marks);
+			const f = fakes();
+
+			// Act
+			const next = await sendReminders(
+				new Date('2026-11-23T13:15:00Z'),
+				rolled,
+				[push, f.email],
+				marks
+			);
+
+			// Assert
+			expect(first.failed).toEqual(['minh']);
+			expect(first.sent).toEqual([]);
+			expect(next.sent).toEqual(['minh']);
+			expect(f.email.sent).toHaveLength(1);
+		});
 	});
 });

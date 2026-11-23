@@ -16,6 +16,7 @@ describe('handlePushTest', () => {
 		const res = await handlePushTest(new Request('http://x', { method: 'OPTIONS' }), {
 			uid: async () => null,
 			channel: null,
+			name: 'push',
 			now: () => NOW
 		});
 		expect(res.status).toBe(204);
@@ -29,6 +30,7 @@ describe('handlePushTest', () => {
 		const res = await handlePushTest(post(), {
 			uid: async () => null,
 			channel: channel(vi.fn()),
+			name: 'push',
 			now: () => NOW
 		});
 		expect(res.status).toBe(401);
@@ -39,6 +41,7 @@ describe('handlePushTest', () => {
 		const res = await handlePushTest(post('Bearer t'), {
 			uid: async () => 'lan',
 			channel: null,
+			name: 'push',
 			now: () => NOW
 		});
 		expect(res.status).toBe(503);
@@ -52,6 +55,7 @@ describe('handlePushTest', () => {
 		const res = await handlePushTest(post('Bearer tok'), {
 			uid,
 			channel: channel(send),
+			name: 'push',
 			now: () => NOW
 		});
 		expect(uid).toHaveBeenCalledWith('Bearer tok');
@@ -67,10 +71,35 @@ describe('handlePushTest', () => {
 			channel: channel(async () => {
 				throw new Error('push: 1 of 1 failed');
 			}),
+			name: 'push',
 			now: () => NOW
 		});
 		expect(res.status).toBe(502);
 		expect(await res.json()).toEqual({ error: 'push: 1 of 1 failed' });
 		expect(cors(res)).toBe('*');
+	});
+
+	it('Given_NoEmailChannel_When_Handle_Then_503EmailNotConfigured', async () => {
+		const res = await handlePushTest(post('Bearer t'), {
+			uid: async () => 'lan',
+			channel: null,
+			name: 'email',
+			now: () => NOW
+		});
+		expect(res.status).toBe(503);
+		expect(await res.json()).toEqual({ error: 'email not configured' });
+	});
+
+	it('Given_EmailUser_When_Handle_Then_SendsCallerReminder200', async () => {
+		const send = vi.fn(async () => {});
+		const res = await handlePushTest(post('Bearer tok'), {
+			uid: async () => 'lan',
+			channel: { name: 'email', send },
+			name: 'email',
+			now: () => NOW
+		});
+		expect(send).toHaveBeenCalledWith({ learnerId: 'lan', day: '2026-11-23' });
+		expect(res.status).toBe(200);
+		expect(await res.json()).toEqual({ ok: true });
 	});
 });

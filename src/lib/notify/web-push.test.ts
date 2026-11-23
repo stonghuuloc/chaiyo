@@ -50,12 +50,12 @@ describe('webPushChannel', () => {
 		expect(list.mock.calls).toEqual([['lan']]);
 	});
 
-	it('Given_NoSubs_When_Send_Then_Resolves', async () => {
+	it('Given_NoSubs_When_Send_Then_RejectsNoDeviceReached', async () => {
 		const { subs } = inMemory({});
 		const post = script({});
 		await expect(
 			webPushChannel({ subs, post }).send({ ...reminder, learnerId: 'huy' })
-		).resolves.toBeUndefined();
+		).rejects.toThrow('push: no device reached');
 		expect(post).not.toHaveBeenCalled();
 	});
 
@@ -72,27 +72,34 @@ describe('webPushChannel', () => {
 
 	it('Given_404_When_Send_Then_Removed', async () => {
 		const { subs, remove } = inMemory({ lan: [sub('e1')] });
-		await webPushChannel({ subs, post: script({ e1: 404 }) }).send(reminder);
+		await expect(
+			webPushChannel({ subs, post: script({ e1: 404 }) }).send(reminder)
+		).rejects.toThrow('push: no device reached');
 		expect(remove.mock.calls).toEqual([['lan', ep('e1')]]);
 	});
 
-	it('Given_500And201_When_Send_Then_KeepsRowTriesBothRejects', async () => {
+	it('Given_500And201_When_Send_Then_KeepsRowTriesBothResolves', async () => {
 		const { subs, remove } = inMemory({ lan: [sub('e1'), sub('e2')] });
 		const post = script({ e1: 500, e2: 201 });
-		await expect(webPushChannel({ subs, post }).send(reminder)).rejects.toThrow(
-			'push: 1 of 2 failed'
-		);
+		await expect(webPushChannel({ subs, post }).send(reminder)).resolves.toBeUndefined();
 		expect(post).toHaveBeenCalledTimes(2);
 		expect(remove).not.toHaveBeenCalled();
 	});
 
-	it('Given_PostThrows_When_Send_Then_CountedAsFailure', async () => {
+	it('Given_PostThrowsAnd201_When_Send_Then_Resolves', async () => {
 		const { subs, remove } = inMemory({ lan: [sub('e1'), sub('e2')] });
 		const post = script({ e1: new Error('network'), e2: 201 });
-		await expect(webPushChannel({ subs, post }).send(reminder)).rejects.toThrow(
-			'push: 1 of 2 failed'
-		);
+		await expect(webPushChannel({ subs, post }).send(reminder)).resolves.toBeUndefined();
 		expect(post).toHaveBeenCalledTimes(2);
+		expect(remove).not.toHaveBeenCalled();
+	});
+
+	it('Given_EveryPostFails_When_Send_Then_Rejects', async () => {
+		const { subs, remove } = inMemory({ lan: [sub('e1'), sub('e2')] });
+		const post = script({ e1: 500, e2: new Error('network') });
+		await expect(webPushChannel({ subs, post }).send(reminder)).rejects.toThrow(
+			'push: 2 of 2 failed'
+		);
 		expect(remove).not.toHaveBeenCalled();
 	});
 
@@ -112,7 +119,9 @@ describe('webPushChannel', () => {
 		});
 		const post = script({});
 
-		await expect(webPushChannel({ subs, post }).send(reminder)).resolves.toBeUndefined();
+		await expect(webPushChannel({ subs, post }).send(reminder)).rejects.toThrow(
+			'push: no device reached'
+		);
 
 		expect(post).not.toHaveBeenCalled();
 		expect(remove.mock.calls.map(([, e]) => e)).toEqual(bad);
