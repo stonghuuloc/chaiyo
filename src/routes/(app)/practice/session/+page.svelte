@@ -33,7 +33,7 @@
 	});
 </script>
 
-<h1>{m.screen_practice_session()}</h1>
+<h1 class="sr-only">{m.screen_practice_session()}</h1>
 {#if cards?.length && opened}
 	<SessionRun {cards} ledger={opened} back={resolve('/(app)/(tabs)/practice')} />
 {:else if cards}

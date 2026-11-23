@@ -6,11 +6,11 @@
 
 {#if page.status === 503}
 	<section data-part="lesson-offline">
-		<h1>{m.lesson_offline()}</h1>
+		<h1 class="text-headline">{m.lesson_offline()}</h1>
 		<p>{m.lesson_offline_hint()}</p>
 		<a href={resolve('/(app)/(tabs)/today')}>{m.lesson_offline_home()}</a>
 	</section>
 {:else}
-	<h1>{page.status}</h1>
+	<h1 class="text-headline">{page.status}</h1>
 	<p>{page.error?.message}</p>
 {/if}

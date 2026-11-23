@@ -73,7 +73,7 @@
 	const rows = $derived(myWords(study, (h) => metas.get(h), new Date()));
 </script>
 
-<h1>{m.mywords_title()}</h1>
+<h1 class="text-title">{m.mywords_title()}</h1>
 {#if ready}
 	<WordsList {rows} bind:query />
 {/if}

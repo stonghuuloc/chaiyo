@@ -12,5 +12,5 @@
 {#if View}
 	<View lesson={data.lesson} session={data.session} />
 {:else}
-	<h1>{m.screen_lesson_section()}</h1>
+	<h1 class="text-title">{m.screen_lesson_section()}</h1>
 {/if}

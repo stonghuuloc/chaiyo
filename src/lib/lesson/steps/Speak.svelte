@@ -157,8 +157,11 @@
 							>
 							{#if !t.weak}
 								<span
-									class="absolute top-1.5 right-1.5 grid size-[18px] place-items-center rounded-full bg-lantern-red text-[10px] text-white"
-									data-check>✓</span
+									class="absolute top-1.5 right-1.5 grid size-[18px] place-items-center rounded-full bg-lantern-red text-white"
+									data-check
+									><svg class="size-3 fill-current" aria-hidden="true"
+										><use href="#i-bold-check" /></svg
+									></span
 								>
 							{/if}
 						</div>

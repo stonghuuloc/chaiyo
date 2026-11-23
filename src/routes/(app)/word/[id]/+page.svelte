@@ -26,7 +26,7 @@
 </script>
 
 <a href={resolve('/(app)/practice/words')} onclick={back}>{m.chy43s2_back()}</a>
-<h1>{m.screen_word()}</h1>
+<h1 class="text-title">{m.screen_word()}</h1>
 
 {#if 'notFound' in data.word}
 	<p>{m.word_not_found()}</p>

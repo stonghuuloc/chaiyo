@@ -20,10 +20,10 @@
 <svelte:head><title>{m.gate_title()}</title></svelte:head>
 
 {#if data.session === null || steps.length === 0}
-	<h1>{m.screen_gate()}</h1>
+	<h1 class="text-title">{m.screen_gate()}</h1>
 {:else}
 	{#await learnerLedger(data.session)}
-		<h1>{m.screen_gate()}</h1>
+		<h1 class="text-title">{m.screen_gate()}</h1>
 	{:then ledger}
 		<GateRun
 			lesson={data.lesson.lesson.id}
@@ -33,6 +33,6 @@
 			{ondone}
 		/>
 	{:catch}
-		<h1>{m.screen_gate()}</h1>
+		<h1 class="text-title">{m.screen_gate()}</h1>
 	{/await}
 {/if}

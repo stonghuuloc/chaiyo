@@ -50,5 +50,5 @@
 	});
 </script>
 
-<h1>{m.screen_settings()}</h1>
+<h1 class="text-title">{m.screen_settings()}</h1>
 {#if deps}<ReminderChannels {deps} />{/if}

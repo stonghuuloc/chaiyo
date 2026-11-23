@@ -15,6 +15,7 @@
 		"test:unit": "vitest",
 		"test": "vitest --run --passWithNoTests",
 		"test:coverage": "vitest --run --coverage",
+		"test:design": "vitest --run --project server src/lib/styles src/lib/shell/layout.test.ts",
 		"lint:content": "tsx scripts/lint-content.ts",
 		"import:content": "tsx scripts/import-content.ts",
 		"render:audio": "tsx scripts/render-audio.ts",
