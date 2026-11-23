@@ -665,5 +665,16 @@
 	"chy50s3_sub_all": "Có {have}/{total}. Đủ bộ rồi!",
 	"chy50s3_how_first": "Qua Bài 0",
 	"chy50s3_how_hsk1": "Qua thi thử HSK 1",
-	"chy50s3_how_hsk2": "Qua thi thử HSK 2"
+	"chy50s3_how_hsk2": "Qua thi thử HSK 2",
+	"chy50s3_friends": "Bạn bè",
+	"chy50s3_friends_sub": "Bảng xếp hạng tuần",
+	"chy50s3_settings": "Cài đặt",
+	"chy50s3_settings_sub": "Nhắc học · hồ sơ · kiểu chữ",
+	"chy50s3_reports": "Báo lỗi nội dung",
+	"chy50s3_reports_sub": "Quản trị · hộp thư báo lỗi",
+	"chy50s3_usage": "Số liệu sử dụng",
+	"chy50s3_usage_sub": "Quản trị · người học bỏ ở đâu",
+	"chy50s3_logout": "Đăng xuất",
+	"chy50s3_logout_failed": "Chưa đăng xuất được, thử lại nhé.",
+	"chy50s3_ver": "Chaiyo · bản thử"
 }
