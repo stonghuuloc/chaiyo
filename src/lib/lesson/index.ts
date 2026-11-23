@@ -1,5 +1,6 @@
 export { default as StepRunner } from './StepRunner.svelte';
 export { default as Done } from './Done.svelte';
+export { default as FreezePopup } from './FreezePopup.svelte';
 export { default as StreakPopup } from './StreakPopup.svelte';
 export { dayCounted, doneNext, nextSection, sectionName } from './done';
 export { dayCountedView } from './streak-popup';
