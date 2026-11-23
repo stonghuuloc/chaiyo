@@ -533,7 +533,10 @@ describe('sendReminders', () => {
 			// Assert
 			expect(result.failed).toEqual(['minh']);
 			expect(result.sent).toEqual(['lan']);
-			expect(result.deliveries).toEqual([{ id: 'lan', channel: 'email', ok: true }]);
+			expect(result.deliveries).toEqual([
+				{ id: 'minh', channel: 'claim', ok: false, error: 'db down' },
+				{ id: 'lan', channel: 'email', ok: true }
+			]);
 			expect(f.push.sent).toHaveLength(0);
 		});
 

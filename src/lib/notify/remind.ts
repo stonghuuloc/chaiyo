@@ -5,7 +5,7 @@ import type { Marks } from './marks';
 import type { Rolled } from './tick';
 
 export type Skip = { id: string; reason: 'counted' | 'no-channel' | 'not-due' | 'already-sent' };
-export type Delivery = { id: string; channel: ChannelName; ok: boolean; error?: string };
+export type Delivery = { id: string; channel: ChannelName | 'claim'; ok: boolean; error?: string };
 export type RemindResult = {
 	sent: string[];
 	skipped: Skip[];
@@ -41,8 +41,14 @@ export async function sendReminders(
 		let claimed: boolean;
 		try {
 			claimed = await marks.claim(learner.id, day);
-		} catch {
+		} catch (e) {
 			failed.push(learner.id);
+			deliveries.push({
+				id: learner.id,
+				channel: 'claim',
+				ok: false,
+				error: e instanceof Error ? e.message : String(e)
+			});
 			continue;
 		}
 		if (!claimed) {

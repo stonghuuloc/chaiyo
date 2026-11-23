@@ -5,10 +5,16 @@ export async function pushPost(): Promise<PushPost | null> {
 	const keys = Deno.env.get('VAPID_KEYS');
 	const subject = Deno.env.get('VAPID_SUBJECT');
 	if (!keys || !subject) return null;
-	const server = await webpush.ApplicationServer.new({
-		contactInformation: subject,
-		vapidKeys: await webpush.importVapidKeys(JSON.parse(keys))
-	});
+	let server: webpush.ApplicationServer;
+	try {
+		server = await webpush.ApplicationServer.new({
+			contactInformation: subject,
+			vapidKeys: await webpush.importVapidKeys(JSON.parse(keys))
+		});
+	} catch (e) {
+		console.warn(`push disabled: bad VAPID config: ${e instanceof Error ? e.message : e}`);
+		return null;
+	}
 	return async (s, body) => {
 		try {
 			await server
