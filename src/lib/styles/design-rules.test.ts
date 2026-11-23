@@ -16,8 +16,11 @@ const BORDER_COLOUR = new RegExp(
 	`^(?:[\\w-]+:)*border(?:-[trblxyse])?-(?:${COLOURS.join('|')}|transparent|current)(?:/\\d+)?$`
 );
 const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]|\u{FE0F}/u;
-const LETTER_KEY =
-	/\.(?:key|code)(?:\.toLowerCase\(\))?\s*[!=]==?\s*['"](?:Key[A-Z]|[A-Za-z])['"]|switch\s*\(\s*\w+\.(?:key|code)\s*\)[^]*?case\s+['"](?:Key[A-Z]|[A-Za-z])['"]\s*:/;
+const LETTER = `['"](?:Key[A-Z]|[A-Za-z])['"]`;
+const LETTER_KEY = new RegExp(
+	`\\.(?:key|code)(?:\\.toLowerCase\\(\\))?\\s*[!=]==?\\s*${LETTER}|switch\\s*\\(\\s*\\w+\\.(?:key|code)\\s*\\)\\s*\\{(?:[^{}]|\\{[^{}]*\\})*?case\\s+${LETTER}\\s*:`,
+	'g'
+);
 const WEBGL = /getContext\(\s*['"](?:webgl2?|experimental-webgl)['"]/;
 
 function walk(dir: string, ext: RegExp): string[] {
@@ -53,14 +56,16 @@ function scoped(text: string): Set<string> {
 	);
 }
 
-function classesOf(tag: string): string[] {
-	const m = /\bclass="([^"]*)"/.exec(tag);
-	return m
-		? m[1]
-				.replace(/\{[^}]*\}/g, ' ')
-				.split(/\s+/)
-				.filter(Boolean)
-		: [];
+const CLASS_ATTR = /\bclass=(?:"([^"]*)"|'([^']*)'|\{((?:[^{}]|\{[^{}]*\})*)\})/g;
+
+function classLists(text: string): { at: number; classes: string[] }[] {
+	return [...text.matchAll(CLASS_ATTR)].map((m) => ({
+		at: m.index,
+		classes: (m[1] ?? m[2] ?? m[3])
+			.replace(/\[(?=\s*['"`])|(?<=['"`]\s*)\]|[{},?'"`]|&&|\|\|/g, ' ')
+			.split(/\s+/)
+			.filter(Boolean)
+	}));
 }
 
 function lineAt(text: string, index: number): number {
@@ -70,22 +75,26 @@ function lineAt(text: string, index: number): number {
 function unsizedHeadings(text: string): number[] {
 	const local = scoped(text);
 	return [...text.matchAll(HEADING)]
-		.filter((m) => !classesOf(m[0]).some((c) => HEADING_SIZE.test(c) || local.has(c)))
+		.filter(
+			(m) =>
+				!classLists(m[0]).some(({ classes }) =>
+					classes.some((c) => HEADING_SIZE.test(c) || local.has(c))
+				)
+		)
 		.map((m) => lineAt(text, m.index));
 }
 
 const variantOf = (c: string) => c.slice(0, c.lastIndexOf(':') + 1);
 
 function uncolouredBorders(text: string): number[] {
-	return [...text.matchAll(/\bclass="([^"]*)"/g)]
-		.filter((m) => {
-			const cls = m[1].replace(/[{}?'"`]|&&|\|\|/g, ' ').split(/\s+/);
-			const colours = cls.filter((c) => BORDER_COLOUR.test(c)).map(variantOf);
-			return cls
+	return classLists(text)
+		.filter(({ classes }) => {
+			const colours = classes.filter((c) => BORDER_COLOUR.test(c)).map(variantOf);
+			return classes
 				.filter((c) => BORDER_WIDTH.test(c))
 				.some((w) => !colours.some((v) => v === '' || v === variantOf(w)));
 		})
-		.map((m) => lineAt(text, m.index));
+		.map(({ at }) => lineAt(text, at));
 }
 
 function hits(files: string[], find: (text: string) => number[]): string[] {
@@ -96,7 +105,8 @@ function hits(files: string[], find: (text: string) => number[]): string[] {
 }
 
 function lines(re: RegExp) {
-	return (text: string) => text.split('\n').flatMap((line, i) => (re.test(line) ? [i + 1] : []));
+	const global = new RegExp(re.source, re.flags.includes('g') ? re.flags : `${re.flags}g`);
+	return (text: string) => [...text.matchAll(global)].map((m) => lineAt(text, m.index));
 }
 
 describe('DESIGN.md rules', () => {
@@ -153,6 +163,10 @@ describe('DESIGN.md rules', () => {
 		['<h2 class="sr-only">x</h2>', 0],
 		['<h1 class="title">x</h1><style>.title { font-size: 36px; }</style>', 0],
 		['<h1 class="wrap">x</h1><style>.wrap { margin: 0; }</style>', 1],
+		["<h1 class='text-title'>x</h1>", 0],
+		["<h1 class={['text-title']}>x</h1>", 0],
+		["<h2 class={['mt-4']}>x</h2>", 1],
+		['<h1 class="text-[56px] leading-none">x</h1>', 0],
 		['<h1 class="card">x</h1><style>.card h1 { font-size: 2px; }</style>', 1]
 	])('Given_Heading_Then_SizeRuleCounts: %s', (sample, count) => {
 		// Arrange
@@ -171,6 +185,10 @@ describe('DESIGN.md rules', () => {
 		['<div class="border border-ruled-line aria-selected:border-ink"></div>', 0],
 		['<div class="border p-4 {extra}"></div>', 1],
 		['<div class="md:border-2"></div>', 1],
+		["<div class={['border', 'p-4']}></div>", 1],
+		["<div class={['border', 'border-ruled-line']}></div>", 0],
+		["<div class='border p-4'></div>", 1],
+		["<div class={open ? 'border border-ink' : 'p-4'}></div>", 0],
 		['<div class="border border-border"></div>', 0],
 		['<div class="md:border-2 md:border-border"></div>', 0],
 		['<div class="border-ruled-line not-first:border-t"></div>', 0],
@@ -204,11 +222,14 @@ describe('DESIGN.md rules', () => {
 		["if (e.key === 'Enter') submit();", false],
 		["if (e.key.toLowerCase() === 'n') next();", true],
 		["switch (e.key) { case 'n': next(); }", true],
+		["switch (e.key) {\n\tcase 'n':\n\t\tnext();\n}", true],
+		["switch (e.key) {\n\tcase 'Enter': {\n\t\tgo();\n\t}\n\tcase 'n':\n\t\tnext();\n}", true],
+		["switch (e.key) {\n\tcase 'Enter':\n\t\tgo();\n}\nswitch (grade) {\n\tcase 'A':\n}", false],
 		["if (e.key === 'Escape') close();", false]
 	])('Given_KeyHandler_Then_LetterRuleMatches: %s', (sample, hit) => {
 		// Arrange
 		// Act
-		const found = LETTER_KEY.test(sample);
+		const found = lines(LETTER_KEY)(sample).length > 0;
 		// Assert
 		expect(found).toBe(hit);
 	});
