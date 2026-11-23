@@ -35,6 +35,14 @@
 		font-family: var(--font-hanzi);
 	}
 
+	:root {
+		--font-hanzi-kaishu: var(--font-hanzi);
+	}
+
+	:root[data-hanzi='xing'] body {
+		--font-hanzi: var(--font-hanzi-xingshu);
+	}
+
 	button:not(:disabled),
 	[role='button']:not(:disabled) {
 		cursor: pointer;
