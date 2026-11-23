@@ -453,5 +453,13 @@
 	"chy47s2_empty": "Chưa chạy",
 	"chy47s2_sent": "{id}: đã gửi",
 	"chy47s2_skipped": "{id}: bỏ qua ({reason})",
-	"chy47s2_channel": "{name}: {n}"
+	"chy47s2_channel": "{name}: {n}",
+	"chy45s2_chip_days": "{n} ngày",
+	"chy45s2_chip_label": "Chuỗi {n} ngày, còn {f} lượt đóng băng",
+	"chy45s2_line_frozen": "{days} bạn nghỉ nên app dùng {k} lượt đóng băng.",
+	"chy45s2_line_next": "Học xong một phần bài hôm nay là chuỗi lên {next}.",
+	"chy45s2_line_counted": "Hôm nay đã tính rồi, chuỗi {n} ngày. Mai gặp lại nha!",
+	"chy45s2_mark_tick": "đã học",
+	"chy45s2_mark_freeze": "đóng băng",
+	"chy45s2_mark_today": "hôm nay"
 }
