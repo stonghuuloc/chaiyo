@@ -68,7 +68,10 @@ type DesignSystem = Awaited<ReturnType<typeof __unstable__loadDesignSystem>>;
 
 const require = createRequire(import.meta.url);
 const STRING_LITERAL = /'([^'\n]*)'|"([^"\n]*)"|`([^`]*)`/g;
-const CLASS_ATTR = /\bclass="([^"]*)"/g;
+const CLASS_ATTR = /\bclass=(?:"([^"]*)"|'([^']*)')/g;
+const CLASS_EXPR = /\bclass=\{([^}]*)\}/g;
+const CLASS_DIRECTIVE = /\bclass:([^\s=>]+)/g;
+const IN_EXPR = /\{([^}]*)\}/g;
 
 async function loadTokens(): Promise<DesignSystem> {
 	const entry = join(src, 'routes', 'layout.css');
@@ -91,25 +94,38 @@ function deadClassesAt(
 	text: string,
 	scoped = new Set<string>()
 ): { at: number; name: string }[] {
-	const lists = [
-		...[...text.matchAll(CLASS_ATTR)].map((m) => ({
+	const literals = (expr: string, at: number) =>
+		[...expr.matchAll(STRING_LITERAL)].map((m) => ({
 			attr: true,
-			at: m.index,
-			body: m[1].replace(/\{[^}]*\}/g, ' ')
-		})),
+			expr: true,
+			at,
+			body: (m[1] ?? m[2] ?? m[3]).replace(/\$\{[^}]*\}/g, ' ')
+		}));
+	const lists = [
+		...[...text.matchAll(CLASS_ATTR)].flatMap((m) => {
+			const value = m[1] ?? m[2];
+			return [
+				{ attr: true, at: m.index, body: value.replace(IN_EXPR, ' ') },
+				...[...value.matchAll(IN_EXPR)].flatMap((e) => literals(e[1], m.index))
+			];
+		}),
+		...[...text.matchAll(CLASS_EXPR)].flatMap((m) => literals(m[1], m.index)),
+		...[...text.matchAll(CLASS_DIRECTIVE)].map((m) => ({ attr: true, at: m.index, body: m[1] })),
 		...[...text.matchAll(STRING_LITERAL)].map((m) => ({
 			attr: false,
 			at: m.index,
 			body: (m[1] ?? m[2] ?? m[3]).replace(/\$\{[^}]*\}/g, ' ')
 		}))
 	];
-	const dead = lists.flatMap(({ attr, at, body }) => {
+	const dead = lists.flatMap(({ attr, at, body, ...rest }) => {
 		const words = body.split(/\s+/).filter((t) => t && !scoped.has(t));
 		const tokens = words.filter((t) => ds.parseCandidate(t).length > 0);
 		if (tokens.length === 0) return [];
 		if (!attr && tokens.length < words.length) return [];
 		const css = ds.candidatesToCss(tokens);
 		if (!attr && css.every((c) => c === null)) return [];
+		const bare = tokens.every((t, i) => css[i] === null && !/[-:]/.test(t));
+		if ('expr' in rest && bare) return [];
 		return tokens.filter((_, i) => css[i] === null).map((name) => ({ at, name }));
 	});
 	return [...new Map(dead.map((d) => [`${d.at} ${d.name}`, d])).values()];
@@ -163,7 +179,12 @@ describe('utility classes resolve to design tokens', () => {
 		'class="lg:text-xl"',
 		'class="max-w-md"',
 		'class="text-gray-500"',
-		"class=\"grid gap-1.5 {today\n\t? 'x' : ''} text-caption\""
+		"class=\"grid gap-1.5 {today\n\t? 'x' : ''} text-caption\"",
+		"class=\"grid {today ? 'text-caption' : 'text-label'}\"",
+		"class={open ? 'text-sm' : 'text-label'}",
+		"class={['flex', open && 'rounded-2xl']}",
+		'class:rounded-2xl={x}',
+		"class='flex shadow'"
 	])('Given_StockTailwindClass_Then_GuardRejectsIt: %s', (sample) => {
 		// Arrange
 		// Act
@@ -179,6 +200,7 @@ describe('utility classes resolve to design tokens', () => {
 		"'shadow'",
 		"'hello world'",
 		"'select sha from content_versions order by imported_at'",
+		"class={kind === 'text' ? 'text-label' : 'text-title'}",
 		'`create table t (id int); grant select on t to anon`',
 		"class=\"flex {open ? 'a' : 'b'}\""
 	])('Given_TokenClassOrPlainString_Then_GuardAllowsIt: %s', (sample) => {

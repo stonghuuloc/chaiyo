@@ -82,10 +82,9 @@ describe('layout rules', () => {
 		// Act
 		const layout = read('routes/(app)/(tabs)/+layout.svelte');
 		// Assert
-		expect(layout).toContain('pb-[calc(env(safe-area-inset-bottom,0px)+120px)]');
-		expect(layout).toContain('lg:pb-16');
-		expect(layout).toContain('pt-[calc(env(safe-area-inset-top,0px)+54px)]');
-		expect(layout).toContain('lg:pt-10');
+		expect(layout).toContain(
+			'pt-[calc(env(safe-area-inset-top,0px)+54px)] pb-[calc(env(safe-area-inset-bottom,0px)+120px)] lg:pt-10 lg:pb-16'
+		);
 	});
 
 	it('Given_LayoutCss_Then_NavInsetIsNonZeroOnlyUnderMinWidth64rem', () => {
