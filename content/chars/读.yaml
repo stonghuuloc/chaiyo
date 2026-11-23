@@ -1,0 +1,16 @@
+hanzi: 读
+readings:
+  - pinyin: dú
+    hanviet: độc
+  - pinyin: dòu
+    hanviet: đậu
+    rare: true
+radical: 言
+ids: ⿰讠卖
+strokes: 10
+mnemonic:
+  hinh: Lời nói (讠) đứng cạnh chữ bán (卖) — đọc to như người rao hàng ngoài chợ.
+  am: Hán-Việt "độc" — chính là chữ trong "độc giả" (读者).
+  doiThat: Nút "已读/未读" trên Zalo/WeChat, nút "阅读全文" trên app tin tức.
+  tuongPhan: ≠ 续 (xù, cũng có 卖 nhưng bộ 纟) — đừng lẫn phần bán 卖 độc lập với 读.
+  kind: etymology

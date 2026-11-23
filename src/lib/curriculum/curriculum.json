@@ -73,6 +73,42 @@
 		"words": ["不", "都", "工作", "工人", "做", "医院", "先生", "老人"]
 	},
 	{
+		"id": "h1-08",
+		"level": 1,
+		"n": 8,
+		"title": "Quốc tịch",
+		"titleHanzi": "国",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["哪", "中国", "外国", "国家", "北京", "男", "女", "对"]
+	},
+	{
+		"id": "h1-09",
+		"level": 1,
+		"n": 9,
+		"title": "Ngôn ngữ",
+		"titleHanzi": "汉语",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["会", "能", "说", "汉语", "中文", "汉字", "写", "读"]
+	},
+	{
+		"id": "h1-10",
+		"level": 1,
+		"n": 10,
+		"title": "Giáo viên",
+		"titleHanzi": "老师",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["跟", "学习", "学校", "教-jiao1", "课本", "书", "小学", "中学"]
+	},
+	{
+		"id": "h1-11",
+		"level": 1,
+		"n": 11,
+		"title": "Làm quen",
+		"titleHanzi": "高兴",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["很", "非常", "真", "高兴", "认识", "累", "忙", "太"]
+	},
+	{
 		"id": "h2-01",
 		"level": 2,
 		"n": 41,

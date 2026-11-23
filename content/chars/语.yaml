@@ -1,0 +1,16 @@
+hanzi: 语
+readings:
+  - pinyin: yǔ
+    hanviet: ngữ
+  - pinyin: yù
+    hanviet: ngự
+    rare: true
+radical: 言
+ids: ⿰讠吾
+strokes: 9
+mnemonic:
+  hinh: 讠 lời nói + 吾 gợi âm → lời nói, ngôn ngữ
+  am: ngữ — "ngôn ngữ", "ngữ pháp"
+  doiThat: 汉语, 外语
+  tuongPhan: "≠ 说 (shuō): cùng bộ 讠, nhưng 语 là ngôn ngữ, 说 là hành động nói"
+  kind: etymology

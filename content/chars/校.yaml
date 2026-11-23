@@ -1,0 +1,16 @@
+hanzi: 校
+readings:
+  - pinyin: xiào
+    hanviet: hiệu
+  - pinyin: jiào
+    hanviet: hiệu
+    rare: true
+radical: 木
+ids: ⿰木交
+strokes: 10
+mnemonic:
+  hinh: 木 gỗ + 交 gợi âm → hàng rào gỗ, nghĩa mở rộng thành trường học
+  am: hiệu — "học hiệu", "hiệu trưởng"
+  doiThat: 学校, 校长
+  tuongPhan: "≠ 交 (jiāo): 校 thêm 木 để thành trường"
+  kind: etymology

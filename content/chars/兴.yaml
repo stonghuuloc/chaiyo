@@ -1,0 +1,16 @@
+hanzi: 兴
+readings:
+  - pinyin: xìng
+    hanviet: hứng
+  - pinyin: xīng
+    hanviet: hưng
+    rare: true
+radical: 八
+ids: ⿳𭕄一八
+strokes: 6
+mnemonic:
+  hinh: "兴 giản lược của 興: nhiều bàn tay cùng nâng lên → hào hứng, hưng thịnh"
+  am: hứng — "cao hứng", "hưng thịnh"
+  doiThat: 高兴
+  tuongPhan: "≠ 关 (guān): cùng mũ 丷, nhưng 兴 có 一 và 八 ở dưới"
+  kind: invented

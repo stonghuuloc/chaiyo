@@ -1,0 +1,10 @@
+id: h1-g24
+level: 1
+std:
+  - 27
+title: Danh từ bổ nghĩa, không cần 的
+pattern: danh từ + danh từ
+explain: "Hai danh từ đứng liền nhau thì danh từ đầu bổ nghĩa cho danh từ sau, thường không cần 的: 汉语老师 = giáo viên tiếng Trung, 中学老师 = giáo viên trung học, 汉语课本 = sách giáo khoa tiếng Trung."
+examples:
+  - s-h1-10-04
+  - s-h1-10-14

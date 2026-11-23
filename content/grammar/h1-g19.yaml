@@ -1,0 +1,17 @@
+id: h1-g19
+level: 1
+std:
+  - 4
+title: "Hỏi bằng 哪: 哪 + 国 / 个"
+pattern: 哪 + 国 / 个 + 人
+explain: |-
+  哪 (nả, nǎ) nghĩa là “nào”. Nó đứng trước 国 hoặc lượng từ: 你是哪国人？ = Bạn là người nước nào? 他是哪个老师？ = Ông ấy là giáo viên nào?
+
+  Câu trả lời thay đúng chỗ của 哪国: 我是中国人。
+examples:
+  - s-h1-08-01
+  - s-h1-08-13
+pitfalls:
+  - wrong: 你是哪国人吗？
+    right: 你是哪国人？
+    why: Câu đã có từ hỏi 哪 thì không thêm 吗.

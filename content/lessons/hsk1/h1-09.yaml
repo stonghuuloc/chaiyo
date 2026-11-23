@@ -1,0 +1,681 @@
+id: h1-09
+level: 1
+topic: Quốc tịch và ngôn ngữ
+order: 9
+title: Ngôn ngữ
+titleHanzi: 汉语
+goal: Nói mình biết hay không biết tiếng Trung; hỏi bằng câu chính phản
+scene:
+  file: lessons/h1-09.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They sit at a desk with a stack of Chinese character cards; the red panda holds up one card and the takin reads it with one paw on its chin.
+sentences:
+  - id: s-h1-09-01
+    hanzi: 你会说汉语吗？
+    pinyin: nǐ huì shuō Hànyǔ ma?
+    vi: Cậu biết nói tiếng Trung không?
+    speaker: takin
+  - id: s-h1-09-02
+    hanzi: 我会说汉语。
+    pinyin: wǒ huì shuō Hànyǔ.
+    vi: Tớ biết nói tiếng Trung.
+    speaker: redpanda
+  - id: s-h1-09-03
+    hanzi: 你会写汉字吗？
+    pinyin: nǐ huì xiě hànzì ma?
+    vi: Cậu biết viết chữ Hán không?
+    speaker: redpanda
+  - id: s-h1-09-04
+    hanzi: 我会写，也会读。
+    pinyin: wǒ huì xiě, yě huì dú.
+    vi: Tớ biết viết, cũng biết đọc.
+    speaker: takin
+  - id: s-h1-09-05
+    hanzi: 你能读这个字吗？
+    pinyin: nǐ néng dú zhège zì ma?
+    vi: Cậu đọc được chữ này không?
+    speaker: redpanda
+  - id: s-h1-09-06
+    hanzi: 能，这个字是“好”。
+    pinyin: néng, zhège zì shì hǎo.
+    vi: Được, chữ này là “好”.
+    speaker: takin
+  - id: s-h1-09-07
+    hanzi: 你会不会说中文？
+    pinyin: nǐ huì bu huì shuō Zhōngwén?
+    vi: Cậu có biết nói tiếng Trung không?
+    speaker: redpanda
+  - id: s-h1-09-08
+    hanzi: 我不会说中文。
+    pinyin: wǒ bù huì shuō Zhōngwén.
+    vi: Tớ không biết nói tiếng Trung.
+    speaker: takin
+  - id: s-h1-09-09
+    hanzi: 你是不是中国人？
+    pinyin: nǐ shì bu shì Zhōngguó rén?
+    vi: Cậu có phải người Trung Quốc không?
+    speaker: redpanda
+  - id: s-h1-09-10
+    hanzi: 对，我是中国人。
+    pinyin: duì, wǒ shì Zhōngguó rén.
+    vi: Đúng, tớ là người Trung Quốc.
+    speaker: takin
+  - id: s-h1-09-11
+    hanzi: 他会说汉语，也会写汉字。
+    pinyin: tā huì shuō Hànyǔ, yě huì xiě hànzì.
+    vi: Anh ấy biết nói tiếng Trung, cũng biết viết chữ Hán.
+  - id: s-h1-09-12
+    hanzi: 我不会读这个字。
+    pinyin: wǒ bù huì dú zhège zì.
+    vi: Tôi không biết đọc chữ này.
+  - id: s-h1-09-13
+    hanzi: 你能说中文吗？
+    pinyin: nǐ néng shuō Zhōngwén ma?
+    vi: Bạn nói được tiếng Trung không?
+  - id: s-h1-09-14
+    hanzi: 她是不是老师？
+    pinyin: tā shì bu shì lǎoshī?
+    vi: Cô ấy có phải giáo viên không?
+  - id: s-h1-09-15
+    hanzi: 我不能说汉语。
+    pinyin: wǒ bù néng shuō Hànyǔ.
+    vi: Tôi không thể nói tiếng Trung.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 会
+      - 能
+      - 说
+      - 汉语
+      - 中文
+      - 汉字
+      - 写
+      - 读
+  grammar:
+    ids:
+      - h1-g22
+      - h1-g23
+    drills:
+      - id: q-h1-09-g01
+        type: choice
+        tests:
+          words:
+            - 会
+            - 说
+          grammar:
+            - h1-g22
+        prompt:
+          kind: vi
+          text: Tớ biết nói tiếng Trung.
+        optionKind: hanzi
+        options:
+          - 我会说汉语
+          - 我是说汉语
+          - 我说会汉语
+        answer: 0
+      - id: q-h1-09-g02
+        type: choice
+        tests:
+          words:
+            - 能
+            - 读
+          grammar:
+            - h1-g22
+        prompt:
+          kind: vi
+          text: Cậu đọc được chữ này không?
+        optionKind: hanzi
+        options:
+          - 你能读这个字吗
+          - 你读能这个字吗
+          - 你吗能读这个字
+        answer: 0
+      - id: q-h1-09-g03
+        type: trueFalse
+        tests:
+          words:
+            - 会
+          grammar:
+            - h1-g22
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我会不说汉语。
+        answer: false
+      - id: q-h1-09-g04
+        type: order
+        tests:
+          words:
+            - 会
+          grammar:
+            - h1-g22
+        tiles:
+          - 会
+          - 我
+          - 说
+          - 汉语
+        answer: s-h1-09-02
+      - id: q-h1-09-g05
+        type: choice
+        tests:
+          words:
+            - 会
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Cậu có biết nói tiếng Trung không?
+        optionKind: hanzi
+        options:
+          - 你会不会说汉语
+          - 你会说不会汉语
+          - 你会不说汉语会
+        answer: 0
+      - id: q-h1-09-g06
+        type: trueFalse
+        tests:
+          words:
+            - 会
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你会不会说汉语吗？
+        answer: false
+      - id: q-h1-09-g07
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 汉字
+          grammar:
+            - h1-g23
+        prompt:
+          kind: audio
+          ref: s-h1-09-09
+        optionKind: hanzi
+        options:
+          - 对，我是中国人。
+          - 我会写汉字。
+          - 能，这个字是好。
+        answer: 0
+      - id: q-h1-09-g08
+        type: choice
+        tests:
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Cô ấy có phải giáo viên không?
+        optionKind: hanzi
+        options:
+          - 她是不是老师
+          - 她是不是老师吗
+          - 她不是是老师
+        answer: 0
+  dialogue:
+    parts:
+      - title: Cậu biết nói tiếng Trung không?
+        lines:
+          - s-h1-09-01
+          - s-h1-09-02
+          - s-h1-09-03
+          - s-h1-09-04
+          - s-h1-09-05
+          - s-h1-09-06
+      - title: Hỏi chính phản
+        lines:
+          - s-h1-09-07
+          - s-h1-09-08
+          - s-h1-09-09
+          - s-h1-09-10
+    questions:
+      - id: q-h1-09-d01
+        type: choice
+        ask: Gấu trúc đỏ có biết nói tiếng Trung không?
+        tests:
+          words:
+            - 会
+            - 说
+          grammar:
+            - h1-g22
+        prompt:
+          kind: audio
+          ref: s-h1-09-02
+        optionKind: vi
+        options:
+          - biết
+          - không biết
+          - chưa rõ
+        answer: 0
+      - id: q-h1-09-d02
+        type: choice
+        ask: Con takin có biết nói tiếng Trung không?
+        tests:
+          words:
+            - 会
+          grammar:
+            - h1-g23
+        prompt:
+          kind: audio
+          ref: s-h1-09-08
+        optionKind: vi
+        options:
+          - không biết
+          - biết
+          - chỉ biết viết
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-09-l01
+        type: tone
+        tests:
+          words:
+            - 说
+          tone: true
+        prompt:
+          kind: audio
+          ref: 说
+        syllable: 0
+        answer: 1
+      - id: q-h1-09-l02
+        type: choice
+        tests:
+          words:
+            - 汉字
+        prompt:
+          kind: audio
+          ref: 汉字
+        optionKind: hanzi
+        options:
+          - 汉字
+          - 汉语
+          - 中文
+          - 写
+        answer: 0
+      - id: q-h1-09-l03
+        type: choice
+        tests:
+          words:
+            - 读
+        prompt:
+          kind: audio
+          ref: 读
+        optionKind: hanzi
+        options:
+          - 读
+          - 写
+          - 说
+          - 能
+        answer: 0
+      - id: q-h1-09-s01
+        type: readAloud
+        tests:
+          words:
+            - 会
+            - 说
+            - 汉语
+          grammar:
+            - h1-g22
+          tone: true
+        sentence: s-h1-09-01
+      - id: q-h1-09-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 会
+            - 说
+          grammar:
+            - h1-g22
+        prompt:
+          kind: vi
+          text: Nói bạn có biết nói tiếng Trung hay không.
+        rubric:
+          - Dùng 我会说汉语 hoặc 我不会说汉语
+        answer: s-h1-09-02
+      - id: q-h1-09-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 写
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Hỏi một bạn có biết viết chữ Hán không, bằng câu chính phản.
+        rubric:
+          - Dùng 你会不会写汉字？
+  writing:
+    chars:
+      - 会
+      - 说
+      - 写
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-09-x01
+      type: choice
+      tests:
+        words:
+          - 会
+      prompt:
+        kind: hanzi
+        ref: 会
+      optionKind: vi
+      options:
+        - biết (nhờ đã học)
+        - đọc
+        - viết
+        - nói
+      answer: 0
+    - id: q-h1-09-x02
+      type: choice
+      tests:
+        words:
+          - 能
+      prompt:
+        kind: hanzi
+        ref: 能
+      optionKind: vi
+      options:
+        - có thể, có khả năng
+        - biết (nhờ đã học)
+        - viết
+        - đọc
+      answer: 0
+    - id: q-h1-09-x03
+      type: choice
+      tests:
+        words:
+          - 说
+      prompt:
+        kind: audio
+        ref: 说
+      optionKind: vi
+      options:
+        - nói
+        - viết
+        - đọc
+        - biết
+      answer: 0
+    - id: q-h1-09-x04
+      type: typePinyin
+      tests:
+        words:
+          - 汉字
+      prompt:
+        kind: hanzi
+        ref: 汉字
+      answer: hànzì
+    - id: q-h1-09-x05
+      type: choice
+      tests:
+        words:
+          - 汉语
+      prompt:
+        kind: hanzi
+        ref: 汉语
+      optionKind: vi
+      options:
+        - tiếng Trung
+        - chữ Hán
+        - nước ngoài
+        - sách
+      answer: 0
+    - id: q-h1-09-x06
+      type: choice
+      tests:
+        words:
+          - 中文
+      prompt:
+        kind: hanzi
+        ref: 中文
+      optionKind: vi
+      options:
+        - tiếng Trung
+        - chữ Hán
+        - người Trung Quốc
+        - trường học
+      answer: 0
+    - id: q-h1-09-x07
+      type: choice
+      tests:
+        words:
+          - 写
+      prompt:
+        kind: vi
+        text: viết
+      optionKind: hanzi
+      options:
+        - 写
+        - 读
+        - 说
+        - 会
+      answer: 0
+    - id: q-h1-09-x08
+      type: choice
+      tests:
+        words:
+          - 读
+      prompt:
+        kind: audio
+        ref: 读
+      optionKind: hanzi
+      options:
+        - 读
+        - 写
+        - 说
+        - 能
+      answer: 0
+    - id: q-h1-09-x09
+      type: choice
+      tests:
+        words:
+          - 会
+          - 说
+        grammar:
+          - h1-g22
+      prompt:
+        kind: vi
+        text: Tớ biết nói tiếng Trung.
+      optionKind: hanzi
+      options:
+        - 我会说汉语
+        - 我是说汉语
+        - 我说会汉语
+      answer: 0
+    - id: q-h1-09-x10
+      type: trueFalse
+      tests:
+        words:
+          - 会
+        grammar:
+          - h1-g22
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我会不说汉语。
+      answer: false
+    - id: q-h1-09-x11
+      type: choice
+      tests:
+        words:
+          - 会
+          - 读
+        grammar:
+          - h1-g22
+      prompt:
+        kind: vi
+        text: Tớ không biết đọc chữ này.
+      optionKind: hanzi
+      options:
+        - 我不会读这个字
+        - 我会不读这个字
+        - 我读不会这个字
+      answer: 0
+    - id: q-h1-09-x12
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 能
+          - 读
+        grammar:
+          - h1-g22
+      prompt:
+        kind: audio
+        ref: s-h1-09-05
+      optionKind: hanzi
+      options:
+        - 能，这个字是好。
+        - 我是中国人。
+        - 她是老师。
+      answer: 0
+    - id: q-h1-09-x13
+      type: choice
+      tests:
+        words:
+          - 会
+        grammar:
+          - h1-g23
+      prompt:
+        kind: vi
+        text: Cậu có biết nói tiếng Trung không?
+      optionKind: hanzi
+      options:
+        - 你会不会说汉语
+        - 你会说不会汉语
+        - 你会不说汉语会
+      answer: 0
+    - id: q-h1-09-x14
+      type: trueFalse
+      tests:
+        words:
+          - 会
+        grammar:
+          - h1-g23
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你会不会说汉语吗？
+      answer: false
+    - id: q-h1-09-x15
+      type: choice
+      tests:
+        words:
+          - 会
+        grammar:
+          - h1-g23
+      prompt:
+        kind: vi
+        text: Cô ấy có phải giáo viên không?
+      optionKind: hanzi
+      options:
+        - 她是不是老师
+        - 她是不是老师吗
+        - 她不是是老师
+      answer: 0
+    - id: q-h1-09-x16
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 会
+        grammar:
+          - h1-g23
+      prompt:
+        kind: audio
+        ref: s-h1-09-09
+      optionKind: hanzi
+      options:
+        - 对，我是中国人。
+        - 我会写汉字。
+        - 能，这个字是好。
+      answer: 0
+    - id: q-h1-09-x17
+      type: choice
+      tests:
+        words:
+          - 会
+          - 说
+        grammar:
+          - h1-g22
+      prompt:
+        kind: audio
+        ref: s-h1-09-01
+      optionKind: vi
+      options:
+        - Cậu biết nói tiếng Trung không?
+        - Cậu tên gì?
+        - Cậu mấy tuổi?
+      answer: 0
+    - id: q-h1-09-x18
+      type: choice
+      tests:
+        words:
+          - 汉字
+      prompt:
+        kind: vi
+        text: chữ Hán
+      optionKind: hanzi
+      options:
+        - 汉字
+        - 汉语
+        - 中文
+        - 写
+      answer: 0
+    - id: q-h1-09-x19
+      type: order
+      tests:
+        words:
+          - 会
+          - 说
+        grammar:
+          - h1-g22
+      tiles:
+        - 会
+        - 我
+        - 说
+        - 汉语
+      answer: s-h1-09-02
+    - id: q-h1-09-x20
+      type: tone
+      tests:
+        words:
+          - 会
+        tone: true
+      prompt:
+        kind: audio
+        ref: 会
+      syllable: 0
+      answer: 4
+    - id: q-h1-09-x21
+      type: trueFalse
+      tests:
+        words:
+          - 读
+      prompt:
+        kind: hanzi
+        ref: 读
+      statement: 读 nghĩa là “đọc”.
+      answer: true
+    - id: q-h1-09-x22
+      type: choice
+      tests:
+        words:
+          - 能
+        grammar:
+          - h1-g22
+      prompt:
+        kind: vi
+        text: Tớ không thể nói tiếng Trung.
+      optionKind: hanzi
+      options:
+        - 我不能说汉语
+        - 我能不说汉语
+        - 我说不能汉语
+      answer: 0

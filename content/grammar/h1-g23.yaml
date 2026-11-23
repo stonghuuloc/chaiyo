@@ -1,0 +1,18 @@
+id: h1-g23
+level: 1
+std:
+  - 48
+  - 33
+title: "Hỏi chính phản: 会不会 · 是不是"
+pattern: V + 不 + V · 是不是
+explain: |-
+  Đặt động từ, rồi 不, rồi lặp lại động từ để hỏi “có … hay không”: 你会不会说汉语？ 她是不是老师？
+
+  不 ở giữa đọc nhẹ (bu). Trả lời bằng 会 / 不会, 是 / 不是. Câu này không thêm 吗.
+examples:
+  - s-h1-09-07
+  - s-h1-09-14
+pitfalls:
+  - wrong: 你会不会说汉语吗？
+    right: 你会不会说汉语？
+    why: Câu chính phản đã là câu hỏi, không thêm 吗.

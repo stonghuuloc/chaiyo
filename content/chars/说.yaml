@@ -1,0 +1,16 @@
+hanzi: 说
+readings:
+  - pinyin: shuō
+    hanviet: thuyết
+  - pinyin: shuì
+    hanviet: thuyết
+    rare: true
+radical: 言
+ids: ⿰讠兑
+strokes: 9
+mnemonic:
+  hinh: bộ 讠(lời nói) ghép với 兑 (đoài, cũng mang nghĩa vui vẻ trao đổi) — mở lời trao đổi = "nói".
+  am: Hán Việt "thuyết" — nhớ qua "thuyết phục", "diễn thuyết", "tiểu thuyết". 兑 tự đọc "đoài", cùng họ ngữ âm cổ với shuō/yuè.
+  doiThat: nút 说话 (ghi âm) trên app nhắn tin, 小说 mục truyện trên app đọc sách, 说明 phần hướng dẫn sử dụng sản phẩm.
+  tuongPhan: ≠ 悦 (yuè, "duyệt", vui vẻ, bộ 忄) — cùng phần 兑 nhưng khác bộ thủ nên khác nghĩa hẳn.
+  kind: etymology

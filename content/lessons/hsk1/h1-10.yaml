@@ -1,0 +1,667 @@
+id: h1-10
+level: 1
+topic: Quốc tịch và ngôn ngữ
+order: 10
+title: Giáo viên
+titleHanzi: 老师
+goal: Nói học với ai, hỏi về giáo viên, sách giáo khoa và trường học
+scene:
+  file: lessons/h1-10.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at a small school desk with a textbook between them; the takin holds a pointer like a teacher and the red panda raises a paw.
+sentences:
+  - id: s-h1-10-01
+    hanzi: 你学习汉语吗？
+    pinyin: nǐ xuéxí Hànyǔ ma?
+    vi: Cậu học tiếng Trung à?
+    speaker: takin
+  - id: s-h1-10-02
+    hanzi: 学习，我跟老师学习汉语。
+    pinyin: xuéxí, wǒ gēn lǎoshī xuéxí Hànyǔ.
+    vi: Ừ, tớ học tiếng Trung với thầy.
+    speaker: redpanda
+  - id: s-h1-10-03
+    hanzi: 你的老师是中国人吗？
+    pinyin: nǐ de lǎoshī shì Zhōngguó rén ma?
+    vi: Thầy của cậu là người Trung Quốc à?
+    speaker: takin
+  - id: s-h1-10-04
+    hanzi: 对，他是汉语老师。
+    pinyin: duì, tā shì Hànyǔ lǎoshī.
+    vi: Đúng, thầy là giáo viên tiếng Trung.
+    speaker: redpanda
+  - id: s-h1-10-05
+    hanzi: 这是你的汉语课本吗？
+    pinyin: zhè shì nǐ de Hànyǔ kèběn ma?
+    vi: Đây là sách giáo khoa tiếng Trung của cậu à?
+    speaker: takin
+  - id: s-h1-10-06
+    hanzi: 对，这是我的汉语课本。
+    pinyin: duì, zhè shì wǒ de Hànyǔ kèběn.
+    vi: Đúng, đây là sách giáo khoa tiếng Trung của tớ.
+    speaker: redpanda
+  - id: s-h1-10-07
+    hanzi: 你是中学生吗？
+    pinyin: nǐ shì zhōngxuéshēng ma?
+    vi: Cậu là học sinh trung học à?
+    speaker: redpanda
+  - id: s-h1-10-08
+    hanzi: 不是，我是小学生。
+    pinyin: bù shì, wǒ shì xiǎoxuéshēng.
+    vi: Không, tớ là học sinh tiểu học.
+    speaker: takin
+  - id: s-h1-10-09
+    hanzi: 你们学校有几个老师？
+    pinyin: nǐmen xuéxiào yǒu jǐ gè lǎoshī?
+    vi: Trường các cậu có mấy giáo viên?
+    speaker: redpanda
+  - id: s-h1-10-10
+    hanzi: 有十个老师。
+    pinyin: yǒu shí gè lǎoshī.
+    vi: Có mười giáo viên.
+    speaker: takin
+  - id: s-h1-10-11
+    hanzi: 他教汉语。
+    pinyin: tā jiāo Hànyǔ.
+    vi: Thầy ấy dạy tiếng Trung.
+  - id: s-h1-10-12
+    hanzi: 我跟朋友学习汉语。
+    pinyin: wǒ gēn péngyou xuéxí Hànyǔ.
+    vi: Tôi học tiếng Trung với bạn.
+  - id: s-h1-10-13
+    hanzi: 这是中文书。
+    pinyin: zhè shì Zhōngwén shū.
+    vi: Đây là sách tiếng Trung.
+  - id: s-h1-10-14
+    hanzi: 她是中学老师。
+    pinyin: tā shì zhōngxué lǎoshī.
+    vi: Cô ấy là giáo viên trung học.
+  - id: s-h1-10-15
+    hanzi: 我们学校有两个汉语老师。
+    pinyin: wǒmen xuéxiào yǒu liǎng gè Hànyǔ lǎoshī.
+    vi: Trường chúng tôi có hai giáo viên tiếng Trung.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 跟
+      - 学习
+      - 学校
+      - 教-jiao1
+      - 课本
+      - 书
+      - 小学
+      - 中学
+  grammar:
+    ids:
+      - h1-g24
+      - h1-g25
+    drills:
+      - id: q-h1-10-g01
+        type: choice
+        tests:
+          grammar:
+            - h1-g24
+        prompt:
+          kind: vi
+          text: giáo viên tiếng Trung
+        optionKind: hanzi
+        options:
+          - 汉语老师
+          - 老师汉语
+          - 汉语是老师
+        answer: 0
+      - id: q-h1-10-g02
+        type: choice
+        tests:
+          words:
+            - 课本
+          grammar:
+            - h1-g24
+        prompt:
+          kind: vi
+          text: sách giáo khoa tiếng Trung
+        optionKind: hanzi
+        options:
+          - 汉语课本
+          - 课本汉语
+          - 汉语是课本
+        answer: 0
+      - id: q-h1-10-g03
+        type: trueFalse
+        tests:
+          words:
+            - 课本
+          grammar:
+            - h1-g24
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 这是课本汉语。
+        answer: false
+      - id: q-h1-10-g04
+        type: order
+        tests:
+          words:
+            - 中学
+          grammar:
+            - h1-g24
+        tiles:
+          - 中学
+          - 她
+          - 是
+          - 老师
+        answer: s-h1-10-14
+      - id: q-h1-10-g05
+        type: choice
+        tests:
+          words:
+            - 跟
+            - 学习
+          grammar:
+            - h1-g25
+        prompt:
+          kind: vi
+          text: Tớ học tiếng Trung với thầy.
+        optionKind: hanzi
+        options:
+          - 我跟老师学习汉语
+          - 我学习汉语跟老师
+          - 跟我老师学习汉语
+        answer: 0
+      - id: q-h1-10-g06
+        type: trueFalse
+        tests:
+          words:
+            - 跟
+            - 学习
+          grammar:
+            - h1-g25
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我学习汉语跟老师。
+        answer: false
+      - id: q-h1-10-g07
+        type: order
+        tests:
+          words:
+            - 跟
+            - 学习
+          grammar:
+            - h1-g25
+        tiles:
+          - 我
+          - 跟
+          - 朋友
+          - 学习
+          - 汉语
+        answer: s-h1-10-12
+      - id: q-h1-10-g08
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 学习
+          grammar:
+            - h1-g25
+        prompt:
+          kind: audio
+          ref: s-h1-10-01
+        optionKind: hanzi
+        options:
+          - 学习，我跟老师学习汉语。
+          - 对，我是中学生。
+          - 有十个老师。
+        answer: 0
+  dialogue:
+    parts:
+      - title: Học tiếng Trung
+        lines:
+          - s-h1-10-01
+          - s-h1-10-02
+          - s-h1-10-03
+          - s-h1-10-04
+          - s-h1-10-05
+          - s-h1-10-06
+      - title: Ở trường
+        lines:
+          - s-h1-10-07
+          - s-h1-10-08
+          - s-h1-10-09
+          - s-h1-10-10
+    questions:
+      - id: q-h1-10-d01
+        type: choice
+        ask: Gấu trúc đỏ học tiếng Trung với ai?
+        tests:
+          words:
+            - 跟
+            - 学习
+          grammar:
+            - h1-g25
+        prompt:
+          kind: audio
+          ref: s-h1-10-02
+        optionKind: vi
+        options:
+          - thầy giáo
+          - bạn
+          - bố
+        answer: 0
+      - id: q-h1-10-d02
+        type: choice
+        ask: Thầy là giáo viên gì?
+        tests:
+          grammar:
+            - h1-g24
+        prompt:
+          kind: audio
+          ref: s-h1-10-04
+        optionKind: vi
+        options:
+          - giáo viên tiếng Trung
+          - giáo viên trung học
+          - giáo viên nam
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-10-l01
+        type: tone
+        tests:
+          words:
+            - 跟
+          tone: true
+        prompt:
+          kind: audio
+          ref: 跟
+        syllable: 0
+        answer: 1
+      - id: q-h1-10-l02
+        type: choice
+        tests:
+          words:
+            - 学校
+        prompt:
+          kind: audio
+          ref: 学校
+        optionKind: hanzi
+        options:
+          - 学校
+          - 学习
+          - 小学
+          - 中学
+        answer: 0
+      - id: q-h1-10-l03
+        type: choice
+        tests:
+          words:
+            - 书
+        prompt:
+          kind: audio
+          ref: 书
+        optionKind: hanzi
+        options:
+          - 书
+          - 本
+          - 写
+          - 读
+        answer: 0
+      - id: q-h1-10-s01
+        type: readAloud
+        tests:
+          words:
+            - 跟
+            - 学习
+          grammar:
+            - h1-g25
+          tone: true
+        sentence: s-h1-10-02
+      - id: q-h1-10-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 跟
+            - 学习
+          grammar:
+            - h1-g25
+        prompt:
+          kind: vi
+          text: Nói bạn học tiếng Trung với ai.
+        rubric:
+          - Dùng 我跟 + người + 学习汉语
+        answer: s-h1-10-12
+      - id: q-h1-10-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 课本
+          grammar:
+            - h1-g24
+        prompt:
+          kind: vi
+          text: Hỏi một bạn xem đây có phải sách giáo khoa tiếng Trung của bạn ấy không.
+        rubric:
+          - Dùng 这是你的汉语课本吗？
+        answer: s-h1-10-05
+  writing:
+    chars:
+      - 书
+      - 本
+      - 小
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-10-x01
+      type: choice
+      tests:
+        words:
+          - 跟
+      prompt:
+        kind: hanzi
+        ref: 跟
+      optionKind: vi
+      options:
+        - với, cùng (ai)
+        - ở
+        - có
+        - rất
+      answer: 0
+    - id: q-h1-10-x02
+      type: choice
+      tests:
+        words:
+          - 学习
+      prompt:
+        kind: audio
+        ref: 学习
+      optionKind: vi
+      options:
+        - học tập
+        - dạy
+        - đọc
+        - viết
+      answer: 0
+    - id: q-h1-10-x03
+      type: choice
+      tests:
+        words:
+          - 学校
+      prompt:
+        kind: vi
+        text: trường học
+      optionKind: hanzi
+      options:
+        - 学校
+        - 学习
+        - 课本
+        - 小学
+      answer: 0
+    - id: q-h1-10-x04
+      type: choice
+      tests:
+        words:
+          - 教-jiao1
+      prompt:
+        kind: audio
+        ref: 教-jiao1
+      optionKind: vi
+      options:
+        - dạy
+        - học
+        - đọc
+        - viết
+      answer: 0
+    - id: q-h1-10-x05
+      type: typePinyin
+      tests:
+        words:
+          - 课本
+      prompt:
+        kind: hanzi
+        ref: 课本
+      answer: kèběn
+    - id: q-h1-10-x06
+      type: choice
+      tests:
+        words:
+          - 书
+      prompt:
+        kind: hanzi
+        ref: 书
+      optionKind: vi
+      options:
+        - sách
+        - bút
+        - trường
+        - thầy
+      answer: 0
+    - id: q-h1-10-x07
+      type: choice
+      tests:
+        words:
+          - 小学
+      prompt:
+        kind: vi
+        text: trường tiểu học
+      optionKind: hanzi
+      options:
+        - 小学
+        - 中学
+        - 学校
+        - 学习
+      answer: 0
+    - id: q-h1-10-x08
+      type: choice
+      tests:
+        words:
+          - 中学
+      prompt:
+        kind: vi
+        text: trường trung học
+      optionKind: hanzi
+      options:
+        - 中学
+        - 小学
+        - 学校
+        - 学习
+      answer: 0
+    - id: q-h1-10-x09
+      type: choice
+      tests:
+        grammar:
+          - h1-g24
+      prompt:
+        kind: vi
+        text: giáo viên tiếng Trung
+      optionKind: hanzi
+      options:
+        - 汉语老师
+        - 老师汉语
+        - 汉语是老师
+      answer: 0
+    - id: q-h1-10-x10
+      type: choice
+      tests:
+        words:
+          - 课本
+        grammar:
+          - h1-g24
+      prompt:
+        kind: vi
+        text: sách giáo khoa tiếng Trung
+      optionKind: hanzi
+      options:
+        - 汉语课本
+        - 课本汉语
+        - 汉语是课本
+      answer: 0
+    - id: q-h1-10-x11
+      type: trueFalse
+      tests:
+        words:
+          - 课本
+        grammar:
+          - h1-g24
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 这是课本汉语。
+      answer: false
+    - id: q-h1-10-x12
+      type: order
+      tests:
+        words:
+          - 中学
+        grammar:
+          - h1-g24
+      tiles:
+        - 中学
+        - 她
+        - 是
+        - 老师
+      answer: s-h1-10-14
+    - id: q-h1-10-x13
+      type: choice
+      tests:
+        words:
+          - 跟
+          - 学习
+        grammar:
+          - h1-g25
+      prompt:
+        kind: vi
+        text: Tớ học tiếng Trung với thầy.
+      optionKind: hanzi
+      options:
+        - 我跟老师学习汉语
+        - 我学习汉语跟老师
+        - 跟我老师学习汉语
+      answer: 0
+    - id: q-h1-10-x14
+      type: trueFalse
+      tests:
+        words:
+          - 跟
+          - 学习
+        grammar:
+          - h1-g25
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我学习汉语跟老师。
+      answer: false
+    - id: q-h1-10-x15
+      type: order
+      tests:
+        words:
+          - 跟
+          - 学习
+        grammar:
+          - h1-g25
+      tiles:
+        - 我
+        - 跟
+        - 朋友
+        - 学习
+        - 汉语
+      answer: s-h1-10-12
+    - id: q-h1-10-x16
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 学习
+        grammar:
+          - h1-g25
+      prompt:
+        kind: audio
+        ref: s-h1-10-01
+      optionKind: hanzi
+      options:
+        - 学习，我跟老师学习汉语。
+        - 对，我是中学生。
+        - 有十个老师。
+      answer: 0
+    - id: q-h1-10-x17
+      type: choice
+      tests:
+        words:
+          - 学校
+      prompt:
+        kind: audio
+        ref: s-h1-10-09
+      optionKind: vi
+      options:
+        - Trường các cậu có mấy giáo viên?
+        - Cậu mấy tuổi?
+        - Bố cậu làm nghề gì?
+      answer: 0
+    - id: q-h1-10-x18
+      type: choice
+      tests:
+        words:
+          - 教-jiao1
+      prompt:
+        kind: vi
+        text: Anh ấy dạy tiếng Trung.
+      optionKind: hanzi
+      options:
+        - 他教汉语
+        - 他汉语教
+        - 汉语教他
+      answer: 0
+    - id: q-h1-10-x19
+      type: tone
+      tests:
+        words:
+          - 跟
+        tone: true
+      prompt:
+        kind: audio
+        ref: 跟
+      syllable: 0
+      answer: 1
+    - id: q-h1-10-x20
+      type: choice
+      tests:
+        words:
+          - 跟
+          - 学习
+        grammar:
+          - h1-g25
+      prompt:
+        kind: vi
+        text: Tớ học tiếng Trung với bạn.
+      optionKind: hanzi
+      options:
+        - 我跟朋友学习汉语
+        - 我学习汉语跟朋友
+        - 跟我朋友学习汉语
+      answer: 0
+    - id: q-h1-10-x21
+      type: choice
+      tests:
+        words:
+          - 学校
+      prompt:
+        kind: audio
+        ref: s-h1-10-15
+      optionKind: vi
+      options:
+        - Trường chúng tôi có hai giáo viên tiếng Trung
+        - Tôi có hai người bạn
+        - Tôi học tiếng Trung
+      answer: 0
+    - id: q-h1-10-x22
+      type: trueFalse
+      tests:
+        words:
+          - 书
+      prompt:
+        kind: hanzi
+        ref: 书
+      statement: 书 nghĩa là “sách”.
+      answer: true

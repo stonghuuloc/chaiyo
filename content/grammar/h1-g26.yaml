@@ -1,0 +1,17 @@
+id: h1-g26
+level: 1
+std:
+  - 30
+title: Tính từ làm vị ngữ
+pattern: 主语 + 很 + tính từ
+explain: |-
+  Tính từ đứng ngay sau chủ ngữ, không dùng 是: 我很忙。 = Tớ bận. 很 (ngận, hěn) ở đây chỉ nối câu, nghĩa rất nhẹ.
+
+  Phủ định thì bỏ 很, đặt 不 trước tính từ: 我不忙。
+examples:
+  - s-h1-11-04
+  - s-h1-11-15
+pitfalls:
+  - wrong: 我是忙
+    right: 我很忙
+    why: Tính từ làm vị ngữ không dùng 是.

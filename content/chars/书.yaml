@@ -1,0 +1,13 @@
+hanzi: 书
+readings:
+  - pinyin: shū
+    hanviet: thư
+radical: 丨
+ids: 书
+strokes: 4
+mnemonic:
+  hinh: 书 là giản thể rút gọn còn vài nét móc của 書 (phồn thể có bộ 聿 "cây bút" trên 曰 "nói") — nhớ bằng hình nét bút cong như gáy sách.
+  am: thư — "thư viện" (图书馆), "thư pháp" (书法), "thư ký" (秘书) đều dùng âm này.
+  doiThat: biển "书店" (hiệu sách) ngoài phố; nút "电子书" (sách điện tử) trên app đọc sách.
+  tuongPhan: ≠ 事 (đã học — việc, chuyện) — cả hai đều có nét móc dọc gần giống ở giữa, nhưng 事 có nhiều nét ngang hơn phía trên.
+  kind: invented

@@ -205,11 +205,189 @@ const rows: Record<string, Row> = {
 		strokes: 9,
 		kind: 'etymology'
 	},
-	先: { readings: [r('xiān', 'tiên')], radical: '儿', ids: '⿱𠂒儿', strokes: 6, kind: 'etymology' }
+	先: {
+		readings: [r('xiān', 'tiên')],
+		radical: '儿',
+		ids: '⿱𠂒儿',
+		strokes: 6,
+		kind: 'etymology'
+	},
+	哪: {
+		readings: [r('nǎ', 'nả'), r('něi', 'nả', true)],
+		radical: '口',
+		ids: '⿰口那',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	中: {
+		readings: [r('zhōng', 'trung'), r('zhòng', 'trúng', true)],
+		radical: '丨',
+		ids: '⿻口丨',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	国: { readings: [r('guó', 'quốc')], radical: '囗', ids: '⿴囗玉', strokes: 8, kind: 'etymology' },
+	外: {
+		readings: [r('wài', 'ngoại')],
+		radical: '夕',
+		ids: '⿰夕卜',
+		strokes: 5,
+		kind: 'etymology'
+	},
+	北: { readings: [r('běi', 'bắc')], radical: '匕', ids: '⿰③匕', strokes: 5, kind: 'etymology' },
+	京: {
+		readings: [r('jīng', 'kinh')],
+		radical: '亠',
+		ids: '⿳亠口小',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	男: { readings: [r('nán', 'nam')], radical: '田', ids: '⿱田力', strokes: 7, kind: 'etymology' },
+	会: {
+		readings: [r('huì', 'hội'), r('kuài', 'cối', true)],
+		radical: '人',
+		ids: '⿱人云',
+		strokes: 6,
+		kind: 'invented'
+	},
+	能: {
+		readings: [r('néng', 'năng')],
+		radical: '肉',
+		ids: '⿰䏍𫧇',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	说: {
+		readings: [r('shuō', 'thuyết'), r('shuì', 'thuyết', true)],
+		radical: '言',
+		ids: '⿰讠兑',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	汉: { readings: [r('hàn', 'hán')], radical: '水', ids: '⿰氵又', strokes: 5, kind: 'etymology' },
+	语: {
+		readings: [r('yǔ', 'ngữ'), r('yù', 'ngự', true)],
+		radical: '言',
+		ids: '⿰讠吾',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	文: { readings: [r('wén', 'văn')], radical: '文', ids: '⿱亠乂', strokes: 4, kind: 'etymology' },
+	写: { readings: [r('xiě', 'tả')], radical: '冖', ids: '⿱冖与', strokes: 5, kind: 'invented' },
+	读: {
+		readings: [r('dú', 'độc'), r('dòu', 'đậu', true)],
+		radical: '言',
+		ids: '⿰讠卖',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	跟: { readings: [r('gēn', 'cân')], radical: '足', ids: '⿰𧾷艮', strokes: 13, kind: 'etymology' },
+	习: { readings: [r('xí', 'tập')], radical: '乙', ids: '⿹𠃌冫', strokes: 3, kind: 'invented' },
+	校: {
+		readings: [r('xiào', 'hiệu'), r('jiào', 'hiệu', true)],
+		radical: '木',
+		ids: '⿰木交',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	教: {
+		readings: [r('jiāo', 'giao'), r('jiào', 'giáo')],
+		radical: '攴',
+		ids: '⿰孝攵',
+		strokes: 11,
+		kind: 'etymology'
+	},
+	课: { readings: [r('kè', 'khoá')], radical: '言', ids: '⿰讠果', strokes: 10, kind: 'etymology' },
+	本: { readings: [r('běn', 'bản')], radical: '木', ids: '本', strokes: 5, kind: 'etymology' },
+	书: { readings: [r('shū', 'thư')], radical: '丨', ids: '书', strokes: 4, kind: 'invented' },
+	小: { readings: [r('xiǎo', 'tiểu')], radical: '小', ids: '小', strokes: 3, kind: 'etymology' },
+	很: { readings: [r('hěn', 'ngận')], radical: '彳', ids: '⿰彳艮', strokes: 9, kind: 'etymology' },
+	非: { readings: [r('fēi', 'phi')], radical: '非', ids: '非', strokes: 8, kind: 'etymology' },
+	常: {
+		readings: [r('cháng', 'thường')],
+		radical: '巾',
+		ids: '⿱𫩠巾',
+		strokes: 11,
+		kind: 'etymology'
+	},
+	真: {
+		readings: [r('zhēn', 'chân')],
+		radical: '目',
+		ids: '⿱十具',
+		strokes: 10,
+		kind: 'invented'
+	},
+	高: {
+		readings: [r('gāo', 'cao')],
+		radical: '高',
+		ids: '⿳亠口冋',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	兴: {
+		readings: [r('xìng', 'hứng'), r('xīng', 'hưng', true)],
+		radical: '八',
+		ids: '⿳𭕄一八',
+		strokes: 6,
+		kind: 'invented'
+	},
+	认: { readings: [r('rèn', 'nhận')], radical: '言', ids: '⿰讠人', strokes: 4, kind: 'etymology' },
+	识: { readings: [r('shí', 'thức')], radical: '言', ids: '⿰讠只', strokes: 7, kind: 'etymology' },
+	累: {
+		readings: [r('lèi', 'luỵ'), r('lěi', 'luỵ', true)],
+		radical: '糸',
+		ids: '⿱田糸',
+		strokes: 11,
+		kind: 'etymology'
+	},
+	忙: {
+		readings: [r('máng', 'mang')],
+		radical: '心',
+		ids: '⿰忄亡',
+		strokes: 6,
+		kind: 'etymology'
+	},
+	太: { readings: [r('tài', 'thái')], radical: '大', ids: '⿵大丶', strokes: 4, kind: 'etymology' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists
 const local: Record<string, Mnemonic> = {
+	语: {
+		hinh: '讠 lời nói + 吾 gợi âm → lời nói, ngôn ngữ',
+		am: 'ngữ — "ngôn ngữ", "ngữ pháp"',
+		doiThat: '汉语, 外语',
+		tuongPhan: '≠ 说 (shuō): cùng bộ 讠, nhưng 语 là ngôn ngữ, 说 là hành động nói'
+	},
+	习: {
+		hinh: '习 giản lược của 習 (lông vũ 羽 + 白) → chim non vỗ cánh tập bay = tập, luyện',
+		am: 'tập — "học tập", "tập quán"',
+		doiThat: '学习, 练习',
+		tuongPhan: '≠ 书 (shū): cùng ít nét, nhưng 习 đọc xí, nghĩa là tập'
+	},
+	校: {
+		hinh: '木 gỗ + 交 gợi âm → hàng rào gỗ, nghĩa mở rộng thành trường học',
+		am: 'hiệu — "học hiệu", "hiệu trưởng"',
+		doiThat: '学校, 校长',
+		tuongPhan: '≠ 交 (jiāo): 校 thêm 木 để thành trường'
+	},
+	课: {
+		hinh: '讠 lời nói + 果 gợi âm → bài giảng, bài học',
+		am: 'khoá — "khoá học", "bài khoá"',
+		doiThat: '课本, 上课',
+		tuongPhan: '≠ 果 (guǒ, quả): 课 thêm 讠 thành bài học'
+	},
+	兴: {
+		hinh: '兴 giản lược của 興: nhiều bàn tay cùng nâng lên → hào hứng, hưng thịnh',
+		am: 'hứng — "cao hứng", "hưng thịnh"',
+		doiThat: '高兴',
+		tuongPhan: '≠ 关 (guān): cùng mũ 丷, nhưng 兴 có 一 và 八 ở dưới'
+	},
+	识: {
+		hinh: '讠 lời nói + 只 gợi âm → nghe lời mà nhận ra = biết, nhận biết',
+		am: 'thức — "nhận thức", "tri thức"',
+		doiThat: '认识',
+		tuongPhan: '≠ 只 (zhǐ): 识 thêm 讠 thành biết'
+	},
 	孩: {
 		hinh: '子 đứa trẻ + 亥 gợi âm → đứa bé: 孩子',
 		am: 'hái nghe gần "hài" trong "hài nhi"',
@@ -274,7 +452,8 @@ const local: Record<string, Mnemonic> = {
 
 mkdirSync('content/chars', { recursive: true });
 for (const [hanzi, { kind, ...row }] of Object.entries(rows)) {
-	const m = mnemonics.get(hanzi) ?? local[hanzi];
+	const found = mnemonics.get(hanzi) ?? local[hanzi];
+	const m = found && !/[\u2E80-\u2FDF]/.test(JSON.stringify(found)) ? found : undefined;
 	const file = { hanzi, ...row, ...(m && { mnemonic: { ...m, kind } }) };
 	writeFileSync(`content/chars/${hanzi}.yaml`, YAML.stringify(file, { lineWidth: 0 }));
 }

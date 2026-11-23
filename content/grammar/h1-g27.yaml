@@ -1,0 +1,17 @@
+id: h1-g27
+level: 1
+std:
+  - 9
+title: "Mức độ: 很 · 非常 · 真 · 太"
+pattern: 很 / 非常 / 真 + tính từ
+explain: |-
+  非常 (phi thường, fēicháng) nghĩa là “rất, vô cùng”, mạnh hơn 很: 我非常高兴。
+
+  真 (chân, zhēn) nghĩa là “thật là”, dùng để khen hoặc cảm thán: 你的汉语真好！ 太 (thái, tài) nghĩa là “quá”: 我太累了。
+examples:
+  - s-h1-11-12
+  - s-h1-11-13
+pitfalls:
+  - wrong: 我很非常忙
+    right: 我非常忙
+    why: Không dùng hai từ chỉ mức độ liền nhau.

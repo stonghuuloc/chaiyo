@@ -1,0 +1,16 @@
+hanzi: 中
+readings:
+  - pinyin: zhōng
+    hanviet: trung
+  - pinyin: zhòng
+    hanviet: trúng
+    rare: true
+radical: 丨
+ids: ⿻口丨
+strokes: 4
+mnemonic:
+  hinh: một mũi tên/cây sào (丨) cắm xuyên chính giữa lá cờ/khung (口) → đúng giữa, trúng tâm
+  am: trung — "trung tâm", "trung thực", "Trung Quốc"
+  doiThat: 进行中 (đang tiến hành — thanh loading trong app), 使用中 (đang sử dụng — biển toilet)
+  tuongPhan: dễ lẫn 申 (shēn, "trình bày", Thân trong 12 con giáp) — 申 có nét ngang trên dưới dài, nghĩa khác hẳn
+  kind: etymology
