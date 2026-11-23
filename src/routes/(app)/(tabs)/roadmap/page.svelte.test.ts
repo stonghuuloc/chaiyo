@@ -371,7 +371,7 @@ describe('/roadmap', () => {
 		expect(page.rowNote('h2-01')).toBe('Mở khi học xong HSK 1');
 		expect(scroll).not.toHaveBeenCalled();
 		expect(window.scrollY).toBe(y);
-		expect(hoisted.replace).toHaveBeenCalledWith('#lv2', {});
+		expect(hoisted.replace).toHaveBeenCalledWith('/roadmap#lv2', {});
 		expect(location.hash).toBe('#lv2');
 		scroll.mockRestore();
 	});
@@ -542,7 +542,7 @@ describe('/roadmap', () => {
 		flushSync();
 
 		// Assert
-		expect(hoisted.replace).toHaveBeenCalledWith('#tracks', {});
+		expect(hoisted.replace).toHaveBeenCalledWith('/roadmap#tracks', {});
 		expect(scroll).toHaveBeenCalledWith({ top: 0 });
 		expect(page.tabs().map((t) => [text(t), t.getAttribute('aria-selected')])).toEqual([
 			['HSK', 'false'],
@@ -580,7 +580,7 @@ describe('/roadmap', () => {
 		flushSync();
 
 		// Assert
-		expect(hoisted.replace).toHaveBeenLastCalledWith('#lv1', {});
+		expect(hoisted.replace).toHaveBeenLastCalledWith('/roadmap#lv1', {});
 		expect(page.one('[data-part=level-strip]')).not.toBeNull();
 		expect(page.tracks()).toHaveLength(0);
 		expect(page.sum()).toBe('HSK 1 · 0/40 bài · 300 từ mới');
@@ -708,7 +708,7 @@ describe('/roadmap', () => {
 		await settle();
 
 		// Assert
-		expect(hoisted.replace).toHaveBeenCalledWith('#lv1', {});
+		expect(hoisted.replace).toHaveBeenCalledWith('/roadmap#lv1', {});
 		expect(page.sum()).toBe('HSK 1 · 0/40 bài · 300 từ mới');
 		expect(into).toHaveBeenCalledTimes(1);
 		expect(into.mock.contexts[0]).toBe(page.row('h1-01'));

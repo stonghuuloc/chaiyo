@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { replaceState } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { currentLevel, type State } from '#lib/study/index.js';
@@ -23,17 +24,18 @@
 	let hashLevel = $state<number | null>(null);
 	const top = $derived(study ? currentLevel(study) : 1);
 	const view = $derived(study ? roadmapLevel(study, hashLevel ?? top) : null);
+	const toHash = (hash: string) => replaceState(resolve(`/(app)/(tabs)/roadmap#${hash}`), {});
 	const onpick = (level: number) => {
 		if (level === view?.level) return;
 		hashLevel = level;
-		replaceState(`#lv${level}`, {});
+		toHash(`lv${level}`);
 	};
 
 	const tracks = $derived(study && mode === 'tracks' ? trackView(study) : null);
 	const onmode = (next: 'hsk' | 'tracks') => {
 		if (next === mode) return;
 		mode = next;
-		replaceState(next === 'tracks' ? '#tracks' : `#lv${view?.level ?? top}`, {});
+		toHash(next === 'tracks' ? 'tracks' : `lv${view?.level ?? top}`);
 		scrollTo({ top: 0 });
 	};
 
@@ -52,13 +54,13 @@
 		const els = [document.querySelector('[data-part=now-card]'), rowOf(target.id)].filter(
 			(el) => el !== null
 		);
-		const seen = new Set<Element>();
+		let seen: Element[] = [];
 		const io = new IntersectionObserver((entries) => {
 			for (const e of entries) {
-				if (e.isIntersecting) seen.add(e.target);
-				else seen.delete(e.target);
+				seen = seen.filter((el) => el !== e.target);
+				if (e.isIntersecting) seen.push(e.target);
 			}
-			offscreen = seen.size === 0;
+			offscreen = seen.length === 0;
 		});
 		for (const el of els) io.observe(el);
 		return () => io.disconnect();
@@ -68,7 +70,7 @@
 		if (!target) return;
 		mode = 'hsk';
 		hashLevel = target.level;
-		replaceState(`#lv${target.level}`, {});
+		toHash(`lv${target.level}`);
 		await tick();
 		const row = rowOf(target.id);
 		if (!row) return;
