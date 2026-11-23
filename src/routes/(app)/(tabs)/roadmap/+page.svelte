@@ -7,9 +7,12 @@
 	import type { PageProps } from './$types';
 	import ExamGroup from './ExamGroup.svelte';
 	import LevelStrip from './LevelStrip.svelte';
+	import ModeSwitch from './ModeSwitch.svelte';
 	import NowCard from './NowCard.svelte';
 	import { examToast, lockToast, roadmapLevel } from './roadmap';
 	import TopicGroups from './TopicGroups.svelte';
+	import TrackList from './TrackList.svelte';
+	import { trackToast, trackView } from './tracks';
 
 	let { data }: PageProps = $props();
 
@@ -22,6 +25,14 @@
 		if (level === view?.level) return;
 		hashLevel = level;
 		replaceState(`#lv${level}`, {});
+	};
+
+	const tracks = $derived(study && mode === 'tracks' ? trackView(study) : null);
+	const onmode = (next: 'hsk' | 'tracks') => {
+		if (next === mode) return;
+		mode = next;
+		replaceState(next === 'tracks' ? '#tracks' : `#lv${view?.level ?? top}`, {});
+		scrollTo({ top: 0 });
 	};
 
 	const readHash = () => {
@@ -73,41 +84,48 @@
 
 <h1 class="pt-[calc(env(safe-area-inset-top,0px)+54px)] text-display">{m.tab_roadmap()}</h1>
 {#if view}
+	<ModeSwitch {mode} {onmode} />
 	<p data-part="roadmap-sum" class="mt-3 text-label text-muted">
-		{view.header
-			? m.chy49s1_header({ level: view.level, ...view.header })
-			: m.chy49s1_header_bare({ level: view.level })}
+		{tracks
+			? m.chy49s3_tracks_sum({ total: tracks.total, open: tracks.open })
+			: view.header
+				? m.chy49s1_header({ level: view.level, ...view.header })
+				: m.chy49s1_header_bare({ level: view.level })}
 	</p>
-	<LevelStrip cells={view.strip} {onpick} />
-	{#if view.empty}
-		<p
-			data-part="drafting"
-			class="mt-5 rounded-cell bg-shaded-paper px-4 py-3 text-toast text-graphite"
-		>
-			{m.chy49s1_drafting({ level: view.level })}
-		</p>
+	{#if tracks}
+		<TrackList items={tracks.items} onlocked={(item) => onlocked(trackToast(item))} />
 	{:else}
-		{#if view.level > top}
+		<LevelStrip cells={view.strip} {onpick} />
+		{#if view.empty}
 			<p
-				data-part="lock-note"
-				class="mt-4 flex items-center gap-2 rounded-cell bg-shaded-paper px-4 py-3 text-toast leading-[normal] text-graphite"
+				data-part="drafting"
+				class="mt-5 rounded-cell bg-shaded-paper px-4 py-3 text-toast text-graphite"
 			>
-				<svg class="size-[15px] flex-none fill-current text-muted" aria-hidden="true"
-					><use href="#i-fill-lock-simple" /></svg
-				>
-				{m.chy49s2_browse_note({ prev: view.level - 1 })}
+				{m.chy49s1_drafting({ level: view.level })}
 			</p>
-		{/if}
-		{#if view.card}
-			<NowCard card={view.card} />
-		{/if}
-		<TopicGroups
-			groups={view.groups}
-			level={view.level}
-			onlocked={(row) => onlocked(lockToast(view, row))}
-		/>
-		{#if view.exams}
-			<ExamGroup exams={view.exams} ontap={(row) => onlocked(examToast(row))} />
+		{:else}
+			{#if view.level > top}
+				<p
+					data-part="lock-note"
+					class="mt-4 flex items-center gap-2 rounded-cell bg-shaded-paper px-4 py-3 text-toast leading-[normal] text-graphite"
+				>
+					<svg class="size-[15px] flex-none fill-current text-muted" aria-hidden="true"
+						><use href="#i-fill-lock-simple" /></svg
+					>
+					{m.chy49s2_browse_note({ prev: view.level - 1 })}
+				</p>
+			{/if}
+			{#if view.card}
+				<NowCard card={view.card} />
+			{/if}
+			<TopicGroups
+				groups={view.groups}
+				level={view.level}
+				onlocked={(row) => onlocked(lockToast(view, row))}
+			/>
+			{#if view.exams}
+				<ExamGroup exams={view.exams} ontap={(row) => onlocked(examToast(row))} />
+			{/if}
 		{/if}
 	{/if}
 {/if}

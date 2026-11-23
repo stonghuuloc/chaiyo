@@ -37,6 +37,14 @@ const publish = (s: State) => {
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: hoisted.load }));
 vi.mock('$app/navigation', () => ({ replaceState: hoisted.replace }));
 
+const level3 = (): State => {
+	const state = reference();
+	for (const id of ['h1-01', 'h1-02', 'h1-03', 'h1-04', 'h1-05', 'h2-01'])
+		state.lessons[id] = { unlocked: true, passed: true, done: [] };
+	state.lessons['h3-01'].unlocked = true;
+	return state;
+};
+
 const at = (hash: string) => history.replaceState(null, '', `${location.pathname}${hash}`);
 
 const session = { user: { id: 'u1' } };
@@ -71,6 +79,8 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 		rowTitle: (id: string) => text(row(id)?.querySelector('[data-part=level-title]')),
 		rowNote: (id: string) => text(row(id)?.querySelector('[data-part=level-note]')),
 		toast: () => text(document.querySelector('[role=status] span')),
+		tabs: () => all('[role=tab]') as HTMLButtonElement[],
+		tracks: () => all('[data-part=track]') as HTMLDetailsElement[],
 		row
 	};
 };
@@ -500,6 +510,143 @@ describe('/roadmap', () => {
 		// Assert
 		expect(at4100).toBe('Qua Bài 1 để mở Bài 2');
 		expect(document.querySelector('[role=status]')).toBeNull();
+	});
+
+	it('Given_ReferenceLearner_When_TapChuyenDe_Then_TracksHashNoStrip', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+
+		// Act
+		page.tabs()[1].click();
+		flushSync();
+
+		// Assert
+		expect(hoisted.replace).toHaveBeenCalledWith('#tracks', {});
+		expect(scroll).toHaveBeenCalledWith({ top: 0 });
+		expect(page.tabs().map((t) => [text(t), t.getAttribute('aria-selected')])).toEqual([
+			['HSK', 'false'],
+			['Chuyên đề', 'true']
+		]);
+		expect(page.one('[data-part=level-strip]')).toBeNull();
+		expect(page.one('[data-part=now-card]')).toBeNull();
+		expect(page.one('[data-part=topic-groups]')).toBeNull();
+		expect(page.tracks()).toHaveLength(5);
+		expect(page.tracks().some((t) => t.open)).toBe(false);
+		expect(page.sum()).toBe('5 chuyên đề · 0 đã mở · học song song với HSK');
+		expect(text(page.tracks()[0].querySelector('[data-part=track-need]'))).toBe(
+			'Đỗ thi thử HSK 2 để mở Du lịch · 8 bài'
+		);
+		expect(page.tracks()[0].querySelector('[data-part=track-need] use')?.getAttribute('href')).toBe(
+			'#i-fill-lock-simple'
+		);
+		expect(text(page.tracks()[0].querySelector('[data-part=track-title]'))).toBe('Du lịch 旅游');
+		expect(page.tracks()[0].querySelector('[data-part=track-icon] use')?.getAttribute('href')).toBe(
+			'#i-fill-suitcase'
+		);
+		scroll.mockRestore();
+	});
+
+	it('Given_Tracks_When_TapHsk_Then_Lv1AndStrip', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+		page.tabs()[1].click();
+		flushSync();
+
+		// Act
+		page.tabs()[0].click();
+		flushSync();
+
+		// Assert
+		expect(hoisted.replace).toHaveBeenLastCalledWith('#lv1', {});
+		expect(page.one('[data-part=level-strip]')).not.toBeNull();
+		expect(page.tracks()).toHaveLength(0);
+		expect(page.sum()).toBe('HSK 1 · 0/40 bài · 300 từ mới');
+		scroll.mockRestore();
+	});
+
+	it('Given_HashTracks_When_Open_Then_TracksMode', async () => {
+		// Arrange
+		at('#tracks');
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.tabs()[1].getAttribute('aria-selected')).toBe('true');
+		expect(page.one('[data-part=level-strip]')).toBeNull();
+		expect(page.tracks()).toHaveLength(5);
+	});
+
+	it('Given_Tracks_When_TapDuLichBai1_Then_LockToast', async () => {
+		// Arrange
+		at('#tracks');
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const du = page.tracks()[0];
+		du.querySelector('summary')!.click();
+		flushSync();
+
+		// Act
+		du.querySelector<HTMLButtonElement>('[data-part=track-row] button')!.click();
+		flushSync();
+
+		// Assert
+		expect(du.open).toBe(true);
+		expect(
+			[...du.querySelectorAll('[data-part=track-row] [data-part=level-title]')].map(text)
+		).toEqual([
+			'Bài 1 · Ở sân bay',
+			'Bài 2 · Nhận phòng khách sạn',
+			'Bài 3 · Hỏi đường',
+			'Bài 4 · Gọi món đặc sản',
+			'Bài 5 · Mua vé tham quan',
+			'Bài 6 · Gặp sự cố',
+			'Bài 7 · Mặc cả ở chợ',
+			'Bài 8 · Chụp ảnh giúp tôi'
+		]);
+		expect(page.toast()).toBe('Đỗ thi thử HSK 2 để mở Du lịch');
+		expect(location.hash).toBe('#tracks');
+	});
+
+	it('Given_Level3Learner_When_TapDuLichBai1_Then_SoonToast', async () => {
+		// Arrange
+		at('#tracks');
+		current = level3();
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		page.tracks()[0].querySelector<HTMLButtonElement>('[data-part=track-row] button')!.click();
+		flushSync();
+
+		// Assert
+		expect(page.sum()).toBe('5 chuyên đề · 2 đã mở · học song song với HSK');
+		expect(text(page.tracks()[0].querySelector('[data-part=track-need]'))).toBe(
+			'Cần HSK 2 · 8 bài'
+		);
+		expect(page.tracks()[0].querySelector('[data-part=track-need] use')).toBeNull();
+		expect(page.toast()).toBe('Chuyên đề Du lịch sắp ra mắt.');
+	});
+
+	it('Given_SelectedTab_When_Tap_Then_NoReplace', async () => {
+		// Arrange
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+		const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+
+		// Act
+		page.tabs()[0].click();
+		flushSync();
+
+		// Assert
+		expect(hoisted.replace).not.toHaveBeenCalled();
+		expect(scroll).not.toHaveBeenCalled();
+		scroll.mockRestore();
 	});
 
 	it('Given_NoSession_When_Open_Then_OnlyTitle', async () => {
