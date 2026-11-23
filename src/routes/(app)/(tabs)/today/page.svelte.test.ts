@@ -4,6 +4,7 @@ import type { Ledger } from '#lib/ledger/index.js';
 import { initialState, type Skill, type State } from '#lib/study/index.js';
 import { countDays } from '#lib/study/fixtures/streak.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { controlName, controls, FREEZE_ACTION } from '../../../../test/controls';
 import Page from './+page.svelte';
 
 const past = '2026-11-01T00:00:00.000Z';
@@ -83,7 +84,11 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 				...target!.querySelectorAll(
 					'[data-part=next-cta], [data-part=practice-row], [data-part=roadmap], [data-part=week-strip]'
 				)
-			].map((e) => e.getAttribute('data-part'))
+			].map((e) => e.getAttribute('data-part')),
+		click: (part: string) => {
+			target!.querySelector<HTMLElement>(`[data-part=${part}]`)!.click();
+			flushSync();
+		}
 	};
 };
 
@@ -350,5 +355,94 @@ describe('/today freeze card', () => {
 
 		// Assert
 		expect(page.dialog()).not.toBeNull();
+	});
+});
+
+describe('/today rules sheet', () => {
+	const ac4 = (): State => {
+		const state = build(0);
+		state.streak = {
+			count: 11,
+			last: '2026-11-17',
+			through: '2026-11-17',
+			freezes: 2,
+			best: 11
+		};
+		return countDays(state, '2026-11-19', '2026-11-19');
+	};
+	const hieuRoi = () =>
+		[...document.querySelectorAll<HTMLElement>('[role=dialog] button')].find(
+			(b) => b.textContent?.trim() === 'Hiểu rồi'
+		)!;
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-20T03:00:00Z'));
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+		localStorage.clear();
+		document.body.querySelectorAll('[role=dialog]').forEach((d) => d.remove());
+	});
+
+	it.each(['streak-chip', 'week-info', 'freeze-rules-link'])(
+		'Given_Ac4_When_Click_%s_Then_RulesSheet1of2And4Rules',
+		async (part) => {
+			// Arrange
+			const page = await mountPage();
+			expect(page.dialog()).toBeNull();
+
+			// Act
+			page.click(part);
+
+			// Assert
+			const d = page.dialog()!;
+			expect(d.querySelector('h2')?.textContent).toBe('Lượt đóng băng là gì?');
+			expect(d.textContent).toContain('Bạn đang có 1/2 lượt');
+			expect(d.querySelectorAll('[data-part=freeze-rule]')).toHaveLength(4);
+		}
+	);
+
+	it('Given_OpenSheet_When_ClickHieuRoi_Then_Closed', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.click('streak-chip');
+
+		// Act
+		hieuRoi().click();
+
+		// Assert
+		await expect.poll(() => page.dialog()).toBeNull();
+	});
+
+	it('Given_OpenSheet_When_Escape_Then_Closed', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.click('streak-chip');
+		expect(page.dialog()).not.toBeNull();
+
+		// Act
+		window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+		flushSync();
+
+		// Assert
+		await expect.poll(() => page.dialog()).toBeNull();
+	});
+
+	it('Given_OpenThenClose_When_Read_Then_ChipMarksLineUnchanged', async () => {
+		// Arrange
+		const page = await mountPage();
+		const before = { chip: page.chip(), marks: page.marks(), line: page.line() };
+
+		// Act
+		page.click('streak-chip');
+		hieuRoi().click();
+		await expect.poll(() => page.dialog()).toBeNull();
+
+		// Assert
+		expect({ chip: page.chip(), marks: page.marks(), line: page.line() }).toEqual(before);
 	});
 });
