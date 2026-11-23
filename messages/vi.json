@@ -486,5 +486,21 @@
 	"chy48s1_off": "Tắt thông báo",
 	"chy48s1_test": "Gửi thử",
 	"chy48s1_no_key": "Chưa cấu hình khóa VAPID",
-	"chy48s1_state": "Trạng thái: {state}"
+	"chy48s1_state": "Trạng thái: {state}",
+	"chy46s3_title": "Lượt đóng băng là gì?",
+	"chy46s3_intro": "Là \"bùa hộ mệnh\" cho chuỗi ngày. Bạn không cần làm gì, app tự dùng khi bạn lỡ nghỉ một hôm.",
+	"chy46s3_have": "Bạn đang có {f}/{max} lượt",
+	"chy46s3_next": "Thêm {k} ngày học liền nữa là được tặng 1",
+	"chy46s3_full": "Đầy túi rồi, cứ yên tâm",
+	"chy46s3_r1_t": "Ngày được tính",
+	"chy46s3_r1": "khi bạn học xong một phần bài hoặc một buổi luyện.",
+	"chy46s3_r2_t": "Học 7 ngày liền",
+	"chy46s3_r2": "được tặng 1 lượt, giữ tối đa {max} lượt.",
+	"chy46s3_r3_t": "Lỡ nghỉ một ngày?",
+	"chy46s3_r3": "App tự dùng 1 lượt, chuỗi giữ nguyên nhưng không cộng thêm.",
+	"chy46s3_r4_t": "Hết lượt mà nghỉ",
+	"chy46s3_r4": "thì chuỗi về 0. Huy hiệu đã có vẫn giữ.",
+	"chy46s3_ok": "Hiểu rồi",
+	"chy46s3_link": "Đóng băng là gì?",
+	"chy46s3_week_label": "Tuần này, xem lượt đóng băng"
 }
