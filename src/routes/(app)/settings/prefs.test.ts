@@ -18,12 +18,22 @@ describe('toPrefs', () => {
 	it('Given_Row_When_ToPrefs_Then_SlicedTimeAndStyle', () => {
 		expect(toPrefs({ reminder_time: '20:15:00', hanzi_style: 'xing' })).toEqual({
 			time: '20:15',
-			hanzi: 'xing'
+			hanzi: 'xing',
+			email: true
 		});
 	});
 
 	it('Given_NoRow_When_ToPrefs_Then_Defaults', () => {
-		expect(toPrefs(null)).toEqual({ time: '21:00', hanzi: 'kai' });
+		expect(toPrefs(null)).toEqual({ time: '21:00', hanzi: 'kai', email: true });
+	});
+
+	it('Given_RemindEmailFalse_When_ToPrefs_Then_EmailFalse', () => {
+		expect(toPrefs({ reminder_time: '21:00:00', remind_email: false }).email).toBe(false);
+	});
+
+	it('Given_NoRow_When_ToPrefs_Then_EmailTrue', () => {
+		expect(toPrefs(null).email).toBe(true);
+		expect(toPrefs({ remind_email: null }).email).toBe(true);
 	});
 
 	it('Given_Unknown_When_ToPrefs_Then_Kai', () => {
@@ -53,6 +63,19 @@ describe('savePrefs', () => {
 				'upsert',
 				'settings',
 				{ learner_id: 'u1', hanzi_style: 'xing' },
+				{ onConflict: 'learner_id' }
+			]
+		]);
+	});
+
+	it('Given_EmailPatch_When_Save_Then_UpsertOnlyRemindEmail', async () => {
+		const { calls, client } = fake();
+		await savePrefs(client, 'u1', { email: false });
+		expect(calls).toEqual([
+			[
+				'upsert',
+				'settings',
+				{ learner_id: 'u1', remind_email: false },
 				{ onConflict: 'learner_id' }
 			]
 		]);
