@@ -648,5 +648,16 @@
 	"chy52s2_days": "ngày",
 	"chy52s2_words": "từ",
 	"chy52s2_empty_title": "Chưa có ai trong bảng",
-	"chy52s2_empty_body": "Học một mình hơi buồn, rủ bạn vào đua cho vui nhé!"
+	"chy52s2_empty_body": "Học một mình hơi buồn, rủ bạn vào đua cho vui nhé!",
+	"chy53s2_reminder": "Nhắc học",
+	"chy53s2_reminder_sub": "Mỗi ngày một lời nhắc, đúng giờ bạn chọn.",
+	"chy53s2_other_aria": "Chọn giờ khác",
+	"chy53s2_hanzi": "Chữ Hán",
+	"chy53s2_hanzi_sub": "Kiểu chữ hiện trên thẻ từ và bài học.",
+	"chy53s2_hanzi_group": "Kiểu chữ Hán",
+	"chy53s2_kai": "Khải thư",
+	"chy53s2_kai_sub": "Nét rõ, dễ tập viết",
+	"chy53s2_xing": "Hành thư",
+	"chy53s2_xing_sub": "Xem trước",
+	"chy53s2_hanzi_hint": "Hành thư chỉ là bản xem trước, đang dùng font gần giống. Máy bạn chưa có thì sẽ hiện nét tay bình thường."
 }
