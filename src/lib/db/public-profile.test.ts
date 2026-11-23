@@ -156,7 +156,7 @@ describe('handle', () => {
 	it('Given_RowsBeforeMigration_When_Migrate_Then_Backfilled', async () => {
 		const dir = mkdtempSync(join(tmpdir(), 'migrations-'));
 		for (const f of readdirSync(MIGRATIONS))
-			if (f !== NEW_MIGRATION) cpSync(join(MIGRATIONS, f), join(dir, f));
+			if (f < NEW_MIGRATION) cpSync(join(MIGRATIONS, f), join(dir, f));
 		const old = new PGlite();
 		await migrate(old, dir);
 		await old.exec(`insert into auth.users (id) values ('${LINH}'), ('${NAM}')`);

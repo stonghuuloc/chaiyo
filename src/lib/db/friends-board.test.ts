@@ -299,3 +299,90 @@ describe('publish_stats', () => {
 		).toBe('42501');
 	});
 });
+
+describe('friends_board', () => {
+	type Row = { handle: string; streak: number; words_week: number; lesson: number; me: boolean };
+	const seedStats = async () => {
+		await asOwner(db);
+		for (const [id, streak, week] of [
+			[LINH, 12, 9],
+			[MINH, 30, 14],
+			[LAN, 4, 25],
+			[HUY, 9, 17],
+			[NAM, 50, 50],
+			[QUAN, 40, 40]
+		] as [string, number, number][])
+			await db.query(
+				`update profiles set streak = $2, words_week = $3, lesson = 7,
+				streak_until = ${TODAY} + 1, week_of = ${MONDAY} where learner_id = $1`,
+				[id, streak, week]
+			);
+	};
+	const board = async (as = LINH) => {
+		await asLearner(db, as);
+		return (
+			await db.query<Row>(
+				'select handle, streak, words_week, lesson, me from public.friends_board() order by handle'
+			)
+		).rows;
+	};
+
+	it('Given_LinhFollows4_When_Board_Then_LinhMinhLanHuy', async () => {
+		await seedStats();
+		expect(await board()).toEqual([
+			{ handle: 'huy', streak: 9, words_week: 17, lesson: 7, me: false },
+			{ handle: 'lan', streak: 4, words_week: 25, lesson: 7, me: false },
+			{ handle: 'linh', streak: 12, words_week: 9, lesson: 7, me: true },
+			{ handle: 'minh', streak: 30, words_week: 14, lesson: 7, me: false }
+		]);
+	});
+
+	it('Given_LinhHidden_When_Board_Then_OwnRowStays', async () => {
+		await seedStats();
+		await db.query('update profiles set hidden = true where learner_id = $1', [LINH]);
+		expect((await board()).filter((r) => r.me).map((r) => r.handle)).toEqual(['linh']);
+	});
+
+	it('Given_StaleStreakUntil_When_Board_Then_Streak0', async () => {
+		await seedStats();
+		await db.query(`update profiles set streak_until = ${TODAY} - 1 where learner_id = $1`, [MINH]);
+		expect((await board()).find((r) => r.handle === 'minh')).toMatchObject({
+			streak: 0,
+			words_week: 14
+		});
+	});
+
+	it('Given_NeverPublished_When_Board_Then_Zeros', async () => {
+		await seedStats();
+		await db.query(
+			'update profiles set streak_until = null, week_of = null where learner_id = $1',
+			[HUY]
+		);
+		expect((await board()).find((r) => r.handle === 'huy')).toMatchObject({
+			streak: 0,
+			words_week: 0
+		});
+	});
+
+	it('Given_LastWeekWeekOf_When_Board_Then_Words0', async () => {
+		await seedStats();
+		await db.query(`update profiles set week_of = ${MONDAY} - 7 where learner_id = $1`, [LAN]);
+		expect((await board()).find((r) => r.handle === 'lan')).toMatchObject({
+			streak: 4,
+			words_week: 0
+		});
+	});
+
+	it('Given_NoFollows_When_Board_Then_OnlyMe', async () => {
+		await seedStats();
+		expect(await board(QUAN)).toEqual([
+			{ handle: 'quan', streak: 40, words_week: 40, lesson: 7, me: true }
+		]);
+	});
+
+	it('Given_Anon_When_Board_Then_42501', async () => {
+		await asOwner(db);
+		await db.exec('set role anon');
+		expect(await code(db.query('select * from public.friends_board()'))).toBe('42501');
+	});
+});

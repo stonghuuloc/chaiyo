@@ -73,3 +73,26 @@ end $$;
 
 revoke execute on function public.publish_stats(int, date, int, int, int, int, text[]) from public, anon;
 grant execute on function public.publish_stats(int, date, int, int, int, int, text[]) to authenticated;
+
+create function public.friends_board()
+returns table (handle text, display_name text, photo_url text, lesson smallint, streak int,
+	words_week int, me boolean)
+language sql stable security definer set search_path = '' as $$
+	select p.handle, p.display_name, p.photo_url, p.lesson,
+		case when p.streak_until >= d.today then p.streak else 0 end,
+		case when p.week_of = date_trunc('week', d.today)::date then p.words_week else 0 end,
+		p.learner_id = auth.uid()
+	from public.profiles p
+	left join public.settings s on s.learner_id = p.learner_id
+	cross join lateral (
+		select (now() at time zone coalesce(s.tz, 'Asia/Ho_Chi_Minh'))::date as today
+	) d
+	where p.learner_id = auth.uid()
+		or (not p.hidden and exists (
+			select 1 from public.follows f
+			where f.follower_id = auth.uid() and f.followee_id = p.learner_id
+		))
+$$;
+
+revoke execute on function public.friends_board() from public, anon;
+grant execute on function public.friends_board() to authenticated;
