@@ -17,6 +17,11 @@ describe('/dev/reminders', () => {
 				{ id: 'huy', reason: 'no-channel' },
 				{ id: 'nam', reason: 'counted' },
 				{ id: 'huy-ny', reason: 'not-due' }
+			],
+			failed: [],
+			deliveries: [
+				{ id: 'minh', channel: 'push', ok: true },
+				{ id: 'minh', channel: 'email', ok: true }
 			]
 		});
 		expect(messages.push).toHaveLength(1);

@@ -3,10 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { memoryStore, openLedger, type Input } from '#lib/ledger/index.js';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
 import { initialState, rollover } from '#lib/study/index.js';
+import type { Channel } from './channel';
 import { fakeChannel } from './fake-channel';
 import { studied } from './fixtures';
 import { memoryMarks } from './marks';
-import { sendReminders } from './remind';
+import { sendReminders, type RemindResult } from './remind';
 import { tick, type Deps, type Learner, type Rolled } from './tick';
 
 const HCM = 'Asia/Ho_Chi_Minh';
@@ -181,5 +182,48 @@ describe('tick', () => {
 		// Assert
 		expect([push.sent.length, email.sent.length, telegram.sent.length]).toEqual([1, 1, 0]);
 		expect([...marks.keys]).toEqual(['minh|2026-11-23']);
+	});
+
+	it('Given_TelegramThrows_When_TickRuns4Times_Then_PushEmailOnceAndTickResolves', async () => {
+		// Arrange
+		const minh = {
+			id: 'minh',
+			tz: HCM,
+			channels: ['push', 'email', 'telegram'] as Learner['channels'],
+			remindAt: '20:00'
+		};
+		const inputs = studied('2026-11-10', '2026-11-22', HCM);
+		const push = fakeChannel('push');
+		const email = fakeChannel('email');
+		const telegram: Channel = {
+			name: 'telegram',
+			send: async () => {
+				throw new Error('telegram: 400');
+			}
+		};
+		const marks = memoryMarks();
+		const results: RemindResult[] = [];
+		const deps: Deps = {
+			...depsFor([minh], { minh: inputs }),
+			remind: (now, r) =>
+				sendReminders(now, r, [push, email, telegram], marks).then((x) => {
+					results.push(x);
+				})
+		};
+
+		// Act
+		for (const t of ['13:00', '13:15', '13:30', '13:45']) {
+			await tick(new Date(`2026-11-23T${t}:00Z`), deps);
+		}
+
+		// Assert
+		expect([push.sent.length, email.sent.length]).toEqual([1, 1]);
+		expect([...marks.keys]).toEqual(['minh|2026-11-23']);
+		expect(results[0].deliveries[2]).toEqual({
+			id: 'minh',
+			channel: 'telegram',
+			ok: false,
+			error: 'telegram: 400'
+		});
 	});
 });
