@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
-import { supabaseDeps } from './supabase';
+import { supabaseDeps, supabaseMarks } from './supabase';
 import { noRemind, type Rolled } from './tick';
 
 const json = (body: unknown, status: number) =>
@@ -159,6 +159,58 @@ describe('supabaseDeps', () => {
 
 		// Act
 		const act = deps.record(rolled);
+
+		// Assert
+		await expect(act).rejects.toThrow('boom');
+	});
+});
+
+describe('supabaseMarks', () => {
+	it('Given_FreshDay_When_Claim_Then_TrueAndUpsertShape', async () => {
+		// Arrange
+		const seen: { url: URL; init?: RequestInit }[] = [];
+		const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+			seen.push({ url: new URL(String(input)), init });
+			return json([{ learner_id: 'minh' }], 201);
+		});
+		const marks = supabaseMarks(clientWith(fetch as typeof globalThis.fetch));
+
+		// Act
+		const claimed = await marks.claim('minh', '2026-11-23');
+
+		// Assert
+		const post = seen[0];
+		const prefer = new Headers(post.init?.headers).get('prefer');
+		expect(claimed).toBe(true);
+		expect(post.url.pathname).toBe('/rest/v1/reminders_sent');
+		expect(post.url.searchParams.get('on_conflict')).toBe('learner_id,day');
+		expect(prefer).toContain('resolution=ignore-duplicates');
+		expect(prefer).toContain('return=representation');
+		expect(JSON.parse(String(post.init?.body))).toEqual({
+			learner_id: 'minh',
+			day: '2026-11-23'
+		});
+	});
+
+	it('Given_ExistingMarker_When_Claim_Then_False', async () => {
+		// Arrange
+		const fetch = vi.fn(async () => json([], 201));
+		const marks = supabaseMarks(clientWith(fetch as typeof globalThis.fetch));
+
+		// Act
+		const claimed = await marks.claim('minh', '2026-11-23');
+
+		// Assert
+		expect(claimed).toBe(false);
+	});
+
+	it('Given_Server500_When_Claim_Then_Throws', async () => {
+		// Arrange
+		const fetch = vi.fn(async () => json({ message: 'boom' }, 500));
+		const marks = supabaseMarks(clientWith(fetch as typeof globalThis.fetch));
+
+		// Act
+		const act = marks.claim('minh', '2026-11-23');
 
 		// Assert
 		await expect(act).rejects.toThrow('boom');

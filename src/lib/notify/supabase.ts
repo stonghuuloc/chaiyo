@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { PAGE, pullInputs } from '#lib/ledger/supabase.js';
 import type { Curriculum } from '#lib/study/index.js';
 import { CHANNEL_NAMES } from './channel';
+import type { Marks } from './marks';
 import type { Deps, Learner } from './tick';
 
 export function supabaseDeps(
@@ -54,5 +55,21 @@ export function supabaseDeps(
 			if (error) throw new Error(error.message);
 		},
 		remind
+	};
+}
+
+export function supabaseMarks(client: SupabaseClient): Marks {
+	return {
+		async claim(learnerId, day) {
+			const { data, error } = await client
+				.from('reminders_sent')
+				.upsert(
+					{ learner_id: learnerId, day },
+					{ onConflict: 'learner_id,day', ignoreDuplicates: true }
+				)
+				.select('learner_id');
+			if (error) throw new Error(error.message);
+			return (data ?? []).length === 1;
+		}
 	};
 }
