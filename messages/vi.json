@@ -468,5 +468,17 @@
 	"chy46s2_note_none": "Hết lượt rồi. Học đủ 7 ngày liền được tặng thêm 1.",
 	"chy46s2_ok": "Học ngay thôi",
 	"chy47s3_ticks": "Chạy 4 lượt 20:00-20:45",
-	"chy47s3_tick": "{at}: gửi {sent}; bỏ qua {skipped}"
+	"chy47s3_tick": "{at}: gửi {sent}; bỏ qua {skipped}",
+	"chy45s3_kind_the": "{n} thẻ",
+	"chy45s3_kind_nghe": "{n} nghe",
+	"chy45s3_kind_viet": "{n} viết",
+	"chy45s3_roadmap": "Lộ trình",
+	"chy45s3_all": "Xem tất cả",
+	"chy45s3_lesson": "Bài {n} · {title} {hanzi}",
+	"chy45s3_done": "Đã xong",
+	"chy45s3_now": "Đang học",
+	"chy45s3_after": "Mở khi qua Bài {n}",
+	"chy45s3_friends": "Bạn bè",
+	"chy45s3_friend_days": "{n} ngày",
+	"chy45s3_friend_lesson": "Bài {n}"
 }
