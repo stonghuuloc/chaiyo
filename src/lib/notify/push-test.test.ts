@@ -102,4 +102,15 @@ describe('handlePushTest', () => {
 		expect(res.status).toBe(200);
 		expect(await res.json()).toEqual({ ok: true });
 	});
+
+	it('Given_NoTelegramChannel_When_Handle_Then_503TelegramNotConfigured', async () => {
+		const res = await handlePushTest(post('Bearer t'), {
+			uid: async () => 'lan',
+			channel: null,
+			name: 'telegram',
+			now: () => NOW
+		});
+		expect(res.status).toBe(503);
+		expect(await res.json()).toEqual({ error: 'telegram not configured' });
+	});
 });
