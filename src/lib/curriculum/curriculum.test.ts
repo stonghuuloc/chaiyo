@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { buildCurriculum, buildLevels } from './build';
 import { CURRICULUM, LESSONS, LEVELS, firstLessonId } from './index';
+import { numberOf, outlineNumbers } from './numbers';
 
 const by = (id: string) => {
 	const lesson = LESSONS.find((l) => l.id === id);
@@ -26,13 +27,42 @@ describe('curriculum', () => {
 			['h1-03', 3],
 			['h1-04', 4],
 			['h1-05', 5],
-			['h2-01', 6],
-			['h3-01', 7],
-			['h4-01', 8],
-			['h5-01', 9]
+			['h2-01', 41],
+			['h3-01', 68],
+			['h4-01', 94],
+			['h5-01', 116]
 		]);
 		expect(LESSONS.map((l) => l.words.length)).toEqual([0, 10, 9, 10, 8, 14, 12, 13, 15, 15]);
 		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(106);
+	});
+
+	it('Given_TwoLevels_When_OutlineNumbers_Then_SecondStartsAfterFirstCount', () => {
+		const lesson = (id: string) => ({ id, title: id });
+		const nums = outlineNumbers([
+			{ level: 1, words: 0, topics: [{ title: 'a', lessons: [lesson('a1'), lesson('a2')] }] },
+			{
+				level: 2,
+				words: 0,
+				topics: [
+					{ title: 'b', lessons: [lesson('b1')] },
+					{ title: 'c', lessons: [lesson('c1'), lesson('c2')] }
+				]
+			}
+		]);
+		expect([...nums]).toEqual([
+			['a1', 1],
+			['a2', 2],
+			['b1', 3],
+			['c1', 4],
+			['c2', 5]
+		]);
+	});
+
+	it('Given_LessonNotInOutline_When_Number_Then_ThrowsWithId', () => {
+		expect(() => numberOf(new Map([['a1', 1]]), 'h9-99')).toThrow(
+			'curriculum: h9-99 is in no level outline'
+		);
+		expect(numberOf(new Map([['a1', 1]]), 'a1')).toBe(1);
 	});
 
 	it('lists sections without warmup and flags the primer', () => {
