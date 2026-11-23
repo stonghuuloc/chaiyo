@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
 	apply,
+	bars,
 	initialState,
 	myWords,
 	searchWords,
@@ -347,5 +348,27 @@ describe('searchWords', () => {
 
 		// Assert
 		expect(result).toEqual([]);
+	});
+});
+
+describe('bars', () => {
+	it.each([
+		[undefined, 0],
+		[{}, 1],
+		[6.9, 1],
+		[7, 2],
+		[21, 3]
+	])('Given_Stability_When_Bars_Then_0To3 %s -> %s', (stability, expected) => {
+		// Arrange
+		const c =
+			stability === undefined
+				? undefined
+				: card(typeof stability === 'number' ? { stability } : {});
+
+		// Act
+		const grade = bars(c);
+
+		// Assert
+		expect(grade).toBe(expected);
 	});
 });
