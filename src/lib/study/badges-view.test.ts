@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
 	apply,
+	BADGE_ART,
 	badgesView,
 	initialState,
 	localDate,
@@ -200,5 +202,16 @@ describe('badgesView', () => {
 			const [, mm, dd] = localDate(new Date(at), state.tz).split('-');
 			expect(e.date).toBe(`${dd}/${mm}`);
 		}
+	});
+
+	it('every art id has a file in static/badges', () => {
+		// Arrange
+		const arts = new Set(Object.values(BADGE_ART));
+
+		// Act
+		const missing = [...arts].filter((a) => !existsSync(`static/badges/${a}.webp`));
+
+		// Assert
+		expect(missing).toEqual([]);
 	});
 });
