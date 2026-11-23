@@ -3,6 +3,8 @@ export { BADGES } from './badges';
 export type { BadgeId } from './badges';
 export { localDate } from './dates';
 export { currentLevel } from './level';
+export { roadAnchor, roadRows } from './road';
+export type { Road, RoadStatus } from './road';
 export { MAX_FREEZES, rollover } from './streak';
 export { minutes, session } from './session';
 export { myWords, searchWords } from './my-words';
