@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { initialState } from './apply';
-import { roadAnchor, roadRows } from './road';
-import type { Curriculum, State } from './types';
+import {
+	initialState,
+	roadAnchor,
+	roadRows,
+	type Curriculum,
+	type State
+} from '#lib/study/index.js';
 
 const lesson = (id: string) => ({ id, level: 1, sections: [], words: [] });
 const curriculum: Curriculum = { lessons: ['a', 'b', 'c', 'd'].map(lesson) };
