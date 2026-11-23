@@ -23,7 +23,9 @@
 	}
 </script>
 
-<div class="sticky top-0 grid grid-cols-[44px_1fr_44px] items-center bg-notebook-paper py-2">
+<div
+	class="sticky top-0 -mx-(--gutter) grid grid-cols-[44px_1fr_44px] items-center bg-notebook-paper px-3 py-2"
+>
 	<a
 		href={resolve('/(app)/(tabs)/me')}
 		onclick={back}
@@ -42,13 +44,15 @@
 	<h1 class="mt-3 font-display text-headline">{data.profile.name}</h1>
 {:else}
 	<div class="mt-8 text-center">
-		<svg class="mx-auto size-14 fill-current text-faint-pencil" aria-hidden="true">
-			<use href={data.profile.status === 'hidden' ? '#i-fill-user-block' : '#i-fill-magnifer'} />
-		</svg>
+		<div class="h-15">
+			<svg class="mx-auto block size-14 fill-current text-faint-pencil" aria-hidden="true">
+				<use href={data.profile.status === 'hidden' ? '#i-fill-user-block' : '#i-fill-magnifer'} />
+			</svg>
+		</div>
 		<h1 class="mt-3 font-display text-headline">
 			{data.profile.status === 'hidden' ? m.chy52s1_hidden_title() : m.chy52s1_missing_title()}
 		</h1>
-		<p class="mx-auto mt-2 max-w-[28ch] text-[15px] text-pencil">
+		<p class="mx-auto mt-2 max-w-[284px] text-[15px] leading-[normal] text-pencil">
 			{data.profile.status === 'hidden' ? m.chy52s1_hidden_body() : m.chy52s1_missing_body()}
 		</p>
 	</div>
