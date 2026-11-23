@@ -1,12 +1,39 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { m } from '#lib/paraglide/messages.js';
+	import { badgeLink } from '#lib/social/badge-link.js';
+	import { copyText } from '#lib/ui/clipboard.js';
 	import Section from '#lib/ui/Section.svelte';
+	import Toast from '#lib/ui/Toast.svelte';
 	import type { BadgeId, BadgesView, LockedBadge } from '#lib/study/index.js';
+	import BadgeSheet from './BadgeSheet.svelte';
 
-	let { view }: { view: BadgesView | null } = $props();
+	type Props = {
+		view: BadgesView | null;
+		handle: string | null;
+		onmissinghandle: () => void;
+	};
+	let { view, handle, onmissinghandle }: Props = $props();
 
 	let openId = $state<BadgeId | null>(null);
+	const open = $derived(
+		view && openId
+			? ([...view.earned, ...view.soon, ...view.rest].find((b) => b.id === openId) ?? null)
+			: null
+	);
+	let toast = $state({ open: false, message: '', nonce: 0 });
+	const say = (message: string) => (toast = { open: true, message, nonce: toast.nonce + 1 });
+
+	async function share() {
+		if (!openId) return;
+		if (!handle) {
+			onmissinghandle();
+			say(m.chy51s2_copy_failed());
+			return;
+		}
+		const ok = await copyText(badgeLink(location.origin, handle, openId));
+		say(ok ? m.chy51s2_copied() : m.chy51s2_copy_failed());
+	}
 
 	const how: Record<BadgeId, () => string> = {
 		first: m.chy51s1_how_first,
@@ -154,3 +181,18 @@
 		{/if}
 	{/if}
 </div>
+
+<BadgeSheet
+	badge={open}
+	how={open ? how[open.id]() : ''}
+	onclose={() => (openId = null)}
+	onshare={share}
+/>
+<Toast
+	open={toast.open}
+	message={toast.message}
+	nonce={toast.nonce}
+	duration={2000}
+	placement="top"
+	onclose={() => (toast.open = false)}
+/>

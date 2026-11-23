@@ -1,5 +1,5 @@
 import { flushSync, mount, tick, unmount } from 'svelte';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
 import { BADGES, initialState, type State } from '#lib/study/index.js';
@@ -32,6 +32,24 @@ const publish = (s: State) => {
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: async () => ledger }));
 
+const handleRow = vi.hoisted(() => vi.fn());
+vi.mock('#lib/supabase.js', () => ({
+	supabase: {
+		from: () => ({ select: () => ({ eq: () => ({ maybeSingle: handleRow }) }) })
+	}
+}));
+
+const writeText = vi.fn();
+Object.defineProperty(navigator, 'clipboard', {
+	configurable: true,
+	value: { writeText: (text: string) => writeText(text) }
+});
+
+beforeEach(() => {
+	handleRow.mockReset().mockResolvedValue({ data: { handle: 'linh' }, error: null });
+	writeText.mockReset().mockResolvedValue(undefined);
+});
+
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
 
@@ -58,6 +76,21 @@ const section = (el: HTMLElement, title: string) =>
 const rowOf = (el: HTMLElement, id: string) =>
 	el.querySelector<HTMLElement>(`li[data-id="${id}"]`)!;
 const user = { user: { id: 'u1' } };
+const dialog = () => document.querySelector<HTMLElement>('[role="dialog"]');
+const toast = () => document.querySelector('[role="status"]')?.textContent?.trim();
+const tap = async (button: HTMLButtonElement) => {
+	button.focus();
+	button.click();
+	await settle();
+};
+const cell = (el: HTMLElement, id: string) =>
+	el.querySelector<HTMLButtonElement>(`button[data-id="${id}"]`)!;
+const rowButton = (el: HTMLElement, id: string) =>
+	el.querySelector<HTMLButtonElement>(`li[data-id="${id}"] > button`)!;
+const share = () =>
+	[...(dialog()?.querySelectorAll('button') ?? [])].find((b) =>
+		b.textContent?.includes('Khoe với bạn bè')
+	);
 
 afterEach(() => {
 	if (app) unmount(app);
@@ -213,6 +246,106 @@ describe('badges page', () => {
 		expect(section(el, 'Đã có').textContent).toContain('Bấm vào để xem hoặc khoe với bạn bè.');
 		expect(section(el, 'Sắp mở').textContent).toContain('Bấm vào để xem cách mở.');
 		expect(el.textContent).not.toContain('Chạm');
+	});
+
+	it('Given_Cell_When_Click_Then_EarnedSheet18_10', async () => {
+		// Arrange
+		const el = await mountPage(user);
+
+		// Act
+		await tap(cell(el, 'streak7'));
+
+		// Assert
+		expect(dialog()?.querySelector('h2')?.textContent).toBe('Chuỗi 7 ngày');
+		expect(dialog()?.textContent).toContain('Học 7 ngày liền, không bỏ buổi nào.');
+		expect(dialog()?.textContent).toContain('Đã có từ ngày 18/10');
+		expect(share()).toBeDefined();
+	});
+
+	it('Given_Row_When_Click_Then_At12of30', async () => {
+		// Arrange
+		const el = await mountPage(user);
+
+		// Act
+		await tap(rowButton(el, 'streak30'));
+
+		// Assert
+		expect(dialog()?.textContent).toContain('Đang ở 12/30');
+		expect(share()).toBeUndefined();
+	});
+
+	it('Given_Open_When_Escape_Then_ClosedFocusOnRow', async () => {
+		// Arrange
+		const el = await mountPage(user);
+		await tap(rowButton(el, 'streak30'));
+
+		// Act
+		window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+		await settle();
+
+		// Assert
+		expect(dialog()).toBeNull();
+		expect(document.activeElement).toBe(rowButton(el, 'streak30'));
+	});
+
+	it('Given_OpenStreak30_When_PublishEarned_Then_EarnedSheet', async () => {
+		// Arrange
+		const el = await mountPage(user);
+		await tap(rowButton(el, 'streak30'));
+
+		// Act
+		publish({
+			...reference(),
+			badges: { ...reference().badges, streak30: '2026-11-01T05:00:00Z' }
+		});
+		await settle();
+
+		// Assert
+		expect(dialog()?.querySelector('h2')?.textContent).toBe('Chuỗi 30 ngày');
+		expect(dialog()?.textContent).toContain('Đã có từ ngày');
+		expect(share()).toBeDefined();
+	});
+
+	it('Given_Share_When_WriteResolves_Then_LinkAndCopiedToast', async () => {
+		// Arrange
+		const el = await mountPage(user);
+		await tap(cell(el, 'streak7'));
+
+		// Act
+		await tap(share()!);
+
+		// Assert
+		expect(writeText).toHaveBeenCalledWith(`${location.origin}/u/linh?badge=streak7`);
+		expect(toast()).toBe('Đã sao chép link');
+	});
+
+	it('Given_Share_When_WriteRejects_Then_FailToast', async () => {
+		// Arrange
+		writeText.mockRejectedValue(new Error('denied'));
+		const el = await mountPage(user);
+		await tap(cell(el, 'streak7'));
+
+		// Act
+		await tap(share()!);
+
+		// Assert
+		expect(toast()).toBe('Chưa sao chép được, thử lại nhé');
+	});
+
+	it('Given_NoHandleRow_When_Share_Then_FailToastNoWriteAndReread', async () => {
+		// Arrange
+		handleRow.mockResolvedValue({ data: null, error: null });
+		const el = await mountPage(user);
+		await tap(cell(el, 'streak7'));
+		expect(handleRow).toHaveBeenCalledTimes(1);
+
+		// Act
+		await tap(share()!);
+
+		// Assert
+		expect(toast()).toBe('Chưa sao chép được, thử lại nhé');
+		expect(writeText).not.toHaveBeenCalled();
+		expect(handleRow).toHaveBeenCalledTimes(2);
 	});
 
 	it('first section is not first-child so it keeps its top rule', async () => {

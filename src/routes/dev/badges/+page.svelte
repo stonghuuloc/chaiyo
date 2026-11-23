@@ -30,6 +30,6 @@
 {@html sprite}
 <div class="shell">
 	<main class="page-col">
-		<BadgesScreen {view} />
+		<BadgesScreen {view} handle="linh" onmissinghandle={() => {}} />
 	</main>
 </div>
