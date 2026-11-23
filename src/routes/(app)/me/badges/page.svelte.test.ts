@@ -184,7 +184,7 @@ describe('badges page', () => {
 		expect(section(el, 'Đã có').querySelectorAll('[data-id]')).toHaveLength(3);
 	});
 
-	it('back link points at /me and no element has an onclick handler or button role', async () => {
+	it('back link points at /me and every cell and row is a button', async () => {
 		// Arrange
 		current = reference();
 
@@ -195,7 +195,24 @@ describe('badges page', () => {
 		const back = el.querySelector('a')!;
 		expect(back.getAttribute('href')).toMatch(/\/me$/);
 		expect(back.getAttribute('aria-label')).toBe('Quay lại');
-		expect(el.querySelectorAll('button, [role="button"], [onclick]')).toHaveLength(0);
+		const buttons = [...el.querySelectorAll('button')];
+		expect(buttons).toHaveLength(9);
+		expect(buttons.every((b) => b.type === 'button')).toBe(true);
+		expect(section(el, 'Đã có').querySelectorAll('button[data-id]')).toHaveLength(2);
+		expect(el.querySelectorAll('li[data-id] > button')).toHaveLength(7);
+	});
+
+	it('Given_Reference_Then_BamSubLines', async () => {
+		// Arrange
+		current = reference();
+
+		// Act
+		const el = await mountPage(user);
+
+		// Assert
+		expect(section(el, 'Đã có').textContent).toContain('Bấm vào để xem hoặc khoe với bạn bè.');
+		expect(section(el, 'Sắp mở').textContent).toContain('Bấm vào để xem cách mở.');
+		expect(el.textContent).not.toContain('Chạm');
 	});
 
 	it('first section is not first-child so it keeps its top rule', async () => {
