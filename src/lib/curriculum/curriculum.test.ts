@@ -85,6 +85,42 @@ describe('levels', () => {
 			]
 		});
 	});
+
+	it('Given_Content_When_BuildLevels_Then_FiveLevelsCounts40_27_26_22_21', () => {
+		// Arrange / Act
+		const levels = buildLevels('content');
+
+		// Assert
+		expect(levels.map((l) => l.level)).toEqual([1, 2, 3, 4, 5]);
+		expect(levels.map((l) => l.topics.flatMap((t) => t.lessons).length)).toEqual([
+			40, 27, 26, 22, 21
+		]);
+		expect(levels.map((l) => l.words)).toEqual([300, 500, 1000, 1200, 1300]);
+		for (const l of levels.slice(1))
+			expect(l.topics.flatMap((t) => t.lessons).map((x) => x.id)).toEqual(
+				Array.from(
+					{ length: l.topics.flatMap((t) => t.lessons).length },
+					(_, i) => `h${l.level}-${String(i + 1).padStart(2, '0')}`
+				)
+			);
+	});
+
+	it('Given_BuiltFirstLessons_When_BuildLevels_Then_TitlesMatchLessons', () => {
+		// Arrange
+		const levels = buildLevels('content').filter((l) => l.level > 1);
+
+		// Act
+		const firsts = levels.map((l) => l.topics[0].lessons[0]);
+
+		// Assert
+		expect(firsts).toEqual(
+			['h2-01', 'h3-01', 'h4-01', 'h5-01'].map((id) => ({
+				id,
+				title: by(id).title,
+				titleHanzi: by(id).titleHanzi
+			}))
+		);
+	});
 });
 
 describe('firstLessonId', () => {

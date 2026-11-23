@@ -1,0 +1,56 @@
+level: 5
+words: 1300
+topics:
+  - title: Xã hội
+    lessons:
+      - id: h5-01
+        title: "Thành thị và nông thôn"
+        titleHanzi: 城市与乡村
+      - id: h5-02
+        title: "Người già"
+      - id: h5-03
+        title: "Giáo dục"
+      - id: h5-04
+        title: "Tình nguyện"
+  - title: Kinh tế
+    lessons:
+      - id: h5-05
+        title: "Khởi nghiệp"
+      - id: h5-06
+        title: "Quảng cáo"
+      - id: h5-07
+        title: "Tiêu dùng"
+      - id: h5-08
+        title: "Tiết kiệm và đầu tư"
+  - title: Khoa học
+    lessons:
+      - id: h5-09
+        title: "Vũ trụ"
+      - id: h5-10
+        title: "Y học"
+      - id: h5-11
+        title: "Trí tuệ nhân tạo"
+      - id: h5-12
+        title: "Phát minh"
+  - title: Lịch sử và văn học
+    lessons:
+      - id: h5-13
+        title: "Thành ngữ"
+      - id: h5-14
+        title: "Truyện cổ"
+      - id: h5-15
+        title: "Thơ Đường"
+      - id: h5-16
+        title: "Nhân vật lịch sử"
+  - title: Quan điểm
+    lessons:
+      - id: h5-17
+        title: "Thành công là gì?"
+      - id: h5-18
+        title: "Hạnh phúc"
+      - id: h5-19
+        title: "Tranh luận"
+      - id: h5-20
+        title: "Lựa chọn"
+      - id: h5-21
+        title: "Thay đổi bản thân"
