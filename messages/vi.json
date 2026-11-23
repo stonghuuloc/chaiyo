@@ -480,5 +480,11 @@
 	"chy45s3_after": "Mở khi qua Bài {n}",
 	"chy45s3_friends": "Bạn bè",
 	"chy45s3_friend_days": "{n} ngày",
-	"chy45s3_friend_lesson": "Bài {n}"
+	"chy45s3_friend_lesson": "Bài {n}",
+	"chy48s1_title": "Thử Web Push",
+	"chy48s1_on": "Bật thông báo",
+	"chy48s1_off": "Tắt thông báo",
+	"chy48s1_test": "Gửi thử",
+	"chy48s1_no_key": "Chưa cấu hình khóa VAPID",
+	"chy48s1_state": "Trạng thái: {state}"
 }
