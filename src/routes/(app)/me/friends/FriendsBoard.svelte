@@ -16,7 +16,7 @@
 	];
 	const MEDAL = ['text-sunflower', 'text-faint-pencil', 'text-pencil'];
 	const ROW =
-		'grid min-h-[68px] grid-cols-[28px_44px_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2';
+		'grid min-h-[68px] grid-cols-[28px_44px_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2 leading-[normal]';
 </script>
 
 {#snippet cells(r: RankedRow)}
@@ -75,7 +75,7 @@
 {/snippet}
 
 {#if others > 0}
-	<p class="mt-2 text-[14px] text-pencil">{m.chy52s2_lead({ n: others })}</p>
+	<p class="mt-2 text-[14px] leading-[normal] text-pencil">{m.chy52s2_lead({ n: others })}</p>
 {/if}
 
 <div
@@ -99,10 +99,10 @@
 		<svg class="mx-auto block size-10 fill-current text-faint-pencil" aria-hidden="true">
 			<use href="#i-fill-users" />
 		</svg>
-		<h2 class="mt-2 font-display text-[19px] leading-[1.25] font-semibold text-ink">
+		<h2 class="mt-3 font-display text-[19px] leading-[1.25] font-semibold text-ink">
 			{m.chy52s2_empty_title()}
 		</h2>
-		<p class="mt-1 text-[14.5px] text-pencil">{m.chy52s2_empty_body()}</p>
+		<p class="mt-1 text-[14.5px] leading-[normal] text-pencil">{m.chy52s2_empty_body()}</p>
 	</div>
 {:else}
 	<ul
