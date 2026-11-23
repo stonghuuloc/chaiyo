@@ -42,7 +42,7 @@ const mountPage = async (s: typeof session | null = session, content: LessonCont
 	return {
 		rows: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-row]')],
 		links: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-link]')],
-		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta]'),
+		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta] a'),
 		gate: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-gate]')!,
 		testOut: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-testout]')
 	};
