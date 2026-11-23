@@ -89,5 +89,235 @@
 				]
 			}
 		]
+	},
+	{
+		"level": 2,
+		"words": 500,
+		"topics": [
+			{
+				"title": "Thói quen hằng ngày",
+				"lessons": [
+					{ "id": "h2-01", "title": "Mấy giờ bạn dậy?", "titleHanzi": "你几点起床" },
+					{ "id": "h2-02", "title": "Đi học bằng xe buýt" },
+					{ "id": "h2-03", "title": "Buổi sáng ăn gì?" },
+					{ "id": "h2-04", "title": "Cuối tuần làm gì?" },
+					{ "id": "h2-05", "title": "Tôi đang tập thể dục" }
+				]
+			},
+			{
+				"title": "Sức khỏe",
+				"lessons": [
+					{ "id": "h2-06", "title": "Bạn bị làm sao?" },
+					{ "id": "h2-07", "title": "Uống thuốc" },
+					{ "id": "h2-08", "title": "Đi khám bác sĩ" },
+					{ "id": "h2-09", "title": "Ngủ sớm dậy sớm" }
+				]
+			},
+			{
+				"title": "Sở thích",
+				"lessons": [
+					{ "id": "h2-10", "title": "Bạn thích môn thể thao nào?" },
+					{ "id": "h2-11", "title": "Chơi bóng đá" },
+					{ "id": "h2-12", "title": "Nghe nhạc, hát" },
+					{ "id": "h2-13", "title": "Đọc sách" },
+					{ "id": "h2-14", "title": "Chụp ảnh" }
+				]
+			},
+			{
+				"title": "So sánh",
+				"lessons": [
+					{ "id": "h2-15", "title": "Cao hơn, thấp hơn" },
+					{ "id": "h2-16", "title": "Cái nào rẻ hơn?" },
+					{ "id": "h2-17", "title": "Hôm nay lạnh hơn hôm qua" },
+					{ "id": "h2-18", "title": "Giống nhau và khác nhau" }
+				]
+			},
+			{
+				"title": "Du lịch",
+				"lessons": [
+					{ "id": "h2-19", "title": "Bạn đã đến Bắc Kinh chưa?" },
+					{ "id": "h2-20", "title": "Đặt phòng khách sạn" },
+					{ "id": "h2-21", "title": "Hỏi đường" },
+					{ "id": "h2-22", "title": "Mua vé tàu" },
+					{ "id": "h2-23", "title": "Chuyến đi vui không?" }
+				]
+			},
+			{
+				"title": "Công việc",
+				"lessons": [
+					{ "id": "h2-24", "title": "Đi làm muộn" },
+					{ "id": "h2-25", "title": "Gặp đồng nghiệp" },
+					{ "id": "h2-26", "title": "Nghỉ phép" },
+					{ "id": "h2-27", "title": "Công việc mới" }
+				]
+			}
+		]
+	},
+	{
+		"level": 3,
+		"words": 1000,
+		"topics": [
+			{
+				"title": "Trường lớp",
+				"lessons": [
+					{ "id": "h3-01", "title": "Kỳ thi sắp đến", "titleHanzi": "考试就要到了" },
+					{ "id": "h3-02", "title": "Làm bài tập" },
+					{ "id": "h3-03", "title": "Thầy cô và học sinh" },
+					{ "id": "h3-04", "title": "Thư viện" },
+					{ "id": "h3-05", "title": "Tốt nghiệp" }
+				]
+			},
+			{
+				"title": "Nhà cửa",
+				"lessons": [
+					{ "id": "h3-06", "title": "Thuê nhà" },
+					{ "id": "h3-07", "title": "Dọn dẹp phòng" },
+					{ "id": "h3-08", "title": "Hàng xóm" },
+					{ "id": "h3-09", "title": "Chuyển nhà" }
+				]
+			},
+			{
+				"title": "Cảm xúc",
+				"lessons": [
+					{ "id": "h3-10", "title": "Đừng lo lắng" },
+					{ "id": "h3-11", "title": "Tức giận" },
+					{ "id": "h3-12", "title": "Vui quá đi" },
+					{ "id": "h3-13", "title": "Nhớ nhà" },
+					{ "id": "h3-14", "title": "Ngạc nhiên" }
+				]
+			},
+			{
+				"title": "Thành phố",
+				"lessons": [
+					{ "id": "h3-15", "title": "Giao thông giờ cao điểm" },
+					{ "id": "h3-16", "title": "Công viên" },
+					{ "id": "h3-17", "title": "Siêu thị" },
+					{ "id": "h3-18", "title": "Ngân hàng" }
+				]
+			},
+			{
+				"title": "Lễ hội",
+				"lessons": [
+					{ "id": "h3-19", "title": "Tết Nguyên đán" },
+					{ "id": "h3-20", "title": "Tết Trung thu" },
+					{ "id": "h3-21", "title": "Sinh nhật" },
+					{ "id": "h3-22", "title": "Tặng quà" }
+				]
+			},
+			{
+				"title": "Môi trường",
+				"lessons": [
+					{ "id": "h3-23", "title": "Bốn mùa" },
+					{ "id": "h3-24", "title": "Bảo vệ cây xanh" },
+					{ "id": "h3-25", "title": "Tiết kiệm nước" },
+					{ "id": "h3-26", "title": "Thời tiết thay đổi" }
+				]
+			}
+		]
+	},
+	{
+		"level": 4,
+		"words": 1200,
+		"topics": [
+			{
+				"title": "Quan hệ",
+				"lessons": [
+					{ "id": "h4-01", "title": "Bạn bè thân thiết", "titleHanzi": "亲密的朋友" },
+					{ "id": "h4-02", "title": "Hiểu lầm" },
+					{ "id": "h4-03", "title": "Xin lỗi và tha thứ" },
+					{ "id": "h4-04", "title": "Hẹn hò" },
+					{ "id": "h4-05", "title": "Kết hôn" }
+				]
+			},
+			{
+				"title": "Nghề nghiệp",
+				"lessons": [
+					{ "id": "h4-06", "title": "Phỏng vấn xin việc" },
+					{ "id": "h4-07", "title": "Viết sơ yếu lý lịch" },
+					{ "id": "h4-08", "title": "Lương và thưởng" },
+					{ "id": "h4-09", "title": "Đổi nghề" }
+				]
+			},
+			{
+				"title": "Công nghệ",
+				"lessons": [
+					{ "id": "h4-10", "title": "Điện thoại thông minh" },
+					{ "id": "h4-11", "title": "Mua sắm trên mạng" },
+					{ "id": "h4-12", "title": "Mạng xã hội" },
+					{ "id": "h4-13", "title": "Học online" }
+				]
+			},
+			{
+				"title": "Văn hóa",
+				"lessons": [
+					{ "id": "h4-14", "title": "Trà Trung Quốc" },
+					{ "id": "h4-15", "title": "Thư pháp" },
+					{ "id": "h4-16", "title": "Ẩm thực các vùng" },
+					{ "id": "h4-17", "title": "Phong tục chào hỏi" }
+				]
+			},
+			{
+				"title": "Cuộc sống",
+				"lessons": [
+					{ "id": "h4-18", "title": "Áp lực" },
+					{ "id": "h4-19", "title": "Thời gian rảnh" },
+					{ "id": "h4-20", "title": "Lập kế hoạch" },
+					{ "id": "h4-21", "title": "Thói quen tốt" },
+					{ "id": "h4-22", "title": "Ước mơ" }
+				]
+			}
+		]
+	},
+	{
+		"level": 5,
+		"words": 1300,
+		"topics": [
+			{
+				"title": "Xã hội",
+				"lessons": [
+					{ "id": "h5-01", "title": "Thành thị và nông thôn", "titleHanzi": "城市与乡村" },
+					{ "id": "h5-02", "title": "Người già" },
+					{ "id": "h5-03", "title": "Giáo dục" },
+					{ "id": "h5-04", "title": "Tình nguyện" }
+				]
+			},
+			{
+				"title": "Kinh tế",
+				"lessons": [
+					{ "id": "h5-05", "title": "Khởi nghiệp" },
+					{ "id": "h5-06", "title": "Quảng cáo" },
+					{ "id": "h5-07", "title": "Tiêu dùng" },
+					{ "id": "h5-08", "title": "Tiết kiệm và đầu tư" }
+				]
+			},
+			{
+				"title": "Khoa học",
+				"lessons": [
+					{ "id": "h5-09", "title": "Vũ trụ" },
+					{ "id": "h5-10", "title": "Y học" },
+					{ "id": "h5-11", "title": "Trí tuệ nhân tạo" },
+					{ "id": "h5-12", "title": "Phát minh" }
+				]
+			},
+			{
+				"title": "Lịch sử và văn học",
+				"lessons": [
+					{ "id": "h5-13", "title": "Thành ngữ" },
+					{ "id": "h5-14", "title": "Truyện cổ" },
+					{ "id": "h5-15", "title": "Thơ Đường" },
+					{ "id": "h5-16", "title": "Nhân vật lịch sử" }
+				]
+			},
+			{
+				"title": "Quan điểm",
+				"lessons": [
+					{ "id": "h5-17", "title": "Thành công là gì?" },
+					{ "id": "h5-18", "title": "Hạnh phúc" },
+					{ "id": "h5-19", "title": "Tranh luận" },
+					{ "id": "h5-20", "title": "Lựa chọn" },
+					{ "id": "h5-21", "title": "Thay đổi bản thân" }
+				]
+			}
+		]
 	}
 ]

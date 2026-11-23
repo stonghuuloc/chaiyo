@@ -103,7 +103,7 @@
 
 {#if step.parts.length > 0}
 	<section data-part="parts" class="mt-5">
-		<h3 class="text-label font-semibold text-graphite">{m.words_parts()}</h3>
+		<h3 class="font-sans text-label font-semibold text-pencil">{m.words_parts()}</h3>
 		<ul class="mt-2 flex flex-wrap gap-2">
 			{#each step.parts as part, i (i)}
 				<li class="flex flex-col items-center rounded-action border border-ruled-line px-3 py-2">
@@ -116,7 +116,7 @@
 	</section>
 {:else if step.components.length > 0}
 	<section data-part="components" class="mt-5">
-		<h3 class="text-label font-semibold text-graphite">{m.words_components()}</h3>
+		<h3 class="font-sans text-label font-semibold text-pencil">{m.words_components()}</h3>
 		<ul class="mt-2 flex flex-col gap-1">
 			{#each step.components as c, i (i)}
 				<li class="font-hanzi">{c}</li>
@@ -127,7 +127,7 @@
 
 {#if step.examples.length > 0}
 	<section data-part="examples" class="mt-5">
-		<h3 class="text-label font-semibold text-graphite">{m.words_examples()}</h3>
+		<h3 class="font-sans text-label font-semibold text-pencil">{m.words_examples()}</h3>
 		<ul class="mt-2 flex flex-col gap-2">
 			{#each step.examples as ex, i (i)}
 				<li data-part="example">

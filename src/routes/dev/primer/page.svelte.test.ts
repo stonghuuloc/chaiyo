@@ -25,7 +25,7 @@ const mountPage = () => {
 	return {
 		seed: () => target!.querySelector<HTMLButtonElement>('button')!,
 		rows: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=hub-row]')],
-		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta]')
+		cta: () => target!.querySelector<HTMLAnchorElement>('[data-part=hub-cta] a')
 	};
 };
 
