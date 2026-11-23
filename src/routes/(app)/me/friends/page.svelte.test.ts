@@ -186,4 +186,16 @@ describe('friends board page', () => {
 		).toBeTruthy();
 		expect(section.querySelector('ul')).toBeNull();
 	});
+
+	it('Given_BoardMeRow_Then_InviteShowsMyHandle', async () => {
+		const root = await render(BOARD);
+		expect(text(root.querySelector('[data-part="invite"] small'))).toBe(
+			`${location.host}/moi/linh`
+		);
+	});
+
+	it('Given_NoMeRow_Then_NoInvite', async () => {
+		const root = await render([row('Lan', 4, 25)]);
+		expect(root.querySelector('[data-part="invite"]')).toBeNull();
+	});
 });
