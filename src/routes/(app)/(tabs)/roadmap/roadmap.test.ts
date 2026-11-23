@@ -1,12 +1,20 @@
-import { CURRICULUM } from '#lib/curriculum/index.js';
+import { CURRICULUM, LESSONS } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { describe, expect, it } from 'vitest';
-import { examToast, lockToast, roadmapLevel } from './roadmap';
+import { examToast, jumpTarget, lockToast, roadmapLevel } from './roadmap';
 
 const reference = (): State => {
 	const state = initialState({ curriculum: CURRICULUM });
 	state.lessons['h0-00'] = { unlocked: true, passed: true, done: [], best: 90 };
 	state.lessons['h1-01'].unlocked = true;
+	return state;
+};
+
+const placed = (): State => {
+	const state = initialState({ curriculum: CURRICULUM });
+	for (const id of ['h0-00', 'h1-01', 'h1-02', 'h1-03', 'h1-04', 'h1-05'])
+		state.lessons[id] = { unlocked: true, passed: true, done: [], best: 85 };
+	state.lessons['h2-01'].unlocked = true;
 	return state;
 };
 
@@ -199,8 +207,8 @@ describe('roadmapLevel', () => {
 		expect(view.exams).toEqual({
 			note: true,
 			rows: [
-				{ part: 'viet', level: 3, last: 1, status: 'locked' },
-				{ part: 'noi', level: 3, last: 1, status: 'locked' }
+				{ part: 'viet', level: 3, last: 68, status: 'locked' },
+				{ part: 'noi', level: 3, last: 68, status: 'locked' }
 			]
 		});
 	});
@@ -210,7 +218,7 @@ describe('roadmapLevel', () => {
 		const view = roadmapLevel(reference(), 2);
 
 		// Assert
-		expect(view.exams).toEqual({ note: false, rows: [{ level: 2, last: 1, status: 'locked' }] });
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 2, last: 41, status: 'locked' }] });
 	});
 
 	it('Given_AllHsk1OutlinePassed_When_Level1_Then_ExamOpen', () => {
@@ -265,12 +273,79 @@ describe('roadmapLevel', () => {
 	it('Given_ExamRows_When_ExamToast_Then_LockedAndSoonCopies', () => {
 		// Arrange
 		const locked = { level: 1, last: 5, status: 'locked' } as const;
-		const open = { part: 'noi', level: 3, last: 1, status: 'open' } as const;
+		const open = { part: 'noi', level: 3, last: 68, status: 'open' } as const;
 
 		// Act
 		const copies = [examToast(locked), examToast(open)];
 
 		// Assert
 		expect(copies).toEqual(['Qua Bài 5 để mở thi thử HSK 1', 'Thi thử HSK 3 sắp ra mắt.']);
+	});
+
+	it('Given_BuiltLessons_When_Rows_Then_NEqualsLessonsN', () => {
+		// Arrange
+		const state = reference();
+
+		// Act
+		const rows = [1, 2, 3, 4, 5].flatMap((L) =>
+			roadmapLevel(state, L).groups.flatMap((g) => g.rows)
+		);
+
+		// Assert
+		for (const l of LESSONS) expect(rows.find((r) => r.id === l.id)?.n).toBe(l.n);
+	});
+
+	it('Given_ReferenceLearner_When_Level2_Then_FirstRowN41', () => {
+		// Arrange / Act
+		const view = roadmapLevel(reference(), 2);
+
+		// Assert
+		expect(view.groups[0].rows[0]).toMatchObject({ id: 'h2-01', n: 41 });
+		expect(view.header?.total).toBe(27);
+	});
+
+	it('Given_PlacedHsk2_When_Level2_Then_Card41Next42', () => {
+		// Arrange / Act
+		const view = roadmapLevel(placed(), 2);
+
+		// Assert
+		expect(view.card).toMatchObject({ id: 'h2-01', n: 41, next: 42 });
+	});
+
+	it('Given_PlacedHsk2_When_Level2_Then_H202DraftN42', () => {
+		// Arrange / Act
+		const view = roadmapLevel(placed(), 2);
+
+		// Assert
+		expect(row(view, 'h2-02')).toMatchObject({ n: 42, status: 'locked', lock: 'draft' });
+		expect(lockToast(view, row(view, 'h2-02'))).toBe('Bài 42 đang được soạn.');
+	});
+
+	it('Given_ReferenceLearner_When_JumpTarget_Then_Level1H101N1', () => {
+		// Arrange / Act
+		const target = jumpTarget(reference());
+
+		// Assert
+		expect(target).toEqual({ level: 1, id: 'h1-01', n: 1 });
+	});
+
+	it('Given_PlacedHsk2_When_JumpTarget_Then_Level2H201N41', () => {
+		// Arrange / Act
+		const target = jumpTarget(placed());
+
+		// Assert
+		expect(target).toEqual({ level: 2, id: 'h2-01', n: 41 });
+	});
+
+	it('Given_AllBuiltPassed_When_JumpTarget_Then_Undefined', () => {
+		// Arrange
+		const state = initialState({ curriculum: CURRICULUM });
+		for (const l of LESSONS) state.lessons[l.id] = { unlocked: true, passed: true, done: [] };
+
+		// Act
+		const target = jumpTarget(state);
+
+		// Assert
+		expect(target).toBeUndefined();
 	});
 });

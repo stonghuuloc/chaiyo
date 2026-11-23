@@ -302,7 +302,7 @@ describe('/roadmap', () => {
 		expect(page.sum()).toBe('HSK 2 · 0/27 bài · 500 từ mới');
 		expect(page.one('[data-part=drafting]')).toBeNull();
 		expect(page.one('[data-part=lock-note]')).toBeNull();
-		expect(page.cardTitle()).toBe('Bài 1 · Mấy giờ bạn dậy? 你几点起床');
+		expect(page.cardTitle()).toBe('Bài 41 · Mấy giờ bạn dậy? 你几点起床');
 		expect(page.open()).toEqual(['Chủ đề 1 · Thói quen hằng ngày']);
 	});
 
@@ -390,8 +390,8 @@ describe('/roadmap', () => {
 			'Thi thử HSK 3 · Nói'
 		]);
 		expect(rows.map((r) => text(r.querySelector('[data-part=exam-note]')))).toEqual([
-			'nghe · đọc · viết · mở khi qua Bài 1',
-			'nhắc lại · tả tranh · trả lời câu hỏi · mở khi qua Bài 1'
+			'nghe · đọc · viết · mở khi qua Bài 68',
+			'nhắc lại · tả tranh · trả lời câu hỏi · mở khi qua Bài 68'
 		]);
 		expect(rows.map((r) => r.querySelector('use')?.getAttribute('href'))).toEqual([
 			'#i-regular-diploma',
