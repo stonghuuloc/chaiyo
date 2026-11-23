@@ -90,10 +90,9 @@
 		{/each}
 	</div>
 	<label
-		class={[
-			'mt-2 flex min-h-12 items-center gap-3 rounded-cell border',
-			other ? 'border-2 border-ink bg-white px-[15px]' : 'border-ruled-line bg-white/40 px-4'
-		]}
+		class={other
+			? 'mt-2 flex min-h-12 items-center gap-3 rounded-cell border-2 border-ink bg-white px-[15px]'
+			: 'mt-2 flex min-h-12 items-center gap-3 rounded-cell border border-ruled-line bg-white/40 px-4'}
 	>
 		<span class="flex-1 text-[15px] text-graphite">{m.welcome_time_other()}</span>
 		<input
@@ -102,7 +101,7 @@
 			value={draft}
 			oninput={(e) => typing(e.currentTarget.value)}
 			onchange={(e) => commit(e.currentTarget.value)}
-			class="min-h-11 border-0 bg-transparent font-sans text-[17px] font-semibold text-ink outline-none [&::-webkit-calendar-picker-indicator]:hidden"
+			class="min-h-11 bg-transparent font-sans text-[17px] font-semibold text-ink outline-none [&::-webkit-calendar-picker-indicator]:hidden"
 		/>
 	</label>
 	{@render children?.()}
