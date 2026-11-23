@@ -689,5 +689,9 @@
 	"chy52s3_unfollow_label": "Bỏ theo dõi {name}",
 	"chy52s3_followed": "Đã theo dõi {name}",
 	"chy52s3_unfollowed": "Đã bỏ theo dõi {name}",
-	"chy52s3_follow_failed": "Chưa lưu được, thử lại nhé"
+	"chy52s3_follow_failed": "Chưa lưu được, thử lại nhé",
+	"chy53s3_email": "Email",
+	"chy53s3_none": "Không chọn kênh nào: sẽ không có lời nhắc.",
+	"chy53s3_tg_on": "Telegram đã kết nối",
+	"chy53s3_tg_off": "Đã ngắt Telegram"
 }
