@@ -74,7 +74,7 @@
 		>
 	{/each}
 	<!-- eslint-enable svelte/no-navigation-without-resolve -->
-	<button class="rounded border px-3 py-1" onclick={seedDone} disabled={!ledger || !lesson}
+	<button class="rounded-cell border px-3 py-1" onclick={seedDone} disabled={!ledger || !lesson}
 		>seed: 5/5 done</button
 	>
 </div>

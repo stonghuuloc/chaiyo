@@ -28,7 +28,7 @@
 		<ol data-part="streak-week" class="mt-5 grid grid-cols-7 gap-1.5" aria-label={m.chy46s1_week()}>
 			{#each view.week as cell (cell.label)}
 				<li
-					class="text-caption grid justify-items-center gap-1.5 {cell.today
+					class="grid justify-items-center gap-1.5 text-label {cell.today
 						? 'text-text'
 						: 'text-muted'}"
 					data-ticked={cell.ticked ? '' : undefined}

@@ -26,7 +26,7 @@
 			<b data-part="practice-title" class="block font-semibold">
 				{m.practice_today_title({ min: view.minutes })}
 			</b>
-			<small data-part="practice-kinds" class="text-caption block text-muted">
+			<small data-part="practice-kinds" class="block text-label text-muted">
 				{view.chips.map((c) => kind[c.skill]({ n: c.n })).join(' · ')}
 			</small>
 		</span>

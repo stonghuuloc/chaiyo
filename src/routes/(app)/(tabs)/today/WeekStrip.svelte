@@ -17,7 +17,7 @@
 		<button
 			type="button"
 			data-part="freeze-rules-link"
-			class="text-caption inline-flex cursor-pointer items-center gap-1 text-muted"
+			class="inline-flex cursor-pointer items-center gap-1 text-label text-muted"
 			onclick={onrules}
 			>{m.chy46s3_link()}<svg class="size-4 fill-current" aria-hidden="true"
 				><use href="#i-regular-caret-right" /></svg
@@ -28,7 +28,7 @@
 		<ol data-part="week-strip" class="mt-3 grid grid-cols-7 gap-1.5">
 			{#each view.cells as cell (cell.day)}
 				<li
-					class="text-caption grid justify-items-center gap-1.5 {cell.today
+					class="grid justify-items-center gap-1.5 text-label {cell.today
 						? 'text-text'
 						: 'text-muted'}"
 					data-mark={cell.mark}

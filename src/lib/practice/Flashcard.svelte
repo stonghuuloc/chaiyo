@@ -162,7 +162,7 @@
 					}}
 				>
 					<span class="font-hanzi text-[56px]">{card.hanzi}</span>
-					<span class="text-caption text-graphite">{m.practice_card_hint()}</span>
+					<span class="text-label text-graphite">{m.practice_card_hint()}</span>
 				</button>
 				{#if card.audio}
 					{@render speaker(card.audio)}
@@ -179,7 +179,7 @@
 				{#if card.example}
 					<div data-part="example" class="text-center">
 						<p class="font-hanzi text-[20px]">{card.example.hanzi}</p>
-						<p class="text-caption text-graphite">{card.example.pinyin}</p>
+						<p class="text-label text-graphite">{card.example.pinyin}</p>
 						<p>{card.example.vi}</p>
 					</div>
 				{/if}
@@ -201,7 +201,7 @@
 		</div>
 	</div>
 	{#if flipped}
-		<p data-part="guide" class="text-caption text-graphite">{m.practice_card_guide()}</p>
+		<p data-part="guide" class="text-label text-graphite">{m.practice_card_guide()}</p>
 		<div class="flex w-full gap-3">
 			<button
 				type="button"

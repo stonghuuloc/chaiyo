@@ -19,7 +19,7 @@
 <div class="m-4 flex gap-4">
 	{#each Object.keys(SCENARIOS) as name (name)}
 		<button
-			class="rounded border px-3 py-1"
+			class="rounded-cell border px-3 py-1"
 			data-part="scenario"
 			onclick={() => pick(name as keyof typeof SCENARIOS)}>{name}</button
 		>

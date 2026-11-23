@@ -72,10 +72,10 @@
 <div class="m-4 flex gap-4">
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- dev-only reset needs a full reload; resolve() drops the query -->
 	<a href="?reset" data-sveltekit-reload class="text-label text-graphite underline">reset</a>
-	<button class="rounded border px-3 py-1" onclick={seed} disabled={!ledger || !lesson}
+	<button class="rounded-cell border px-3 py-1" onclick={seed} disabled={!ledger || !lesson}
 		>seed: 4 words answered</button
 	>
-	<button class="rounded border px-3 py-1" onclick={seedDone} disabled={!ledger || !lesson}
+	<button class="rounded-cell border px-3 py-1" onclick={seedDone} disabled={!ledger || !lesson}
 		>seed: 5 sections done</button
 	>
 </div>

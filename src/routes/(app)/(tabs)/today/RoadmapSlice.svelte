@@ -22,7 +22,7 @@
 		<a
 			data-part="roadmap-all"
 			href={resolve('/(app)/(tabs)/roadmap')}
-			class="text-caption flex items-center gap-1 text-muted"
+			class="flex items-center gap-1 text-label text-muted"
 		>
 			{m.chy45s3_all()}
 			<svg class="size-3.5 fill-current" aria-hidden="true"
@@ -65,7 +65,7 @@
 			{m.chy45s3_lesson({ n: row.n, title: row.title, hanzi: row.hanzi })}
 		</b>
 		{#if note(row)}
-			<small data-part="road-note" class="text-caption block text-muted">{note(row)}</small>
+			<small data-part="road-note" class="block text-label text-muted">{note(row)}</small>
 		{/if}
 	</span>
 {/snippet}

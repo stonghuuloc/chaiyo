@@ -10,11 +10,11 @@
 
 <article data-k={k} class="flex flex-col gap-4 pb-8">
 	<header class="flex flex-col gap-2">
-		<span class="text-sm flex items-center gap-2 text-pencil">
+		<span class="flex items-center gap-2 text-label text-pencil">
 			<svg class="size-5" aria-hidden="true"><use href="#{entry.icon}" /></svg>
 			{entry.label()}
 		</span>
-		<h1 class="text-2xl font-display">{entry.title()}</h1>
+		<h1 class="font-display text-headline">{entry.title()}</h1>
 		<p class="text-graphite">{entry.lead()}</p>
 	</header>
 
@@ -26,16 +26,16 @@
 
 	<div
 		data-part="sample"
-		class="rounded-2xl flex flex-col gap-1 border border-ruled-line bg-white p-4"
+		class="flex flex-col gap-1 rounded-cell border border-ruled-line bg-white p-4"
 	>
-		<p class="text-sm text-pencil">{entry.sample.label()}</p>
-		<p lang="zh" class="text-2xl">{entry.sample.hanzi()}</p>
+		<p class="text-label text-pencil">{entry.sample.label()}</p>
+		<p lang="zh" class="text-headline">{entry.sample.hanzi()}</p>
 		<p>{entry.sample.gloss()}</p>
 	</div>
 
 	<p
 		data-part="demo-note"
-		class="rounded-2xl border border-dashed border-ruled-line p-4 text-graphite"
+		class="rounded-cell border border-dashed border-ruled-line p-4 text-graphite"
 	>
 		{noteFor(k, level, lv)}
 	</p>

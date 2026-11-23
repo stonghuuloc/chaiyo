@@ -65,7 +65,7 @@
 </script>
 
 <div class="flex items-center justify-between">
-	<h1>{m.tab_today()}</h1>
+	<h1 class="text-display">{m.tab_today()}</h1>
 	{#if study && now}
 		<StreakChip view={weekView(study, now)} onrules={() => (rules = true)} />
 	{/if}

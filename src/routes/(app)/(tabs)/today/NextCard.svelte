@@ -29,7 +29,7 @@
 	data-scene={view.scene}
 	src={src[view.scene]}
 	alt={alt[view.scene]()}
-	class="rounded-2xl block w-full"
+	class="block w-full rounded-cell"
 	width="860"
 	height="573"
 />

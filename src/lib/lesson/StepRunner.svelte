@@ -145,7 +145,7 @@
 			>
 				{#each steps as { id } (id)}
 					<i
-						class="rounded-sm h-1 {answered.has(id) ? 'bg-lantern-red' : 'bg-ruled-line'}"
+						class="h-1 rounded-pill {answered.has(id) ? 'bg-lantern-red' : 'bg-ruled-line'}"
 						data-on={answered.has(id)}
 					></i>
 				{/each}

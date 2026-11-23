@@ -10,7 +10,7 @@
 	data-part="streak-chip"
 	aria-label={m.chy45s2_chip_label({ n: view.count, f: view.freezes })}
 	onclick={onrules}
-	class="text-caption flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-text"
+	class="flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-label text-text"
 >
 	<svg class="size-[18px] fill-current text-primary" aria-hidden="true"
 		><use href="#i-fill-fire" /></svg

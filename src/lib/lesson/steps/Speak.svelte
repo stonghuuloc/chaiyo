@@ -129,7 +129,7 @@
 	{:else if phase === 'live' || phase === 'done'}
 		<div class="flex h-16 items-end justify-center gap-[3px]">
 			{#each levels as l, i (i)}
-				<i class="rounded-sm w-1 bg-lantern-red" data-bar style="height:{3 + l * 58}px"></i>
+				<i class="w-1 rounded-pill bg-lantern-red" data-bar style="height:{3 + l * 58}px"></i>
 			{/each}
 		</div>
 		<p class="mt-2 text-center text-label text-graphite">
