@@ -4,6 +4,7 @@ import YAML from 'yaml';
 import { loadContentDir } from '#lib/content/lint/load.js';
 import type { Lesson, Primer } from '#lib/content/schemas.js';
 import type { Curriculum } from '#lib/study/index.js';
+import { numberOf, outlineNumbers } from './numbers';
 
 export type CurriculumLesson = Curriculum['lessons'][number] & {
 	n: number;
@@ -39,13 +40,14 @@ export function buildCurriculum(contentDir: string): CurriculumLesson[] {
 			`curriculum: ${errors.map((e) => `${e.file} ${e.path}: ${e.message}`).join('; ')}`
 		);
 	if (set.lessons.length === 0) throw new Error(`curriculum: no lessons in ${contentDir}/lessons`);
+	const nums = outlineNumbers(buildLevels(contentDir));
 	return set.lessons
 		.map((l) => l.value)
 		.sort((a, b) => a.level - b.level || a.order - b.order)
-		.map((l, n) => ({
+		.map((l) => ({
 			id: l.id,
 			level: l.level,
-			n,
+			n: 'kind' in l ? 0 : numberOf(nums, l.id),
 			title: l.title,
 			titleHanzi: l.titleHanzi,
 			sections: ORDER.filter((k) => k in l.sections),

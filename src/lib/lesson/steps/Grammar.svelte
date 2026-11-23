@@ -42,7 +42,7 @@
 	});
 </script>
 
-<p class="mt-5 text-label font-semibold tracking-wider text-lantern-red-text uppercase">
+<p class="mt-5 text-label text-pencil">
 	{step.kicker}
 </p>
 <h2 class="mt-1 font-display text-headline">{step.title}</h2>
@@ -85,7 +85,7 @@
 {/if}
 
 {#if prefs}<Pills {prefs} />{/if}
-<h3 class="mt-6 text-label font-semibold tracking-wider text-graphite uppercase">
+<h3 class="mt-6 font-sans text-label font-semibold text-pencil">
 	{m.grammar_examples()}
 </h3>
 <ul class="mt-2 flex flex-col gap-2">
@@ -122,7 +122,7 @@
 </ul>
 
 {#if step.pitfall}
-	<h3 class="mt-6 text-label font-semibold tracking-wider text-graphite uppercase">
+	<h3 class="mt-6 font-sans text-label font-semibold text-pencil">
 		{m.grammar_pitfalls()}
 	</h3>
 	<div class="mt-2 flex flex-wrap gap-2">

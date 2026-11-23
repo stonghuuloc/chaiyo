@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { buildCurriculum, buildLevels } from './build';
 import { CURRICULUM, LESSONS, LEVELS, firstLessonId } from './index';
+import { numberOf, outlineNumbers } from './numbers';
 
 const by = (id: string) => {
 	const lesson = LESSONS.find((l) => l.id === id);
@@ -26,13 +27,42 @@ describe('curriculum', () => {
 			['h1-03', 3],
 			['h1-04', 4],
 			['h1-05', 5],
-			['h2-01', 6],
-			['h3-01', 7],
-			['h4-01', 8],
-			['h5-01', 9]
+			['h2-01', 41],
+			['h3-01', 68],
+			['h4-01', 94],
+			['h5-01', 116]
 		]);
 		expect(LESSONS.map((l) => l.words.length)).toEqual([0, 10, 9, 10, 8, 14, 12, 13, 15, 15]);
 		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(106);
+	});
+
+	it('Given_TwoLevels_When_OutlineNumbers_Then_SecondStartsAfterFirstCount', () => {
+		const lesson = (id: string) => ({ id, title: id });
+		const nums = outlineNumbers([
+			{ level: 1, words: 0, topics: [{ title: 'a', lessons: [lesson('a1'), lesson('a2')] }] },
+			{
+				level: 2,
+				words: 0,
+				topics: [
+					{ title: 'b', lessons: [lesson('b1')] },
+					{ title: 'c', lessons: [lesson('c1'), lesson('c2')] }
+				]
+			}
+		]);
+		expect([...nums]).toEqual([
+			['a1', 1],
+			['a2', 2],
+			['b1', 3],
+			['c1', 4],
+			['c2', 5]
+		]);
+	});
+
+	it('Given_LessonNotInOutline_When_Number_Then_ThrowsWithId', () => {
+		expect(() => numberOf(new Map([['a1', 1]]), 'h9-99')).toThrow(
+			'curriculum: h9-99 is in no level outline'
+		);
+		expect(numberOf(new Map([['a1', 1]]), 'a1')).toBe(1);
 	});
 
 	it('lists sections without warmup and flags the primer', () => {
@@ -84,6 +114,42 @@ describe('levels', () => {
 				{ id: 'h1-02', title: 'Bạn tên gì?', titleHanzi: '你叫什么名字' }
 			]
 		});
+	});
+
+	it('Given_Content_When_BuildLevels_Then_FiveLevelsCounts40_27_26_22_21', () => {
+		// Arrange / Act
+		const levels = buildLevels('content');
+
+		// Assert
+		expect(levels.map((l) => l.level)).toEqual([1, 2, 3, 4, 5]);
+		expect(levels.map((l) => l.topics.flatMap((t) => t.lessons).length)).toEqual([
+			40, 27, 26, 22, 21
+		]);
+		expect(levels.map((l) => l.words)).toEqual([300, 500, 1000, 1200, 1300]);
+		for (const l of levels.slice(1))
+			expect(l.topics.flatMap((t) => t.lessons).map((x) => x.id)).toEqual(
+				Array.from(
+					{ length: l.topics.flatMap((t) => t.lessons).length },
+					(_, i) => `h${l.level}-${String(i + 1).padStart(2, '0')}`
+				)
+			);
+	});
+
+	it('Given_BuiltFirstLessons_When_BuildLevels_Then_TitlesMatchLessons', () => {
+		// Arrange
+		const levels = buildLevels('content').filter((l) => l.level > 1);
+
+		// Act
+		const firsts = levels.map((l) => l.topics[0].lessons[0]);
+
+		// Assert
+		expect(firsts).toEqual(
+			['h2-01', 'h3-01', 'h4-01', 'h5-01'].map((id) => ({
+				id,
+				title: by(id).title,
+				titleHanzi: by(id).titleHanzi
+			}))
+		);
 	});
 });
 

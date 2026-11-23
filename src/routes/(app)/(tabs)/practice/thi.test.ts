@@ -33,7 +33,7 @@ describe('thiChips', () => {
 		expect(view.selected).toBe(1);
 	});
 
-	it('Given_Level3_When_ThiChips_Then_Passed1And2Next7After4To6', () => {
+	it('Given_Level3_When_ThiChips_Then_Passed1And2Next68After4To6', () => {
 		// Arrange
 		const state = build(3);
 		// Act
@@ -47,7 +47,7 @@ describe('thiChips', () => {
 			'after',
 			'after'
 		]);
-		expect(view.chips[2].lesson).toBe(7);
+		expect(view.chips[2].lesson).toBe(68);
 		expect(view.chips.map((c) => c.lock)).toEqual([false, false, false, true, true, true]);
 		expect(view.selected).toBe(3);
 	});
@@ -61,13 +61,13 @@ describe('thiChips', () => {
 		expect(view.chips[4]).toEqual({ level: 5, lock: false, line: 'ready' });
 	});
 
-	it('Given_Level5NotPassed_When_ThiChips_Then_Next9', () => {
+	it('Given_Level5NotPassed_When_ThiChips_Then_Next116', () => {
 		// Arrange
 		const state = build(5);
 		// Act
 		const view = thiChips(state);
 		// Assert
-		expect(view.chips[4]).toEqual({ level: 5, lock: false, line: 'next', lesson: 9 });
+		expect(view.chips[4]).toEqual({ level: 5, lock: false, line: 'next', lesson: 116 });
 	});
 
 	it('Given_NoLessonUnlocked_When_ThiChips_Then_Selected1', () => {
