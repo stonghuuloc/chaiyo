@@ -33,6 +33,7 @@ describe('supabaseDeps', () => {
 				Array.from({ length: n }, (_, i) => ({
 					learner_id: `l-${i}`,
 					tz: 'Asia/Ho_Chi_Minh',
+					reminder_time: '21:00:00',
 					remind_push: false,
 					remind_email: true,
 					remind_telegram: false
@@ -57,6 +58,7 @@ describe('supabaseDeps', () => {
 		const row = (id: string, push: boolean, email: boolean, telegram: boolean) => ({
 			learner_id: id,
 			tz: 'Asia/Ho_Chi_Minh',
+			reminder_time: '21:00:00',
 			remind_push: push,
 			remind_email: email,
 			remind_telegram: telegram
@@ -80,7 +82,33 @@ describe('supabaseDeps', () => {
 		]);
 	});
 
-	it('Given_Learners_When_Read_Then_SelectNamesFlagColumns', async () => {
+	it('Given_ReminderTimeRow_When_Learners_Then_RemindAtHhMm', async () => {
+		// Arrange
+		const fetch = vi.fn(async () =>
+			json(
+				[
+					{
+						learner_id: 'a',
+						tz: 'Asia/Ho_Chi_Minh',
+						reminder_time: '07:30:00',
+						remind_push: true,
+						remind_email: false,
+						remind_telegram: false
+					}
+				],
+				200
+			)
+		);
+		const deps = supabaseDeps(clientWith(fetch as typeof globalThis.fetch), CURRICULUM, noRemind);
+
+		// Act
+		const learners = await deps.learners();
+
+		// Assert
+		expect(learners.map((l) => l.remindAt)).toEqual(['07:30']);
+	});
+
+	it('Given_Learners_When_Read_Then_SelectNamesReminderTimeAndFlagColumns', async () => {
 		// Arrange
 		const urls: URL[] = [];
 		const fetch = vi.fn(async (input: RequestInfo | URL) => {
@@ -94,7 +122,7 @@ describe('supabaseDeps', () => {
 
 		// Assert
 		expect(urls[0].searchParams.get('select')?.replaceAll(' ', '')).toBe(
-			'learner_id,tz,remind_push,remind_email,remind_telegram'
+			'learner_id,tz,reminder_time,remind_push,remind_email,remind_telegram'
 		);
 	});
 

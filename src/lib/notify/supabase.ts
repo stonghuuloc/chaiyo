@@ -16,13 +16,14 @@ export function supabaseDeps(
 			for (let from = 0; ; from += PAGE) {
 				const { data, error } = await client
 					.from('settings')
-					.select('learner_id, tz, remind_push, remind_email, remind_telegram')
+					.select('learner_id, tz, reminder_time, remind_push, remind_email, remind_telegram')
 					.order('learner_id')
 					.range(from, from + PAGE - 1);
 				if (error) throw new Error(error.message);
 				const rows = (data ?? []) as {
 					learner_id: string;
 					tz: string;
+					reminder_time: string;
 					remind_push: boolean;
 					remind_email: boolean;
 					remind_telegram: boolean;
@@ -31,6 +32,7 @@ export function supabaseDeps(
 					...rows.map((r) => ({
 						id: r.learner_id,
 						tz: r.tz,
+						remindAt: r.reminder_time.slice(0, 5),
 						channels: CHANNEL_NAMES.filter((n) => r[`remind_${n}`])
 					}))
 				);
