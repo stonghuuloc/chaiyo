@@ -606,5 +606,15 @@
 	"chy52s1_hidden_title": "Hồ sơ đang ẩn",
 	"chy52s1_hidden_body": "Bạn này chọn giữ hồ sơ cho riêng mình. Tôn trọng nha!",
 	"chy52s1_missing_title": "Không thấy người này",
-	"chy52s1_missing_body": "Link hơi lạc đường rồi. Quay lại tìm bạn nhé."
+	"chy52s1_missing_body": "Link hơi lạc đường rồi. Quay lại tìm bạn nhé.",
+	"chy53s1_back": "Quay lại",
+	"chy53s1_profile": "Hồ sơ",
+	"chy53s1_profile_sub": "Tên và ảnh bạn bè sẽ thấy.",
+	"chy53s1_photo_ok": "Ảnh đẹp đó!",
+	"chy53s1_photo_remove": "Bỏ ảnh",
+	"chy53s1_privacy": "Quyền riêng tư",
+	"chy53s1_hide": "Ẩn hồ sơ công khai",
+	"chy53s1_hide_hint": "Bật thì người khác không tìm thấy và không xem được hồ sơ của bạn.",
+	"chy53s1_hidden_on": "Hồ sơ đã ẩn",
+	"chy53s1_hidden_off": "Hồ sơ đã hiện lại"
 }
