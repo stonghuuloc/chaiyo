@@ -16,3 +16,9 @@
 		background: var(--color-frost-divider);
 	}
 }
+
+@utility section-ruled {
+	margin-top: --spacing(5);
+	padding-top: --spacing(6);
+	border-top: 1px solid var(--color-ruled-line);
+}

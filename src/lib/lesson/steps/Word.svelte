@@ -108,8 +108,8 @@
 			{#each step.parts as part, i (i)}
 				<li class="flex flex-col items-center rounded-action border border-ruled-line px-3 py-2">
 					<span class="font-hanzi text-[24px]">{part.hanzi}</span>
-					<span class="text-caption">{part.pinyin}</span>
-					<span class="text-caption text-graphite uppercase">{part.hanviet}</span>
+					<span class="text-label">{part.pinyin}</span>
+					<span class="text-label text-graphite uppercase">{part.hanviet}</span>
 				</li>
 			{/each}
 		</ul>
@@ -132,7 +132,7 @@
 			{#each step.examples as ex, i (i)}
 				<li data-part="example">
 					<p class="font-hanzi text-[20px]"><TapText sentenceId={ex.id} hanzi={ex.hanzi} /></p>
-					<p class="text-caption text-graphite">{ex.pinyin}</p>
+					<p class="text-label text-graphite">{ex.pinyin}</p>
 					<p>{ex.vi}</p>
 				</li>
 			{/each}

@@ -23,14 +23,14 @@
 		</span>
 		<span class="grid">
 			<b class="text-body text-text">{view.have}</b>
-			<small class="text-caption text-muted">{view.sub}</small>
+			<small class="text-label text-muted">{view.sub}</small>
 		</span>
 	</div>
 	<ol class="mt-4 grid gap-3">
 		{#each view.rules as r, i (i)}
 			<li data-part="freeze-rule" class="flex gap-3 text-body text-graphite">
 				<span
-					class="text-caption grid size-6 shrink-0 place-items-center rounded-full bg-white text-text"
+					class="grid size-6 shrink-0 place-items-center rounded-full bg-white text-label text-text"
 					>{i + 1}</span
 				>
 				<span><b class="text-text">{r.title}</b> {r.text}</span>

@@ -25,22 +25,23 @@
 
 <svelte:window ononline={() => (online = true)} onoffline={() => (online = false)} />
 
-<main class="max-w-xl mx-auto p-4 font-body">
-	<h1 class="text-xl">/dev/audio</h1>
+<main class="mx-auto max-w-column p-4 font-body">
+	<h1 class="text-headline">/dev/audio</h1>
 	<p>base {AUDIO_BASE} · {online ? 'online' : 'offline'}</p>
-	<button class="rounded my-2 border px-3 py-2" onclick={cacheLesson}>Cache this lesson</button>
+	<button class="my-2 rounded-cell border px-3 py-2" onclick={cacheLesson}>Cache this lesson</button
+	>
 	<p data-testid="cached">{cached}</p>
 	<p data-testid="readout">{readout}</p>
 	<ul>
 		{#each data.clips as clip (clip.key)}
 			<li class="flex items-center gap-3 py-1">
 				<button
-					class="rounded border px-3 py-2"
+					class="rounded-cell border px-3 py-2"
 					aria-label={`Play ${clip.hanzi} (${clip.voice})`}
 					onclick={() => tap(clip.key)}>▶</button
 				>
 				<span>{clip.hanzi}</span>
-				<span class="text-sm opacity-60">{clip.voice}</span>
+				<span class="text-label opacity-60">{clip.voice}</span>
 			</li>
 		{/each}
 	</ul>

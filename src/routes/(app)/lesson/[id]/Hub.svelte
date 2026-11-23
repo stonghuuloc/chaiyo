@@ -19,7 +19,7 @@
 		data-part="hub-row"
 		data-look={row.look}
 		href={href(row.id)}
-		class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+		class="flex items-center gap-3 rounded-cell border border-ruled-line bg-white p-3"
 	>
 		<span
 			class="size-6 shrink-0 rounded-full border-2 border-lantern-red"
@@ -37,7 +37,7 @@
 <section data-content-sha={lesson.contentSha} class="flex flex-col gap-6 pb-24">
 	<header class="flex flex-col gap-2">
 		{#if hub.kicker}
-			<p class="text-sm text-pencil">{hub.kicker}</p>
+			<p class="text-label text-pencil">{hub.kicker}</p>
 		{/if}
 		<h1 class="font-display text-headline">{hub.title} <span lang="zh">{hub.hanzi}</span></h1>
 		{#if hub.meta}
@@ -51,12 +51,12 @@
 					</i>
 				{/each}
 			</div>
-			<span class="text-sm text-graphite">{hub.progress}</span>
+			<span class="text-label text-graphite">{hub.progress}</span>
 		</div>
 	</header>
 
 	<section class="flex flex-col gap-3">
-		<h2 class="text-lg font-display">{m.hub_sections()}</h2>
+		<h2 class="font-display text-headline">{m.hub_sections()}</h2>
 		<ol class="flex flex-col gap-2">
 			{#if hub.warmup}
 				<li>{@render link(hub.warmup)}</li>
@@ -69,7 +69,7 @@
 			<a
 				data-part="hub-link"
 				href={resolve('/(app)/pinyin')}
-				class="rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3"
+				class="flex items-center gap-3 rounded-cell border border-ruled-line bg-white p-3"
 			>
 				<span class="size-6 shrink-0 rounded-full border-2 border-lantern-red"></span>
 				<b>{link.label}</b>
@@ -81,7 +81,7 @@
 			href={hub.gate.locked ? undefined : resolve('/(app)/lesson/[id]/gate', { id })}
 			aria-disabled={hub.gate.locked ? 'true' : undefined}
 			class={[
-				'rounded-2xl flex items-center gap-3 border border-ruled-line bg-white p-3',
+				'flex items-center gap-3 rounded-cell border border-ruled-line bg-white p-3',
 				hub.gate.locked && 'cursor-default text-graphite'
 			]}
 		>
@@ -111,11 +111,11 @@
 	{#if hub.words.length > 0}
 		<section class="flex flex-col gap-3">
 			<div class="flex items-baseline justify-between">
-				<h2 class="text-lg font-display">{m.hub_lesson_words_title()}</h2>
+				<h2 class="font-display text-headline">{m.hub_lesson_words_title()}</h2>
 				<a
 					data-part="hub-lexicon"
 					href={resolve('/(app)/(tabs)/practice')}
-					class="text-sm text-lantern-red">{m.hub_lesson_words_mine()}</a
+					class="text-label text-lantern-red">{m.hub_lesson_words_mine()}</a
 				>
 			</div>
 			<ul class="flex flex-wrap gap-2">
@@ -124,16 +124,16 @@
 						data-part="hub-word"
 						data-reached={String(w.reached)}
 						class={[
-							'rounded-xl flex flex-col items-center border bg-white px-3 py-2',
+							'flex flex-col items-center rounded-cell border bg-white px-3 py-2',
 							w.reached ? 'border-solid border-ruled-line' : 'border-dashed border-pencil'
 						]}
 					>
-						<span lang="zh" class="text-lg">{w.hanzi}</span>
-						<span class="text-sm text-graphite">{w.pinyin}</span>
+						<span lang="zh" class="text-title">{w.hanzi}</span>
+						<span class="text-label text-graphite">{w.pinyin}</span>
 					</li>
 				{/each}
 			</ul>
-			<p data-part="hub-legend" class="text-sm text-pencil">{m.hub_lesson_words_legend()}</p>
+			<p data-part="hub-legend" class="text-label text-pencil">{m.hub_lesson_words_legend()}</p>
 		</section>
 	{/if}
 

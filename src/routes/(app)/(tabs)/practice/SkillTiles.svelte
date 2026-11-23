@@ -21,7 +21,7 @@
 </script>
 
 <section data-part="skill-tiles" class="flex flex-col gap-3">
-	<h2>{m.chy41s2_tiles_title()}</h2>
+	<h2 class="text-headline">{m.chy41s2_tiles_title()}</h2>
 	<ul class="flex flex-col gap-2">
 		{#each tiles as t (t.key)}
 			<li>
@@ -30,10 +30,10 @@
 					data-part="skill-tile"
 					data-key={t.key}
 					href={resolve(t.route) + '?' + t.query}
-					class="rounded-2xl flex flex-col border border-ruled-line bg-white p-4"
+					class="flex flex-col rounded-cell border border-ruled-line bg-white p-4"
 				>
 					<b>{label[t.key]()}</b>
-					<small class="text-sm opacity-60">{sub(t)}</small>
+					<small class="text-label opacity-60">{sub(t)}</small>
 				</a>
 				<!-- eslint-enable svelte/no-navigation-without-resolve -->
 			</li>

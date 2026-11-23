@@ -22,7 +22,7 @@
 		>{#each chars as { c, i, han } (i)}{#if han}<span
 					data-i={i}
 					data-hit={on(i) || undefined}
-					class="rounded-sm cursor-pointer data-hit:bg-lantern-red/15">{c}</span
+					class="cursor-pointer rounded-[6px] data-hit:bg-lantern-red-wash">{c}</span
 				>{:else}{c}{/if}{/each}</span
 	>
 {:else}{hanzi}{/if}

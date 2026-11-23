@@ -60,7 +60,7 @@
 				>
 					<span class="font-hanzi text-[24px]">{slot}</span>
 					{#if step.labels[c]}
-						<span class="text-caption text-graphite">{step.labels[c]}</span>
+						<span class="text-label text-graphite">{step.labels[c]}</span>
 					{/if}
 				</span>
 			{/each}
@@ -131,14 +131,14 @@
 			data-part="pitfall-wrong"
 		>
 			<span class="font-hanzi text-[22px]">{step.pitfall.wrong}</span>
-			<span class="text-caption font-semibold text-lantern-red-text">{m.grammar_wrong()}</span>
+			<span class="text-label font-semibold text-lantern-red-text">{m.grammar_wrong()}</span>
 		</div>
 		<div
 			class="flex min-h-14 flex-col justify-center gap-1 rounded-action border-2 border-ink bg-white px-3 py-2"
 			data-part="pitfall-right"
 		>
 			<span class="font-hanzi text-[22px]">{step.pitfall.right}</span>
-			<span class="text-caption font-semibold">{m.grammar_right()}</span>
+			<span class="text-label font-semibold">{m.grammar_right()}</span>
 		</div>
 	</div>
 {/if}

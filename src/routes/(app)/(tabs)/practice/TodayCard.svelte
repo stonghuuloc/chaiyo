@@ -16,15 +16,17 @@
 {#if view}
 	<section
 		data-part="today"
-		class="rounded-2xl flex flex-col gap-3 border border-ruled-line bg-white p-4"
+		class="flex flex-col gap-3 rounded-cell border border-ruled-line bg-white p-4"
 	>
-		<h2 data-part="today-title">{m.practice_today_title({ min: view.minutes })}</h2>
+		<h2 data-part="today-title" class="text-headline">
+			{m.practice_today_title({ min: view.minutes })}
+		</h2>
 		<ul class="flex flex-wrap gap-2">
 			{#each view.chips as c (c.skill)}
 				<li
 					data-part="today-chip"
 					data-skill={c.skill}
-					class="text-sm rounded-full border border-ruled-line px-3 py-1"
+					class="rounded-full border border-ruled-line px-3 py-1 text-label"
 				>
 					{chip[c.skill]({ n: c.n })}
 				</li>
@@ -40,7 +42,7 @@
 	</section>
 {:else}
 	<section data-part="today-clear" class="flex flex-col gap-2">
-		<h2>{m.practice_clear_title()}</h2>
+		<h2 class="text-headline">{m.practice_clear_title()}</h2>
 		<p>{m.practice_clear_text()}</p>
 	</section>
 {/if}

@@ -36,7 +36,7 @@
 	});
 </script>
 
-<h1>{m.tab_practice()}</h1>
+<h1 class="text-display">{m.tab_practice()}</h1>
 {#if study}
 	<TodayCard view={todayView(study, new Date())} />
 	<SkillTiles tiles={skillTiles(study, new Date())} />

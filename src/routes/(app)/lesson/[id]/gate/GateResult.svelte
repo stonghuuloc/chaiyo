@@ -61,9 +61,9 @@
 			>{m.gate_result_score({ right: view.right, of: view.of })}</span
 		>
 	</div>
-	<div data-part="meter" class="rounded relative mt-5 h-2 bg-ruled-line" aria-hidden="true">
+	<div data-part="meter" class="relative mt-5 h-2 rounded-pill bg-ruled-line" aria-hidden="true">
 		<i
-			class="rounded absolute inset-y-0 left-0 {view.pass ? 'bg-lantern-red' : 'bg-pencil'}"
+			class="absolute inset-y-0 left-0 rounded-pill {view.pass ? 'bg-lantern-red' : 'bg-pencil'}"
 			style="width: {view.pct}%"
 		></i>
 		<u class="absolute -inset-y-[5px] left-[80%] w-0.5 bg-ink"></u>
