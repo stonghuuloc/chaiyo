@@ -11,12 +11,13 @@ const COLOURS = [...tokens.matchAll(/--color-([a-z][\w-]*):/g)].map((m) => m[1])
 const HEADING = /<h[12]\b[^>]*>/g;
 const HEADING_SIZE =
 	/^(text-(display|headline|title|action|body|label|chip|toast|tab)|text-\[[^\]]+\]|sr-only)$/;
-const BORDER_WIDTH = /^(?:[\w-]+:)*border(?:-[trblxy])?(?:-\d+|-\[[^\]]+\])?$/;
+const BORDER_WIDTH = /^(?:[\w-]+:)*border(?:-[trblxyse])?(?:-\d+|-\[[^\]]+\])?$/;
 const BORDER_COLOUR = new RegExp(
-	`^(?:[\\w-]+:)*border(?:-[trblxy])?-(?:${COLOURS.join('|')}|transparent|current)(?:/\\d+)?$`
+	`^(?:[\\w-]+:)*border(?:-[trblxyse])?-(?:${COLOURS.join('|')}|transparent|current)(?:/\\d+)?$`
 );
-const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]|\u{FE0F}/u;
-const LETTER_KEY = /\.(?:key|code)\s*[!=]==?\s*['"](?:Key[A-Z]|[A-Za-z])['"]/;
+const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]|\u{FE0F}/u;
+const LETTER_KEY =
+	/\.(?:key|code)(?:\.toLowerCase\(\))?\s*[!=]==?\s*['"](?:Key[A-Z]|[A-Za-z])['"]|case\s+['"](?:Key[A-Z]|[A-Za-z])['"]\s*:/;
 const WEBGL = /getContext\(\s*['"](?:webgl2?|experimental-webgl)['"]/;
 
 function walk(dir: string, ext: RegExp): string[] {
@@ -167,6 +168,7 @@ describe('DESIGN.md rules', () => {
 		['<span>✓</span>', true],
 		['"streak": "🔥 7 ngày"', true],
 		['<span>你好！</span>', false],
+		['<span>⏰</span>', true],
 		['"x": "Chào · bạn"', false]
 	])('Given_Text_Then_EmojiRuleMatches: %s', (sample, hit) => {
 		// Arrange
@@ -181,6 +183,8 @@ describe('DESIGN.md rules', () => {
 		["if (e.code === 'KeyN') next();", true],
 		["if (e.code === 'Digit1') pick(0);", false],
 		["if (e.key === 'Enter') submit();", false],
+		["if (e.key.toLowerCase() === 'n') next();", true],
+		["switch (e.key) { case 'n': next(); }", true],
 		["if (e.key === 'Escape') close();", false]
 	])('Given_KeyHandler_Then_LetterRuleMatches: %s', (sample, hit) => {
 		// Arrange
