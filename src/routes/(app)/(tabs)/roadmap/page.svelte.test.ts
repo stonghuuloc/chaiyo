@@ -212,9 +212,7 @@ describe('/roadmap', () => {
 		expect(locked.every((r) => r.querySelector('a') === null)).toBe(true);
 		const buttons = locked.map((r) => r.querySelector('button[data-part=level-row-btn]'));
 		expect(buttons.every((b) => b?.getAttribute('type') === 'button')).toBe(true);
-		expect(
-			page.row('h1-02')!.querySelector('use[href="#i-regular-caret-right"]')
-		).not.toBeNull();
+		expect(page.row('h1-02')!.querySelector('use[href="#i-regular-caret-right"]')).not.toBeNull();
 	});
 
 	it('Given_ReferenceLearner_When_TapBai2_Then_ToastAndNoNavigation', async () => {

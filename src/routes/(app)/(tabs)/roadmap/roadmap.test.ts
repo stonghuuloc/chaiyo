@@ -217,7 +217,11 @@ describe('roadmapLevel', () => {
 		// Arrange
 		const state = reference();
 		for (let i = 1; i <= 40; i++)
-			state.lessons[`h1-${String(i).padStart(2, '0')}`] = { unlocked: true, passed: true, done: [] };
+			state.lessons[`h1-${String(i).padStart(2, '0')}`] = {
+				unlocked: true,
+				passed: true,
+				done: []
+			};
 
 		// Act
 		const view = roadmapLevel(state, 1);
