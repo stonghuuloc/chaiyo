@@ -64,15 +64,17 @@ export function publishOnChange(
 	let timer: ReturnType<typeof setTimeout> | undefined;
 	const publish = async () => {
 		if (!live) return;
+		const synced = await ledger.sync().then(
+			() => true,
+			() => false
+		);
+		if (!live) return;
 		const stats = publicStats(ledger.state(), new Date());
 		const payload = JSON.stringify(stats);
 		if (payload === accepted) return;
-		if (await publishStats(client, stats).catch(() => false)) accepted = payload;
+		if ((await publishStats(client, stats).catch(() => false)) && synced) accepted = payload;
 	};
-	void ledger
-		.sync()
-		.catch(() => undefined)
-		.then(publish);
+	void publish();
 	const off = ledger.subscribe(() => {
 		clearTimeout(timer);
 		timer = setTimeout(() => void publish(), wait);

@@ -188,6 +188,27 @@ describe('publishOnChange', () => {
 		expect(rpc).toHaveBeenCalledTimes(1);
 	});
 
+	it('Given_Change_When_Publish_Then_SyncRunsBeforeRpc', async () => {
+		const order: string[] = [];
+		ledger.sync.mockImplementation(async () => void order.push('sync'));
+		const rpc = vi.fn(async () => (order.push('rpc'), { data: true, error: null }));
+		await open(rpc);
+		order.length = 0;
+		bump();
+		await vi.advanceTimersByTimeAsync(2000);
+		expect(order).toEqual(['sync', 'rpc']);
+	});
+
+	it('Given_SyncFailsThenWorks_When_Change_Then_PayloadRepublished', async () => {
+		ledger.sync.mockRejectedValue(new Error('offline'));
+		const rpc = vi.fn(async () => ({ data: true, error: null }));
+		await open(rpc);
+		ledger.sync.mockResolvedValue(undefined);
+		change();
+		await vi.advanceTimersByTimeAsync(2000);
+		expect(rpc).toHaveBeenCalledTimes(2);
+	});
+
 	it('Given_TwoChangesIn2s_When_OnChange_Then_OneRpc', async () => {
 		const rpc = vi.fn(async () => ({ data: true, error: null }));
 		await open(rpc);
