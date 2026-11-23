@@ -29,7 +29,9 @@
 			<img
 				src="/badges/{badge.art}.webp"
 				alt=""
-				class="mx-auto block size-40 rounded-full {'date' in badge ? '' : 'opacity-[.55] grayscale'}"
+				class="mx-auto block size-40 rounded-full {'date' in badge
+					? ''
+					: 'opacity-[.55] grayscale'}"
 			/>
 			<p class="mt-1 text-[15px] leading-[1.45] text-graphite">{how}</p>
 			{#if 'date' in badge}

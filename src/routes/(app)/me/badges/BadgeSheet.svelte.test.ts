@@ -3,7 +3,12 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { EarnedBadge, LockedBadge } from '#lib/study/index.js';
 import BadgeSheet from './BadgeSheet.svelte';
 
-const streak7: EarnedBadge = { id: 'streak7', title: 'Chuỗi 7 ngày', art: 'streak7', date: '18/10' };
+const streak7: EarnedBadge = {
+	id: 'streak7',
+	title: 'Chuỗi 7 ngày',
+	art: 'streak7',
+	date: '18/10'
+};
 const streak30: LockedBadge = {
 	id: 'streak30',
 	title: 'Chuỗi 30 ngày',
@@ -12,7 +17,14 @@ const streak30: LockedBadge = {
 	need: 30,
 	pct: 40
 };
-const hsk1: LockedBadge = { id: 'hsk1', title: 'Đỗ HSK 1', art: 'hsk1', have: 0, need: null, pct: 0 };
+const hsk1: LockedBadge = {
+	id: 'hsk1',
+	title: 'Đỗ HSK 1',
+	art: 'hsk1',
+	have: 0,
+	need: null,
+	pct: 0
+};
 
 let target: HTMLDivElement | undefined;
 let app: Record<string, unknown> | undefined;
