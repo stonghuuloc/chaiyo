@@ -72,6 +72,8 @@ const CLASS_ATTR = /\bclass=(?:"([^"]*)"|'([^']*)')/g;
 const CLASS_EXPR = /\bclass=\{([^}]*)\}/g;
 const CLASS_DIRECTIVE = /\bclass:([^\s=>]+)/g;
 const IN_EXPR = /\{([^}]*)\}/g;
+const COMPARED_BEFORE = /(===|!==|==|!=)\s*$/;
+const COMPARED_AFTER = /^\s*(===|!==|==|!=)/;
 
 async function loadTokens(): Promise<DesignSystem> {
 	const entry = join(src, 'routes', 'layout.css');
@@ -95,12 +97,17 @@ function deadClassesAt(
 	scoped = new Set<string>()
 ): { at: number; name: string }[] {
 	const literals = (expr: string, at: number) =>
-		[...expr.matchAll(STRING_LITERAL)].map((m) => ({
-			attr: true,
-			expr: true,
-			at,
-			body: (m[1] ?? m[2] ?? m[3]).replace(/\$\{[^}]*\}/g, ' ')
-		}));
+		[...expr.matchAll(STRING_LITERAL)]
+			.filter(
+				(m) =>
+					!COMPARED_BEFORE.test(expr.slice(0, m.index)) &&
+					!COMPARED_AFTER.test(expr.slice(m.index + m[0].length))
+			)
+			.map((m) => ({
+				attr: true,
+				at,
+				body: (m[1] ?? m[2] ?? m[3]).replace(/\$\{[^}]*\}/g, ' ')
+			}));
 	const lists = [
 		...[...text.matchAll(CLASS_ATTR)].flatMap((m) => {
 			const value = m[1] ?? m[2];
@@ -117,15 +124,13 @@ function deadClassesAt(
 			body: (m[1] ?? m[2] ?? m[3]).replace(/\$\{[^}]*\}/g, ' ')
 		}))
 	];
-	const dead = lists.flatMap(({ attr, at, body, ...rest }) => {
+	const dead = lists.flatMap(({ attr, at, body }) => {
 		const words = body.split(/\s+/).filter((t) => t && !scoped.has(t));
 		const tokens = words.filter((t) => ds.parseCandidate(t).length > 0);
 		if (tokens.length === 0) return [];
 		if (!attr && tokens.length < words.length) return [];
 		const css = ds.candidatesToCss(tokens);
 		if (!attr && css.every((c) => c === null)) return [];
-		const bare = tokens.every((t, i) => css[i] === null && !/[-:]/.test(t));
-		if ('expr' in rest && bare) return [];
 		return tokens.filter((_, i) => css[i] === null).map((name) => ({ at, name }));
 	});
 	return [...new Map(dead.map((d) => [`${d.at} ${d.name}`, d])).values()];
@@ -184,7 +189,9 @@ describe('utility classes resolve to design tokens', () => {
 		"class={open ? 'text-sm' : 'text-label'}",
 		"class={['flex', open && 'rounded-2xl']}",
 		'class:rounded-2xl={x}',
-		"class='flex shadow'"
+		"class='flex shadow'",
+		"class={open ? 'shadow' : ''}",
+		"class=\"flex {open ? 'rounded' : ''}\""
 	])('Given_StockTailwindClass_Then_GuardRejectsIt: %s', (sample) => {
 		// Arrange
 		// Act
