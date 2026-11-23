@@ -25,7 +25,7 @@ export async function bootHanziStyle(o: {
 	storage: Store;
 	read: () => Promise<HanziStyle | null>;
 }) {
-	let cached: string | null = null;
+	let cached: string | null;
 	try {
 		cached = o.storage.getItem(HANZI_KEY);
 	} catch {
