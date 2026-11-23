@@ -14,8 +14,7 @@
 	const hub = $derived(hubView(lesson, sections, study));
 	const href = (section: string) => resolve('/(app)/lesson/[id]/[section]', { id, section });
 
-	const rowCls =
-		'grid min-h-16 grid-cols-[36px_1fr_16px] items-center gap-3 py-2 [@media(hover:hover)]:cursor-pointer';
+	const rowCls = 'grid min-h-16 grid-cols-[36px_1fr_16px] items-center gap-3 py-2';
 </script>
 
 {#snippet mark(look: Look | 'locked', pct = 0)}
