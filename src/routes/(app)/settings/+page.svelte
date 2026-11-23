@@ -74,7 +74,7 @@
 </script>
 
 <header
-	class="sticky top-0 z-10 grid -mx-(--gutter) grid-cols-[44px_1fr_44px] items-center bg-background px-3 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2"
+	class="sticky top-0 z-10 grid -mx-(--gutter) grid-cols-[44px_1fr_44px] items-center bg-background px-[calc(var(--gutter)-8px)] pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2"
 >
 	<a
 		href={resolve('/(app)/(tabs)/me')}
