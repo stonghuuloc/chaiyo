@@ -4,6 +4,16 @@ import { cssMs, dialogPop, panelEnter, scrimFade, sheetSlide, toastRise } from '
 const node = {} as Element;
 
 describe('ui motion', () => {
+	it('Given_Above_When_ToastRise_Then_NegativeOffset', () => {
+		// Arrange
+		// Act
+		const above = toastRise(node, { reduced: false, from: 'above' }).css?.(0, 1) ?? '';
+		const below = toastRise(node, { reduced: false }).css?.(0, 1) ?? '';
+		// Assert
+		expect(above).toContain('translateY(-8px)');
+		expect(below).toContain('translateY(8px)');
+	});
+
 	it('Given_NoDocument_When_CssMs_Then_ReturnsFallback', () => {
 		// Arrange
 		// Act

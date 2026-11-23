@@ -49,11 +49,15 @@ export function panelEnter(node: Element, params: Params): TransitionConfig {
 	return desktop ? dialogPop(node, params) : sheetSlide(node, params);
 }
 
-export function toastRise(_node: Element, { reduced }: Params): TransitionConfig {
+export function toastRise(
+	_node: Element,
+	{ reduced, from = 'below' }: Params & { from?: 'below' | 'above' }
+): TransitionConfig {
 	if (reduced) return fadeOnly();
+	const dir = from === 'above' ? -1 : 1;
 	return {
 		duration: cssMs('--motion-toast', 180),
 		easing: cubicOut,
-		css: (t, u) => `opacity: ${t}; transform: translateY(${u * 8}px)`
+		css: (t, u) => `opacity: ${t}; transform: translateY(${dir * u * 8}px)`
 	};
 }
