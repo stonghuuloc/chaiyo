@@ -118,3 +118,184 @@ describe('stat columns and evidence stamps', () => {
 		expect(r.rows[0].n).toBe(2);
 	});
 });
+
+const TZ = 'Asia/Ho_Chi_Minh';
+const TODAY = `(now() at time zone '${TZ}')::date`;
+const MONDAY = `date_trunc('week', ${TODAY})::date`;
+const localNoon = (day: string) => `((${day}) + time '12:00') at time zone '${TZ}'`;
+
+const content = async () => {
+	await asOwner(db);
+	await db.exec(`
+		insert into lessons (id, kind, level, "order", title, title_hanzi, sections) values
+			('fb-l1', 'lesson', 1, 901, 'a', 'a', '{}'), ('fb-l2', 'lesson', 1, 902, 'b', 'b', '{}'),
+			('fb-l3', 'lesson', 3, 903, 'c', 'c', '{}');
+		insert into questions (id, lesson_id, role, body) values
+			('fb-q1', 'fb-l1', 'drill', '{}'), ('fb-q2', 'fb-l2', 'drill', '{}'), ('fb-q3', 'fb-l3', 'drill', '{}');
+		insert into words (id, hanzi, pinyin, spoken, hanviet, level, data)
+			select w, w, 'x', 'x', 'x', 1, '{}' from unnest(array['我', '是', '他', '你', '好', '她']) w
+			on conflict do nothing;
+		insert into settings (learner_id, tz) values ('${LINH}', '${TZ}');
+	`);
+};
+
+let seq = 0;
+const attempt = async (word: string, at: string, received = at, question = 'fb-q0') => {
+	await asOwner(db);
+	await db.query(
+		`insert into attempts (learner_id, id, question_id, content_sha, skill, word, ms, at, received_at)
+		values ($1, $2, $3, 's', 'the', $4, 1, ${at}, ${received})`,
+		[LINH, `fb-${seq++}`, question, word]
+	);
+};
+
+const caps = async () => {
+	await content();
+	const d1 = localNoon(`${MONDAY} - 4`);
+	const d2 = localNoon(`${MONDAY} - 3`);
+	await attempt('我', d1);
+	await attempt('他', d1);
+	await attempt('是', d2);
+	await attempt('你', 'now()');
+	await attempt('好', 'now()');
+	await attempt('zz', 'now()');
+	await attempt('我', "now() - interval '10 days'", 'now()');
+	await asOwner(db);
+	await db.query(
+		"insert into lexicon_saves (learner_id, word, saved_at) values ($1, '她', now())",
+		[LINH]
+	);
+};
+
+type Stats = [number, string, number, number, number, number, string[]];
+const publish = async (s: Stats, as = LINH) => {
+	await asLearner(db, as);
+	const r = await db.query<{ ok: boolean }>(
+		`select public.publish_stats($1, (${TODAY} + $2::int), $3, $4, $5, $6, $7) as ok`,
+		[s[0], Number(s[1]), s[2], s[3], s[4], s[5], s[6]]
+	);
+	return r.rows[0].ok;
+};
+const stored = async (id = LINH) => {
+	await asOwner(db);
+	return (
+		await db.query<Record<string, unknown>>(
+			`select streak, words_week, words_known, hsk, lesson, badges,
+			(streak_until - ${TODAY})::int as until, (week_of = ${MONDAY}) as monday, week_of
+			from profiles where learner_id = $1`,
+			[id]
+		)
+	).rows[0];
+};
+
+describe('publish_stats', () => {
+	const honest: Stats = [2, '1', 1, 4, 1, 0, ['first']];
+
+	it.each([
+		['NegativeStreak', [-1, '1', 0, 0, 1, 0, []]],
+		['Hsk6', [0, '1', 0, 0, 6, 0, []]],
+		['FakeBadge', [0, '1', 0, 0, 1, 0, ['fake']]],
+		['NegativeWords', [0, '1', -1, 0, 1, 0, []]]
+	] as [string, Stats][])('Given_%s_When_Publish_Then_22023', async (_, s) => {
+		expect(await code(publish(s))).toBe('22023');
+		expect(await stored()).toMatchObject({ streak: 0, until: null, week_of: null });
+	});
+
+	it('Given_NullStreak_When_Publish_Then_22023', async () => {
+		await asLearner(db, LINH);
+		expect(
+			await code(db.query(`select public.publish_stats(null, ${TODAY}, 0, 0, 1, 0, '{}'::text[])`))
+		).toBe('22023');
+	});
+
+	it('Given_EveryBadgeId_When_Publish_Then_Accepted', async () => {
+		const { BADGES } = await import('#lib/study/badges.js');
+		expect(await publish([0, '0', 0, 0, 1, 0, BADGES.map(([id]) => id)])).toBe(true);
+	});
+
+	it('Given_NoProfileRow_When_Publish_Then_False', async () => {
+		await asOwner(db);
+		await db.query('delete from profiles where learner_id = $1', [LINH]);
+		expect(await publish(honest)).toBe(false);
+	});
+
+	it('Given_3Days5Words1Saved_When_PublishInflated_Then_Clamped', async () => {
+		await caps();
+		expect(await publish([10, '1', 9, 50, 1, 0, []])).toBe(true);
+		expect(await stored()).toMatchObject({ streak: 3, words_known: 6, words_week: 2 });
+	});
+
+	it('Given_Backdated10Days_When_Publish_Then_DayNotCounted', async () => {
+		await caps();
+		await attempt('他', "now() - interval '10 days'", "now() - interval '10 days'");
+		await publish([10, '1', 9, 50, 1, 0, []]);
+		expect(await stored()).toMatchObject({ streak: 4 });
+	});
+
+	it('Given_JunkWordZz_When_Publish_Then_NotKnown', async () => {
+		await content();
+		await attempt('zz', 'now()');
+		await publish([1, '1', 5, 5, 1, 0, []]);
+		expect(await stored()).toMatchObject({ streak: 1, words_known: 0, words_week: 0 });
+	});
+
+	it('Given_2LessonsLevel1_When_PublishHsk3Lesson136_Then_Hsk1Lesson3', async () => {
+		await content();
+		await attempt('你', 'now()', 'now()', 'fb-q1');
+		await attempt('好', 'now()', 'now()', 'fb-q2');
+		await publish([1, '1', 0, 0, 3, 136, []]);
+		expect(await stored()).toMatchObject({ hsk: 1, lesson: 3 });
+	});
+
+	it('Given_LevelThreeLessonAttempted_When_PublishHsk3_Then_Hsk3', async () => {
+		await content();
+		await attempt('你', 'now()', 'now()', 'fb-q3');
+		await publish([1, '1', 0, 0, 3, 2, []]);
+		expect(await stored()).toMatchObject({ hsk: 3, lesson: 2 });
+	});
+
+	it('Given_NoAttempts_When_Publish_Then_Hsk1Lesson0', async () => {
+		await publish([0, '0', 0, 0, 4, 12, []]);
+		expect(await stored()).toMatchObject({ streak: 0, hsk: 1, lesson: 0 });
+	});
+
+	it('Given_HonestValues_When_Publish_Then_StoredAsSent', async () => {
+		await caps();
+		await attempt('你', 'now()', 'now()', 'fb-q1');
+		await publish(honest);
+		expect(await stored()).toMatchObject({
+			streak: 2,
+			until: 1,
+			words_week: 1,
+			words_known: 4,
+			hsk: 1,
+			lesson: 0,
+			badges: ['first']
+		});
+	});
+
+	it('Given_UntilFarAhead_When_Publish_Then_TodayPlus3', async () => {
+		await publish([0, '30', 0, 0, 1, 0, []]);
+		expect(await stored()).toMatchObject({ until: 3 });
+	});
+
+	it('Given_Publish_When_Read_Then_WeekOfIsLocalMonday', async () => {
+		await content();
+		await publish([0, '0', 0, 0, 1, 0, []]);
+		expect(await stored()).toMatchObject({ monday: true });
+	});
+
+	it('Given_Publish_Then_OtherRowsUntouched', async () => {
+		await caps();
+		await publish([10, '1', 9, 50, 1, 0, []]);
+		expect(await stored(MINH)).toMatchObject({ streak: 0, words_known: 0, until: null });
+	});
+
+	it('Given_Anon_When_Publish_Then_42501', async () => {
+		await asOwner(db);
+		await db.exec('set role anon');
+		expect(
+			await code(db.query(`select public.publish_stats(0, ${TODAY}, 0, 0, 1, 0, '{}'::text[])`))
+		).toBe('42501');
+	});
+});
