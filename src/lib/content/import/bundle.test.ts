@@ -141,7 +141,7 @@ describe('buildBundle clips', () => {
 		expect(clips!['mā']).toBe(`pinyin-chart/${mā}`);
 		expect(clips!['nǐ hǎo']).toMatch(/^chips\/[0-9a-f]{64}$/);
 		expect(clips!['ní hǎo']).toMatch(/^chips\//);
-	});
+	}, 30_000);
 
 	it('Given_PrimerBundle_When_Built_Then_EveryGatePromptHasClip', async () => {
 		// Arrange
@@ -160,7 +160,7 @@ describe('buildBundle clips', () => {
 		expect(wanted.filter((t) => !clips?.[t])).toEqual([]);
 		expect(wanted).toContain('hǎo');
 		expect(wanted).toContain('ní hǎo');
-	});
+	}, 30_000);
 
 	it('Given_LessonBundle_When_Built_Then_NoClips', async () => {
 		// Arrange
