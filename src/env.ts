@@ -13,5 +13,6 @@ export const variables = defineEnvVars({
 	// Deployment name (production, preview, development) set by Vercel at build; local builds fall back to development.
 	VERCEL_ENV: { public: true, static: true, schema: optional },
 	// VAPID public key (base64url) for Web Push subscriptions; unset disables enabling push. Generate with scripts/vapid-keys.ts.
-	PUBLIC_VAPID_PUBLIC_KEY: { public: true, static: true, schema: optional }
+	PUBLIC_VAPID_PUBLIC_KEY: { public: true, static: true, schema: optional },
+	PUBLIC_TELEGRAM_BOT: { public: true, static: true, schema: optional }
 });
