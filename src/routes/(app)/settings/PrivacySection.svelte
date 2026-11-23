@@ -46,7 +46,9 @@
 			</span>
 			<span class="min-w-0">
 				<b class="block text-[16px] leading-[normal] font-semibold">{m.chy53s1_hide()}</b>
-				<small class="mt-px block text-[13px] leading-[normal] text-pencil">{m.chy53s1_hide_hint()}</small>
+				<small class="mt-px block text-[13px] leading-[normal] text-pencil"
+					>{m.chy53s1_hide_hint()}</small
+				>
 			</span>
 			<Switch checked={hidden} label={m.chy53s1_hide()} onchange={flip} />
 		</li>
