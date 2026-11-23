@@ -20,6 +20,7 @@ Deno.serve((req) =>
 			return data.user?.id ?? null;
 		},
 		channel: post ? webPushChannel({ subs: supabasePushSubs(client), post }) : null,
+		name: 'push',
 		now: () => new Date()
 	})
 );
