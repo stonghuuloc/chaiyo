@@ -676,5 +676,18 @@
 	"chy50s3_usage_sub": "Quản trị · người học bỏ ở đâu",
 	"chy50s3_logout": "Đăng xuất",
 	"chy50s3_logout_failed": "Chưa đăng xuất được, thử lại nhé.",
-	"chy50s3_ver": "Chaiyo · bản thử"
+	"chy50s3_ver": "Chaiyo · bản thử",
+	"chy52s3_title": "Theo dõi thêm",
+	"chy52s3_sub": "Tìm bạn theo tên rồi bấm theo dõi.",
+	"chy52s3_search": "Tìm bạn theo tên",
+	"chy52s3_meta": "HSK {hsk} · Bài {n}",
+	"chy52s3_none": "Không thấy ai tên “{q}”. Thử tên khác nhé.",
+	"chy52s3_search_failed": "Chưa tìm được. Kiểm tra mạng rồi thử lại.",
+	"chy52s3_follow": "Theo dõi",
+	"chy52s3_following": "Đang theo dõi",
+	"chy52s3_follow_label": "Theo dõi {name}",
+	"chy52s3_unfollow_label": "Bỏ theo dõi {name}",
+	"chy52s3_followed": "Đã theo dõi {name}",
+	"chy52s3_unfollowed": "Đã bỏ theo dõi {name}",
+	"chy52s3_follow_failed": "Chưa lưu được, thử lại nhé"
 }

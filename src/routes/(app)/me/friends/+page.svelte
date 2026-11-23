@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { afterNavigate, snapshot } from '$app/navigation';
+	import { afterNavigate, invalidateAll, snapshot } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { rankBoard, withMe, type BoardMode } from '#lib/social/board.js';
 	import { publicStats, type PublicStats } from '#lib/social/stats.js';
+	import FriendSearch from './FriendSearch.svelte';
 	import FriendsBoard from './FriendsBoard.svelte';
 	import type { PageProps } from './$types';
 
@@ -69,3 +70,4 @@
 </div>
 
 <FriendsBoard {rows} {mode} onmode={(next) => (mode = next)} />
+<FriendSearch onchange={invalidateAll} />
