@@ -13,10 +13,14 @@ function closeDays(streak: State['streak'], until: string, events: StudyEvent[])
 	if (!k.last) return k;
 	for (let d = addDays(k.through ?? k.last, 1); d <= until; d = addDays(d, 1)) {
 		if (k.freezes > 0) {
-			k = { ...k, freezes: k.freezes - 1 };
+			k = {
+				...k,
+				freezes: k.freezes - 1,
+				frozen: [...(k.frozen ?? []).filter((x) => x >= addDays(d, -14)), d]
+			};
 			events.push({ type: 'FreezeSpent', day: d, freezes: k.freezes });
 		} else if (k.count > 0) {
-			k = { ...k, count: 0 };
+			k = { count: 0, last: k.last, freezes: k.freezes, through: k.through, best: k.best };
 			events.push({ type: 'StreakReset', day: d });
 		}
 		k = { ...k, through: d };
@@ -45,7 +49,14 @@ export function countDay(s: State, now: Date): { state: State; events: StudyEven
 	return {
 		state: {
 			...s,
-			streak: { count, last: day, freezes, through: day, best: Math.max(before, count) }
+			streak: {
+				count,
+				last: day,
+				freezes,
+				through: day,
+				best: Math.max(before, count),
+				...(closed.frozen?.length ? { frozen: closed.frozen } : {})
+			}
 		},
 		events
 	};

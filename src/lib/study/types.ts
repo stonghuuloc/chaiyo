@@ -42,7 +42,14 @@ export type State = {
 	lessons: Record<string, LessonProgress>;
 	placed: number;
 	tz: string;
-	streak: { count: number; last?: string; freezes: number; through?: string; best?: number };
+	streak: {
+		count: number;
+		last?: string;
+		freezes: number;
+		through?: string;
+		best?: number;
+		frozen?: string[];
+	};
 	runs: Record<string, { step: Step; answers: Record<string, boolean>; closed?: true }>;
 	tones: ToneTally;
 };
