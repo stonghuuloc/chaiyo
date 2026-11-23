@@ -1,0 +1,16 @@
+hanzi: 号
+readings:
+  - pinyin: hào
+    hanviet: hiệu
+  - pinyin: háo
+    hanviet: hiệu
+    rare: true
+radical: 口
+ids: ⿱口丂
+strokes: 5
+mnemonic:
+  hinh: 口 miệng + 丂 hơi thở bật ra → hô to một con số, một hiệu
+  am: hiệu — "ký hiệu", "tín hiệu"
+  doiThat: 几号, 号码
+  tuongPhan: "≠ 句 (jù, câu): 号 có 丂, 句 có 勹"
+  kind: invented

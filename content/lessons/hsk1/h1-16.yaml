@@ -1,0 +1,690 @@
+id: h1-16
+level: 1
+topic: Số và thời gian
+order: 16
+title: Hôm qua và ngày mai
+titleHanzi: 昨天
+goal: Nói việc đã xong hôm qua, năm ngoái; nói ngày mai, sang năm; phủ định bằng 没
+scene:
+  file: lessons/h1-16.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They walk along a path; the red panda looks back over its shoulder and the takin points ahead to a school gate.
+sentences:
+  - id: s-h1-16-01
+    hanzi: 你昨天来学校了吗？
+    pinyin: nǐ zuótiān lái xuéxiào le ma?
+    vi: Hôm qua cậu có đến trường không?
+    speaker: takin
+  - id: s-h1-16-02
+    hanzi: 我昨天来了。
+    pinyin: wǒ zuótiān lái le.
+    vi: Hôm qua tớ đến rồi.
+    speaker: redpanda
+  - id: s-h1-16-03
+    hanzi: 你前天来了吗？
+    pinyin: nǐ qiántiān lái le ma?
+    vi: Hôm kia cậu đến chưa?
+    speaker: takin
+  - id: s-h1-16-04
+    hanzi: 前天我没来，我回家了。
+    pinyin: qiántiān wǒ méi lái, wǒ huí jiā le.
+    vi: Hôm kia tớ không đến, tớ về nhà rồi.
+    speaker: redpanda
+  - id: s-h1-16-05
+    hanzi: 明天你来吗？
+    pinyin: míngtiān nǐ lái ma?
+    vi: Ngày mai cậu có đến không?
+    speaker: takin
+  - id: s-h1-16-06
+    hanzi: 明天我来。
+    pinyin: míngtiān wǒ lái.
+    vi: Ngày mai tớ đến.
+    speaker: redpanda
+  - id: s-h1-16-07
+    hanzi: 你去年学习汉语了吗？
+    pinyin: nǐ qùnián xuéxí Hànyǔ le ma?
+    vi: Năm ngoái cậu học tiếng Trung chưa?
+    speaker: takin
+  - id: s-h1-16-08
+    hanzi: 对，我去年学习汉语了。
+    pinyin: duì, wǒ qùnián xuéxí Hànyǔ le.
+    vi: Đúng, năm ngoái tớ học tiếng Trung rồi.
+    speaker: redpanda
+  - id: s-h1-16-09
+    hanzi: 明年你学习中文吗？
+    pinyin: míngnián nǐ xuéxí Zhōngwén ma?
+    vi: Sang năm cậu học tiếng Trung không?
+    speaker: takin
+  - id: s-h1-16-10
+    hanzi: 明年我也学习。
+    pinyin: míngnián wǒ yě xuéxí.
+    vi: Sang năm tớ cũng học.
+    speaker: redpanda
+  - id: s-h1-16-11
+    hanzi: 他昨天没来。
+    pinyin: tā zuótiān méi lái.
+    vi: Hôm qua anh ấy không đến.
+  - id: s-h1-16-12
+    hanzi: 我昨天读了三本书。
+    pinyin: wǒ zuótiān dú le sān běn shū.
+    vi: Hôm qua tôi đọc ba quyển sách.
+  - id: s-h1-16-13
+    hanzi: 她去年回中国了。
+    pinyin: tā qùnián huí Zhōngguó le.
+    vi: Năm ngoái cô ấy về Trung Quốc rồi.
+  - id: s-h1-16-14
+    hanzi: 明年我回家。
+    pinyin: míngnián wǒ huí jiā.
+    vi: Sang năm tôi về nhà.
+  - id: s-h1-16-15
+    hanzi: 昨天我没学习。
+    pinyin: zuótiān wǒ méi xuéxí.
+    vi: Hôm qua tôi không học.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 昨天
+      - 明天
+      - 了
+      - 没
+      - 来
+      - 回
+      - 去年
+      - 明年
+  grammar:
+    ids:
+      - h1-g37
+      - h1-g38
+    drills:
+      - id: q-h1-16-g01
+        type: choice
+        tests:
+          words:
+            - 昨天
+            - 了
+          grammar:
+            - h1-g37
+        prompt:
+          kind: vi
+          text: Hôm qua tớ đến rồi.
+        optionKind: hanzi
+        options:
+          - 我昨天来了
+          - 我来了昨天
+          - 来了我昨天
+        answer: 0
+      - id: q-h1-16-g02
+        type: trueFalse
+        tests:
+          words:
+            - 明天
+            - 了
+          grammar:
+            - h1-g37
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 明天我来了。
+        answer: false
+      - id: q-h1-16-g03
+        type: choice
+        tests:
+          words:
+            - 了
+          grammar:
+            - h1-g37
+        prompt:
+          kind: vi
+          text: Hôm qua tớ đọc ba quyển sách.
+        optionKind: hanzi
+        options:
+          - 我昨天读了三本书
+          - 我昨天了读三本书
+          - 我读三本书了昨天
+        answer: 0
+      - id: q-h1-16-g04
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 昨天
+            - 来
+          grammar:
+            - h1-g37
+        prompt:
+          kind: audio
+          ref: s-h1-16-01
+        optionKind: hanzi
+        options:
+          - 我昨天来了。
+          - 明天我来。
+          - 我是学生。
+        answer: 0
+      - id: q-h1-16-g05
+        type: choice
+        tests:
+          words:
+            - 没
+          grammar:
+            - h1-g38
+        prompt:
+          kind: vi
+          text: Hôm qua anh ấy không đến.
+        optionKind: hanzi
+        options:
+          - 他昨天没来
+          - 他昨天没来了
+          - 他昨天不来了
+        answer: 0
+      - id: q-h1-16-g06
+        type: trueFalse
+        tests:
+          words:
+            - 没
+          grammar:
+            - h1-g38
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我昨天没来了。
+        answer: false
+      - id: q-h1-16-g07
+        type: choice
+        tests:
+          words:
+            - 没
+          grammar:
+            - h1-g38
+        prompt:
+          kind: vi
+          text: Hôm qua tớ không học.
+        optionKind: hanzi
+        options:
+          - 昨天我没学习
+          - 昨天我学习没
+          - 昨天没我了学习
+        answer: 0
+      - id: q-h1-16-g08
+        type: order
+        tests:
+          words:
+            - 没
+            - 来
+          grammar:
+            - h1-g38
+        tiles:
+          - 他
+          - 昨天
+          - 没
+          - 来
+        answer: s-h1-16-11
+  dialogue:
+    parts:
+      - title: Hôm qua và hôm kia
+        lines:
+          - s-h1-16-01
+          - s-h1-16-02
+          - s-h1-16-03
+          - s-h1-16-04
+          - s-h1-16-05
+          - s-h1-16-06
+      - title: Năm ngoái và sang năm
+        lines:
+          - s-h1-16-07
+          - s-h1-16-08
+          - s-h1-16-09
+          - s-h1-16-10
+    questions:
+      - id: q-h1-16-d01
+        type: choice
+        ask: Hôm kia gấu trúc đỏ làm gì?
+        tests:
+          words:
+            - 没
+            - 回
+          grammar:
+            - h1-g38
+        prompt:
+          kind: audio
+          ref: s-h1-16-04
+        optionKind: vi
+        options:
+          - không đến, về nhà
+          - đến trường
+          - đi học
+        answer: 0
+      - id: q-h1-16-d02
+        type: choice
+        ask: Hôm qua gấu trúc đỏ có đến không?
+        tests:
+          words:
+            - 昨天
+            - 来
+            - 了
+          grammar:
+            - h1-g37
+        prompt:
+          kind: audio
+          ref: s-h1-16-02
+        optionKind: vi
+        options:
+          - có đến
+          - không đến
+          - chưa biết
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-16-l01
+        type: tone
+        tests:
+          words:
+            - 昨天
+          tone: true
+        prompt:
+          kind: audio
+          ref: 昨天
+        syllable: 0
+        answer: 2
+      - id: q-h1-16-l02
+        type: choice
+        tests:
+          words:
+            - 回
+        prompt:
+          kind: audio
+          ref: 回
+        optionKind: hanzi
+        options:
+          - 回
+          - 来
+          - 去
+          - 了
+        answer: 0
+      - id: q-h1-16-l03
+        type: choice
+        tests:
+          words:
+            - 明年
+        prompt:
+          kind: audio
+          ref: 明年
+        optionKind: hanzi
+        options:
+          - 明年
+          - 去年
+          - 明天
+          - 昨天
+        answer: 0
+      - id: q-h1-16-s01
+        type: readAloud
+        tests:
+          words:
+            - 昨天
+            - 来
+            - 了
+          grammar:
+            - h1-g37
+          tone: true
+        sentence: s-h1-16-02
+      - id: q-h1-16-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 没
+            - 来
+          grammar:
+            - h1-g37
+            - h1-g38
+        prompt:
+          kind: vi
+          text: Nói hôm qua bạn có đến trường không.
+        rubric:
+          - Dùng 我昨天来了 hoặc 我昨天没来
+        answer: s-h1-16-02
+      - id: q-h1-16-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 明年
+          grammar:
+            - h1-g37
+        prompt:
+          kind: vi
+          text: Nói năm sau bạn làm gì.
+        rubric:
+          - Dùng 明年我 + động từ, không dùng 了
+        answer: s-h1-16-14
+  writing:
+    chars:
+      - 昨
+      - 来
+      - 回
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-16-x01
+      type: choice
+      tests:
+        words:
+          - 昨天
+      prompt:
+        kind: hanzi
+        ref: 昨天
+      optionKind: vi
+      options:
+        - hôm qua
+        - ngày mai
+        - hôm nay
+        - hôm kia
+      answer: 0
+    - id: q-h1-16-x02
+      type: choice
+      tests:
+        words:
+          - 明天
+      prompt:
+        kind: vi
+        text: ngày mai
+      optionKind: hanzi
+      options:
+        - 明天
+        - 昨天
+        - 前天
+        - 后天
+      answer: 0
+    - id: q-h1-16-x03
+      type: choice
+      tests:
+        words:
+          - 了
+      prompt:
+        kind: hanzi
+        ref: 了
+      optionKind: vi
+      options:
+        - (đã) xong, rồi
+        - không
+        - cũng
+        - rất
+      answer: 0
+    - id: q-h1-16-x04
+      type: choice
+      tests:
+        words:
+          - 没
+      prompt:
+        kind: hanzi
+        ref: 没
+      optionKind: vi
+      options:
+        - không, chưa (việc đã xảy ra)
+        - đã xong
+        - cũng
+        - rất
+      answer: 0
+    - id: q-h1-16-x05
+      type: choice
+      tests:
+        words:
+          - 来
+      prompt:
+        kind: vi
+        text: đến, tới
+      optionKind: hanzi
+      options:
+        - 来
+        - 回
+        - 去
+        - 了
+      answer: 0
+    - id: q-h1-16-x06
+      type: choice
+      tests:
+        words:
+          - 回
+      prompt:
+        kind: vi
+        text: về
+      optionKind: hanzi
+      options:
+        - 回
+        - 来
+        - 去
+        - 没
+      answer: 0
+    - id: q-h1-16-x07
+      type: choice
+      tests:
+        words:
+          - 去年
+      prompt:
+        kind: hanzi
+        ref: 去年
+      optionKind: vi
+      options:
+        - năm ngoái
+        - năm sau
+        - năm nay
+        - hôm qua
+      answer: 0
+    - id: q-h1-16-x08
+      type: typePinyin
+      tests:
+        words:
+          - 明年
+      prompt:
+        kind: hanzi
+        ref: 明年
+      answer: míngnián
+    - id: q-h1-16-x09
+      type: choice
+      tests:
+        words:
+          - 昨天
+          - 了
+        grammar:
+          - h1-g37
+      prompt:
+        kind: vi
+        text: Hôm qua tớ đến rồi.
+      optionKind: hanzi
+      options:
+        - 我昨天来了
+        - 我来了昨天
+        - 来了我昨天
+      answer: 0
+    - id: q-h1-16-x10
+      type: trueFalse
+      tests:
+        words:
+          - 明天
+          - 了
+        grammar:
+          - h1-g37
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 明天我来了。
+      answer: false
+    - id: q-h1-16-x11
+      type: choice
+      tests:
+        words:
+          - 了
+        grammar:
+          - h1-g37
+      prompt:
+        kind: vi
+        text: Hôm qua tớ đọc ba quyển sách.
+      optionKind: hanzi
+      options:
+        - 我昨天读了三本书
+        - 我昨天了读三本书
+        - 我读三本书了昨天
+      answer: 0
+    - id: q-h1-16-x12
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 昨天
+          - 来
+        grammar:
+          - h1-g37
+      prompt:
+        kind: audio
+        ref: s-h1-16-01
+      optionKind: hanzi
+      options:
+        - 我昨天来了。
+        - 明天我来。
+        - 我是学生。
+      answer: 0
+    - id: q-h1-16-x13
+      type: choice
+      tests:
+        words:
+          - 没
+        grammar:
+          - h1-g38
+      prompt:
+        kind: vi
+        text: Hôm qua anh ấy không đến.
+      optionKind: hanzi
+      options:
+        - 他昨天没来
+        - 他昨天没来了
+        - 他昨天不来了
+      answer: 0
+    - id: q-h1-16-x14
+      type: trueFalse
+      tests:
+        words:
+          - 没
+        grammar:
+          - h1-g38
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我昨天没来了。
+      answer: false
+    - id: q-h1-16-x15
+      type: choice
+      tests:
+        words:
+          - 没
+        grammar:
+          - h1-g38
+      prompt:
+        kind: vi
+        text: Hôm qua tớ không học.
+      optionKind: hanzi
+      options:
+        - 昨天我没学习
+        - 昨天我学习没
+        - 昨天没我了学习
+      answer: 0
+    - id: q-h1-16-x16
+      type: order
+      tests:
+        words:
+          - 没
+          - 来
+        grammar:
+          - h1-g38
+      tiles:
+        - 他
+        - 昨天
+        - 没
+        - 来
+      answer: s-h1-16-11
+    - id: q-h1-16-x17
+      type: choice
+      tests:
+        words:
+          - 没
+          - 回
+      prompt:
+        kind: audio
+        ref: s-h1-16-04
+      optionKind: vi
+      options:
+        - Hôm kia tớ không đến, tớ về nhà rồi
+        - Hôm kia tớ đến rồi
+        - Hôm kia tớ ở nhà
+      answer: 0
+    - id: q-h1-16-x18
+      type: tone
+      tests:
+        words:
+          - 来
+        tone: true
+      prompt:
+        kind: audio
+        ref: 来
+      syllable: 0
+      answer: 2
+    - id: q-h1-16-x19
+      type: choice
+      tests:
+        words:
+          - 去年
+          - 回
+          - 了
+        grammar:
+          - h1-g37
+      prompt:
+        kind: vi
+        text: Năm ngoái cô ấy về Trung Quốc rồi.
+      optionKind: hanzi
+      options:
+        - 她去年回中国了
+        - 她回去年中国了
+        - 去年她回了中国
+      answer: 0
+    - id: q-h1-16-x20
+      type: trueFalse
+      tests:
+        words:
+          - 去年
+      prompt:
+        kind: hanzi
+        ref: 去年
+      statement: 去年 nghĩa là “năm ngoái”.
+      answer: true
+    - id: q-h1-16-x21
+      type: choice
+      tests:
+        words:
+          - 明年
+          - 回
+        grammar:
+          - h1-g37
+      prompt:
+        kind: vi
+        text: Sang năm tớ về nhà.
+      optionKind: hanzi
+      options:
+        - 明年我回家
+        - 明年我回家了
+        - 我回家明年
+      answer: 0
+    - id: q-h1-16-x22
+      type: choice
+      tests:
+        words:
+          - 没
+        grammar:
+          - h1-g38
+      prompt:
+        kind: vi
+        text: Hôm qua tớ không học.
+      optionKind: hanzi
+      options:
+        - 昨天我没学习
+        - 昨天我学习没
+        - 昨天没我了学习
+      answer: 0

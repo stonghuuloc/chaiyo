@@ -1,0 +1,16 @@
+hanzi: 上
+readings:
+  - pinyin: shàng
+    hanviet: thượng
+  - pinyin: shǎng
+    hanviet: thưởng
+    rare: true
+radical: 一
+ids: ⿱卜一
+strokes: 3
+mnemonic:
+  hinh: một nét ngang làm mốc, thêm ký hiệu ngắn NẰM TRÊN mốc — chỉ sự "ở trên, đi lên"
+  am: shàng ≈ "thượng" — thượng lưu, thượng đẳng, cao thượng
+  doiThat: nút 上传 (upload) và 上一页 (trang trước) trên mọi app; biển thang máy 上 (lên); lời chào 早上好
+  tuongPhan: đối lập trực tiếp với 下; ≠ 卡 (kǎ, thẻ — có thêm nét ngang giữa nếu viết ẩu)
+  kind: etymology

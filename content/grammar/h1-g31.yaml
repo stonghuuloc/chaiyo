@@ -1,0 +1,17 @@
+id: h1-g31
+level: 1
+std:
+  - 44
+title: Năm, tháng, ngày
+pattern: 年 + 月 + 日 / 号
+explain: |-
+  Ngày tháng đọc từ lớn đến nhỏ: năm, tháng, ngày. 二零二六年十一月二十三号. Năm đọc từng chữ số: 二零二六年.
+
+  号 (hiệu, hào) dùng khi nói, 日 (nhật, rì) dùng khi viết. Hỏi ngày: 今天几月几号？
+examples:
+  - s-h1-13-02
+  - s-h1-13-14
+pitfalls:
+  - wrong: 二十三号十一月
+    right: 十一月二十三号
+    why: Tháng đứng trước ngày, nhỏ dần.

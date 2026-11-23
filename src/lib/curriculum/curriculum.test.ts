@@ -33,15 +33,20 @@ describe('curriculum', () => {
 			['h1-09', 9],
 			['h1-10', 10],
 			['h1-11', 11],
+			['h1-12', 12],
+			['h1-13', 13],
+			['h1-14', 14],
+			['h1-15', 15],
+			['h1-16', 16],
 			['h2-01', 41],
 			['h3-01', 68],
 			['h4-01', 94],
 			['h5-01', 116]
 		]);
 		expect(LESSONS.map((l) => l.words.length)).toEqual([
-			0, 10, 9, 10, 8, 14, 8, 8, 8, 8, 8, 8, 12, 13, 15, 15
+			0, 10, 9, 10, 8, 14, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 12, 13, 15, 15
 		]);
-		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(154);
+		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(194);
 	});
 
 	it('Given_TwoLevels_When_OutlineNumbers_Then_SecondStartsAfterFirstCount', () => {

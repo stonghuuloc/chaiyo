@@ -347,11 +347,194 @@ const rows: Record<string, Row> = {
 		strokes: 6,
 		kind: 'etymology'
 	},
-	太: { readings: [r('tài', 'thái')], radical: '大', ids: '⿵大丶', strokes: 4, kind: 'etymology' }
+	太: { readings: [r('tài', 'thái')], radical: '大', ids: '⿵大丶', strokes: 4, kind: 'etymology' },
+	百: { readings: [r('bǎi', 'bách')], radical: '白', ids: '⿱一白', strokes: 6, kind: 'invented' },
+	零: {
+		readings: [r('líng', 'linh')],
+		radical: '雨',
+		ids: '⿱雨令',
+		strokes: 13,
+		kind: 'etymology'
+	},
+	半: {
+		readings: [r('bàn', 'bán')],
+		radical: '十',
+		ids: '⿱丷⿻二丨',
+		strokes: 5,
+		kind: 'invented'
+	},
+	杯: { readings: [r('bēi', 'bôi')], radical: '木', ids: '⿰木不', strokes: 8, kind: 'etymology' },
+	页: { readings: [r('yè', 'hiệt')], radical: '页', ids: '页', strokes: 6, kind: 'invented' },
+	次: { readings: [r('cì', 'thứ')], radical: '欠', ids: '⿰冫欠', strokes: 6, kind: 'etymology' },
+	些: { readings: [r('xiē', 'ta')], radical: '二', ids: '⿱此二', strokes: 8, kind: 'invented' },
+	年: { readings: [r('nián', 'niên')], radical: '干', ids: '年', strokes: 6, kind: 'invented' },
+	月: { readings: [r('yuè', 'nguyệt')], radical: '月', ids: '月', strokes: 4, kind: 'etymology' },
+	日: { readings: [r('rì', 'nhật')], radical: '日', ids: '日', strokes: 4, kind: 'etymology' },
+	号: {
+		readings: [r('hào', 'hiệu'), r('háo', 'hiệu', true)],
+		radical: '口',
+		ids: '⿱口丂',
+		strokes: 5,
+		kind: 'invented'
+	},
+	今: { readings: [r('jīn', 'kim')], radical: '人', ids: '⿱亽㇇', strokes: 4, kind: 'etymology' },
+	天: {
+		readings: [r('tiān', 'thiên')],
+		radical: '大',
+		ids: '⿱一大',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	前: {
+		readings: [r('qián', 'tiền')],
+		radical: '刀',
+		ids: '⿱䒑刖',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	后: { readings: [r('hòu', 'hậu')], radical: '口', ids: '⿸𠂋口', strokes: 6, kind: 'etymology' },
+	星: {
+		readings: [r('xīng', 'tinh')],
+		radical: '日',
+		ids: '⿱日生',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	期: { readings: [r('qī', 'kỳ')], radical: '月', ids: '⿰其月', strokes: 12, kind: 'etymology' },
+	还: {
+		readings: [r('hái', 'hoàn'), r('huán', 'hoàn')],
+		radical: '辵',
+		ids: '⿺辶不',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	上: {
+		readings: [r('shàng', 'thượng'), r('shǎng', 'thưởng', true)],
+		radical: '一',
+		ids: '⿱卜一',
+		strokes: 3,
+		kind: 'etymology'
+	},
+	午: { readings: [r('wǔ', 'ngọ')], radical: '十', ids: '⿱𠂉十', strokes: 4, kind: 'invented' },
+	下: { readings: [r('xià', 'hạ')], radical: '一', ids: '⿱一卜', strokes: 3, kind: 'etymology' },
+	早: { readings: [r('zǎo', 'tảo')], radical: '日', ids: '⿱日十', strokes: 6, kind: 'etymology' },
+	晚: { readings: [r('wǎn', 'vãn')], radical: '日', ids: '⿰日免', strokes: 11, kind: 'etymology' },
+	点: {
+		readings: [r('diǎn', 'điểm')],
+		radical: '火',
+		ids: '⿱占灬',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	分: {
+		readings: [r('fēn', 'phân'), r('fèn', 'phận', true)],
+		radical: '刀',
+		ids: '⿱八刀',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	现: {
+		readings: [r('xiàn', 'hiện')],
+		radical: '玉',
+		ids: '⿰王见',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	在: { readings: [r('zài', 'tại')], radical: '土', ids: '⿸才土', strokes: 6, kind: 'etymology' },
+	时: { readings: [r('shí', 'thời')], radical: '日', ids: '⿰日寸', strokes: 7, kind: 'etymology' },
+	候: { readings: [r('hòu', 'hậu')], radical: '人', ids: '⿰亻侯', strokes: 10, kind: 'etymology' },
+	间: {
+		readings: [r('jiān', 'gian'), r('jiàn', 'gián', true)],
+		radical: '门',
+		ids: '⿵门日',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	床: {
+		readings: [r('chuáng', 'sàng')],
+		radical: '广',
+		ids: '⿸广木',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	睡: {
+		readings: [r('shuì', 'thuỵ')],
+		radical: '目',
+		ids: '⿰目垂',
+		strokes: 13,
+		kind: 'etymology'
+	},
+	觉: {
+		readings: [r('jiào', 'giáo'), r('jué', 'giác')],
+		radical: '见',
+		ids: '⿳𭕄冖见',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	昨: { readings: [r('zuó', 'tạc')], radical: '日', ids: '⿰日乍', strokes: 9, kind: 'etymology' },
+	明: {
+		readings: [r('míng', 'minh')],
+		radical: '日',
+		ids: '⿰日月',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	了: {
+		readings: [r('le', 'liễu'), r('liǎo', 'liễu', true)],
+		radical: '亅',
+		ids: '⿱乛亅',
+		strokes: 2,
+		kind: 'invented'
+	},
+	来: { readings: [r('lái', 'lai')], radical: '木', ids: '来', strokes: 7, kind: 'invented' },
+	回: { readings: [r('huí', 'hồi')], radical: '囗', ids: '⿴囗口', strokes: 6, kind: 'etymology' },
+	去: { readings: [r('qù', 'khứ')], radical: '厶', ids: '⿱土厶', strokes: 5, kind: 'invented' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists
 const local: Record<string, Mnemonic> = {
+	页: {
+		hinh: '页 giản lược của 頁, gốc nghĩa là "cái đầu"; nay mượn để chỉ trang sách',
+		am: 'hiệt — hiếm gặp, neo bằng nghĩa "trang"',
+		doiThat: '一页纸, 十页',
+		tuongPhan: '≠ 夜 (yè, đêm): cùng đọc yè, khác chữ và khác nghĩa'
+	},
+	号: {
+		hinh: '口 miệng + 丂 hơi thở bật ra → hô to một con số, một hiệu',
+		am: 'hiệu — "ký hiệu", "tín hiệu"',
+		doiThat: '几号, 号码',
+		tuongPhan: '≠ 句 (jù, câu): 号 có 丂, 句 có 勹'
+	},
+	期: {
+		hinh: '其 gợi âm + 月 mặt trăng → một chu kỳ theo vầng trăng = một kỳ, một tuần',
+		am: 'kỳ — "thời kỳ", "học kỳ"',
+		doiThat: '星期, 学期',
+		tuongPhan: '≠ 其 (qí): 期 thêm 月 thành "kỳ hạn"'
+	},
+	晚: {
+		hinh: '日 mặt trời + 免 gợi âm → lúc mặt trời đã xuống = buổi tối, muộn',
+		am: 'vãn — "vãn", "buổi vãn"',
+		doiThat: '晚上, 晚饭',
+		tuongPhan: '≠ 免 (miǎn): 晚 thêm 日 thành buổi tối'
+	},
+	候: {
+		hinh: '亻 người + 侯 gợi âm → người đứng chờ đúng lúc = thời điểm',
+		am: 'hậu — "thời hậu", "khí hậu"',
+		doiThat: '时候, 等候',
+		tuongPhan: '≠ 后 (hòu, sau): cùng đọc hòu, khác chữ và khác nghĩa'
+	},
+	床: {
+		hinh: '广 mái che + 木 gỗ → cái giường gỗ đặt dưới mái nhà',
+		am: 'sàng — "khởi sàng" (thức dậy)',
+		doiThat: '起床, 床上',
+		tuongPhan: '≠ 林 (lín, rừng): 床 chỉ có một 木 dưới 广'
+	},
+	睡: {
+		hinh: '目 mắt + 垂 rủ xuống → mí mắt rủ xuống = ngủ',
+		am: 'thuỵ — "thuỵ miên" (giấc ngủ)',
+		doiThat: '睡觉, 睡着',
+		tuongPhan: '≠ 垂 (chuí): 睡 thêm 目 thành ngủ'
+	},
 	语: {
 		hinh: '讠 lời nói + 吾 gợi âm → lời nói, ngôn ngữ',
 		am: 'ngữ — "ngôn ngữ", "ngữ pháp"',

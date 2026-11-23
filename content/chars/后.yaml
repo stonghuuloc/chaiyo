@@ -1,0 +1,13 @@
+hanzi: 后
+readings:
+  - pinyin: hòu
+    hanviet: hậu
+radical: 口
+ids: ⿸𠂋口
+strokes: 6
+mnemonic:
+  hinh: '`[từ nguyên]` 后 gốc vẽ một người ngồi trên bệ ra lệnh, miệng (口) phát lệnh — nghĩa "vua/hậu". Nghĩa "phía sau" là do giản thể mượn mặt chữ này thay cho 後 phồn thể, không liên quan hình.'
+  am: 'Hán-Việt: **hậu** — như "hậu quả", "hoàng hậu", "sau này gọi là hậu". Nhớ qua "hậu" trong "tối hậu thư", "hậu duệ".'
+  doiThat: Nút "后退/后一页" (lùi/trang sau) trong app, biển "后门" (cửa sau) ở tòa nhà, phim cổ trang có 皇后 (hoàng hậu) trong phụ đề.
+  tuongPhan: "≠ 石 (shí, đá — cũng có nét gập + 口 nhưng khác cấu trúc) và đặc biệt ≠ 右 (yòu, bên phải — dễ lẫn vì cùng có 口 ở dưới, khác phần trên: 右 = 广-dạng + 口, 后 = 一+𠃌+口)."
+  kind: etymology

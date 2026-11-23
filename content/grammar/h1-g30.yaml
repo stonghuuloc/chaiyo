@@ -1,0 +1,13 @@
+id: h1-g30
+level: 1
+std:
+  - 7
+title: "Một nửa: 半"
+pattern: 半 + lượng từ + danh từ
+explain: |-
+  半 (bán, bàn) nghĩa là “một nửa”, đặt trước lượng từ: 半本书 = nửa quyển sách.
+
+  Sau 点, 半 nghĩa là “rưỡi”: 三点半 = 3 giờ rưỡi.
+examples:
+  - s-h1-12-06
+  - s-h1-12-12

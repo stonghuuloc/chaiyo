@@ -1,0 +1,16 @@
+hanzi: 间
+readings:
+  - pinyin: jiān
+    hanviet: gian
+  - pinyin: jiàn
+    hanviet: gián
+    rare: true
+radical: 门
+ids: ⿵门日
+strokes: 7
+mnemonic:
+  hinh: ánh MẶT TRỜI (日) lọt qua khe CỬA (门) → khoảng GIỮA, không gian.
+  am: "2 âm Hán-Việt theo 2 pinyin: **gian** (jiān — không gian, phòng: 房间, 中间, 时间) / **gián** (jiàn — gián tiếp, do thám: 间接, 间谍)."
+  doiThat: nút "中间" (ở giữa) trên app chỉnh sửa ảnh; số "房间号" khi đặt phòng khách sạn/game.
+  tuongPhan: '间 (门+日, "khoảng giữa") ≠ 问 (门+口, "hỏi", học cùng bài này) — cùng bộ 门 nhưng bên trong khác: 日 (mặt trời) và 口 (miệng).'
+  kind: etymology

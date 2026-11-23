@@ -1,0 +1,17 @@
+id: h1-g32
+level: 1
+std:
+  - 28
+title: Thời gian đứng trước động từ
+pattern: chủ ngữ + thời gian + động từ
+explain: |-
+  Từ chỉ thời gian đứng trước động từ, sau chủ ngữ: 我今天学习汉语. Cũng có thể đứng đầu câu: 今天我学习汉语.
+
+  Không đặt từ chỉ thời gian sau động từ.
+examples:
+  - s-h1-13-08
+  - s-h1-13-13
+pitfalls:
+  - wrong: 我学习汉语今天
+    right: 我今天学习汉语
+    why: Thời gian đứng trước động từ.

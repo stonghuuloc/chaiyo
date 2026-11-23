@@ -1,0 +1,16 @@
+hanzi: 了
+readings:
+  - pinyin: le
+    hanviet: liễu
+  - pinyin: liǎo
+    hanviet: liễu
+    rare: true
+radical: 亅
+ids: ⿱乛亅
+strokes: 2
+mnemonic:
+  hinh: một nét ngang cụt rồi móc xuống dứt khoát — xong, hết, rồi
+  am: âm Hán-Việt liễu — liễu giải (了解, hiểu rõ)
+  doiThat: "tin nhắn công việc: 到了 (tới rồi), 收到了 (nhận rồi), 好了 (xong rồi)"
+  tuongPhan: ≠ 子 (zǐ, con) = 了 + nét ngang giữa. Có nét ngang → 子
+  kind: invented

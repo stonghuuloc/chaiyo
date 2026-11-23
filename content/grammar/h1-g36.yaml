@@ -1,0 +1,17 @@
+id: h1-g36
+level: 1
+std:
+  - 28
+title: Giờ giấc đứng trước động từ
+pattern: chủ ngữ + giờ + động từ
+explain: |-
+  Giờ giấc đứng trước động từ: 我六点起床 = Tớ dậy lúc 6 giờ. Hỏi giờ làm việc: 你几点起床？
+
+  Sau 的, 时候 chỉ lúc nào đó: 睡觉的时候 = lúc đi ngủ.
+examples:
+  - s-h1-15-04
+  - s-h1-15-14
+pitfalls:
+  - wrong: 我起床六点
+    right: 我六点起床
+    why: Giờ giấc đứng trước động từ.

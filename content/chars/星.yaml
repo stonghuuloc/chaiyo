@@ -1,0 +1,13 @@
+hanzi: 星
+readings:
+  - pinyin: xīng
+    hanviet: tinh
+radical: 日
+ids: ⿱日生
+strokes: 9
+mnemonic:
+  hinh: 星 = 日 (mặt trời/ánh sáng) trên + 生 (sinh) dưới — một điểm sáng nhỏ "sinh ra" giữa trời đêm, tức ngôi sao.
+  am: Hán-Việt là "tinh" (minh tinh, tinh tú, Kim tinh, Hỏa tinh) — nhớ trực tiếp qua âm này.
+  doiThat: 明星 (ngôi sao/người nổi tiếng) trên tin tức giải trí; 星期 (tuần) trên lịch app; 星巴克 (Starbucks) trên biển hiệu quán cà phê.
+  tuongPhan: '≠ 生 (đã học — sinh ra/sống): 星 thêm bộ 日 phía trên; 生 đứng riêng chỉ mang nghĩa "sinh, sống", không liên quan tới sao.'
+  kind: etymology

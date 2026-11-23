@@ -1,0 +1,674 @@
+id: h1-13
+level: 1
+topic: Số và thời gian
+order: 13
+title: Ngày tháng
+titleHanzi: 号
+goal: Hỏi và nói ngày tháng năm, sinh nhật; đặt thời gian trước động từ
+scene:
+  file: lessons/h1-13.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand beside a big wall calendar; the red panda marks a date with a paw and the takin holds a small birthday cake.
+sentences:
+  - id: s-h1-13-01
+    hanzi: 今天几月几号？
+    pinyin: jīntiān jǐ yuè jǐ hào?
+    vi: Hôm nay là ngày mấy tháng mấy?
+    speaker: takin
+  - id: s-h1-13-02
+    hanzi: 今天十一月二十三号。
+    pinyin: jīntiān shíyī yuè èrshísān hào.
+    vi: Hôm nay là ngày 23 tháng 11.
+    speaker: redpanda
+  - id: s-h1-13-03
+    hanzi: 前天是你的生日吗？
+    pinyin: qiántiān shì nǐ de shēngrì ma?
+    vi: Hôm kia là sinh nhật cậu à?
+    speaker: takin
+  - id: s-h1-13-04
+    hanzi: 不是，后天是我的生日。
+    pinyin: bù shì, hòutiān shì wǒ de shēngrì.
+    vi: Không, ngày kia là sinh nhật tớ.
+    speaker: redpanda
+  - id: s-h1-13-05
+    hanzi: 你的生日是几月几号？
+    pinyin: nǐ de shēngrì shì jǐ yuè jǐ hào?
+    vi: Sinh nhật cậu là ngày mấy tháng mấy?
+    speaker: takin
+  - id: s-h1-13-06
+    hanzi: 我的生日是十二月二十五号。
+    pinyin: wǒ de shēngrì shì shí’èr yuè èrshíwǔ hào.
+    vi: Sinh nhật tớ là ngày 25 tháng 12.
+    speaker: redpanda
+  - id: s-h1-13-07
+    hanzi: 你今天学习汉语吗？
+    pinyin: nǐ jīntiān xuéxí Hànyǔ ma?
+    vi: Hôm nay cậu học tiếng Trung không?
+    speaker: takin
+  - id: s-h1-13-08
+    hanzi: 对，我今天学习汉语，后天也学习汉语。
+    pinyin: duì, wǒ jīntiān xuéxí Hànyǔ, hòutiān yě xuéxí Hànyǔ.
+    vi: Có, hôm nay tớ học tiếng Trung, ngày kia cũng học.
+    speaker: redpanda
+  - id: s-h1-13-09
+    hanzi: 你的朋友前天学习汉语吗？
+    pinyin: nǐ de péngyou qiántiān xuéxí Hànyǔ ma?
+    vi: Hôm kia bạn cậu có học tiếng Trung không?
+    speaker: takin
+  - id: s-h1-13-10
+    hanzi: 不，他前天不学习汉语。
+    pinyin: bù, tā qiántiān bù xuéxí Hànyǔ.
+    vi: Không, hôm kia bạn ấy không học tiếng Trung.
+    speaker: redpanda
+  - id: s-h1-13-11
+    hanzi: 今天是我的生日。
+    pinyin: jīntiān shì wǒ de shēngrì.
+    vi: Hôm nay là sinh nhật tôi.
+  - id: s-h1-13-12
+    hanzi: 我的生日是三月十号。
+    pinyin: wǒ de shēngrì shì sān yuè shí hào.
+    vi: Sinh nhật tôi là ngày 10 tháng 3.
+  - id: s-h1-13-13
+    hanzi: 他后天不学习汉语。
+    pinyin: tā hòutiān bù xuéxí Hànyǔ.
+    vi: Ngày kia anh ấy không học tiếng Trung.
+  - id: s-h1-13-14
+    hanzi: 二零二六年十一月二十三日。
+    pinyin: èr líng èr liù nián shíyī yuè èrshísān rì.
+    vi: Ngày 23 tháng 11 năm 2026.
+  - id: s-h1-13-15
+    hanzi: 前天是我朋友的生日。
+    pinyin: qiántiān shì wǒ péngyou de shēngrì.
+    vi: Hôm kia là sinh nhật bạn tôi.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 年
+      - 月
+      - 日
+      - 号
+      - 今天
+      - 生日
+      - 前天
+      - 后天
+  grammar:
+    ids:
+      - h1-g31
+      - h1-g32
+    drills:
+      - id: q-h1-13-g01
+        type: choice
+        tests:
+          words:
+            - 今天
+            - 号
+          grammar:
+            - h1-g31
+        prompt:
+          kind: vi
+          text: Hôm nay là ngày 23 tháng 11.
+        optionKind: hanzi
+        options:
+          - 今天十一月二十三号
+          - 今天二十三号十一月
+          - 今天十一二十三月号
+        answer: 0
+      - id: q-h1-13-g02
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 号
+          grammar:
+            - h1-g31
+        prompt:
+          kind: audio
+          ref: s-h1-13-01
+        optionKind: hanzi
+        options:
+          - 今天十一月二十三号。
+          - 今天是我的生日吗？
+          - 后天是我朋友的生日。
+        answer: 0
+      - id: q-h1-13-g03
+        type: trueFalse
+        tests:
+          words:
+            - 号
+          grammar:
+            - h1-g31
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 今天二十三号十一月。
+        answer: false
+      - id: q-h1-13-g04
+        type: choice
+        tests:
+          words:
+            - 生日
+            - 号
+          grammar:
+            - h1-g31
+        prompt:
+          kind: vi
+          text: Sinh nhật tớ là ngày 10 tháng 3.
+        optionKind: hanzi
+        options:
+          - 我的生日是三月十号
+          - 我的生日是十号三月
+          - 三月我的生日是十号
+        answer: 0
+      - id: q-h1-13-g05
+        type: choice
+        tests:
+          words:
+            - 今天
+          grammar:
+            - h1-g32
+        prompt:
+          kind: vi
+          text: Hôm nay tớ học tiếng Trung.
+        optionKind: hanzi
+        options:
+          - 我今天学习汉语
+          - 我学习汉语今天
+          - 今天学习我汉语
+        answer: 0
+      - id: q-h1-13-g06
+        type: trueFalse
+        tests:
+          words:
+            - 今天
+          grammar:
+            - h1-g32
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我学习汉语今天。
+        answer: false
+      - id: q-h1-13-g07
+        type: choice
+        tests:
+          words:
+            - 后天
+          grammar:
+            - h1-g32
+        prompt:
+          kind: vi
+          text: Ngày kia anh ấy không học tiếng Trung.
+        optionKind: hanzi
+        options:
+          - 他后天不学习汉语
+          - 他不学习汉语后天
+          - 后天他学习不汉语
+        answer: 0
+      - id: q-h1-13-g08
+        type: order
+        tests:
+          words:
+            - 后天
+          grammar:
+            - h1-g32
+        tiles:
+          - 他
+          - 后天
+          - 不
+          - 学习
+          - 汉语
+        answer: s-h1-13-13
+  dialogue:
+    parts:
+      - title: Hôm nay ngày mấy?
+        lines:
+          - s-h1-13-01
+          - s-h1-13-02
+          - s-h1-13-03
+          - s-h1-13-04
+          - s-h1-13-05
+          - s-h1-13-06
+      - title: Làm gì vào ngày nào?
+        lines:
+          - s-h1-13-07
+          - s-h1-13-08
+          - s-h1-13-09
+          - s-h1-13-10
+    questions:
+      - id: q-h1-13-d01
+        type: choice
+        ask: Hôm nay là ngày nào?
+        tests:
+          words:
+            - 号
+          grammar:
+            - h1-g31
+        prompt:
+          kind: audio
+          ref: s-h1-13-02
+        optionKind: vi
+        options:
+          - 23/11
+          - 25/12
+          - 10/3
+        answer: 0
+      - id: q-h1-13-d02
+        type: choice
+        ask: Sinh nhật gấu trúc đỏ là khi nào?
+        tests:
+          words:
+            - 后天
+            - 生日
+          grammar:
+            - h1-g32
+        prompt:
+          kind: audio
+          ref: s-h1-13-04
+        optionKind: vi
+        options:
+          - ngày kia
+          - hôm kia
+          - hôm nay
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-13-l01
+        type: tone
+        tests:
+          words:
+            - 号
+          tone: true
+        prompt:
+          kind: audio
+          ref: 号
+        syllable: 0
+        answer: 4
+      - id: q-h1-13-l02
+        type: choice
+        tests:
+          words:
+            - 年
+        prompt:
+          kind: audio
+          ref: 年
+        optionKind: hanzi
+        options:
+          - 年
+          - 月
+          - 日
+          - 号
+        answer: 0
+      - id: q-h1-13-l03
+        type: choice
+        tests:
+          words:
+            - 生日
+        prompt:
+          kind: audio
+          ref: 生日
+        optionKind: hanzi
+        options:
+          - 生日
+          - 今天
+          - 前天
+          - 后天
+        answer: 0
+      - id: q-h1-13-s01
+        type: readAloud
+        tests:
+          words:
+            - 今天
+            - 号
+          grammar:
+            - h1-g31
+          tone: true
+        sentence: s-h1-13-01
+      - id: q-h1-13-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 今天
+            - 号
+          grammar:
+            - h1-g31
+        prompt:
+          kind: vi
+          text: Nói hôm nay là ngày mấy tháng mấy.
+        rubric:
+          - Dùng 今天 + tháng + 号
+        answer: s-h1-13-02
+      - id: q-h1-13-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 生日
+          grammar:
+            - h1-g31
+        prompt:
+          kind: vi
+          text: Nói sinh nhật của bạn là ngày nào.
+        rubric:
+          - Dùng 我的生日是 + tháng + 号
+        answer: s-h1-13-06
+  writing:
+    chars:
+      - 月
+      - 日
+      - 号
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-13-x01
+      type: choice
+      tests:
+        words:
+          - 年
+      prompt:
+        kind: hanzi
+        ref: 年
+      optionKind: vi
+      options:
+        - năm
+        - tháng
+        - ngày
+        - tuần
+      answer: 0
+    - id: q-h1-13-x02
+      type: choice
+      tests:
+        words:
+          - 月
+      prompt:
+        kind: vi
+        text: tháng
+      optionKind: hanzi
+      options:
+        - 月
+        - 年
+        - 日
+        - 号
+      answer: 0
+    - id: q-h1-13-x03
+      type: choice
+      tests:
+        words:
+          - 日
+      prompt:
+        kind: hanzi
+        ref: 日
+      optionKind: vi
+      options:
+        - ngày (khi viết)
+        - năm
+        - tháng
+        - giờ
+      answer: 0
+    - id: q-h1-13-x04
+      type: typePinyin
+      tests:
+        words:
+          - 号
+      prompt:
+        kind: hanzi
+        ref: 号
+      answer: hào
+    - id: q-h1-13-x05
+      type: choice
+      tests:
+        words:
+          - 今天
+      prompt:
+        kind: audio
+        ref: 今天
+      optionKind: vi
+      options:
+        - hôm nay
+        - hôm qua
+        - ngày mai
+        - ngày kia
+      answer: 0
+    - id: q-h1-13-x06
+      type: choice
+      tests:
+        words:
+          - 生日
+      prompt:
+        kind: vi
+        text: sinh nhật
+      optionKind: hanzi
+      options:
+        - 生日
+        - 今天
+        - 后天
+        - 前天
+      answer: 0
+    - id: q-h1-13-x07
+      type: choice
+      tests:
+        words:
+          - 前天
+      prompt:
+        kind: hanzi
+        ref: 前天
+      optionKind: vi
+      options:
+        - hôm kia
+        - hôm nay
+        - ngày kia
+        - hôm qua
+      answer: 0
+    - id: q-h1-13-x08
+      type: choice
+      tests:
+        words:
+          - 后天
+      prompt:
+        kind: hanzi
+        ref: 后天
+      optionKind: vi
+      options:
+        - ngày kia
+        - hôm kia
+        - hôm nay
+        - ngày mai
+      answer: 0
+    - id: q-h1-13-x09
+      type: choice
+      tests:
+        words:
+          - 今天
+          - 号
+        grammar:
+          - h1-g31
+      prompt:
+        kind: vi
+        text: Hôm nay là ngày 23 tháng 11.
+      optionKind: hanzi
+      options:
+        - 今天十一月二十三号
+        - 今天二十三号十一月
+        - 今天十一二十三月号
+      answer: 0
+    - id: q-h1-13-x10
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 号
+        grammar:
+          - h1-g31
+      prompt:
+        kind: audio
+        ref: s-h1-13-01
+      optionKind: hanzi
+      options:
+        - 今天十一月二十三号。
+        - 今天是我的生日吗？
+        - 后天是我朋友的生日。
+      answer: 0
+    - id: q-h1-13-x11
+      type: trueFalse
+      tests:
+        words:
+          - 号
+        grammar:
+          - h1-g31
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 今天二十三号十一月。
+      answer: false
+    - id: q-h1-13-x12
+      type: choice
+      tests:
+        words:
+          - 生日
+          - 号
+        grammar:
+          - h1-g31
+      prompt:
+        kind: vi
+        text: Sinh nhật tớ là ngày 10 tháng 3.
+      optionKind: hanzi
+      options:
+        - 我的生日是三月十号
+        - 我的生日是十号三月
+        - 三月我的生日是十号
+      answer: 0
+    - id: q-h1-13-x13
+      type: choice
+      tests:
+        words:
+          - 今天
+        grammar:
+          - h1-g32
+      prompt:
+        kind: vi
+        text: Hôm nay tớ học tiếng Trung.
+      optionKind: hanzi
+      options:
+        - 我今天学习汉语
+        - 我学习汉语今天
+        - 今天学习我汉语
+      answer: 0
+    - id: q-h1-13-x14
+      type: trueFalse
+      tests:
+        words:
+          - 今天
+        grammar:
+          - h1-g32
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我学习汉语今天。
+      answer: false
+    - id: q-h1-13-x15
+      type: choice
+      tests:
+        words:
+          - 后天
+        grammar:
+          - h1-g32
+      prompt:
+        kind: vi
+        text: Ngày kia anh ấy không học tiếng Trung.
+      optionKind: hanzi
+      options:
+        - 他后天不学习汉语
+        - 他不学习汉语后天
+        - 后天他学习不汉语
+      answer: 0
+    - id: q-h1-13-x16
+      type: order
+      tests:
+        words:
+          - 后天
+        grammar:
+          - h1-g32
+      tiles:
+        - 他
+        - 后天
+        - 不
+        - 学习
+        - 汉语
+      answer: s-h1-13-13
+    - id: q-h1-13-x17
+      type: choice
+      tests:
+        words:
+          - 后天
+          - 生日
+      prompt:
+        kind: audio
+        ref: s-h1-13-04
+      optionKind: vi
+      options:
+        - Ngày kia là sinh nhật tớ
+        - Hôm kia là sinh nhật tớ
+        - Hôm nay là sinh nhật tớ
+      answer: 0
+    - id: q-h1-13-x18
+      type: tone
+      tests:
+        words:
+          - 年
+        tone: true
+      prompt:
+        kind: audio
+        ref: 年
+      syllable: 0
+      answer: 2
+    - id: q-h1-13-x19
+      type: choice
+      tests:
+        words:
+          - 前天
+          - 生日
+        grammar:
+          - h1-g32
+      prompt:
+        kind: vi
+        text: Hôm kia là sinh nhật bạn của tôi.
+      optionKind: hanzi
+      options:
+        - 前天是我朋友的生日
+        - 我朋友的生日是前天是
+        - 前天我朋友是生日的
+      answer: 0
+    - id: q-h1-13-x20
+      type: trueFalse
+      tests:
+        words:
+          - 号
+      prompt:
+        kind: hanzi
+        ref: 号
+      statement: 号 nghĩa là “ngày” khi nói.
+      answer: true
+    - id: q-h1-13-x21
+      type: choice
+      tests:
+        words:
+          - 今天
+          - 生日
+      prompt:
+        kind: vi
+        text: Hôm nay là sinh nhật tớ.
+      optionKind: hanzi
+      options:
+        - 今天是我的生日
+        - 今天我的生日是
+        - 是今天我的生日
+      answer: 0
+    - id: q-h1-13-x22
+      type: typePinyin
+      tests:
+        words:
+          - 年
+      prompt:
+        kind: hanzi
+        ref: 年
+      answer: nián

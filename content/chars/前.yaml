@@ -1,0 +1,13 @@
+hanzi: 前
+readings:
+  - pinyin: qián
+    hanviet: tiền
+radical: 刀
+ids: ⿱䒑刖
+strokes: 9
+mnemonic:
+  hinh: '`[tự dựng]` Nhìn 前 như một lưỡi dao (刀) đặt phía trước một khối hình vuông (phần trên) — "đưa dao ra trước mặt để dẫn đường". Chỉ là mẹo hình, KHÔNG phải từ nguyên thật (từ nguyên thật là chân trên thuyền, xem phần Cấu tạo).'
+  am: 'Hán-Việt: **tiền** — như trong "tiền tuyến", "tiền đạo", "tiền sử". Nhớ 前 qua các từ Hán-Việt này.'
+  doiThat: Biển chỉ đường "前方施工" (phía trước đang thi công), nút "上一页/前一页" (trang trước) trong app đọc, menu app gọi món "以前的订单" (đơn trước đây).
+  tuongPhan: ≠ 剪 (jiǎn, cắt — cũng có 刀 nhưng thêm 前 làm biểu âm, dễ lẫn vì 剪 = 前 + 刀 lặp lại bộ 刀).
+  kind: etymology

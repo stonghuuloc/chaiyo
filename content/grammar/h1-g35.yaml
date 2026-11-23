@@ -1,0 +1,18 @@
+id: h1-g35
+level: 1
+std:
+  - 44
+  - 7
+title: "Giờ: 点 · 分 · 半"
+pattern: 数 + 点 + 数 + 分 / 半
+explain: |-
+  三点 = 3 giờ; 三点十分 = 3 giờ 10 phút; 三点半 = 3 giờ rưỡi. Hỏi giờ: 现在几点？
+
+  2 giờ nói 两点, không nói 二点. Quãng thời gian: 半个小时 = nửa tiếng, 一个小时 = một tiếng.
+examples:
+  - s-h1-15-02
+  - s-h1-15-13
+pitfalls:
+  - wrong: 二点
+    right: 两点
+    why: Giờ thứ hai nói 两点.
