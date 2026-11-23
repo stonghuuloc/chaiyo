@@ -73,3 +73,10 @@ export function rollover(state: State, day: string): { state: State; events: Stu
 	const streak = closeDays(state.streak, day, events);
 	return { state: streak === state.streak ? state : { ...state, streak }, events };
 }
+
+export function liveStreak(state: State, now: Date): State['streak'] {
+	const today = localDate(now, state.tz);
+	return state.streak.last === today
+		? state.streak
+		: rollover(state, addDays(today, -1)).state.streak;
+}

@@ -7,7 +7,7 @@ export { localDate } from './dates';
 export { currentLevel } from './level';
 export { roadAnchor, roadRows } from './road';
 export type { Road, RoadStatus } from './road';
-export { MAX_FREEZES, rollover } from './streak';
+export { liveStreak, MAX_FREEZES, rollover } from './streak';
 export { minutes, session } from './session';
 export { bars, myWords, searchWords } from './my-words';
 export type { MyWordRow, WordMeta } from './my-words';

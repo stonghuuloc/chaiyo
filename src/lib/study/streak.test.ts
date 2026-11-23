@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
 	apply,
 	initialState,
+	liveStreak,
 	rollover,
 	type Attempt,
 	type State,
@@ -128,5 +129,32 @@ describe('frozen days', () => {
 
 	it('Given_RunWithoutFreeze_When_Fold_Then_NoFrozenKey', () => {
 		expect('frozen' in bg().streak).toBe(false);
+	});
+});
+
+describe('liveStreak', () => {
+	const noon = (day: string) => new Date(`${day}T05:00:00Z`);
+
+	it('Given_CountedToday_When_Live_Then_Unchanged', () => {
+		const s = bg();
+		expect(liveStreak(s, noon('2026-11-12'))).toBe(s.streak);
+	});
+
+	it('Given_CountedYesterday_When_Live_Then_Unchanged', () => {
+		expect(liveStreak(bg(), noon('2026-11-13'))).toMatchObject({ count: 12, freezes: 1 });
+	});
+
+	it('Given_GapNoFreeze_When_Live_Then_Count0', () => {
+		const s = bg();
+		const none = { ...s, streak: { ...s.streak, freezes: 0 } };
+		expect(liveStreak(none, noon('2026-11-14'))).toMatchObject({ count: 0, last: '2026-11-12' });
+	});
+
+	it('Given_GapOneFreeze_When_Live_Then_KeptAndFreezeSpent', () => {
+		expect(liveStreak(bg(), noon('2026-11-14'))).toMatchObject({
+			count: 12,
+			freezes: 0,
+			through: '2026-11-13'
+		});
 	});
 });
