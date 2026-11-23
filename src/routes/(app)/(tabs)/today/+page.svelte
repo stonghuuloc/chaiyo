@@ -4,11 +4,15 @@
 	import type { State } from '#lib/study/index.js';
 	import type { PageProps } from './$types';
 	import NextCard from './NextCard.svelte';
+	import StreakChip from './StreakChip.svelte';
 	import { todayState } from './today';
+	import WeekStrip from './WeekStrip.svelte';
+	import { weekView } from './week';
 
 	let { data }: PageProps = $props();
 
 	let study = $state<State | null>(null);
+	const now = $derived(study ? new Date() : null);
 
 	$effect(() => {
 		const session = data.session;
@@ -30,7 +34,13 @@
 	});
 </script>
 
-<h1>{m.tab_today()}</h1>
-{#if study}
-	<NextCard view={todayState(study, new Date())} />
+<div class="flex items-center justify-between">
+	<h1>{m.tab_today()}</h1>
+	{#if study && now}
+		<StreakChip view={weekView(study, now)} />
+	{/if}
+</div>
+{#if study && now}
+	<NextCard view={todayState(study, now)} />
+	<WeekStrip view={weekView(study, now)} />
 {/if}

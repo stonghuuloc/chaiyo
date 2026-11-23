@@ -2,7 +2,8 @@ import { flushSync, mount, tick, unmount } from 'svelte';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
 import { initialState, type State } from '#lib/study/index.js';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { countDays } from '#lib/study/fixtures/streak.js';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
 
 const past = '2026-11-01T00:00:00.000Z';
@@ -51,7 +52,14 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 		cta: () => target!.querySelector('[data-part=next-cta]')?.textContent?.trim(),
 		scene: () => target!.querySelector('[data-part=scene]')?.getAttribute('data-scene'),
 		scenes: () => target!.querySelectorAll('[data-part=scene]').length,
-		ctas: () => target!.querySelectorAll('[data-part=next-cta]').length
+		ctas: () => target!.querySelectorAll('[data-part=next-cta]').length,
+		chip: () => target!.querySelector('[data-part=streak-chip]')?.getAttribute('aria-label'),
+		marks: () =>
+			[...target!.querySelectorAll('[data-part=week-strip] > li')].map((c) =>
+				c.getAttribute('data-mark')
+			),
+		line: () => target!.querySelector('[data-part=streak-line]')?.textContent?.trim(),
+		strips: () => target!.querySelectorAll('[data-part=week-strip]').length
 	};
 };
 
@@ -117,5 +125,76 @@ describe('/today', () => {
 		// Assert
 		expect(page.cta()).toBe('Tiếp tục Bài 1');
 		expect(page.scene()).toBe('lesson-next');
+	});
+});
+
+describe('/today streak', () => {
+	const ac4 = (): State => {
+		const state = build(0);
+		state.streak = {
+			count: 11,
+			last: '2026-11-17',
+			through: '2026-11-17',
+			freezes: 2,
+			best: 11
+		};
+		return countDays(state, '2026-11-19', '2026-11-19');
+	};
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-20T03:00:00Z'));
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
+	it('Given_LedgerAc4State_When_Mount_Then_ChipStripAndAc4Line', async () => {
+		// Arrange
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.h1()).toBe(1);
+		expect(page.chip()).toBe('Chuỗi 12 ngày, còn 1 lượt đóng băng');
+		expect(page.marks()).toEqual(['tick', 'tick', 'freeze', 'tick', 'today', 'later', 'later']);
+		expect(page.line()).toBe(
+			'T4 bạn nghỉ nên app dùng 1 lượt đóng băng. Học xong một phần bài hôm nay là chuỗi lên 13.'
+		);
+	});
+
+	it('Given_NoSession_When_Mount_Then_NoChipNoStrip', async () => {
+		// Arrange
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage({ session: null });
+
+		// Assert
+		expect(page.h1()).toBe(1);
+		expect(page.chip()).toBeUndefined();
+		expect(page.strips()).toBe(0);
+		expect(page.line()).toBeUndefined();
+	});
+
+	it('Given_Ac4State_When_LedgerEmitsCountedToday_Then_Ac5Line', async () => {
+		// Arrange
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		publish(countDays(ac4(), '2026-11-20', '2026-11-20'));
+		await settle();
+
+		// Assert
+		expect(page.chip()).toBe('Chuỗi 13 ngày, còn 1 lượt đóng băng');
+		expect(page.marks()[4]).toBe('tick');
+		expect(page.line()).toBe('Hôm nay đã tính rồi, chuỗi 13 ngày. Mai gặp lại nha!');
 	});
 });
