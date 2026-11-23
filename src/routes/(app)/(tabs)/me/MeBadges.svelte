@@ -35,7 +35,7 @@
 	</p>
 	<ul class="-mx-5 mt-3 flex [scrollbar-width:none] gap-2 overflow-x-auto px-5">
 		{#each strip as b (b.id)}
-			<li class="flex-none">
+			<li class="flex flex-none">
 				<a
 					href={resolve('/(app)/me/badges')}
 					data-id={b.id}
@@ -50,7 +50,7 @@
 						class="mx-auto size-21 rounded-full {b.locked ? 'opacity-45 grayscale' : ''}"
 					/>
 					<b class="mt-2 block text-[13.5px] leading-[1.25] font-semibold">{b.title}</b>
-					<small class="mt-0.5 block text-[12px] text-pencil">
+					<small class="mt-0.5 block text-[12px] leading-[normal] text-pencil">
 						{#if !b.locked}
 							{m.chy51s1_earned()}
 						{:else if b.need !== null}

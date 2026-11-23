@@ -83,7 +83,7 @@
 		class="mt-5 min-h-12 w-full text-[15px] font-semibold text-pencil"
 		onclick={logout}>{m.chy50s3_logout()}</button
 	>
-	<p class="text-center text-[12px] text-faint-pencil">{m.chy50s3_ver()}</p>
+	<p class="text-center text-[12px] leading-[normal] text-faint-pencil">{m.chy50s3_ver()}</p>
 </section>
 
 {#snippet body(r: Row)}
@@ -91,8 +91,8 @@
 		<svg class="size-[22px] fill-current" aria-hidden="true"><use href="#i-{r.icon}" /></svg>
 	</span>
 	<span class="min-w-0">
-		<b class="block font-semibold">{r.title}</b>
-		<small class="mt-px block truncate text-[13px] text-pencil">{r.sub}</small>
+		<b class="block leading-[normal] font-semibold">{r.title}</b>
+		<small class="mt-px block truncate text-[13px] leading-[normal] text-pencil">{r.sub}</small>
 	</span>
 {/snippet}
 
