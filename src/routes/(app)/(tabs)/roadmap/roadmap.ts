@@ -111,9 +111,13 @@ export function roadmapLevel(state: State, level: number): LevelView {
 
 	const now = holder?.rows.find((r) => r.status === 'now');
 	const outlined = groups.filter((g) => g.kind === 'topic');
-	const lastId = outlineIds(level).at(-1);
+	const ids = outlineIds(level);
+	const live = LESSONS.filter((l) => l.level === level);
+	const lastLive = ids.findLastIndex((id) => live.some((l) => l.id === id)) + 1;
 	const status: ExamRow['status'] =
-		level <= top && lastId && state.lessons[lastId]?.passed ? 'open' : 'locked';
+		level <= top && live.length > 0 && live.every((l) => state.lessons[l.id]?.passed)
+			? 'open'
+			: 'locked';
 	const parts = level >= SPEAKING_FROM ? (['viet', 'noi'] as const) : [undefined];
 	return {
 		level,
@@ -128,7 +132,12 @@ export function roadmapLevel(state: State, level: number): LevelView {
 		groups,
 		exams: {
 			note: level >= SPEAKING_FROM,
-			rows: parts.map((part) => ({ ...(part ? { part } : {}), level, last: n, status }))
+			rows: parts.map((part) => ({
+				...(part ? { part } : {}),
+				level,
+				last: lastLive || n,
+				status
+			}))
 		}
 	};
 }

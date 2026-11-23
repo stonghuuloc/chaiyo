@@ -188,7 +188,7 @@ describe('roadmapLevel', () => {
 		const view = roadmapLevel(reference(), 1);
 
 		// Assert
-		expect(view.exams).toEqual({ note: false, rows: [{ level: 1, last: 40, status: 'locked' }] });
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 1, last: 5, status: 'locked' }] });
 	});
 
 	it('Given_Level3_When_View_Then_VietAndNoiLast26WithNote', () => {
@@ -199,8 +199,8 @@ describe('roadmapLevel', () => {
 		expect(view.exams).toEqual({
 			note: true,
 			rows: [
-				{ part: 'viet', level: 3, last: 26, status: 'locked' },
-				{ part: 'noi', level: 3, last: 26, status: 'locked' }
+				{ part: 'viet', level: 3, last: 1, status: 'locked' },
+				{ part: 'noi', level: 3, last: 1, status: 'locked' }
 			]
 		});
 	});
@@ -210,7 +210,7 @@ describe('roadmapLevel', () => {
 		const view = roadmapLevel(reference(), 2);
 
 		// Assert
-		expect(view.exams).toEqual({ note: false, rows: [{ level: 2, last: 27, status: 'locked' }] });
+		expect(view.exams).toEqual({ note: false, rows: [{ level: 2, last: 1, status: 'locked' }] });
 	});
 
 	it('Given_AllHsk1OutlinePassed_When_Level1_Then_ExamOpen', () => {
@@ -227,7 +227,7 @@ describe('roadmapLevel', () => {
 		const view = roadmapLevel(state, 1);
 
 		// Assert
-		expect(view.exams?.rows).toEqual([{ level: 1, last: 40, status: 'open' }]);
+		expect(view.exams?.rows).toEqual([{ level: 1, last: 5, status: 'open' }]);
 	});
 
 	it('Given_Hsk1LastPassedButLevelAbove_When_Level2_Then_ExamLocked', () => {
@@ -258,19 +258,19 @@ describe('roadmapLevel', () => {
 		expect(copies).toEqual([
 			'Qua Bài 1 để mở Bài 2',
 			'Bài 6 đang được soạn.',
-			'Đỗ thi thử HSK 1 để mở HSK 2'
+			'Học xong HSK 1 để mở HSK 2'
 		]);
 	});
 
 	it('Given_ExamRows_When_ExamToast_Then_LockedAndSoonCopies', () => {
 		// Arrange
-		const locked = { level: 1, last: 40, status: 'locked' } as const;
-		const open = { part: 'noi', level: 3, last: 26, status: 'open' } as const;
+		const locked = { level: 1, last: 5, status: 'locked' } as const;
+		const open = { part: 'noi', level: 3, last: 1, status: 'open' } as const;
 
 		// Act
 		const copies = [examToast(locked), examToast(open)];
 
 		// Assert
-		expect(copies).toEqual(['Qua Bài 40 để mở thi thử HSK 1', 'Thi thử HSK 3 sắp ra mắt.']);
+		expect(copies).toEqual(['Qua Bài 5 để mở thi thử HSK 1', 'Thi thử HSK 3 sắp ra mắt.']);
 	});
 });

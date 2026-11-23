@@ -265,10 +265,10 @@ describe('/roadmap', () => {
 			'Thi thử HSK 1'
 		]);
 		expect(text(rows[0].querySelector('[data-part=exam-note]'))).toBe(
-			'nghe · đọc · viết · mở khi qua Bài 40'
+			'nghe · đọc · viết · mở khi qua Bài 5'
 		);
 		expect(exams.querySelector('[data-part=exam-end]')).toBeNull();
-		expect(page.toast()).toBe('Qua Bài 40 để mở thi thử HSK 1');
+		expect(page.toast()).toBe('Qua Bài 5 để mở thi thử HSK 1');
 	});
 
 	it('Given_NextStatePublished_When_Render_Then_TextsUpdate', async () => {
@@ -321,7 +321,7 @@ describe('/roadmap', () => {
 		// Assert
 		expect(page.sum()).toBe('HSK 2 · 0/27 bài · 500 từ mới');
 		expect(text(page.one('[data-part=lock-note]'))).toBe(
-			'Mở khi đỗ thi thử HSK 1. Xem trước các bài bên dưới.'
+			'Mở khi học xong HSK 1. Xem trước các bài bên dưới.'
 		);
 		expect(page.one('[data-part=now-card]')).toBeNull();
 		expect(page.open()).toEqual(['Chủ đề 1 · Thói quen hằng ngày']);
@@ -332,7 +332,7 @@ describe('/roadmap', () => {
 			'false',
 			'false'
 		]);
-		expect(page.rowNote('h2-01')).toBe('Mở khi đỗ thi thử HSK 1');
+		expect(page.rowNote('h2-01')).toBe('Mở khi học xong HSK 1');
 		expect(scroll).not.toHaveBeenCalled();
 		expect(window.scrollY).toBe(y);
 		expect(location.href).toBe(href);
@@ -351,7 +351,7 @@ describe('/roadmap', () => {
 		flushSync();
 
 		// Assert
-		expect(page.toast()).toBe('Đỗ thi thử HSK 1 để mở HSK 2');
+		expect(page.toast()).toBe('Học xong HSK 1 để mở HSK 2');
 	});
 
 	it('Given_Hsk2Shown_When_StatePublished_Then_StaysHsk2', async () => {
@@ -390,8 +390,8 @@ describe('/roadmap', () => {
 			'Thi thử HSK 3 · Nói'
 		]);
 		expect(rows.map((r) => text(r.querySelector('[data-part=exam-note]')))).toEqual([
-			'nghe · đọc · viết · mở khi qua Bài 26',
-			'nhắc lại · tả tranh · trả lời câu hỏi · mở khi qua Bài 26'
+			'nghe · đọc · viết · mở khi qua Bài 1',
+			'nhắc lại · tả tranh · trả lời câu hỏi · mở khi qua Bài 1'
 		]);
 		expect(rows.map((r) => r.querySelector('use')?.getAttribute('href'))).toEqual([
 			'#i-regular-diploma',
