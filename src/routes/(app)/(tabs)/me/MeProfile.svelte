@@ -28,7 +28,7 @@
 	{/if}
 	<div>
 		<h1 class="font-display text-[22px] leading-[1.15] font-semibold">{name}</h1>
-		<p class="mt-0.5 text-[14px] text-pencil">{m.chy50s2_joined({ month, year })}</p>
+		<p class="mt-0.5 text-[14px] leading-[18px] text-pencil">{m.chy50s2_joined({ month, year })}</p>
 	</div>
 	<a
 		href={resolve('/(app)/settings')}

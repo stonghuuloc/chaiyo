@@ -32,13 +32,15 @@
 			<b class="font-display text-[40px] leading-none font-semibold">{lv.level}</b>
 		</span>
 		<div>
-			<p class="text-[12.5px] font-bold tracking-[.06em] text-lantern-red-text uppercase">
+			<p
+				class="text-[12.5px] leading-[18px] font-bold tracking-[.06em] text-lantern-red-text uppercase"
+			>
 				{m.chy50s2_kicker()}
 			</p>
 			<h2 class="mt-0.5 font-display text-[23px] leading-[1.2] font-semibold">
 				{m.chy50s2_title({ level: lv.level, pct: lv.pct })}
 			</h2>
-			<p data-part="me-line" class="mt-0.5 text-[14px] text-pencil">{line}</p>
+			<p data-part="me-line" class="mt-0.5 text-[14px] leading-[18px] text-pencil">{line}</p>
 		</div>
 	</div>
 	<div data-part="me-prog" class="mt-4 grid gap-3">
@@ -59,7 +61,7 @@
 	</div>
 	<p
 		data-part="me-goal"
-		class="mt-4 flex items-center gap-2 rounded-[14px] bg-notebook-paper p-3 text-[14px] text-graphite"
+		class="mt-4 flex items-center gap-2 rounded-[14px] bg-notebook-paper p-3 text-[14px] leading-[18px] text-graphite"
 	>
 		<svg class="size-5 flex-none fill-current" aria-hidden="true"
 			><use href="#i-fill-diploma" /></svg
