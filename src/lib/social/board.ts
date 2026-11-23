@@ -57,5 +57,5 @@ export function rankBoard(rows: BoardRow[], mode: BoardMode): RankedRow[] {
 				a.name.localeCompare(b.name, 'vi') ||
 				a.handle.localeCompare(b.handle)
 		)
-		.map((row, i) => ({ row, rank: i + 1, medal: i < 3, value: value(row) }));
+		.map((row, i) => ({ row, rank: i + 1, medal: i < 3 && value(row) > 0, value: value(row) }));
 }

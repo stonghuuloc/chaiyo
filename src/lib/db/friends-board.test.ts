@@ -143,8 +143,8 @@ let seq = 0;
 const attempt = async (word: string, at: string, received = at, question = 'fb-q0') => {
 	await asOwner(db);
 	await db.query(
-		`insert into attempts (learner_id, id, question_id, content_sha, skill, word, ms, at, received_at)
-		values ($1, $2, $3, 's', 'the', $4, 1, ${at}, ${received})`,
+		`insert into attempts (learner_id, id, question_id, content_sha, skill, word, correct, ms, at, received_at)
+		values ($1, $2, $3, 's', 'the', $4, true, 1, ${at}, ${received})`,
 		[LINH, `fb-${seq++}`, question, word]
 	);
 };
@@ -206,6 +206,30 @@ describe('publish_stats', () => {
 		expect(
 			await code(db.query(`select public.publish_stats(null, ${TODAY}, 0, 0, 1, 0, '{}'::text[])`))
 		).toBe('22023');
+	});
+
+	it('Given_NoEvidence_When_PublishLongBadges_Then_Stripped', async () => {
+		await publish([0, '0', 0, 0, 1, 0, ['streak100', 'words300', 'first']]);
+		expect(await stored()).toMatchObject({ badges: [] });
+	});
+
+	it('Given_DeviceClockFiveSecondsFast_When_Publish_Then_WordCounts', async () => {
+		await content();
+		await attempt('我', "now() + interval '5 seconds'", 'now()');
+		await publish([0, '0', 0, 1, 1, 0, []]);
+		expect(await stored()).toMatchObject({ words_known: 1 });
+	});
+
+	it('Given_WrongAnswerOnly_When_Publish_Then_NoWordEvidence', async () => {
+		await content();
+		await asOwner(db);
+		await db.query(
+			`insert into attempts (learner_id, id, question_id, content_sha, skill, word, correct, ms, at, received_at)
+			values ($1, 'wrong1', 'fb-q0', 's', 'the', '我', false, 1, now(), now())`,
+			[LINH]
+		);
+		await publish([0, '0', 0, 5, 1, 0, []]);
+		expect(await stored()).toMatchObject({ words_known: 0 });
 	});
 
 	it('Given_EveryBadgeId_When_Publish_Then_Accepted', async () => {
