@@ -18,3 +18,11 @@ regexes = ['''[0-9a-f]{32,}''']
 [[allowlists]]
 description = "invented VAPID public key used as a test fixture"
 paths = ['''src/lib/notify/subscribe\.test\.ts''']
+
+[[allowlists]]
+description = "invented Telegram link tokens used as test fixtures"
+paths = [
+  '''src/lib/notify/telegram-bot\.test\.ts''',
+  '''src/lib/notify/telegram-store\.test\.ts''',
+  '''src/routes/\(app\)/settings/ReminderChannels\.svelte\.test\.ts''',
+]
