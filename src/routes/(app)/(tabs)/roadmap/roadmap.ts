@@ -3,7 +3,11 @@ import { currentLevel, roadRows, type Road, type State } from '#lib/study/index.
 
 type Item = { id: string; n: number; title: string; hanzi: string };
 
-export type LevelRow = Road<Item> & { best?: number; part?: number };
+export type LevelRow = Road<Item> & {
+	best?: number;
+	part?: number;
+	lock?: 'after' | 'level' | 'draft';
+};
 export type LevelGroup = {
 	kind: 'primer' | 'topic';
 	i: number;
@@ -13,7 +17,7 @@ export type LevelGroup = {
 	total: number;
 	open: boolean;
 };
-export type LevelCell = { level: number; locked: boolean; current: boolean };
+export type LevelCell = { level: number; locked: boolean; current: boolean; progress: number };
 export type LevelView = {
 	level: number;
 	empty: boolean;
@@ -25,12 +29,21 @@ export type LevelView = {
 
 const LEVEL_COUNT = 5;
 
+const outlineIds = (level: number) =>
+	(LEVELS.find((o) => o.level === level)?.topics ?? []).flatMap((t) => t.lessons.map((l) => l.id));
+
+const progressOf = (state: State, level: number) => {
+	const ids = outlineIds(level);
+	return ids.length === 0 ? 0 : ids.filter((id) => state.lessons[id]?.passed).length / ids.length;
+};
+
 export function roadmapLevel(state: State, level: number): LevelView {
 	const top = currentLevel(state);
 	const strip = Array.from({ length: LEVEL_COUNT }, (_, k) => ({
 		level: k + 1,
 		locked: k + 1 > top,
-		current: k + 1 === level
+		current: k + 1 === level,
+		progress: progressOf(state, k + 1)
 	}));
 	const outline = LEVELS.find((o) => o.level === level);
 	if (!outline) return { level, empty: true, strip, groups: [] };
@@ -50,9 +63,18 @@ export function roadmapLevel(state: State, level: number): LevelView {
 		const sections = LESSONS.find((l) => l.id === r.id)?.sections.length ?? 1;
 		const { after, ...rest } = r;
 		const published = LESSONS.some((l) => l.id === r.id);
+		const lock =
+			r.status !== 'locked'
+				? undefined
+				: level > top
+					? 'level'
+					: published && after !== undefined
+						? 'after'
+						: 'draft';
 		return {
 			...rest,
 			...(published && after !== undefined ? { after } : {}),
+			...(lock ? { lock } : {}),
 			best: p?.passed ? p.best : undefined,
 			part: r.status === 'now' ? Math.min((p?.done.length ?? 0) + 1, sections) : undefined
 		};
