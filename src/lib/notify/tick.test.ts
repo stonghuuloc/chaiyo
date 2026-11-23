@@ -32,7 +32,7 @@ const depsFor = (
 describe('tick', () => {
 	it('Given_Streak12With1Freeze_When_MissedDay_Then_FreezeSpentAndEqualsPhone', async () => {
 		// Arrange
-		const a = { id: 'a', tz: HCM };
+		const a = { id: 'a', tz: HCM, channels: [] };
 		const inputs = studied('2026-11-01', '2026-11-12', HCM);
 		const recorded: Rolled[] = [];
 		const ledger = await openLedger({
@@ -55,7 +55,7 @@ describe('tick', () => {
 
 	it('Given_StudiedYesterday_When_Tick_Then_NoEventsAndStreakKept', async () => {
 		// Arrange
-		const a = { id: 'a', tz: HCM };
+		const a = { id: 'a', tz: HCM, channels: [] };
 		const inputs = studied('2026-11-01', '2026-11-13', HCM);
 		const recorded: Rolled[] = [];
 
@@ -70,8 +70,8 @@ describe('tick', () => {
 	it('Given_TwoTimezones_When_Tick_Then_EachRollsItsOwnYesterday', async () => {
 		// Arrange
 		const learners = [
-			{ id: 'hcm', tz: HCM },
-			{ id: 'ny', tz: 'America/New_York' }
+			{ id: 'hcm', tz: HCM, channels: [] },
+			{ id: 'ny', tz: 'America/New_York', channels: [] }
 		];
 		const recorded: Rolled[] = [];
 
@@ -88,8 +88,8 @@ describe('tick', () => {
 	it('Given_TwoLearners_When_Tick_Then_RecordsAllBeforeOneRemind', async () => {
 		// Arrange
 		const learners = [
-			{ id: 'a', tz: HCM },
-			{ id: 'b', tz: HCM }
+			{ id: 'a', tz: HCM, channels: [] },
+			{ id: 'b', tz: HCM, channels: [] }
 		];
 		const log: string[] = [];
 
@@ -102,7 +102,7 @@ describe('tick', () => {
 
 	it('Given_MissedYesterdayNoFreeze_When_Tick_Then_StreakResetRecordedBeforeRemind', async () => {
 		// Arrange
-		const a = { id: 'a', tz: HCM };
+		const a = { id: 'a', tz: HCM, channels: [] };
 		const inputs = studied('2026-11-17', '2026-11-21', HCM);
 		const log: string[] = [];
 		const recorded: Rolled[] = [];
@@ -126,8 +126,8 @@ describe('tick', () => {
 	it('Given_InputsThrowForB_When_Tick_Then_BFailedAndRemindGetsOnlyA', async () => {
 		// Arrange
 		const learners = [
-			{ id: 'a', tz: HCM },
-			{ id: 'b', tz: HCM }
+			{ id: 'a', tz: HCM, channels: [] },
+			{ id: 'b', tz: HCM, channels: [] }
 		];
 		const log: string[] = [];
 

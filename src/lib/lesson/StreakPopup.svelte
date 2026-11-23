@@ -4,6 +4,8 @@
 	import type { StudyEvent } from '#lib/study/index.js';
 	import Button from '#lib/ui/Button.svelte';
 	import Dialog from '#lib/ui/Dialog.svelte';
+	import Particles from '#lib/ui/Particles.svelte';
+	import { reducedMotion } from '#lib/ui/particles.js';
 	import { dayCountedView } from './streak-popup';
 
 	type Props = { events: StudyEvent[] };
@@ -11,13 +13,15 @@
 
 	const view = $derived(dayCountedView(events));
 	let open = $state(untrack(() => dayCountedView(events) !== null));
+	const motion = !reducedMotion();
 </script>
 
 <Dialog open={open && view !== null} title={view?.headline ?? ''} onclose={() => (open = false)}>
 	{#if view}
 		<svg
 			data-part="streak-flame"
-			class="mx-auto mt-3 size-[68px] fill-current text-primary"
+			data-motion={motion ? 'flicker' : undefined}
+			class="mx-auto mt-3 size-[68px] fill-current text-primary {motion ? 'flicker' : ''}"
 			aria-hidden="true"><use href="#i-fill-fire" /></svg
 		>
 		<p data-part="streak-body" class="mt-3 text-body text-muted">{view.body}</p>
@@ -58,3 +62,28 @@
 		<Button onclick={() => (open = false)}>{m.done_streak_ok()}</Button>
 	</div>
 </Dialog>
+
+{#if open && view && motion}
+	<Particles kind="ember" />
+{/if}
+
+<style>
+	@media (prefers-reduced-motion: no-preference) {
+		.flicker {
+			transform-origin: 50% 90%;
+			animation: flick 1.4s infinite;
+		}
+	}
+	@keyframes flick {
+		0%,
+		100% {
+			transform: scale(1) rotate(0);
+		}
+		30% {
+			transform: scale(1.05, 0.97) rotate(-2deg);
+		}
+		60% {
+			transform: scale(0.97, 1.04) rotate(2deg);
+		}
+	}
+</style>

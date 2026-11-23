@@ -15,7 +15,7 @@ const clientWith = (fetch: typeof globalThis.fetch) =>
 		global: { fetch }
 	});
 const rolled = {
-	learner: { id: 'learner-a', tz: 'Asia/Ho_Chi_Minh' },
+	learner: { id: 'learner-a', tz: 'Asia/Ho_Chi_Minh', channels: [] },
 	day: '2026-11-22',
 	state: { streak: { count: 0, freezes: 0 } },
 	events: [{ type: 'StreakReset', day: '2026-11-22' }]
@@ -30,7 +30,13 @@ describe('supabaseDeps', () => {
 			urls.push(url.search);
 			const n = Number(url.searchParams.get('offset')) === 0 ? 1000 : 1;
 			return json(
-				Array.from({ length: n }, (_, i) => ({ learner_id: `l-${i}`, tz: 'Asia/Ho_Chi_Minh' })),
+				Array.from({ length: n }, (_, i) => ({
+					learner_id: `l-${i}`,
+					tz: 'Asia/Ho_Chi_Minh',
+					remind_push: false,
+					remind_email: true,
+					remind_telegram: false
+				})),
 				200
 			);
 		});
@@ -44,6 +50,52 @@ describe('supabaseDeps', () => {
 		expect(urls).toHaveLength(2);
 		expect(urls[1]).toContain('offset=1000&limit=1000');
 		expect(urls[0]).toContain('order=learner_id');
+	});
+
+	it('Given_FlagRows_When_Learners_Then_ChannelsFromTrueFlags', async () => {
+		// Arrange
+		const row = (id: string, push: boolean, email: boolean, telegram: boolean) => ({
+			learner_id: id,
+			tz: 'Asia/Ho_Chi_Minh',
+			remind_push: push,
+			remind_email: email,
+			remind_telegram: telegram
+		});
+		const fetch = vi.fn(async () =>
+			json(
+				[row('a', false, true, true), row('b', false, false, false), row('c', true, true, true)],
+				200
+			)
+		);
+		const deps = supabaseDeps(clientWith(fetch as typeof globalThis.fetch), CURRICULUM, noRemind);
+
+		// Act
+		const learners = await deps.learners();
+
+		// Assert
+		expect(learners.map((l) => l.channels)).toEqual([
+			['email', 'telegram'],
+			[],
+			['push', 'email', 'telegram']
+		]);
+	});
+
+	it('Given_Learners_When_Read_Then_SelectNamesFlagColumns', async () => {
+		// Arrange
+		const urls: URL[] = [];
+		const fetch = vi.fn(async (input: RequestInfo | URL) => {
+			urls.push(new URL(String(input)));
+			return json([], 200);
+		});
+		const deps = supabaseDeps(clientWith(fetch as typeof globalThis.fetch), CURRICULUM, noRemind);
+
+		// Act
+		await deps.learners();
+
+		// Assert
+		expect(urls[0].searchParams.get('select')?.replaceAll(' ', '')).toBe(
+			'learner_id,tz,remind_push,remind_email,remind_telegram'
+		);
 	});
 
 	it('Given_Rolled_When_Record_Then_UpsertIgnoresDuplicates', async () => {

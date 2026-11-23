@@ -2,7 +2,8 @@ import { flushSync, mount, tick, unmount } from 'svelte';
 import { CURRICULUM } from '#lib/curriculum/index.js';
 import type { Ledger } from '#lib/ledger/index.js';
 import { initialState, type State } from '#lib/study/index.js';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { countDays } from '#lib/study/fixtures/streak.js';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
 
 const past = '2026-11-01T00:00:00.000Z';
@@ -51,7 +52,15 @@ const mountPage = async (data: { session: typeof session | null } = { session })
 		cta: () => target!.querySelector('[data-part=next-cta]')?.textContent?.trim(),
 		scene: () => target!.querySelector('[data-part=scene]')?.getAttribute('data-scene'),
 		scenes: () => target!.querySelectorAll('[data-part=scene]').length,
-		ctas: () => target!.querySelectorAll('[data-part=next-cta]').length
+		ctas: () => target!.querySelectorAll('[data-part=next-cta]').length,
+		chip: () => target!.querySelector('[data-part=streak-chip]')?.getAttribute('aria-label'),
+		marks: () =>
+			[...target!.querySelectorAll('[data-part=week-strip] > li')].map((c) =>
+				c.getAttribute('data-mark')
+			),
+		line: () => target!.querySelector('[data-part=streak-line]')?.textContent?.trim(),
+		strips: () => target!.querySelectorAll('[data-part=week-strip]').length,
+		dialog: () => document.querySelector('[role=dialog]')
 	};
 };
 
@@ -117,5 +126,160 @@ describe('/today', () => {
 		// Assert
 		expect(page.cta()).toBe('Tiếp tục Bài 1');
 		expect(page.scene()).toBe('lesson-next');
+	});
+});
+
+describe('/today streak', () => {
+	const ac4 = (): State => {
+		const state = build(0);
+		state.streak = {
+			count: 11,
+			last: '2026-11-17',
+			through: '2026-11-17',
+			freezes: 2,
+			best: 11
+		};
+		return countDays(state, '2026-11-19', '2026-11-19');
+	};
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-20T03:00:00Z'));
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
+	it('Given_LedgerAc4State_When_Mount_Then_ChipStripAndAc4Line', async () => {
+		// Arrange
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.h1()).toBe(1);
+		expect(page.chip()).toBe('Chuỗi 12 ngày, còn 1 lượt đóng băng');
+		expect(page.marks()).toEqual(['tick', 'tick', 'freeze', 'tick', 'today', 'later', 'later']);
+		expect(page.line()).toBe(
+			'T4 bạn nghỉ nên app dùng 1 lượt đóng băng. Học xong một phần bài hôm nay là chuỗi lên 13.'
+		);
+	});
+
+	it('Given_NoSession_When_Mount_Then_NoChipNoStrip', async () => {
+		// Arrange
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage({ session: null });
+
+		// Assert
+		expect(page.h1()).toBe(1);
+		expect(page.chip()).toBeUndefined();
+		expect(page.strips()).toBe(0);
+		expect(page.line()).toBeUndefined();
+	});
+
+	it('Given_Ac4State_When_LedgerEmitsCountedToday_Then_Ac5Line', async () => {
+		// Arrange
+		current = ac4();
+		hoisted.load.mockResolvedValue(ledger);
+		const page = await mountPage();
+
+		// Act
+		publish(countDays(ac4(), '2026-11-20', '2026-11-20'));
+		await settle();
+
+		// Assert
+		expect(page.chip()).toBe('Chuỗi 13 ngày, còn 1 lượt đóng băng');
+		expect(page.marks()[4]).toBe('tick');
+		expect(page.line()).toBe('Hôm nay đã tính rồi, chuỗi 13 ngày. Mai gặp lại nha!');
+	});
+});
+
+describe('/today freeze card', () => {
+	const frozen = (): State => ({
+		...build(0),
+		streak: { count: 12, last: '2026-11-10', through: '2026-11-10', freezes: 2, best: 12 }
+	});
+
+	beforeEach(() => {
+		vi.useFakeTimers({ toFake: ['Date'] });
+		vi.setSystemTime(new Date('2026-11-12T02:00:00Z'));
+		current = frozen();
+		hoisted.load.mockResolvedValue(ledger);
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+		localStorage.clear();
+		document.body.querySelectorAll('[role=dialog]').forEach((d) => d.remove());
+	});
+
+	it('Given_FreezeSpentYesterday_When_Mount_Then_FreezeCardAndSeenStored', async () => {
+		// Arrange / Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.dialog()!.querySelector('h2')!.textContent).toBe('Chuỗi vẫn còn nguyên!');
+		expect(localStorage.getItem('chaiyo.freeze-seen.u1')).toBe('2026-11-11');
+	});
+
+	it('Given_SeenToday_When_Remount_Then_NoFreezeCard', async () => {
+		// Arrange
+		await mountPage();
+		unmount(app as never);
+		target?.remove();
+		target = app = undefined;
+		await settle();
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.dialog()).toBeNull();
+		expect(localStorage.getItem('chaiyo.freeze-seen.u1')).toBe('2026-11-11');
+	});
+
+	it('Given_ClosedCard_When_LedgerPublishes_Then_NoReopen', async () => {
+		// Arrange
+		const page = await mountPage();
+		page.dialog()!.querySelector('button')!.click();
+		await expect.poll(() => page.dialog()).toBeNull();
+
+		// Act
+		publish(frozen());
+		await settle();
+
+		// Assert
+		expect(page.dialog()).toBeNull();
+	});
+
+	it('Given_SyncPublishesFreezeAfterMount_When_Publish_Then_FreezeCard', async () => {
+		// Arrange
+		current = build(0);
+		const page = await mountPage();
+		expect(page.dialog()).toBeNull();
+
+		// Act
+		publish(frozen());
+		await settle();
+
+		// Assert
+		expect(page.dialog()).not.toBeNull();
+	});
+
+	it('Given_OtherLearnerSeen_When_Mount_Then_FreezeCard', async () => {
+		// Arrange
+		localStorage.setItem('chaiyo.freeze-seen.u2', '2026-11-11');
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.dialog()).not.toBeNull();
 	});
 });

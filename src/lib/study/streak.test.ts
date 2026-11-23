@@ -93,3 +93,40 @@ describe('streak counting', () => {
 		expect(days(utc.events)).toEqual([{ day: '2026-10-23', streak: 1 }]);
 	});
 });
+
+describe('frozen days', () => {
+	const start = () => initialState({ curriculum: CURRICULUM });
+	const run17 = () => countDays(start(), '2026-11-01', '2026-11-17');
+
+	it('Given_FreezeSpentOn18Nov_When_CountDay19Nov_Then_FrozenHas18Nov', () => {
+		const s = countDays(run17(), '2026-11-19', '2026-11-19');
+		expect(s.streak.frozen).toEqual(['2026-11-18']);
+	});
+
+	it('Given_FreezeSpentByRollover_When_Rollover_Then_FrozenHasDay', () => {
+		const r = rollover(run17(), '2026-11-18');
+		expect(r.state.streak.frozen).toEqual(['2026-11-18']);
+	});
+
+	it('Given_FreezeThenReset_When_Rollover_Then_FrozenCleared', () => {
+		const r = rollover(run17(), '2026-11-20');
+		expect(r.state.streak.count).toBe(0);
+		expect('frozen' in r.state.streak).toBe(false);
+	});
+
+	it('Given_FreezeOn1NovThen16Nov_When_Spent_Then_Only16NovKept', () => {
+		const hand: State = {
+			...start(),
+			streak: { count: 10, last: '2026-10-31', through: '2026-10-31', freezes: 2 }
+		};
+		const first = rollover(hand, '2026-11-01').state;
+		expect(first.streak.frozen).toEqual(['2026-11-01']);
+		const run = countDays(first, '2026-11-02', '2026-11-15');
+		expect(run.streak.frozen).toEqual(['2026-11-01']);
+		expect(rollover(run, '2026-11-16').state.streak.frozen).toEqual(['2026-11-16']);
+	});
+
+	it('Given_RunWithoutFreeze_When_Fold_Then_NoFrozenKey', () => {
+		expect('frozen' in bg().streak).toBe(false);
+	});
+});
