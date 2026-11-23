@@ -1,11 +1,17 @@
 import { localDate } from '#lib/study/index.js';
-import type { Channel } from './channel';
+import type { Channel, ChannelName } from './channel';
 import { isDue } from './due';
 import type { Marks } from './marks';
 import type { Rolled } from './tick';
 
 export type Skip = { id: string; reason: 'counted' | 'no-channel' | 'not-due' | 'already-sent' };
-export type RemindResult = { sent: string[]; skipped: Skip[] };
+export type Delivery = { id: string; channel: ChannelName; ok: boolean; error?: string };
+export type RemindResult = {
+	sent: string[];
+	skipped: Skip[];
+	failed: string[];
+	deliveries: Delivery[];
+};
 
 export async function sendReminders(
 	now: Date,
@@ -15,6 +21,8 @@ export async function sendReminders(
 ): Promise<RemindResult> {
 	const sent: string[] = [];
 	const skipped: Skip[] = [];
+	const failed: string[] = [];
+	const deliveries: Delivery[] = [];
 	for (const { learner, state } of rolled) {
 		const day = localDate(now, learner.tz);
 		if (state.streak.last === day) {
@@ -30,21 +38,36 @@ export async function sendReminders(
 			skipped.push({ id: learner.id, reason: 'not-due' });
 			continue;
 		}
-		if (!(await marks.claim(learner.id, day))) {
+		let claimed: boolean;
+		try {
+			claimed = await marks.claim(learner.id, day);
+		} catch {
+			failed.push(learner.id);
+			continue;
+		}
+		if (!claimed) {
 			skipped.push({ id: learner.id, reason: 'already-sent' });
 			continue;
 		}
-		let delivered = 0;
-		try {
-			for (const c of usable) {
-				await c.send({ learnerId: learner.id, day });
-				delivered++;
-			}
-		} catch (e) {
-			if (delivered === 0) await marks.release(learner.id, day).catch(() => {});
-			throw e;
+		const settled = await Promise.allSettled(
+			usable.map((c) => c.send({ learnerId: learner.id, day }))
+		);
+		const mine = settled.map((s, i): Delivery =>
+			s.status === 'fulfilled'
+				? { id: learner.id, channel: usable[i].name, ok: true }
+				: {
+						id: learner.id,
+						channel: usable[i].name,
+						ok: false,
+						error: s.reason instanceof Error ? s.reason.message : String(s.reason)
+					}
+		);
+		deliveries.push(...mine);
+		if (mine.some((d) => d.ok)) sent.push(learner.id);
+		else {
+			failed.push(learner.id);
+			await marks.release(learner.id, day).catch(() => {});
 		}
-		sent.push(learner.id);
 	}
-	return { sent, skipped };
+	return { sent, skipped, failed, deliveries };
 }
