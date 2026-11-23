@@ -74,7 +74,7 @@ function unsizedHeadings(text: string): number[] {
 		.map((m) => lineAt(text, m.index));
 }
 
-const variantOf = (c: string) => c.slice(0, c.lastIndexOf('border'));
+const variantOf = (c: string) => c.slice(0, c.lastIndexOf(':') + 1);
 
 function uncolouredBorders(text: string): number[] {
 	return [...text.matchAll(/\bclass="([^"]*)"/g)]
@@ -171,6 +171,8 @@ describe('DESIGN.md rules', () => {
 		['<div class="border border-ruled-line aria-selected:border-ink"></div>', 0],
 		['<div class="border p-4 {extra}"></div>', 1],
 		['<div class="md:border-2"></div>', 1],
+		['<div class="border border-border"></div>', 0],
+		['<div class="md:border-2 md:border-border"></div>', 0],
 		['<div class="border-ruled-line not-first:border-t"></div>', 0],
 		['<div class="md:border-2 md:border-ink"></div>', 0]
 	])('Given_Border_Then_ColourRuleCounts: %s', (sample, count) => {
