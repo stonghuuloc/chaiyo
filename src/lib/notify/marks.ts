@@ -1,4 +1,7 @@
-export type Marks = { claim(learnerId: string, day: string): Promise<boolean> };
+export type Marks = {
+	claim(learnerId: string, day: string): Promise<boolean>;
+	release(learnerId: string, day: string): Promise<void>;
+};
 
 export function memoryMarks(): Marks & { keys: Set<string> } {
 	const keys = new Set<string>();
@@ -9,6 +12,9 @@ export function memoryMarks(): Marks & { keys: Set<string> } {
 			if (keys.has(key)) return false;
 			keys.add(key);
 			return true;
+		},
+		async release(learnerId, day) {
+			keys.delete(`${learnerId}|${day}`);
 		}
 	};
 }

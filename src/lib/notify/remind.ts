@@ -34,7 +34,16 @@ export async function sendReminders(
 			skipped.push({ id: learner.id, reason: 'already-sent' });
 			continue;
 		}
-		for (const c of usable) await c.send({ learnerId: learner.id, day });
+		let delivered = 0;
+		try {
+			for (const c of usable) {
+				await c.send({ learnerId: learner.id, day });
+				delivered++;
+			}
+		} catch (e) {
+			if (delivered === 0) await marks.release(learner.id, day).catch(() => {});
+			throw e;
+		}
 		sent.push(learner.id);
 	}
 	return { sent, skipped };

@@ -70,6 +70,14 @@ export function supabaseMarks(client: SupabaseClient): Marks {
 				.select('learner_id');
 			if (error) throw new Error(error.message);
 			return (data ?? []).length === 1;
+		},
+		async release(learnerId, day) {
+			const { error } = await client
+				.from('reminders_sent')
+				.delete()
+				.eq('learner_id', learnerId)
+				.eq('day', day);
+			if (error) throw new Error(error.message);
 		}
 	};
 }

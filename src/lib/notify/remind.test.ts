@@ -305,7 +305,7 @@ describe('sendReminders', () => {
 		expect(marks.keys.size).toBe(0);
 	});
 
-	it('Given_SendThrows_When_NextTick_Then_AlreadySent', async () => {
+	it('Given_SendThrowsBeforeAnyDelivery_When_NextTick_Then_RetriesAndSends', async () => {
 		// Arrange
 		const marks = memoryMarks();
 		const rolled = [rolledFor('minh', '2026-11-22', ['push'])];
@@ -322,7 +322,33 @@ describe('sendReminders', () => {
 		const result = await sendReminders(new Date('2026-11-23T13:15:00Z'), rolled, all(f), marks);
 
 		// Assert
+		expect(result.sent).toEqual(['minh']);
+		expect(f.push.sent).toHaveLength(1);
+	});
+
+	it('Given_PushDeliveredThenEmailThrows_When_NextTick_Then_AlreadySent', async () => {
+		// Arrange
+		const marks = memoryMarks();
+		const rolled = [rolledFor('minh', '2026-11-22', ['push', 'email'])];
+		const f = fakes();
+		const boom: Channel = {
+			name: 'email',
+			send: async () => {
+				throw new Error('boom');
+			}
+		};
+		await expect(sendReminders(NOW, rolled, [f.push, boom], marks)).rejects.toThrow('boom');
+
+		// Act
+		const result = await sendReminders(
+			new Date('2026-11-23T13:15:00Z'),
+			rolled,
+			[f.push, boom],
+			marks
+		);
+
+		// Assert
 		expect(result.skipped).toEqual([{ id: 'minh', reason: 'already-sent' }]);
-		expect(f.push.sent).toHaveLength(0);
+		expect(f.push.sent).toHaveLength(1);
 	});
 });

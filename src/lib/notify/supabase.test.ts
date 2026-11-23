@@ -215,4 +215,35 @@ describe('supabaseMarks', () => {
 		// Assert
 		await expect(act).rejects.toThrow('boom');
 	});
+
+	it('Given_Marker_When_Release_Then_DeleteByLearnerAndDay', async () => {
+		// Arrange
+		const seen: { url: URL; init?: RequestInit }[] = [];
+		const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+			seen.push({ url: new URL(String(input)), init });
+			return new Response(null, { status: 204 });
+		});
+		const marks = supabaseMarks(clientWith(fetch as typeof globalThis.fetch));
+
+		// Act
+		await marks.release('minh', '2026-11-23');
+
+		// Assert
+		expect(seen[0].init?.method).toBe('DELETE');
+		expect(seen[0].url.pathname).toBe('/rest/v1/reminders_sent');
+		expect(seen[0].url.searchParams.get('learner_id')).toBe('eq.minh');
+		expect(seen[0].url.searchParams.get('day')).toBe('eq.2026-11-23');
+	});
+
+	it('Given_Server500_When_Release_Then_Throws', async () => {
+		// Arrange
+		const fetch = vi.fn(async () => json({ message: 'boom' }, 500));
+		const marks = supabaseMarks(clientWith(fetch as typeof globalThis.fetch));
+
+		// Act
+		const act = marks.release('minh', '2026-11-23');
+
+		// Assert
+		await expect(act).rejects.toThrow('boom');
+	});
 });
