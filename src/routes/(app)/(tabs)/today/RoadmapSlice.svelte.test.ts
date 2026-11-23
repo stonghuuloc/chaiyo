@@ -23,7 +23,8 @@ const mountSlice = (rows: RoadRow[]) => {
 	const items = () => [...target!.querySelectorAll<HTMLElement>('[data-part=road-row]')];
 	return {
 		items,
-		titles: () => items().map((r) => r.querySelector('[data-part=road-title]')?.textContent?.trim()),
+		titles: () =>
+			items().map((r) => r.querySelector('[data-part=road-title]')?.textContent?.trim()),
 		notes: () => items().map((r) => r.querySelector('[data-part=road-note]')?.textContent?.trim()),
 		rowAnchors: () => [...target!.querySelectorAll<HTMLAnchorElement>('[data-part=road-row] a')],
 		all: () => target!.querySelector<HTMLAnchorElement>('[data-part=roadmap-all]')
@@ -49,12 +50,7 @@ describe('RoadmapSlice', () => {
 			'Bài 2 · Bạn tên gì? 你叫什么名字',
 			'Bài 3 · Đây là ai? 这是谁'
 		]);
-		expect(slice.notes()).toEqual([
-			'Đã xong',
-			'Đang học',
-			'Mở khi qua Bài 1',
-			'Mở khi qua Bài 2'
-		]);
+		expect(slice.notes()).toEqual(['Đã xong', 'Đang học', 'Mở khi qua Bài 1', 'Mở khi qua Bài 2']);
 	});
 
 	it('Given_Ac6Rows_When_Render_Then_LessonLinksOnlyOnDoneAndNow', () => {

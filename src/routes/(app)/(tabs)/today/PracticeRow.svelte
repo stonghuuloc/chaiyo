@@ -17,7 +17,7 @@
 	<a
 		data-part="practice-row"
 		href={resolve('/(app)/practice/session')}
-		class="rounded-action mt-4 grid min-h-16 grid-cols-[44px_1fr_auto] items-center gap-3 bg-white px-4 py-3 text-text"
+		class="mt-4 grid min-h-16 grid-cols-[44px_1fr_auto] items-center gap-3 rounded-action bg-white px-4 py-3 text-text"
 	>
 		<span class="grid size-11 place-items-center rounded-cell bg-shaded-paper">
 			<svg class="size-6 fill-current" aria-hidden="true"><use href="#i-fill-brain" /></svg>

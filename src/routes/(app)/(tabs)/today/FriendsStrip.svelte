@@ -13,7 +13,10 @@
 		<h2 class="text-body text-text">{m.chy45s3_friends()}</h2>
 		<ul class="mt-3 grid grid-cols-3 gap-2">
 			{#each friends.slice(0, 3) as friend (friend.id)}
-				<li data-part="friend" class="rounded-action flex items-center gap-2 bg-white p-3 text-text">
+				<li
+					data-part="friend"
+					class="flex items-center gap-2 rounded-action bg-white p-3 text-text"
+				>
 					<span
 						class="grid size-9 shrink-0 place-items-center rounded-full bg-sunflower-wash font-semibold"
 						aria-hidden="true">{friend.name[0]}</span
