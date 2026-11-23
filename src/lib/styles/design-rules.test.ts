@@ -33,7 +33,12 @@ const code = () => walk(src, /\.(svelte|ts)$/);
 
 function scoped(text: string): Set<string> {
 	const styles = [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join();
-	return new Set([...styles.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].map((m) => m[1]));
+	const sized = [...styles.matchAll(/([^{}]*)\{([^{}]*)\}/g)].filter((m) =>
+		/\bfont(-size)?\s*:/.test(m[2])
+	);
+	return new Set(
+		sized.flatMap((m) => [...m[1].matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].map((c) => c[1]))
+	);
 }
 
 function classesOf(tag: string): string[] {
@@ -59,10 +64,12 @@ function unsizedHeadings(text: string): number[] {
 
 function uncolouredBorders(text: string): number[] {
 	return [...text.matchAll(/\bclass="([^"]*)"/g)]
-		.filter((m) => !m[1].includes('{'))
 		.filter((m) => {
-			const cls = m[1].split(/\s+/);
-			return cls.some((c) => BORDER_WIDTH.test(c)) && !cls.some((c) => BORDER_COLOUR.test(c));
+			const cls = m[1].replace(/[{}?:'"`]|&&|\|\|/g, (t) => (t === ':' ? ':' : ' ')).split(/\s+/);
+			return (
+				cls.some((c) => BORDER_WIDTH.test(c) && !c.includes(':')) &&
+				!cls.some((c) => BORDER_COLOUR.test(c) && !c.includes(':'))
+			);
 		})
 		.map((m) => lineAt(text, m.index));
 }
@@ -130,7 +137,8 @@ describe('DESIGN.md rules', () => {
 		['<h2 class="mt-5 font-display">Lộ trình</h2>', 1],
 		['<h1 class="text-display">Hôm nay</h1>', 0],
 		['<h2 class="sr-only">x</h2>', 0],
-		['<h1 class="title">x</h1><style>.title { font-size: 36px; }</style>', 0]
+		['<h1 class="title">x</h1><style>.title { font-size: 36px; }</style>', 0],
+		['<h1 class="wrap">x</h1><style>.wrap { margin: 0; }</style>', 1]
 	])('Given_Heading_Then_SizeRuleCounts: %s', (sample, count) => {
 		// Arrange
 		// Act
@@ -144,7 +152,9 @@ describe('DESIGN.md rules', () => {
 		['<div class="mt-6 border-t pt-5"></div>', 1],
 		['<div class="border border-ruled-line"></div>', 0],
 		['<div class="border-t-2 border-lantern-red/40"></div>', 0],
-		['<div class="aria-selected:border-ink border"></div>', 0]
+		['<div class="aria-selected:border-ink border"></div>', 1],
+		['<div class="border border-ruled-line aria-selected:border-ink"></div>', 0],
+		['<div class="border p-4 {extra}"></div>', 1]
 	])('Given_Border_Then_ColourRuleCounts: %s', (sample, count) => {
 		// Arrange
 		// Act

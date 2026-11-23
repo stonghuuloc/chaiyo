@@ -191,7 +191,7 @@
 				<span
 					data-part={stampDir === 'right' ? 'stamp-remember' : 'stamp-forget'}
 					style="opacity: {stampAlpha};"
-					class="absolute top-4 rounded-action border-2 px-3 py-1 text-title font-bold {stampDir ===
+					class="absolute top-4 rounded-action border-2 border-current px-3 py-1 text-title font-bold {stampDir ===
 					'right'
 						? 'right-4 -rotate-12'
 						: 'left-4 rotate-12'}"
