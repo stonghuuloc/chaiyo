@@ -154,11 +154,74 @@ const rows: Record<string, Row> = {
 		ids: '⿰白勺',
 		strokes: 8,
 		kind: 'invented'
-	}
+	},
+	有: { readings: [r('yǒu', 'hữu')], radical: '月', ids: '⿸𠂇月', strokes: 6, kind: 'etymology' },
+	口: { readings: [r('kǒu', 'khẩu')], radical: '口', ids: '口', strokes: 3, kind: 'etymology' },
+	人: { readings: [r('rén', 'nhân')], radical: '人', ids: '人', strokes: 2, kind: 'etymology' },
+	两: {
+		readings: [r('liǎng', 'lưỡng')],
+		radical: '一',
+		ids: '⿱一⿻冂从',
+		strokes: 7,
+		kind: 'invented'
+	},
+	个: {
+		readings: [r('gè', 'cá'), r('gě', 'cá', true)],
+		radical: '丨',
+		ids: '⿱人丨',
+		strokes: 3,
+		kind: 'invented'
+	},
+	儿: { readings: [r('ér', 'nhi')], radical: '儿', ids: '⿰丿乚', strokes: 2, kind: 'etymology' },
+	子: {
+		readings: [r('zǐ', 'tử'), r('zi', 'tử', true)],
+		radical: '子',
+		ids: '子',
+		strokes: 3,
+		kind: 'etymology'
+	},
+	女: { readings: [r('nǚ', 'nữ')], radical: '女', ids: '女', strokes: 3, kind: 'etymology' },
+	孩: { readings: [r('hái', 'hài')], radical: '子', ids: '⿰子亥', strokes: 9, kind: 'etymology' },
+	都: {
+		readings: [r('dōu', 'đô'), r('dū', 'đô')],
+		radical: '邑',
+		ids: '⿰者阝',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	工: { readings: [r('gōng', 'công')], radical: '工', ids: '工', strokes: 3, kind: 'etymology' },
+	作: {
+		readings: [r('zuò', 'tác'), r('zuō', 'tác', true)],
+		radical: '人',
+		ids: '⿰亻乍',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	做: { readings: [r('zuò', 'tố')], radical: '人', ids: '⿰亻故', strokes: 11, kind: 'etymology' },
+	院: {
+		readings: [r('yuàn', 'viện')],
+		radical: '阜',
+		ids: '⿰阝完',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	先: { readings: [r('xiān', 'tiên')], radical: '儿', ids: '⿱𠂒儿', strokes: 6, kind: 'etymology' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists
 const local: Record<string, Mnemonic> = {
+	孩: {
+		hinh: '子 đứa trẻ + 亥 gợi âm → đứa bé: 孩子',
+		am: 'hái nghe gần "hài" trong "hài nhi"',
+		doiThat: '孩子, 小孩儿',
+		tuongPhan: '≠ 子 (zǐ): 孩 thêm 亥 để gợi âm, nghĩa vẫn là trẻ con'
+	},
+	院: {
+		hinh: '阝 bờ tường + 完 gợi âm → khoảng sân có tường bao quanh = viện',
+		am: 'viện — "bệnh viện", "học viện"',
+		doiThat: '医院, 学院',
+		tuongPhan: '≠ 完 (wán, xong): thêm 阝 thành sân, viện'
+	},
 	谁: {
 		hinh: '讠 lời nói + 隹 con chim → nghe tiếng mà không thấy người: "ai nói đấy?"',
 		am: 'Gõ cửa: "谁?" — "Thuỳ đây!"',

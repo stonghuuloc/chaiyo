@@ -1,0 +1,666 @@
+id: h1-07
+level: 1
+topic: Gia đình
+order: 7
+title: Nghề nghiệp
+titleHanzi: 工作
+goal: Hỏi và nói nghề nghiệp của người nhà; phủ định bằng 不, nói “đều” bằng 都
+scene:
+  file: lessons/h1-07.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand outside a small hospital building with a red cross on the door; the red panda points at it with one paw and the takin holds a clipboard.
+sentences:
+  - id: s-h1-07-01
+    hanzi: 你爸爸做什么工作？
+    pinyin: nǐ bàba zuò shénme gōngzuò?
+    vi: Bố cậu làm nghề gì?
+    speaker: takin
+  - id: s-h1-07-02
+    hanzi: 他是医生。
+    pinyin: tā shì yīshēng.
+    vi: Bố tớ là bác sĩ.
+    speaker: redpanda
+  - id: s-h1-07-03
+    hanzi: 你妈妈也是医生吗？
+    pinyin: nǐ māma yě shì yīshēng ma?
+    vi: Mẹ cậu cũng là bác sĩ à?
+    speaker: takin
+  - id: s-h1-07-04
+    hanzi: 不，她不是医生，她是老师。
+    pinyin: bù, tā bù shì yīshēng, tā shì lǎoshī.
+    vi: Không, mẹ tớ không phải bác sĩ, mẹ là giáo viên.
+    speaker: redpanda
+  - id: s-h1-07-05
+    hanzi: 爸爸、妈妈都有工作。
+    pinyin: bàba, māma dōu yǒu gōngzuò.
+    vi: Bố mẹ tớ đều có việc làm.
+    speaker: redpanda
+  - id: s-h1-07-06
+    hanzi: 你哥哥、姐姐都是学生吗？
+    pinyin: nǐ gēge, jiějie dōu shì xuésheng ma?
+    vi: Anh chị cậu đều là học sinh à?
+    speaker: takin
+  - id: s-h1-07-07
+    hanzi: 不，哥哥是工人，姐姐是学生。
+    pinyin: bù, gēge shì gōngrén, jiějie shì xuésheng.
+    vi: Không, anh tớ là công nhân, chị tớ là học sinh.
+    speaker: redpanda
+  - id: s-h1-07-08
+    hanzi: 这是医院。
+    pinyin: zhè shì yīyuàn.
+    vi: Đây là bệnh viện.
+    speaker: takin
+  - id: s-h1-07-09
+    hanzi: 那个先生是医生吗？
+    pinyin: nàge xiānsheng shì yīshēng ma?
+    vi: Ông kia là bác sĩ à?
+    speaker: redpanda
+  - id: s-h1-07-10
+    hanzi: 是，他是医生。那个老人不是医生。
+    pinyin: shì, tā shì yīshēng. nàge lǎorén bù shì yīshēng.
+    vi: Đúng, ông ấy là bác sĩ. Cụ già kia không phải bác sĩ.
+    speaker: takin
+  - id: s-h1-07-11
+    hanzi: 那个老人是谁？
+    pinyin: nàge lǎorén shì shéi?
+    vi: Cụ già kia là ai?
+    speaker: redpanda
+  - id: s-h1-07-12
+    hanzi: 他是我爸爸的朋友。
+    pinyin: tā shì wǒ bàba de péngyou.
+    vi: Cụ ấy là bạn của bố tớ.
+    speaker: takin
+  - id: s-h1-07-13
+    hanzi: 我们都是学生。
+    pinyin: wǒmen dōu shì xuésheng.
+    vi: Chúng tôi đều là học sinh.
+  - id: s-h1-07-14
+    hanzi: 我不做医生。
+    pinyin: wǒ bù zuò yīshēng.
+    vi: Tôi không làm bác sĩ.
+  - id: s-h1-07-15
+    hanzi: 他爸爸是工人。
+    pinyin: tā bàba shì gōngrén.
+    vi: Bố anh ấy là công nhân.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 不
+      - 都
+      - 工作
+      - 工人
+      - 做
+      - 医院
+      - 先生
+      - 老人
+  grammar:
+    ids:
+      - h1-g17
+      - h1-g18
+    drills:
+      - id: q-h1-07-g01
+        type: choice
+        tests:
+          words:
+            - 不
+          grammar:
+            - h1-g17
+        prompt:
+          kind: vi
+          text: Anh ấy không phải bác sĩ.
+        optionKind: hanzi
+        options:
+          - 他不是医生
+          - 他是不医生
+          - 他不医生
+        answer: 0
+      - id: q-h1-07-g02
+        type: trueFalse
+        tests:
+          words:
+            - 不
+          grammar:
+            - h1-g17
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 他不医生。
+        answer: false
+      - id: q-h1-07-g03
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 不
+          grammar:
+            - h1-g17
+        prompt:
+          kind: audio
+          ref: s-h1-07-03
+        optionKind: hanzi
+        options:
+          - 不，她不是医生。
+          - 是，我们都是学生。
+          - 有，我有弟弟。
+        answer: 0
+      - id: q-h1-07-g04
+        type: choice
+        tests:
+          words:
+            - 不
+            - 做
+          grammar:
+            - h1-g17
+        prompt:
+          kind: vi
+          text: Tớ không làm bác sĩ.
+        optionKind: hanzi
+        options:
+          - 我不做医生
+          - 我做不医生
+          - 我医生不做
+        answer: 0
+      - id: q-h1-07-g05
+        type: choice
+        tests:
+          words:
+            - 都
+          grammar:
+            - h1-g18
+        prompt:
+          kind: vi
+          text: Chúng tớ đều là học sinh.
+        optionKind: hanzi
+        options:
+          - 我们都是学生
+          - 都我们是学生
+          - 我们是都学生
+        answer: 0
+      - id: q-h1-07-g06
+        type: order
+        tests:
+          words:
+            - 都
+          grammar:
+            - h1-g18
+        tiles:
+          - 都
+          - 我们
+          - 是
+          - 学生
+        answer: s-h1-07-13
+      - id: q-h1-07-g07
+        type: trueFalse
+        tests:
+          words:
+            - 都
+            - 工作
+          grammar:
+            - h1-g18
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 爸爸、妈妈有都工作。
+        answer: false
+      - id: q-h1-07-g08
+        type: choice
+        tests:
+          words:
+            - 都
+            - 工作
+          grammar:
+            - h1-g18
+        prompt:
+          kind: vi
+          text: Bố mẹ đều có việc làm.
+        optionKind: hanzi
+        options:
+          - 爸爸、妈妈都有工作
+          - 爸爸、妈妈有工作都
+          - 都爸爸、妈妈有工作
+        answer: 0
+  dialogue:
+    parts:
+      - title: Bố mẹ làm nghề gì?
+        lines:
+          - s-h1-07-01
+          - s-h1-07-02
+          - s-h1-07-03
+          - s-h1-07-04
+          - s-h1-07-05
+      - title: Anh chị làm gì?
+        lines:
+          - s-h1-07-06
+          - s-h1-07-07
+      - title: Ở bệnh viện
+        lines:
+          - s-h1-07-08
+          - s-h1-07-09
+          - s-h1-07-10
+          - s-h1-07-11
+          - s-h1-07-12
+    questions:
+      - id: q-h1-07-d01
+        type: choice
+        ask: Mẹ gấu trúc đỏ có phải bác sĩ không?
+        tests:
+          words:
+            - 不
+          grammar:
+            - h1-g17
+        prompt:
+          kind: audio
+          ref: s-h1-07-04
+        optionKind: vi
+        options:
+          - Không, mẹ là giáo viên
+          - Có, mẹ là bác sĩ
+          - Mẹ là công nhân
+        answer: 0
+      - id: q-h1-07-d02
+        type: choice
+        ask: Ai có việc làm?
+        tests:
+          words:
+            - 都
+            - 工作
+          grammar:
+            - h1-g18
+        prompt:
+          kind: audio
+          ref: s-h1-07-05
+        optionKind: vi
+        options:
+          - cả bố và mẹ
+          - chỉ bố
+          - chỉ mẹ
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-07-l01
+        type: tone
+        tests:
+          words:
+            - 都
+          tone: true
+        prompt:
+          kind: audio
+          ref: 都
+        syllable: 0
+        answer: 1
+      - id: q-h1-07-l02
+        type: choice
+        tests:
+          words:
+            - 工人
+        prompt:
+          kind: audio
+          ref: 工人
+        optionKind: hanzi
+        options:
+          - 工人
+          - 工作
+          - 老人
+          - 医生
+        answer: 0
+      - id: q-h1-07-l03
+        type: choice
+        tests:
+          words:
+            - 医院
+        prompt:
+          kind: audio
+          ref: 医院
+        optionKind: hanzi
+        options:
+          - 医院
+          - 医生
+          - 先生
+          - 老人
+        answer: 0
+      - id: q-h1-07-s01
+        type: readAloud
+        tests:
+          words:
+            - 做
+            - 工作
+          tone: true
+        sentence: s-h1-07-01
+      - id: q-h1-07-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 做
+        prompt:
+          kind: vi
+          text: Nói bố hoặc mẹ bạn làm nghề gì.
+        rubric:
+          - Dùng 他 / 她 + 是 + nghề (他是医生)
+        answer: s-h1-07-02
+      - id: q-h1-07-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 做
+            - 工作
+        prompt:
+          kind: vi
+          text: Hỏi một bạn xem bố bạn ấy làm nghề gì.
+        rubric:
+          - Dùng 你爸爸做什么工作？
+        answer: s-h1-07-01
+  writing:
+    chars:
+      - 工
+      - 作
+      - 做
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-07-x01
+      type: choice
+      tests:
+        words:
+          - 不
+      prompt:
+        kind: hanzi
+        ref: 不
+      optionKind: vi
+      options:
+        - không
+        - đều
+        - làm
+        - cũng
+      answer: 0
+    - id: q-h1-07-x02
+      type: choice
+      tests:
+        words:
+          - 都
+      prompt:
+        kind: hanzi
+        ref: 都
+      optionKind: vi
+      options:
+        - đều
+        - không
+        - làm
+        - cũng
+      answer: 0
+    - id: q-h1-07-x03
+      type: typePinyin
+      tests:
+        words:
+          - 工作
+      prompt:
+        kind: hanzi
+        ref: 工作
+      answer: gōngzuò
+    - id: q-h1-07-x04
+      type: choice
+      tests:
+        words:
+          - 工人
+      prompt:
+        kind: vi
+        text: công nhân
+      optionKind: hanzi
+      options:
+        - 工人
+        - 工作
+        - 老人
+        - 医院
+      answer: 0
+    - id: q-h1-07-x05
+      type: choice
+      tests:
+        words:
+          - 做
+      prompt:
+        kind: hanzi
+        ref: 做
+      optionKind: vi
+      options:
+        - làm
+        - có
+        - là
+        - đều
+      answer: 0
+    - id: q-h1-07-x06
+      type: choice
+      tests:
+        words:
+          - 医院
+      prompt:
+        kind: audio
+        ref: 医院
+      optionKind: vi
+      options:
+        - bệnh viện
+        - bác sĩ
+        - ông
+        - người già
+      answer: 0
+    - id: q-h1-07-x07
+      type: typePinyin
+      tests:
+        words:
+          - 先生
+      prompt:
+        kind: hanzi
+        ref: 先生
+      answer: xiānsheng
+    - id: q-h1-07-x08
+      type: choice
+      tests:
+        words:
+          - 老人
+      prompt:
+        kind: vi
+        text: người già
+      optionKind: hanzi
+      options:
+        - 老人
+        - 工人
+        - 先生
+        - 学生
+      answer: 0
+    - id: q-h1-07-x09
+      type: tone
+      tests:
+        words:
+          - 做
+        tone: true
+      prompt:
+        kind: audio
+        ref: 做
+      syllable: 0
+      answer: 4
+    - id: q-h1-07-x10
+      type: choice
+      tests:
+        words:
+          - 不
+        grammar:
+          - h1-g17
+      prompt:
+        kind: vi
+        text: Anh ấy không phải bác sĩ.
+      optionKind: hanzi
+      options:
+        - 他不是医生
+        - 他是不医生
+        - 他不医生
+      answer: 0
+    - id: q-h1-07-x11
+      type: trueFalse
+      tests:
+        words:
+          - 不
+        grammar:
+          - h1-g17
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 他不医生。
+      answer: false
+    - id: q-h1-07-x12
+      type: order
+      tests:
+        words:
+          - 不
+          - 做
+        grammar:
+          - h1-g17
+      tiles:
+        - 不
+        - 做
+        - 医生
+        - 我
+      answer: s-h1-07-14
+    - id: q-h1-07-x13
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 不
+        grammar:
+          - h1-g17
+      prompt:
+        kind: audio
+        ref: s-h1-07-03
+      optionKind: hanzi
+      options:
+        - 不，她不是医生。
+        - 是，我们都是学生。
+        - 有，我有弟弟。
+      answer: 0
+    - id: q-h1-07-x14
+      type: choice
+      tests:
+        words:
+          - 都
+        grammar:
+          - h1-g18
+      prompt:
+        kind: vi
+        text: Chúng tớ đều là học sinh.
+      optionKind: hanzi
+      options:
+        - 我们都是学生
+        - 都我们是学生
+        - 我们是都学生
+      answer: 0
+    - id: q-h1-07-x15
+      type: trueFalse
+      tests:
+        words:
+          - 都
+          - 工作
+        grammar:
+          - h1-g18
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 爸爸、妈妈有都工作。
+      answer: false
+    - id: q-h1-07-x16
+      type: order
+      tests:
+        words:
+          - 都
+        grammar:
+          - h1-g18
+      tiles:
+        - 都
+        - 我们
+        - 是
+        - 学生
+      answer: s-h1-07-13
+    - id: q-h1-07-x17
+      type: choice
+      tests:
+        words:
+          - 都
+          - 工作
+        grammar:
+          - h1-g18
+      prompt:
+        kind: vi
+        text: Bố mẹ đều có việc làm.
+      optionKind: hanzi
+      options:
+        - 爸爸、妈妈都有工作
+        - 爸爸、妈妈有工作都
+        - 都爸爸、妈妈有工作
+      answer: 0
+    - id: q-h1-07-x18
+      type: choice
+      tests:
+        words:
+          - 做
+          - 工作
+      prompt:
+        kind: audio
+        ref: s-h1-07-01
+      optionKind: vi
+      options:
+        - Bố cậu làm nghề gì?
+        - Bố cậu tên gì?
+        - Bố cậu mấy tuổi?
+      answer: 0
+    - id: q-h1-07-x19
+      type: choice
+      tests:
+        words:
+          - 先生
+      prompt:
+        kind: vi
+        text: Ông kia là bác sĩ à?
+      optionKind: hanzi
+      options:
+        - 那个先生是医生吗
+        - 那个先生是医生呢
+        - 那个医生是先生吗
+      answer: 0
+    - id: q-h1-07-x20
+      type: choice
+      tests:
+        words:
+          - 医院
+      prompt:
+        kind: vi
+        text: Đây là bệnh viện.
+      optionKind: hanzi
+      options:
+        - 这是医院
+        - 这是工人
+        - 那是老人
+      answer: 0
+    - id: q-h1-07-x21
+      type: trueFalse
+      tests:
+        words:
+          - 老人
+      prompt:
+        kind: hanzi
+        ref: 老人
+      statement: 老人 nghĩa là “người già”.
+      answer: true
+    - id: q-h1-07-x22
+      type: choice
+      tests:
+        words:
+          - 工人
+      prompt:
+        kind: vi
+        text: Anh tớ là công nhân.
+      optionKind: hanzi
+      options:
+        - 哥哥是工人
+        - 哥哥是工作
+        - 哥哥是老人
+      answer: 0

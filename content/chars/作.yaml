@@ -1,0 +1,16 @@
+hanzi: 作
+readings:
+  - pinyin: zuò
+    hanviet: tác
+  - pinyin: zuō
+    hanviet: tác
+    rare: true
+radical: 人
+ids: ⿰亻乍
+strokes: 7
+mnemonic:
+  hinh: người (亻) đang bắt tay vào làm điều gì đó (乍, thoạt/bắt đầu) — "người bắt đầu làm"
+  am: 作 = tác, y hệt "tác" trong "tác giả, tác phẩm, sáng tác"
+  doiThat: ô "备注" ghi "作者" trên bìa sách; nút "创作" trong app viết/vẽ
+  tuongPhan: "≠ 做 (zuò, cùng âm, khẩu ngữ hàng ngày: 做饭, 做人) — 作 trang trọng/văn viết hơn"
+  kind: etymology

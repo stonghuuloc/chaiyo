@@ -1,0 +1,17 @@
+id: h1-g16
+level: 1
+std:
+  - 23
+title: "Hai: 二 · 两"
+pattern: 两 + lượng từ · 二 khi đếm số
+explain: |-
+  二 (nhị, èr) dùng khi đọc số và đếm: 一、二、三; 十二 = mười hai; 二十 = hai mươi.
+
+  两 (lưỡng, liǎng) đứng trước lượng từ: 两个孩子 = hai đứa trẻ, 两口人 = hai người.
+examples:
+  - s-h1-06-07
+  - s-h1-06-10
+pitfalls:
+  - wrong: 二个孩子
+    right: 两个孩子
+    why: Trước lượng từ dùng 两, không dùng 二.

@@ -1,0 +1,16 @@
+hanzi: 子
+readings:
+  - pinyin: zǐ
+    hanviet: tử
+  - pinyin: zi
+    hanviet: tử
+    rare: true
+radical: 子
+ids: 子
+strokes: 3
+mnemonic:
+  hinh: Hình một đứa bé nhỏ, đầu to, hai tay dang ngang, chân quấn lại — 子 = đứa con, đứa nhỏ.
+  am: tử — "tử tôn" (con cháu), "phụ tử" (cha con), "quý tử". Riêng khi chỉ giờ/chi đầu 12 địa chi thì đọc **tý** (giờ Tý, năm Tý).
+  doiThat: "Menu quán ăn TQ: 饺子 (sủi cảo), 包子 (bánh bao) — hậu tố 子 đọc nhẹ (zi) xuất hiện dày đặc trên thực đơn và tên đồ vật hằng ngày."
+  tuongPhan: ≠ 女 (nǚ, đã học — chỉ giới tính nữ nói chung, không phải "con"); ≠ 儿 (ér, đã học — cũng nghĩa "con/con trai" nhưng 儿 thiên về từ 儿子/女儿 hợp thể, còn 子 vừa là hậu tố vừa mang nghĩa độc lập rộng hơn).
+  kind: etymology

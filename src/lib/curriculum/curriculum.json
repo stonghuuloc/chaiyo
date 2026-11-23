@@ -55,6 +55,24 @@
 		"words": ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "几", "岁", "吗", "呢"]
 	},
 	{
+		"id": "h1-06",
+		"level": 1,
+		"n": 6,
+		"title": "Số người trong nhà",
+		"titleHanzi": "口",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["有", "口", "人", "两", "个", "儿子", "女儿", "孩子"]
+	},
+	{
+		"id": "h1-07",
+		"level": 1,
+		"n": 7,
+		"title": "Nghề nghiệp",
+		"titleHanzi": "工作",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["不", "都", "工作", "工人", "做", "医院", "先生", "老人"]
+	},
+	{
 		"id": "h2-01",
 		"level": 2,
 		"n": 41,
