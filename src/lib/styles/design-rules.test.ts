@@ -17,7 +17,7 @@ const BORDER_COLOUR = new RegExp(
 );
 const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]|\u{FE0F}/u;
 const LETTER_KEY =
-	/\.(?:key|code)(?:\.toLowerCase\(\))?\s*[!=]==?\s*['"](?:Key[A-Z]|[A-Za-z])['"]|case\s+['"](?:Key[A-Z]|[A-Za-z])['"]\s*:/;
+	/\.(?:key|code)(?:\.toLowerCase\(\))?\s*[!=]==?\s*['"](?:Key[A-Z]|[A-Za-z])['"]|switch\s*\(\s*\w+\.(?:key|code)\s*\)[^]*?case\s+['"](?:Key[A-Z]|[A-Za-z])['"]\s*:/;
 const WEBGL = /getContext\(\s*['"](?:webgl2?|experimental-webgl)['"]/;
 
 function walk(dir: string, ext: RegExp): string[] {
@@ -33,12 +33,23 @@ const screens = () =>
 const code = () => walk(src, /\.(svelte|ts)$/);
 
 function scoped(text: string): Set<string> {
-	const styles = [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join();
+	const styles = [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
+		.map((m) => m[1].replace(/\/\*[\s\S]*?\*\//g, ''))
+		.join();
 	const sized = [...styles.matchAll(/([^{}]*)\{([^{}]*)\}/g)].filter((m) =>
 		/\bfont(-size)?\s*:/.test(m[2])
 	);
 	return new Set(
-		sized.flatMap((m) => [...m[1].matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].map((c) => c[1]))
+		sized.flatMap((m) =>
+			m[1].split(',').flatMap((sel) => {
+				const last =
+					sel
+						.trim()
+						.split(/[\s>+~]+/)
+						.pop() ?? '';
+				return [...last.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].map((c) => c[1]);
+			})
+		)
 	);
 }
 
@@ -63,14 +74,16 @@ function unsizedHeadings(text: string): number[] {
 		.map((m) => lineAt(text, m.index));
 }
 
+const variantOf = (c: string) => c.slice(0, c.lastIndexOf('border'));
+
 function uncolouredBorders(text: string): number[] {
 	return [...text.matchAll(/\bclass="([^"]*)"/g)]
 		.filter((m) => {
-			const cls = m[1].replace(/[{}?:'"`]|&&|\|\|/g, (t) => (t === ':' ? ':' : ' ')).split(/\s+/);
-			return (
-				cls.some((c) => BORDER_WIDTH.test(c) && !c.includes(':')) &&
-				!cls.some((c) => BORDER_COLOUR.test(c) && !c.includes(':'))
-			);
+			const cls = m[1].replace(/[{}?'"`]|&&|\|\|/g, ' ').split(/\s+/);
+			const colours = cls.filter((c) => BORDER_COLOUR.test(c)).map(variantOf);
+			return cls
+				.filter((c) => BORDER_WIDTH.test(c))
+				.some((w) => !colours.some((v) => v === '' || v === variantOf(w)));
 		})
 		.map((m) => lineAt(text, m.index));
 }
@@ -139,7 +152,8 @@ describe('DESIGN.md rules', () => {
 		['<h1 class="text-display">Hôm nay</h1>', 0],
 		['<h2 class="sr-only">x</h2>', 0],
 		['<h1 class="title">x</h1><style>.title { font-size: 36px; }</style>', 0],
-		['<h1 class="wrap">x</h1><style>.wrap { margin: 0; }</style>', 1]
+		['<h1 class="wrap">x</h1><style>.wrap { margin: 0; }</style>', 1],
+		['<h1 class="card">x</h1><style>.card h1 { font-size: 2px; }</style>', 1]
 	])('Given_Heading_Then_SizeRuleCounts: %s', (sample, count) => {
 		// Arrange
 		// Act
@@ -155,7 +169,10 @@ describe('DESIGN.md rules', () => {
 		['<div class="border-t-2 border-lantern-red/40"></div>', 0],
 		['<div class="aria-selected:border-ink border"></div>', 1],
 		['<div class="border border-ruled-line aria-selected:border-ink"></div>', 0],
-		['<div class="border p-4 {extra}"></div>', 1]
+		['<div class="border p-4 {extra}"></div>', 1],
+		['<div class="md:border-2"></div>', 1],
+		['<div class="border-ruled-line not-first:border-t"></div>', 0],
+		['<div class="md:border-2 md:border-ink"></div>', 0]
 	])('Given_Border_Then_ColourRuleCounts: %s', (sample, count) => {
 		// Arrange
 		// Act
