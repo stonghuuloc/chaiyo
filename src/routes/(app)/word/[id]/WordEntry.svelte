@@ -32,7 +32,7 @@
 </script>
 
 <header>
-	<h2 lang="zh-Hans">{view.hanzi}</h2>
+	<h2 lang="zh-Hans" class="font-hanzi text-[56px] leading-none font-normal">{view.hanzi}</h2>
 	<p class="reading">
 		{view.pinyin}{#if view.hanviet}<span> · {view.hanviet}</span>{/if}
 	</p>
