@@ -1,0 +1,68 @@
+level: 3
+words: 1000
+topics:
+  - title: Trường lớp
+    lessons:
+      - id: h3-01
+        title: "Kỳ thi sắp đến"
+        titleHanzi: 考试就要到了
+      - id: h3-02
+        title: "Làm bài tập"
+      - id: h3-03
+        title: "Thầy cô và học sinh"
+      - id: h3-04
+        title: "Thư viện"
+      - id: h3-05
+        title: "Tốt nghiệp"
+  - title: Nhà cửa
+    lessons:
+      - id: h3-06
+        title: "Thuê nhà"
+      - id: h3-07
+        title: "Dọn dẹp phòng"
+      - id: h3-08
+        title: "Hàng xóm"
+      - id: h3-09
+        title: "Chuyển nhà"
+  - title: Cảm xúc
+    lessons:
+      - id: h3-10
+        title: "Đừng lo lắng"
+      - id: h3-11
+        title: "Tức giận"
+      - id: h3-12
+        title: "Vui quá đi"
+      - id: h3-13
+        title: "Nhớ nhà"
+      - id: h3-14
+        title: "Ngạc nhiên"
+  - title: Thành phố
+    lessons:
+      - id: h3-15
+        title: "Giao thông giờ cao điểm"
+      - id: h3-16
+        title: "Công viên"
+      - id: h3-17
+        title: "Siêu thị"
+      - id: h3-18
+        title: "Ngân hàng"
+  - title: Lễ hội
+    lessons:
+      - id: h3-19
+        title: "Tết Nguyên đán"
+      - id: h3-20
+        title: "Tết Trung thu"
+      - id: h3-21
+        title: "Sinh nhật"
+      - id: h3-22
+        title: "Tặng quà"
+  - title: Môi trường
+    lessons:
+      - id: h3-23
+        title: "Bốn mùa"
+      - id: h3-24
+        title: "Bảo vệ cây xanh"
+      - id: h3-25
+        title: "Tiết kiệm nước"
+      - id: h3-26
+        title: "Thời tiết thay đổi"

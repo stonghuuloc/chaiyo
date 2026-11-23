@@ -1,0 +1,58 @@
+level: 4
+words: 1200
+topics:
+  - title: Quan hệ
+    lessons:
+      - id: h4-01
+        title: "Bạn bè thân thiết"
+        titleHanzi: 亲密的朋友
+      - id: h4-02
+        title: "Hiểu lầm"
+      - id: h4-03
+        title: "Xin lỗi và tha thứ"
+      - id: h4-04
+        title: "Hẹn hò"
+      - id: h4-05
+        title: "Kết hôn"
+  - title: Nghề nghiệp
+    lessons:
+      - id: h4-06
+        title: "Phỏng vấn xin việc"
+      - id: h4-07
+        title: "Viết sơ yếu lý lịch"
+      - id: h4-08
+        title: "Lương và thưởng"
+      - id: h4-09
+        title: "Đổi nghề"
+  - title: Công nghệ
+    lessons:
+      - id: h4-10
+        title: "Điện thoại thông minh"
+      - id: h4-11
+        title: "Mua sắm trên mạng"
+      - id: h4-12
+        title: "Mạng xã hội"
+      - id: h4-13
+        title: "Học online"
+  - title: Văn hóa
+    lessons:
+      - id: h4-14
+        title: "Trà Trung Quốc"
+      - id: h4-15
+        title: "Thư pháp"
+      - id: h4-16
+        title: "Ẩm thực các vùng"
+      - id: h4-17
+        title: "Phong tục chào hỏi"
+  - title: Cuộc sống
+    lessons:
+      - id: h4-18
+        title: "Áp lực"
+      - id: h4-19
+        title: "Thời gian rảnh"
+      - id: h4-20
+        title: "Lập kế hoạch"
+      - id: h4-21
+        title: "Thói quen tốt"
+      - id: h4-22
+        title: "Ước mơ"
