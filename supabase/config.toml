@@ -424,6 +424,9 @@ deno_version = 2
 [functions.notify]
 verify_jwt = false
 
+[functions.push-test]
+verify_jwt = true
+
 [analytics]
 enabled = false
 port = 56327
