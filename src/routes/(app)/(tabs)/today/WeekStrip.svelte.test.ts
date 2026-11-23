@@ -1,5 +1,5 @@
 import { flushSync, mount, unmount } from 'svelte';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import WeekStrip from './WeekStrip.svelte';
 import type { Mark, WeekView } from './week';
 
@@ -19,15 +19,16 @@ const view = (marks: Mark[], line: string): WeekView => ({
 	line
 });
 
-const mountStrip = (v: WeekView) => {
+const mountStrip = (v: WeekView, onrules = vi.fn()) => {
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(WeekStrip, { target, props: { view: v } }) as Record<string, unknown>;
+	app = mount(WeekStrip, { target, props: { view: v, onrules } }) as Record<string, unknown>;
 	flushSync();
 	return {
 		heading: () => target!.querySelector('h2')?.textContent?.trim(),
 		cells: () => [...target!.querySelectorAll('[data-part=week-strip] > li')],
-		line: () => target!.querySelector('[data-part=streak-line]')?.textContent?.trim()
+		line: () => target!.querySelector('[data-part=streak-line]')?.textContent?.trim(),
+		click: (part: string) => target!.querySelector<HTMLElement>(`[data-part=${part}]`)!.click()
 	};
 };
 
@@ -86,5 +87,38 @@ describe('WeekStrip', () => {
 		expect(strip.cells()[4].getAttribute('data-mark')).toBe('tick');
 		expect(strip.cells()[4].querySelector('use[href="#i-bold-check"]')).not.toBeNull();
 		expect(strip.line()).toBe(line);
+	});
+
+	it('Given_Strip_When_ClickWeekInfo_Then_OnrulesOnce', () => {
+		// Arrange
+		const onrules = vi.fn();
+		const strip = mountStrip(
+			view(['tick', 'tick', 'freeze', 'tick', 'today', 'later', 'later'], 'x'),
+			onrules
+		);
+
+		// Act
+		strip.click('week-info');
+
+		// Assert
+		expect(onrules).toHaveBeenCalledTimes(1);
+	});
+
+	it('Given_Strip_When_ClickLink_Then_OnrulesOnce', () => {
+		// Arrange
+		const onrules = vi.fn();
+		const strip = mountStrip(
+			view(['tick', 'tick', 'freeze', 'tick', 'today', 'later', 'later'], 'x'),
+			onrules
+		);
+		expect(target!.querySelector('[data-part=freeze-rules-link]')?.textContent?.trim()).toBe(
+			'Đóng băng là gì?'
+		);
+
+		// Act
+		strip.click('freeze-rules-link');
+
+		// Assert
+		expect(onrules).toHaveBeenCalledTimes(1);
 	});
 });

@@ -2,7 +2,7 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import type { WeekView } from './week';
 
-	let { view }: { view: WeekView } = $props();
+	let { view, onrules }: { view: WeekView; onrules: () => void } = $props();
 
 	const names = {
 		tick: () => m.chy45s2_mark_tick(),
@@ -12,41 +12,61 @@
 </script>
 
 <section data-part="week" class="mt-5">
-	<h2 class="text-body text-text">{m.chy46s1_week()}</h2>
-	<ol data-part="week-strip" class="mt-3 grid grid-cols-7 gap-1.5">
-		{#each view.cells as cell (cell.day)}
-			<li
-				class="text-caption grid justify-items-center gap-1.5 {cell.today
-					? 'text-text'
-					: 'text-muted'}"
-				data-mark={cell.mark}
-				data-today={cell.today ? '' : undefined}
-			>
-				<span
-					class="grid size-[30px] place-items-center rounded-full border-[1.5px] {cell.mark ===
-					'tick'
-						? 'border-primary bg-primary text-white'
-						: cell.mark === 'freeze'
-							? 'border-primary text-primary'
-							: 'border-border'}"
+	<div class="flex items-center justify-between">
+		<h2 class="text-body text-text">{m.chy46s1_week()}</h2>
+		<button
+			type="button"
+			data-part="freeze-rules-link"
+			class="text-caption inline-flex cursor-pointer items-center gap-1 text-muted"
+			onclick={onrules}
+			>{m.chy46s3_link()}<svg class="size-4 fill-current" aria-hidden="true"
+				><use href="#i-regular-caret-right" /></svg
+			></button
+		>
+	</div>
+	<div class="relative">
+		<ol data-part="week-strip" class="mt-3 grid grid-cols-7 gap-1.5">
+			{#each view.cells as cell (cell.day)}
+				<li
+					class="text-caption grid justify-items-center gap-1.5 {cell.today
+						? 'text-text'
+						: 'text-muted'}"
+					data-mark={cell.mark}
+					data-today={cell.today ? '' : undefined}
 				>
-					{#if cell.mark === 'tick'}
-						<svg class="size-[18px] fill-current" aria-hidden="true"
-							><use href="#i-bold-check" /></svg
-						>
-					{:else if cell.mark === 'freeze'}
-						<svg class="size-[18px] fill-current" aria-hidden="true"
-							><use href="#i-regular-snowflake" /></svg
-						>
+					<span
+						class="grid size-[30px] place-items-center rounded-full border-[1.5px] {cell.mark ===
+						'tick'
+							? 'border-primary bg-primary text-white'
+							: cell.mark === 'freeze'
+								? 'border-primary text-primary'
+								: 'border-border'}"
+					>
+						{#if cell.mark === 'tick'}
+							<svg class="size-[18px] fill-current" aria-hidden="true"
+								><use href="#i-bold-check" /></svg
+							>
+						{:else if cell.mark === 'freeze'}
+							<svg class="size-[18px] fill-current" aria-hidden="true"
+								><use href="#i-regular-snowflake" /></svg
+							>
+						{/if}
+					</span>
+					{cell.label}
+					{#if cell.mark === 'tick' || cell.mark === 'freeze' || cell.mark === 'today'}
+						<span class="sr-only">{names[cell.mark]()}</span>
 					{/if}
-				</span>
-				{cell.label}
-				{#if cell.mark === 'tick' || cell.mark === 'freeze' || cell.mark === 'today'}
-					<span class="sr-only">{names[cell.mark]()}</span>
-				{/if}
-			</li>
-		{/each}
-	</ol>
+				</li>
+			{/each}
+		</ol>
+		<button
+			type="button"
+			data-part="week-info"
+			aria-label={m.chy46s3_week_label()}
+			class="absolute inset-0 cursor-pointer rounded-[14px]"
+			onclick={onrules}
+		></button>
+	</div>
 	<p
 		data-part="streak-line"
 		class="mt-4 rounded-[14px] bg-white p-3 text-left text-body text-graphite"
