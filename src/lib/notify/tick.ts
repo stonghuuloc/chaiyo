@@ -6,9 +6,10 @@ import {
 	type State,
 	type StudyEvent
 } from '#lib/study/index.js';
+import type { ChannelName } from './channel';
 import { foldInputs, yesterday } from './fold';
 
-export type Learner = { id: string; tz: string };
+export type Learner = { id: string; tz: string; channels: ChannelName[] };
 export type Rolled = { learner: Learner; day: string; state: State; events: StudyEvent[] };
 export type TickResult = { rolled: string[]; failed: string[] };
 export type Deps = {

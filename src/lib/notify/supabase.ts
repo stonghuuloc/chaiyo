@@ -20,7 +20,7 @@ export function supabaseDeps(
 					.range(from, from + PAGE - 1);
 				if (error) throw new Error(error.message);
 				const rows = (data ?? []) as { learner_id: string; tz: string }[];
-				out.push(...rows.map((r) => ({ id: r.learner_id, tz: r.tz })));
+				out.push(...rows.map((r) => ({ id: r.learner_id, tz: r.tz, channels: [] })));
 				if (rows.length < PAGE) return out;
 			}
 		},

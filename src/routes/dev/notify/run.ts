@@ -20,7 +20,7 @@ export async function runDemo(now: Date): Promise<{ log: string[]; result: TickR
 	const log: string[] = [];
 	const deps: Deps = {
 		curriculum: { lessons: [] },
-		learners: async () => Object.keys(history).map((id) => ({ id, tz: TZ })),
+		learners: async () => Object.keys(history).map((id) => ({ id, tz: TZ, channels: [] })),
 		inputs: async (id) => history[id],
 		record: async (r) => {
 			log.push(`record ${r.learner.id} (${r.events.map((e) => e.type).join(', ') || '0 events'})`);
