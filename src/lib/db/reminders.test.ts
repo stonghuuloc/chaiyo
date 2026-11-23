@@ -79,7 +79,9 @@ describe('settings reminder columns', () => {
 
 describe('profiles.photo_url size', () => {
 	const save = (n: number) =>
-		db.query("insert into profiles (display_name, photo_url) values ('Linh', $1)", ['a'.repeat(n)]);
+		db.query("insert into profiles (display_name, photo_url) values ('Linh', $1)", [
+			'data:image/jpeg;base64,' + 'a'.repeat(n - 23)
+		]);
 
 	it('rejects 100 001 characters with 23514', async () => {
 		await asLearner(db, LINH);

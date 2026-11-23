@@ -18,6 +18,7 @@ begin
 	base := left(regexp_replace(public.fold_vi(coalesce(substring(trim(p_name) from '(\S+)$'), '')),
 		'[^a-z0-9]', '', 'g'), 36);
 	if base = '' then base := 'ban'; end if;
+	perform pg_advisory_xact_lock(hashtext(base));
 	h := base;
 	while exists (select 1 from public.profiles where handle = h and learner_id <> p_self) loop
 		n := n + 1; h := base || n;
@@ -28,7 +29,7 @@ end $$;
 create function public.profiles_set_handle() returns trigger
 language plpgsql security definer set search_path = '' as $$
 begin
-	new.handle := coalesce(new.handle, public.profile_handle(new.display_name, new.learner_id));
+	new.handle := public.profile_handle(new.display_name, new.learner_id);
 	return new;
 end $$;
 
@@ -47,7 +48,20 @@ end $$;
 
 alter table public.profiles
 	alter column handle set not null,
-	add constraint handle_format check (handle ~ '^[a-z0-9]{1,40}$');
+	add constraint handle_format check (handle ~ '^[a-z0-9]{1,40}$'),
+	add constraint photo_url_data check (photo_url is null or photo_url ~ '^data:image/(jpeg|png|webp);base64,');
+
+create function public.profiles_keep_handle() returns trigger
+language plpgsql set search_path = '' as $$
+begin
+	if new.handle is distinct from old.handle then
+		raise exception 'handle is fixed' using errcode = '42501';
+	end if;
+	return new;
+end $$;
+
+create trigger profiles_handle_fixed before update on public.profiles
+	for each row execute function public.profiles_keep_handle();
 create unique index profiles_handle on public.profiles (handle);
 
 revoke execute on function public.profile_handle(text, uuid) from public, anon, authenticated;

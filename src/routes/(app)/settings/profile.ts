@@ -5,11 +5,12 @@ export type Profile = { name: string; photo: string | null; hidden: boolean };
 type Client = Pick<SupabaseClient, 'from'>;
 
 export async function loadProfile(client: Client, uid: string): Promise<Profile> {
-	const { data } = await client
+	const { data, error } = await client
 		.from('profiles')
 		.select('display_name, photo_url, hidden')
 		.eq('learner_id', uid)
 		.maybeSingle();
+	if (error) throw error;
 	return {
 		name: data?.display_name ?? '',
 		photo: data?.photo_url ?? null,

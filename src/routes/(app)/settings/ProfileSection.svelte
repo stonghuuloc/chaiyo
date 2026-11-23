@@ -37,9 +37,12 @@
 		}
 	};
 
+	let saves = 0;
 	const setPhoto = async (next: string | null) => {
+		const mine = ++saves;
 		try {
 			await deps.save({ photo: next });
+			if (mine !== saves) return;
 			photo = next;
 			if (next) deps.notify(m.chy53s1_photo_ok());
 		} catch {

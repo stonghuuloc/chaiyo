@@ -142,17 +142,10 @@ describe('handle', () => {
 		expect(await handleOf(LINH)).toBe('linh');
 	});
 
-	it('Given_BadHandle_When_Update_Then_23514', async () => {
+	it('Given_AnyHandleChange_When_Update_Then_42501', async () => {
 		await asLearner(db, LINH);
-		expect(await code(db.query("update profiles set handle = 'Bad Handle'"))).toBe('23514');
-		expect(await code(db.query("update profiles set handle = ''"))).toBe('23514');
-		expect(await code(db.query(`update profiles set handle = '${'a'.repeat(41)}'`))).toBe('23514');
-	});
-
-	it('Given_TakenHandle_When_Update_Then_23505', async () => {
-		await asLearner(db, LINH);
-		const own = await code(db.query("update profiles set handle = 'loc'"));
-		expect(own).toBe('23505');
+		expect(await code(db.query("update profiles set handle = 'Bad Handle'"))).toBe('42501');
+		expect(await code(db.query("update profiles set handle = 'loc'"))).toBe('42501');
 	});
 
 	it('Given_DangNgoc_When_FoldVi_Then_dang_ngoc', async () => {
