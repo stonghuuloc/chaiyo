@@ -14,4 +14,5 @@ export function particles(kind: Kind, rand: () => number = Math.random): Particl
 	}));
 }
 
-export const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+export const reducedMotion = () =>
+	typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
