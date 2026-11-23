@@ -184,7 +184,7 @@
 {#if free}
 	{#if phase === 'done' || phase === 'blocked'}
 		<div class="mt-5 border-t border-ruled-line pt-4" data-reveal>
-			<h3 class="text-label font-semibold text-pencil">
+			<h3 class="font-sans text-label font-semibold text-pencil">
 				{m.speak_reveal_title()}
 			</h3>
 			{#if step.answer}

@@ -85,7 +85,7 @@
 {/if}
 
 {#if prefs}<Pills {prefs} />{/if}
-<h3 class="mt-6 text-label font-semibold text-pencil">
+<h3 class="mt-6 font-sans text-label font-semibold text-pencil">
 	{m.grammar_examples()}
 </h3>
 <ul class="mt-2 flex flex-col gap-2">
@@ -122,7 +122,7 @@
 </ul>
 
 {#if step.pitfall}
-	<h3 class="mt-6 text-label font-semibold text-pencil">
+	<h3 class="mt-6 font-sans text-label font-semibold text-pencil">
 		{m.grammar_pitfalls()}
 	</h3>
 	<div class="mt-2 flex flex-wrap gap-2">
