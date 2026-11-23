@@ -525,5 +525,20 @@
 	"chy48s3_tg_test": "Gửi thử",
 	"chy48s3_tg_sent": "Đã gửi lời nhắc thử.",
 	"chy48s3_tg_unlink": "Ngắt kết nối",
-	"chy48s3_error": "Lỗi: {message}"
+	"chy48s3_error": "Lỗi: {message}",
+	"chy49s1_header": "HSK {level} · {passed}/{total} bài · {words} từ mới",
+	"chy49s1_header_bare": "HSK {level}",
+	"chy49s1_drafting": "Lộ trình HSK {level} đang được soạn.",
+	"chy49s1_strip": "Cấp độ",
+	"chy49s1_kicker": "Đang học",
+	"chy49s1_lesson": "Bài {n} · {title}",
+	"chy49s1_card_line": "Phần {part} · cần {pct}% bài kiểm tra để mở Bài {next}",
+	"chy49s1_cta": "Tiếp tục Bài {n}",
+	"chy49s1_primer": "Khởi đầu",
+	"chy49s1_topic": "Chủ đề {i} · {title}",
+	"chy49s1_count": "{passed}/{total}",
+	"chy49s1_done_best": "Đã xong · điểm cao nhất {score}%",
+	"chy49s1_done": "Đã xong",
+	"chy49s1_now": "Đang học · phần {part}",
+	"chy49s1_after": "Mở khi qua Bài {n}"
 }
