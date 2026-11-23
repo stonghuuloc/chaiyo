@@ -42,12 +42,14 @@
 	async function logout() {
 		if (busy) return;
 		busy = true;
-		const { error } = await supabase.auth.signOut();
-		if (error) {
+		try {
+			const { error } = await supabase.auth.signOut();
+			if (error) throw error;
+			await goto(resolve('/login'), { replace: true });
+		} catch {
 			busy = false;
-			return say(m.chy50s3_logout_failed());
+			say(m.chy50s3_logout_failed());
 		}
-		await goto(resolve('/login'), { replace: true });
 	}
 </script>
 

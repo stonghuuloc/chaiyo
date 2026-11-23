@@ -23,6 +23,9 @@ language plpgsql security definer set search_path = '' as $$
 declare t public.profiles;
 begin
 	select * into t from public.profiles where handle = lower(p_handle);
+	if p_on is null then
+		raise exception 'p_on is required' using errcode = '22023';
+	end if;
 	if not p_on then
 		delete from public.follows
 		where follower_id = auth.uid() and followee_id = t.learner_id;
@@ -33,6 +36,17 @@ begin
 		on conflict do nothing;
 	return true;
 end $$;
+
+create function public.is_hidden(p_id uuid) returns boolean
+language sql stable security definer set search_path = '' as $$
+	select coalesce((select hidden from public.profiles where learner_id = p_id), false)
+$$;
+revoke execute on function public.is_hidden(uuid) from public, anon;
+grant execute on function public.is_hidden(uuid) to authenticated;
+
+drop policy follows_insert on public.follows;
+create policy follows_insert on public.follows for insert to authenticated
+	with check (follower_id = auth.uid() and not public.is_hidden(followee_id));
 
 revoke execute on function public.search_learners(text) from public, anon;
 grant execute on function public.search_learners(text) to authenticated;

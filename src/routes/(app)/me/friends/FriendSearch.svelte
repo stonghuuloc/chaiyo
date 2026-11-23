@@ -69,7 +69,7 @@
 			return;
 		}
 		say(on ? m.chy52s3_followed({ name: r.name }) : m.chy52s3_unfollowed({ name: r.name }));
-		await onchange();
+		await Promise.resolve(onchange()).catch(() => {});
 	}
 </script>
 
