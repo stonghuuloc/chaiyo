@@ -42,7 +42,7 @@
 					class="size-14 rounded-full opacity-[.55] grayscale"
 				/>
 				<span class="block">
-					<span class="block text-[15.5px] font-semibold">{b.title}</span>
+					<span class="block text-[15.5px] leading-[normal] font-semibold">{b.title}</span>
 					<span class="mt-0.5 block text-[13px] leading-[1.35] text-pencil">{how[b.id]()}</span>
 					{#if b.need !== null}
 						<span class="mt-1.5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
@@ -53,7 +53,7 @@
 									style:width="{b.pct}%"
 								></span>
 							</span>
-							<span class="text-[12.5px] font-semibold text-graphite tabular-nums"
+							<span class="text-[12.5px] leading-[normal] font-semibold text-graphite tabular-nums"
 								>{b.have}/{b.need}</span
 							>
 						</span>
@@ -65,7 +65,9 @@
 {/snippet}
 
 <div>
-	<div class="sticky top-0 z-10 grid grid-cols-[44px_1fr_44px] items-center bg-notebook-paper py-2">
+	<div
+		class="sticky top-0 z-10 -mx-[var(--gutter)] grid grid-cols-[44px_1fr_44px] items-center bg-notebook-paper px-3 py-2"
+	>
 		<a
 			href={resolve('/(app)/(tabs)/me')}
 			class="grid size-11 place-items-center rounded-full text-graphite"
@@ -110,7 +112,7 @@
 							<span class="mt-2 block px-1 text-[13.5px] leading-tight font-semibold"
 								>{b.title}</span
 							>
-							<span class="mt-0.5 block text-[12.5px] text-pencil"
+							<span class="mt-0.5 block text-[12.5px] leading-[normal] text-pencil"
 								>{m.chy51s1_date({ date: b.date })}</span
 							>
 						</div>
@@ -124,7 +126,7 @@
 					{view.kind === 'none' ? m.chy51s1_try() : m.chy51s1_soon()}
 				</h2>
 				{#if view.kind === 'none'}
-					<p class="mt-0.5 text-[13.5px] text-pencil">{m.chy51s1_try_sub()}</p>
+					<p class="mt-0.5 text-[13.5px] leading-[normal] text-pencil">{m.chy51s1_try_sub()}</p>
 				{/if}
 				{@render lockedList(view.soon)}
 			</Section>
@@ -132,7 +134,7 @@
 		{#if view.rest.length}
 			<Section>
 				<h2 class="font-display text-[19px] leading-tight font-semibold">{m.chy51s1_rest()}</h2>
-				<p class="mt-0.5 text-[13.5px] text-pencil">{m.chy51s1_rest_sub()}</p>
+				<p class="mt-0.5 text-[13.5px] leading-[normal] text-pencil">{m.chy51s1_rest_sub()}</p>
 				{@render lockedList(view.rest)}
 			</Section>
 		{/if}
