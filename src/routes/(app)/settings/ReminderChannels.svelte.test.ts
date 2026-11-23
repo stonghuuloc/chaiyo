@@ -288,7 +288,7 @@ describe('ReminderChannels email row', () => {
 		release();
 		await settle();
 		await settle();
-		expect(deps.saveEmail.mock.calls).toEqual([[false], [true]]);
+		expect(vi.mocked(deps.saveEmail).mock.calls).toEqual([[false], [true]]);
 		expect(saved).toEqual([false, true]);
 		expect(sw('Email').getAttribute('aria-checked')).toBe('true');
 	});
