@@ -1,0 +1,14 @@
+id: h1-g61
+level: 1
+std:
+  - 1
+title: "Bên trong: 里边"
+pattern: danh từ + 里边 / 里
+explain: 里边 (lý biên, lǐbian) là “bên trong”. 房子里边 = bên trong nhà; có thể rút gọn 房子里. 里边有什么？ hỏi trong đó có gì.
+examples:
+  - s-h1-26-03
+  - s-h1-26-14
+pitfalls:
+  - wrong: 里边房间有什么
+    right: 房间里边有什么
+    why: 里边 đứng sau danh từ.

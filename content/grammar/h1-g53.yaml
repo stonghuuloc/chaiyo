@@ -1,0 +1,18 @@
+id: h1-g53
+level: 1
+std:
+  - 14
+  - 34
+title: "Đừng: 别 + động từ"
+pattern: 别 + động từ
+explain: |-
+  别 (biệt, bié) + động từ nghĩa là “đừng, chớ”, dùng để cấm hoặc khuyên: 别坐这儿 = Đừng ngồi đây. 别在这里吃饭 = Đừng ăn cơm ở đây.
+
+  Không thêm 吗 sau câu cấm.
+examples:
+  - s-h1-23-07
+  - s-h1-23-09
+pitfalls:
+  - wrong: 不坐别这儿
+    right: 别坐这儿
+    why: 别 đứng trước động từ.

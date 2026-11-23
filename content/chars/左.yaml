@@ -1,0 +1,13 @@
+hanzi: 左
+readings:
+  - pinyin: zuǒ
+    hanviet: tả
+radical: 工
+ids: ⿸𠂇工
+strokes: 5
+mnemonic:
+  hinh: "`[từ nguyên]` 左 vẽ một bàn tay (nét phẩy trên) cầm cái thước thợ 工 — tay trái cầm dụng cụ phụ trong khi tay phải làm việc chính."
+  am: Hán-Việt "tả" — trong "tả hữu" (左右, người giúp việc thân cận), "tả khuynh" (thiên tả).
+  doiThat: Biển chỉ đường, GPS ("左转" rẽ trái), nút mũi tên trái trong app bản đồ/game.
+  tuongPhan: '左 đáy là 工 (2 nét ngang + 1 sổ, kín góc vuông) — khác 右 đáy là 口 (miệng, hình vuông kín 4 cạnh). Nhớ: "trái làm THỢ (工), phải MỞ MIỆNG (口)".'
+  kind: etymology

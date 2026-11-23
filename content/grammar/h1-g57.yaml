@@ -1,0 +1,17 @@
+id: h1-g57
+level: 1
+std:
+  - 15
+title: "Từ đâu: 从"
+pattern: 从 + nơi chốn + động từ
+explain: |-
+  从 (tòng, cóng) nghĩa là “từ”, 从 + nơi chốn + 来 / 去: 我从学校来 = Tớ từ trường đến. 她从家去学校.
+
+  Điểm đến dùng 到: 从学校走到医院.
+examples:
+  - s-h1-25-07
+  - s-h1-25-13
+pitfalls:
+  - wrong: 我学校从来
+    right: 我从学校来
+    why: 从 + nơi chốn đứng trước động từ.

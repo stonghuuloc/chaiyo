@@ -1,0 +1,14 @@
+id: h1-g59
+level: 1
+std:
+  - 13
+title: "Thêm nữa: 还"
+pattern: 还 + 有 / động từ
+explain: "还 (hoàn, hái) nghĩa là “còn, thêm nữa”, đứng trước động từ: 里边有电脑，还有电视 = Bên trong có máy tính, còn có ti vi. 我还想看电视."
+examples:
+  - s-h1-26-04
+  - s-h1-26-11
+pitfalls:
+  - wrong: 我有电脑，有还电视
+    right: 我有电脑，还有电视
+    why: 还 đứng trước động từ.

@@ -1,0 +1,14 @@
+id: h1-g56
+level: 1
+std:
+  - 29
+title: "Đi đâu làm gì: 去"
+pattern: 主语 + 去 + nơi + động từ
+explain: "去 (khứ, qù) + nơi chốn + động từ nói đi đến đâu để làm gì: 我去医院看病 = Tớ đi bệnh viện khám bệnh. 我想去图书馆看书."
+examples:
+  - s-h1-25-02
+  - s-h1-25-15
+pitfalls:
+  - wrong: 我看病去医院
+    right: 我去医院看病
+    why: 去 + nơi chốn đứng trước động từ.

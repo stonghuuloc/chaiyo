@@ -1,0 +1,14 @@
+id: h1-g52
+level: 1
+std:
+  - 2
+title: "Xin phép: 能"
+pattern: 能 + động từ + 吗？
+explain: "能 (năng, néng) + động từ + 吗 hỏi xin phép hoặc hỏi có thể không: 我能坐这儿吗？ = Tớ ngồi đây được không? Trả lời đồng ý: 能, 请坐. Từ chối: 不能."
+examples:
+  - s-h1-23-01
+  - s-h1-23-11
+pitfalls:
+  - wrong: 我坐能这儿吗
+    right: 我能坐这儿吗
+    why: 能 đứng trước động từ.

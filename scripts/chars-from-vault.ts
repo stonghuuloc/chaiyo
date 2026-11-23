@@ -660,11 +660,160 @@ const rows: Record<string, Row> = {
 		kind: 'etymology'
 	},
 	电: { readings: [r('diàn', 'điện')], radical: '田', ids: '⿻日乚', strokes: 5, kind: 'invented' },
-	影: { readings: [r('yǐng', 'ảnh')], radical: '彡', ids: '⿰景彡', strokes: 15, kind: 'etymology' }
+	影: {
+		readings: [r('yǐng', 'ảnh')],
+		radical: '彡',
+		ids: '⿰景彡',
+		strokes: 15,
+		kind: 'etymology'
+	},
+	里: { readings: [r('lǐ', 'lý')], radical: '里', ids: '⿱⿻甲一一', strokes: 7, kind: 'invented' },
+	左: { readings: [r('zuǒ', 'tả')], radical: '工', ids: '⿸𠂇工', strokes: 5, kind: 'etymology' },
+	右: { readings: [r('yòu', 'hữu')], radical: '口', ids: '⿸𠂇口', strokes: 5, kind: 'etymology' },
+	坐: { readings: [r('zuò', 'toạ')], radical: '土', ids: '⿻土从', strokes: 7, kind: 'etymology' },
+	边: {
+		readings: [r('biān', 'biên')],
+		radical: '辵',
+		ids: '⿺辶力',
+		strokes: 5,
+		kind: 'etymology'
+	},
+	别: { readings: [r('bié', 'biệt')], radical: '刀', ids: '⿰另刂', strokes: 7, kind: 'etymology' },
+	旁: {
+		readings: [r('páng', 'bàng')],
+		radical: '方',
+		ids: '⿱⿱⿱亠丷冖方',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	大: {
+		readings: [r('dà', 'đại'), r('dài', 'đại', true)],
+		radical: '大',
+		ids: '⿻一人',
+		strokes: 3,
+		kind: 'etymology'
+	},
+	图: { readings: [r('tú', 'đồ')], radical: '囗', ids: '⿴囗冬', strokes: 8, kind: 'etymology' },
+	馆: {
+		readings: [r('guǎn', 'quán')],
+		radical: '食',
+		ids: '⿰饣官',
+		strokes: 11,
+		kind: 'etymology'
+	},
+	桌: {
+		readings: [r('zhuō', 'trác')],
+		radical: '木',
+		ids: '⿱卓木',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	地: {
+		readings: [r('dì', 'địa'), r('de', 'địa', true)],
+		radical: '土',
+		ids: '⿰土也',
+		strokes: 6,
+		kind: 'etymology'
+	},
+	方: {
+		readings: [r('fāng', 'phương')],
+		radical: '方',
+		ids: '⿱亠⿰丿𠃌',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	从: {
+		readings: [r('cóng', 'tòng')],
+		radical: '人',
+		ids: '⿰人人',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	到: { readings: [r('dào', 'đáo')], radical: '刀', ids: '⿰至刂', strokes: 8, kind: 'etymology' },
+	看: {
+		readings: [r('kàn', 'khán'), r('kān', 'khán', true)],
+		radical: '目',
+		ids: '⿱龵目',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	病: {
+		readings: [r('bìng', 'bệnh')],
+		radical: '疒',
+		ids: '⿸疒丙',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	走: { readings: [r('zǒu', 'tẩu')], radical: '走', ids: '⿱土龰', strokes: 7, kind: 'etymology' },
+	房: {
+		readings: [r('fáng', 'phòng')],
+		radical: '户',
+		ids: '⿸户方',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	视: { readings: [r('shì', 'thị')], radical: '见', ids: '⿰礻见', strokes: 8, kind: 'etymology' },
+	脑: { readings: [r('nǎo', 'não')], radical: '月', ids: '⿰月㐫', strokes: 10, kind: 'etymology' },
+	休: { readings: [r('xiū', 'hưu')], radical: '人', ids: '⿰亻木', strokes: 6, kind: 'etymology' },
+	息: { readings: [r('xī', 'tức')], radical: '心', ids: '⿱自心', strokes: 10, kind: 'etymology' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists
 const local: Record<string, Mnemonic> = {
+	旁: {
+		hinh: '方 phương hướng + 亠 mái che ở trên → vật ở ngay một phương cạnh mình = bên cạnh',
+		am: 'bàng — "bàng quan", "bàng biên" (bên cạnh)',
+		doiThat: '旁边',
+		tuongPhan: '≠ 方 (fāng): 旁 thêm phần mái che phía trên'
+	},
+	图: {
+		hinh: '囗 khung bao quanh + 冬 bên trong → bức vẽ nằm trong khung = bản đồ, tranh',
+		am: 'đồ — "địa đồ", "đồ thư quán"',
+		doiThat: '图书馆, 地图',
+		tuongPhan: '≠ 国 (guó): cùng khung 囗, bên trong khác'
+	},
+	馆: {
+		hinh: '饣 ăn + 官 gợi âm → nơi có người phục vụ, nhà, quán, viện',
+		am: 'quán — "đồ thư quán", "phạn quán"',
+		doiThat: '图书馆, 饭馆',
+		tuongPhan: '≠ 官 (guān): 馆 thêm 饣 thành quán, nhà'
+	},
+	桌: {
+		hinh: '卓 gợi âm + 木 gỗ → đồ làm bằng gỗ để đặt đồ = cái bàn',
+		am: 'trác — "trác tử" (cái bàn)',
+		doiThat: '桌子',
+		tuongPhan: '≠ 卓 (zhuó): 桌 thêm 木 thành cái bàn'
+	},
+	病: {
+		hinh: '疒 bộ bệnh + 丙 gợi âm → nằm trên giường vì ốm = bệnh',
+		am: 'bệnh — "bệnh viện", "bệnh nhân"',
+		doiThat: '生病, 看病',
+		tuongPhan: '≠ 丙 (bǐng): 病 thêm 疒 thành bệnh'
+	},
+	房: {
+		hinh: '户 cửa + 方 gợi âm → căn có cửa = nhà, phòng',
+		am: 'phòng — "phòng ốc", "thư phòng"',
+		doiThat: '房间, 房子',
+		tuongPhan: '≠ 方 (fāng): 房 thêm 户 thành phòng'
+	},
+	视: {
+		hinh: '礻 báo hiệu + 见 nhìn → nhìn kỹ = xem',
+		am: 'thị — "điện thị", "thị lực"',
+		doiThat: '电视',
+		tuongPhan: '≠ 见 (jiàn): 视 thêm 礻 thành nhìn xem'
+	},
+	脑: {
+		hinh: '月 thịt + 㐫 phần đầu → phần thịt trong đầu = não',
+		am: 'não — "điện não", "đại não"',
+		doiThat: '电脑',
+		tuongPhan: '≠ 胸 (xiōng): cùng bộ 月, 脑 chỉ đầu'
+	},
+	息: {
+		hinh: '自 mũi + 心 tim → hơi thở từ mũi và tim = hơi thở, nghỉ',
+		am: 'tức — "hưu tức", "tin tức"',
+		doiThat: '休息',
+		tuongPhan: '≠ 思 (sī): cùng 心, trên khác'
+	},
 	渴: {
 		hinh: '氵 nước + 曷 gợi âm → thiếu nước = khát',
 		am: 'khát — "khát", "khát nước"',

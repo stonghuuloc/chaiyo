@@ -1,0 +1,13 @@
+hanzi: 房
+readings:
+  - pinyin: fáng
+    hanviet: phòng
+radical: 户
+ids: ⿸户方
+strokes: 8
+mnemonic:
+  hinh: 户 cửa + 方 gợi âm → căn có cửa = nhà, phòng
+  am: phòng — "phòng ốc", "thư phòng"
+  doiThat: 房间, 房子
+  tuongPhan: "≠ 方 (fāng): 房 thêm 户 thành phòng"
+  kind: etymology

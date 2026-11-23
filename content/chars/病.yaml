@@ -1,0 +1,13 @@
+hanzi: 病
+readings:
+  - pinyin: bìng
+    hanviet: bệnh
+radical: 疒
+ids: ⿸疒丙
+strokes: 10
+mnemonic:
+  hinh: 疒 bộ bệnh + 丙 gợi âm → nằm trên giường vì ốm = bệnh
+  am: bệnh — "bệnh viện", "bệnh nhân"
+  doiThat: 生病, 看病
+  tuongPhan: "≠ 丙 (bǐng): 病 thêm 疒 thành bệnh"
+  kind: etymology

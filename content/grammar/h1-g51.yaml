@@ -1,0 +1,17 @@
+id: h1-g51
+level: 1
+std:
+  - 6
+title: "Ở đây, ở kia: 这儿 · 那儿"
+pattern: 这儿 / 那儿 + 是 / 有 + …
+explain: |-
+  这儿 (giá nhi, zhèr) là “ở đây, chỗ này”, 那儿 (na nhi, nàr) là “ở kia, chỗ đó”. Chúng đứng đầu câu như danh từ chỉ nơi chốn: 这儿是学校，那儿是医院.
+
+  Nói “ở” kiểu khác: 这里, 那里 cùng nghĩa với 这儿, 那儿.
+examples:
+  - s-h1-22-10
+  - s-h1-22-14
+pitfalls:
+  - wrong: 这儿学校
+    right: 这儿是学校
+    why: Nối 这儿 với danh từ cần có 是.

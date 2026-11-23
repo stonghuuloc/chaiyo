@@ -1,0 +1,15 @@
+id: h1-g58
+level: 1
+std:
+  - 11
+  - 12
+title: "Trước rồi sau: 先…再…"
+pattern: 先 + động từ，再 + động từ
+explain: "先 (tiên, xiān) là “trước”, 再 (tái, zài) là “rồi, sau đó”. 先…再… nói thứ tự hai việc: 我先吃饭，再去看病 = Tớ ăn cơm trước, rồi đi khám."
+examples:
+  - s-h1-25-05
+  - s-h1-25-12
+pitfalls:
+  - wrong: 我再吃饭，先去看病
+    right: 我先吃饭，再去看病
+    why: 先 đứng trước việc làm trước.

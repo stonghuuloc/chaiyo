@@ -1,0 +1,17 @@
+id: h1-g54
+level: 1
+std:
+  - 37
+title: "Có ở nơi nào: 有"
+pattern: nơi chốn + 有 + người / vật
+explain: |-
+  有 (hữu) còn nói nơi nào đó có gì: 书包里有书 = Trong cặp có sách. Hỏi: 学校里有什么？
+
+  Dạng này đặt nơi chốn trước, người hoặc vật sau 有.
+examples:
+  - s-h1-24-08
+  - s-h1-24-14
+pitfalls:
+  - wrong: 有书书包里
+    right: 书包里有书
+    why: Nơi chốn đứng trước 有.

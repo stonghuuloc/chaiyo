@@ -1,0 +1,13 @@
+hanzi: 右
+readings:
+  - pinyin: yòu
+    hanviet: hữu
+radical: 口
+ids: ⿸𠂇口
+strokes: 5
+mnemonic:
+  hinh: "`[từ nguyên]` 右 vẽ bàn tay (phẩy trên) đặt cạnh miệng 口 — tay phải phối hợp với miệng khi ăn, viết, làm việc chính."
+  am: Hán-Việt "hữu" — trong "hữu khuynh" (thiên hữu), "tả hữu" (左右).
+  doiThat: Biển chỉ đường ("右转" rẽ phải), nút mũi tên phải trong app bản đồ, phím tắt game.
+  tuongPhan: '右 đáy là 口 (miệng, vuông kín 4 cạnh) — khác 左 đáy là 工 (2 ngang 1 sổ, hở góc). Nhớ: "phải MỞ MIỆNG (口), trái làm THỢ (工)".'
+  kind: etymology

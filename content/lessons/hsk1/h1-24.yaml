@@ -1,0 +1,686 @@
+id: h1-24
+level: 1
+topic: Nơi chốn
+order: 24
+title: Trường học
+titleHanzi: 学校
+goal: Nói nơi nào có gì bằng 有 và 是; kể tên chỗ trong trường
+scene:
+  file: lessons/h1-24.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand in a bright library with tall shelves; the red panda holds a bag on a table and the takin holds a book.
+sentences:
+  - id: s-h1-24-01
+    hanzi: 学校里有什么？
+    pinyin: xuéxiào lǐ yǒu shénme?
+    vi: Trong trường có gì?
+    speaker: takin
+  - id: s-h1-24-02
+    hanzi: 学校里有大学生，有老师。
+    pinyin: xuéxiào lǐ yǒu dàxuéshēng, yǒu lǎoshī.
+    vi: Trong trường có sinh viên, có giáo viên.
+    speaker: redpanda
+  - id: s-h1-24-03
+    hanzi: 学校里有图书馆吗？
+    pinyin: xuéxiào lǐ yǒu túshūguǎn ma?
+    vi: Trong trường có thư viện không?
+    speaker: takin
+  - id: s-h1-24-04
+    hanzi: 有，图书馆在学校里边。
+    pinyin: yǒu, túshūguǎn zài xuéxiào lǐbian.
+    vi: Có, thư viện ở bên trong trường.
+    speaker: redpanda
+  - id: s-h1-24-05
+    hanzi: 图书馆里有什么？
+    pinyin: túshūguǎn lǐ yǒu shénme?
+    vi: Trong thư viện có gì?
+    speaker: takin
+  - id: s-h1-24-06
+    hanzi: 有书，有桌子。
+    pinyin: yǒu shū, yǒu zhuōzi.
+    vi: Có sách, có bàn.
+    speaker: redpanda
+  - id: s-h1-24-07
+    hanzi: 桌子上有书包吗？
+    pinyin: zhuōzi shàng yǒu shūbāo ma?
+    vi: Trên bàn có cặp sách không?
+    speaker: takin
+  - id: s-h1-24-08
+    hanzi: 有，桌子上有一个书包。
+    pinyin: yǒu, zhuōzi shàng yǒu yī gè shūbāo.
+    vi: Có, trên bàn có một cái cặp.
+    speaker: redpanda
+  - id: s-h1-24-09
+    hanzi: 桌子中间是什么？
+    pinyin: zhuōzi zhōngjiān shì shénme?
+    vi: Ở giữa bàn là gì?
+    speaker: takin
+  - id: s-h1-24-10
+    hanzi: 桌子中间是一杯茶。
+    pinyin: zhuōzi zhōngjiān shì yī bēi chá.
+    vi: Ở giữa bàn là một cốc trà.
+    speaker: redpanda
+  - id: s-h1-24-11
+    hanzi: 学校前面是大学。
+    pinyin: xuéxiào qiánmian shì dàxué.
+    vi: Phía trước trường là đại học.
+  - id: s-h1-24-12
+    hanzi: 这个地方有图书馆吗？
+    pinyin: zhège dìfang yǒu túshūguǎn ma?
+    vi: Chỗ này có thư viện không?
+  - id: s-h1-24-13
+    hanzi: 图书馆旁边是大学生的家。
+    pinyin: túshūguǎn pángbiān shì dàxuéshēng de jiā.
+    vi: Cạnh thư viện là nhà của sinh viên.
+  - id: s-h1-24-14
+    hanzi: 书包里有书和钱。
+    pinyin: shūbāo lǐ yǒu shū hé qián.
+    vi: Trong cặp có sách và tiền.
+  - id: s-h1-24-15
+    hanzi: 你的书包里有什么？
+    pinyin: nǐ de shūbāo lǐ yǒu shénme?
+    vi: Trong cặp của bạn có gì?
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 大学
+      - 大学生
+      - 图书馆
+      - 桌子
+      - 书包
+      - 中间
+      - 地方
+      - 里边
+  grammar:
+    ids:
+      - h1-g54
+      - h1-g55
+    drills:
+      - id: q-h1-24-g01
+        type: choice
+        tests:
+          words:
+            - 书包
+          grammar:
+            - h1-g54
+        prompt:
+          kind: vi
+          text: Trong cặp có sách.
+        optionKind: hanzi
+        options:
+          - 书包里有书
+          - 书包有里书
+          - 有书书包里
+        answer: 0
+      - id: q-h1-24-g02
+        type: trueFalse
+        tests:
+          words:
+            - 桌子
+          grammar:
+            - h1-g54
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 有书桌子上。
+        answer: false
+      - id: q-h1-24-g03
+        type: choice
+        tests:
+          words:
+            - 桌子
+            - 书包
+          grammar:
+            - h1-g54
+        prompt:
+          kind: vi
+          text: Trên bàn có một cái cặp.
+        optionKind: hanzi
+        options:
+          - 桌子上有一个书包
+          - 桌子有上一个书包
+          - 有桌子上一个书包
+        answer: 0
+      - id: q-h1-24-g04
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 图书馆
+          grammar:
+            - h1-g54
+        prompt:
+          kind: audio
+          ref: s-h1-24-03
+        optionKind: hanzi
+        options:
+          - 有，图书馆在学校里边。
+          - 学校前面是大学。
+          - 我想喝茶。
+        answer: 0
+      - id: q-h1-24-g05
+        type: choice
+        tests:
+          words:
+            - 大学
+          grammar:
+            - h1-g55
+        prompt:
+          kind: vi
+          text: Phía trước trường là đại học.
+        optionKind: hanzi
+        options:
+          - 学校前面是大学
+          - 学校前面有大学是
+          - 学校是前面大学
+        answer: 0
+      - id: q-h1-24-g06
+        type: order
+        tests:
+          words:
+            - 中间
+          grammar:
+            - h1-g55
+        tiles:
+          - 桌子
+          - 中间
+          - 是
+          - 一杯
+          - 茶
+        answer: s-h1-24-10
+      - id: q-h1-24-g07
+        type: trueFalse
+        tests:
+          words:
+            - 大学生
+          grammar:
+            - h1-g55
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 图书馆旁边是大学生的家。 nghĩa là “Cạnh thư viện là nhà sinh viên”.
+        answer: true
+      - id: q-h1-24-g08
+        type: trueFalse
+        tests:
+          words:
+            - 大学
+          grammar:
+            - h1-g55
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 学校前面有大学是。
+        answer: false
+  dialogue:
+    parts:
+      - title: Trong trường có gì?
+        lines:
+          - s-h1-24-01
+          - s-h1-24-02
+          - s-h1-24-03
+          - s-h1-24-04
+          - s-h1-24-05
+          - s-h1-24-06
+      - title: Trên bàn có gì?
+        lines:
+          - s-h1-24-07
+          - s-h1-24-08
+          - s-h1-24-09
+          - s-h1-24-10
+    questions:
+      - id: q-h1-24-d01
+        type: choice
+        ask: Trên bàn có gì?
+        tests:
+          words:
+            - 桌子
+            - 书包
+          grammar:
+            - h1-g54
+        prompt:
+          kind: audio
+          ref: s-h1-24-08
+        optionKind: vi
+        options:
+          - một cái cặp
+          - một cốc trà
+          - một quyển sách
+        answer: 0
+      - id: q-h1-24-d02
+        type: choice
+        ask: Ở giữa bàn là gì?
+        tests:
+          words:
+            - 中间
+          grammar:
+            - h1-g55
+        prompt:
+          kind: audio
+          ref: s-h1-24-10
+        optionKind: vi
+        options:
+          - một cốc trà
+          - một cái cặp
+          - sách
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-24-l01
+        type: tone
+        tests:
+          words:
+            - 图书馆
+          tone: true
+        prompt:
+          kind: audio
+          ref: 图书馆
+        syllable: 0
+        answer: 2
+      - id: q-h1-24-l02
+        type: choice
+        tests:
+          words:
+            - 大学
+        prompt:
+          kind: audio
+          ref: 大学
+        optionKind: hanzi
+        options:
+          - 大学
+          - 大学生
+          - 图书馆
+          - 桌子
+        answer: 0
+      - id: q-h1-24-l03
+        type: choice
+        tests:
+          words:
+            - 书包
+        prompt:
+          kind: audio
+          ref: 书包
+        optionKind: hanzi
+        options:
+          - 书包
+          - 中间
+          - 地方
+          - 里边
+        answer: 0
+      - id: q-h1-24-s01
+        type: readAloud
+        tests:
+          words:
+            - 大学
+            - 里边
+          grammar:
+            - h1-g54
+          tone: true
+        sentence: s-h1-24-01
+      - id: q-h1-24-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 书包
+          grammar:
+            - h1-g54
+        prompt:
+          kind: vi
+          text: Nói trong cặp của bạn có gì.
+        rubric:
+          - Dùng 我的书包里有…
+        answer: s-h1-24-14
+      - id: q-h1-24-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 大学
+          grammar:
+            - h1-g55
+        prompt:
+          kind: vi
+          text: Nói phía trước trường là gì.
+        rubric:
+          - Dùng 学校前面是…
+        answer: s-h1-24-11
+  writing:
+    chars:
+      - 大
+      - 图
+      - 方
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-24-x01
+      type: choice
+      tests:
+        words:
+          - 大学
+      prompt:
+        kind: hanzi
+        ref: 大学
+      optionKind: vi
+      options:
+        - trường đại học
+        - sinh viên
+        - thư viện
+        - cái bàn
+      answer: 0
+    - id: q-h1-24-x02
+      type: choice
+      tests:
+        words:
+          - 大学生
+      prompt:
+        kind: vi
+        text: sinh viên
+      optionKind: hanzi
+      options:
+        - 大学生
+        - 大学
+        - 图书馆
+        - 桌子
+      answer: 0
+    - id: q-h1-24-x03
+      type: choice
+      tests:
+        words:
+          - 图书馆
+      prompt:
+        kind: hanzi
+        ref: 图书馆
+      optionKind: vi
+      options:
+        - thư viện
+        - trường đại học
+        - sinh viên
+        - cái bàn
+      answer: 0
+    - id: q-h1-24-x04
+      type: choice
+      tests:
+        words:
+          - 桌子
+      prompt:
+        kind: vi
+        text: cái bàn
+      optionKind: hanzi
+      options:
+        - 桌子
+        - 大学
+        - 大学生
+        - 图书馆
+      answer: 0
+    - id: q-h1-24-x05
+      type: choice
+      tests:
+        words:
+          - 书包
+      prompt:
+        kind: hanzi
+        ref: 书包
+      optionKind: vi
+      options:
+        - cặp sách
+        - trường đại học
+        - sinh viên
+        - thư viện
+      answer: 0
+    - id: q-h1-24-x06
+      type: choice
+      tests:
+        words:
+          - 中间
+      prompt:
+        kind: vi
+        text: ở giữa
+      optionKind: hanzi
+      options:
+        - 中间
+        - 大学
+        - 大学生
+        - 图书馆
+      answer: 0
+    - id: q-h1-24-x07
+      type: choice
+      tests:
+        words:
+          - 地方
+      prompt:
+        kind: hanzi
+        ref: 地方
+      optionKind: vi
+      options:
+        - nơi, chỗ
+        - trường đại học
+        - sinh viên
+        - thư viện
+      answer: 0
+    - id: q-h1-24-x08
+      type: choice
+      tests:
+        words:
+          - 里边
+      prompt:
+        kind: vi
+        text: bên trong
+      optionKind: hanzi
+      options:
+        - 里边
+        - 大学
+        - 大学生
+        - 图书馆
+      answer: 0
+    - id: q-h1-24-x09
+      type: choice
+      tests:
+        words:
+          - 书包
+        grammar:
+          - h1-g54
+      prompt:
+        kind: vi
+        text: Trong cặp có sách.
+      optionKind: hanzi
+      options:
+        - 书包里有书
+        - 书包有里书
+        - 有书书包里
+      answer: 0
+    - id: q-h1-24-x10
+      type: trueFalse
+      tests:
+        words:
+          - 桌子
+        grammar:
+          - h1-g54
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 有书桌子上。
+      answer: false
+    - id: q-h1-24-x11
+      type: choice
+      tests:
+        words:
+          - 桌子
+          - 书包
+        grammar:
+          - h1-g54
+      prompt:
+        kind: vi
+        text: Trên bàn có một cái cặp.
+      optionKind: hanzi
+      options:
+        - 桌子上有一个书包
+        - 桌子有上一个书包
+        - 有桌子上一个书包
+      answer: 0
+    - id: q-h1-24-x12
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 图书馆
+        grammar:
+          - h1-g54
+      prompt:
+        kind: audio
+        ref: s-h1-24-03
+      optionKind: hanzi
+      options:
+        - 有，图书馆在学校里边。
+        - 学校前面是大学。
+        - 我想喝茶。
+      answer: 0
+    - id: q-h1-24-x13
+      type: choice
+      tests:
+        words:
+          - 大学
+        grammar:
+          - h1-g55
+      prompt:
+        kind: vi
+        text: Phía trước trường là đại học.
+      optionKind: hanzi
+      options:
+        - 学校前面是大学
+        - 学校前面有大学是
+        - 学校是前面大学
+      answer: 0
+    - id: q-h1-24-x14
+      type: order
+      tests:
+        words:
+          - 中间
+        grammar:
+          - h1-g55
+      tiles:
+        - 桌子
+        - 中间
+        - 是
+        - 一杯
+        - 茶
+      answer: s-h1-24-10
+    - id: q-h1-24-x15
+      type: trueFalse
+      tests:
+        words:
+          - 大学生
+        grammar:
+          - h1-g55
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 图书馆旁边是大学生的家。 nghĩa là “Cạnh thư viện là nhà sinh viên”.
+      answer: true
+    - id: q-h1-24-x16
+      type: trueFalse
+      tests:
+        words:
+          - 大学
+        grammar:
+          - h1-g55
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 学校前面有大学是。
+      answer: false
+    - id: q-h1-24-x17
+      type: choice
+      tests:
+        words:
+          - 里边
+          - 图书馆
+        grammar:
+          - h1-g54
+      prompt:
+        kind: audio
+        ref: s-h1-24-04
+      optionKind: vi
+      options:
+        - Thư viện ở bên trong trường
+        - Thư viện ở ngoài trường
+        - Thư viện ở phía sau
+      answer: 0
+    - id: q-h1-24-x18
+      type: choice
+      tests:
+        words:
+          - 地方
+          - 图书馆
+        grammar:
+          - h1-g54
+      prompt:
+        kind: vi
+        text: Chỗ này có thư viện không?
+      optionKind: hanzi
+      options:
+        - 这个地方有图书馆吗
+        - 这个有图书馆地方吗
+        - 这个地方图书馆有吗
+      answer: 0
+    - id: q-h1-24-x19
+      type: choice
+      tests:
+        words:
+          - 书包
+        grammar:
+          - h1-g54
+      prompt:
+        kind: vi
+        text: Trong cặp có sách và tiền.
+      optionKind: hanzi
+      options:
+        - 书包里有书和钱
+        - 书包有书和钱里
+        - 有书和钱书包里
+      answer: 0
+    - id: q-h1-24-x20
+      type: trueFalse
+      tests:
+        words:
+          - 大学生
+        grammar:
+          - h1-g54
+      prompt:
+        kind: hanzi
+        ref: 大学生
+      statement: 大学生 nghĩa là “sinh viên”.
+      answer: true
+    - id: q-h1-24-x21
+      type: choice
+      tests:
+        words:
+          - 中间
+        grammar:
+          - h1-g55
+      prompt:
+        kind: audio
+        ref: s-h1-24-09
+      optionKind: vi
+      options:
+        - Ở giữa bàn là gì?
+        - Trên bàn có gì?
+        - Trong cặp có gì?
+      answer: 0
+    - id: q-h1-24-x22
+      type: choice
+      tests:
+        words:
+          - 桌子
+        grammar:
+          - h1-g54
+      prompt:
+        kind: vi
+        text: Trong thư viện có sách, có bàn.
+      optionKind: hanzi
+      options:
+        - 图书馆里有书，有桌子
+        - 图书馆有里书，有桌子
+        - 有书图书馆里，有桌子
+      answer: 0

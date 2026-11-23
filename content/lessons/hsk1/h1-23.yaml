@@ -1,0 +1,708 @@
+id: h1-23
+level: 1
+topic: Nơi chốn
+order: 23
+title: Chỗ ngồi
+titleHanzi: 坐
+goal: Xin phép ngồi bằng 能; ngăn lại bằng 别; chỉ chỗ bằng 这儿, 那里, 旁边
+scene:
+  file: lessons/h1-23.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand in a quiet room with two empty chairs; the red panda points at a chair and the takin shakes one paw.
+sentences:
+  - id: s-h1-23-01
+    hanzi: 我能坐这儿吗？
+    pinyin: wǒ néng zuò zhèr ma?
+    vi: Tớ ngồi đây được không?
+    speaker: takin
+  - id: s-h1-23-02
+    hanzi: 能，请坐。
+    pinyin: néng, qǐng zuò.
+    vi: Được, mời ngồi.
+    speaker: redpanda
+  - id: s-h1-23-03
+    hanzi: 你能坐我旁边吗？
+    pinyin: nǐ néng zuò wǒ pángbiān ma?
+    vi: Cậu ngồi cạnh tớ được không?
+    speaker: takin
+  - id: s-h1-23-04
+    hanzi: 谢谢，我坐你旁边。
+    pinyin: xièxie, wǒ zuò nǐ pángbiān.
+    vi: Cảm ơn, tớ ngồi cạnh cậu.
+    speaker: redpanda
+  - id: s-h1-23-05
+    hanzi: 这里有人吗？
+    pinyin: zhèlǐ yǒu rén ma?
+    vi: Chỗ này có người không?
+    speaker: takin
+  - id: s-h1-23-06
+    hanzi: 没有，请坐。
+    pinyin: méiyǒu, qǐng zuò.
+    vi: Không có, mời ngồi.
+    speaker: redpanda
+  - id: s-h1-23-07
+    hanzi: 别坐这儿，那儿好。
+    pinyin: bié zuò zhèr, nàr hǎo.
+    vi: Đừng ngồi đây, kia tốt hơn.
+    speaker: takin
+  - id: s-h1-23-08
+    hanzi: 好，我们坐那里。
+    pinyin: hǎo, wǒmen zuò nàlǐ.
+    vi: Được, chúng ta ngồi chỗ đó.
+    speaker: redpanda
+  - id: s-h1-23-09
+    hanzi: 别在这里吃饭。
+    pinyin: bié zài zhèlǐ chī fàn.
+    vi: Đừng ăn cơm ở đây.
+    speaker: takin
+  - id: s-h1-23-10
+    hanzi: 对不起，我不吃了。
+    pinyin: duìbuqǐ, wǒ bù chī le.
+    vi: Xin lỗi, tôi không ăn nữa.
+    speaker: redpanda
+    unknown:
+      - hanzi: 了
+        pinyin: le
+        vi: trợ từ cuối câu
+  - id: s-h1-23-11
+    hanzi: 我能坐这边吗？
+    pinyin: wǒ néng zuò zhèbiān ma?
+    vi: Tôi ngồi bên này được không?
+  - id: s-h1-23-12
+    hanzi: 老师在我旁边。
+    pinyin: lǎoshī zài wǒ pángbiān.
+    vi: Cô giáo ở cạnh tôi.
+  - id: s-h1-23-13
+    hanzi: 别喝茶，喝水。
+    pinyin: bié hē chá, hē shuǐ.
+    vi: Đừng uống trà, uống nước.
+  - id: s-h1-23-14
+    hanzi: 你能说汉语吗？
+    pinyin: nǐ néng shuō Hànyǔ ma?
+    vi: Bạn nói được tiếng Trung không?
+  - id: s-h1-23-15
+    hanzi: 别在那儿等我。
+    pinyin: bié zài nàr děng wǒ.
+    vi: Đừng đợi tôi ở đó.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 坐
+      - 这边
+      - 别
+      - 这儿
+      - 那儿
+      - 这里
+      - 那里
+      - 旁边
+  grammar:
+    ids:
+      - h1-g52
+      - h1-g53
+    drills:
+      - id: q-h1-23-g01
+        type: choice
+        tests:
+          words:
+            - 坐
+          grammar:
+            - h1-g52
+        prompt:
+          kind: vi
+          text: Tớ ngồi đây được không?
+        optionKind: hanzi
+        options:
+          - 我能坐这儿吗
+          - 我坐能这儿吗
+          - 我能这儿坐吗
+        answer: 0
+      - id: q-h1-23-g02
+        type: choice
+        tests:
+          words:
+            - 坐
+            - 这边
+          grammar:
+            - h1-g52
+        prompt:
+          kind: vi
+          text: Tôi ngồi bên này được không?
+        optionKind: hanzi
+        options:
+          - 我能坐这边吗
+          - 我坐这边能吗
+          - 能我坐这边吗
+        answer: 0
+      - id: q-h1-23-g03
+        type: order
+        tests:
+          words:
+            - 坐
+            - 旁边
+          grammar:
+            - h1-g52
+        tiles:
+          - 你
+          - 能
+          - 坐
+          - 我
+          - 旁边
+          - 吗
+        answer: s-h1-23-03
+      - id: q-h1-23-g04
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 坐
+          grammar:
+            - h1-g52
+        prompt:
+          kind: audio
+          ref: s-h1-23-01
+        optionKind: hanzi
+        options:
+          - 能，请坐。
+          - 别坐这儿。
+          - 我在学校。
+        answer: 0
+      - id: q-h1-23-g05
+        type: choice
+        tests:
+          words:
+            - 别
+            - 坐
+          grammar:
+            - h1-g53
+        prompt:
+          kind: vi
+          text: Đừng ngồi đây.
+        optionKind: hanzi
+        options:
+          - 别坐这儿
+          - 不坐别这儿
+          - 坐别这儿
+        answer: 0
+      - id: q-h1-23-g06
+        type: trueFalse
+        tests:
+          words:
+            - 别
+          grammar:
+            - h1-g53
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 别坐这儿吗？
+        answer: false
+      - id: q-h1-23-g07
+        type: choice
+        tests:
+          words:
+            - 别
+            - 这里
+          grammar:
+            - h1-g53
+        prompt:
+          kind: vi
+          text: Đừng ăn cơm ở đây.
+        optionKind: hanzi
+        options:
+          - 别在这里吃饭
+          - 在这里别吃饭
+          - 别吃饭在这里
+        answer: 0
+      - id: q-h1-23-g08
+        type: order
+        tests:
+          words:
+            - 别
+            - 那儿
+          grammar:
+            - h1-g53
+        tiles:
+          - 别
+          - 在
+          - 那儿
+          - 等
+          - 我
+        answer: s-h1-23-15
+  dialogue:
+    parts:
+      - title: Xin phép ngồi
+        lines:
+          - s-h1-23-01
+          - s-h1-23-02
+          - s-h1-23-03
+          - s-h1-23-04
+          - s-h1-23-05
+          - s-h1-23-06
+      - title: Đừng ngồi đây
+        lines:
+          - s-h1-23-07
+          - s-h1-23-08
+          - s-h1-23-09
+          - s-h1-23-10
+    questions:
+      - id: q-h1-23-d01
+        type: choice
+        ask: Gấu trúc đỏ nói gì?
+        tests:
+          words:
+            - 坐
+          grammar:
+            - h1-g52
+        prompt:
+          kind: audio
+          ref: s-h1-23-02
+        optionKind: vi
+        options:
+          - được ngồi
+          - không được ngồi
+          - chưa rõ
+        answer: 0
+      - id: q-h1-23-d02
+        type: choice
+        ask: Hai bạn quyết định ngồi đâu?
+        tests:
+          words:
+            - 别
+            - 那里
+          grammar:
+            - h1-g53
+        prompt:
+          kind: audio
+          ref: s-h1-23-07
+        optionKind: vi
+        options:
+          - ngồi chỗ kia
+          - ngồi chỗ này
+          - ăn cơm
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-23-l01
+        type: tone
+        tests:
+          words:
+            - 坐
+          tone: true
+        prompt:
+          kind: audio
+          ref: 坐
+        syllable: 0
+        answer: 4
+      - id: q-h1-23-l02
+        type: choice
+        tests:
+          words:
+            - 坐
+        prompt:
+          kind: audio
+          ref: 坐
+        optionKind: hanzi
+        options:
+          - 坐
+          - 这边
+          - 别
+          - 这儿
+        answer: 0
+      - id: q-h1-23-l03
+        type: choice
+        tests:
+          words:
+            - 那儿
+        prompt:
+          kind: audio
+          ref: 那儿
+        optionKind: hanzi
+        options:
+          - 那儿
+          - 这里
+          - 那里
+          - 旁边
+        answer: 0
+      - id: q-h1-23-s01
+        type: readAloud
+        tests:
+          words:
+            - 坐
+            - 这儿
+          grammar:
+            - h1-g52
+          tone: true
+        sentence: s-h1-23-01
+      - id: q-h1-23-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 坐
+          grammar:
+            - h1-g52
+        prompt:
+          kind: vi
+          text: Xin phép ngồi cạnh một người.
+        rubric:
+          - Dùng 我能坐你旁边吗？
+        answer: s-h1-23-01
+      - id: q-h1-23-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 别
+          grammar:
+            - h1-g53
+        prompt:
+          kind: vi
+          text: Bảo một người đừng ngồi ở đây.
+        rubric:
+          - Dùng 别坐这儿
+        answer: s-h1-23-07
+  writing:
+    chars:
+      - 坐
+      - 别
+      - 旁
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-23-x01
+      type: choice
+      tests:
+        words:
+          - 坐
+      prompt:
+        kind: hanzi
+        ref: 坐
+      optionKind: vi
+      options:
+        - ngồi
+        - bên này
+        - đừng
+        - ở đây
+      answer: 0
+    - id: q-h1-23-x02
+      type: choice
+      tests:
+        words:
+          - 这边
+      prompt:
+        kind: vi
+        text: bên này
+      optionKind: hanzi
+      options:
+        - 这边
+        - 坐
+        - 别
+        - 这儿
+      answer: 0
+    - id: q-h1-23-x03
+      type: choice
+      tests:
+        words:
+          - 别
+      prompt:
+        kind: hanzi
+        ref: 别
+      optionKind: vi
+      options:
+        - đừng
+        - ngồi
+        - bên này
+        - ở đây
+      answer: 0
+    - id: q-h1-23-x04
+      type: choice
+      tests:
+        words:
+          - 这儿
+      prompt:
+        kind: vi
+        text: ở đây
+      optionKind: hanzi
+      options:
+        - 这儿
+        - 坐
+        - 这边
+        - 别
+      answer: 0
+    - id: q-h1-23-x05
+      type: choice
+      tests:
+        words:
+          - 那儿
+      prompt:
+        kind: hanzi
+        ref: 那儿
+      optionKind: vi
+      options:
+        - ở đó
+        - ngồi
+        - bên này
+        - đừng
+      answer: 0
+    - id: q-h1-23-x06
+      type: choice
+      tests:
+        words:
+          - 这里
+      prompt:
+        kind: vi
+        text: chỗ này
+      optionKind: hanzi
+      options:
+        - 这里
+        - 坐
+        - 这边
+        - 别
+      answer: 0
+    - id: q-h1-23-x07
+      type: choice
+      tests:
+        words:
+          - 那里
+      prompt:
+        kind: hanzi
+        ref: 那里
+      optionKind: vi
+      options:
+        - chỗ đó
+        - ngồi
+        - bên này
+        - đừng
+      answer: 0
+    - id: q-h1-23-x08
+      type: choice
+      tests:
+        words:
+          - 旁边
+      prompt:
+        kind: vi
+        text: bên cạnh
+      optionKind: hanzi
+      options:
+        - 旁边
+        - 坐
+        - 这边
+        - 别
+      answer: 0
+    - id: q-h1-23-x09
+      type: choice
+      tests:
+        words:
+          - 坐
+        grammar:
+          - h1-g52
+      prompt:
+        kind: vi
+        text: Tớ ngồi đây được không?
+      optionKind: hanzi
+      options:
+        - 我能坐这儿吗
+        - 我坐能这儿吗
+        - 我能这儿坐吗
+      answer: 0
+    - id: q-h1-23-x10
+      type: choice
+      tests:
+        words:
+          - 坐
+          - 这边
+        grammar:
+          - h1-g52
+      prompt:
+        kind: vi
+        text: Tôi ngồi bên này được không?
+      optionKind: hanzi
+      options:
+        - 我能坐这边吗
+        - 我坐这边能吗
+        - 能我坐这边吗
+      answer: 0
+    - id: q-h1-23-x11
+      type: order
+      tests:
+        words:
+          - 坐
+          - 旁边
+        grammar:
+          - h1-g52
+      tiles:
+        - 你
+        - 能
+        - 坐
+        - 我
+        - 旁边
+        - 吗
+      answer: s-h1-23-03
+    - id: q-h1-23-x12
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 坐
+        grammar:
+          - h1-g52
+      prompt:
+        kind: audio
+        ref: s-h1-23-01
+      optionKind: hanzi
+      options:
+        - 能，请坐。
+        - 别坐这儿。
+        - 我在学校。
+      answer: 0
+    - id: q-h1-23-x13
+      type: choice
+      tests:
+        words:
+          - 别
+          - 坐
+        grammar:
+          - h1-g53
+      prompt:
+        kind: vi
+        text: Đừng ngồi đây.
+      optionKind: hanzi
+      options:
+        - 别坐这儿
+        - 不坐别这儿
+        - 坐别这儿
+      answer: 0
+    - id: q-h1-23-x14
+      type: trueFalse
+      tests:
+        words:
+          - 别
+        grammar:
+          - h1-g53
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 别坐这儿吗？
+      answer: false
+    - id: q-h1-23-x15
+      type: choice
+      tests:
+        words:
+          - 别
+          - 这里
+        grammar:
+          - h1-g53
+      prompt:
+        kind: vi
+        text: Đừng ăn cơm ở đây.
+      optionKind: hanzi
+      options:
+        - 别在这里吃饭
+        - 在这里别吃饭
+        - 别吃饭在这里
+      answer: 0
+    - id: q-h1-23-x16
+      type: order
+      tests:
+        words:
+          - 别
+          - 那儿
+        grammar:
+          - h1-g53
+      tiles:
+        - 别
+        - 在
+        - 那儿
+        - 等
+        - 我
+      answer: s-h1-23-15
+    - id: q-h1-23-x17
+      type: choice
+      tests:
+        words:
+          - 那里
+          - 坐
+        grammar:
+          - h1-g52
+      prompt:
+        kind: audio
+        ref: s-h1-23-08
+      optionKind: vi
+      options:
+        - Được, chúng ta ngồi chỗ đó
+        - Được, chúng ta ngồi chỗ này
+        - Không, chúng ta không ngồi
+      answer: 0
+    - id: q-h1-23-x18
+      type: choice
+      tests:
+        words:
+          - 这里
+        grammar:
+          - h1-g52
+      prompt:
+        kind: audio
+        ref: s-h1-23-05
+      optionKind: vi
+      options:
+        - Chỗ này có người không?
+        - Cậu tên gì?
+        - Cậu ăn gì?
+      answer: 0
+    - id: q-h1-23-x19
+      type: trueFalse
+      tests:
+        words:
+          - 旁边
+        grammar:
+          - h1-g52
+      prompt:
+        kind: hanzi
+        ref: 旁边
+      statement: 旁边 nghĩa là “bên cạnh”.
+      answer: true
+    - id: q-h1-23-x20
+      type: choice
+      tests:
+        words:
+          - 别
+        grammar:
+          - h1-g53
+      prompt:
+        kind: vi
+        text: Đừng uống trà, uống nước.
+      optionKind: hanzi
+      options:
+        - 别喝茶，喝水
+        - 喝别茶，喝水
+        - 别茶喝，水喝
+      answer: 0
+    - id: q-h1-23-x21
+      type: choice
+      tests:
+        words:
+          - 别
+          - 那儿
+        grammar:
+          - h1-g53
+      prompt:
+        kind: audio
+        ref: s-h1-23-07
+      optionKind: vi
+      options:
+        - Đừng ngồi đây, kia tốt hơn
+        - Đừng ngồi kia, đây tốt hơn
+        - Chúng ta ngồi đây
+      answer: 0
+    - id: q-h1-23-x22
+      type: trueFalse
+      tests:
+        words:
+          - 坐
+        grammar:
+          - h1-g52
+      prompt:
+        kind: hanzi
+        ref: 坐
+      statement: 我能坐这儿吗？ là câu xin phép.
+      answer: true
