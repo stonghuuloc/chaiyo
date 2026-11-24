@@ -16,9 +16,9 @@ describe('isAdmin', () => {
 		expect(await isAdmin(client({ data: false, error: null }).client)).toBe(false);
 	});
 
-	it('Given_RpcError_Then_False', async () => {
+	it('Given_RpcError_Then_Throws', async () => {
 		const c = client({ data: null, error: { message: 'permission denied', code: '42501' } });
-		expect(await isAdmin(c.client)).toBe(false);
+		await expect(isAdmin(c.client)).rejects.toThrow('permission denied');
 	});
 
 	it('Given_Call_Then_RpcIsAdminNoArgs', async () => {

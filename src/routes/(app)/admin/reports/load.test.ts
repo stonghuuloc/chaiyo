@@ -32,6 +32,12 @@ describe('admin reports load', () => {
 		expect(rpc.mock.calls.map((c) => c[0])).toEqual(['is_admin']);
 	});
 
+	it('Given_IsAdminRpcFails_Then_ThrowsNot403', async () => {
+		rpc.mockImplementation(async () => ({ data: null, error: { message: 'fetch failed' } }));
+		await expect(run()).rejects.toThrow('fetch failed');
+		await expect(run()).rejects.not.toMatchObject({ status: 403 });
+	});
+
 	it('Given_ListError_Then_Throws', async () => {
 		answer(true, { data: null, error: { message: 'boom' } });
 		await expect(run()).rejects.toThrow('boom');
