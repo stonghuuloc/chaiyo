@@ -19,7 +19,7 @@ beforeEach(() => rpc.mockReset());
 describe('admin reports load', () => {
 	it('Given_Admin_Then_PushedMeShellAndReports', async () => {
 		answer(true, { data: REFERENCE_ROWS, error: null });
-		const data = await run();
+		const data = (await run()) as { shell: unknown; reports: { id: string; word: string }[] };
 		expect(data.shell).toEqual({ template: 'pushed', section: 'me' });
 		expect(data.reports).toHaveLength(10);
 		expect(data.reports[0]).toMatchObject({ id: REFERENCE_ROWS[0].id, word: '你好' });

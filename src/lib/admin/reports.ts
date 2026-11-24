@@ -69,6 +69,16 @@ export const chipOf = (c: Category): InboxCard['chip'] => (c === 'hanviet' ? 'ot
 
 const CHIPS: InboxCard['chip'][] = ['meaning', 'pinyin', 'audio', 'other'];
 
+const CHIP_NAMES: Record<ChipKey, () => string> = {
+	all: m.chy54s1_chip_all,
+	meaning: m.chy54s1_cat_meaning,
+	pinyin: m.chy54s1_cat_pinyin,
+	audio: m.chy54s1_cat_audio,
+	other: m.chy54s1_cat_other
+};
+
+export const chipName = (key: ChipKey): string => CHIP_NAMES[key]();
+
 function headOf(r: InboxReport): CardHead {
 	const lesson = LESSONS.find((l) => l.id === r.lesson);
 	if (r.word)
