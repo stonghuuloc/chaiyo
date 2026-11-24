@@ -6,11 +6,12 @@ const NULLS = {
 	photo_url: null,
 	handle: null,
 	streak: null,
-	words_week: null,
 	words_known: null,
 	hsk: null,
 	lesson: null,
-	badges: null
+	badges: null,
+	following: null,
+	me: null
 };
 const VISIBLE = {
 	status: 'visible',
@@ -18,11 +19,12 @@ const VISIBLE = {
 	photo_url: 'https://x/y.png',
 	handle: 'linh',
 	streak: 4,
-	words_week: 12,
 	words_known: 90,
 	hsk: 2,
 	lesson: 7,
-	badges: ['first']
+	badges: ['first'],
+	following: true,
+	me: false
 };
 const client = (result: { data: unknown; error: { message: string } | null }) => ({
 	rpc: vi.fn().mockResolvedValue(result)
@@ -36,12 +38,19 @@ describe('publicProfile', () => {
 			photo: 'https://x/y.png',
 			handle: 'linh',
 			streak: 4,
-			wordsWeek: 12,
 			wordsKnown: 90,
 			hsk: 2,
 			lesson: 7,
-			badges: ['first']
+			badges: ['first'],
+			following: true,
+			me: false
 		});
+	});
+
+	it('Given_BadgesOutOfOrderAndUnknown_Then_CatalogueOrderKnownOnly', async () => {
+		const row = { ...VISIBLE, badges: ['streak7', 'zzz', 'first'] };
+		const got = await publicProfile(client({ data: [row], error: null }), 'linh');
+		expect(got).toMatchObject({ badges: ['first', 'streak7'] });
 	});
 
 	it('Given_HiddenRow_When_Read_Then_StatusOnly', async () => {
@@ -65,9 +74,9 @@ describe('publicProfile', () => {
 		await expect(publicProfile(c, 'x')).rejects.toThrow('boom');
 	});
 
-	it('Given_Handle_When_Read_Then_PassesP_handle', async () => {
+	it('Given_Handle_When_Read_Then_CallsProfileView', async () => {
 		const c = client({ data: [], error: null });
 		await publicProfile(c, 'abc');
-		expect(c.rpc).toHaveBeenCalledWith('public_profile', { p_handle: 'abc' });
+		expect(c.rpc).toHaveBeenCalledWith('profile_view', { p_handle: 'abc' });
 	});
 });

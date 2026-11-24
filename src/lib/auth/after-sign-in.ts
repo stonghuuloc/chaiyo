@@ -1,6 +1,7 @@
 import { resolve } from '$app/paths';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from '#lib/supabase.js';
+import { takeInvite } from './invite.js';
 import { landing } from './login.js';
 
 export async function afterSignIn(session: Session, now: number) {
@@ -12,5 +13,11 @@ export async function afterSignIn(session: Session, now: number) {
 	return error ? ('/(app)/(tabs)/today' as const) : landing(data, now);
 }
 
-export const hrefFor = (l: ReturnType<typeof landing>) =>
-	l === 'restore' ? resolve('/login') + '?s=restore' : resolve(l);
+export function hrefFor(
+	l: ReturnType<typeof landing> | '/(onboard)/placement',
+	store?: Parameters<typeof takeInvite>[0]
+) {
+	if (l === 'restore') return resolve('/login') + '?s=restore';
+	const invite = l === '/(app)/(tabs)/today' && store ? takeInvite(store) : null;
+	return invite ? resolve('/(app)/u/[handle]', { handle: invite }) : resolve(l);
+}

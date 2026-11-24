@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { BADGES, type BadgeId } from '#lib/study/index.js';
 
 export type PublicProfile =
 	| { status: 'missing' }
@@ -9,11 +10,12 @@ export type PublicProfile =
 			photo: string | null;
 			handle: string;
 			streak: number;
-			wordsWeek: number;
 			wordsKnown: number;
 			hsk: number;
 			lesson: number;
-			badges: string[];
+			badges: BadgeId[];
+			following: boolean;
+			me: boolean;
 	  };
 
 type Row = {
@@ -22,18 +24,19 @@ type Row = {
 	photo_url: string | null;
 	handle: string;
 	streak: number;
-	words_week: number;
 	words_known: number;
 	hsk: number;
 	lesson: number;
 	badges: string[];
+	following: boolean;
+	me: boolean;
 };
 
 export async function publicProfile(
 	client: Pick<SupabaseClient, 'rpc'>,
 	handle: string
 ): Promise<PublicProfile> {
-	const { data, error } = await client.rpc('public_profile', { p_handle: handle });
+	const { data, error } = await client.rpc('profile_view', { p_handle: handle });
 	if (error) throw new Error(error.message);
 	const row = (data as Row[] | null)?.[0];
 	if (row?.status === 'hidden') return { status: 'hidden' };
@@ -44,10 +47,11 @@ export async function publicProfile(
 		photo: row.photo_url,
 		handle: row.handle,
 		streak: row.streak,
-		wordsWeek: row.words_week,
 		wordsKnown: row.words_known,
 		hsk: row.hsk,
 		lesson: row.lesson,
-		badges: row.badges
+		badges: BADGES.map(([id]) => id).filter((id) => row.badges.includes(id)),
+		following: row.following,
+		me: row.me
 	};
 }

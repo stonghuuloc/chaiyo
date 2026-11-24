@@ -693,5 +693,15 @@
 	"chy53s3_email": "Email",
 	"chy53s3_none": "Không chọn kênh nào: sẽ không có lời nhắc.",
 	"chy53s3_tg_on": "Telegram đã kết nối",
-	"chy53s3_tg_off": "Đã ngắt Telegram"
+	"chy53s3_tg_off": "Đã ngắt Telegram",
+	"chy52s4_hsk": "HSK {n}",
+	"chy52s4_lesson": "Bài {n}",
+	"chy52s4_learning": "Đang học",
+	"chy52s4_known": "Từ đã biết",
+	"chy52s4_badges": "Huy hiệu",
+	"chy52s4_badges_count": "{name} có {n} huy hiệu.",
+	"chy52s4_badges_none": "{name} chưa có huy hiệu nào.",
+	"chy52s4_invite": "Rủ bạn vào học chung",
+	"chy52s4_copy": "Chép link",
+	"chy52s4_copied": "Đã chép link, gửi cho bạn bè nhé!"
 }

@@ -70,4 +70,4 @@
 </div>
 
 <FriendsBoard {rows} {mode} onmode={(next) => (mode = next)} />
-<FriendSearch onchange={invalidateAll} />
+<FriendSearch onchange={invalidateAll} handle={data.board.find((r) => r.me)?.handle ?? null} />

@@ -4,13 +4,19 @@
 	import { m } from '#lib/paraglide/messages.js';
 	import { searchLearners, setFollow, type FoundLearner } from '#lib/social/follow.js';
 	import { supabase } from '#lib/supabase.js';
+	import { copyText } from '#lib/ui/clipboard.js';
 	import Toast from '#lib/ui/Toast.svelte';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	let {
 		client = supabase,
-		onchange
-	}: { client?: Pick<SupabaseClient, 'rpc'>; onchange: () => Promise<void> } = $props();
+		onchange,
+		handle
+	}: {
+		client?: Pick<SupabaseClient, 'rpc'>;
+		onchange: () => Promise<void>;
+		handle: string | null;
+	} = $props();
 
 	let q = $state('');
 	let asked = $state('');
@@ -24,6 +30,13 @@
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
 	$effect(() => () => clearTimeout(timer));
+
+	const invite = $derived(handle ? `${location.origin}/moi/${handle}` : null);
+
+	async function copyInvite() {
+		if (!invite) return;
+		say((await copyText(invite)) ? m.chy52s4_copied() : m.chy51s2_copy_failed());
+	}
 
 	function oninput() {
 		clearTimeout(timer);
@@ -164,6 +177,29 @@
 				{/each}
 			{/if}
 		</ul>
+	{/if}
+	{#if invite}
+		<button
+			type="button"
+			data-part="invite"
+			onclick={copyInvite}
+			class="mt-4 grid min-h-16 w-full cursor-pointer grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 rounded-[18px] border border-ruled-line bg-white/55 px-4 py-2 text-left leading-[normal]"
+		>
+			<span class="grid size-10 place-items-center rounded-[12px] bg-shaded-paper">
+				<svg class="size-[22px] fill-current text-graphite" aria-hidden="true"
+					><use href="#i-fill-link-round" /></svg
+				>
+			</span>
+			<span class="min-w-0">
+				<b class="block font-semibold text-ink">{m.chy52s4_invite()}</b>
+				<small class="mt-px block truncate text-[13px] text-pencil"
+					>{invite.replace(/^https?:\/\//, '')}</small
+				>
+			</span>
+			<span data-part="go" class="text-[13.5px] font-semibold text-graphite"
+				>{m.chy52s4_copy()}</span
+			>
+		</button>
 	{/if}
 </section>
 

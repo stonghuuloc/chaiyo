@@ -42,13 +42,13 @@ const settle = async () => {
 	flushSync();
 };
 
-const render = async () => {
+const render = async (handle: string | null = 'linh') => {
 	target = document.createElement('div');
 	document.body.append(target);
-	app = mount(FriendSearch, { target, props: { client: { rpc } as never, onchange } }) as Record<
-		string,
-		unknown
-	>;
+	app = mount(FriendSearch, {
+		target,
+		props: { client: { rpc } as never, onchange, handle }
+	}) as Record<string, unknown>;
 	await settle();
 	return target;
 };
@@ -298,5 +298,55 @@ describe('friend search section', () => {
 		await settle();
 		expect(btn(root, 0).getAttribute('aria-pressed')).toBe('true');
 		expect(onchange).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('invite card', () => {
+	const writeText = vi.fn();
+	const card = (root: HTMLElement) => root.querySelector<HTMLButtonElement>('[data-part="invite"]');
+
+	beforeEach(() => {
+		writeText.mockReset();
+		Object.defineProperty(navigator, 'clipboard', {
+			value: { writeText },
+			configurable: true
+		});
+	});
+
+	it('Given_Handle_Then_InviteCardWithOriginlessLink', async () => {
+		const root = await render('linh');
+		const c = card(root)!;
+		expect(c.tagName).toBe('BUTTON');
+		expect(c.closest('section')).not.toBeNull();
+		expect(c.parentElement?.lastElementChild).toBe(c);
+		expect(text(c.querySelector('b'))).toBe('Rủ bạn vào học chung');
+		expect(text(c.querySelector('small'))).toBe(`${location.host}/moi/linh`);
+		expect(text(c.querySelector('[data-part="go"]'))).toBe('Chép link');
+		expect(c.querySelector('use[href="#i-fill-link-round"]')).not.toBeNull();
+	});
+
+	it('Given_TapInvite_Then_CopiesMoiLinkAndToast', async () => {
+		writeText.mockResolvedValue(undefined);
+		const root = await render('linh');
+		card(root)!.click();
+		await wait(0);
+		expect(writeText).toHaveBeenCalledWith(`${location.origin}/moi/linh`);
+		expect(root.textContent).toContain('Đã chép link, gửi cho bạn bè nhé!');
+		await wait(2200);
+		expect(root.textContent).not.toContain('Đã chép link, gửi cho bạn bè nhé!');
+	});
+
+	it('Given_ClipboardFails_Then_CopyFailedToast', async () => {
+		writeText.mockRejectedValue(new Error('denied'));
+		const root = await render('linh');
+		card(root)!.click();
+		await wait(0);
+		expect(root.textContent).toContain('Chưa sao chép được, thử lại nhé');
+		expect(root.textContent).not.toContain('Đã chép link');
+	});
+
+	it('Given_NoHandle_Then_NoInviteCard', async () => {
+		const root = await render(null);
+		expect(card(root)).toBeNull();
 	});
 });
