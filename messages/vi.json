@@ -703,5 +703,10 @@
 	"chy52s4_badges_none": "{name} chưa có huy hiệu nào.",
 	"chy52s4_invite": "Rủ bạn vào học chung",
 	"chy52s4_copy": "Chép link",
-	"chy52s4_copied": "Đã chép link, gửi cho bạn bè nhé!"
+	"chy52s4_copied": "Đã chép link, gửi cho bạn bè nhé!",
+	"chy54s1_reporter_none": "Người học",
+	"chy54s1_ago_min": "{n} phút trước",
+	"chy54s1_ago_hour": "{n} giờ trước",
+	"chy54s1_ago_yesterday": "Hôm qua",
+	"chy54s1_ago_day": "{n} ngày trước"
 }
