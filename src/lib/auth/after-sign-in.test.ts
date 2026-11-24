@@ -20,6 +20,18 @@ describe('hrefFor', () => {
 		expect(hrefFor('restore')).toBe('/login?s=restore');
 		expect(hrefFor('/(app)/(tabs)/today')).toBe('/(app)/(tabs)/today');
 	});
+
+	it('Given_StoredInvite_When_LandingToday_Then_InviterProfileOnce', () => {
+		const m = new Map([['chaiyo:invite', 'linh']]);
+		const store = {
+			getItem: (k: string) => m.get(k) ?? null,
+			setItem: (k: string, v: string) => void m.set(k, v),
+			removeItem: (k: string) => void m.delete(k)
+		};
+		expect(hrefFor('/(onboard)/welcome', store)).toBe('/(onboard)/welcome');
+		expect(hrefFor('/(app)/(tabs)/today', store)).toBe('/(app)/u/[handle]');
+		expect(hrefFor('/(app)/(tabs)/today', store)).toBe('/(app)/(tabs)/today');
+	});
 });
 
 describe('afterSignIn', () => {

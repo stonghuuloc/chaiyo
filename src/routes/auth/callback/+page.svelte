@@ -15,7 +15,9 @@
 		const { data } = await supabase.auth.getSession();
 		if (!data.session) return goto(resolve('/login'), { replace: true });
 		// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
-		return goto(hrefFor(await afterSignIn(data.session, Date.now())), { replace: true });
+		return goto(hrefFor(await afterSignIn(data.session, Date.now()), localStorage), {
+			replace: true
+		});
 	});
 </script>
 

@@ -72,7 +72,9 @@
 		const at = Date.now();
 		if (error || !row?.delete_at || Date.parse(row.delete_at) <= at) {
 			// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
-			return goto(hrefFor(error ? '/(app)/(tabs)/today' : landing(row, at)), { replace: true });
+			return goto(hrefFor(error ? '/(app)/(tabs)/today' : landing(row, at), localStorage), {
+				replace: true
+			});
 		}
 		restoreFailed = false;
 		restore = { email: data.session.user.email ?? '', days: daysLeft(row.delete_at, at) };
@@ -96,7 +98,7 @@
 		}
 		restore = null;
 		// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
-		return goto(hrefFor(landing(row, Date.now())), { replace: true });
+		return goto(hrefFor(landing(row, Date.now()), localStorage), { replace: true });
 	}
 
 	async function later() {
@@ -157,7 +159,9 @@
 			return;
 		}
 		// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
-		return goto(hrefFor(await afterSignIn(data.session, Date.now())), { replace: true });
+		return goto(hrefFor(await afterSignIn(data.session, Date.now()), localStorage), {
+			replace: true
+		});
 	}
 </script>
 

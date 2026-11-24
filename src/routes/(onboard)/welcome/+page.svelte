@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { hrefFor } from '#lib/auth/after-sign-in.js';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
 	import sprite from '#lib/assets/icons.svg?raw';
 	import Button from '#lib/ui/Button.svelte';
 	import FocusFrame from '#lib/ui/FocusFrame.svelte';
@@ -99,7 +99,8 @@
 						tz: Intl.DateTimeFormat().resolvedOptions().timeZone
 					});
 				},
-				go: () => goto(resolve(to))
+				// eslint-disable-next-line svelte/no-navigation-without-resolve -- hrefFor resolve()s
+				go: () => goto(hrefFor(to, localStorage))
 			});
 			if (!saved) error = m.welcome_save_error();
 		} finally {
