@@ -11,7 +11,7 @@
 		icon: string;
 		title: string;
 		sub: string;
-		to?: '/(app)/me/friends' | '/(app)/settings';
+		to?: '/(app)/me/friends' | '/(app)/settings' | '/(app)/admin/reports';
 	};
 
 	const rows = $derived<Row[]>([
@@ -29,7 +29,12 @@
 		},
 		...(admin
 			? [
-					{ icon: 'fill-shield', title: m.chy50s3_reports(), sub: m.chy50s3_reports_sub() },
+					{
+						icon: 'fill-shield',
+						title: m.chy50s3_reports(),
+						sub: m.chy50s3_reports_sub(),
+						to: '/(app)/admin/reports' as const
+					},
 					{ icon: 'fill-chart', title: m.chy50s3_usage(), sub: m.chy50s3_usage_sub() }
 				]
 			: [])
