@@ -14,19 +14,27 @@ const MIN = 60_000;
 const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
 
-const SEED: [number, string, string | null, string | null, string | null, string | null, string, number][] =
-	[
-		[1, 'pinyin', '你好', 'h1-01', 'w03', 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.', LAN, 12 * MIN],
-		[2, 'audio', '谢谢', null, null, null, MINH, HOUR],
-		[3, 'meaning', '您', 'h1-01', 'w05', 'Nghĩa hơi dài.', LAN, 3 * HOUR],
-		[4, 'other', null, 'h1-01', 'd02', 'Câu thứ 3 bị lặp.', LAN, 5 * HOUR],
-		[5, 'pinyin', '没关系', null, null, null, MINH, 26 * HOUR],
-		[6, 'audio', '不客气', null, null, 'Audio bị cụt chữ cuối.', LAN, 30 * HOUR],
-		[7, 'meaning', '你们', null, null, null, MINH, 2 * DAY],
-		[8, 'hanviet', null, 'h1-01', 'q4', 'Hai đáp án giống hệt nhau.', LAN, 3 * DAY],
-		[9, 'meaning', '再见', null, null, null, MINH, 4 * DAY],
-		[10, 'audio', '对不起', null, null, 'Giọng nhỏ hơn.', LAN, 5 * DAY]
-	];
+const SEED: [
+	number,
+	string,
+	string | null,
+	string | null,
+	string | null,
+	string | null,
+	string,
+	number
+][] = [
+	[1, 'pinyin', '你好', 'h1-01', 'w03', 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.', LAN, 12 * MIN],
+	[2, 'audio', '谢谢', null, null, null, MINH, HOUR],
+	[3, 'meaning', '您', 'h1-01', 'w05', 'Nghĩa hơi dài.', LAN, 3 * HOUR],
+	[4, 'other', null, 'h1-01', 'd02', 'Câu thứ 3 bị lặp.', LAN, 5 * HOUR],
+	[5, 'pinyin', '没关系', null, null, null, MINH, 26 * HOUR],
+	[6, 'audio', '不客气', null, null, 'Audio bị cụt chữ cuối.', LAN, 30 * HOUR],
+	[7, 'meaning', '你们', null, null, null, MINH, 2 * DAY],
+	[8, 'hanviet', null, 'h1-01', 'q4', 'Hai đáp án giống hệt nhau.', LAN, 3 * DAY],
+	[9, 'meaning', '再见', null, null, null, MINH, 4 * DAY],
+	[10, 'audio', '对不起', null, null, 'Giọng nhỏ hơn.', LAN, 5 * DAY]
+];
 
 let db: PGlite;
 beforeEach(async () => {
@@ -147,9 +155,7 @@ describe('admin reports', () => {
 			status: 'new',
 			resolved_at: null
 		});
-		expect((rows[0].created_at as Date).toISOString()).toBe(
-			new Date(NOW - 12 * MIN).toISOString()
-		);
+		expect((rows[0].created_at as Date).toISOString()).toBe(new Date(NOW - 12 * MIN).toISOString());
 	});
 
 	it('Given_Learner_When_SetStatus_Then_42501AndRowUnchanged', async () => {
