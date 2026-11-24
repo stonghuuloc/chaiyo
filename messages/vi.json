@@ -724,6 +724,7 @@
 	"chy54s1_word": "Từ mới",
 	"chy54s1_word_lesson": "Từ mới · Bài {n}",
 	"chy54s1_lesson": "Bài {n} · {title}",
+	"chy54s1_lesson_step": "Bài {n} · {title} · {step}",
 	"chy54s1_who": "{name} · {ago}",
 	"chy54s1_no_note": "Không có ghi chú"
 }

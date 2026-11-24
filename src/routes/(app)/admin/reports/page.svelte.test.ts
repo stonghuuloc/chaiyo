@@ -1,4 +1,4 @@
-import { REFERENCE_NOW, REFERENCE_ROWS } from '#lib/admin/fixtures/reports.js';
+import { pagedRpc, REFERENCE_NOW, REFERENCE_ROWS } from '#lib/admin/fixtures/reports.js';
 import { listReports } from '#lib/admin/reports.js';
 import { flushSync, mount, unmount } from 'svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -14,7 +14,7 @@ const text = (e: Element | null | undefined) => e?.textContent?.replace(/\s+/g, 
 
 const render = async () => {
 	const reports = await listReports({
-		rpc: async () => ({ data: REFERENCE_ROWS, error: null })
+		rpc: () => pagedRpc(REFERENCE_ROWS)
 	} as never);
 	target = document.createElement('div');
 	document.body.append(target);
@@ -135,7 +135,7 @@ describe('/admin/reports', () => {
 		const box = r4.querySelector('[data-part=card-icon]')!;
 		expect(box.querySelector('use')?.getAttribute('href')).toBe('#i-fill-book-open-text');
 		expect(box.classList).toContain('size-10');
-		expect(text(r4.querySelector('b'))).toBe('Bài 1 · Xin chào');
+		expect(text(r4.querySelector('b'))).toBe('Bài 1 · Xin chào · d02');
 		expect(text(r4.querySelector('[data-part=card-tag]'))).toBe('Khác');
 	});
 

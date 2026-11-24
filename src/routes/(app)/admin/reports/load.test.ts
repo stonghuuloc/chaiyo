@@ -1,12 +1,14 @@
-import { REFERENCE_ROWS } from '#lib/admin/fixtures/reports.js';
+import { pagedRpc, REFERENCE_ROWS } from '#lib/admin/fixtures/reports.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const rpc = vi.hoisted(() => vi.fn());
 vi.mock('#lib/supabase.js', () => ({ supabase: { rpc } }));
 
 const answer = (isAdmin: unknown, list: { data: unknown; error: unknown }) =>
-	rpc.mockImplementation(async (name: string) =>
-		name === 'is_admin' ? { data: isAdmin, error: null } : list
+	rpc.mockImplementation((name: string) =>
+		name === 'is_admin'
+			? { data: isAdmin, error: null }
+			: pagedRpc((list.data as unknown[]) ?? null, list.error)
 	);
 
 const run = async () => {

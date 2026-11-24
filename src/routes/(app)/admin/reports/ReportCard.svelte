@@ -6,7 +6,9 @@
 
 	const title = $derived(
 		card.head.kind === 'lesson'
-			? m.chy54s1_lesson({ n: card.head.n, title: card.head.title })
+			? card.head.step
+				? m.chy54s1_lesson_step({ n: card.head.n, title: card.head.title, step: card.head.step })
+				: m.chy54s1_lesson({ n: card.head.n, title: card.head.title })
 			: card.head.lesson === null
 				? m.chy54s1_word()
 				: m.chy54s1_word_lesson({ n: card.head.lesson })

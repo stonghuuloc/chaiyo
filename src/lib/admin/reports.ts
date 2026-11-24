@@ -20,7 +20,7 @@ export type ChipKey = 'all' | 'meaning' | 'pinyin' | 'audio' | 'other';
 
 export type CardHead =
 	| { kind: 'word'; hanzi: string; long: boolean; lesson: number | null }
-	| { kind: 'lesson'; n: number; title: string };
+	| { kind: 'lesson'; n: number; title: string; step: string | null };
 
 export type InboxCard = {
 	id: string;
@@ -49,10 +49,18 @@ type Row = {
 	reporter: string | null;
 };
 
+const PAGE = 1000;
+
 export async function listReports(client: Pick<SupabaseClient, 'rpc'>): Promise<InboxReport[]> {
-	const { data, error } = await client.rpc('list_error_reports');
-	if (error) throw new Error(error.message);
-	return ((data as Row[] | null) ?? []).map((r) => ({
+	const rows: Row[] = [];
+	for (let from = 0; ; from += PAGE) {
+		const { data, error } = await client.rpc('list_error_reports').range(from, from + PAGE - 1);
+		if (error) throw new Error(error.message);
+		const page = (data as Row[] | null) ?? [];
+		rows.push(...page);
+		if (page.length < PAGE) break;
+	}
+	return rows.map((r) => ({
 		id: r.id,
 		category: r.category,
 		word: r.word_id,
@@ -83,7 +91,12 @@ function headOf(r: InboxReport): CardHead {
 	const lesson = LESSONS.find((l) => l.id === r.lesson);
 	if (r.word)
 		return { kind: 'word', hanzi: r.word, long: [...r.word].length > 2, lesson: lesson?.n ?? null };
-	return { kind: 'lesson', n: lesson?.n ?? 0, title: lesson?.title ?? r.lesson ?? '' };
+	return {
+		kind: 'lesson',
+		n: lesson?.n ?? 0,
+		title: lesson?.title ?? r.lesson ?? '',
+		step: r.step
+	};
 }
 
 export function inboxView(rows: InboxReport[], now: Date): InboxView {

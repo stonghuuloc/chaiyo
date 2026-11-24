@@ -47,3 +47,7 @@ export const REFERENCE_ROWS = [
 	row(9, 'meaning', '再见', null, null, null, null, 4 * DAY),
 	row(10, 'audio', '对不起', null, null, 'Giọng nhỏ hơn.', 'Lan', 5 * DAY)
 ];
+
+export const pagedRpc = (data: unknown[] | null, error: unknown = null) => ({
+	range: async (from: number, to: number) => ({ data: data?.slice(from, to + 1) ?? null, error })
+});

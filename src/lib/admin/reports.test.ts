@@ -1,10 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
-import { REFERENCE_NOW, REFERENCE_ROWS } from './fixtures/reports';
+import { pagedRpc, REFERENCE_NOW, REFERENCE_ROWS } from './fixtures/reports';
 import { inboxView, listReports, type InboxReport } from './reports';
 
-const read = async (rows: unknown) => {
-	const rpc = vi.fn(async () => ({ data: rows, error: null }));
+const read = async (rows: unknown[] | null) => {
+	const rpc = vi.fn(() => pagedRpc(rows));
 	const out = await listReports({ rpc } as unknown as SupabaseClient);
 	return { rpc, out };
 };
@@ -36,7 +36,7 @@ describe('listReports', () => {
 	});
 
 	it('Given_RpcError_Then_Throws', async () => {
-		const rpc = vi.fn(async () => ({ data: null, error: { message: 'not admin' } }));
+		const rpc = vi.fn(() => pagedRpc(null, { message: 'not admin' }));
 		await expect(listReports({ rpc } as unknown as SupabaseClient)).rejects.toThrow('not admin');
 	});
 });
@@ -92,7 +92,7 @@ describe('inboxView', () => {
 	it('Given_R4_Then_LessonCardBai1XinChao', async () => {
 		expect(await card(4)).toMatchObject({
 			chip: 'other',
-			head: { kind: 'lesson', n: 1, title: 'Xin chào' },
+			head: { kind: 'lesson', n: 1, title: 'Xin chào', step: expect.anything() },
 			ago: '5 giờ trước'
 		});
 	});
@@ -115,8 +115,8 @@ describe('inboxView', () => {
 			REFERENCE_NOW
 		);
 		expect(v.cards.map((c) => c.head)).toEqual([
-			{ kind: 'lesson', n: 0, title: 'gone' },
-			{ kind: 'lesson', n: 0, title: '' }
+			{ kind: 'lesson', n: 0, title: 'gone', step: r4.step },
+			{ kind: 'lesson', n: 0, title: '', step: null }
 		]);
 	});
 
@@ -128,5 +128,22 @@ describe('inboxView', () => {
 		expect(v.counts).toEqual({ new: 8, resolved: 2 });
 		expect(v.chips.map((c) => c.count)).toEqual([8, 3, 1, 2, 2]);
 		expect(v.cards.map((c) => c.id)).toEqual(REFERENCE_ROWS.slice(2).map((r) => r.id));
+	});
+
+	it('Given_2500Reports_When_List_Then_ThreePagesAllRows', async () => {
+		const base = REFERENCE_ROWS[0];
+		const rows = Array.from({ length: 2500 }, (_, i) => ({ ...base, id: `r${i}` }));
+		const rpc = vi.fn(() => pagedRpc(rows));
+		const out = await listReports({ rpc } as unknown as SupabaseClient);
+		expect(out).toHaveLength(2500);
+		expect(out.at(-1)?.id).toBe('r2499');
+		expect(rpc).toHaveBeenCalledTimes(3);
+	});
+
+	it('Given_Exactly1000Reports_When_List_Then_SecondPageEmptyStops', async () => {
+		const rows = Array.from({ length: 1000 }, (_, i) => ({ ...REFERENCE_ROWS[0], id: `r${i}` }));
+		const rpc = vi.fn(() => pagedRpc(rows));
+		expect(await listReports({ rpc } as unknown as SupabaseClient)).toHaveLength(1000);
+		expect(rpc).toHaveBeenCalledTimes(2);
 	});
 });
