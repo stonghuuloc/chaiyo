@@ -47,7 +47,7 @@
 
 <span
 	data-part="admin-badge"
-	class="mt-2 inline-flex items-center gap-[5px] rounded-full border border-ruled-line bg-shaded-paper px-2.5 py-1 text-[12px] font-semibold text-graphite"
+	class="mt-2 inline-flex items-center gap-[5px] rounded-full border border-ruled-line bg-shaded-paper px-2.5 py-1 text-[12px] leading-[normal] font-semibold text-graphite"
 >
 	<svg class="size-3.5 fill-current" aria-hidden="true"><use href="#i-fill-shield" /></svg>
 	{m.chy54s1_badge()}

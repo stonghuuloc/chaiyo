@@ -32,15 +32,15 @@
 				>
 			</span>
 		{/if}
-		<b class="block text-[15px] font-semibold">{title}</b>
+		<b class="block text-[15px] leading-[normal] font-semibold">{title}</b>
 	</div>
 	<div class="mt-3 flex flex-wrap items-center gap-2">
 		<span
 			data-part="card-tag"
-			class="rounded-full bg-shaded-paper px-2.5 py-[3px] text-[12.5px] font-semibold text-graphite"
+			class="rounded-full bg-shaded-paper px-2.5 py-[3px] text-[12.5px] leading-[normal] font-semibold text-graphite"
 			>{chipName(card.chip)}</span
 		>
-		<span data-part="card-who" class="text-[13px] text-pencil"
+		<span data-part="card-who" class="text-[13px] leading-[normal] text-pencil"
 			>{m.chy54s1_who({ name: card.who, ago: card.ago })}</span
 		>
 	</div>
