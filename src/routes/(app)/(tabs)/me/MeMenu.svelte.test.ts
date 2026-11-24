@@ -57,16 +57,18 @@ describe('MeMenu', () => {
 		expect(v.carets()).toEqual([1, 1]);
 	});
 
-	it('Given_Admin_When_Render_Then_FourRowsLastTwoNotLinks', () => {
+	it('Given_Admin_When_Render_Then_ReportsLinksUsagePlain', () => {
 		const v = render(true);
 		expect(v.titles()).toEqual(['Bạn bè', 'Cài đặt', 'Báo lỗi nội dung', 'Số liệu sử dụng']);
 		expect(v.subs().slice(2)).toEqual([
 			'Quản trị · hộp thư báo lỗi',
 			'Quản trị · người học bỏ ở đâu'
 		]);
-		expect(v.hrefs().slice(2)).toEqual([null, null]);
-		expect(v.hrefs().slice(0, 2).every(Boolean)).toBe(true);
-		expect(v.carets()).toEqual([1, 1, 0, 0]);
+		const hrefs = v.hrefs();
+		expect(hrefs[2]).toMatch(/\/admin\/reports$/);
+		expect(hrefs[3]).toBeNull();
+		expect(hrefs.slice(0, 2).every(Boolean)).toBe(true);
+		expect(v.carets()).toEqual([1, 1, 1, 0]);
 	});
 
 	it('Given_SignOutOk_When_Logout_Then_GotoLoginReplace', async () => {

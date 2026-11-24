@@ -14,7 +14,5 @@ export const variables = defineEnvVars({
 	VERCEL_ENV: { public: true, static: true, schema: optional },
 	// VAPID public key (base64url) for Web Push subscriptions; unset disables enabling push. Generate with scripts/vapid-keys.ts.
 	PUBLIC_VAPID_PUBLIC_KEY: { public: true, static: true, schema: optional },
-	PUBLIC_TELEGRAM_BOT: { public: true, static: true, schema: optional },
-	// comma list; shows admin menu rows only
-	PUBLIC_ADMIN_EMAILS: { public: true, static: true, schema: optional }
+	PUBLIC_TELEGRAM_BOT: { public: true, static: true, schema: optional }
 });

@@ -15,8 +15,7 @@ const learner = (words: number, passed: string[] = []): State => {
 	return state;
 };
 
-const hoisted = vi.hoisted(() => ({ load: vi.fn(), profile: vi.fn() }));
-const env = vi.hoisted(() => ({ admins: undefined as string | undefined }));
+const hoisted = vi.hoisted(() => ({ load: vi.fn(), profile: vi.fn(), isAdmin: vi.fn() }));
 let current: State = learner(12);
 const listeners = new Set<(s: State) => void>();
 const ledger = {
@@ -29,12 +28,8 @@ const publish = (s: State) => {
 };
 
 vi.mock('#lib/learner/index.js', () => ({ learnerLedger: hoisted.load }));
-vi.mock('#lib/supabase.js', () => ({ supabase: { auth: { signOut: vi.fn() } } }));
-vi.mock('$app/env/public', () => ({
-	get PUBLIC_ADMIN_EMAILS() {
-		return env.admins;
-	}
-}));
+vi.mock('#lib/supabase.js', () => ({ supabase: { auth: { signOut: vi.fn() }, rpc: vi.fn() } }));
+vi.mock('#lib/admin/admin.js', () => ({ isAdmin: hoisted.isAdmin }));
 vi.mock('../../settings/profile', () => ({ loadProfile: hoisted.profile }));
 
 type Session = {
@@ -99,18 +94,19 @@ const mountPage = async (data: { session: Session | null } = { session }) => {
 
 beforeEach(() => {
 	hoisted.profile.mockResolvedValue({ name: 'Tống Lộc', photo: null, hidden: false });
+	hoisted.isAdmin.mockResolvedValue(false);
 	vi.useFakeTimers({ toFake: ['Date'] });
 	vi.setSystemTime(new Date('2026-11-23T10:00:00+07:00'));
 });
 
 afterEach(() => {
-	env.admins = undefined;
 	if (app) unmount(app as never);
 	target?.remove();
 	target = app = undefined;
 	listeners.clear();
 	hoisted.load.mockReset();
 	hoisted.profile.mockReset();
+	hoisted.isAdmin.mockReset();
 	vi.useRealTimers();
 });
 
@@ -212,9 +208,9 @@ describe('/me', () => {
 		expect(page.badgesSub()).toMatch(/^Có 3\/9\. Cái tiếp theo: /);
 	});
 
-	it('Given_AdminEmail_When_Open_Then_FourMenuRows', async () => {
+	it('Given_IsAdminTrue_When_Open_Then_FourMenuRows', async () => {
 		// Arrange
-		env.admins = 'x@example.com, LOC@example.com';
+		hoisted.isAdmin.mockResolvedValue(true);
 		current = learner(12);
 		hoisted.load.mockResolvedValue(ledger);
 
@@ -223,11 +219,38 @@ describe('/me', () => {
 
 		// Assert
 		expect(page.menuTitles()).toEqual(['Bạn bè', 'Cài đặt', 'Báo lỗi nội dung', 'Số liệu sử dụng']);
+		expect(hoisted.isAdmin).toHaveBeenCalledTimes(1);
+	});
+
+	it('Given_IsAdminFalse_When_Open_Then_TwoRows', async () => {
+		// Arrange
+		hoisted.isAdmin.mockResolvedValue(false);
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.menuTitles()).toEqual(['Bạn bè', 'Cài đặt']);
+	});
+
+	it('Given_IsAdminRejects_When_Open_Then_TwoRows', async () => {
+		// Arrange
+		hoisted.isAdmin.mockRejectedValue(new Error('offline'));
+		current = learner(12);
+		hoisted.load.mockResolvedValue(ledger);
+
+		// Act
+		const page = await mountPage();
+
+		// Assert
+		expect(page.menuTitles()).toEqual(['Bạn bè', 'Cài đặt']);
 	});
 
 	it('Given_AdminPage_When_Open_Then_NoRedPrimaryControl', async () => {
 		// Arrange
-		env.admins = 'loc@example.com';
+		hoisted.isAdmin.mockResolvedValue(true);
 		current = learner(12);
 		hoisted.load.mockResolvedValue(ledger);
 		const red = new Set(['bg-lantern-red', 'shadow-lift', 'inset-shadow-lift']);

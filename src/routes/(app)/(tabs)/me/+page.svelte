@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isAdmin } from '#lib/admin/admin.js';
 	import { learnerLedger } from '#lib/learner/index.js';
 	import { m } from '#lib/paraglide/messages.js';
 	import { badgesView, type State } from '#lib/study/index.js';
@@ -11,7 +12,6 @@
 	import MeMenu from './MeMenu.svelte';
 	import MeProfile from './MeProfile.svelte';
 	import SkillMemory from './SkillMemory.svelte';
-	import { isAdmin } from './admin';
 	import { joinedMonth, meLevel } from './level';
 	import { meStats } from './me';
 
@@ -19,6 +19,7 @@
 
 	let study = $state<State | null>(null);
 	let profile = $state<Profile | null>(null);
+	let admin = $state(false);
 
 	const who = $derived.by(() => {
 		const user = data.session?.user;
@@ -33,11 +34,15 @@
 		const session = data.session;
 		study = null;
 		profile = null;
+		admin = false;
 		if (!session) return;
 		let live = true;
 		let off = () => {};
 		loadProfile(supabase, session.user.id)
 			.then((p) => live && (profile = p))
+			.catch(() => {});
+		isAdmin(supabase)
+			.then((v) => live && (admin = v))
 			.catch(() => {});
 		learnerLedger(session)
 			.then((ledger) => {
@@ -59,7 +64,7 @@
 	<MeHero stats={s} lv={meLevel(study)} />
 	<SkillMemory skills={s.skills} />
 	<MeBadges view={badgesView(study)} />
-	<MeMenu admin={isAdmin(data.session.user.email)} />
+	<MeMenu {admin} />
 {:else}
 	<h1 class="sr-only">{m.tab_me()}</h1>
 {/if}
