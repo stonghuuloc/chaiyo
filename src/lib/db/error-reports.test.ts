@@ -103,7 +103,7 @@ describe('error_reports', () => {
 			)
 		).rejects.toMatchObject({ code: '42501' });
 		await expect(report({ status: 'resolved' })).rejects.toMatchObject({ code: '42501' });
-		await expect(db.query('select * from error_reports')).rejects.toMatchObject({ code: '42501' });
+		await expect(db.query('select * from error_reports')).resolves.toMatchObject({ rows: [] });
 		await expect(db.query("update error_reports set note = 'x'")).rejects.toMatchObject({
 			code: '42501'
 		});
