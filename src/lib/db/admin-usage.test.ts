@@ -207,6 +207,13 @@ describe('gate edges', () => {
 		expect((await usage(7)).gates).toEqual([{ lesson: 'h1-01', runs: 2, fails: 1 }]);
 	});
 
+	it('Given_AttemptsDatedInFuture_Then_NotActiveAndNoGate', async () => {
+		await gateRun(LAN, 'gf', `now() + interval '30 days'`, right(8));
+		const v = await usage(30);
+		expect(v.active).toEqual({ today: 0, d7: 0, d30: 0 });
+		expect(v.gates).toEqual([]);
+	});
+
 	it('Given_RepeatAnswer_Then_FirstAnswerWins', async () => {
 		await gateRun(
 			LAN,

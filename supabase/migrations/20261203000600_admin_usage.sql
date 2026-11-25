@@ -26,12 +26,14 @@ begin
 		'd30', count(distinct a.learner_id)
 	) into v_active
 	from public.attempts a
-	where a.step is not null and a.at >= v_d30 and a.step ? 'lesson';
+	where a.step is not null and a.at >= v_d30 and a.at < v_d1 + interval '1 day'
+		and a.step ? 'lesson';
 
 	with w as (
 		select a.learner_id, a.step
 		from public.attempts a
-		where a.step is not null and a.at >= v_d30 and a.step ? 'lesson' and a.at >= v_from
+		where a.step is not null and a.at >= v_d30 and a.at < v_d1 + interval '1 day'
+			and a.step ? 'lesson' and a.at >= v_from
 	),
 	k as (
 		select distinct w.learner_id, w.step->>'run' as run
@@ -44,7 +46,8 @@ begin
 			case when jsonb_typeof(a.step->'of') = 'number' then (a.step->>'of')::numeric end as of_n
 		from public.attempts a
 		join k on k.learner_id = a.learner_id and k.run = a.step->>'run'
-		where a.step->>'kind' = 'gate'
+		where a.step->>'kind' = 'gate' and a.at >= v_from - interval '1 day'
+			and a.at < v_d1 + interval '1 day'
 	),
 	first_answer as (
 		select distinct on (g.learner_id, g.run, g.question_id) g.*
@@ -77,7 +80,8 @@ begin
 	with w as (
 		select a.learner_id, a.step
 		from public.attempts a
-		where a.step is not null and a.at >= v_d30 and a.step ? 'lesson' and a.at >= v_from
+		where a.step is not null and a.at >= v_d30 and a.at < v_d1 + interval '1 day'
+			and a.step ? 'lesson' and a.at >= v_from
 	),
 	s as (
 		select w.step->>'lesson' as lesson,
