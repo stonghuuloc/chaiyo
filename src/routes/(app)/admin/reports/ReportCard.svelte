@@ -32,7 +32,7 @@
 		<a
 			data-part="card-link"
 			{href}
-			class="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 text-inherit"
+			class="grid min-h-11 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 text-inherit"
 		>
 			{#if card.head.kind === 'word'}
 				<span
