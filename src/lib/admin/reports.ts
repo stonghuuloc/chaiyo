@@ -90,6 +90,15 @@ export async function listReports(client: Pick<SupabaseClient, 'rpc'>): Promise<
 	}));
 }
 
+export async function setReportStatus(
+	client: Pick<SupabaseClient, 'rpc'>,
+	id: string,
+	status: Tab
+): Promise<void> {
+	const { error } = await client.rpc('set_error_report_status', { p_id: id, p_status: status });
+	if (error) throw new Error(error.message);
+}
+
 export const chipOf = (c: Category): InboxCard['chip'] => (c === 'hanviet' ? 'other' : c);
 
 const CHIPS: InboxCard['chip'][] = ['meaning', 'pinyin', 'audio', 'other'];

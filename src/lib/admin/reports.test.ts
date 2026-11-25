@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
 import { pagedRpc, REFERENCE_NOW, REFERENCE_ROWS } from './fixtures/reports';
-import { cardHref, inboxView, listReports, type InboxReport } from './reports';
+import { cardHref, inboxView, listReports, setReportStatus, type InboxReport } from './reports';
 
 const read = async (rows: unknown[] | null) => {
 	const rpc = vi.fn(() => pagedRpc(rows));
@@ -234,5 +234,24 @@ describe('cardHref', () => {
 			REFERENCE_NOW
 		);
 		expect(v.cards.map((c) => cardHref(c.head))).toEqual([null, null]);
+	});
+});
+
+describe('setReportStatus', () => {
+	it('Given_Resolve_Then_RpcArgs', async () => {
+		const rpc = vi.fn(async () => ({ data: null, error: null }));
+		await setReportStatus({ rpc } as unknown as SupabaseClient, 'r1', 'resolved');
+		expect(rpc).toHaveBeenCalledOnce();
+		expect(rpc).toHaveBeenCalledWith('set_error_report_status', {
+			p_id: 'r1',
+			p_status: 'resolved'
+		});
+	});
+
+	it('Given_RpcError_Then_Throws', async () => {
+		const rpc = vi.fn(async () => ({ data: null, error: { message: 'not admin' } }));
+		await expect(setReportStatus({ rpc } as unknown as SupabaseClient, 'r1', 'new')).rejects.toThrow(
+			'not admin'
+		);
 	});
 });
