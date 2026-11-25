@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
 import { pagedRpc, REFERENCE_NOW, REFERENCE_ROWS } from './fixtures/reports';
-import { inboxView, listReports, type InboxReport } from './reports';
+import { cardHref, inboxView, listReports, type InboxReport } from './reports';
 
 const read = async (rows: unknown[] | null) => {
 	const rpc = vi.fn(() => pagedRpc(rows));
@@ -65,7 +65,7 @@ describe('inboxView', () => {
 		expect(await card(1)).toEqual({
 			id: REFERENCE_ROWS[0].id,
 			chip: 'pinyin',
-			head: { kind: 'word', hanzi: '你好', long: false, lesson: 1 },
+			head: { kind: 'word', hanzi: '你好', long: false, lesson: 1, lessonId: 'h1-01' },
 			who: 'Lan',
 			ago: '12 phút trước',
 			note: 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.',
@@ -93,7 +93,14 @@ describe('inboxView', () => {
 	it('Given_R4_Then_LessonCardBai1XinChao', async () => {
 		expect(await card(4)).toMatchObject({
 			chip: 'other',
-			head: { kind: 'lesson', n: 1, title: 'Xin chào', step: expect.anything() },
+			head: {
+				kind: 'lesson',
+				n: 1,
+				title: 'Xin chào',
+				step: expect.anything(),
+				lessonId: 'h1-01',
+				known: true
+			},
 			ago: '5 giờ trước'
 		});
 	});
@@ -116,8 +123,8 @@ describe('inboxView', () => {
 			REFERENCE_NOW
 		);
 		expect(v.cards.map((c) => c.head)).toEqual([
-			{ kind: 'lesson', n: 0, title: 'gone', step: r4.step },
-			{ kind: 'lesson', n: 0, title: '', step: null }
+			{ kind: 'lesson', n: 0, title: 'gone', step: r4.step, lessonId: 'gone', known: false },
+			{ kind: 'lesson', n: 0, title: '', step: null, lessonId: null, known: false }
 		]);
 	});
 
@@ -201,5 +208,31 @@ describe('inboxView tab and chip', () => {
 		expect(v).toEqual(inboxView(rows, REFERENCE_NOW, { tab: 'new', chip: 'all' }));
 		expect(v.cards).toHaveLength(10);
 		expect(v.empty).toBeNull();
+	});
+});
+
+describe('cardHref', () => {
+	it('Given_R1_Then_HrefWordWithLesson', async () => {
+		expect(cardHref((await card(1)).head)).toBe('/word/你好?lesson=h1-01');
+	});
+
+	it('Given_R2_Then_HrefWordNoQuery', async () => {
+		expect(cardHref((await card(2)).head)).toBe('/word/谢谢');
+	});
+
+	it('Given_R4_Then_HrefLessonWords', async () => {
+		expect(cardHref((await card(4)).head)).toBe('/lesson/h1-01/words');
+	});
+
+	it('Given_UnknownLesson_Then_NoHref', async () => {
+		const [r4] = (await ten()).slice(3, 4);
+		const v = inboxView(
+			[
+				{ ...r4, lesson: 'gone' },
+				{ ...r4, id: 'x', lesson: null, step: null }
+			],
+			REFERENCE_NOW
+		);
+		expect(v.cards.map((c) => cardHref(c.head))).toEqual([null, null]);
 	});
 });

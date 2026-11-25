@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import { LESSONS } from '#lib/curriculum/index.js';
 import { m } from '#lib/paraglide/messages.js';
 import type { Category } from '#lib/report/types.js';
@@ -21,8 +22,15 @@ export type ChipKey = 'all' | 'meaning' | 'pinyin' | 'audio' | 'other';
 export type Tab = 'new' | 'resolved';
 
 export type CardHead =
-	| { kind: 'word'; hanzi: string; long: boolean; lesson: number | null }
-	| { kind: 'lesson'; n: number; title: string; step: string | null };
+	| { kind: 'word'; hanzi: string; long: boolean; lesson: number | null; lessonId: string | null }
+	| {
+			kind: 'lesson';
+			n: number;
+			title: string;
+			step: string | null;
+			lessonId: string | null;
+			known: boolean;
+	  };
 
 export type InboxCard = {
 	id: string;
@@ -99,13 +107,32 @@ export const chipName = (key: ChipKey): string => CHIP_NAMES[key]();
 function headOf(r: InboxReport): CardHead {
 	const lesson = LESSONS.find((l) => l.id === r.lesson);
 	if (r.word)
-		return { kind: 'word', hanzi: r.word, long: [...r.word].length > 2, lesson: lesson?.n ?? null };
+		return {
+			kind: 'word',
+			hanzi: r.word,
+			long: [...r.word].length > 2,
+			lesson: lesson?.n ?? null,
+			lessonId: r.lesson
+		};
 	return {
 		kind: 'lesson',
 		n: lesson?.n ?? 0,
 		title: lesson?.title ?? r.lesson ?? '',
-		step: r.step
+		step: r.step,
+		lessonId: r.lesson,
+		known: lesson !== undefined
 	};
+}
+
+export function cardHref(head: CardHead): string | null {
+	if (head.kind === 'word')
+		return (
+			resolve('/(app)/word/[id]', { id: head.hanzi }) +
+			(head.lessonId ? `?lesson=${encodeURIComponent(head.lessonId)}` : '')
+		);
+	return head.known && head.lessonId
+		? resolve('/(app)/lesson/[id]/[section]', { id: head.lessonId, section: 'words' })
+		: null;
 }
 
 export function inboxView(
