@@ -18,6 +18,8 @@ export type InboxReport = {
 
 export type ChipKey = 'all' | 'meaning' | 'pinyin' | 'audio' | 'other';
 
+export type Tab = 'new' | 'resolved';
+
 export type CardHead =
 	| { kind: 'word'; hanzi: string; long: boolean; lesson: number | null }
 	| { kind: 'lesson'; n: number; title: string; step: string | null };
@@ -29,12 +31,19 @@ export type InboxCard = {
 	who: string;
 	ago: string;
 	note: string | null;
+	status: Tab;
 };
+
+export type InboxEmpty =
+	| { kind: 'inbox-clear' }
+	| { kind: 'none-done' }
+	| { kind: 'chip'; tab: Tab; chip: ChipKey };
 
 export type InboxView = {
 	counts: { new: number; resolved: number };
 	chips: { key: ChipKey; count: number }[];
 	cards: InboxCard[];
+	empty: InboxEmpty | null;
 };
 
 type Row = {
@@ -99,22 +108,41 @@ function headOf(r: InboxReport): CardHead {
 	};
 }
 
-export function inboxView(rows: InboxReport[], now: Date): InboxView {
-	const fresh = rows.filter((r) => r.status === 'new');
-	const cards = fresh.map((r) => ({
-		id: r.id,
-		chip: chipOf(r.category),
-		head: headOf(r),
-		who: r.reporter ?? m.chy54s1_reporter_none(),
-		ago: ago(r.at, now),
-		note: r.note
-	}));
+export function inboxView(
+	rows: InboxReport[],
+	now: Date,
+	{ tab = 'new', chip = 'all' }: { tab?: Tab; chip?: ChipKey } = {}
+): InboxView {
+	const counts = {
+		new: rows.filter((r) => r.status === 'new').length,
+		resolved: rows.filter((r) => r.status === 'resolved').length
+	};
+	const src = rows.filter((r) => r.status === tab).map(
+		(r): InboxCard => ({
+			id: r.id,
+			chip: chipOf(r.category),
+			head: headOf(r),
+			who: r.reporter ?? m.chy54s1_reporter_none(),
+			ago: ago(r.at, now),
+			note: r.note,
+			status: r.status
+		})
+	);
+	const cards = src.filter((c) => chip === 'all' || c.chip === chip);
 	return {
-		counts: { new: fresh.length, resolved: rows.length - fresh.length },
+		counts,
 		chips: [
-			{ key: 'all', count: cards.length },
-			...CHIPS.map((key) => ({ key, count: cards.filter((c) => c.chip === key).length }))
+			{ key: 'all', count: src.length },
+			...CHIPS.map((key) => ({ key, count: src.filter((c) => c.chip === key).length }))
 		],
-		cards
+		cards,
+		empty:
+			cards.length > 0
+				? null
+				: tab === 'new' && counts.new === 0
+					? { kind: 'inbox-clear' }
+					: tab === 'resolved' && counts.resolved === 0
+						? { kind: 'none-done' }
+						: { kind: 'chip', tab, chip }
 	};
 }

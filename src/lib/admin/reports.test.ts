@@ -68,7 +68,8 @@ describe('inboxView', () => {
 			head: { kind: 'word', hanzi: '你好', long: false, lesson: 1 },
 			who: 'Lan',
 			ago: '12 phút trước',
-			note: 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.'
+			note: 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.',
+			status: 'new'
 		});
 	});
 
@@ -145,5 +146,60 @@ describe('inboxView', () => {
 		const rpc = vi.fn(() => pagedRpc(rows));
 		expect(await listReports({ rpc } as unknown as SupabaseClient)).toHaveLength(1000);
 		expect(rpc).toHaveBeenCalledTimes(2);
+	});
+});
+
+describe('inboxView tab and chip', () => {
+	const done = (rows: InboxReport[], pick: (r: InboxReport, i: number) => boolean) =>
+		rows.map((r, i): InboxReport => (pick(r, i) ? { ...r, status: 'resolved' } : r));
+	const ids = (v: ReturnType<typeof inboxView>) => v.cards.map((c) => c.id);
+	const rid = (...n: number[]) => n.map((k) => REFERENCE_ROWS[k - 1].id);
+
+	it('Given_AudioChipOnNew_Then_R2R6R10', async () => {
+		const v = inboxView(await ten(), REFERENCE_NOW, { chip: 'audio' });
+		expect(ids(v)).toEqual(rid(2, 6, 10));
+		expect(v.empty).toBeNull();
+	});
+
+	it('Given_R1Resolved_When_TabResolved_Then_Chips1_0_1_0_0', async () => {
+		const rows = done(await ten(), (_, i) => i === 0);
+		const v = inboxView(rows, REFERENCE_NOW, { tab: 'resolved' });
+		expect(v.chips.map((c) => c.count)).toEqual([1, 0, 1, 0, 0]);
+		expect(ids(v)).toEqual(rid(1));
+		expect(v.cards[0].status).toBe('resolved');
+		expect(v.counts).toEqual({ new: 9, resolved: 1 });
+	});
+
+	it('Given_AllResolved_When_NewAnyChip_Then_InboxClear', async () => {
+		const rows = done(await ten(), () => true);
+		for (const chip of ['all', 'meaning', 'audio'] as const)
+			expect(inboxView(rows, REFERENCE_NOW, { chip }).empty).toEqual({ kind: 'inbox-clear' });
+	});
+
+	it('Given_NoneResolved_When_TabResolved_Then_NoneDone', async () => {
+		const v = inboxView(await ten(), REFERENCE_NOW, { tab: 'resolved', chip: 'pinyin' });
+		expect(v.cards).toEqual([]);
+		expect(v.empty).toEqual({ kind: 'none-done' });
+	});
+
+	it('Given_AudioAllResolved_When_NewAudio_Then_ChipEmpty', async () => {
+		const rows = done(await ten(), (r) => r.category === 'audio');
+		const v = inboxView(rows, REFERENCE_NOW, { chip: 'audio' });
+		expect(v.cards).toEqual([]);
+		expect(v.empty).toEqual({ kind: 'chip', tab: 'new', chip: 'audio' });
+	});
+
+	it('Given_R1Resolved_When_ResolvedMeaning_Then_ChipEmpty', async () => {
+		const rows = done(await ten(), (_, i) => i === 0);
+		const v = inboxView(rows, REFERENCE_NOW, { tab: 'resolved', chip: 'meaning' });
+		expect(v.empty).toEqual({ kind: 'chip', tab: 'resolved', chip: 'meaning' });
+	});
+
+	it('Given_DefaultArgs_Then_S1Output', async () => {
+		const rows = await ten();
+		const v = inboxView(rows, REFERENCE_NOW);
+		expect(v).toEqual(inboxView(rows, REFERENCE_NOW, { tab: 'new', chip: 'all' }));
+		expect(v.cards).toHaveLength(10);
+		expect(v.empty).toBeNull();
 	});
 });
