@@ -250,8 +250,8 @@ describe('setReportStatus', () => {
 
 	it('Given_RpcError_Then_Throws', async () => {
 		const rpc = vi.fn(async () => ({ data: null, error: { message: 'not admin' } }));
-		await expect(setReportStatus({ rpc } as unknown as SupabaseClient, 'r1', 'new')).rejects.toThrow(
-			'not admin'
-		);
+		await expect(
+			setReportStatus({ rpc } as unknown as SupabaseClient, 'r1', 'new')
+		).rejects.toThrow('not admin');
 	});
 });

@@ -43,9 +43,7 @@ export type InboxCard = {
 };
 
 export type InboxEmpty =
-	| { kind: 'inbox-clear' }
-	| { kind: 'none-done' }
-	| { kind: 'chip'; tab: Tab; chip: ChipKey };
+	{ kind: 'inbox-clear' } | { kind: 'none-done' } | { kind: 'chip'; tab: Tab; chip: ChipKey };
 
 export type InboxView = {
 	counts: { new: number; resolved: number };
@@ -153,8 +151,9 @@ export function inboxView(
 		new: rows.filter((r) => r.status === 'new').length,
 		resolved: rows.filter((r) => r.status === 'resolved').length
 	};
-	const src = rows.filter((r) => r.status === tab).map(
-		(r): InboxCard => ({
+	const src = rows
+		.filter((r) => r.status === tab)
+		.map((r): InboxCard => ({
 			id: r.id,
 			chip: chipOf(r.category),
 			head: headOf(r),
@@ -162,8 +161,7 @@ export function inboxView(
 			ago: ago(r.at, now),
 			note: r.note,
 			status: r.status
-		})
-	);
+		}));
 	const cards = src.filter((c) => chip === 'all' || c.chip === chip);
 	return {
 		counts,

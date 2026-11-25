@@ -44,4 +44,17 @@ describe('admin reports load', () => {
 		answer(true, { data: null, error: { message: 'boom' } });
 		await expect(run()).rejects.toThrow('boom');
 	});
+
+	it('Given_R1ResolvedInDb_When_Load_Then_R1Resolved', async () => {
+		answer(true, {
+			data: [
+				{ ...REFERENCE_ROWS[0], status: 'resolved', resolved_at: '2026-11-24T10:05:00Z' },
+				...REFERENCE_ROWS.slice(1)
+			],
+			error: null
+		});
+		const data = (await run()) as { reports: { id: string; status: string }[] };
+		expect(data.reports[0]).toMatchObject({ id: REFERENCE_ROWS[0].id, status: 'resolved' });
+		expect(data.reports.filter((r) => r.status === 'new')).toHaveLength(9);
+	});
 });
