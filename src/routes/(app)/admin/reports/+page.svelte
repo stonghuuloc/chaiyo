@@ -33,10 +33,7 @@
 		history.back();
 	}
 
-	let rows = $state(data.reports);
-	$effect(() => {
-		rows = data.reports;
-	});
+	let rows = $derived(data.reports);
 	let tab = $state<Tab>('new');
 	let selected = $state<ChipKey>('all');
 	const pending = new SvelteSet<string>();
