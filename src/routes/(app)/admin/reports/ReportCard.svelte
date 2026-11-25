@@ -29,6 +29,7 @@
 
 <li data-part="report-card" data-id={card.id} class="p-4">
 	{#if href}
+		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- cardHref resolve()s -->
 		<a
 			data-part="card-link"
 			{href}
