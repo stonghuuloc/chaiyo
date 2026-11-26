@@ -1,0 +1,19 @@
+id: h1-g64
+level: 1
+std:
+  - 18
+  - 38
+title: "Hơn: A 比 B + tính từ"
+pattern: A + 比 + B + tính từ
+explain: 比 (tỷ, bǐ) là “hơn, so với”. A 比 B + tính từ = A … hơn B. 今天比昨天热 = hôm nay nóng hơn hôm qua; 哥哥比我高 = anh trai cao hơn tôi. Tính từ đứng cuối câu.
+examples:
+  - s-h1-28-02
+  - s-h1-28-11
+  - s-h1-28-13
+pitfalls:
+  - wrong: 今天比昨天很热
+    right: 今天比昨天热
+    why: Câu có 比 không thêm 很 trước tính từ.
+  - wrong: 今天热比昨天
+    right: 今天比昨天热
+    why: 比 + B đứng trước tính từ, không đứng sau.

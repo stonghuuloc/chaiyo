@@ -1,0 +1,698 @@
+id: h1-29
+level: 1
+topic: Thời tiết và đi lại
+order: 29
+title: Máy bay
+titleHanzi: 飞机
+goal: Nói đi cùng ai bằng 跟 / 和 … 一起 / 一块儿; nói đi bằng máy bay, tàu hỏa, xe
+scene:
+  file: lessons/h1-29.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand together on a busy train station platform with small suitcases and tickets in their paws; a long train waits beside them and an airplane flies in the sky above.
+sentences:
+  - id: s-h1-29-01
+    hanzi: 明天你去哪儿？
+    pinyin: míngtiān nǐ qù nǎr?
+    vi: Mai cậu đi đâu?
+    speaker: takin
+  - id: s-h1-29-02
+    hanzi: 我去北京。
+    pinyin: wǒ qù Běijīng.
+    vi: Tớ đi Bắc Kinh.
+    speaker: redpanda
+  - id: s-h1-29-03
+    hanzi: 你坐飞机去吗？
+    pinyin: nǐ zuò fēijī qù ma?
+    vi: Cậu đi máy bay à?
+    speaker: takin
+  - id: s-h1-29-04
+    hanzi: 不，我坐火车去。
+    pinyin: bù, wǒ zuò huǒchē qù.
+    vi: Không, tớ đi tàu hỏa.
+    speaker: redpanda
+  - id: s-h1-29-05
+    hanzi: 我也去北京，我跟你一起去。
+    pinyin: wǒ yě qù Běijīng, wǒ gēn nǐ yīqǐ qù.
+    vi: Tớ cũng đi Bắc Kinh, tớ đi cùng cậu.
+    speaker: takin
+  - id: s-h1-29-06
+    hanzi: 好！你有车票吗？
+    pinyin: hǎo! nǐ yǒu chēpiào ma?
+    vi: Được! Cậu có vé tàu chưa?
+    speaker: redpanda
+  - id: s-h1-29-07
+    hanzi: 没有，我现在去买。
+    pinyin: méiyǒu, wǒ xiànzài qù mǎi.
+    vi: Chưa có, giờ tớ đi mua.
+    speaker: takin
+  - id: s-h1-29-08
+    hanzi: 我们明天几点在车站见？
+    pinyin: wǒmen míngtiān jǐ diǎn zài chēzhàn jiàn?
+    vi: Mai mấy giờ mình gặp nhau ở ga?
+    speaker: redpanda
+  - id: s-h1-29-09
+    hanzi: 上午八点。
+    pinyin: shàngwǔ bā diǎn.
+    vi: Tám giờ sáng.
+    speaker: takin
+  - id: s-h1-29-10
+    hanzi: 我们一块儿坐汽车去车站，好吗？
+    pinyin: wǒmen yīkuàir zuò qìchē qù chēzhàn, hǎo ma?
+    vi: Mình cùng đi xe buýt ra ga nhé?
+    speaker: redpanda
+  - id: s-h1-29-11
+    hanzi: 不，我妈妈会开车。
+    pinyin: bù, wǒ māma huì kāichē.
+    vi: Khỏi, mẹ tớ biết lái xe.
+    speaker: takin
+  - id: s-h1-29-12
+    hanzi: 她跟我们一起去车站。
+    pinyin: tā gēn wǒmen yīqǐ qù chēzhàn.
+    vi: Mẹ đi cùng bọn mình ra ga.
+    speaker: takin
+  - id: s-h1-29-13
+    hanzi: 他跟朋友一起坐火车。
+    pinyin: tā gēn péngyou yīqǐ zuò huǒchē.
+    vi: Anh ấy đi tàu hỏa cùng bạn.
+  - id: s-h1-29-14
+    hanzi: 我和哥哥一块儿去北京。
+    pinyin: wǒ hé gēge yīkuàir qù Běijīng.
+    vi: Tôi đi Bắc Kinh cùng anh trai.
+  - id: s-h1-29-15
+    hanzi: 你跟谁一起去北京？
+    pinyin: nǐ gēn shéi yīqǐ qù Běijīng?
+    vi: Cậu đi Bắc Kinh cùng ai?
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 一起
+      - 一块儿
+      - 飞机
+      - 火车
+      - 汽车
+      - 开车
+      - 车站
+      - 车票
+  grammar:
+    ids:
+      - h1-g66
+    drills:
+      - id: q-h1-29-g01
+        type: choice
+        tests:
+          words:
+            - 一起
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Tớ đi cùng cậu.
+        optionKind: hanzi
+        options:
+          - 我跟你一起去
+          - 我一起跟你去
+          - 跟我你一起去
+        answer: 0
+      - id: q-h1-29-g02
+        type: trueFalse
+        tests:
+          words:
+            - 一起
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我一起跟你去。
+        answer: false
+      - id: q-h1-29-g03
+        type: choice
+        tests:
+          words:
+            - 一块儿
+            - 汽车
+            - 车站
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Mình cùng đi xe buýt ra ga.
+        optionKind: hanzi
+        options:
+          - 我们一块儿坐汽车去车站
+          - 我们坐一块儿汽车去车站
+          - 我们坐汽车去车站一块儿
+        answer: 0
+      - id: q-h1-29-g04
+        type: order
+        tests:
+          words:
+            - 火车
+            - 一起
+          grammar:
+            - h1-g66
+        tiles:
+          - 他
+          - 跟
+          - 朋友
+          - 一起
+          - 坐
+          - 火车
+        answer: s-h1-29-13
+      - id: q-h1-29-g05
+        type: choice
+        tests:
+          words:
+            - 车站
+            - 一起
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Mẹ đi cùng bọn mình ra ga.
+        optionKind: hanzi
+        options:
+          - 她跟我们一起去车站
+          - 她一起跟我们去车站
+          - 她跟一起我们去车站
+        answer: 0
+      - id: q-h1-29-g06
+        type: trueFalse
+        tests:
+          words:
+            - 一块儿
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我和哥哥去北京一块儿。
+        answer: false
+      - id: q-h1-29-g07
+        type: choice
+        tests:
+          words:
+            - 车票
+            - 一起
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Tớ cùng bạn đi mua vé tàu.
+        optionKind: hanzi
+        options:
+          - 我跟朋友一起去买车票
+          - 我跟朋友去一起买车票
+          - 我一起朋友跟去买车票
+        answer: 0
+      - id: q-h1-29-g08
+        type: choice
+        tests:
+          words:
+            - 飞机
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Cậu đi máy bay à?
+        optionKind: hanzi
+        options:
+          - 你坐飞机去吗
+          - 你飞机坐去吗
+          - 坐你飞机去吗
+        answer: 0
+  dialogue:
+    parts:
+      - title: Đi Bắc Kinh
+        lines:
+          - s-h1-29-01
+          - s-h1-29-02
+          - s-h1-29-03
+          - s-h1-29-04
+          - s-h1-29-05
+          - s-h1-29-06
+          - s-h1-29-07
+      - title: Gặp nhau ở ga
+        lines:
+          - s-h1-29-08
+          - s-h1-29-09
+          - s-h1-29-10
+          - s-h1-29-11
+          - s-h1-29-12
+    questions:
+      - id: q-h1-29-d01
+        type: choice
+        ask: Bạn takin đi Bắc Kinh cùng ai?
+        tests:
+          words:
+            - 一起
+          grammar:
+            - h1-g66
+        prompt:
+          kind: audio
+          ref: s-h1-29-05
+        optionKind: vi
+        options:
+          - đi cùng gấu trúc đỏ
+          - đi một mình
+          - không đi
+        answer: 0
+      - id: q-h1-29-d02
+        type: choice
+        ask: Mẹ của bạn takin làm gì?
+        tests:
+          words:
+            - 车站
+          grammar:
+            - h1-g66
+        prompt:
+          kind: audio
+          ref: s-h1-29-12
+        optionKind: vi
+        options:
+          - mẹ đi cùng ra ga
+          - mẹ ở nhà
+          - mẹ đi máy bay
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-29-l01
+        type: tone
+        tests:
+          words:
+            - 飞机
+          tone: true
+        prompt:
+          kind: audio
+          ref: 飞机
+        syllable: 0
+        answer: 1
+      - id: q-h1-29-l02
+        type: choice
+        tests:
+          words:
+            - 火车
+        prompt:
+          kind: audio
+          ref: 火车
+        optionKind: hanzi
+        options:
+          - 火车
+          - 汽车
+          - 飞机
+          - 车站
+        answer: 0
+      - id: q-h1-29-l03
+        type: choice
+        tests:
+          words:
+            - 开车
+        prompt:
+          kind: audio
+          ref: 开车
+        optionKind: hanzi
+        options:
+          - 开车
+          - 车票
+          - 一起
+          - 一块儿
+        answer: 0
+      - id: q-h1-29-s01
+        type: readAloud
+        tests:
+          words:
+            - 一起
+          grammar:
+            - h1-g66
+          tone: true
+        sentence: s-h1-29-05
+      - id: q-h1-29-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 一块儿
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Nói bạn đi Bắc Kinh cùng ai.
+        rubric:
+          - Dùng 我和…一块儿去北京
+        answer: s-h1-29-14
+      - id: q-h1-29-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 车站
+          grammar:
+            - h1-g66
+        prompt:
+          kind: vi
+          text: Hỏi mai mấy giờ gặp nhau ở ga.
+        rubric:
+          - Dùng 我们明天几点在车站见？
+        answer: s-h1-29-08
+  writing:
+    chars:
+      - 飞
+      - 机
+      - 站
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-29-x01
+      type: choice
+      tests:
+        words:
+          - 一起
+      prompt:
+        kind: hanzi
+        ref: 一起
+      optionKind: vi
+      options:
+        - cùng nhau
+        - cùng nhau, với nhau
+        - máy bay
+        - tàu hỏa
+      answer: 0
+    - id: q-h1-29-x02
+      type: choice
+      tests:
+        words:
+          - 一块儿
+      prompt:
+        kind: vi
+        text: cùng nhau, với nhau
+      optionKind: hanzi
+      options:
+        - 一块儿
+        - 一起
+        - 飞机
+        - 火车
+      answer: 0
+    - id: q-h1-29-x03
+      type: choice
+      tests:
+        words:
+          - 飞机
+      prompt:
+        kind: hanzi
+        ref: 飞机
+      optionKind: vi
+      options:
+        - máy bay
+        - cùng nhau
+        - cùng nhau, với nhau
+        - tàu hỏa
+      answer: 0
+    - id: q-h1-29-x04
+      type: choice
+      tests:
+        words:
+          - 火车
+      prompt:
+        kind: vi
+        text: tàu hỏa
+      optionKind: hanzi
+      options:
+        - 火车
+        - 一起
+        - 一块儿
+        - 飞机
+      answer: 0
+    - id: q-h1-29-x05
+      type: choice
+      tests:
+        words:
+          - 汽车
+      prompt:
+        kind: hanzi
+        ref: 汽车
+      optionKind: vi
+      options:
+        - xe hơi, xe buýt
+        - cùng nhau
+        - cùng nhau, với nhau
+        - máy bay
+      answer: 0
+    - id: q-h1-29-x06
+      type: choice
+      tests:
+        words:
+          - 开车
+      prompt:
+        kind: vi
+        text: lái xe
+      optionKind: hanzi
+      options:
+        - 开车
+        - 一起
+        - 一块儿
+        - 飞机
+      answer: 0
+    - id: q-h1-29-x07
+      type: choice
+      tests:
+        words:
+          - 车站
+      prompt:
+        kind: hanzi
+        ref: 车站
+      optionKind: vi
+      options:
+        - nhà ga, trạm xe
+        - cùng nhau
+        - cùng nhau, với nhau
+        - máy bay
+      answer: 0
+    - id: q-h1-29-x08
+      type: choice
+      tests:
+        words:
+          - 车票
+      prompt:
+        kind: vi
+        text: vé xe, vé tàu
+      optionKind: hanzi
+      options:
+        - 车票
+        - 一起
+        - 一块儿
+        - 飞机
+      answer: 0
+    - id: q-h1-29-x09
+      type: choice
+      tests:
+        words:
+          - 一起
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Tớ đi cùng cậu.
+      optionKind: hanzi
+      options:
+        - 我跟你一起去
+        - 我一起跟你去
+        - 跟我你一起去
+      answer: 0
+    - id: q-h1-29-x10
+      type: trueFalse
+      tests:
+        words:
+          - 一起
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我一起跟你去。
+      answer: false
+    - id: q-h1-29-x11
+      type: choice
+      tests:
+        words:
+          - 一块儿
+          - 汽车
+          - 车站
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Mình cùng đi xe buýt ra ga.
+      optionKind: hanzi
+      options:
+        - 我们一块儿坐汽车去车站
+        - 我们坐一块儿汽车去车站
+        - 我们坐汽车去车站一块儿
+      answer: 0
+    - id: q-h1-29-x12
+      type: order
+      tests:
+        words:
+          - 火车
+          - 一起
+        grammar:
+          - h1-g66
+      tiles:
+        - 他
+        - 跟
+        - 朋友
+        - 一起
+        - 坐
+        - 火车
+      answer: s-h1-29-13
+    - id: q-h1-29-x13
+      type: choice
+      tests:
+        words:
+          - 车站
+          - 一起
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Mẹ đi cùng bọn mình ra ga.
+      optionKind: hanzi
+      options:
+        - 她跟我们一起去车站
+        - 她一起跟我们去车站
+        - 她跟一起我们去车站
+      answer: 0
+    - id: q-h1-29-x14
+      type: trueFalse
+      tests:
+        words:
+          - 一块儿
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我和哥哥去北京一块儿。
+      answer: false
+    - id: q-h1-29-x15
+      type: choice
+      tests:
+        words:
+          - 车票
+          - 一起
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Tớ cùng bạn đi mua vé tàu.
+      optionKind: hanzi
+      options:
+        - 我跟朋友一起去买车票
+        - 我跟朋友去一起买车票
+        - 我一起朋友跟去买车票
+      answer: 0
+    - id: q-h1-29-x16
+      type: choice
+      tests:
+        words:
+          - 飞机
+        grammar:
+          - h1-g66
+      prompt:
+        kind: vi
+        text: Cậu đi máy bay à?
+      optionKind: hanzi
+      options:
+        - 你坐飞机去吗
+        - 你飞机坐去吗
+        - 坐你飞机去吗
+      answer: 0
+    - id: q-h1-29-x17
+      type: choice
+      tests:
+        words:
+          - 一起
+        grammar:
+          - h1-g66
+      prompt:
+        kind: audio
+        ref: s-h1-29-05
+      optionKind: vi
+      options:
+        - đi cùng cậu
+        - đi một mình
+        - không đi
+      answer: 0
+    - id: q-h1-29-x18
+      type: choice
+      tests:
+        words:
+          - 车站
+      prompt:
+        kind: audio
+        ref: s-h1-29-08
+      optionKind: vi
+      options:
+        - mai mấy giờ gặp ở ga
+        - hôm nay gặp ở nhà
+        - không gặp
+      answer: 0
+    - id: q-h1-29-x19
+      type: choice
+      tests:
+        words:
+          - 一块儿
+          - 汽车
+        grammar:
+          - h1-g66
+      prompt:
+        kind: audio
+        ref: s-h1-29-10
+      optionKind: vi
+      options:
+        - cùng đi xe buýt ra ga
+        - đi máy bay
+        - đi bộ
+      answer: 0
+    - id: q-h1-29-x20
+      type: choice
+      tests:
+        words:
+          - 火车
+      prompt:
+        kind: audio
+        ref: s-h1-29-04
+      optionKind: vi
+      options:
+        - đi tàu hỏa
+        - đi máy bay
+        - đi xe buýt
+      answer: 0
+    - id: q-h1-29-x21
+      type: choice
+      tests:
+        words:
+          - 车票
+      prompt:
+        kind: audio
+        ref: s-h1-29-06
+      optionKind: vi
+      options:
+        - hỏi có vé tàu chưa
+        - hỏi mấy giờ
+        - hỏi đi đâu
+      answer: 0
+    - id: q-h1-29-x22
+      type: choice
+      tests:
+        words:
+          - 开车
+      prompt:
+        kind: audio
+        ref: s-h1-29-11
+      optionKind: vi
+      options:
+        - mẹ biết lái xe
+        - mẹ đi tàu
+        - mẹ không đi
+      answer: 0

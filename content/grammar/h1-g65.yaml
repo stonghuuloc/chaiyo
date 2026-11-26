@@ -1,0 +1,18 @@
+id: h1-g65
+level: 1
+std:
+  - 38
+title: "Không bằng: A 没有 B + tính từ"
+pattern: A + 没有 + B + tính từ
+explain: 没有 (một hữu, méiyǒu) đứng giữa hai người hay hai vật thì nghĩa là “không … bằng”. A 没有 B + tính từ = A không … bằng B. 妹妹没有我高 = em gái không cao bằng tôi. 没有 + danh từ vẫn là “không có”.
+examples:
+  - s-h1-28-04
+  - s-h1-28-12
+  - s-h1-28-14
+pitfalls:
+  - wrong: 妹妹不有我高
+    right: 妹妹没有我高
+    why: Phủ định của 有 luôn là 没有, không nói 不有.
+  - wrong: 妹妹没有高我
+    right: 妹妹没有我高
+    why: B đứng ngay sau 没有, tính từ ở cuối câu.

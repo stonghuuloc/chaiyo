@@ -244,6 +244,51 @@
 		"words": ["还", "有时", "常常", "房间", "房子", "电视", "电脑", "休息"]
 	},
 	{
+		"id": "h1-27",
+		"level": 1,
+		"n": 27,
+		"title": "Thời tiết",
+		"titleHanzi": "天气",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["天气", "下雨", "风", "冷", "热", "白天", "晚", "快"]
+	},
+	{
+		"id": "h1-28",
+		"level": 1,
+		"n": 28,
+		"title": "Nóng và lạnh",
+		"titleHanzi": "热",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["比", "没有", "高", "大", "小", "多", "少", "慢"]
+	},
+	{
+		"id": "h1-29",
+		"level": 1,
+		"n": 29,
+		"title": "Máy bay",
+		"titleHanzi": "飞机",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["一起", "一块儿", "飞机", "火车", "汽车", "开车", "车站", "车票"]
+	},
+	{
+		"id": "h1-30",
+		"level": 1,
+		"n": 30,
+		"title": "Taxi",
+		"titleHanzi": "出租车",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["吧", "打车", "马路", "路口", "走路", "远", "送", "站"]
+	},
+	{
+		"id": "h1-31",
+		"level": 1,
+		"n": 31,
+		"title": "Phương tiện",
+		"titleHanzi": "车",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["怎么", "路上", "出去", "出来", "回去", "回来", "进去", "进来"]
+	},
+	{
 		"id": "h2-01",
 		"level": 2,
 		"n": 41,

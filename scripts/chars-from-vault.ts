@@ -755,7 +755,71 @@ const rows: Record<string, Row> = {
 	视: { readings: [r('shì', 'thị')], radical: '见', ids: '⿰礻见', strokes: 8, kind: 'etymology' },
 	脑: { readings: [r('nǎo', 'não')], radical: '月', ids: '⿰月㐫', strokes: 10, kind: 'etymology' },
 	休: { readings: [r('xiū', 'hưu')], radical: '人', ids: '⿰亻木', strokes: 6, kind: 'etymology' },
-	息: { readings: [r('xī', 'tức')], radical: '心', ids: '⿱自心', strokes: 10, kind: 'etymology' }
+	息: { readings: [r('xī', 'tức')], radical: '心', ids: '⿱自心', strokes: 10, kind: 'etymology' },
+	冷: {
+		readings: [r('lěng', 'lãnh')],
+		radical: '冫',
+		ids: '⿰冫令',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	雨: { readings: [r('yǔ', 'vũ')], radical: '雨', ids: '⿱一𠕒', strokes: 8, kind: 'etymology' },
+	风: {
+		readings: [r('fēng', 'phong')],
+		radical: '風',
+		ids: '⿵几㐅',
+		strokes: 4,
+		kind: 'etymology'
+	},
+	热: {
+		readings: [r('rè', 'nhiệt')],
+		radical: '火',
+		ids: '⿱执灬',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	白: { readings: [r('bái', 'bạch')], radical: '白', ids: '白', strokes: 5, kind: 'etymology' },
+	快: {
+		readings: [r('kuài', 'khoái')],
+		radical: '心',
+		ids: '⿰忄夬',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	比: { readings: [r('bǐ', 'tỷ')], radical: '比', ids: '比', strokes: 4, kind: 'etymology' },
+	慢: { readings: [r('màn', 'mạn')], radical: '心', ids: '⿰忄曼', strokes: 14, kind: 'etymology' },
+	飞: { readings: [r('fēi', 'phi')], radical: '乙', ids: '飞', strokes: 3, kind: 'etymology' },
+	机: { readings: [r('jī', 'cơ')], radical: '木', ids: '⿰木几', strokes: 6, kind: 'etymology' },
+	火: { readings: [r('huǒ', 'hoả')], radical: '火', ids: '⿱八人', strokes: 4, kind: 'etymology' },
+	车: { readings: [r('chē', 'xa')], radical: '車', ids: '车', strokes: 4, kind: 'etymology' },
+	汽: { readings: [r('qì', 'khí')], radical: '水', ids: '⿰氵气', strokes: 7, kind: 'etymology' },
+	开: { readings: [r('kāi', 'khai')], radical: '廾', ids: '⿱一廾', strokes: 4, kind: 'etymology' },
+	站: {
+		readings: [r('zhàn', 'trạm')],
+		radical: '立',
+		ids: '⿰立占',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	吧: { readings: [r('ba', 'ba')], radical: '口', ids: '⿰口巴', strokes: 7, kind: 'invented' },
+	马: { readings: [r('mǎ', 'mã')], radical: '馬', ids: '马', strokes: 3, kind: 'etymology' },
+	路: { readings: [r('lù', 'lộ')], radical: '足', ids: '⿰𧾷各', strokes: 13, kind: 'etymology' },
+	远: {
+		readings: [r('yuǎn', 'viễn')],
+		radical: '辵',
+		ids: '⿺辶元',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	送: {
+		readings: [r('sòng', 'tống')],
+		radical: '辵',
+		ids: '⿺辶关',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	怎: { readings: [r('zěn', 'chẩm')], radical: '心', ids: '⿱乍心', strokes: 9, kind: 'invented' },
+	出: { readings: [r('chū', 'xuất')], radical: '凵', ids: '⿱屮凵', strokes: 5, kind: 'etymology' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists

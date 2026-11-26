@@ -1,0 +1,20 @@
+id: h1-g70
+level: 1
+std: []
+title: "Đi bằng gì: 坐 / 开 + phương tiện"
+pattern: 主语 + 坐 / 开 + phương tiện + 去 / 来 (+ nơi chốn)
+explain: |-
+  坐 (tọa, zuò) + phương tiện nghĩa là “đi bằng …” khi mình ngồi trên xe: 坐飞机 = đi máy bay, 坐火车 = đi tàu hỏa, 坐汽车 = đi ô tô. Tự mình lái thì dùng 开车 = lái xe.
+
+  Phương tiện đứng trước 去 / 来: 坐火车去吧 = Đi tàu hỏa đi; 他开车来 = Bố lái xe đến. Đi bộ thì nói 走路, không dùng 坐.
+examples:
+  - s-h1-31-02
+  - s-h1-31-03
+  - s-h1-31-06
+pitfalls:
+  - wrong: 我去北京坐火车。
+    right: 我坐火车去北京。
+    why: 坐 + phương tiện đứng trước 去.
+  - wrong: 我坐走路去。
+    right: 我走路去。
+    why: Đi bộ là 走路, không dùng 坐.

@@ -1,0 +1,657 @@
+id: h1-30
+level: 1
+topic: Thời tiết và đi lại
+order: 30
+title: Taxi
+titleHanzi: 出租车
+goal: Rủ bạn làm gì bằng 吧; bảo ai làm gì bằng câu cầu khiến; nói đi taxi hay đi bộ
+scene:
+  file: lessons/h1-30.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at a city crossroads in light rain; the red panda raises a paw to hail a taxi while the takin waits on the sidewalk.
+sentences:
+  - id: s-h1-30-01
+    hanzi: 车站远吗？
+    pinyin: chēzhàn yuǎn ma?
+    vi: Ga có xa không?
+    speaker: takin
+  - id: s-h1-30-02
+    hanzi: 车站很远，我们打车吧。
+    pinyin: chēzhàn hěn yuǎn, wǒmen dǎchē ba.
+    vi: Ga xa lắm, tụi mình đi taxi đi.
+    speaker: redpanda
+  - id: s-h1-30-03
+    hanzi: 我想走路去。
+    pinyin: wǒ xiǎng zǒulù qù.
+    vi: Tớ muốn đi bộ.
+    speaker: takin
+  - id: s-h1-30-04
+    hanzi: 下雨了，打车吧！
+    pinyin: xià yǔ le, dǎchē ba!
+    vi: Mưa rồi, đi taxi đi!
+    speaker: redpanda
+  - id: s-h1-30-05
+    hanzi: 好吧。在哪儿打车？
+    pinyin: hǎo ba. zài nǎr dǎchē?
+    vi: Thôi được. Bắt taxi ở đâu?
+    speaker: takin
+  - id: s-h1-30-06
+    hanzi: 去前边的路口打车。
+    pinyin: qù qiánbian de lùkǒu dǎchē.
+    vi: Ra ngã tư phía trước bắt taxi.
+    speaker: redpanda
+  - id: s-h1-30-07
+    hanzi: 你送我去车站吧。
+    pinyin: nǐ sòng wǒ qù chēzhàn ba.
+    vi: Cậu đưa tớ ra ga nhé.
+    speaker: takin
+  - id: s-h1-30-08
+    hanzi: 好，我送你。
+    pinyin: hǎo, wǒ sòng nǐ.
+    vi: Ừ, tớ đưa cậu đi.
+    speaker: redpanda
+  - id: s-h1-30-09
+    hanzi: 你站在这边等车。
+    pinyin: nǐ zhàn zài zhèbiān děng chē.
+    vi: Cậu đứng bên này đợi xe.
+    speaker: redpanda
+  - id: s-h1-30-10
+    hanzi: 马路上有很多汽车。
+    pinyin: mǎlù shang yǒu hěn duō qìchē.
+    vi: Ngoài đường có nhiều xe hơi quá.
+    speaker: takin
+  - id: s-h1-30-11
+    hanzi: 车来了！快上车！
+    pinyin: chē lái le! kuài shàng chē!
+    vi: Xe tới rồi! Lên xe mau!
+    speaker: redpanda
+  - id: s-h1-30-12
+    hanzi: 我们走吧！
+    pinyin: wǒmen zǒu ba!
+    vi: Tụi mình đi thôi!
+    speaker: takin
+  - id: s-h1-30-13
+    hanzi: 学校不远，我常常走路去。
+    pinyin: xuéxiào bù yuǎn, wǒ chángcháng zǒulù qù.
+    vi: Trường không xa, tôi hay đi bộ đến đó.
+  - id: s-h1-30-14
+    hanzi: 我们一起走路去学校吧。
+    pinyin: wǒmen yīqǐ zǒulù qù xuéxiào ba.
+    vi: Chúng mình cùng đi bộ đến trường nhé.
+  - id: s-h1-30-15
+    hanzi: 我送你一本书。
+    pinyin: wǒ sòng nǐ yī běn shū.
+    vi: Tôi tặng bạn một cuốn sách.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 吧
+      - 打车
+      - 马路
+      - 路口
+      - 走路
+      - 远
+      - 送
+      - 站
+  grammar:
+    ids:
+      - h1-g67
+      - h1-g68
+    drills:
+      - id: q-h1-30-g01
+        type: choice
+        tests:
+          words:
+            - 吧
+          grammar:
+            - h1-g67
+        prompt:
+          kind: vi
+          text: Tụi mình đi thôi!
+        optionKind: hanzi
+        options:
+          - 我们走吧
+          - 吧我们走
+          - 我们吧走
+        answer: 0
+      - id: q-h1-30-g02
+        type: trueFalse
+        tests:
+          words:
+            - 吧
+            - 打车
+          grammar:
+            - h1-g67
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 吧我们打车。
+        answer: false
+      - id: q-h1-30-g03
+        type: order
+        tests:
+          words:
+            - 走路
+            - 吧
+          grammar:
+            - h1-g67
+        tiles:
+          - 我们
+          - 一起
+          - 走路
+          - 去
+          - 学校
+          - 吧
+        answer: s-h1-30-14
+      - id: q-h1-30-g04
+        type: choice
+        tests:
+          words:
+            - 送
+            - 吧
+          grammar:
+            - h1-g67
+        prompt:
+          kind: vi
+          text: Cậu đưa tớ ra ga nhé.
+        optionKind: hanzi
+        options:
+          - 你送我去车站吧
+          - 吧你送我去车站
+          - 你送吧我去车站
+        answer: 0
+      - id: q-h1-30-g05
+        type: choice
+        tests:
+          words:
+            - 路口
+            - 打车
+          grammar:
+            - h1-g68
+        prompt:
+          kind: vi
+          text: Ra ngã tư phía trước bắt taxi.
+        optionKind: hanzi
+        options:
+          - 去前边的路口打车
+          - 去前边的打车路口
+          - 路口前边的去打车
+        answer: 0
+      - id: q-h1-30-g06
+        type: order
+        tests:
+          words:
+            - 站
+          grammar:
+            - h1-g68
+        tiles:
+          - 你
+          - 站
+          - 在
+          - 这边
+          - 等
+          - 车
+        answer: s-h1-30-09
+      - id: q-h1-30-g07
+        type: trueFalse
+        tests:
+          grammar:
+            - h1-g68
+        prompt:
+          kind: vi
+          text: Câu này đúng không? (Lên xe mau!)
+        statement: 上车快！
+        answer: false
+  dialogue:
+    parts:
+      - title: Đi taxi hay đi bộ?
+        lines:
+          - s-h1-30-01
+          - s-h1-30-02
+          - s-h1-30-03
+          - s-h1-30-04
+          - s-h1-30-05
+          - s-h1-30-06
+          - s-h1-30-07
+          - s-h1-30-08
+      - title: Ở ngã tư
+        lines:
+          - s-h1-30-09
+          - s-h1-30-10
+          - s-h1-30-11
+          - s-h1-30-12
+    questions:
+      - id: q-h1-30-d01
+        type: choice
+        ask: Gấu trúc đỏ rủ làm gì?
+        tests:
+          words:
+            - 打车
+            - 吧
+          grammar:
+            - h1-g67
+        prompt:
+          kind: audio
+          ref: s-h1-30-02
+        optionKind: vi
+        options:
+          - đi taxi
+          - đi bộ
+          - đi tàu hỏa
+        answer: 0
+      - id: q-h1-30-d02
+        type: choice
+        ask: Takin phải làm gì?
+        tests:
+          words:
+            - 站
+          grammar:
+            - h1-g68
+        prompt:
+          kind: audio
+          ref: s-h1-30-09
+        optionKind: vi
+        options:
+          - đứng bên này đợi xe
+          - lên xe ngay
+          - đi bộ ra ga
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-30-l01
+        type: tone
+        tests:
+          words:
+            - 远
+          tone: true
+        prompt:
+          kind: audio
+          ref: 远
+        syllable: 0
+        answer: 3
+      - id: q-h1-30-l02
+        type: choice
+        tests:
+          words:
+            - 路口
+        prompt:
+          kind: audio
+          ref: 路口
+        optionKind: hanzi
+        options:
+          - 路口
+          - 马路
+          - 走路
+          - 打车
+        answer: 0
+      - id: q-h1-30-l03
+        type: choice
+        tests:
+          words:
+            - 送
+        prompt:
+          kind: audio
+          ref: 送
+        optionKind: hanzi
+        options:
+          - 送
+          - 站
+          - 远
+          - 吧
+        answer: 0
+      - id: q-h1-30-s01
+        type: readAloud
+        tests:
+          words:
+            - 打车
+            - 吧
+          grammar:
+            - h1-g67
+          tone: true
+        sentence: s-h1-30-02
+      - id: q-h1-30-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 站
+          grammar:
+            - h1-g68
+        prompt:
+          kind: vi
+          text: Bảo bạn đứng bên này đợi xe.
+        rubric:
+          - Nói thẳng động từ, ví dụ 你站在这边…
+        answer: s-h1-30-09
+  writing:
+    chars:
+      - 路
+      - 远
+      - 送
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-30-x01
+      type: choice
+      tests:
+        words:
+          - 吧
+      prompt:
+        kind: hanzi
+        ref: 吧
+      optionKind: vi
+      options:
+        - nhé, đi, thôi (rủ, gợi ý)
+        - xa
+        - đi bộ
+        - ngã tư
+      answer: 0
+    - id: q-h1-30-x02
+      type: choice
+      tests:
+        words:
+          - 打车
+      prompt:
+        kind: vi
+        text: đi taxi
+      optionKind: hanzi
+      options:
+        - 打车
+        - 走路
+        - 马路
+        - 路口
+      answer: 0
+    - id: q-h1-30-x03
+      type: choice
+      tests:
+        words:
+          - 马路
+      prompt:
+        kind: hanzi
+        ref: 马路
+      optionKind: vi
+      options:
+        - đường, đường phố
+        - ngã tư
+        - đi bộ
+        - đi taxi
+      answer: 0
+    - id: q-h1-30-x04
+      type: choice
+      tests:
+        words:
+          - 路口
+      prompt:
+        kind: vi
+        text: ngã tư, giao lộ
+      optionKind: hanzi
+      options:
+        - 路口
+        - 马路
+        - 走路
+        - 打车
+      answer: 0
+    - id: q-h1-30-x05
+      type: choice
+      tests:
+        words:
+          - 走路
+      prompt:
+        kind: hanzi
+        ref: 走路
+      optionKind: vi
+      options:
+        - đi bộ
+        - đi taxi
+        - đường, đường phố
+        - đứng
+      answer: 0
+    - id: q-h1-30-x06
+      type: choice
+      tests:
+        words:
+          - 远
+      prompt:
+        kind: vi
+        text: xa
+      optionKind: hanzi
+      options:
+        - 远
+        - 送
+        - 站
+        - 吧
+      answer: 0
+    - id: q-h1-30-x07
+      type: choice
+      tests:
+        words:
+          - 送
+      prompt:
+        kind: hanzi
+        ref: 送
+      optionKind: vi
+      options:
+        - đưa, tặng
+        - đứng
+        - xa
+        - đi bộ
+      answer: 0
+    - id: q-h1-30-x08
+      type: choice
+      tests:
+        words:
+          - 站
+      prompt:
+        kind: vi
+        text: đứng
+      optionKind: hanzi
+      options:
+        - 站
+        - 送
+        - 远
+        - 走路
+      answer: 0
+    - id: q-h1-30-x09
+      type: choice
+      tests:
+        words:
+          - 吧
+        grammar:
+          - h1-g67
+      prompt:
+        kind: vi
+        text: Tụi mình đi thôi!
+      optionKind: hanzi
+      options:
+        - 我们走吧
+        - 吧我们走
+        - 我们吧走
+      answer: 0
+    - id: q-h1-30-x10
+      type: trueFalse
+      tests:
+        words:
+          - 吧
+          - 打车
+        grammar:
+          - h1-g67
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 吧我们打车。
+      answer: false
+    - id: q-h1-30-x11
+      type: order
+      tests:
+        words:
+          - 走路
+          - 吧
+        grammar:
+          - h1-g67
+      tiles:
+        - 我们
+        - 一起
+        - 走路
+        - 去
+        - 学校
+        - 吧
+      answer: s-h1-30-14
+    - id: q-h1-30-x12
+      type: choice
+      tests:
+        words:
+          - 送
+          - 吧
+        grammar:
+          - h1-g67
+      prompt:
+        kind: vi
+        text: Cậu đưa tớ ra ga nhé.
+      optionKind: hanzi
+      options:
+        - 你送我去车站吧
+        - 吧你送我去车站
+        - 你送吧我去车站
+      answer: 0
+    - id: q-h1-30-x13
+      type: choice
+      tests:
+        words:
+          - 路口
+          - 打车
+        grammar:
+          - h1-g68
+      prompt:
+        kind: vi
+        text: Ra ngã tư phía trước bắt taxi.
+      optionKind: hanzi
+      options:
+        - 去前边的路口打车
+        - 去前边的打车路口
+        - 路口前边的去打车
+      answer: 0
+    - id: q-h1-30-x14
+      type: order
+      tests:
+        words:
+          - 站
+        grammar:
+          - h1-g68
+      tiles:
+        - 你
+        - 站
+        - 在
+        - 这边
+        - 等
+        - 车
+      answer: s-h1-30-09
+    - id: q-h1-30-x15
+      type: trueFalse
+      tests:
+        grammar:
+          - h1-g68
+      prompt:
+        kind: vi
+        text: Câu này đúng không? (Lên xe mau!)
+      statement: 上车快！
+      answer: false
+    - id: q-h1-30-x16
+      type: choice
+      tests:
+        words:
+          - 远
+          - 走路
+      prompt:
+        kind: audio
+        ref: s-h1-30-13
+      optionKind: vi
+      options:
+        - Trường không xa, hay đi bộ đến đó.
+        - Trường xa lắm, phải đi taxi.
+        - Trường ở cạnh ga.
+      answer: 0
+    - id: q-h1-30-x17
+      type: choice
+      tests:
+        words:
+          - 马路
+      prompt:
+        kind: audio
+        ref: s-h1-30-10
+      optionKind: vi
+      options:
+        - Ngoài đường có nhiều xe hơi.
+        - Ngoài đường không có xe.
+        - Ngoài đường có nhiều tàu hỏa.
+      answer: 0
+    - id: q-h1-30-x18
+      type: choice
+      tests:
+        words:
+          - 远
+          - 打车
+        grammar:
+          - h1-g67
+      prompt:
+        kind: audio
+        ref: s-h1-30-02
+      optionKind: vi
+      options:
+        - Ga xa lắm, tụi mình đi taxi đi.
+        - Ga gần lắm, tụi mình đi bộ đi.
+        - Ga xa lắm, tụi mình về nhà đi.
+      answer: 0
+    - id: q-h1-30-x19
+      type: choice
+      tests:
+        words:
+          - 路口
+        grammar:
+          - h1-g68
+      prompt:
+        kind: audio
+        ref: s-h1-30-06
+      optionKind: vi
+      options:
+        - Ra ngã tư phía trước bắt taxi.
+        - Đi bộ ra ga.
+        - Đứng bên này đợi xe.
+      answer: 0
+    - id: q-h1-30-x20
+      type: trueFalse
+      tests:
+        words:
+          - 送
+      prompt:
+        kind: audio
+        ref: s-h1-30-15
+      statement: Câu này nghĩa là “Tôi tặng bạn một cuốn sách”.
+      answer: true
+    - id: q-h1-30-x21
+      type: choice
+      tests:
+        words:
+          - 站
+        grammar:
+          - h1-g68
+      prompt:
+        kind: vi
+        text: Cậu đứng bên này đợi xe.
+      optionKind: hanzi
+      options:
+        - 你站在这边等车
+        - 你在这边等车站
+        - 你等车站在这边
+      answer: 0
+    - id: q-h1-30-x22
+      type: trueFalse
+      tests:
+        words:
+          - 马路
+      prompt:
+        kind: hanzi
+        ref: 马路
+      statement: 马路 nghĩa là “đường, đường phố”.
+      answer: true
