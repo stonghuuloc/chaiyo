@@ -3,7 +3,7 @@ level: 1
 std:
   - 30
 title: Tính từ làm vị ngữ
-pattern: 主语 + 很 + tính từ
+pattern: chủ ngữ + 很 + tính từ
 explain: |-
   Tính từ đứng ngay sau chủ ngữ, không dùng 是: 我很忙。 = Tớ bận. 很 (ngận, hěn) ở đây chỉ nối câu, nghĩa rất nhẹ.
 

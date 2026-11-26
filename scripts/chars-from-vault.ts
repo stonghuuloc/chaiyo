@@ -1099,6 +1099,42 @@ const local: Record<string, Mnemonic> = {
 		am: 'kè nghe gần "khách"',
 		doiThat: '不客气, 客人',
 		tuongPhan: '各 gè "mỗi" không có mái; thêm 宀 thành khách'
+	},
+	怎: {
+		hinh: '乍 chợt + 心 tim → chợt băn khoăn trong lòng "làm sao đây?" = thế nào, làm sao',
+		am: '"chẩm" trong 怎么 (chẩm ma); zěn đọc gần "zẩn"',
+		doiThat: '怎么办？ 怎么走？ — câu hỏi cách làm hằng ngày',
+		tuongPhan: '≠ 作 (zuò, làm): 怎 có 心 ở dưới, 作 có 亻 ở bên'
+	},
+	汽: {
+		hinh: '氵 nước + 气 hơi → nước bốc thành hơi = hơi nước',
+		am: '"khí" trong 汽车 (khí xa), 汽水',
+		doiThat: '汽车, 汽水 trên biển hiệu và thực đơn',
+		tuongPhan: '≠ 气 (qì, khí): 汽 có 氵 chỉ hơi nước; 气 chỉ không khí'
+	},
+	站: {
+		hinh: '立 đứng + 占 chiếm chỗ → đứng chiếm một chỗ = đứng, trạm dừng',
+		am: '"trạm" trong xa trạm, trạm xe',
+		doiThat: 'biển 车站, 地铁站 ở nhà ga',
+		tuongPhan: '≠ 占 (zhàn, chiếm): 站 có 立 đứng ở bên trái'
+	},
+	路: {
+		hinh: '足 bàn chân + 各 từng người → mỗi người đi bằng chân trên một lối = đường',
+		am: '"lộ" trong đại lộ, công lộ',
+		doiThat: 'biển 马路, 路口, 走路 ở ngã tư',
+		tuongPhan: '≠ 跟 (gēn): cùng bộ 足 chân, 路 là đường, 跟 là theo'
+	},
+	远: {
+		hinh: '辶 bước đi + 元 điểm đầu → đi mãi từ điểm đầu = xa',
+		am: '"viễn" trong viễn thông, viễn xứ',
+		doiThat: '离这儿远吗？ 不远 khi hỏi đường',
+		tuongPhan: '≠ 近 (jìn, gần): cùng bộ 辶, nghĩa trái nhau'
+	},
+	送: {
+		hinh: '辶 bước đi + 关 đóng cửa → đi cùng ai ra tới cửa rồi đóng lại = tiễn, đưa',
+		am: '"tống" trong tống tiễn',
+		doiThat: '我送你去车站 — đưa bạn ra ga; 送货 trên app giao hàng',
+		tuongPhan: '≠ 进 (jìn): cùng bộ 辶; 送 đưa đi ra, 进 đi vào'
 	}
 };
 
@@ -1106,6 +1142,10 @@ mkdirSync('content/chars', { recursive: true });
 for (const [hanzi, { kind, ...row }] of Object.entries(rows)) {
 	const found = mnemonics.get(hanzi) ?? local[hanzi];
 	const m = found && !/[\u2E80-\u2FDF]/.test(JSON.stringify(found)) ? found : undefined;
+	if (!m)
+		console.warn(
+			`chars-from-vault: ${hanzi} has no mnemonic${found ? ' (radical glyph in the vault entry)' : ''}`
+		);
 	const file = { hanzi, ...row, ...(m && { mnemonic: { ...m, kind } }) };
 	writeFileSync(`content/chars/${hanzi}.yaml`, YAML.stringify(file, { lineWidth: 0 }));
 }

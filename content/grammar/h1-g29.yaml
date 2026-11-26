@@ -4,7 +4,7 @@ std:
   - 8
   - 23
 title: "Số + lượng từ: 本 · 页 · 个 · 次 · 一些"
-pattern: 数 + 本 / 页 / 个 / 次 + danh từ
+pattern: số + 本 / 页 / 个 / 次 + danh từ
 explain: |-
   本 (bản, běn) đếm sách vở: 一本书. 页 (hiệt, yè) đếm trang: 一百页. 个 đếm cốc và nhiều vật khác: 三个杯子.
 

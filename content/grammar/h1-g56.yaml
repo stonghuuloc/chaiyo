@@ -3,7 +3,7 @@ level: 1
 std:
   - 29
 title: "Đi đâu làm gì: 去"
-pattern: 主语 + 去 + nơi + động từ
+pattern: chủ ngữ + 去 + nơi + động từ
 explain: "去 (khứ, qù) + nơi chốn + động từ nói đi đến đâu để làm gì: 我去医院看病 = Tớ đi bệnh viện khám bệnh. 我想去图书馆看书."
 examples:
   - s-h1-25-02

@@ -3,7 +3,7 @@ level: 1
 std:
   - 7
 title: "Số đến 100: 十 · 百 · 零"
-pattern: 数 + 百 + (零) + 数
+pattern: số + 百 + (零) + số
 explain: |-
   Một trăm là 一百. Số có trăm đọc từ lớn đến nhỏ: 一百一十 = 110, 一百二十 = 120.
 

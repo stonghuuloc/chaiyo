@@ -4,7 +4,7 @@ std:
   - 44
   - 7
 title: "Giờ: 点 · 分 · 半"
-pattern: 数 + 点 + 数 + 分 / 半
+pattern: số + 点 + số + 分 / 半
 explain: |-
   三点 = 3 giờ; 三点十分 = 3 giờ 10 phút; 三点半 = 3 giờ rưỡi. Hỏi giờ: 现在几点？
 

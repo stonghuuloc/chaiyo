@@ -4,7 +4,7 @@ std:
   - 4
   - 46
 title: "Hỏi cách làm: 怎么 + động từ"
-pattern: 主语 + 怎么 + động từ (+ tân ngữ)？
+pattern: chủ ngữ + 怎么 + động từ (+ tân ngữ)？
 explain: |-
   怎么 (chẩm ma, zěnme) đứng trước động từ để hỏi cách làm: 我们怎么去北京？ = Tụi mình đi Bắc Kinh bằng gì? 你怎么写这个字？ = Chữ này cậu viết thế nào?
 
