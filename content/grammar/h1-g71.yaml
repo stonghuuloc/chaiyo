@@ -1,0 +1,16 @@
+id: h1-g71
+level: 1
+std:
+  - 6
+title: "Cái này, cái kia: 这个 / 那个"
+pattern: 这个 / 那个 + danh từ
+explain: 这个 (zhège) là “cái này”, chỉ vật ở gần; 那个 (nàge) là “cái kia”, chỉ vật ở xa. Hai từ này đứng trước danh từ. 这个手机 = cái điện thoại này, 那个杯子 = cái cốc kia. Tiếng Việt nói “điện thoại này”, còn tiếng Trung đặt 这个 lên trước.
+examples:
+  - s-h1-33-01
+  - s-h1-33-04
+  - s-h1-33-13
+  - s-h1-33-15
+pitfalls:
+  - wrong: 手机这个是你的吗？
+    right: 这个手机是你的吗？
+    why: 这个 / 那个 đứng trước danh từ, không đứng sau như tiếng Việt.

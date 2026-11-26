@@ -1,0 +1,691 @@
+id: h1-35
+level: 1
+topic: Mua sắm
+order: 35
+title: Cửa hàng
+titleHanzi: 商店
+goal: Nói đã mua bao nhiêu với 了; phủ định việc đã qua với 没; hỏi cửa hàng mở, đóng cửa
+scene:
+  file: lessons/h1-35.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at the door of a small bookstore inside a shopping mall; the red panda holds a stack of three books and the takin looks into an empty wallet.
+sentences:
+  - id: s-h1-35-01
+    hanzi: 你昨天去书店了吗？
+    pinyin: nǐ zuótiān qù shūdiàn le ma?
+    vi: Hôm qua cậu có đi nhà sách không?
+    speaker: takin
+  - id: s-h1-35-02
+    hanzi: 去了，我买了三本书。
+    pinyin: qù le, wǒ mǎi le sān běn shū.
+    vi: Có, tớ mua ba quyển sách.
+    speaker: redpanda
+  - id: s-h1-35-03
+    hanzi: 你买了几本汉语书？
+    pinyin: nǐ mǎi le jǐ běn Hànyǔ shū?
+    vi: Cậu mua mấy quyển sách tiếng Trung?
+    speaker: takin
+  - id: s-h1-35-04
+    hanzi: 我买了两本，没买别的。
+    pinyin: wǒ mǎi le liǎng běn, méi mǎi bié de.
+    vi: Tớ mua hai quyển, không mua cái khác.
+    speaker: redpanda
+  - id: s-h1-35-05
+    hanzi: 你的钱包呢？
+    pinyin: nǐ de qiánbāo ne?
+    vi: Ví của cậu đâu?
+    speaker: takin
+  - id: s-h1-35-06
+    hanzi: 我今天没拿钱包。
+    pinyin: wǒ jīntiān méi ná qiánbāo.
+    vi: Hôm nay tớ không mang ví.
+    speaker: redpanda
+  - id: s-h1-35-07
+    hanzi: 没关系，我们去商场吧，我有钱。
+    pinyin: méi guānxi, wǒmen qù shāngchǎng ba, wǒ yǒu qián.
+    vi: Không sao, tụi mình đi trung tâm thương mại đi, tớ có tiền.
+    speaker: takin
+  - id: s-h1-35-08
+    hanzi: 商场几点关门？
+    pinyin: shāngchǎng jǐ diǎn guān mén?
+    vi: Trung tâm thương mại mấy giờ đóng cửa?
+    speaker: redpanda
+  - id: s-h1-35-09
+    hanzi: 晚上十点关门。
+    pinyin: wǎnshang shí diǎn guān mén.
+    vi: Mười giờ tối đóng cửa.
+    speaker: takin
+  - id: s-h1-35-10
+    hanzi: 那个商店开门了吗？
+    pinyin: nàge shāngdiàn kāi mén le ma?
+    vi: Cửa hàng kia mở cửa chưa?
+    speaker: redpanda
+  - id: s-h1-35-11
+    hanzi: 还没开门。
+    pinyin: hái méi kāi mén.
+    vi: Vẫn chưa mở cửa.
+    speaker: takin
+  - id: s-h1-35-12
+    hanzi: 你买门票了吗？
+    pinyin: nǐ mǎi ménpiào le ma?
+    vi: Cậu mua vé vào cửa chưa?
+    speaker: takin
+  - id: s-h1-35-13
+    hanzi: 买了，我在门口买了两个人的门票。
+    pinyin: mǎi le, wǒ zài ménkǒu mǎi le liǎng ge rén de ménpiào.
+    vi: Mua rồi, tớ mua vé cho hai người ở cửa.
+    speaker: redpanda
+  - id: s-h1-35-14
+    hanzi: 妈妈在商店买了一个钱包。
+    pinyin: māma zài shāngdiàn mǎi le yí ge qiánbāo.
+    vi: Mẹ mua một cái ví ở cửa hàng.
+  - id: s-h1-35-15
+    hanzi: 我昨天没去商场。
+    pinyin: wǒ zuótiān méi qù shāngchǎng.
+    vi: Hôm qua tớ không đi trung tâm thương mại.
+  - id: s-h1-35-16
+    hanzi: 请关门。
+    pinyin: qǐng guān mén.
+    vi: Làm ơn đóng cửa.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 商店
+      - 商场
+      - 书店
+      - 钱包
+      - 门口
+      - 关
+      - 开
+      - 门票
+  grammar:
+    ids:
+      - h1-g75
+      - h1-g38
+    drills:
+      - id: q-h1-35-g01
+        type: choice
+        tests:
+          words:
+            - 书店
+          grammar:
+            - h1-g75
+        prompt:
+          kind: vi
+          text: Tớ mua ba quyển sách.
+        optionKind: hanzi
+        options:
+          - 我买了三本书
+          - 我了买三本书
+          - 我买三了本书
+        answer: 0
+      - id: q-h1-35-g02
+        type: trueFalse
+        tests:
+          words:
+            - 书店
+          grammar:
+            - h1-g75
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我了买两本书。
+        answer: false
+      - id: q-h1-35-g03
+        type: order
+        tests:
+          words:
+            - 商店
+            - 钱包
+          grammar:
+            - h1-g75
+        tiles:
+          - 妈妈
+          - 在
+          - 商店
+          - 买
+          - 了
+          - 一个
+          - 钱包
+        answer: s-h1-35-14
+      - id: q-h1-35-g04
+        type: choice
+        tests:
+          words:
+            - 商场
+          grammar:
+            - h1-g38
+        prompt:
+          kind: vi
+          text: Hôm qua tớ không đi trung tâm thương mại.
+        optionKind: hanzi
+        options:
+          - 我昨天没去商场
+          - 我昨天不去商场
+          - 我昨天没去商场了
+        answer: 0
+      - id: q-h1-35-g05
+        type: trueFalse
+        tests:
+          words:
+            - 钱包
+          grammar:
+            - h1-g38
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我今天没拿钱包了。
+        answer: false
+      - id: q-h1-35-g06
+        type: order
+        tests:
+          words:
+            - 开
+          grammar:
+            - h1-g38
+        tiles:
+          - 还
+          - 没
+          - 开
+          - 门
+        answer: s-h1-35-11
+      - id: q-h1-35-g07
+        type: choice
+        tests:
+          words:
+            - 关
+        prompt:
+          kind: vi
+          text: Làm ơn đóng cửa.
+        optionKind: hanzi
+        options:
+          - 请关门
+          - 请开门
+          - 请进门
+        answer: 0
+      - id: q-h1-35-g08
+        type: choice
+        tests:
+          words:
+            - 门票
+        prompt:
+          kind: vi
+          text: Cậu mua vé vào cửa chưa?
+        optionKind: hanzi
+        options:
+          - 你买门票了吗
+          - 你买钱包了吗
+          - 你去书店了吗
+        answer: 0
+  dialogue:
+    parts:
+      - title: Ở nhà sách
+        lines:
+          - s-h1-35-01
+          - s-h1-35-02
+          - s-h1-35-03
+          - s-h1-35-04
+      - title: Quên ví
+        lines:
+          - s-h1-35-05
+          - s-h1-35-06
+          - s-h1-35-07
+          - s-h1-35-08
+          - s-h1-35-09
+      - title: Mở cửa chưa?
+        lines:
+          - s-h1-35-10
+          - s-h1-35-11
+          - s-h1-35-12
+          - s-h1-35-13
+    questions:
+      - id: q-h1-35-d01
+        type: choice
+        ask: Gấu trúc đỏ mua mấy quyển sách?
+        tests:
+          words:
+            - 书店
+          grammar:
+            - h1-g75
+        prompt:
+          kind: audio
+          ref: s-h1-35-02
+        optionKind: vi
+        options:
+          - ba quyển
+          - hai quyển
+          - một quyển
+        answer: 0
+      - id: q-h1-35-d02
+        type: choice
+        ask: Hôm nay gấu trúc đỏ thế nào?
+        tests:
+          words:
+            - 钱包
+          grammar:
+            - h1-g38
+        prompt:
+          kind: audio
+          ref: s-h1-35-06
+        optionKind: vi
+        options:
+          - Không mang ví
+          - Mua ví mới
+          - Có nhiều tiền
+        answer: 0
+      - id: q-h1-35-d03
+        type: choice
+        ask: Trung tâm thương mại mấy giờ đóng cửa?
+        tests:
+          words:
+            - 商场
+            - 关
+        prompt:
+          kind: audio
+          ref: s-h1-35-09
+        optionKind: vi
+        options:
+          - mười giờ tối
+          - mười giờ sáng
+          - sáu giờ tối
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-35-l01
+        type: tone
+        tests:
+          words:
+            - 商店
+          tone: true
+        prompt:
+          kind: audio
+          ref: 商店
+        syllable: 0
+        answer: 1
+      - id: q-h1-35-l02
+        type: choice
+        tests:
+          words:
+            - 门口
+        prompt:
+          kind: audio
+          ref: 门口
+        optionKind: hanzi
+        options:
+          - 门口
+          - 门票
+          - 钱包
+          - 书店
+        answer: 0
+      - id: q-h1-35-l03
+        type: choice
+        tests:
+          words:
+            - 商场
+        prompt:
+          kind: audio
+          ref: 商场
+        optionKind: hanzi
+        options:
+          - 商场
+          - 商店
+          - 书店
+          - 门口
+        answer: 0
+      - id: q-h1-35-s01
+        type: readAloud
+        tests:
+          words:
+            - 书店
+          grammar:
+            - h1-g75
+          tone: true
+        sentence: s-h1-35-02
+      - id: q-h1-35-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 商店
+          grammar:
+            - h1-g75
+        prompt:
+          kind: vi
+          text: Nói hôm qua cậu đã mua gì, mua bao nhiêu.
+        rubric:
+          - Dùng động từ + 了 + số + lượng từ + danh từ
+        answer: s-h1-35-14
+  writing:
+    chars:
+      - 商
+      - 店
+      - 门
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-35-x01
+      type: choice
+      tests:
+        words:
+          - 商店
+      prompt:
+        kind: hanzi
+        ref: 商店
+      optionKind: vi
+      options:
+        - cửa hàng, tiệm
+        - nhà sách
+        - trung tâm thương mại
+        - ví tiền
+      answer: 0
+    - id: q-h1-35-x02
+      type: choice
+      tests:
+        words:
+          - 商场
+      prompt:
+        kind: vi
+        text: trung tâm thương mại
+      optionKind: hanzi
+      options:
+        - 商场
+        - 商店
+        - 书店
+        - 门口
+      answer: 0
+    - id: q-h1-35-x03
+      type: choice
+      tests:
+        words:
+          - 书店
+      prompt:
+        kind: hanzi
+        ref: 书店
+      optionKind: vi
+      options:
+        - nhà sách
+        - cửa hàng, tiệm
+        - vé vào cửa
+        - cửa ra vào
+      answer: 0
+    - id: q-h1-35-x04
+      type: choice
+      tests:
+        words:
+          - 钱包
+      prompt:
+        kind: vi
+        text: ví tiền
+      optionKind: hanzi
+      options:
+        - 钱包
+        - 门票
+        - 商店
+        - 门口
+      answer: 0
+    - id: q-h1-35-x05
+      type: choice
+      tests:
+        words:
+          - 门口
+      prompt:
+        kind: hanzi
+        ref: 门口
+      optionKind: vi
+      options:
+        - cửa ra vào, cổng
+        - vé vào cửa
+        - ví tiền
+        - nhà sách
+      answer: 0
+    - id: q-h1-35-x06
+      type: choice
+      tests:
+        words:
+          - 关
+      prompt:
+        kind: vi
+        text: đóng (cửa)
+      optionKind: hanzi
+      options:
+        - 关
+        - 开
+        - 买
+        - 坐
+      answer: 0
+    - id: q-h1-35-x07
+      type: choice
+      tests:
+        words:
+          - 开
+      prompt:
+        kind: hanzi
+        ref: 开
+      optionKind: vi
+      options:
+        - mở (cửa)
+        - đóng (cửa)
+        - mua
+        - ngồi
+      answer: 0
+    - id: q-h1-35-x08
+      type: choice
+      tests:
+        words:
+          - 门票
+      prompt:
+        kind: vi
+        text: vé vào cửa
+      optionKind: hanzi
+      options:
+        - 门票
+        - 钱包
+        - 门口
+        - 商场
+      answer: 0
+    - id: q-h1-35-x09
+      type: choice
+      tests:
+        words:
+          - 书店
+        grammar:
+          - h1-g75
+      prompt:
+        kind: vi
+        text: Tớ mua ba quyển sách.
+      optionKind: hanzi
+      options:
+        - 我买了三本书
+        - 我了买三本书
+        - 我买三了本书
+      answer: 0
+    - id: q-h1-35-x10
+      type: trueFalse
+      tests:
+        words:
+          - 书店
+        grammar:
+          - h1-g75
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我了买两本书。
+      answer: false
+    - id: q-h1-35-x11
+      type: order
+      tests:
+        words:
+          - 商店
+          - 钱包
+        grammar:
+          - h1-g75
+      tiles:
+        - 妈妈
+        - 在
+        - 商店
+        - 买
+        - 了
+        - 一个
+        - 钱包
+      answer: s-h1-35-14
+    - id: q-h1-35-x12
+      type: choice
+      tests:
+        words:
+          - 商场
+        grammar:
+          - h1-g38
+      prompt:
+        kind: vi
+        text: Hôm qua tớ không đi trung tâm thương mại.
+      optionKind: hanzi
+      options:
+        - 我昨天没去商场
+        - 我昨天不去商场
+        - 我昨天没去商场了
+      answer: 0
+    - id: q-h1-35-x13
+      type: trueFalse
+      tests:
+        words:
+          - 钱包
+        grammar:
+          - h1-g38
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我今天没拿钱包了。
+      answer: false
+    - id: q-h1-35-x14
+      type: order
+      tests:
+        words:
+          - 开
+        grammar:
+          - h1-g38
+      tiles:
+        - 还
+        - 没
+        - 开
+        - 门
+      answer: s-h1-35-11
+    - id: q-h1-35-x15
+      type: choice
+      tests:
+        words:
+          - 书店
+        grammar:
+          - h1-g75
+          - h1-g38
+      prompt:
+        kind: audio
+        ref: s-h1-35-04
+      optionKind: vi
+      options:
+        - Tớ mua hai quyển, không mua cái khác.
+        - Tớ mua ba quyển, không mua cái khác.
+        - Tớ không mua quyển nào.
+      answer: 0
+    - id: q-h1-35-x16
+      type: choice
+      tests:
+        words:
+          - 钱包
+        grammar:
+          - h1-g38
+      prompt:
+        kind: audio
+        ref: s-h1-35-06
+      optionKind: vi
+      options:
+        - Hôm nay tớ không mang ví.
+        - Hôm nay tớ mua một cái ví.
+        - Hôm nay tớ có tiền.
+      answer: 0
+    - id: q-h1-35-x17
+      type: choice
+      tests:
+        words:
+          - 关
+      prompt:
+        kind: vi
+        text: Làm ơn đóng cửa.
+      optionKind: hanzi
+      options:
+        - 请关门
+        - 请开门
+        - 请进门
+      answer: 0
+    - id: q-h1-35-x18
+      type: choice
+      tests:
+        words:
+          - 门票
+      prompt:
+        kind: vi
+        text: Cậu mua vé vào cửa chưa?
+      optionKind: hanzi
+      options:
+        - 你买门票了吗
+        - 你买钱包了吗
+        - 你去书店了吗
+      answer: 0
+    - id: q-h1-35-x19
+      type: choice
+      tests:
+        words:
+          - 商场
+          - 关
+      prompt:
+        kind: audio
+        ref: s-h1-35-08
+      optionKind: vi
+      options:
+        - Trung tâm thương mại mấy giờ đóng cửa?
+        - Trung tâm thương mại mấy giờ mở cửa?
+        - Trung tâm thương mại ở đâu?
+      answer: 0
+    - id: q-h1-35-x20
+      type: choice
+      tests:
+        words:
+          - 商店
+          - 开
+      prompt:
+        kind: audio
+        ref: s-h1-35-10
+      optionKind: vi
+      options:
+        - Cửa hàng kia mở cửa chưa?
+        - Cửa hàng kia đóng cửa chưa?
+        - Cửa hàng kia ở đâu?
+      answer: 0
+    - id: q-h1-35-x21
+      type: choice
+      tests:
+        words:
+          - 门口
+          - 门票
+        grammar:
+          - h1-g75
+      prompt:
+        kind: audio
+        ref: s-h1-35-13
+      optionKind: vi
+      options:
+        - Tớ mua vé cho hai người ở cửa.
+        - Tớ mua vé cho ba người ở cửa.
+        - Tớ chưa mua vé.
+      answer: 0
+    - id: q-h1-35-x22
+      type: trueFalse
+      tests:
+        words:
+          - 书店
+      prompt:
+        kind: hanzi
+        ref: 书店
+      statement: 书店 nghĩa là “nhà sách”.
+      answer: true

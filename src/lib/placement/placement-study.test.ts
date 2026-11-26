@@ -37,7 +37,7 @@ describe('placement result in Study', () => {
 		expect(s.lessons['h3-01']).toMatchObject({ unlocked: true, passed: false });
 		expect(s.lessons['h4-01'].unlocked).toBe(false);
 		const words = Object.values(s.lexicon);
-		expect(words).toHaveLength(270);
+		expect(words).toHaveLength(294);
 		for (const w of words) expect(w).toEqual({ saved: false, cards: {} });
 		expect(list.every((a) => a.step?.kind === 'placement')).toBe(true);
 	});
@@ -57,6 +57,6 @@ describe('placement result in Study', () => {
 		for (const a of attempts('RRRRRRRRRR WWRRRRRR')) await ledger.record(a);
 		const s = ledger.state();
 		expect(s.placed).toBe(1);
-		expect(Object.keys(s.lexicon)).toHaveLength(259);
+		expect(Object.keys(s.lexicon)).toHaveLength(283);
 	});
 });

@@ -819,7 +819,70 @@ const rows: Record<string, Row> = {
 		kind: 'etymology'
 	},
 	怎: { readings: [r('zěn', 'chẩm')], radical: '心', ids: '⿱乍心', strokes: 9, kind: 'invented' },
-	出: { readings: [r('chū', 'xuất')], radical: '凵', ids: '⿱屮凵', strokes: 5, kind: 'etymology' }
+	出: { readings: [r('chū', 'xuất')], radical: '凵', ids: '⿱屮凵', strokes: 5, kind: 'etymology' },
+	商: {
+		readings: [r('shāng', 'thương')],
+		radical: '口',
+		ids: '⿱⿱亠丷冏',
+		strokes: 11,
+		kind: 'invented'
+	},
+	场: {
+		readings: [r('chǎng', 'trường')],
+		radical: '土',
+		ids: '⿰土𠃓',
+		strokes: 6,
+		kind: 'invented'
+	},
+	帮: {
+		readings: [r('bāng', 'bang')],
+		radical: '巾',
+		ids: '⿱邦巾',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	手: { readings: [r('shǒu', 'thủ')], radical: '手', ids: '手', strokes: 4, kind: 'etymology' },
+	找: {
+		readings: [r('zhǎo', 'trảo')],
+		radical: '手',
+		ids: '⿰扌戈',
+		strokes: 7,
+		kind: 'etymology'
+	},
+	拿: { readings: [r('ná', 'nã')], radical: '手', ids: '⿱合手', strokes: 10, kind: 'etymology' },
+	放: {
+		readings: [r('fàng', 'phóng')],
+		radical: '攴',
+		ids: '⿰方攵',
+		strokes: 8,
+		kind: 'etymology'
+	},
+	新: { readings: [r('xīn', 'tân')], radical: '斤', ids: '⿰亲斤', strokes: 13, kind: 'etymology' },
+	服: { readings: [r('fú', 'phục')], radical: '月', ids: '⿰月𠬝', strokes: 8, kind: 'etymology' },
+	样: {
+		readings: [r('yàng', 'dạng')],
+		radical: '木',
+		ids: '⿰木羊',
+		strokes: 10,
+		kind: 'etymology'
+	},
+	洗: { readings: [r('xǐ', 'tẩy')], radical: '水', ids: '⿰氵先', strokes: 9, kind: 'etymology' },
+	用: {
+		readings: [r('yòng', 'dụng')],
+		radical: '用',
+		ids: '⿵冂⿻二丨',
+		strokes: 5,
+		kind: 'invented'
+	},
+	穿: {
+		readings: [r('chuān', 'xuyên')],
+		radical: '穴',
+		ids: '⿱穴牙',
+		strokes: 9,
+		kind: 'etymology'
+	},
+	衣: { readings: [r('yī', 'y')], radical: '衣', ids: '⿱亠𧘇', strokes: 6, kind: 'etymology' },
+	门: { readings: [r('mén', 'môn')], radical: '門', ids: '门', strokes: 3, kind: 'etymology' }
 };
 
 // drafts for chars the vault has not reached yet; the vault's own entry wins once it exists
@@ -1135,6 +1198,54 @@ const local: Record<string, Mnemonic> = {
 		am: '"tống" trong tống tiễn',
 		doiThat: '我送你去车站 — đưa bạn ra ga; 送货 trên app giao hàng',
 		tuongPhan: '≠ 进 (jìn): cùng bộ 辶; 送 đưa đi ra, 进 đi vào'
+	},
+	商: {
+		hinh: '亠 + 丷 + 冏 ô cửa sáng → chỗ mở cửa trao đổi hàng hoá = buôn bán, thương mại',
+		am: '"thương" trong thương mại, thương điếm',
+		doiThat: '商店, 商场 trên biển hiệu phố mua sắm',
+		tuongPhan: '≠ 高 (gāo, cao): 商 có thêm 丷 ở trên và 冏 ở dưới'
+	},
+	场: {
+		hinh: '土 đất + 昜 ánh sáng trải rộng → khoảnh đất rộng để tụ họp = bãi, nơi, trường',
+		am: '"trường" trong thương trường, quảng trường',
+		doiThat: '商场 là trung tâm thương mại; 机场 là sân bay',
+		tuongPhan: '≠ 地 (dì, đất): cùng bộ 土, 场 là bãi rộng, 地 là mặt đất'
+	},
+	帮: {
+		hinh: '邦 nước + 巾 khăn → nhiều bàn tay khăn vải kết lại giúp nhau = giúp đỡ, bang hội',
+		am: '"bang" trong bang hội, bang trợ',
+		doiThat: '帮帮我 khi nhờ ai; nút "帮助" trong app',
+		tuongPhan: '≠ 邦 (bāng): 帮 có thêm 巾 ở dưới'
+	},
+	找: {
+		hinh: '扌 bàn tay + 戈 cây qua → tay cầm vũ khí lục tìm khắp nơi = tìm, kiếm',
+		am: '"trảo" trong trảo (tìm); zhǎo đọc gần "chảo"',
+		doiThat: '找钱 khi thối tiền; app tìm đường ghi "找路"',
+		tuongPhan: '≠ 我 (wǒ, tôi): 找 có 扌 bên trái, 我 không có'
+	},
+	拿: {
+		hinh: '合 gộp lại + 手 tay → tay gộp lại nắm vào = cầm, lấy',
+		am: '"nã" trong nã (cầm bắt)',
+		doiThat: '你拿着 khi đưa đồ; 拿铁 trên menu cà phê',
+		tuongPhan: '≠ 合 (hé, hợp): 拿 có 手 ở dưới'
+	},
+	放: {
+		hinh: '方 hướng + 攵 tay cầm gậy → đẩy ra một hướng cho đi = thả, đặt, để',
+		am: '"phóng" trong phóng thích, phóng to',
+		doiThat: '放这里 khi chỉ chỗ để đồ; 放假 là nghỉ lễ',
+		tuongPhan: '≠ 方 (fāng, phương): 放 có thêm 攵 bên phải'
+	},
+	洗: {
+		hinh: '氵 nước + 先 đi trước → đem nước làm cho sạch trước khi dùng = rửa, giặt',
+		am: '"tẩy" trong tẩy rửa, tẩy trang',
+		doiThat: '洗手间 là nhà vệ sinh; 洗衣机 là máy giặt',
+		tuongPhan: '≠ 先 (xiān, trước): 洗 có 氵 bên trái'
+	},
+	穿: {
+		hinh: '穴 cái hang + 牙 răng → răng nhọn đục xuyên hang = xuyên qua, mặc vào',
+		am: '"xuyên" trong xuyên qua, xuyên suốt',
+		doiThat: '穿衣服 là mặc quần áo; 穿过马路 là băng qua đường',
+		tuongPhan: '≠ 牙 (yá, răng): 穿 có 穴 che bên trên'
 	}
 };
 

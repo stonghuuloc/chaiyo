@@ -1,0 +1,688 @@
+id: h1-34
+level: 1
+topic: Mua sắm
+order: 34
+title: Mua bao nhiêu
+titleHanzi: 多
+goal: Nói số + lượng từ 杯 / 块 / 本 / 页; hỏi mức độ với 多 + tính từ; mua bánh bao
+scene:
+  file: lessons/h1-34.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. The takin stands behind a small steamed-bun stall with bamboo steamers and a cup of tea on the counter; the red panda holds out a big fluffy bun in one paw and looks into its school bag for money.
+sentences:
+  - id: s-h1-34-01
+    hanzi: 一个包子多少钱？
+    pinyin: yī gè bāozi duōshao qián?
+    vi: Một cái bánh bao bao nhiêu tiền?
+    speaker: redpanda
+  - id: s-h1-34-02
+    hanzi: 两块钱一个。
+    pinyin: liǎng kuài qián yī gè.
+    vi: Hai đồng một cái.
+    speaker: takin
+  - id: s-h1-34-03
+    hanzi: 我要两个包子，一杯茶。
+    pinyin: wǒ yào liǎng gè bāozi, yī bēi chá.
+    vi: Tớ lấy hai cái bánh bao, một cốc trà.
+    speaker: redpanda
+  - id: s-h1-34-04
+    hanzi: 我们的包子很大，你看一下儿。
+    pinyin: wǒmen de bāozi hěn dà, nǐ kàn yīxiàr.
+    vi: Bánh bao chỗ tớ to lắm, cậu xem thử đi.
+    speaker: takin
+  - id: s-h1-34-05
+    hanzi: 包子有多大？
+    pinyin: bāozi yǒu duō dà?
+    vi: Bánh bao to cỡ nào?
+    speaker: redpanda
+  - id: s-h1-34-06
+    hanzi: 很大！你拿一个看看。
+    pinyin: hěn dà! nǐ ná yī gè kànkan.
+    vi: To lắm! Cậu cầm một cái xem thử.
+    speaker: takin
+  - id: s-h1-34-07
+    hanzi: 茶里放一点儿牛奶吧。
+    pinyin: chá lǐ fàng yīdiǎnr niúnǎi ba.
+    vi: Cho một chút sữa vào trà nhé.
+    speaker: redpanda
+  - id: s-h1-34-08
+    hanzi: 好，你用这个杯子喝吧。
+    pinyin: hǎo, nǐ yòng zhège bēizi hē ba.
+    vi: Được, cậu dùng cái cốc này mà uống nhé.
+    speaker: takin
+  - id: s-h1-34-09
+    hanzi: 我的钱呢？我找一下儿。
+    pinyin: wǒ de qián ne? wǒ zhǎo yīxiàr.
+    vi: Tiền của tớ đâu rồi? Để tớ tìm một chút.
+    speaker: redpanda
+  - id: s-h1-34-10
+    hanzi: 在你的书包里吧？
+    pinyin: zài nǐ de shūbāo lǐ ba?
+    vi: Chắc ở trong cặp sách của cậu đó?
+    speaker: takin
+  - id: s-h1-34-11
+    hanzi: 对！给你十块钱。
+    pinyin: duì! gěi nǐ shí kuài qián.
+    vi: Đúng rồi! Gửi cậu mười đồng.
+    speaker: redpanda
+  - id: s-h1-34-12
+    hanzi: 找你三块。我帮你拿包子。
+    pinyin: zhǎo nǐ sān kuài. wǒ bāng nǐ ná bāozi.
+    vi: Thối cậu ba đồng. Tớ cầm bánh bao giúp cậu.
+    speaker: takin
+  - id: s-h1-34-13
+    hanzi: 从这儿到车站多远？
+    pinyin: cóng zhèr dào chēzhàn duō yuǎn?
+    vi: Từ đây đến ga bao xa?
+  - id: s-h1-34-14
+    hanzi: 这本书有一百页。
+    pinyin: zhè běn shū yǒu yībǎi yè.
+    vi: Cuốn sách này có một trăm trang.
+  - id: s-h1-34-15
+    hanzi: 你的孩子多大了？
+    pinyin: nǐ de háizi duō dà le?
+    vi: Con cậu mấy tuổi rồi?
+  - id: s-h1-34-16
+    hanzi: 我吃了两块面包。
+    pinyin: wǒ chī le liǎng kuài miànbāo.
+    vi: Tớ ăn hai miếng bánh mì rồi.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 包子
+      - 一点儿
+      - 一下儿
+      - 用
+      - 找
+      - 拿
+      - 放
+      - 帮
+  grammar:
+    ids:
+      - h1-g73
+      - h1-g74
+    drills:
+      - id: q-h1-34-g01
+        type: choice
+        tests:
+          words:
+            - 包子
+          grammar:
+            - h1-g73
+        prompt:
+          kind: vi
+          text: Tớ lấy hai cái bánh bao, một cốc trà.
+        optionKind: hanzi
+        options:
+          - 我要两个包子，一杯茶
+          - 我要两个包子，一个茶
+          - 我要两个包子，茶一杯
+        answer: 0
+      - id: q-h1-34-g02
+        type: trueFalse
+        tests:
+          words:
+            - 杯子
+          grammar:
+            - h1-g73
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我要一个茶。
+        answer: false
+      - id: q-h1-34-g03
+        type: order
+        tests:
+          words:
+            - 页
+          grammar:
+            - h1-g73
+        tiles:
+          - 这
+          - 本
+          - 书
+          - 有
+          - 一百
+          - 页
+        answer: s-h1-34-14
+      - id: q-h1-34-g04
+        type: choice
+        tests:
+          words:
+            - 孩子
+          grammar:
+            - h1-g74
+        prompt:
+          kind: vi
+          text: Con cậu mấy tuổi rồi?
+        optionKind: hanzi
+        options:
+          - 你的孩子多大了
+          - 你的孩子大多了
+          - 多你的孩子大了
+        answer: 0
+      - id: q-h1-34-g05
+        type: trueFalse
+        tests:
+          words:
+            - 孩子
+          grammar:
+            - h1-g74
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你的孩子多大了吗？
+        answer: false
+      - id: q-h1-34-g06
+        type: order
+        tests:
+          words:
+            - 远
+          grammar:
+            - h1-g74
+        tiles:
+          - 从
+          - 这儿
+          - 到
+          - 车站
+          - 多
+          - 远
+        answer: s-h1-34-13
+      - id: q-h1-34-g07
+        type: choice
+        tests:
+          words:
+            - 帮
+            - 拿
+        prompt:
+          kind: vi
+          text: Tớ cầm bánh bao giúp cậu.
+        optionKind: hanzi
+        options:
+          - 我帮你拿包子
+          - 你帮我拿包子
+          - 我帮你放包子
+        answer: 0
+      - id: q-h1-34-g08
+        type: choice
+        tests:
+          words:
+            - 放
+            - 一点儿
+        prompt:
+          kind: vi
+          text: Cho một chút sữa vào trà nhé.
+        optionKind: hanzi
+        options:
+          - 茶里放一点儿牛奶吧
+          - 茶里拿一点儿牛奶吧
+          - 茶里用一点儿牛奶吧
+        answer: 0
+  dialogue:
+    parts:
+      - title: Mua bánh bao
+        lines:
+          - s-h1-34-01
+          - s-h1-34-02
+          - s-h1-34-03
+          - s-h1-34-04
+      - title: To cỡ nào?
+        lines:
+          - s-h1-34-05
+          - s-h1-34-06
+          - s-h1-34-07
+          - s-h1-34-08
+      - title: Trả tiền
+        lines:
+          - s-h1-34-09
+          - s-h1-34-10
+          - s-h1-34-11
+          - s-h1-34-12
+    questions:
+      - id: q-h1-34-d01
+        type: choice
+        ask: Gấu trúc đỏ mua gì?
+        tests:
+          words:
+            - 包子
+          grammar:
+            - h1-g73
+        prompt:
+          kind: audio
+          ref: s-h1-34-03
+        optionKind: vi
+        options:
+          - hai cái bánh bao, một cốc trà
+          - một cái bánh bao, hai cốc trà
+          - hai cái bánh bao, một cốc sữa
+        answer: 0
+      - id: q-h1-34-d02
+        type: choice
+        ask: Gấu trúc đỏ hỏi gì?
+        tests:
+          words:
+            - 包子
+          grammar:
+            - h1-g74
+        prompt:
+          kind: audio
+          ref: s-h1-34-05
+        optionKind: vi
+        options:
+          - Bánh bao to cỡ nào?
+          - Bánh bao bao nhiêu tiền?
+          - Bánh bao ở đâu?
+        answer: 0
+      - id: q-h1-34-d03
+        type: choice
+        ask: Gấu trúc đỏ làm gì?
+        tests:
+          words:
+            - 找
+            - 一下儿
+        prompt:
+          kind: audio
+          ref: s-h1-34-09
+        optionKind: vi
+        options:
+          - tìm tiền một chút
+          - đếm tiền một chút
+          - cất tiền vào cặp
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-34-l01
+        type: tone
+        tests:
+          words:
+            - 包子
+          tone: true
+        prompt:
+          kind: audio
+          ref: 包子
+        syllable: 0
+        answer: 1
+      - id: q-h1-34-l02
+        type: choice
+        tests:
+          words:
+            - 拿
+        prompt:
+          kind: audio
+          ref: 拿
+        optionKind: hanzi
+        options:
+          - 拿
+          - 放
+          - 用
+          - 找
+        answer: 0
+      - id: q-h1-34-l03
+        type: choice
+        tests:
+          words:
+            - 一点儿
+        prompt:
+          kind: audio
+          ref: 一点儿
+        optionKind: hanzi
+        options:
+          - 一点儿
+          - 一下儿
+          - 一些
+          - 一样
+        answer: 0
+      - id: q-h1-34-s01
+        type: readAloud
+        tests:
+          words:
+            - 包子
+          grammar:
+            - h1-g74
+          tone: true
+        sentence: s-h1-34-05
+      - id: q-h1-34-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 包子
+          grammar:
+            - h1-g73
+        prompt:
+          kind: vi
+          text: Nói cậu muốn mua mấy cái bánh bao và mấy cốc trà.
+        rubric:
+          - Dùng số + 个 / 杯 + danh từ
+        answer: s-h1-34-03
+  writing:
+    chars:
+      - 找
+      - 拿
+      - 帮
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-34-x01
+      type: choice
+      tests:
+        words:
+          - 包子
+      prompt:
+        kind: hanzi
+        ref: 包子
+      optionKind: vi
+      options:
+        - bánh bao
+        - bánh mì
+        - mì sợi
+        - cơm
+      answer: 0
+    - id: q-h1-34-x02
+      type: choice
+      tests:
+        words:
+          - 一点儿
+      prompt:
+        kind: vi
+        text: một chút, một ít
+      optionKind: hanzi
+      options:
+        - 一点儿
+        - 一下儿
+        - 一样
+        - 一起
+      answer: 0
+    - id: q-h1-34-x03
+      type: choice
+      tests:
+        words:
+          - 一下儿
+      prompt:
+        kind: hanzi
+        ref: 一下儿
+      optionKind: vi
+      options:
+        - (làm) một chút, thử một lần
+        - một ít (đồ vật)
+        - giống nhau
+        - cùng nhau
+      answer: 0
+    - id: q-h1-34-x04
+      type: choice
+      tests:
+        words:
+          - 用
+      prompt:
+        kind: vi
+        text: dùng, sử dụng
+      optionKind: hanzi
+      options:
+        - 用
+        - 拿
+        - 放
+        - 帮
+      answer: 0
+    - id: q-h1-34-x05
+      type: choice
+      tests:
+        words:
+          - 找
+      prompt:
+        kind: hanzi
+        ref: 找
+      optionKind: vi
+      options:
+        - tìm
+        - cầm, lấy
+        - để, đặt
+        - giúp
+      answer: 0
+    - id: q-h1-34-x06
+      type: choice
+      tests:
+        words:
+          - 拿
+      prompt:
+        kind: vi
+        text: cầm, lấy
+      optionKind: hanzi
+      options:
+        - 拿
+        - 找
+        - 用
+        - 放
+      answer: 0
+    - id: q-h1-34-x07
+      type: choice
+      tests:
+        words:
+          - 放
+      prompt:
+        kind: hanzi
+        ref: 放
+      optionKind: vi
+      options:
+        - để, đặt, bỏ vào
+        - dùng
+        - tìm
+        - cầm, lấy
+      answer: 0
+    - id: q-h1-34-x08
+      type: choice
+      tests:
+        words:
+          - 帮
+      prompt:
+        kind: vi
+        text: giúp, giúp đỡ
+      optionKind: hanzi
+      options:
+        - 帮
+        - 拿
+        - 找
+        - 用
+      answer: 0
+    - id: q-h1-34-x09
+      type: choice
+      tests:
+        words:
+          - 包子
+        grammar:
+          - h1-g73
+      prompt:
+        kind: vi
+        text: Tớ lấy hai cái bánh bao, một cốc trà.
+      optionKind: hanzi
+      options:
+        - 我要两个包子，一杯茶
+        - 我要两个包子，一个茶
+        - 我要两个包子，茶一杯
+      answer: 0
+    - id: q-h1-34-x10
+      type: trueFalse
+      tests:
+        words:
+          - 杯子
+        grammar:
+          - h1-g73
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我要一个茶。
+      answer: false
+    - id: q-h1-34-x11
+      type: order
+      tests:
+        words:
+          - 页
+        grammar:
+          - h1-g73
+      tiles:
+        - 这
+        - 本
+        - 书
+        - 有
+        - 一百
+        - 页
+      answer: s-h1-34-14
+    - id: q-h1-34-x12
+      type: choice
+      tests:
+        words:
+          - 孩子
+        grammar:
+          - h1-g74
+      prompt:
+        kind: vi
+        text: Con cậu mấy tuổi rồi?
+      optionKind: hanzi
+      options:
+        - 你的孩子多大了
+        - 你的孩子大多了
+        - 多你的孩子大了
+      answer: 0
+    - id: q-h1-34-x13
+      type: trueFalse
+      tests:
+        words:
+          - 孩子
+        grammar:
+          - h1-g74
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你的孩子多大了吗？
+      answer: false
+    - id: q-h1-34-x14
+      type: order
+      tests:
+        words:
+          - 远
+        grammar:
+          - h1-g74
+      tiles:
+        - 从
+        - 这儿
+        - 到
+        - 车站
+        - 多
+        - 远
+      answer: s-h1-34-13
+    - id: q-h1-34-x15
+      type: choice
+      tests:
+        words:
+          - 包子
+        grammar:
+          - h1-g74
+      prompt:
+        kind: audio
+        ref: s-h1-34-05
+      optionKind: vi
+      options:
+        - Bánh bao to cỡ nào?
+        - Bánh bao bao nhiêu tiền?
+        - Bánh bao ở đâu?
+      answer: 0
+    - id: q-h1-34-x16
+      type: choice
+      tests:
+        words:
+          - 面包
+        grammar:
+          - h1-g73
+      prompt:
+        kind: audio
+        ref: s-h1-34-16
+      optionKind: vi
+      options:
+        - Tớ ăn hai miếng bánh mì rồi.
+        - Tớ ăn hai cái bánh bao rồi.
+        - Tớ uống hai cốc trà rồi.
+      answer: 0
+    - id: q-h1-34-x17
+      type: choice
+      tests:
+        words:
+          - 帮
+          - 拿
+      prompt:
+        kind: vi
+        text: Tớ cầm bánh bao giúp cậu.
+      optionKind: hanzi
+      options:
+        - 我帮你拿包子
+        - 你帮我拿包子
+        - 我帮你放包子
+      answer: 0
+    - id: q-h1-34-x18
+      type: choice
+      tests:
+        words:
+          - 放
+          - 一点儿
+      prompt:
+        kind: vi
+        text: Cho một chút sữa vào trà nhé.
+      optionKind: hanzi
+      options:
+        - 茶里放一点儿牛奶吧
+        - 茶里拿一点儿牛奶吧
+        - 茶里用一点儿牛奶吧
+      answer: 0
+    - id: q-h1-34-x19
+      type: choice
+      tests:
+        words:
+          - 找
+          - 一下儿
+      prompt:
+        kind: audio
+        ref: s-h1-34-09
+      optionKind: vi
+      options:
+        - Tiền của tớ đâu rồi? Để tớ tìm một chút.
+        - Tiền của tớ đây. Cậu cầm đi.
+        - Tiền của tớ ở trong cặp sách.
+      answer: 0
+    - id: q-h1-34-x20
+      type: choice
+      tests:
+        words:
+          - 用
+      prompt:
+        kind: audio
+        ref: s-h1-34-08
+      optionKind: vi
+      options:
+        - cậu dùng cái cốc này mà uống nhé
+        - cậu cầm cái cốc này đi nhé
+        - cậu để cái cốc này lên bàn nhé
+      answer: 0
+    - id: q-h1-34-x21
+      type: trueFalse
+      tests:
+        words:
+          - 拿
+      prompt:
+        kind: hanzi
+        ref: 拿
+      statement: 拿 nghĩa là “cầm, lấy”.
+      answer: true
+    - id: q-h1-34-x22
+      type: order
+      tests:
+        words:
+          - 放
+          - 一点儿
+      tiles:
+        - 茶
+        - 里
+        - 放
+        - 一点儿
+        - 牛奶
+        - 吧
+      answer: s-h1-34-07
