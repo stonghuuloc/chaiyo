@@ -5,7 +5,14 @@ import type { Marks } from './marks';
 import type { Rolled } from './tick';
 
 export type Skip = { id: string; reason: 'counted' | 'no-channel' | 'not-due' | 'already-sent' };
-export type Delivery = { id: string; channel: ChannelName | 'claim'; ok: boolean; error?: string };
+export type Delivery = {
+	id: string;
+	channel: ChannelName | 'claim' | 'log';
+	ok: boolean;
+	error?: string;
+};
+export type SendRow = { id: string; learnerId: string; day: string; channel: ChannelName };
+export type SendLog = { record(rows: SendRow[]): Promise<void> };
 export type RemindResult = {
 	sent: string[];
 	skipped: Skip[];
@@ -17,8 +24,10 @@ export async function sendReminders(
 	now: Date,
 	rolled: Rolled[],
 	channels: Channel[],
-	marks: Marks
+	marks: Marks,
+	o: { log?: SendLog; newId?: () => string } = {}
 ): Promise<RemindResult> {
+	const newId = o.newId ?? (() => crypto.randomUUID());
 	const sent: string[] = [];
 	const skipped: Skip[] = [];
 	const failed: string[] = [];
@@ -55,8 +64,11 @@ export async function sendReminders(
 			skipped.push({ id: learner.id, reason: 'already-sent' });
 			continue;
 		}
+		const opens = usable.map(() => (o.log ? newId() : undefined));
 		const settled = await Promise.allSettled(
-			usable.map((c) => c.send({ learnerId: learner.id, day }))
+			usable.map((c, i) =>
+				c.send({ learnerId: learner.id, day, ...(opens[i] && { open: opens[i] }) })
+			)
 		);
 		const mine = settled.flatMap((s, i): Delivery[] =>
 			s.status === 'fulfilled'
@@ -73,6 +85,20 @@ export async function sendReminders(
 					]
 		);
 		deliveries.push(...mine);
+		const rows = settled.flatMap((s, i): SendRow[] =>
+			s.status === 'fulfilled' && s.value !== 'skipped' && opens[i]
+				? [{ id: opens[i]!, learnerId: learner.id, day, channel: usable[i].name }]
+				: []
+		);
+		if (o.log && rows.length)
+			await o.log.record(rows).catch((e) =>
+				deliveries.push({
+					id: learner.id,
+					channel: 'log',
+					ok: false,
+					error: e instanceof Error ? e.message : String(e)
+				})
+			);
 		if (mine.length === 0) {
 			skipped.push({ id: learner.id, reason: 'no-channel' });
 			await marks.release(learner.id, day).catch(() => {});

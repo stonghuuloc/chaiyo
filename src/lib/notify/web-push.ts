@@ -1,4 +1,4 @@
-import type { Channel } from './channel';
+import { remindUrl, type Channel } from './channel';
 
 export type PushSub = { endpoint: string; p256dh: string; auth: string };
 export type PushSubs = {
@@ -40,10 +40,11 @@ export function webPushChannel(o: {
 	post: PushPost;
 	payload?: typeof REMINDER_PUSH;
 }): Channel {
-	const body = JSON.stringify(o.payload ?? REMINDER_PUSH);
+	const payload = o.payload ?? REMINDER_PUSH;
 	return {
 		name: 'push',
-		async send({ learnerId }) {
+		async send({ learnerId, open }) {
+			const body = JSON.stringify({ ...payload, url: remindUrl(payload.url, open) });
 			const all = await o.subs.list(learnerId);
 			let failed = 0;
 			let ok = 0;

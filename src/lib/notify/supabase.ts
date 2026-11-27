@@ -3,6 +3,7 @@ import { PAGE, pullInputs } from '#lib/ledger/supabase.js';
 import type { Curriculum } from '#lib/study/index.js';
 import { CHANNEL_NAMES } from './channel';
 import type { Marks } from './marks';
+import type { SendLog } from './remind';
 import type { Deps, Learner } from './tick';
 
 export function supabaseDeps(
@@ -77,6 +78,18 @@ export function supabaseMarks(client: SupabaseClient): Marks {
 				.delete()
 				.eq('learner_id', learnerId)
 				.eq('day', day);
+			if (error) throw new Error(error.message);
+		}
+	};
+}
+
+export function supabaseSends(client: SupabaseClient): SendLog {
+	return {
+		async record(rows) {
+			const { error } = await client.from('notify_sends').upsert(
+				rows.map((r) => ({ id: r.id, learner_id: r.learnerId, day: r.day, channel: r.channel })),
+				{ onConflict: 'learner_id,day,channel', ignoreDuplicates: true }
+			);
 			if (error) throw new Error(error.message);
 		}
 	};

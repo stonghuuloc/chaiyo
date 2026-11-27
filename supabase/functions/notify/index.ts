@@ -6,7 +6,7 @@ import { emailFromEnv } from '#lib/notify/email.js';
 import { handle } from '#lib/notify/handler.js';
 import { supabasePushSubs } from '#lib/notify/push-store.js';
 import { sendReminders } from '#lib/notify/remind.js';
-import { supabaseDeps, supabaseMarks } from '#lib/notify/supabase.js';
+import { supabaseDeps, supabaseMarks, supabaseSends } from '#lib/notify/supabase.js';
 import { supabaseTelegram } from '#lib/notify/telegram-store.js';
 import { telegramFromEnv } from '#lib/notify/telegram.js';
 import { tick } from '#lib/notify/tick.js';
@@ -36,7 +36,9 @@ Deno.serve((req) =>
 			return tick(
 				now,
 				supabaseDeps(client, { lessons }, (at, rolled) =>
-					sendReminders(at, rolled, channels, supabaseMarks(client)).then((r) =>
+					sendReminders(at, rolled, channels, supabaseMarks(client), {
+						log: supabaseSends(client)
+					}).then((r) =>
 						failedLines(r).forEach((l) => console.warn(l))
 					)
 				)

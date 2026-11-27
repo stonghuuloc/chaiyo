@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
 import { CURRICULUM } from '#lib/study/fixtures/curriculum.js';
-import { supabaseDeps, supabaseMarks } from './supabase';
+import { supabaseDeps, supabaseMarks, supabaseSends } from './supabase';
 import { noRemind, type Rolled } from './tick';
 
 const json = (body: unknown, status: number) =>
@@ -245,5 +245,37 @@ describe('supabaseMarks', () => {
 
 		// Assert
 		await expect(act).rejects.toThrow('boom');
+	});
+});
+
+describe('supabaseSends', () => {
+	const rows = [
+		{ id: 'tok-1', learnerId: 'lan', day: '2026-11-23', channel: 'email' as const },
+		{ id: 'tok-2', learnerId: 'lan', day: '2026-11-23', channel: 'push' as const }
+	];
+
+	it('Given_Rows_When_Record_Then_OneUpsertIgnoreDuplicates', async () => {
+		const fetch = vi.fn(async () => json([], 201));
+
+		await supabaseSends(clientWith(fetch as typeof globalThis.fetch)).record(rows);
+
+		expect(fetch).toHaveBeenCalledTimes(1);
+		const [input, init] = fetch.mock.calls[0] as unknown as [RequestInfo | URL, RequestInit];
+		const url = new URL(String(input));
+		expect(url.pathname).toBe('/rest/v1/notify_sends');
+		expect(url.searchParams.get('on_conflict')).toBe('learner_id,day,channel');
+		expect(new Headers(init.headers).get('prefer')).toContain('resolution=ignore-duplicates');
+		expect(JSON.parse(init.body as string)).toEqual([
+			{ id: 'tok-1', learner_id: 'lan', day: '2026-11-23', channel: 'email' },
+			{ id: 'tok-2', learner_id: 'lan', day: '2026-11-23', channel: 'push' }
+		]);
+	});
+
+	it('Given_500_When_Record_Then_Throws', async () => {
+		const fetch = vi.fn(async () => json({ message: 'boom' }, 500));
+
+		await expect(
+			supabaseSends(clientWith(fetch as typeof globalThis.fetch)).record(rows)
+		).rejects.toThrow('boom');
 	});
 });
