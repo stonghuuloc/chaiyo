@@ -1,8 +1,17 @@
 <script lang="ts">
 	import { afterNavigate, snapshot } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { chipName, inboxView } from '#lib/admin/reports.js';
+	import {
+		chipName,
+		inboxView,
+		setReportStatus,
+		type ChipKey,
+		type Tab
+	} from '#lib/admin/reports.js';
 	import { m } from '#lib/paraglide/messages.js';
+	import { supabase } from '#lib/supabase.js';
+	import Toast from '#lib/ui/Toast.svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	import ReportCard from './ReportCard.svelte';
 	import type { PageProps } from './$types';
 
@@ -24,7 +33,42 @@
 		history.back();
 	}
 
-	const view = $derived(inboxView(data.reports, new Date()));
+	let rows = $derived(data.reports);
+	let tab = $state<Tab>('new');
+	let selected = $state<ChipKey>('all');
+	const pending = new SvelteSet<string>();
+	let toast = $state({ open: false, message: '', undo: null as string | null, nonce: 0 });
+
+	const view = $derived(inboxView(rows, new Date(), { tab, chip: selected }));
+
+	async function set(id: string, status: Tab): Promise<boolean> {
+		if (pending.has(id)) return false;
+		pending.add(id);
+		try {
+			await setReportStatus(supabase, id, status);
+			rows = rows.map((r) => (r.id === id ? { ...r, status } : r));
+			return true;
+		} catch {
+			toast = { open: true, message: m.chy54s2_failed(), undo: null, nonce: toast.nonce + 1 };
+			return false;
+		} finally {
+			pending.delete(id);
+		}
+	}
+
+	async function resolveCard(id: string) {
+		if (await set(id, 'resolved'))
+			toast = { open: true, message: m.chy54s2_toast(), undo: id, nonce: toast.nonce + 1 };
+	}
+
+	async function reopenCard(id: string) {
+		toast.open = false;
+		await set(id, 'new');
+	}
+
+	function undo() {
+		if (toast.undo) void set(toast.undo, 'new');
+	}
 </script>
 
 <div
@@ -60,13 +104,14 @@
 	aria-label={m.chy54s1_tabs()}
 	class="mt-4 grid grid-cols-2 rounded-full border border-ruled-line bg-shaded-paper p-[3px]"
 >
-	{#each [{ label: m.chy54s1_tab_new(), count: view.counts.new, on: true }, { label: m.chy54s1_tab_done(), count: view.counts.resolved, on: false }] as tab (tab.label)}
+	{#each [{ key: 'new', label: m.chy54s1_tab_new(), count: view.counts.new }, { key: 'resolved', label: m.chy54s1_tab_done(), count: view.counts.resolved }] as const as t (t.key)}
 		<button
 			type="button"
-			aria-pressed={tab.on}
-			class="min-h-11 rounded-full text-[15px] font-semibold {tab.on
+			aria-pressed={tab === t.key}
+			onclick={() => (tab = t.key)}
+			class="min-h-11 rounded-full text-[15px] font-semibold {tab === t.key
 				? 'bg-ink text-notebook-paper'
-				: 'text-pencil'}">{tab.label} <small class="font-medium">{tab.count}</small></button
+				: 'text-pencil'}">{t.label} <small class="font-medium">{t.count}</small></button
 		>
 	{/each}
 </div>
@@ -80,9 +125,10 @@
 	{#each view.chips as chip (chip.key)}
 		<button
 			type="button"
-			aria-pressed={chip.key === 'all'}
+			aria-pressed={chip.key === selected}
+			onclick={() => (selected = chip.key)}
 			class="min-h-11 flex-none rounded-full border px-4 text-[14px] font-medium whitespace-nowrap {chip.key ===
-			'all'
+			selected
 				? 'border-ink bg-ink text-notebook-paper'
 				: 'border-ruled-line bg-white/60 text-graphite'}"
 			>{m.chy54s1_chip({ name: chipName(chip.key), count: chip.count })}</button
@@ -90,11 +136,52 @@
 	{/each}
 </div>
 
-<ul
-	data-part="report-list"
-	class="mt-4 divide-y divide-ruled-line overflow-hidden rounded-[18px] border border-ruled-line bg-white/55"
->
-	{#each view.cards as card (card.id)}
-		<ReportCard {card} />
-	{/each}
-</ul>
+{#if view.empty}
+	{@const e = view.empty}
+	<div data-part="report-empty" class="mt-8 px-4 text-center text-pencil">
+		<span lang="zh" class="block font-hanzi text-[56px] text-faint-pencil"
+			>{e.kind === 'inbox-clear' ? '安' : e.kind === 'none-done' ? '空' : '静'}</span
+		>
+		<p class="mt-2">
+			<b class="font-display text-[19px] font-semibold text-ink"
+				>{e.kind === 'inbox-clear'
+					? m.chy54s2_clear_title()
+					: e.kind === 'none-done'
+						? m.chy54s2_none_title()
+						: m.chy54s2_quiet_title()}</b
+			>
+		</p>
+		<p class="mt-2">
+			{e.kind === 'inbox-clear'
+				? m.chy54s2_clear_body()
+				: e.kind === 'none-done'
+					? m.chy54s2_none_body()
+					: e.tab === 'new'
+						? m.chy54s2_quiet_new({ name: chipName(e.chip) })
+						: m.chy54s2_quiet_done({ name: chipName(e.chip) })}
+		</p>
+	</div>
+{:else}
+	<ul
+		data-part="report-list"
+		class="mt-4 divide-y divide-ruled-line overflow-hidden rounded-[18px] border border-ruled-line bg-white/55"
+	>
+		{#each view.cards as card (card.id)}
+			<ReportCard
+				{card}
+				busy={pending.has(card.id)}
+				onresolve={() => resolveCard(card.id)}
+				onreopen={() => reopenCard(card.id)}
+			/>
+		{/each}
+	</ul>
+{/if}
+
+<Toast
+	open={toast.open}
+	message={toast.message}
+	nonce={toast.nonce}
+	actionLabel={toast.undo ? m.chy54s2_undo() : undefined}
+	onaction={undo}
+	onclose={() => (toast.open = false)}
+/>

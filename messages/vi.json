@@ -726,5 +726,20 @@
 	"chy54s1_lesson": "Bài {n} · {title}",
 	"chy54s1_lesson_step": "Bài {n} · {title} · {step}",
 	"chy54s1_who": "{name} · {ago}",
-	"chy54s1_no_note": "Không có ghi chú"
+	"chy54s1_no_note": "Không có ghi chú",
+	"chy54s2_hint_word": "Mở thẻ từ {hanzi}",
+	"chy54s2_hint_lesson": "Mở danh sách từ của bài",
+	"chy54s2_resolve": "Đánh dấu đã xử lý",
+	"chy54s2_resolved": "Đã xử lý",
+	"chy54s2_reopen": "Mở lại",
+	"chy54s2_toast": "Đã xử lý xong, gọn gàng!",
+	"chy54s2_undo": "Hoàn tác",
+	"chy54s2_failed": "Chưa lưu được, thử lại nhé.",
+	"chy54s2_clear_title": "Hộp thư sạch bong!",
+	"chy54s2_clear_body": "Không còn báo lỗi nào đang chờ. Nghỉ tay uống miếng trà đi nhé.",
+	"chy54s2_none_title": "Chưa xử lý cái nào",
+	"chy54s2_none_body": "Báo lỗi bạn đã xử lý sẽ nằm ở đây.",
+	"chy54s2_quiet_title": "Mục này đang yên ắng",
+	"chy54s2_quiet_new": "Không có báo lỗi “{name}” nào đang chờ.",
+	"chy54s2_quiet_done": "Chưa có báo lỗi “{name}” nào được xử lý."
 }

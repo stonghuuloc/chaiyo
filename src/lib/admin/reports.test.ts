@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
 import { pagedRpc, REFERENCE_NOW, REFERENCE_ROWS } from './fixtures/reports';
-import { inboxView, listReports, type InboxReport } from './reports';
+import { cardHref, inboxView, listReports, setReportStatus, type InboxReport } from './reports';
 
 const read = async (rows: unknown[] | null) => {
 	const rpc = vi.fn(() => pagedRpc(rows));
@@ -65,10 +65,11 @@ describe('inboxView', () => {
 		expect(await card(1)).toEqual({
 			id: REFERENCE_ROWS[0].id,
 			chip: 'pinyin',
-			head: { kind: 'word', hanzi: '你好', long: false, lesson: 1 },
+			head: { kind: 'word', hanzi: '你好', long: false, lesson: 1, lessonId: 'h1-01' },
 			who: 'Lan',
 			ago: '12 phút trước',
-			note: 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.'
+			note: 'Thẻ ghi nǐ hǎo nhưng audio đọc ní hǎo.',
+			status: 'new'
 		});
 	});
 
@@ -92,7 +93,14 @@ describe('inboxView', () => {
 	it('Given_R4_Then_LessonCardBai1XinChao', async () => {
 		expect(await card(4)).toMatchObject({
 			chip: 'other',
-			head: { kind: 'lesson', n: 1, title: 'Xin chào', step: expect.anything() },
+			head: {
+				kind: 'lesson',
+				n: 1,
+				title: 'Xin chào',
+				step: expect.anything(),
+				lessonId: 'h1-01',
+				known: true
+			},
 			ago: '5 giờ trước'
 		});
 	});
@@ -115,8 +123,8 @@ describe('inboxView', () => {
 			REFERENCE_NOW
 		);
 		expect(v.cards.map((c) => c.head)).toEqual([
-			{ kind: 'lesson', n: 0, title: 'gone', step: r4.step },
-			{ kind: 'lesson', n: 0, title: '', step: null }
+			{ kind: 'lesson', n: 0, title: 'gone', step: r4.step, lessonId: 'gone', known: false },
+			{ kind: 'lesson', n: 0, title: '', step: null, lessonId: null, known: false }
 		]);
 	});
 
@@ -145,5 +153,105 @@ describe('inboxView', () => {
 		const rpc = vi.fn(() => pagedRpc(rows));
 		expect(await listReports({ rpc } as unknown as SupabaseClient)).toHaveLength(1000);
 		expect(rpc).toHaveBeenCalledTimes(2);
+	});
+});
+
+describe('inboxView tab and chip', () => {
+	const done = (rows: InboxReport[], pick: (r: InboxReport, i: number) => boolean) =>
+		rows.map((r, i): InboxReport => (pick(r, i) ? { ...r, status: 'resolved' } : r));
+	const ids = (v: ReturnType<typeof inboxView>) => v.cards.map((c) => c.id);
+	const rid = (...n: number[]) => n.map((k) => REFERENCE_ROWS[k - 1].id);
+
+	it('Given_AudioChipOnNew_Then_R2R6R10', async () => {
+		const v = inboxView(await ten(), REFERENCE_NOW, { chip: 'audio' });
+		expect(ids(v)).toEqual(rid(2, 6, 10));
+		expect(v.empty).toBeNull();
+	});
+
+	it('Given_R1Resolved_When_TabResolved_Then_Chips1_0_1_0_0', async () => {
+		const rows = done(await ten(), (_, i) => i === 0);
+		const v = inboxView(rows, REFERENCE_NOW, { tab: 'resolved' });
+		expect(v.chips.map((c) => c.count)).toEqual([1, 0, 1, 0, 0]);
+		expect(ids(v)).toEqual(rid(1));
+		expect(v.cards[0].status).toBe('resolved');
+		expect(v.counts).toEqual({ new: 9, resolved: 1 });
+	});
+
+	it('Given_AllResolved_When_NewAnyChip_Then_InboxClear', async () => {
+		const rows = done(await ten(), () => true);
+		for (const chip of ['all', 'meaning', 'audio'] as const)
+			expect(inboxView(rows, REFERENCE_NOW, { chip }).empty).toEqual({ kind: 'inbox-clear' });
+	});
+
+	it('Given_NoneResolved_When_TabResolved_Then_NoneDone', async () => {
+		const v = inboxView(await ten(), REFERENCE_NOW, { tab: 'resolved', chip: 'pinyin' });
+		expect(v.cards).toEqual([]);
+		expect(v.empty).toEqual({ kind: 'none-done' });
+	});
+
+	it('Given_AudioAllResolved_When_NewAudio_Then_ChipEmpty', async () => {
+		const rows = done(await ten(), (r) => r.category === 'audio');
+		const v = inboxView(rows, REFERENCE_NOW, { chip: 'audio' });
+		expect(v.cards).toEqual([]);
+		expect(v.empty).toEqual({ kind: 'chip', tab: 'new', chip: 'audio' });
+	});
+
+	it('Given_R1Resolved_When_ResolvedMeaning_Then_ChipEmpty', async () => {
+		const rows = done(await ten(), (_, i) => i === 0);
+		const v = inboxView(rows, REFERENCE_NOW, { tab: 'resolved', chip: 'meaning' });
+		expect(v.empty).toEqual({ kind: 'chip', tab: 'resolved', chip: 'meaning' });
+	});
+
+	it('Given_DefaultArgs_Then_S1Output', async () => {
+		const rows = await ten();
+		const v = inboxView(rows, REFERENCE_NOW);
+		expect(v).toEqual(inboxView(rows, REFERENCE_NOW, { tab: 'new', chip: 'all' }));
+		expect(v.cards).toHaveLength(10);
+		expect(v.empty).toBeNull();
+	});
+});
+
+describe('cardHref', () => {
+	it('Given_R1_Then_HrefWordWithLesson', async () => {
+		expect(cardHref((await card(1)).head)).toBe('/word/你好?lesson=h1-01');
+	});
+
+	it('Given_R2_Then_HrefWordNoQuery', async () => {
+		expect(cardHref((await card(2)).head)).toBe('/word/谢谢');
+	});
+
+	it('Given_R4_Then_HrefLessonWords', async () => {
+		expect(cardHref((await card(4)).head)).toBe('/lesson/h1-01/words');
+	});
+
+	it('Given_UnknownLesson_Then_NoHref', async () => {
+		const [r4] = (await ten()).slice(3, 4);
+		const v = inboxView(
+			[
+				{ ...r4, lesson: 'gone' },
+				{ ...r4, id: 'x', lesson: null, step: null }
+			],
+			REFERENCE_NOW
+		);
+		expect(v.cards.map((c) => cardHref(c.head))).toEqual([null, null]);
+	});
+});
+
+describe('setReportStatus', () => {
+	it('Given_Resolve_Then_RpcArgs', async () => {
+		const rpc = vi.fn(async () => ({ data: null, error: null }));
+		await setReportStatus({ rpc } as unknown as SupabaseClient, 'r1', 'resolved');
+		expect(rpc).toHaveBeenCalledOnce();
+		expect(rpc).toHaveBeenCalledWith('set_error_report_status', {
+			p_id: 'r1',
+			p_status: 'resolved'
+		});
+	});
+
+	it('Given_RpcError_Then_Throws', async () => {
+		const rpc = vi.fn(async () => ({ data: null, error: { message: 'not admin' } }));
+		await expect(
+			setReportStatus({ rpc } as unknown as SupabaseClient, 'r1', 'new')
+		).rejects.toThrow('not admin');
 	});
 });
