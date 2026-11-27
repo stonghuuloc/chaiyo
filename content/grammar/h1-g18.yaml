@@ -1,0 +1,14 @@
+id: h1-g18
+level: 1
+std:
+  - 10
+title: "Đều: 都"
+pattern: chủ ngữ + 都 + 是 / động từ
+explain: "都 (đô, dōu) nghĩa là “đều”. Nó đứng sau chủ ngữ gồm nhiều người, trước 是 hoặc động từ: 我们都是学生 = Chúng tớ đều là học sinh; 爸爸、妈妈都有工作 = Bố mẹ đều có việc làm."
+examples:
+  - s-h1-07-05
+  - s-h1-07-13
+pitfalls:
+  - wrong: 都我们是学生
+    right: 我们都是学生
+    why: 都 đứng sau chủ ngữ, không đứng đầu câu.

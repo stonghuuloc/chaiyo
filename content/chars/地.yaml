@@ -1,0 +1,16 @@
+hanzi: 地
+readings:
+  - pinyin: dì
+    hanviet: địa
+  - pinyin: de
+    hanviet: địa
+    rare: true
+radical: 土
+ids: ⿰土也
+strokes: 6
+mnemonic:
+  hinh: 土 (đất) + 也 (cũng) — ở đâu cũng có đất = mặt đất, nơi chốn nói chung
+  am: "địa — kênh mạnh nhất: địa phương, địa chỉ, địa lý, mặt đất"
+  doiThat: 土地 (đất đai) trên giấy tờ nhà đất; 慢慢地/认真地 trong văn viết chỉ cách thức làm việc
+  tuongPhan: ≠ 里 (đã học) — 地 chỉ ĐẤT/NƠI CHUNG CHUNG (地上, 土地); 里 chỉ BÊN TRONG một vật/nơi cụ thể (这里, 心里). "Ở đây" là 这里, KHÔNG PHẢI 这地.
+  kind: etymology

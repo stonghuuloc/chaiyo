@@ -27,13 +27,46 @@ describe('curriculum', () => {
 			['h1-03', 3],
 			['h1-04', 4],
 			['h1-05', 5],
+			['h1-06', 6],
+			['h1-07', 7],
+			['h1-08', 8],
+			['h1-09', 9],
+			['h1-10', 10],
+			['h1-11', 11],
+			['h1-12', 12],
+			['h1-13', 13],
+			['h1-14', 14],
+			['h1-15', 15],
+			['h1-16', 16],
+			['h1-17', 17],
+			['h1-18', 18],
+			['h1-19', 19],
+			['h1-20', 20],
+			['h1-21', 21],
+			['h1-22', 22],
+			['h1-23', 23],
+			['h1-24', 24],
+			['h1-25', 25],
+			['h1-26', 26],
+			['h1-27', 27],
+			['h1-28', 28],
+			['h1-29', 29],
+			['h1-30', 30],
+			['h1-31', 31],
+			['h1-32', 32],
+			['h1-33', 33],
+			['h1-34', 34],
+			['h1-35', 35],
 			['h2-01', 41],
 			['h3-01', 68],
 			['h4-01', 94],
 			['h5-01', 116]
 		]);
-		expect(LESSONS.map((l) => l.words.length)).toEqual([0, 10, 9, 10, 8, 14, 12, 13, 15, 15]);
-		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(106);
+		expect(LESSONS.map((l) => l.words.length)).toEqual([
+			0, 10, 9, 10, 8, 14, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+			8, 8, 8, 8, 8, 8, 12, 13, 15, 15
+		]);
+		expect(LESSONS.reduce((n, l) => n + l.words.length, 0)).toBe(346);
 	});
 
 	it('Given_TwoLevels_When_OutlineNumbers_Then_SecondStartsAfterFirstCount', () => {
@@ -111,7 +144,7 @@ describe('levels', () => {
 			title: 'Chào hỏi',
 			lessons: [
 				{ id: 'h1-01', title: 'Xin chào', titleHanzi: '你好' },
-				{ id: 'h1-02', title: 'Bạn tên gì?', titleHanzi: '你叫什么名字' }
+				{ id: 'h1-02', title: 'Hỏi tên', titleHanzi: '名字' }
 			]
 		});
 	});

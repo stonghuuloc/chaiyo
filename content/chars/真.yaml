@@ -1,0 +1,13 @@
+hanzi: 真
+readings:
+  - pinyin: zhēn
+    hanviet: chân
+radical: 目
+ids: ⿱十具
+strokes: 10
+mnemonic:
+  hinh: "`[tự dựng]` Trên đầu 十 (như cây gạch ngang đóng dấu), giữa là 目 (mắt) đang nhìn thẳng, dưới là chân đế vững — thấy tận mắt, đứng vững, mới gọi là THẬT."
+  am: Hán-Việt = chân, y hệt "chân thật", "chân lý", "chân dung" — âm Việt dùng hằng ngày, khỏi cầu âm.
+  doiThat: Chữ 真 xuất hiện dày trong câu cửa miệng 真的吗 (thật á?) — hiện trên tin nhắn, sub phim, hội thoại hằng ngày.
+  tuongPhan: ≠ 直 (zhí, thẳng) — 直 không có 目 ở giữa, chỉ có 十+目-thu gọn khác; ≠ 具 (jù) cũng dễ lẫn vì cùng có phần trên giống 十/目 nhưng dưới là 八 rõ hai chân tách.
+  kind: invented

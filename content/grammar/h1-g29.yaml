@@ -1,0 +1,18 @@
+id: h1-g29
+level: 1
+std:
+  - 8
+  - 23
+title: "Số + lượng từ: 本 · 页 · 个 · 次 · 一些"
+pattern: số + 本 / 页 / 个 / 次 + danh từ
+explain: |-
+  本 (bản, běn) đếm sách vở: 一本书. 页 (hiệt, yè) đếm trang: 一百页. 个 đếm cốc và nhiều vật khác: 三个杯子.
+
+  次 (thứ, cì) đếm số lần, đặt sau động từ: 说一次. 一些 (nhất ta, yīxiē) là “một ít, vài”, đứng trước danh từ: 一些杯子.
+examples:
+  - s-h1-12-02
+  - s-h1-12-09
+pitfalls:
+  - wrong: 我有三书
+    right: 我有三本书
+    why: Thiếu lượng từ 本 giữa số và danh từ.

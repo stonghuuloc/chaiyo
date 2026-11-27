@@ -20,6 +20,15 @@ describe('lint:content CLI', () => {
 		expect(err.trimEnd().split('\n').at(-1)).toBe('3 errors in 2 files');
 	});
 
+	it('names the lesson and the stray character, and exits 1', { timeout: 20_000 }, () => {
+		const { status, out } = cli('src/lib/content/lint/fixtures/cli-stray-char');
+		expect(status).toBe(1);
+		expect(out.trimEnd().split('\n')).toHaveLength(1);
+		expect(out).toMatch(
+			/^lessons\/hsk1\/h1-01\.yaml {2}sentences\[9\]\.hanzi {2}#5 .*我 not among the known characters of h1-01/
+		);
+	});
+
 	it('keeps a multi-line parse error on one stdout line', { timeout: 20_000 }, () => {
 		const { status, out } = cli('src/lib/content/lint/fixtures/cli-malformed');
 		expect(status).toBe(1);

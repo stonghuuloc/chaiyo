@@ -1,0 +1,17 @@
+id: h1-g45
+level: 1
+std:
+  - 4
+title: "Hỏi số lượng: 多少 · 几"
+pattern: 多少 + (lượng từ) + danh từ · 几 + lượng từ
+explain: |-
+  多少 (đa thiểu, duōshao) hỏi số lượng bất kỳ, lượng từ có thể bỏ: 多少钱？ = Bao nhiêu tiền? 几 (mấy, jǐ) hỏi số nhỏ, bắt buộc có lượng từ: 你有几块钱？
+
+  Hỏi giá luôn dùng 多少钱.
+examples:
+  - s-h1-20-03
+  - s-h1-20-13
+pitfalls:
+  - wrong: 这本书几钱？
+    right: 这本书多少钱？
+    why: Hỏi giá dùng 多少钱, không dùng 几钱.

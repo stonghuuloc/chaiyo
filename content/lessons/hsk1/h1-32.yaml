@@ -1,0 +1,720 @@
+id: h1-32
+level: 1
+topic: Mua sắm
+order: 32
+title: Ôn mua sắm
+titleHanzi: 买
+goal: Ôn 买, 钱, 贵; hỏi lựa chọn với 还是; hỏi 要不要 / 喜欢不喜欢; nối danh từ với 和
+scene:
+  file: lessons/h1-32.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at a small market stall with milk, eggs, fruit and tea on the counter; the red panda holds a shopping basket and looks at a price tag, and the takin holds some coins.
+sentences:
+  - id: s-h1-32-01
+    hanzi: 你想买什么？
+    pinyin: nǐ xiǎng mǎi shénme?
+    vi: Cậu muốn mua gì?
+    speaker: takin
+  - id: s-h1-32-02
+    hanzi: 我想买牛奶和鸡蛋。
+    pinyin: wǒ xiǎng mǎi niúnǎi hé jīdàn.
+    vi: Tớ muốn mua sữa và trứng.
+    speaker: redpanda
+  - id: s-h1-32-03
+    hanzi: 你要不要买水果？
+    pinyin: nǐ yào bu yào mǎi shuǐguǒ?
+    vi: Cậu có mua trái cây không?
+    speaker: takin
+  - id: s-h1-32-04
+    hanzi: 要，我喜欢吃水果。
+    pinyin: yào, wǒ xǐhuan chī shuǐguǒ.
+    vi: Có, tớ thích ăn trái cây.
+    speaker: redpanda
+  - id: s-h1-32-05
+    hanzi: 这个多少钱？
+    pinyin: zhège duōshao qián?
+    vi: Cái này bao nhiêu tiền?
+    speaker: redpanda
+  - id: s-h1-32-06
+    hanzi: 三十块。
+    pinyin: sānshí kuài.
+    vi: Ba mươi đồng.
+    speaker: takin
+  - id: s-h1-32-07
+    hanzi: 太贵了！我们买那个吧。
+    pinyin: tài guì le! wǒmen mǎi nàge ba.
+    vi: Đắt quá! Tụi mình mua cái kia đi.
+    speaker: redpanda
+  - id: s-h1-32-08
+    hanzi: 那个不贵，也很好吃。
+    pinyin: nàge bù guì, yě hěn hǎochī.
+    vi: Cái kia không đắt, mà cũng ngon lắm.
+    speaker: takin
+  - id: s-h1-32-09
+    hanzi: 你想喝茶还是喝水？
+    pinyin: nǐ xiǎng hē chá háishi hē shuǐ?
+    vi: Cậu muốn uống trà hay uống nước?
+    speaker: takin
+  - id: s-h1-32-10
+    hanzi: 我想喝茶。
+    pinyin: wǒ xiǎng hē chá.
+    vi: Tớ muốn uống trà.
+    speaker: redpanda
+  - id: s-h1-32-11
+    hanzi: 你喜欢不喜欢吃这个菜？
+    pinyin: nǐ xǐhuan bu xǐhuan chī zhège cài?
+    vi: Cậu có thích ăn món này không?
+    speaker: takin
+  - id: s-h1-32-12
+    hanzi: 喜欢，很好吃！
+    pinyin: xǐhuan, hěn hǎochī!
+    vi: Thích chứ, ngon lắm!
+    speaker: redpanda
+  - id: s-h1-32-13
+    hanzi: 妈妈和爸爸都喜欢喝茶。
+    pinyin: māma hé bàba dōu xǐhuan hē chá.
+    vi: Mẹ và bố đều thích uống trà.
+  - id: s-h1-32-14
+    hanzi: 我们买米还是买面条？
+    pinyin: wǒmen mǎi mǐ háishi mǎi miàntiáo?
+    vi: Tụi mình mua gạo hay mua mì?
+  - id: s-h1-32-15
+    hanzi: 你想不想吃饭？
+    pinyin: nǐ xiǎng bu xiǎng chī fàn?
+    vi: Cậu có muốn ăn cơm không?
+  - id: s-h1-32-16
+    hanzi: 我的钱不多，不能买。
+    pinyin: wǒ de qián bù duō, bù néng mǎi.
+    vi: Tiền của tớ không nhiều, không mua được.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 买
+      - 要
+      - 钱
+      - 贵
+      - 想
+      - 喜欢
+      - 还是
+      - 好吃
+  grammar:
+    ids:
+      - h1-g40
+      - h1-g34
+      - h1-g23
+    drills:
+      - id: q-h1-32-g01
+        type: choice
+        tests:
+          words:
+            - 买
+          grammar:
+            - h1-g40
+        prompt:
+          kind: vi
+          text: Tớ muốn mua sữa và trứng.
+        optionKind: hanzi
+        options:
+          - 我想买牛奶和鸡蛋
+          - 我想买和牛奶鸡蛋
+          - 我和想买牛奶鸡蛋
+        answer: 0
+      - id: q-h1-32-g02
+        type: trueFalse
+        tests:
+          words:
+            - 买
+          grammar:
+            - h1-g40
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我买牛奶和喝茶。
+        answer: false
+      - id: q-h1-32-g03
+        type: order
+        tests:
+          words:
+            - 喜欢
+          grammar:
+            - h1-g40
+        tiles:
+          - 妈妈
+          - 和
+          - 爸爸
+          - 都
+          - 喜欢
+          - 喝
+          - 茶
+        answer: s-h1-32-13
+      - id: q-h1-32-g04
+        type: choice
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+        prompt:
+          kind: vi
+          text: Cậu muốn uống trà hay uống nước?
+        optionKind: hanzi
+        options:
+          - 你想喝茶还是喝水
+          - 你想喝茶还是喝水吗
+          - 你还是想喝茶喝水
+        answer: 0
+      - id: q-h1-32-g05
+        type: trueFalse
+        tests:
+          words:
+            - 还是
+            - 要
+          grammar:
+            - h1-g34
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你要茶还是水吗？
+        answer: false
+      - id: q-h1-32-g06
+        type: order
+        tests:
+          words:
+            - 还是
+            - 买
+          grammar:
+            - h1-g34
+        tiles:
+          - 我们
+          - 买
+          - 米
+          - 还是
+          - 买
+          - 面条
+        answer: s-h1-32-14
+      - id: q-h1-32-g07
+        type: choice
+        tests:
+          words:
+            - 要
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Cậu có mua trái cây không?
+        optionKind: hanzi
+        options:
+          - 你要不要买水果
+          - 你要不买水果
+          - 你不要要买水果
+        answer: 0
+      - id: q-h1-32-g08
+        type: trueFalse
+        tests:
+          words:
+            - 喜欢
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你喜欢不喜欢吃这个菜吗？
+        answer: false
+      - id: q-h1-32-g09
+        type: order
+        tests:
+          words:
+            - 想
+          grammar:
+            - h1-g23
+        tiles:
+          - 你
+          - 想不想
+          - 吃饭
+        answer: s-h1-32-15
+  dialogue:
+    parts:
+      - title: Mua gì?
+        lines:
+          - s-h1-32-01
+          - s-h1-32-02
+          - s-h1-32-03
+          - s-h1-32-04
+      - title: Đắt quá!
+        lines:
+          - s-h1-32-05
+          - s-h1-32-06
+          - s-h1-32-07
+          - s-h1-32-08
+      - title: Uống gì, ăn gì?
+        lines:
+          - s-h1-32-09
+          - s-h1-32-10
+          - s-h1-32-11
+          - s-h1-32-12
+    questions:
+      - id: q-h1-32-d01
+        type: choice
+        ask: Gấu trúc đỏ muốn mua gì?
+        tests:
+          words:
+            - 买
+          grammar:
+            - h1-g40
+        prompt:
+          kind: audio
+          ref: s-h1-32-02
+        optionKind: vi
+        options:
+          - sữa và trứng
+          - trà và nước
+          - gạo và mì
+        answer: 0
+      - id: q-h1-32-d02
+        type: choice
+        ask: Linh ngưu hỏi gì?
+        tests:
+          words:
+            - 要
+          grammar:
+            - h1-g23
+        prompt:
+          kind: audio
+          ref: s-h1-32-03
+        optionKind: vi
+        options:
+          - Cậu có mua trái cây không?
+          - Cậu mua trái cây gì?
+          - Trái cây bao nhiêu tiền?
+        answer: 0
+      - id: q-h1-32-d03
+        type: choice
+        ask: Cái này bao nhiêu tiền?
+        tests:
+          words:
+            - 钱
+        prompt:
+          kind: audio
+          ref: s-h1-32-06
+        optionKind: vi
+        options:
+          - ba mươi đồng
+          - mười ba đồng
+          - ba đồng
+        answer: 0
+      - id: q-h1-32-d04
+        type: choice
+        ask: Linh ngưu cho chọn giữa hai thứ gì?
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+        prompt:
+          kind: audio
+          ref: s-h1-32-09
+        optionKind: vi
+        options:
+          - trà hay nước
+          - trà hay sữa
+          - nước hay sữa
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-32-l01
+        type: tone
+        tests:
+          words:
+            - 贵
+          tone: true
+        prompt:
+          kind: audio
+          ref: 贵
+        syllable: 0
+        answer: 4
+      - id: q-h1-32-l02
+        type: choice
+        tests:
+          words:
+            - 钱
+        prompt:
+          kind: audio
+          ref: 钱
+        optionKind: hanzi
+        options:
+          - 钱
+          - 贵
+          - 买
+          - 要
+        answer: 0
+      - id: q-h1-32-l03
+        type: choice
+        tests:
+          words:
+            - 好吃
+        prompt:
+          kind: audio
+          ref: 好吃
+        optionKind: hanzi
+        options:
+          - 好吃
+          - 喜欢
+          - 还是
+          - 想
+        answer: 0
+      - id: q-h1-32-s01
+        type: readAloud
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+          tone: true
+        sentence: s-h1-32-09
+      - id: q-h1-32-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 要
+          grammar:
+            - h1-g23
+        prompt:
+          kind: vi
+          text: Hỏi bạn có muốn mua trái cây không.
+        rubric:
+          - Dùng 要不要 + động từ, không thêm 吗
+        answer: s-h1-32-03
+  writing:
+    chars:
+      - 买
+      - 钱
+      - 贵
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-32-x01
+      type: choice
+      tests:
+        words:
+          - 买
+      prompt:
+        kind: hanzi
+        ref: 买
+      optionKind: vi
+      options:
+        - mua
+        - đắt
+        - tiền
+        - ngon
+      answer: 0
+    - id: q-h1-32-x02
+      type: choice
+      tests:
+        words:
+          - 要
+      prompt:
+        kind: hanzi
+        ref: 要
+      optionKind: vi
+      options:
+        - cần, muốn có
+        - tiền
+        - đắt
+        - ngon
+      answer: 0
+    - id: q-h1-32-x03
+      type: choice
+      tests:
+        words:
+          - 钱
+      prompt:
+        kind: vi
+        text: tiền
+      optionKind: hanzi
+      options:
+        - 钱
+        - 贵
+        - 买
+        - 要
+      answer: 0
+    - id: q-h1-32-x04
+      type: choice
+      tests:
+        words:
+          - 贵
+      prompt:
+        kind: hanzi
+        ref: 贵
+      optionKind: vi
+      options:
+        - đắt
+        - ngon
+        - tiền
+        - mua
+      answer: 0
+    - id: q-h1-32-x05
+      type: choice
+      tests:
+        words:
+          - 想
+      prompt:
+        kind: hanzi
+        ref: 想
+      optionKind: vi
+      options:
+        - muốn, nghĩ
+        - mua
+        - thích
+        - đắt
+      answer: 0
+    - id: q-h1-32-x06
+      type: choice
+      tests:
+        words:
+          - 喜欢
+      prompt:
+        kind: vi
+        text: thích
+      optionKind: hanzi
+      options:
+        - 喜欢
+        - 好吃
+        - 还是
+        - 想
+      answer: 0
+    - id: q-h1-32-x07
+      type: choice
+      tests:
+        words:
+          - 还是
+      prompt:
+        kind: hanzi
+        ref: 还是
+      optionKind: vi
+      options:
+        - hay là
+        - và
+        - cũng
+        - đều
+      answer: 0
+    - id: q-h1-32-x08
+      type: choice
+      tests:
+        words:
+          - 好吃
+      prompt:
+        kind: vi
+        text: ngon
+      optionKind: hanzi
+      options:
+        - 好吃
+        - 喜欢
+        - 贵
+        - 还是
+      answer: 0
+    - id: q-h1-32-x09
+      type: choice
+      tests:
+        words:
+          - 买
+        grammar:
+          - h1-g40
+      prompt:
+        kind: vi
+        text: Tớ muốn mua sữa và trứng.
+      optionKind: hanzi
+      options:
+        - 我想买牛奶和鸡蛋
+        - 我想买和牛奶鸡蛋
+        - 我和想买牛奶鸡蛋
+      answer: 0
+    - id: q-h1-32-x10
+      type: trueFalse
+      tests:
+        words:
+          - 买
+        grammar:
+          - h1-g40
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我买牛奶和喝茶。
+      answer: false
+    - id: q-h1-32-x11
+      type: order
+      tests:
+        words:
+          - 喜欢
+        grammar:
+          - h1-g40
+      tiles:
+        - 妈妈
+        - 和
+        - 爸爸
+        - 都
+        - 喜欢
+        - 喝
+        - 茶
+      answer: s-h1-32-13
+    - id: q-h1-32-x12
+      type: choice
+      tests:
+        words:
+          - 还是
+        grammar:
+          - h1-g34
+      prompt:
+        kind: vi
+        text: Cậu muốn uống trà hay uống nước?
+      optionKind: hanzi
+      options:
+        - 你想喝茶还是喝水
+        - 你想喝茶还是喝水吗
+        - 你还是想喝茶喝水
+      answer: 0
+    - id: q-h1-32-x13
+      type: trueFalse
+      tests:
+        words:
+          - 还是
+          - 要
+        grammar:
+          - h1-g34
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你要茶还是水吗？
+      answer: false
+    - id: q-h1-32-x14
+      type: order
+      tests:
+        words:
+          - 还是
+          - 买
+        grammar:
+          - h1-g34
+      tiles:
+        - 我们
+        - 买
+        - 米
+        - 还是
+        - 买
+        - 面条
+      answer: s-h1-32-14
+    - id: q-h1-32-x15
+      type: choice
+      tests:
+        words:
+          - 要
+        grammar:
+          - h1-g23
+      prompt:
+        kind: vi
+        text: Cậu có mua trái cây không?
+      optionKind: hanzi
+      options:
+        - 你要不要买水果
+        - 你要不买水果
+        - 你不要要买水果
+      answer: 0
+    - id: q-h1-32-x16
+      type: trueFalse
+      tests:
+        words:
+          - 喜欢
+        grammar:
+          - h1-g23
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你喜欢不喜欢吃这个菜吗？
+      answer: false
+    - id: q-h1-32-x17
+      type: order
+      tests:
+        words:
+          - 想
+        grammar:
+          - h1-g23
+      tiles:
+        - 你
+        - 想不想
+        - 吃饭
+      answer: s-h1-32-15
+    - id: q-h1-32-x18
+      type: choice
+      tests:
+        words:
+          - 喜欢
+        grammar:
+          - h1-g40
+      prompt:
+        kind: audio
+        ref: s-h1-32-13
+      optionKind: vi
+      options:
+        - Mẹ và bố đều thích uống trà.
+        - Mẹ và bố đều thích uống nước.
+        - Mẹ và bố đều thích uống sữa.
+      answer: 0
+    - id: q-h1-32-x19
+      type: choice
+      tests:
+        words:
+          - 想
+        grammar:
+          - h1-g23
+      prompt:
+        kind: audio
+        ref: s-h1-32-15
+      optionKind: vi
+      options:
+        - Cậu có muốn ăn cơm không?
+        - Cậu muốn ăn cơm gì?
+        - Cậu ăn cơm ở đâu?
+      answer: 0
+    - id: q-h1-32-x20
+      type: choice
+      tests:
+        words:
+          - 还是
+          - 买
+        grammar:
+          - h1-g34
+      prompt:
+        kind: audio
+        ref: s-h1-32-14
+      optionKind: vi
+      options:
+        - Tụi mình mua gạo hay mua mì?
+        - Tụi mình mua gạo và mì.
+        - Tụi mình mua gạo, không mua mì.
+      answer: 0
+    - id: q-h1-32-x21
+      type: choice
+      tests:
+        words:
+          - 贵
+          - 好吃
+      prompt:
+        kind: audio
+        ref: s-h1-32-08
+      optionKind: vi
+      options:
+        - Cái kia không đắt, mà cũng ngon lắm.
+        - Cái kia đắt, mà không ngon.
+        - Cái kia không ngon, mà đắt lắm.
+      answer: 0
+    - id: q-h1-32-x22
+      type: trueFalse
+      tests:
+        words:
+          - 钱
+      prompt:
+        kind: hanzi
+        ref: 钱
+      statement: 钱 nghĩa là “tiền”.
+      answer: true

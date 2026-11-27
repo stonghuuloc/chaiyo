@@ -1,0 +1,679 @@
+id: h1-14
+level: 1
+topic: Số và thời gian
+order: 14
+title: Thứ trong tuần
+titleHanzi: 星期
+goal: Nói thứ trong tuần và các buổi trong ngày; hỏi lựa chọn bằng 还是
+scene:
+  file: lessons/h1-14.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They look at a weekly timetable board on a wall; the red panda points at one day and the takin holds a pencil.
+sentences:
+  - id: s-h1-14-01
+    hanzi: 今天星期几？
+    pinyin: jīntiān xīngqī jǐ?
+    vi: Hôm nay thứ mấy?
+    speaker: takin
+  - id: s-h1-14-02
+    hanzi: 今天星期五。
+    pinyin: jīntiān xīngqī wǔ.
+    vi: Hôm nay thứ sáu.
+    speaker: redpanda
+  - id: s-h1-14-03
+    hanzi: 前天星期三，后天星期天。
+    pinyin: qiántiān xīngqī sān, hòutiān xīngqī tiān.
+    vi: Hôm kia thứ tư, ngày kia Chủ nhật.
+    speaker: redpanda
+  - id: s-h1-14-04
+    hanzi: 星期天你学习吗？
+    pinyin: xīngqītiān nǐ xuéxí ma?
+    vi: Chủ nhật cậu có học không?
+    speaker: takin
+  - id: s-h1-14-05
+    hanzi: 星期天不学习。
+    pinyin: xīngqītiān bù xuéxí.
+    vi: Chủ nhật tớ không học.
+    speaker: redpanda
+  - id: s-h1-14-06
+    hanzi: 你上午学习还是下午学习？
+    pinyin: nǐ shàngwǔ xuéxí háishi xiàwǔ xuéxí?
+    vi: Cậu học buổi sáng hay buổi chiều?
+    speaker: takin
+  - id: s-h1-14-07
+    hanzi: 我上午学习。
+    pinyin: wǒ shàngwǔ xuéxí.
+    vi: Tớ học buổi sáng.
+    speaker: redpanda
+  - id: s-h1-14-08
+    hanzi: 你中午忙吗？
+    pinyin: nǐ zhōngwǔ máng ma?
+    vi: Buổi trưa cậu bận không?
+    speaker: takin
+  - id: s-h1-14-09
+    hanzi: 我中午不忙，晚上很忙。
+    pinyin: wǒ zhōngwǔ bù máng, wǎnshang hěn máng.
+    vi: Trưa tớ không bận, tối tớ rất bận.
+    speaker: redpanda
+  - id: s-h1-14-10
+    hanzi: 你上午忙还是下午忙？
+    pinyin: nǐ shàngwǔ máng háishi xiàwǔ máng?
+    vi: Cậu bận buổi sáng hay buổi chiều?
+    speaker: takin
+  - id: s-h1-14-11
+    hanzi: 今天星期天。
+    pinyin: jīntiān xīngqītiān.
+    vi: Hôm nay là Chủ nhật.
+  - id: s-h1-14-12
+    hanzi: 他是中国人还是外国人？
+    pinyin: tā shì Zhōngguó rén háishi wàiguó rén?
+    vi: Anh ấy là người Trung Quốc hay người nước ngoài?
+  - id: s-h1-14-13
+    hanzi: 你是学生还是老师？
+    pinyin: nǐ shì xuésheng háishi lǎoshī?
+    vi: Bạn là học sinh hay giáo viên?
+  - id: s-h1-14-14
+    hanzi: 我早上很忙。
+    pinyin: wǒ zǎoshang hěn máng.
+    vi: Buổi sáng sớm tôi rất bận.
+  - id: s-h1-14-15
+    hanzi: 星期三下午我学习汉语。
+    pinyin: xīngqī sān xiàwǔ wǒ xuéxí Hànyǔ.
+    vi: Chiều thứ tư tôi học tiếng Trung.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 星期
+      - 天
+      - 还是
+      - 上午
+      - 下午
+      - 中午
+      - 早上
+      - 晚上
+  grammar:
+    ids:
+      - h1-g33
+      - h1-g34
+    drills:
+      - id: q-h1-14-g01
+        type: choice
+        tests:
+          words:
+            - 星期
+          grammar:
+            - h1-g33
+        prompt:
+          kind: vi
+          text: Hôm nay thứ sáu.
+        optionKind: hanzi
+        options:
+          - 今天星期五
+          - 今天五星期
+          - 星期今天五
+        answer: 0
+      - id: q-h1-14-g02
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 星期
+          grammar:
+            - h1-g33
+        prompt:
+          kind: audio
+          ref: s-h1-14-01
+        optionKind: hanzi
+        options:
+          - 今天星期五。
+          - 我上午学习。
+          - 对，我是老师。
+        answer: 0
+      - id: q-h1-14-g03
+        type: trueFalse
+        tests:
+          words:
+            - 星期
+          grammar:
+            - h1-g33
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 今天星期七。
+        answer: false
+      - id: q-h1-14-g04
+        type: choice
+        tests:
+          words:
+            - 天
+          grammar:
+            - h1-g33
+        prompt:
+          kind: vi
+          text: Chủ nhật tớ không học.
+        optionKind: hanzi
+        options:
+          - 星期天我不学习
+          - 我不学习星期天
+          - 星期天不我学习
+        answer: 0
+      - id: q-h1-14-g05
+        type: choice
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+        prompt:
+          kind: vi
+          text: Cậu là học sinh hay giáo viên?
+        optionKind: hanzi
+        options:
+          - 你是学生还是老师
+          - 你是学生还是老师吗
+          - 你还是学生是老师
+        answer: 0
+      - id: q-h1-14-g06
+        type: trueFalse
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你是学生还是老师吗？
+        answer: false
+      - id: q-h1-14-g07
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 还是
+            - 上午
+          grammar:
+            - h1-g34
+        prompt:
+          kind: audio
+          ref: s-h1-14-06
+        optionKind: hanzi
+        options:
+          - 我上午学习。
+          - 对，我是学生。
+          - 今天星期五。
+        answer: 0
+      - id: q-h1-14-g08
+        type: order
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+        tiles:
+          - 你
+          - 是
+          - 学生
+          - 还是
+          - 老师
+        answer: s-h1-14-13
+  dialogue:
+    parts:
+      - title: Hôm nay thứ mấy?
+        lines:
+          - s-h1-14-01
+          - s-h1-14-02
+          - s-h1-14-03
+          - s-h1-14-04
+          - s-h1-14-05
+          - s-h1-14-06
+      - title: Buổi nào?
+        lines:
+          - s-h1-14-07
+          - s-h1-14-08
+          - s-h1-14-09
+          - s-h1-14-10
+    questions:
+      - id: q-h1-14-d01
+        type: choice
+        ask: Hôm nay thứ mấy?
+        tests:
+          words:
+            - 星期
+          grammar:
+            - h1-g33
+        prompt:
+          kind: audio
+          ref: s-h1-14-02
+        optionKind: vi
+        options:
+          - thứ sáu
+          - thứ tư
+          - thứ hai
+        answer: 0
+      - id: q-h1-14-d02
+        type: choice
+        ask: Gấu trúc đỏ học buổi nào?
+        tests:
+          words:
+            - 上午
+          grammar:
+            - h1-g34
+        prompt:
+          kind: audio
+          ref: s-h1-14-07
+        optionKind: vi
+        options:
+          - buổi sáng
+          - buổi chiều
+          - buổi tối
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-14-l01
+        type: tone
+        tests:
+          words:
+            - 星期
+          tone: true
+        prompt:
+          kind: audio
+          ref: 星期
+        syllable: 0
+        answer: 1
+      - id: q-h1-14-l02
+        type: choice
+        tests:
+          words:
+            - 下午
+        prompt:
+          kind: audio
+          ref: 下午
+        optionKind: hanzi
+        options:
+          - 下午
+          - 上午
+          - 中午
+          - 晚上
+        answer: 0
+      - id: q-h1-14-l03
+        type: choice
+        tests:
+          words:
+            - 早上
+        prompt:
+          kind: audio
+          ref: 早上
+        optionKind: hanzi
+        options:
+          - 早上
+          - 晚上
+          - 上午
+          - 中午
+        answer: 0
+      - id: q-h1-14-s01
+        type: readAloud
+        tests:
+          words:
+            - 星期
+          grammar:
+            - h1-g33
+          tone: true
+        sentence: s-h1-14-01
+      - id: q-h1-14-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 星期
+          grammar:
+            - h1-g33
+        prompt:
+          kind: vi
+          text: Nói hôm nay thứ mấy.
+        rubric:
+          - Dùng 今天星期 + số
+        answer: s-h1-14-02
+      - id: q-h1-14-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 还是
+          grammar:
+            - h1-g34
+        prompt:
+          kind: vi
+          text: Hỏi một bạn học buổi sáng hay buổi chiều.
+        rubric:
+          - Dùng 你上午学习还是下午学习？
+        answer: s-h1-14-06
+  writing:
+    chars:
+      - 星
+      - 期
+      - 早
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-14-x01
+      type: choice
+      tests:
+        words:
+          - 星期
+      prompt:
+        kind: hanzi
+        ref: 星期
+      optionKind: vi
+      options:
+        - tuần
+        - tháng
+        - ngày
+        - năm
+      answer: 0
+    - id: q-h1-14-x02
+      type: choice
+      tests:
+        words:
+          - 天
+      prompt:
+        kind: hanzi
+        ref: 天
+      optionKind: vi
+      options:
+        - ngày
+        - sách
+        - trang
+        - lần
+      answer: 0
+    - id: q-h1-14-x03
+      type: choice
+      tests:
+        words:
+          - 还是
+      prompt:
+        kind: hanzi
+        ref: 还是
+      optionKind: vi
+      options:
+        - hay là
+        - và
+        - nhưng
+        - cũng
+      answer: 0
+    - id: q-h1-14-x04
+      type: choice
+      tests:
+        words:
+          - 上午
+      prompt:
+        kind: hanzi
+        ref: 上午
+      optionKind: vi
+      options:
+        - buổi sáng
+        - buổi chiều
+        - buổi tối
+        - buổi trưa
+      answer: 0
+    - id: q-h1-14-x05
+      type: typePinyin
+      tests:
+        words:
+          - 下午
+      prompt:
+        kind: hanzi
+        ref: 下午
+      answer: xiàwǔ
+    - id: q-h1-14-x06
+      type: choice
+      tests:
+        words:
+          - 中午
+      prompt:
+        kind: vi
+        text: buổi trưa
+      optionKind: hanzi
+      options:
+        - 中午
+        - 上午
+        - 下午
+        - 晚上
+      answer: 0
+    - id: q-h1-14-x07
+      type: choice
+      tests:
+        words:
+          - 早上
+      prompt:
+        kind: audio
+        ref: 早上
+      optionKind: vi
+      options:
+        - sáng sớm
+        - buổi tối
+        - buổi chiều
+        - buổi trưa
+      answer: 0
+    - id: q-h1-14-x08
+      type: choice
+      tests:
+        words:
+          - 晚上
+      prompt:
+        kind: hanzi
+        ref: 晚上
+      optionKind: vi
+      options:
+        - buổi tối
+        - buổi sáng
+        - buổi chiều
+        - buổi trưa
+      answer: 0
+    - id: q-h1-14-x09
+      type: choice
+      tests:
+        words:
+          - 星期
+        grammar:
+          - h1-g33
+      prompt:
+        kind: vi
+        text: Hôm nay thứ sáu.
+      optionKind: hanzi
+      options:
+        - 今天星期五
+        - 今天五星期
+        - 星期今天五
+      answer: 0
+    - id: q-h1-14-x10
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 星期
+        grammar:
+          - h1-g33
+      prompt:
+        kind: audio
+        ref: s-h1-14-01
+      optionKind: hanzi
+      options:
+        - 今天星期五。
+        - 我上午学习。
+        - 对，我是老师。
+      answer: 0
+    - id: q-h1-14-x11
+      type: trueFalse
+      tests:
+        words:
+          - 星期
+        grammar:
+          - h1-g33
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 今天星期七。
+      answer: false
+    - id: q-h1-14-x12
+      type: choice
+      tests:
+        words:
+          - 天
+        grammar:
+          - h1-g33
+      prompt:
+        kind: vi
+        text: Chủ nhật tớ không học.
+      optionKind: hanzi
+      options:
+        - 星期天我不学习
+        - 我不学习星期天
+        - 星期天不我学习
+      answer: 0
+    - id: q-h1-14-x13
+      type: choice
+      tests:
+        words:
+          - 还是
+        grammar:
+          - h1-g34
+      prompt:
+        kind: vi
+        text: Cậu là học sinh hay giáo viên?
+      optionKind: hanzi
+      options:
+        - 你是学生还是老师
+        - 你是学生还是老师吗
+        - 你还是学生是老师
+      answer: 0
+    - id: q-h1-14-x14
+      type: trueFalse
+      tests:
+        words:
+          - 还是
+        grammar:
+          - h1-g34
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你是学生还是老师吗？
+      answer: false
+    - id: q-h1-14-x15
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 还是
+          - 上午
+        grammar:
+          - h1-g34
+      prompt:
+        kind: audio
+        ref: s-h1-14-06
+      optionKind: hanzi
+      options:
+        - 我上午学习。
+        - 对，我是学生。
+        - 今天星期五。
+      answer: 0
+    - id: q-h1-14-x16
+      type: order
+      tests:
+        words:
+          - 还是
+        grammar:
+          - h1-g34
+      tiles:
+        - 你
+        - 是
+        - 学生
+        - 还是
+        - 老师
+      answer: s-h1-14-13
+    - id: q-h1-14-x17
+      type: choice
+      tests:
+        words:
+          - 中午
+          - 晚上
+      prompt:
+        kind: audio
+        ref: s-h1-14-09
+      optionKind: vi
+      options:
+        - Trưa tớ không bận, tối rất bận
+        - Trưa tớ bận, tối không bận
+        - Tớ bận cả ngày
+      answer: 0
+    - id: q-h1-14-x18
+      type: tone
+      tests:
+        words:
+          - 晚上
+        tone: true
+      prompt:
+        kind: audio
+        ref: 晚上
+      syllable: 0
+      answer: 3
+    - id: q-h1-14-x19
+      type: choice
+      tests:
+        words:
+          - 星期
+          - 下午
+        grammar:
+          - h1-g33
+      prompt:
+        kind: vi
+        text: Chiều thứ tư tớ học tiếng Trung.
+      optionKind: hanzi
+      options:
+        - 星期三下午我学习汉语
+        - 我学习汉语星期三下午
+        - 星期三我下午汉语学习
+      answer: 0
+    - id: q-h1-14-x20
+      type: trueFalse
+      tests:
+        words:
+          - 天
+        grammar:
+          - h1-g33
+      prompt:
+        kind: hanzi
+        ref: 天
+      statement: 星期天 nghĩa là “Chủ nhật”.
+      answer: true
+    - id: q-h1-14-x21
+      type: choice
+      tests:
+        words:
+          - 还是
+        grammar:
+          - h1-g34
+      prompt:
+        kind: vi
+        text: Anh ấy là người Trung Quốc hay người nước ngoài?
+      optionKind: hanzi
+      options:
+        - 他是中国人还是外国人
+        - 他是中国人还是外国人吗
+        - 他还是中国人是外国人
+      answer: 0
+    - id: q-h1-14-x22
+      type: choice
+      tests:
+        words:
+          - 早上
+      prompt:
+        kind: vi
+        text: Buổi sáng tớ rất bận.
+      optionKind: hanzi
+      options:
+        - 我早上很忙
+        - 我很忙早上
+        - 早上我忙很
+      answer: 0

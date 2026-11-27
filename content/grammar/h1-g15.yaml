@@ -1,0 +1,18 @@
+id: h1-g15
+level: 1
+std:
+  - 8
+  - 23
+title: Số + lượng từ + danh từ
+pattern: số + 个 / 口 + danh từ
+explain: |-
+  Giữa số và danh từ cần một lượng từ. 个 (cá, gè) dùng cho nhiều người và vật: 一个哥哥 = một anh trai, 三个朋友 = ba người bạn.
+
+  口 (khẩu, kǒu) chỉ dùng để đếm số người trong một nhà: 四口人 = bốn người.
+examples:
+  - s-h1-06-01
+  - s-h1-06-15
+pitfalls:
+  - wrong: 我有三朋友
+    right: 我有三个朋友
+    why: Thiếu lượng từ 个 giữa số và danh từ.

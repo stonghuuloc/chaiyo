@@ -1,0 +1,677 @@
+id: h1-15
+level: 1
+topic: Số và thời gian
+order: 15
+title: Giờ giấc
+titleHanzi: 点
+goal: Hỏi và nói giờ; nói mình dậy và ngủ lúc mấy giờ
+scene:
+  file: lessons/h1-15.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand under a big round wall clock; the red panda points up at the clock hands and the takin yawns beside a small bed.
+sentences:
+  - id: s-h1-15-01
+    hanzi: 现在几点？
+    pinyin: xiànzài jǐ diǎn?
+    vi: Bây giờ mấy giờ?
+    speaker: takin
+  - id: s-h1-15-02
+    hanzi: 现在七点半。
+    pinyin: xiànzài qī diǎn bàn.
+    vi: Bây giờ là 7 giờ rưỡi.
+    speaker: redpanda
+  - id: s-h1-15-03
+    hanzi: 你几点起床？
+    pinyin: nǐ jǐ diǎn qǐchuáng?
+    vi: Cậu dậy lúc mấy giờ?
+    speaker: takin
+  - id: s-h1-15-04
+    hanzi: 我六点起床。
+    pinyin: wǒ liù diǎn qǐchuáng.
+    vi: Tớ dậy lúc 6 giờ.
+    speaker: redpanda
+  - id: s-h1-15-05
+    hanzi: 你几点睡觉？
+    pinyin: nǐ jǐ diǎn shuìjiào?
+    vi: Cậu ngủ lúc mấy giờ?
+    speaker: takin
+  - id: s-h1-15-06
+    hanzi: 我晚上十点睡觉。
+    pinyin: wǒ wǎnshang shí diǎn shuìjiào.
+    vi: Tớ ngủ lúc 10 giờ tối.
+    speaker: redpanda
+  - id: s-h1-15-07
+    hanzi: 你有时间吗？
+    pinyin: nǐ yǒu shíjiān ma?
+    vi: Cậu có thời gian không?
+    speaker: takin
+  - id: s-h1-15-08
+    hanzi: 有，我下午两点有时间。
+    pinyin: yǒu, wǒ xiàwǔ liǎng diǎn yǒu shíjiān.
+    vi: Có, tớ có thời gian lúc 2 giờ chiều.
+    speaker: redpanda
+  - id: s-h1-15-09
+    hanzi: 我学习半个小时，你学习一个小时。
+    pinyin: wǒ xuéxí bàn gè xiǎoshí, nǐ xuéxí yī gè xiǎoshí.
+    vi: Tớ học nửa tiếng, cậu học một tiếng.
+    speaker: takin
+  - id: s-h1-15-10
+    hanzi: 好，现在是学习的时候。
+    pinyin: hǎo, xiànzài shì xuéxí de shíhou.
+    vi: Được, bây giờ là lúc học.
+    speaker: redpanda
+  - id: s-h1-15-11
+    hanzi: 现在两点。
+    pinyin: xiànzài liǎng diǎn.
+    vi: Bây giờ là 2 giờ.
+  - id: s-h1-15-12
+    hanzi: 她早上七点起床。
+    pinyin: tā zǎoshang qī diǎn qǐchuáng.
+    vi: Cô ấy dậy lúc 7 giờ sáng.
+  - id: s-h1-15-13
+    hanzi: 他十点二十分睡觉。
+    pinyin: tā shí diǎn èrshí fēn shuìjiào.
+    vi: Anh ấy ngủ lúc 10 giờ 20.
+  - id: s-h1-15-14
+    hanzi: 现在是睡觉的时候。
+    pinyin: xiànzài shì shuìjiào de shíhou.
+    vi: Bây giờ là lúc đi ngủ.
+  - id: s-h1-15-15
+    hanzi: 你下午有时间吗？
+    pinyin: nǐ xiàwǔ yǒu shíjiān ma?
+    vi: Chiều bạn có thời gian không?
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 点
+      - 分
+      - 现在
+      - 时候
+      - 时间
+      - 小时
+      - 起床
+      - 睡觉
+  grammar:
+    ids:
+      - h1-g35
+      - h1-g36
+    drills:
+      - id: q-h1-15-g01
+        type: choice
+        tests:
+          words:
+            - 点
+          grammar:
+            - h1-g35
+        prompt:
+          kind: vi
+          text: 3 giờ rưỡi
+        optionKind: hanzi
+        options:
+          - 三点半
+          - 半三点
+          - 三半点
+        answer: 0
+      - id: q-h1-15-g02
+        type: choice
+        tests:
+          words:
+            - 点
+          grammar:
+            - h1-g35
+        prompt:
+          kind: vi
+          text: 2 giờ
+        optionKind: hanzi
+        options:
+          - 两点
+          - 二点
+          - 点两
+        answer: 0
+      - id: q-h1-15-g03
+        type: trueFalse
+        tests:
+          words:
+            - 点
+          grammar:
+            - h1-g35
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: “二点” là hai giờ.
+        answer: false
+      - id: q-h1-15-g04
+        type: choice
+        tests:
+          words:
+            - 点
+            - 分
+          grammar:
+            - h1-g35
+        prompt:
+          kind: vi
+          text: 10 giờ 20 phút
+        optionKind: hanzi
+        options:
+          - 十点二十分
+          - 十二十点分
+          - 点十二十分
+        answer: 0
+      - id: q-h1-15-g05
+        type: choice
+        tests:
+          words:
+            - 起床
+          grammar:
+            - h1-g36
+        prompt:
+          kind: vi
+          text: Tớ dậy lúc 6 giờ.
+        optionKind: hanzi
+        options:
+          - 我六点起床
+          - 我起床六点
+          - 我起六点床
+        answer: 0
+      - id: q-h1-15-g06
+        type: trueFalse
+        tests:
+          words:
+            - 起床
+          grammar:
+            - h1-g36
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我起床六点。
+        answer: false
+      - id: q-h1-15-g07
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 起床
+          grammar:
+            - h1-g36
+        prompt:
+          kind: audio
+          ref: s-h1-15-03
+        optionKind: hanzi
+        options:
+          - 我六点起床。
+          - 现在七点半。
+          - 我有时间。
+        answer: 0
+      - id: q-h1-15-g08
+        type: order
+        tests:
+          words:
+            - 起床
+          grammar:
+            - h1-g36
+        tiles:
+          - 她
+          - 早上
+          - 七
+          - 点
+          - 起床
+        answer: s-h1-15-12
+  dialogue:
+    parts:
+      - title: Bây giờ mấy giờ?
+        lines:
+          - s-h1-15-01
+          - s-h1-15-02
+          - s-h1-15-03
+          - s-h1-15-04
+          - s-h1-15-05
+          - s-h1-15-06
+      - title: Thời gian
+        lines:
+          - s-h1-15-07
+          - s-h1-15-08
+          - s-h1-15-09
+          - s-h1-15-10
+    questions:
+      - id: q-h1-15-d01
+        type: choice
+        ask: Bây giờ là mấy giờ?
+        tests:
+          words:
+            - 点
+          grammar:
+            - h1-g35
+        prompt:
+          kind: audio
+          ref: s-h1-15-02
+        optionKind: vi
+        options:
+          - 7 giờ rưỡi
+          - 7 giờ
+          - 8 giờ rưỡi
+        answer: 0
+      - id: q-h1-15-d02
+        type: choice
+        ask: Gấu trúc đỏ dậy lúc mấy giờ?
+        tests:
+          words:
+            - 起床
+          grammar:
+            - h1-g36
+        prompt:
+          kind: audio
+          ref: s-h1-15-04
+        optionKind: vi
+        options:
+          - 6 giờ
+          - 7 giờ
+          - 10 giờ
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-15-l01
+        type: tone
+        tests:
+          words:
+            - 点
+          tone: true
+        prompt:
+          kind: audio
+          ref: 点
+        syllable: 0
+        answer: 3
+      - id: q-h1-15-l02
+        type: choice
+        tests:
+          words:
+            - 小时
+        prompt:
+          kind: audio
+          ref: 小时
+        optionKind: hanzi
+        options:
+          - 小时
+          - 时间
+          - 时候
+          - 现在
+        answer: 0
+      - id: q-h1-15-l03
+        type: choice
+        tests:
+          words:
+            - 睡觉
+        prompt:
+          kind: audio
+          ref: 睡觉
+        optionKind: hanzi
+        options:
+          - 睡觉
+          - 起床
+          - 现在
+          - 时间
+        answer: 0
+      - id: q-h1-15-s01
+        type: readAloud
+        tests:
+          words:
+            - 现在
+            - 点
+          grammar:
+            - h1-g35
+          tone: true
+        sentence: s-h1-15-01
+      - id: q-h1-15-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 现在
+            - 点
+          grammar:
+            - h1-g35
+        prompt:
+          kind: vi
+          text: Nói bây giờ là mấy giờ.
+        rubric:
+          - Dùng 现在 + số + 点
+        answer: s-h1-15-02
+      - id: q-h1-15-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 起床
+          grammar:
+            - h1-g36
+        prompt:
+          kind: vi
+          text: Nói bạn dậy lúc mấy giờ.
+        rubric:
+          - Dùng 我 + giờ + 点起床
+        answer: s-h1-15-04
+  writing:
+    chars:
+      - 点
+      - 时
+      - 床
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-15-x01
+      type: choice
+      tests:
+        words:
+          - 点
+      prompt:
+        kind: hanzi
+        ref: 点
+      optionKind: vi
+      options:
+        - giờ
+        - phút
+        - ngày
+        - tháng
+      answer: 0
+    - id: q-h1-15-x02
+      type: choice
+      tests:
+        words:
+          - 分
+      prompt:
+        kind: vi
+        text: phút
+      optionKind: hanzi
+      options:
+        - 分
+        - 点
+        - 半
+        - 时
+      answer: 0
+    - id: q-h1-15-x03
+      type: choice
+      tests:
+        words:
+          - 现在
+      prompt:
+        kind: hanzi
+        ref: 现在
+      optionKind: vi
+      options:
+        - bây giờ
+        - hôm nay
+        - hôm qua
+        - ngày mai
+      answer: 0
+    - id: q-h1-15-x04
+      type: typePinyin
+      tests:
+        words:
+          - 时候
+      prompt:
+        kind: hanzi
+        ref: 时候
+      answer: shíhou
+    - id: q-h1-15-x05
+      type: choice
+      tests:
+        words:
+          - 时间
+      prompt:
+        kind: vi
+        text: thời gian
+      optionKind: hanzi
+      options:
+        - 时间
+        - 时候
+        - 小时
+        - 现在
+      answer: 0
+    - id: q-h1-15-x06
+      type: choice
+      tests:
+        words:
+          - 小时
+      prompt:
+        kind: audio
+        ref: 小时
+      optionKind: vi
+      options:
+        - tiếng (đồng hồ)
+        - phút
+        - ngày
+        - tuần
+      answer: 0
+    - id: q-h1-15-x07
+      type: choice
+      tests:
+        words:
+          - 起床
+      prompt:
+        kind: vi
+        text: thức dậy
+      optionKind: hanzi
+      options:
+        - 起床
+        - 睡觉
+        - 现在
+        - 时间
+      answer: 0
+    - id: q-h1-15-x08
+      type: choice
+      tests:
+        words:
+          - 睡觉
+      prompt:
+        kind: audio
+        ref: 睡觉
+      optionKind: vi
+      options:
+        - ngủ
+        - thức dậy
+        - học
+        - bận
+      answer: 0
+    - id: q-h1-15-x09
+      type: choice
+      tests:
+        words:
+          - 点
+        grammar:
+          - h1-g35
+      prompt:
+        kind: vi
+        text: 3 giờ rưỡi
+      optionKind: hanzi
+      options:
+        - 三点半
+        - 半三点
+        - 三半点
+      answer: 0
+    - id: q-h1-15-x10
+      type: choice
+      tests:
+        words:
+          - 点
+        grammar:
+          - h1-g35
+      prompt:
+        kind: vi
+        text: 2 giờ
+      optionKind: hanzi
+      options:
+        - 两点
+        - 二点
+        - 点两
+      answer: 0
+    - id: q-h1-15-x11
+      type: trueFalse
+      tests:
+        words:
+          - 点
+        grammar:
+          - h1-g35
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: “二点” là hai giờ.
+      answer: false
+    - id: q-h1-15-x12
+      type: choice
+      tests:
+        words:
+          - 点
+          - 分
+        grammar:
+          - h1-g35
+      prompt:
+        kind: vi
+        text: 10 giờ 20 phút
+      optionKind: hanzi
+      options:
+        - 十点二十分
+        - 十二十点分
+        - 点十二十分
+      answer: 0
+    - id: q-h1-15-x13
+      type: choice
+      tests:
+        words:
+          - 起床
+        grammar:
+          - h1-g36
+      prompt:
+        kind: vi
+        text: Tớ dậy lúc 6 giờ.
+      optionKind: hanzi
+      options:
+        - 我六点起床
+        - 我起床六点
+        - 我起六点床
+      answer: 0
+    - id: q-h1-15-x14
+      type: trueFalse
+      tests:
+        words:
+          - 起床
+        grammar:
+          - h1-g36
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我起床六点。
+      answer: false
+    - id: q-h1-15-x15
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 起床
+        grammar:
+          - h1-g36
+      prompt:
+        kind: audio
+        ref: s-h1-15-03
+      optionKind: hanzi
+      options:
+        - 我六点起床。
+        - 现在七点半。
+        - 我有时间。
+      answer: 0
+    - id: q-h1-15-x16
+      type: order
+      tests:
+        words:
+          - 起床
+        grammar:
+          - h1-g36
+      tiles:
+        - 她
+        - 早上
+        - 七
+        - 点
+        - 起床
+      answer: s-h1-15-12
+    - id: q-h1-15-x17
+      type: choice
+      tests:
+        words:
+          - 现在
+          - 时候
+      prompt:
+        kind: audio
+        ref: s-h1-15-10
+      optionKind: vi
+      options:
+        - Được, bây giờ là lúc học
+        - Được, bây giờ là 2 giờ
+        - Được, tớ có thời gian
+      answer: 0
+    - id: q-h1-15-x18
+      type: tone
+      tests:
+        words:
+          - 现在
+        tone: true
+      prompt:
+        kind: audio
+        ref: 现在
+      syllable: 0
+      answer: 4
+    - id: q-h1-15-x19
+      type: choice
+      tests:
+        words:
+          - 小时
+        grammar:
+          - h1-g35
+      prompt:
+        kind: vi
+        text: nửa tiếng
+      optionKind: hanzi
+      options:
+        - 半个小时
+        - 半小时个
+        - 个半小时
+      answer: 0
+    - id: q-h1-15-x20
+      type: trueFalse
+      tests:
+        words:
+          - 睡觉
+      prompt:
+        kind: hanzi
+        ref: 睡觉
+      statement: 睡觉 nghĩa là “ngủ”.
+      answer: true
+    - id: q-h1-15-x21
+      type: choice
+      tests:
+        words:
+          - 时间
+      prompt:
+        kind: vi
+        text: Bạn có thời gian không?
+      optionKind: hanzi
+      options:
+        - 你有时间吗
+        - 你时间有吗
+        - 时间你有吗
+      answer: 0
+    - id: q-h1-15-x22
+      type: choice
+      tests:
+        words:
+          - 现在
+          - 时候
+        grammar:
+          - h1-g36
+      prompt:
+        kind: vi
+        text: Bây giờ là lúc đi ngủ.
+      optionKind: hanzi
+      options:
+        - 现在是睡觉的时候
+        - 现在是睡觉时候的
+        - 睡觉现在是的时候
+      answer: 0

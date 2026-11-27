@@ -1,0 +1,17 @@
+id: h1-g20
+level: 1
+std:
+  - 36
+title: 是 + quốc tịch · giới tính
+pattern: A + 是 + 中国人 / 男老师
+explain: |-
+  是 nối chủ ngữ với danh từ chỉ quốc tịch, giới tính hoặc nghề: 我是中国人。 她是女老师。
+
+  Nói người nước nào thì thêm 人 sau tên nước: 中国人, 外国人. 国家 là “đất nước”: 中国是我的国家。
+examples:
+  - s-h1-08-11
+  - s-h1-08-12
+pitfalls:
+  - wrong: 我是中国
+    right: 我是中国人
+    why: Nói người nước nào thì thêm 人.

@@ -1,0 +1,695 @@
+id: h1-26
+level: 1
+topic: Nơi chốn
+order: 26
+title: Nhà
+titleHanzi: 家
+goal: Nói trong nhà có gì; nói thêm bằng 还; nói thường xuyên hay đôi khi
+scene:
+  file: lessons/h1-26.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They relax in a cosy living room with a television and a computer; the red panda lies on a sofa and the takin holds a remote.
+sentences:
+  - id: s-h1-26-01
+    hanzi: 你家有几个房间？
+    pinyin: nǐ jiā yǒu jǐ gè fángjiān?
+    vi: Nhà cậu có mấy phòng?
+    speaker: takin
+  - id: s-h1-26-02
+    hanzi: 我家有三个房间。
+    pinyin: wǒ jiā yǒu sān gè fángjiān.
+    vi: Nhà tớ có ba phòng.
+    speaker: redpanda
+  - id: s-h1-26-03
+    hanzi: 你的房间里边有什么？
+    pinyin: nǐ de fángjiān lǐbian yǒu shénme?
+    vi: Trong phòng cậu có gì?
+    speaker: takin
+  - id: s-h1-26-04
+    hanzi: 里边有电脑，还有电视。
+    pinyin: lǐbian yǒu diànnǎo, hái yǒu diànshì.
+    vi: Bên trong có máy tính, còn có ti vi.
+    speaker: redpanda
+  - id: s-h1-26-05
+    hanzi: 你常常看电视吗？
+    pinyin: nǐ chángcháng kàn diànshì ma?
+    vi: Cậu có hay xem ti vi không?
+    speaker: takin
+  - id: s-h1-26-06
+    hanzi: 我常常看电视，有时看电影。
+    pinyin: wǒ chángcháng kàn diànshì, yǒushí kàn diànyǐng.
+    vi: Tớ hay xem ti vi, đôi khi xem phim.
+    speaker: redpanda
+  - id: s-h1-26-07
+    hanzi: 你常常玩电脑吗？
+    pinyin: nǐ chángcháng wán diànnǎo ma?
+    vi: Cậu có hay chơi máy tính không?
+    speaker: takin
+  - id: s-h1-26-08
+    hanzi: 有时玩，有时看书。
+    pinyin: yǒushí wán, yǒushí kàn shū.
+    vi: Đôi khi chơi, đôi khi đọc sách.
+    speaker: redpanda
+  - id: s-h1-26-09
+    hanzi: 我还有一个房子。
+    pinyin: wǒ hái yǒu yī gè fángzi.
+    vi: Tớ còn có một căn nhà nữa.
+    speaker: takin
+  - id: s-h1-26-10
+    hanzi: 我现在想休息。
+    pinyin: wǒ xiànzài xiǎng xiūxi.
+    vi: Bây giờ tớ muốn nghỉ ngơi.
+    speaker: redpanda
+  - id: s-h1-26-11
+    hanzi: 他家有电视，还有电脑。
+    pinyin: tā jiā yǒu diànshì, hái yǒu diànnǎo.
+    vi: Nhà anh ấy có ti vi, còn có máy tính.
+  - id: s-h1-26-12
+    hanzi: 她常常在房间里休息。
+    pinyin: tā chángcháng zài fángjiān lǐ xiūxi.
+    vi: Cô ấy hay nghỉ ngơi trong phòng.
+  - id: s-h1-26-13
+    hanzi: 我有时在家里休息。
+    pinyin: wǒ yǒushí zài jiā lǐ xiūxi.
+    vi: Đôi khi tôi nghỉ ngơi ở nhà.
+  - id: s-h1-26-14
+    hanzi: 房子里边有几个房间？
+    pinyin: fángzi lǐbian yǒu jǐ gè fángjiān?
+    vi: Trong nhà có mấy phòng?
+  - id: s-h1-26-15
+    hanzi: 我还想看电视。
+    pinyin: wǒ hái xiǎng kàn diànshì.
+    vi: Tôi còn muốn xem ti vi.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 还
+      - 有时
+      - 常常
+      - 房间
+      - 房子
+      - 电视
+      - 电脑
+      - 休息
+  grammar:
+    ids:
+      - h1-g59
+      - h1-g60
+      - h1-g61
+    drills:
+      - id: q-h1-26-g01
+        type: choice
+        tests:
+          words:
+            - 还
+            - 电视
+          grammar:
+            - h1-g59
+        prompt:
+          kind: vi
+          text: Bên trong có máy tính, còn có ti vi.
+        optionKind: hanzi
+        options:
+          - 里边有电脑，还有电视
+          - 里边有电脑，有还电视
+          - 里边还有电脑，有电视
+        answer: 0
+      - id: q-h1-26-g02
+        type: trueFalse
+        tests:
+          words:
+            - 还
+          grammar:
+            - h1-g59
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我有房子，有还电脑。
+        answer: false
+      - id: q-h1-26-g03
+        type: choice
+        tests:
+          words:
+            - 还
+          grammar:
+            - h1-g59
+        prompt:
+          kind: vi
+          text: Tôi còn muốn xem ti vi.
+        optionKind: hanzi
+        options:
+          - 我还想看电视
+          - 我想还看电视
+          - 还我想看电视
+        answer: 0
+      - id: q-h1-26-g04
+        type: choice
+        tests:
+          words:
+            - 常常
+            - 电视
+          grammar:
+            - h1-g60
+        prompt:
+          kind: vi
+          text: Tớ hay xem ti vi.
+        optionKind: hanzi
+        options:
+          - 我常常看电视
+          - 我看电视常常
+          - 常常我看电视
+        answer: 0
+      - id: q-h1-26-g05
+        type: order
+        tests:
+          words:
+            - 有时
+            - 休息
+          grammar:
+            - h1-g60
+        tiles:
+          - 我
+          - 有时
+          - 在
+          - 家里
+          - 休息
+        answer: s-h1-26-13
+      - id: q-h1-26-g06
+        type: trueFalse
+        tests:
+          words:
+            - 常常
+          grammar:
+            - h1-g60
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我看电视常常。
+        answer: false
+      - id: q-h1-26-g07
+        type: choice
+        tests:
+          words:
+            - 里边
+            - 房间
+          grammar:
+            - h1-g61
+        prompt:
+          kind: vi
+          text: Trong nhà có mấy phòng?
+        optionKind: hanzi
+        options:
+          - 房子里边有几个房间
+          - 房子有里边几个房间
+          - 里边房子有几个房间
+        answer: 0
+      - id: q-h1-26-g08
+        type: choice
+        tests:
+          words:
+            - 里边
+          grammar:
+            - h1-g61
+        prompt:
+          kind: vi
+          text: Trong phòng cậu có gì?
+        optionKind: hanzi
+        options:
+          - 你的房间里边有什么
+          - 你的里边房间有什么
+          - 里边你的房间有什么
+        answer: 0
+  dialogue:
+    parts:
+      - title: Trong nhà có gì?
+        lines:
+          - s-h1-26-01
+          - s-h1-26-02
+          - s-h1-26-03
+          - s-h1-26-04
+      - title: Hay làm gì?
+        lines:
+          - s-h1-26-05
+          - s-h1-26-06
+          - s-h1-26-07
+          - s-h1-26-08
+          - s-h1-26-09
+          - s-h1-26-10
+    questions:
+      - id: q-h1-26-d01
+        type: choice
+        ask: Trong phòng có những gì?
+        tests:
+          words:
+            - 还
+          grammar:
+            - h1-g59
+        prompt:
+          kind: audio
+          ref: s-h1-26-04
+        optionKind: vi
+        options:
+          - máy tính và ti vi
+          - chỉ máy tính
+          - chỉ ti vi
+        answer: 0
+      - id: q-h1-26-d02
+        type: choice
+        ask: Gấu trúc đỏ hay làm gì?
+        tests:
+          words:
+            - 常常
+            - 有时
+          grammar:
+            - h1-g60
+        prompt:
+          kind: audio
+          ref: s-h1-26-06
+        optionKind: vi
+        options:
+          - hay xem ti vi
+          - hay đọc sách
+          - hay chơi bóng
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-26-l01
+        type: tone
+        tests:
+          words:
+            - 还
+          tone: true
+        prompt:
+          kind: audio
+          ref: 还
+        syllable: 0
+        answer: 2
+      - id: q-h1-26-l02
+        type: choice
+        tests:
+          words:
+            - 还
+        prompt:
+          kind: audio
+          ref: 还
+        optionKind: hanzi
+        options:
+          - 还
+          - 有时
+          - 常常
+          - 房间
+        answer: 0
+      - id: q-h1-26-l03
+        type: choice
+        tests:
+          words:
+            - 房子
+        prompt:
+          kind: audio
+          ref: 房子
+        optionKind: hanzi
+        options:
+          - 房子
+          - 电视
+          - 电脑
+          - 休息
+        answer: 0
+      - id: q-h1-26-s01
+        type: readAloud
+        tests:
+          words:
+            - 还
+            - 电视
+          grammar:
+            - h1-g59
+          tone: true
+        sentence: s-h1-26-04
+      - id: q-h1-26-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 常常
+          grammar:
+            - h1-g60
+        prompt:
+          kind: vi
+          text: Nói bạn hay làm gì, đôi khi làm gì.
+        rubric:
+          - Dùng 我常常…，有时…
+        answer: s-h1-26-06
+      - id: q-h1-26-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 里边
+          grammar:
+            - h1-g61
+        prompt:
+          kind: vi
+          text: Hỏi trong phòng một bạn có gì.
+        rubric:
+          - Dùng 你的房间里边有什么？
+        answer: s-h1-26-03
+  writing:
+    chars:
+      - 房
+      - 休
+      - 息
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-26-x01
+      type: choice
+      tests:
+        words:
+          - 还
+      prompt:
+        kind: hanzi
+        ref: 还
+      optionKind: vi
+      options:
+        - còn, thêm nữa
+        - đôi khi
+        - thường xuyên
+        - phòng
+      answer: 0
+    - id: q-h1-26-x02
+      type: choice
+      tests:
+        words:
+          - 有时
+      prompt:
+        kind: vi
+        text: đôi khi
+      optionKind: hanzi
+      options:
+        - 有时
+        - 还
+        - 常常
+        - 房间
+      answer: 0
+    - id: q-h1-26-x03
+      type: choice
+      tests:
+        words:
+          - 常常
+      prompt:
+        kind: hanzi
+        ref: 常常
+      optionKind: vi
+      options:
+        - thường xuyên
+        - còn, thêm nữa
+        - đôi khi
+        - phòng
+      answer: 0
+    - id: q-h1-26-x04
+      type: choice
+      tests:
+        words:
+          - 房间
+      prompt:
+        kind: vi
+        text: phòng
+      optionKind: hanzi
+      options:
+        - 房间
+        - 还
+        - 有时
+        - 常常
+      answer: 0
+    - id: q-h1-26-x05
+      type: choice
+      tests:
+        words:
+          - 房子
+      prompt:
+        kind: hanzi
+        ref: 房子
+      optionKind: vi
+      options:
+        - nhà, căn nhà
+        - còn, thêm nữa
+        - đôi khi
+        - thường xuyên
+      answer: 0
+    - id: q-h1-26-x06
+      type: choice
+      tests:
+        words:
+          - 电视
+      prompt:
+        kind: vi
+        text: ti vi
+      optionKind: hanzi
+      options:
+        - 电视
+        - 还
+        - 有时
+        - 常常
+      answer: 0
+    - id: q-h1-26-x07
+      type: choice
+      tests:
+        words:
+          - 电脑
+      prompt:
+        kind: hanzi
+        ref: 电脑
+      optionKind: vi
+      options:
+        - máy tính
+        - còn, thêm nữa
+        - đôi khi
+        - thường xuyên
+      answer: 0
+    - id: q-h1-26-x08
+      type: choice
+      tests:
+        words:
+          - 休息
+      prompt:
+        kind: vi
+        text: nghỉ ngơi
+      optionKind: hanzi
+      options:
+        - 休息
+        - 还
+        - 有时
+        - 常常
+      answer: 0
+    - id: q-h1-26-x09
+      type: choice
+      tests:
+        words:
+          - 还
+          - 电视
+        grammar:
+          - h1-g59
+      prompt:
+        kind: vi
+        text: Bên trong có máy tính, còn có ti vi.
+      optionKind: hanzi
+      options:
+        - 里边有电脑，还有电视
+        - 里边有电脑，有还电视
+        - 里边还有电脑，有电视
+      answer: 0
+    - id: q-h1-26-x10
+      type: trueFalse
+      tests:
+        words:
+          - 还
+        grammar:
+          - h1-g59
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我有房子，有还电脑。
+      answer: false
+    - id: q-h1-26-x11
+      type: choice
+      tests:
+        words:
+          - 还
+        grammar:
+          - h1-g59
+      prompt:
+        kind: vi
+        text: Tôi còn muốn xem ti vi.
+      optionKind: hanzi
+      options:
+        - 我还想看电视
+        - 我想还看电视
+        - 还我想看电视
+      answer: 0
+    - id: q-h1-26-x12
+      type: choice
+      tests:
+        words:
+          - 常常
+          - 电视
+        grammar:
+          - h1-g60
+      prompt:
+        kind: vi
+        text: Tớ hay xem ti vi.
+      optionKind: hanzi
+      options:
+        - 我常常看电视
+        - 我看电视常常
+        - 常常我看电视
+      answer: 0
+    - id: q-h1-26-x13
+      type: order
+      tests:
+        words:
+          - 有时
+          - 休息
+        grammar:
+          - h1-g60
+      tiles:
+        - 我
+        - 有时
+        - 在
+        - 家里
+        - 休息
+      answer: s-h1-26-13
+    - id: q-h1-26-x14
+      type: trueFalse
+      tests:
+        words:
+          - 常常
+        grammar:
+          - h1-g60
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我看电视常常。
+      answer: false
+    - id: q-h1-26-x15
+      type: choice
+      tests:
+        words:
+          - 里边
+          - 房间
+        grammar:
+          - h1-g61
+      prompt:
+        kind: vi
+        text: Trong nhà có mấy phòng?
+      optionKind: hanzi
+      options:
+        - 房子里边有几个房间
+        - 房子有里边几个房间
+        - 里边房子有几个房间
+      answer: 0
+    - id: q-h1-26-x16
+      type: choice
+      tests:
+        words:
+          - 里边
+        grammar:
+          - h1-g61
+      prompt:
+        kind: vi
+        text: Trong phòng cậu có gì?
+      optionKind: hanzi
+      options:
+        - 你的房间里边有什么
+        - 你的里边房间有什么
+        - 里边你的房间有什么
+      answer: 0
+    - id: q-h1-26-x17
+      type: choice
+      tests:
+        words:
+          - 有时
+        grammar:
+          - h1-g60
+      prompt:
+        kind: audio
+        ref: s-h1-26-08
+      optionKind: vi
+      options:
+        - đôi khi chơi, đôi khi đọc sách
+        - luôn luôn chơi
+        - không chơi
+      answer: 0
+    - id: q-h1-26-x18
+      type: choice
+      tests:
+        words:
+          - 房间
+        grammar:
+          - h1-g61
+      prompt:
+        kind: audio
+        ref: s-h1-26-01
+      optionKind: vi
+      options:
+        - Nhà cậu có mấy phòng?
+        - Cậu tên gì?
+        - Cậu ăn gì?
+      answer: 0
+    - id: q-h1-26-x19
+      type: trueFalse
+      tests:
+        words:
+          - 电脑
+        grammar:
+          - h1-g59
+      prompt:
+        kind: hanzi
+        ref: 电脑
+      statement: 电脑 nghĩa là “máy tính”.
+      answer: true
+    - id: q-h1-26-x20
+      type: choice
+      tests:
+        words:
+          - 房子
+          - 还
+        grammar:
+          - h1-g59
+      prompt:
+        kind: audio
+        ref: s-h1-26-09
+      optionKind: vi
+      options:
+        - còn có một căn nhà nữa
+        - chỉ có một phòng
+        - không có nhà
+      answer: 0
+    - id: q-h1-26-x21
+      type: choice
+      tests:
+        words:
+          - 休息
+          - 常常
+        grammar:
+          - h1-g60
+      prompt:
+        kind: vi
+        text: Cô ấy hay nghỉ ngơi trong phòng.
+      optionKind: hanzi
+      options:
+        - 她常常在房间里休息
+        - 她在房间里常常休息了
+        - 她休息常常在房间里
+      answer: 0
+    - id: q-h1-26-x22
+      type: trueFalse
+      tests:
+        words:
+          - 休息
+        grammar:
+          - h1-g60
+      prompt:
+        kind: hanzi
+        ref: 休息
+      statement: 休息 nghĩa là “nghỉ ngơi”.
+      answer: true

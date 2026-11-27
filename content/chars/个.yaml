@@ -1,0 +1,16 @@
+hanzi: 个
+readings:
+  - pinyin: gè
+    hanviet: cá
+  - pinyin: gě
+    hanviet: cá
+    rare: true
+radical: 丨
+ids: ⿱人丨
+strokes: 3
+mnemonic:
+  hinh: Một người (人) đứng thẳng cầm cây gậy (丨) — đếm từng "cái", từng "người" một.
+  am: 'Hán-Việt "cá" — 个人 (cá nhân), 个性 (cá tính), 个体 (cá thể): âm quen thuộc.'
+  doiThat: 'Lượng từ 个 khắp nơi: menu "两个菜", app "3个通知", câu cửa miệng "一个人".'
+  tuongPhan: 介 (jiè, giới thiệu) — cũng có nét 人 phía trên nhưng phần dưới khác hẳn, đừng gõ lộn.
+  kind: invented

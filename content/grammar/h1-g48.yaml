@@ -1,0 +1,17 @@
+id: h1-g48
+level: 1
+std:
+  - 35
+title: "Cảm thán: 太…了"
+pattern: 太 + tính từ / 喜欢 + 了
+explain: |-
+  太 (thái, tài) + tính từ + 了 nghĩa là “… quá”: 太好了！ = Tuyệt quá! 你的汉语太好了！ = Tiếng Trung của cậu giỏi quá!
+
+  Giữ 了 ở cuối câu cảm thán.
+examples:
+  - s-h1-21-10
+  - s-h1-21-14
+pitfalls:
+  - wrong: 这个太好
+    right: 这个太好了
+    why: Câu cảm thán 太…了 giữ 了 ở cuối.

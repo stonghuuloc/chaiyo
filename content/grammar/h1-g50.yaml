@@ -1,0 +1,17 @@
+id: h1-g50
+level: 1
+std:
+  - 1
+title: "Phương vị: 上 · 下 · 里 · 外 · 前 · 后 · 左 · 右"
+pattern: danh từ + 上 / 下 / 里 / 外 / 前面 / 后面
+explain: |-
+  上 (thượng) trên, 下 (hạ) dưới, 里 (lý) trong, 外 (ngoại) ngoài, 前 (tiền) trước, 后 (hậu) sau, 左 (tả) trái, 右 (hữu) phải đứng sau danh từ: 书在书包里, 钱在书上.
+
+  Với 前, 后 thêm 面: 医院在学校前面. Với 左, 右 thêm 边 (biên, bên): 左边, 右边.
+examples:
+  - s-h1-22-08
+  - s-h1-22-12
+pitfalls:
+  - wrong: 书包里书在
+    right: 书在书包里
+    why: Phương vị 里 / 上 đứng sau danh từ.

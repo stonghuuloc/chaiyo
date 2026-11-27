@@ -1,0 +1,17 @@
+id: h1-g40
+level: 1
+std:
+  - 19
+title: "Nối danh từ: 和"
+pattern: danh từ + 和 + danh từ
+explain: |-
+  和 (hoà, hé) nghĩa là “và”, nối hai danh từ: 肉和菜 = thịt và rau; 我和朋友 = tôi và bạn.
+
+  和 chỉ nối danh từ, không nối động từ hay cả câu.
+examples:
+  - s-h1-18-04
+  - s-h1-18-15
+pitfalls:
+  - wrong: 我吃饭和喝茶
+    right: 我吃饭，也喝茶
+    why: 和 chỉ nối danh từ, không nối động từ.

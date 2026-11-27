@@ -3,8 +3,8 @@ id: h1-05
 level: 1
 topic: Gia đình
 order: 5
-title: Bạn mấy tuổi?
-titleHanzi: 你几岁
+title: Tuổi tác
+titleHanzi: 岁
 goal: Đếm đến 99, hỏi và nói tuổi, hỏi câu có hay không
 scene:
   file: lessons/h1-05.png

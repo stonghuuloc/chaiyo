@@ -1,0 +1,17 @@
+id: h1-g21
+level: 1
+std:
+  - 33
+title: Trả lời bằng 对 · 是 · 不是
+pattern: 是 / 对 / 不是 + câu đầy đủ
+explain: |-
+  Với câu hỏi có 吗, trả lời “đúng” bằng 是 hoặc 对, trả lời “không phải” bằng 不是: 你是北京人吗？ — 不是，我不是北京人。
+
+  对 (đối, duì) nghĩa là “đúng”: 对，他是男老师。
+examples:
+  - s-h1-08-05
+  - s-h1-08-09
+pitfalls:
+  - wrong: 对，我不是中国人
+    right: 不是，我不是中国人
+    why: Trả lời “không” bắt đầu bằng 不是.

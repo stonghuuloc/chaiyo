@@ -1,0 +1,696 @@
+id: h1-06
+level: 1
+topic: Gia đình
+order: 6
+title: Số người trong nhà
+titleHanzi: 口
+goal: Nói nhà có mấy người, có anh chị em hay con cái không; đếm bằng 个 và 口
+scene:
+  file: lessons/h1-06.png
+  cast:
+    - redpanda
+    - takin
+    - panda
+  prompt: Only the red panda, the takin and the baby panda. The red panda holds a framed family photo with four small round figures; the takin leans in to look; the baby panda holds up two round paws.
+sentences:
+  - id: s-h1-06-01
+    hanzi: 你家有几口人？
+    pinyin: nǐ jiā yǒu jǐ kǒu rén?
+    vi: Nhà cậu có mấy người?
+    speaker: takin
+  - id: s-h1-06-02
+    hanzi: 我家有四口人。
+    pinyin: wǒ jiā yǒu sì kǒu rén.
+    vi: Nhà tớ có bốn người.
+    speaker: redpanda
+  - id: s-h1-06-03
+    hanzi: 我家有爸爸、妈妈、哥哥，也有我。
+    pinyin: wǒ jiā yǒu bàba, māma, gēge, yě yǒu wǒ.
+    vi: Nhà tớ có bố, mẹ, anh trai, và cả tớ nữa.
+    speaker: redpanda
+  - id: s-h1-06-04
+    hanzi: 你有弟弟吗？
+    pinyin: nǐ yǒu dìdi ma?
+    vi: Cậu có em trai không?
+    speaker: takin
+  - id: s-h1-06-05
+    hanzi: 我没有弟弟，有一个哥哥。
+    pinyin: wǒ méiyǒu dìdi, yǒu yī gè gēge.
+    vi: Tớ không có em trai, tớ có một anh trai.
+    speaker: redpanda
+  - id: s-h1-06-06
+    hanzi: 你哥哥有孩子吗？
+    pinyin: nǐ gēge yǒu háizi ma?
+    vi: Anh cậu có con không?
+    speaker: takin
+  - id: s-h1-06-07
+    hanzi: 有，他有两个孩子。
+    pinyin: yǒu, tā yǒu liǎng gè háizi.
+    vi: Có, anh ấy có hai đứa con.
+    speaker: redpanda
+  - id: s-h1-06-08
+    hanzi: 一个儿子，一个女儿吗？
+    pinyin: yī gè érzi, yī gè nǚ'ér ma?
+    vi: Một con trai, một con gái à?
+    speaker: takin
+  - id: s-h1-06-09
+    hanzi: 对，一个儿子，一个女儿。
+    pinyin: duì, yī gè érzi, yī gè nǚ'ér.
+    vi: Đúng, một con trai, một con gái.
+    speaker: redpanda
+  - id: s-h1-06-10
+    hanzi: 我有两个姐姐。
+    pinyin: wǒ yǒu liǎng gè jiějie.
+    vi: Tôi có hai chị gái.
+  - id: s-h1-06-11
+    hanzi: 他家有五口人。
+    pinyin: tā jiā yǒu wǔ kǒu rén.
+    vi: Nhà anh ấy có năm người.
+  - id: s-h1-06-12
+    hanzi: 你有妹妹吗？
+    pinyin: nǐ yǒu mèimei ma?
+    vi: Bạn có em gái không?
+  - id: s-h1-06-13
+    hanzi: 我没有哥哥。
+    pinyin: wǒ méiyǒu gēge.
+    vi: Tôi không có anh trai.
+  - id: s-h1-06-14
+    hanzi: 她有一个女儿。
+    pinyin: tā yǒu yī gè nǚ'ér.
+    vi: Cô ấy có một con gái.
+  - id: s-h1-06-15
+    hanzi: 我有三个朋友。
+    pinyin: wǒ yǒu sān gè péngyou.
+    vi: Tôi có ba người bạn.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 有
+      - 口
+      - 人
+      - 两
+      - 个
+      - 儿子
+      - 女儿
+      - 孩子
+  grammar:
+    ids:
+      - h1-g14
+      - h1-g15
+      - h1-g16
+    drills:
+      - id: q-h1-06-g01
+        type: choice
+        tests:
+          words:
+            - 有
+          grammar:
+            - h1-g14
+        prompt:
+          kind: vi
+          text: Tớ có em trai.
+        optionKind: hanzi
+        options:
+          - 我有弟弟
+          - 我是弟弟
+          - 弟弟有我
+        answer: 0
+      - id: q-h1-06-g02
+        type: trueFalse
+        tests:
+          words:
+            - 有
+          grammar:
+            - h1-g14
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我不有弟弟。
+        answer: false
+      - id: q-h1-06-g03
+        type: order
+        tests:
+          words:
+            - 有
+          grammar:
+            - h1-g14
+        tiles:
+          - 有
+          - 你
+          - 吗
+          - 弟弟
+        answer: s-h1-06-04
+      - id: q-h1-06-g04
+        type: choice
+        tests:
+          words:
+            - 个
+          grammar:
+            - h1-g15
+        prompt:
+          kind: vi
+          text: Tớ có ba người bạn.
+        optionKind: hanzi
+        options:
+          - 我有三个朋友
+          - 我有三朋友
+          - 我有朋友三个
+        answer: 0
+      - id: q-h1-06-g05
+        type: order
+        tests:
+          words:
+            - 口
+            - 人
+          grammar:
+            - h1-g15
+        tiles:
+          - 我
+          - 家
+          - 有
+          - 四
+          - 口
+          - 人
+        answer: s-h1-06-02
+      - id: q-h1-06-g06
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 口
+            - 人
+          grammar:
+            - h1-g15
+        prompt:
+          kind: audio
+          ref: s-h1-06-01
+        optionKind: hanzi
+        options:
+          - 我家有四口人。
+          - 我有四个朋友。
+          - 他是我哥哥。
+        answer: 0
+      - id: q-h1-06-g07
+        type: choice
+        tests:
+          words:
+            - 两
+            - 孩子
+          grammar:
+            - h1-g16
+        prompt:
+          kind: vi
+          text: hai đứa trẻ
+        optionKind: hanzi
+        options:
+          - 两个孩子
+          - 二个孩子
+          - 两孩子
+        answer: 0
+      - id: q-h1-06-g08
+        type: trueFalse
+        tests:
+          words:
+            - 两
+          grammar:
+            - h1-g16
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我有二个姐姐。
+        answer: false
+      - id: q-h1-06-g09
+        type: choice
+        tests:
+          words:
+            - 两
+          grammar:
+            - h1-g16
+        prompt:
+          kind: vi
+          text: mười hai (12)
+        optionKind: hanzi
+        options:
+          - 十二
+          - 十两
+          - 两十
+        answer: 0
+  dialogue:
+    parts:
+      - title: Nhà cậu mấy người?
+        lines:
+          - s-h1-06-01
+          - s-h1-06-02
+          - s-h1-06-03
+          - s-h1-06-04
+          - s-h1-06-05
+      - title: Anh trai có con
+        lines:
+          - s-h1-06-06
+          - s-h1-06-07
+          - s-h1-06-08
+          - s-h1-06-09
+    questions:
+      - id: q-h1-06-d01
+        type: choice
+        ask: Nhà gấu trúc đỏ có mấy người?
+        tests:
+          words:
+            - 口
+            - 人
+          grammar:
+            - h1-g14
+            - h1-g15
+        prompt:
+          kind: audio
+          ref: s-h1-06-02
+        optionKind: vi
+        options:
+          - bốn người
+          - ba người
+          - năm người
+        answer: 0
+      - id: q-h1-06-d02
+        type: choice
+        ask: Anh trai có mấy đứa con?
+        tests:
+          words:
+            - 两
+            - 孩子
+          grammar:
+            - h1-g16
+        prompt:
+          kind: audio
+          ref: s-h1-06-07
+        optionKind: vi
+        options:
+          - hai đứa
+          - một đứa
+          - ba đứa
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-06-l01
+        type: tone
+        tests:
+          words:
+            - 有
+          tone: true
+        prompt:
+          kind: audio
+          ref: 有
+        syllable: 0
+        answer: 3
+      - id: q-h1-06-l02
+        type: choice
+        tests:
+          words:
+            - 口
+        prompt:
+          kind: audio
+          ref: 口
+        optionKind: hanzi
+        options:
+          - 口
+          - 九
+          - 有
+          - 五
+        answer: 0
+      - id: q-h1-06-l03
+        type: choice
+        tests:
+          words:
+            - 两
+        prompt:
+          kind: audio
+          ref: 两
+        optionKind: hanzi
+        options:
+          - 两
+          - 三
+          - 四
+          - 二
+        answer: 0
+      - id: q-h1-06-s01
+        type: readAloud
+        tests:
+          words:
+            - 口
+          grammar:
+            - h1-g15
+          tone: true
+        sentence: s-h1-06-01
+      - id: q-h1-06-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 口
+          grammar:
+            - h1-g14
+            - h1-g15
+        prompt:
+          kind: vi
+          text: Nói nhà bạn có mấy người.
+        rubric:
+          - Dùng 我家有 + số + 口人
+        answer: s-h1-06-02
+      - id: q-h1-06-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 有
+          grammar:
+            - h1-g14
+        prompt:
+          kind: vi
+          text: Hỏi một bạn xem bạn ấy có anh chị em không.
+        rubric:
+          - Dùng 你有…吗？ (你有哥哥吗？)
+        answer: s-h1-06-04
+  writing:
+    chars:
+      - 口
+      - 人
+      - 个
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-06-x01
+      type: choice
+      tests:
+        words:
+          - 有
+      prompt:
+        kind: hanzi
+        ref: 有
+      optionKind: vi
+      options:
+        - có
+        - là
+        - không
+        - cũng
+      answer: 0
+    - id: q-h1-06-x02
+      type: typePinyin
+      tests:
+        words:
+          - 口
+      prompt:
+        kind: hanzi
+        ref: 口
+      answer: kǒu
+    - id: q-h1-06-x03
+      type: choice
+      tests:
+        words:
+          - 人
+      prompt:
+        kind: audio
+        ref: 人
+      optionKind: hanzi
+      options:
+        - 人
+        - 几
+        - 九
+        - 儿
+      answer: 0
+    - id: q-h1-06-x04
+      type: choice
+      tests:
+        words:
+          - 两
+      prompt:
+        kind: vi
+        text: hai
+      optionKind: hanzi
+      options:
+        - 两
+        - 三
+        - 四
+        - 六
+      answer: 0
+    - id: q-h1-06-x05
+      type: choice
+      tests:
+        words:
+          - 个
+      prompt:
+        kind: hanzi
+        ref: 个
+      optionKind: vi
+      options:
+        - cái (lượng từ chung)
+        - người
+        - nhà
+        - tuổi
+      answer: 0
+    - id: q-h1-06-x06
+      type: choice
+      tests:
+        words:
+          - 儿子
+      prompt:
+        kind: hanzi
+        ref: 儿子
+      optionKind: vi
+      options:
+        - con trai
+        - con gái
+        - em trai
+        - anh trai
+      answer: 0
+    - id: q-h1-06-x07
+      type: typePinyin
+      tests:
+        words:
+          - 孩子
+      prompt:
+        kind: hanzi
+        ref: 孩子
+      answer: háizi
+    - id: q-h1-06-x08
+      type: choice
+      tests:
+        words:
+          - 女儿
+      prompt:
+        kind: vi
+        text: con gái
+      optionKind: hanzi
+      options:
+        - 女儿
+        - 儿子
+        - 孩子
+        - 姐姐
+      answer: 0
+    - id: q-h1-06-x09
+      type: choice
+      tests:
+        words:
+          - 孩子
+      prompt:
+        kind: audio
+        ref: 孩子
+      optionKind: vi
+      options:
+        - trẻ con
+        - con trai
+        - con gái
+        - bạn
+      answer: 0
+    - id: q-h1-06-x10
+      type: choice
+      tests:
+        words:
+          - 有
+        grammar:
+          - h1-g14
+      prompt:
+        kind: vi
+        text: Tớ có em trai.
+      optionKind: hanzi
+      options:
+        - 我有弟弟
+        - 我是弟弟
+        - 弟弟有我
+      answer: 0
+    - id: q-h1-06-x11
+      type: trueFalse
+      tests:
+        words:
+          - 有
+        grammar:
+          - h1-g14
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我不有弟弟。
+      answer: false
+    - id: q-h1-06-x12
+      type: order
+      tests:
+        words:
+          - 有
+        grammar:
+          - h1-g14
+      tiles:
+        - 有
+        - 你
+        - 吗
+        - 弟弟
+      answer: s-h1-06-04
+    - id: q-h1-06-x13
+      type: choice
+      tests:
+        words:
+          - 有
+        grammar:
+          - h1-g14
+      prompt:
+        kind: vi
+        text: Tớ không có anh trai.
+      optionKind: hanzi
+      options:
+        - 我没有哥哥
+        - 我不有哥哥
+        - 我没哥哥有
+      answer: 0
+    - id: q-h1-06-x14
+      type: choice
+      tests:
+        words:
+          - 口
+          - 人
+        grammar:
+          - h1-g15
+      prompt:
+        kind: vi
+        text: Nhà tớ có bốn người.
+      optionKind: hanzi
+      options:
+        - 我家有四口人
+        - 我家有口四人
+        - 我家四有口人
+      answer: 0
+    - id: q-h1-06-x15
+      type: choice
+      tests:
+        words:
+          - 个
+        grammar:
+          - h1-g15
+      prompt:
+        kind: vi
+        text: Tớ có ba người bạn.
+      optionKind: hanzi
+      options:
+        - 我有三个朋友
+        - 我有三朋友
+        - 我有朋友三个
+      answer: 0
+    - id: q-h1-06-x16
+      type: order
+      tests:
+        words:
+          - 口
+        grammar:
+          - h1-g15
+      tiles:
+        - 我
+        - 家
+        - 有
+        - 四
+        - 口
+        - 人
+      answer: s-h1-06-02
+    - id: q-h1-06-x17
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 人
+        grammar:
+          - h1-g15
+      prompt:
+        kind: audio
+        ref: s-h1-06-01
+      optionKind: hanzi
+      options:
+        - 我家有四口人。
+        - 我有四个朋友。
+        - 他是我哥哥。
+      answer: 0
+    - id: q-h1-06-x18
+      type: choice
+      tests:
+        words:
+          - 两
+          - 孩子
+        grammar:
+          - h1-g16
+      prompt:
+        kind: vi
+        text: hai đứa trẻ
+      optionKind: hanzi
+      options:
+        - 两个孩子
+        - 二个孩子
+        - 两孩子
+      answer: 0
+    - id: q-h1-06-x19
+      type: trueFalse
+      tests:
+        words:
+          - 两
+        grammar:
+          - h1-g16
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我有二个姐姐。
+      answer: false
+    - id: q-h1-06-x20
+      type: choice
+      tests:
+        words:
+          - 两
+        grammar:
+          - h1-g16
+      prompt:
+        kind: vi
+        text: mười hai (12)
+      optionKind: hanzi
+      options:
+        - 十二
+        - 十两
+        - 两十
+      answer: 0
+    - id: q-h1-06-x21
+      type: choice
+      tests:
+        words:
+          - 两
+          - 个
+        grammar:
+          - h1-g16
+      prompt:
+        kind: vi
+        text: Tớ có hai chị gái.
+      optionKind: hanzi
+      options:
+        - 我有两个姐姐
+        - 我有二个姐姐
+        - 我有两姐姐
+      answer: 0
+    - id: q-h1-06-x22
+      type: tone
+      tests:
+        words:
+          - 两
+        tone: true
+      prompt:
+        kind: audio
+        ref: 两
+      syllable: 0
+      answer: 3

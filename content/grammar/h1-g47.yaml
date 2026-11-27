@@ -1,0 +1,14 @@
+id: h1-g47
+level: 1
+std:
+  - 9
+title: "Nhất: 最"
+pattern: 最 + 喜欢 / tính từ
+explain: "最 (tối, zuì) nghĩa là “nhất”, đứng trước 喜欢 hoặc tính từ: 我最喜欢电影 = Tớ thích phim nhất."
+examples:
+  - s-h1-21-02
+  - s-h1-21-12
+pitfalls:
+  - wrong: 我喜欢最电影
+    right: 我最喜欢电影
+    why: 最 đứng trước 喜欢 hoặc tính từ.

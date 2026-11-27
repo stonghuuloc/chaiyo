@@ -1,3 +1,4 @@
+import { LESSONS } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { describe, expect, it } from 'vitest';
 import { thiChips } from './thi';
@@ -10,6 +11,7 @@ const curriculum = {
 		words: []
 	}))
 };
+const lastWritten = Math.max(...LESSONS.filter((l) => l.level === 1).map((l) => l.n));
 const build = (unlockedTo?: number, passed: string[] = []): State => {
 	const state = initialState({ curriculum });
 	for (const l of curriculum.lessons) {
@@ -28,7 +30,7 @@ describe('thiChips', () => {
 		// Assert
 		expect(view.chips.map((c) => c.level)).toEqual([1, 2, 3, 4, 5, 6]);
 		expect(view.chips.map((c) => c.lock)).toEqual([false, true, true, true, true, true]);
-		expect(view.chips[0]).toEqual({ level: 1, lock: false, line: 'next', lesson: 5 });
+		expect(view.chips[0]).toEqual({ level: 1, lock: false, line: 'next', lesson: lastWritten });
 		expect(view.chips.slice(1).every((c) => c.line === 'after')).toBe(true);
 		expect(view.selected).toBe(1);
 	});

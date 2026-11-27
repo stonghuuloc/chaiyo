@@ -1,0 +1,16 @@
+hanzi: 分
+readings:
+  - pinyin: fēn
+    hanviet: phân
+  - pinyin: fèn
+    hanviet: phận
+    rare: true
+radical: 刀
+ids: ⿱八刀
+strokes: 4
+mnemonic:
+  hinh: một lưỡi dao (刀) chặt xuống, vật tách hẳn ra hai bên (八) — càng chặt càng chia nhỏ
+  am: phân — phân chia, phân biệt, phân tích; phận — thân phận, bổn phận, duyên phận
+  doiThat: "mặt đồng hồ: 三点十分 (3 giờ 10 phút); bảng điểm game/thi: 一百分; câu cửa miệng nghe suốt trên phim: 十分 (rất)"
+  tuongPhan: ≠ 八 (bā, đã học — số 8). 分 = 八 + thêm 刀 ở dưới. Không có 刀 thì chỉ còn 八 (tám)
+  kind: etymology

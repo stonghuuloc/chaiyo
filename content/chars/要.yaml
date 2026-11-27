@@ -1,0 +1,16 @@
+hanzi: 要
+readings:
+  - pinyin: yào
+    hanviet: yếu
+  - pinyin: yāo
+    hanviet: yêu
+    rare: true
+radical: 襾
+ids: ⿱覀女
+strokes: 9
+mnemonic:
+  hinh: 要 vốn là hình người đứng chống tay ngang hông (dáng chống nạnh, tả cái eo) → sau mượn nghĩa trừu tượng "muốn, cần, quan trọng".
+  am: 'Hai âm: "yếu" (trọng yếu, yếu điểm, cần yếu) và "yêu" (yêu cầu 要求).'
+  doiThat: Form đăng ký "本栏为必填/需要" (bắt buộc điền); quán ăn hỏi "还要别的吗?"; app mua hàng "要不要".
+  tuongPhan: ≠ 耍 (shuǎ, chơi đùa) — phần trên là 而 (nhi) chứ không phải 覀, dễ nhầm khi viết nhanh.
+  kind: invented

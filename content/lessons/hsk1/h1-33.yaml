@@ -1,0 +1,686 @@
+id: h1-33
+level: 1
+topic: Mua sắm
+order: 33
+title: Miêu tả đồ vật
+titleHanzi: 漂亮
+goal: Chỉ đồ vật với 这个 / 那个; tả đồ vật với 很 / 非常 + tính từ + 的; nói giống nhau với 一样
+scene:
+  file: lessons/h1-33.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand in a small clothing shop with white shirts on a rack; the red panda holds up a white shirt and the takin shows a new phone.
+sentences:
+  - id: s-h1-33-01
+    hanzi: 这个手机是你的吗？
+    pinyin: zhège shǒujī shì nǐ de ma?
+    vi: Cái điện thoại này là của cậu à?
+    speaker: takin
+  - id: s-h1-33-02
+    hanzi: 是，是我的新手机。
+    pinyin: shì, shì wǒ de xīn shǒujī.
+    vi: Ừ, điện thoại mới của tớ đó.
+    speaker: redpanda
+  - id: s-h1-33-03
+    hanzi: 很好看！我也想买一个。
+    pinyin: hěn hǎokàn! wǒ yě xiǎng mǎi yí ge.
+    vi: Đẹp ghê! Tớ cũng muốn mua một cái.
+    speaker: takin
+  - id: s-h1-33-04
+    hanzi: 你看，那个手机和我的一样。
+    pinyin: nǐ kàn, nàge shǒujī hé wǒ de yīyàng.
+    vi: Cậu xem, cái điện thoại kia giống của tớ.
+    speaker: redpanda
+  - id: s-h1-33-05
+    hanzi: 我想买很好看的衣服。
+    pinyin: wǒ xiǎng mǎi hěn hǎokàn de yīfu.
+    vi: Tớ muốn mua quần áo thật đẹp.
+    speaker: redpanda
+  - id: s-h1-33-06
+    hanzi: 你看，这是非常好看的衣服！
+    pinyin: nǐ kàn, zhè shì fēicháng hǎokàn de yīfu!
+    vi: Cậu xem nè, đây là bộ đồ siêu đẹp!
+    speaker: takin
+  - id: s-h1-33-07
+    hanzi: 太贵了！我不要。
+    pinyin: tài guì le! wǒ bú yào.
+    vi: Đắt quá! Tớ không lấy đâu.
+    speaker: redpanda
+  - id: s-h1-33-08
+    hanzi: 白的呢？白的很新，也不贵。
+    pinyin: bái de ne? bái de hěn xīn, yě bú guì.
+    vi: Còn đồ trắng thì sao? Đồ trắng mới tinh, lại không đắt.
+    speaker: takin
+  - id: s-h1-33-09
+    hanzi: 你明天穿什么衣服？
+    pinyin: nǐ míngtiān chuān shénme yīfu?
+    vi: Mai cậu mặc đồ gì?
+    speaker: redpanda
+  - id: s-h1-33-10
+    hanzi: 我穿白衣服。
+    pinyin: wǒ chuān bái yīfu.
+    vi: Tớ mặc đồ trắng.
+    speaker: takin
+  - id: s-h1-33-11
+    hanzi: 白衣服要常洗。
+    pinyin: bái yīfu yào cháng xǐ.
+    vi: Đồ trắng phải giặt thường xuyên đó.
+    speaker: redpanda
+  - id: s-h1-33-12
+    hanzi: 我今天晚上洗。
+    pinyin: wǒ jīntiān wǎnshang xǐ.
+    vi: Tối nay tớ giặt.
+    speaker: takin
+  - id: s-h1-33-13
+    hanzi: 那个杯子很好看。
+    pinyin: nàge bēizi hěn hǎokàn.
+    vi: Cái cốc kia đẹp ghê.
+  - id: s-h1-33-14
+    hanzi: 他有一个很新的手机。
+    pinyin: tā yǒu yí ge hěn xīn de shǒujī.
+    vi: Anh ấy có một cái điện thoại rất mới.
+  - id: s-h1-33-15
+    hanzi: 这个学生和那个学生一样高。
+    pinyin: zhège xuésheng hé nàge xuésheng yīyàng gāo.
+    vi: Bạn học sinh này cao bằng bạn học sinh kia.
+  - id: s-h1-33-16
+    hanzi: 吃饭前要洗手。
+    pinyin: chīfàn qián yào xǐ shǒu.
+    vi: Trước khi ăn cơm phải rửa tay.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 衣服
+      - 好看
+      - 新
+      - 白
+      - 穿
+      - 洗
+      - 手机
+      - 一样
+  grammar:
+    ids:
+      - h1-g71
+      - h1-g72
+    drills:
+      - id: q-h1-33-g01
+        type: choice
+        tests:
+          words:
+            - 手机
+          grammar:
+            - h1-g71
+        prompt:
+          kind: vi
+          text: Cái điện thoại này là của cậu à?
+        optionKind: hanzi
+        options:
+          - 这个手机是你的吗
+          - 手机这个是你的吗
+          - 这手机个是你的吗
+        answer: 0
+      - id: q-h1-33-g02
+        type: trueFalse
+        tests:
+          words:
+            - 好看
+          grammar:
+            - h1-g71
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 杯子那个很好看。
+        answer: false
+      - id: q-h1-33-g03
+        type: order
+        tests:
+          words:
+            - 好看
+          grammar:
+            - h1-g71
+        tiles:
+          - 那个
+          - 杯子
+          - 很
+          - 好看
+        answer: s-h1-33-13
+      - id: q-h1-33-g04
+        type: choice
+        tests:
+          words:
+            - 衣服
+          grammar:
+            - h1-g72
+        prompt:
+          kind: vi
+          text: Tớ muốn mua quần áo thật đẹp.
+        optionKind: hanzi
+        options:
+          - 我想买很好看的衣服
+          - 我想买很好看衣服
+          - 我想买衣服的很好看
+        answer: 0
+      - id: q-h1-33-g05
+        type: trueFalse
+        tests:
+          words:
+            - 新
+          grammar:
+            - h1-g72
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 他有一个很新手机。
+        answer: false
+      - id: q-h1-33-g06
+        type: order
+        tests:
+          words:
+            - 手机
+          grammar:
+            - h1-g72
+        tiles:
+          - 他
+          - 有
+          - 一个
+          - 很
+          - 新
+          - 的
+          - 手机
+        answer: s-h1-33-14
+      - id: q-h1-33-g07
+        type: choice
+        tests:
+          words:
+            - 洗
+        prompt:
+          kind: vi
+          text: Trước khi ăn cơm phải rửa tay.
+        optionKind: hanzi
+        options:
+          - 吃饭前要洗手
+          - 吃饭后要洗手
+          - 吃饭前不洗手
+        answer: 0
+      - id: q-h1-33-g08
+        type: choice
+        tests:
+          words:
+            - 穿
+        prompt:
+          kind: vi
+          text: Tớ mặc đồ trắng.
+        optionKind: hanzi
+        options:
+          - 我穿白衣服
+          - 我洗白衣服
+          - 我买白衣服
+        answer: 0
+  dialogue:
+    parts:
+      - title: Điện thoại mới
+        lines:
+          - s-h1-33-01
+          - s-h1-33-02
+          - s-h1-33-03
+          - s-h1-33-04
+      - title: Mua quần áo
+        lines:
+          - s-h1-33-05
+          - s-h1-33-06
+          - s-h1-33-07
+          - s-h1-33-08
+      - title: Giặt đồ
+        lines:
+          - s-h1-33-09
+          - s-h1-33-10
+          - s-h1-33-11
+          - s-h1-33-12
+    questions:
+      - id: q-h1-33-d01
+        type: choice
+        ask: Gấu trúc đỏ nói gì về cái điện thoại kia?
+        tests:
+          words:
+            - 一样
+          grammar:
+            - h1-g71
+        prompt:
+          kind: audio
+          ref: s-h1-33-04
+        optionKind: vi
+        options:
+          - Giống điện thoại của bạn ấy
+          - Rất đắt
+          - Không đẹp
+        answer: 0
+      - id: q-h1-33-d02
+        type: choice
+        ask: Gấu trúc đỏ muốn mua gì?
+        tests:
+          words:
+            - 衣服
+            - 好看
+          grammar:
+            - h1-g72
+        prompt:
+          kind: audio
+          ref: s-h1-33-05
+        optionKind: vi
+        options:
+          - quần áo thật đẹp
+          - điện thoại mới
+          - cái cốc mới
+        answer: 0
+      - id: q-h1-33-d03
+        type: choice
+        ask: Đồ trắng thì phải làm sao?
+        tests:
+          words:
+            - 洗
+        prompt:
+          kind: audio
+          ref: s-h1-33-11
+        optionKind: vi
+        options:
+          - phải giặt thường xuyên
+          - không được mặc
+          - phải mua mới
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-33-l01
+        type: tone
+        tests:
+          words:
+            - 新
+          tone: true
+        prompt:
+          kind: audio
+          ref: 新
+        syllable: 0
+        answer: 1
+      - id: q-h1-33-l02
+        type: choice
+        tests:
+          words:
+            - 一样
+        prompt:
+          kind: audio
+          ref: 一样
+        optionKind: hanzi
+        options:
+          - 一样
+          - 手机
+          - 衣服
+          - 好看
+        answer: 0
+      - id: q-h1-33-l03
+        type: choice
+        tests:
+          words:
+            - 穿
+        prompt:
+          kind: audio
+          ref: 穿
+        optionKind: hanzi
+        options:
+          - 穿
+          - 洗
+          - 新
+          - 白
+        answer: 0
+      - id: q-h1-33-s01
+        type: readAloud
+        tests:
+          words:
+            - 衣服
+            - 好看
+          grammar:
+            - h1-g72
+          tone: true
+        sentence: s-h1-33-05
+      - id: q-h1-33-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 手机
+          grammar:
+            - h1-g71
+        prompt:
+          kind: vi
+          text: Hỏi bạn cái điện thoại này có phải của bạn ấy không.
+        rubric:
+          - Dùng 这个手机 hoặc 那个手机 + 是你的吗
+        answer: s-h1-33-01
+  writing:
+    chars:
+      - 衣
+      - 穿
+      - 洗
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-33-x01
+      type: choice
+      tests:
+        words:
+          - 衣服
+      prompt:
+        kind: hanzi
+        ref: 衣服
+      optionKind: vi
+      options:
+        - quần áo
+        - điện thoại di động
+        - giống nhau
+        - đẹp
+      answer: 0
+    - id: q-h1-33-x02
+      type: choice
+      tests:
+        words:
+          - 好看
+      prompt:
+        kind: vi
+        text: đẹp, ưa nhìn
+      optionKind: hanzi
+      options:
+        - 好看
+        - 一样
+        - 衣服
+        - 手机
+      answer: 0
+    - id: q-h1-33-x03
+      type: choice
+      tests:
+        words:
+          - 新
+      prompt:
+        kind: hanzi
+        ref: 新
+      optionKind: vi
+      options:
+        - mới
+        - trắng
+        - giặt, rửa
+        - mặc
+      answer: 0
+    - id: q-h1-33-x04
+      type: choice
+      tests:
+        words:
+          - 白
+      prompt:
+        kind: vi
+        text: trắng
+      optionKind: hanzi
+      options:
+        - 白
+        - 新
+        - 穿
+        - 洗
+      answer: 0
+    - id: q-h1-33-x05
+      type: choice
+      tests:
+        words:
+          - 穿
+      prompt:
+        kind: hanzi
+        ref: 穿
+      optionKind: vi
+      options:
+        - mặc (quần áo)
+        - giặt, rửa
+        - mới
+        - trắng
+      answer: 0
+    - id: q-h1-33-x06
+      type: choice
+      tests:
+        words:
+          - 洗
+      prompt:
+        kind: vi
+        text: giặt, rửa
+      optionKind: hanzi
+      options:
+        - 洗
+        - 穿
+        - 白
+        - 新
+      answer: 0
+    - id: q-h1-33-x07
+      type: choice
+      tests:
+        words:
+          - 手机
+      prompt:
+        kind: hanzi
+        ref: 手机
+      optionKind: vi
+      options:
+        - điện thoại di động
+        - quần áo
+        - giống nhau
+        - mới
+      answer: 0
+    - id: q-h1-33-x08
+      type: choice
+      tests:
+        words:
+          - 一样
+      prompt:
+        kind: vi
+        text: giống nhau
+      optionKind: hanzi
+      options:
+        - 一样
+        - 好看
+        - 手机
+        - 衣服
+      answer: 0
+    - id: q-h1-33-x09
+      type: choice
+      tests:
+        words:
+          - 手机
+        grammar:
+          - h1-g71
+      prompt:
+        kind: vi
+        text: Cái điện thoại này là của cậu à?
+      optionKind: hanzi
+      options:
+        - 这个手机是你的吗
+        - 手机这个是你的吗
+        - 这手机个是你的吗
+      answer: 0
+    - id: q-h1-33-x10
+      type: trueFalse
+      tests:
+        words:
+          - 好看
+        grammar:
+          - h1-g71
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 杯子那个很好看。
+      answer: false
+    - id: q-h1-33-x11
+      type: order
+      tests:
+        words:
+          - 好看
+        grammar:
+          - h1-g71
+      tiles:
+        - 那个
+        - 杯子
+        - 很
+        - 好看
+      answer: s-h1-33-13
+    - id: q-h1-33-x12
+      type: choice
+      tests:
+        words:
+          - 衣服
+        grammar:
+          - h1-g72
+      prompt:
+        kind: vi
+        text: Tớ muốn mua quần áo thật đẹp.
+      optionKind: hanzi
+      options:
+        - 我想买很好看的衣服
+        - 我想买很好看衣服
+        - 我想买衣服的很好看
+      answer: 0
+    - id: q-h1-33-x13
+      type: trueFalse
+      tests:
+        words:
+          - 新
+        grammar:
+          - h1-g72
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 他有一个很新手机。
+      answer: false
+    - id: q-h1-33-x14
+      type: order
+      tests:
+        words:
+          - 手机
+        grammar:
+          - h1-g72
+      tiles:
+        - 他
+        - 有
+        - 一个
+        - 很
+        - 新
+        - 的
+        - 手机
+      answer: s-h1-33-14
+    - id: q-h1-33-x15
+      type: choice
+      tests:
+        words:
+          - 一样
+        grammar:
+          - h1-g71
+      prompt:
+        kind: audio
+        ref: s-h1-33-15
+      optionKind: vi
+      options:
+        - Bạn học sinh này cao bằng bạn học sinh kia.
+        - Bạn học sinh này cao hơn bạn học sinh kia.
+        - Bạn học sinh này không cao.
+      answer: 0
+    - id: q-h1-33-x16
+      type: choice
+      tests:
+        words:
+          - 好看
+          - 衣服
+        grammar:
+          - h1-g72
+      prompt:
+        kind: audio
+        ref: s-h1-33-06
+      optionKind: vi
+      options:
+        - đây là bộ đồ siêu đẹp
+        - đây là bộ đồ rất đắt
+        - đây là điện thoại mới
+      answer: 0
+    - id: q-h1-33-x17
+      type: choice
+      tests:
+        words:
+          - 洗
+      prompt:
+        kind: vi
+        text: Trước khi ăn cơm phải rửa tay.
+      optionKind: hanzi
+      options:
+        - 吃饭前要洗手
+        - 吃饭后要洗手
+        - 吃饭前不洗手
+      answer: 0
+    - id: q-h1-33-x18
+      type: choice
+      tests:
+        words:
+          - 穿
+      prompt:
+        kind: vi
+        text: Tớ mặc đồ trắng.
+      optionKind: hanzi
+      options:
+        - 我穿白衣服
+        - 我洗白衣服
+        - 我买白衣服
+      answer: 0
+    - id: q-h1-33-x19
+      type: choice
+      tests:
+        words:
+          - 一样
+          - 手机
+        grammar:
+          - h1-g71
+      prompt:
+        kind: audio
+        ref: s-h1-33-04
+      optionKind: vi
+      options:
+        - Cái điện thoại kia giống của tớ.
+        - Cái điện thoại kia đắt quá.
+        - Cái điện thoại này mới quá.
+      answer: 0
+    - id: q-h1-33-x20
+      type: choice
+      tests:
+        words:
+          - 白
+          - 新
+      prompt:
+        kind: audio
+        ref: s-h1-33-08
+      optionKind: vi
+      options:
+        - Đồ trắng mới tinh, lại không đắt.
+        - Đồ trắng đắt lắm.
+        - Đồ trắng không đẹp.
+      answer: 0
+    - id: q-h1-33-x21
+      type: trueFalse
+      tests:
+        words:
+          - 穿
+      prompt:
+        kind: hanzi
+        ref: 穿
+      statement: 穿 nghĩa là “mặc (quần áo)”.
+      answer: true
+    - id: q-h1-33-x22
+      type: order
+      tests:
+        words:
+          - 白
+          - 洗
+      tiles:
+        - 白
+        - 衣服
+        - 要
+        - 常
+        - 洗
+      answer: s-h1-33-11

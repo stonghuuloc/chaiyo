@@ -1,0 +1,17 @@
+id: h1-g43
+level: 1
+std:
+  - 34
+title: "Câu cầu khiến: 请"
+pattern: 请 + động từ
+explain: |-
+  请 (thỉnh, qǐng) đứng đầu câu cầu khiến để mời hoặc nhờ lịch sự: 请进 = mời vào; 请等一下 = xin đợi một chút; 请给我米饭 = làm ơn cho tôi cơm.
+
+  Có thể thêm 你 sau 请: 请你给我茶.
+examples:
+  - s-h1-19-05
+  - s-h1-19-13
+pitfalls:
+  - wrong: 进请
+    right: 请进
+    why: 请 đứng đầu, trước động từ.

@@ -1,0 +1,691 @@
+id: h1-27
+level: 1
+topic: Thời tiết và đi lại
+order: 27
+title: Thời tiết
+titleHanzi: 天气
+goal: Nói thời tiết hôm nay; nói tình hình đã đổi bằng 了; nói câu thời tiết không cần chủ ngữ
+scene:
+  file: lessons/h1-27.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at a window on a cold, windy, rainy morning; rain runs down the glass, the red panda wraps itself in a scarf and the takin points at the clock.
+sentences:
+  - id: s-h1-27-01
+    hanzi: 今天天气好吗？
+    pinyin: jīntiān tiānqì hǎo ma?
+    vi: Hôm nay thời tiết có đẹp không?
+    speaker: takin
+  - id: s-h1-27-02
+    hanzi: 不好，下雨了。
+    pinyin: bù hǎo, xià yǔ le.
+    vi: Không đẹp, mưa rồi.
+    speaker: redpanda
+  - id: s-h1-27-03
+    hanzi: 外边冷吗？
+    pinyin: wàibian lěng ma?
+    vi: Bên ngoài có lạnh không?
+    speaker: takin
+  - id: s-h1-27-04
+    hanzi: 很冷，还有风。
+    pinyin: hěn lěng, hái yǒu fēng.
+    vi: Lạnh lắm, còn có gió nữa.
+    speaker: redpanda
+  - id: s-h1-27-05
+    hanzi: 昨天很热，今天冷了。
+    pinyin: zuótiān hěn rè, jīntiān lěng le.
+    vi: Hôm qua nóng lắm, hôm nay lạnh rồi.
+    speaker: takin
+  - id: s-h1-27-06
+    hanzi: 太冷了！我想在家休息。
+    pinyin: tài lěng le! wǒ xiǎng zài jiā xiūxi.
+    vi: Lạnh quá! Tớ muốn ở nhà nghỉ ngơi.
+    speaker: redpanda
+  - id: s-h1-27-07
+    hanzi: 现在几点了？
+    pinyin: xiànzài jǐ diǎn le?
+    vi: Bây giờ mấy giờ rồi?
+    speaker: redpanda
+  - id: s-h1-27-08
+    hanzi: 八点了，你晚了！
+    pinyin: bā diǎn le, nǐ wǎn le!
+    vi: Tám giờ rồi, cậu muộn rồi!
+    speaker: takin
+  - id: s-h1-27-09
+    hanzi: 外边还下雨吗？
+    pinyin: wàibian hái xià yǔ ma?
+    vi: Bên ngoài còn mưa không?
+    speaker: redpanda
+  - id: s-h1-27-10
+    hanzi: 不下雨了，你快去学校。
+    pinyin: bù xià yǔ le, nǐ kuài qù xuéxiào.
+    vi: Hết mưa rồi, cậu đi học nhanh lên.
+    speaker: takin
+  - id: s-h1-27-11
+    hanzi: 白天很热，晚上很冷。
+    pinyin: báitiān hěn rè, wǎnshang hěn lěng.
+    vi: Ban ngày rất nóng, buổi tối rất lạnh.
+  - id: s-h1-27-12
+    hanzi: 下雨了，我们回家。
+    pinyin: xià yǔ le, wǒmen huí jiā.
+    vi: Mưa rồi, chúng tôi về nhà.
+  - id: s-h1-27-13
+    hanzi: 晚上有风，天气冷了。
+    pinyin: wǎnshang yǒu fēng, tiānqì lěng le.
+    vi: Buổi tối có gió, trời lạnh rồi.
+  - id: s-h1-27-14
+    hanzi: 我饿了，想吃饭。
+    pinyin: wǒ è le, xiǎng chī fàn.
+    vi: Tôi đói rồi, muốn ăn cơm.
+  - id: s-h1-27-15
+    hanzi: 今天很热，明天下雨。
+    pinyin: jīntiān hěn rè, míngtiān xià yǔ.
+    vi: Hôm nay nóng, ngày mai mưa.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 天气
+      - 下雨
+      - 风
+      - 冷
+      - 热
+      - 白天
+      - 晚
+      - 快
+  grammar:
+    ids:
+      - h1-g62
+      - h1-g63
+    drills:
+      - id: q-h1-27-g01
+        type: choice
+        tests:
+          words:
+            - 热
+            - 冷
+          grammar:
+            - h1-g62
+        prompt:
+          kind: vi
+          text: Hôm qua nóng lắm, hôm nay lạnh rồi.
+        optionKind: hanzi
+        options:
+          - 昨天很热，今天冷了
+          - 昨天很热，今天了冷
+          - 昨天很热，了今天冷
+        answer: 0
+      - id: q-h1-27-g02
+        type: trueFalse
+        tests:
+          words:
+            - 天气
+            - 冷
+          grammar:
+            - h1-g62
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 天气了冷。
+        answer: false
+      - id: q-h1-27-g03
+        type: order
+        tests:
+          words:
+            - 风
+            - 天气
+          grammar:
+            - h1-g62
+        tiles:
+          - 晚上
+          - 有
+          - 风
+          - ，
+          - 天气
+          - 冷
+          - 了
+        answer: s-h1-27-13
+      - id: q-h1-27-g04
+        type: choice
+        tests:
+          words:
+            - 下雨
+          grammar:
+            - h1-g62
+        prompt:
+          kind: vi
+          text: Hết mưa rồi.
+        optionKind: hanzi
+        options:
+          - 不下雨了
+          - 不了下雨
+          - 了不下雨
+        answer: 0
+      - id: q-h1-27-g05
+        type: choice
+        tests:
+          words:
+            - 下雨
+          grammar:
+            - h1-g63
+        prompt:
+          kind: vi
+          text: Mưa rồi.
+        optionKind: hanzi
+        options:
+          - 下雨了
+          - 天气下雨了
+          - 了下雨
+        answer: 0
+      - id: q-h1-27-g06
+        type: trueFalse
+        tests:
+          words:
+            - 天气
+            - 下雨
+          grammar:
+            - h1-g63
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 天气下雨了。
+        answer: false
+      - id: q-h1-27-g07
+        type: choice
+        tests:
+          words:
+            - 下雨
+          grammar:
+            - h1-g63
+        prompt:
+          kind: vi
+          text: Ngày mai mưa.
+        optionKind: hanzi
+        options:
+          - 明天下雨
+          - 下雨明天
+          - 天气明天下雨
+        answer: 0
+      - id: q-h1-27-g08
+        type: order
+        tests:
+          words:
+            - 下雨
+          grammar:
+            - h1-g63
+        tiles:
+          - 下雨
+          - 了
+          - ，
+          - 我们
+          - 回
+          - 家
+        answer: s-h1-27-12
+  dialogue:
+    parts:
+      - title: Hôm nay trời thế nào?
+        lines:
+          - s-h1-27-01
+          - s-h1-27-02
+          - s-h1-27-03
+          - s-h1-27-04
+          - s-h1-27-05
+          - s-h1-27-06
+      - title: Muộn rồi!
+        lines:
+          - s-h1-27-07
+          - s-h1-27-08
+          - s-h1-27-09
+          - s-h1-27-10
+    questions:
+      - id: q-h1-27-d01
+        type: choice
+        ask: Hôm nay thời tiết thế nào?
+        tests:
+          words:
+            - 下雨
+          grammar:
+            - h1-g63
+        prompt:
+          kind: audio
+          ref: s-h1-27-02
+        optionKind: vi
+        options:
+          - mưa rồi
+          - trời đẹp
+          - nóng lắm
+        answer: 0
+      - id: q-h1-27-d02
+        type: choice
+        ask: Bên ngoài bây giờ thế nào?
+        tests:
+          words:
+            - 下雨
+            - 快
+          grammar:
+            - h1-g62
+        prompt:
+          kind: audio
+          ref: s-h1-27-10
+        optionKind: vi
+        options:
+          - hết mưa rồi
+          - vẫn còn mưa
+          - có gió
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-27-l01
+        type: tone
+        tests:
+          words:
+            - 冷
+          tone: true
+        prompt:
+          kind: audio
+          ref: 冷
+        syllable: 0
+        answer: 3
+      - id: q-h1-27-l02
+        type: choice
+        tests:
+          words:
+            - 热
+        prompt:
+          kind: audio
+          ref: 热
+        optionKind: hanzi
+        options:
+          - 热
+          - 冷
+          - 风
+          - 快
+        answer: 0
+      - id: q-h1-27-l03
+        type: choice
+        tests:
+          words:
+            - 白天
+        prompt:
+          kind: audio
+          ref: 白天
+        optionKind: hanzi
+        options:
+          - 白天
+          - 天气
+          - 下雨
+          - 晚
+        answer: 0
+      - id: q-h1-27-s01
+        type: readAloud
+        tests:
+          words:
+            - 热
+            - 冷
+          grammar:
+            - h1-g62
+          tone: true
+        sentence: s-h1-27-05
+      - id: q-h1-27-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 下雨
+          grammar:
+            - h1-g63
+        prompt:
+          kind: vi
+          text: Nói với bạn là trời mưa rồi.
+        rubric:
+          - Dùng 下雨了, không thêm chủ ngữ
+        answer: s-h1-27-12
+      - id: q-h1-27-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 冷
+          grammar:
+            - h1-g62
+        prompt:
+          kind: vi
+          text: Nói hôm qua nóng, hôm nay đã lạnh rồi.
+        rubric:
+          - Dùng 昨天很热，今天冷了
+        answer: s-h1-27-05
+  writing:
+    chars:
+      - 冷
+      - 热
+      - 风
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-27-x01
+      type: choice
+      tests:
+        words:
+          - 天气
+      prompt:
+        kind: hanzi
+        ref: 天气
+      optionKind: vi
+      options:
+        - thời tiết
+        - mưa
+        - gió
+        - lạnh
+      answer: 0
+    - id: q-h1-27-x02
+      type: choice
+      tests:
+        words:
+          - 下雨
+      prompt:
+        kind: vi
+        text: mưa
+      optionKind: hanzi
+      options:
+        - 下雨
+        - 天气
+        - 风
+        - 冷
+      answer: 0
+    - id: q-h1-27-x03
+      type: choice
+      tests:
+        words:
+          - 风
+      prompt:
+        kind: hanzi
+        ref: 风
+      optionKind: vi
+      options:
+        - gió
+        - thời tiết
+        - mưa
+        - lạnh
+      answer: 0
+    - id: q-h1-27-x04
+      type: choice
+      tests:
+        words:
+          - 冷
+      prompt:
+        kind: vi
+        text: lạnh, rét
+      optionKind: hanzi
+      options:
+        - 冷
+        - 热
+        - 风
+        - 快
+      answer: 0
+    - id: q-h1-27-x05
+      type: choice
+      tests:
+        words:
+          - 热
+      prompt:
+        kind: hanzi
+        ref: 热
+      optionKind: vi
+      options:
+        - nóng
+        - lạnh, rét
+        - gió
+        - muộn, trễ
+      answer: 0
+    - id: q-h1-27-x06
+      type: choice
+      tests:
+        words:
+          - 白天
+      prompt:
+        kind: vi
+        text: ban ngày
+      optionKind: hanzi
+      options:
+        - 白天
+        - 天气
+        - 下雨
+        - 晚
+      answer: 0
+    - id: q-h1-27-x07
+      type: choice
+      tests:
+        words:
+          - 晚
+      prompt:
+        kind: hanzi
+        ref: 晚
+      optionKind: vi
+      options:
+        - muộn, trễ
+        - nhanh
+        - nóng
+        - ban ngày
+      answer: 0
+    - id: q-h1-27-x08
+      type: choice
+      tests:
+        words:
+          - 快
+      prompt:
+        kind: vi
+        text: nhanh
+      optionKind: hanzi
+      options:
+        - 快
+        - 晚
+        - 冷
+        - 热
+      answer: 0
+    - id: q-h1-27-x09
+      type: choice
+      tests:
+        words:
+          - 热
+          - 冷
+        grammar:
+          - h1-g62
+      prompt:
+        kind: vi
+        text: Hôm qua nóng lắm, hôm nay lạnh rồi.
+      optionKind: hanzi
+      options:
+        - 昨天很热，今天冷了
+        - 昨天很热，今天了冷
+        - 昨天很热，了今天冷
+      answer: 0
+    - id: q-h1-27-x10
+      type: trueFalse
+      tests:
+        words:
+          - 天气
+          - 冷
+        grammar:
+          - h1-g62
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 天气了冷。
+      answer: false
+    - id: q-h1-27-x11
+      type: order
+      tests:
+        words:
+          - 风
+          - 天气
+        grammar:
+          - h1-g62
+      tiles:
+        - 晚上
+        - 有
+        - 风
+        - ，
+        - 天气
+        - 冷
+        - 了
+      answer: s-h1-27-13
+    - id: q-h1-27-x12
+      type: choice
+      tests:
+        words:
+          - 下雨
+        grammar:
+          - h1-g62
+      prompt:
+        kind: vi
+        text: Hết mưa rồi.
+      optionKind: hanzi
+      options:
+        - 不下雨了
+        - 不了下雨
+        - 了不下雨
+      answer: 0
+    - id: q-h1-27-x13
+      type: choice
+      tests:
+        words:
+          - 下雨
+        grammar:
+          - h1-g63
+      prompt:
+        kind: vi
+        text: Mưa rồi.
+      optionKind: hanzi
+      options:
+        - 下雨了
+        - 天气下雨了
+        - 了下雨
+      answer: 0
+    - id: q-h1-27-x14
+      type: trueFalse
+      tests:
+        words:
+          - 天气
+          - 下雨
+        grammar:
+          - h1-g63
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 天气下雨了。
+      answer: false
+    - id: q-h1-27-x15
+      type: choice
+      tests:
+        words:
+          - 下雨
+        grammar:
+          - h1-g63
+      prompt:
+        kind: vi
+        text: Ngày mai mưa.
+      optionKind: hanzi
+      options:
+        - 明天下雨
+        - 下雨明天
+        - 天气明天下雨
+      answer: 0
+    - id: q-h1-27-x16
+      type: order
+      tests:
+        words:
+          - 下雨
+        grammar:
+          - h1-g63
+      tiles:
+        - 下雨
+        - 了
+        - ，
+        - 我们
+        - 回
+        - 家
+      answer: s-h1-27-12
+    - id: q-h1-27-x17
+      type: choice
+      tests:
+        words:
+          - 风
+          - 冷
+        grammar:
+          - h1-g62
+      prompt:
+        kind: audio
+        ref: s-h1-27-13
+      optionKind: vi
+      options:
+        - buổi tối có gió, trời lạnh rồi
+        - buổi tối mưa, trời nóng
+        - ban ngày có gió, trời nóng rồi
+      answer: 0
+    - id: q-h1-27-x18
+      type: choice
+      tests:
+        words:
+          - 白天
+          - 热
+      prompt:
+        kind: audio
+        ref: s-h1-27-11
+      optionKind: vi
+      options:
+        - ban ngày nóng, buổi tối lạnh
+        - ban ngày lạnh, buổi tối nóng
+        - ban ngày mưa, buổi tối có gió
+      answer: 0
+    - id: q-h1-27-x19
+      type: trueFalse
+      tests:
+        words:
+          - 快
+      prompt:
+        kind: hanzi
+        ref: 快
+      statement: 快 nghĩa là “nhanh”.
+      answer: true
+    - id: q-h1-27-x20
+      type: choice
+      tests:
+        words:
+          - 晚
+        grammar:
+          - h1-g62
+      prompt:
+        kind: audio
+        ref: s-h1-27-08
+      optionKind: vi
+      options:
+        - Tám giờ rồi, cậu muộn rồi!
+        - Bảy giờ, còn sớm.
+        - Tám giờ, cậu đến nhanh quá.
+      answer: 0
+    - id: q-h1-27-x21
+      type: choice
+      tests:
+        words:
+          - 下雨
+          - 热
+        grammar:
+          - h1-g63
+      prompt:
+        kind: vi
+        text: Hôm nay nóng, ngày mai mưa.
+      optionKind: hanzi
+      options:
+        - 今天很热，明天下雨
+        - 今天很热，下雨明天
+        - 今天很热，天气明天下雨
+      answer: 0
+    - id: q-h1-27-x22
+      type: trueFalse
+      tests:
+        words:
+          - 白天
+      prompt:
+        kind: hanzi
+        ref: 白天
+      statement: 白天 nghĩa là “ban ngày”.
+      answer: true

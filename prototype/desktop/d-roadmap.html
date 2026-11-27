@@ -92,10 +92,10 @@ const paint = (on) => lv.innerHTML = LV.map(([n, p]) => '<button class="lv' + (n
 paint(1);
 lv.onclick = (e) => { const b = e.target.closest('.lv'); if (b) paint(+b.querySelector('b').textContent); };
 const T = [
-  ['Chào hỏi', [['Xin chào', '你好', 'now'], ['Bạn tên gì?', '你叫什么名字']]],
-  ['Gia đình', [['Gia đình', '我的家'], ['Đây là ai?', '这是谁'], ['Bạn mấy tuổi?', '你几岁'], ['Nhà bạn có mấy người?', '你家有几口人'], ['Bố mẹ làm nghề gì?', '做什么工作']]],
-  ['Quốc tịch và ngôn ngữ', [['Bạn là người nước nào?', '你是哪国人'], ['Tôi biết nói tiếng Trung', '我会说汉语'], ['Cô giáo tiếng Trung', '汉语老师'], ['Rất vui được gặp bạn', '认识你很高兴']]],
-  ['Số và thời gian', [['Số đếm', '一二三'], ['Hôm nay ngày mấy?', '今天几号'], ['Thứ mấy?', '星期几'], ['Bây giờ mấy giờ?', '现在几点'], ['Hôm qua, ngày mai', '昨天明天']]],
+  ['Chào hỏi', [['Xin chào', '你好', 'now'], ['Hỏi tên', '名字']]],
+  ['Gia đình', [['Hỏi người', '谁'], ['Gia đình', '家'], ['Tuổi tác', '岁'], ['Số người trong nhà', '口'], ['Nghề nghiệp', '工作']]],
+  ['Quốc tịch và ngôn ngữ', [['Quốc tịch', '国'], ['Ngôn ngữ', '汉语'], ['Giáo viên', '老师'], ['Làm quen', '高兴']]],
+  ['Số và thời gian', [['Số đếm', '十'], ['Ngày tháng', '号'], ['Thứ trong tuần', '星期'], ['Giờ giấc', '点'], ['Hôm qua và ngày mai', '昨天']]],
 ];
 let n = 0;
 document.getElementById('topics').innerHTML = T.map(([t, ls], i) => '<details class="topic"' + (i < 2 ? ' open' : '') + '><summary>' + t + '<span class="c">' + ls.length + ' bài</span>' + ic('regular-caret-down', 'ic chev') + '</summary><ol class="path">' +

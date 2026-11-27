@@ -3,6 +3,8 @@ import { initialState, type State } from '#lib/study/index.js';
 import { describe, expect, it } from 'vitest';
 import { examToast, jumpTarget, lockToast, roadmapLevel } from './roadmap';
 
+const lastWritten = Math.max(...LESSONS.filter((l) => l.level === 1).map((l) => l.n));
+
 const reference = (): State => {
 	const state = initialState({ curriculum: CURRICULUM });
 	state.lessons['h0-00'] = { unlocked: true, passed: true, done: [], best: 90 };
@@ -153,10 +155,14 @@ describe('roadmapLevel', () => {
 
 		// Assert
 		expect(row(view, 'h1-02')).toMatchObject({ n: 2, status: 'locked', after: 1, lock: 'after' });
-		expect(row(view, 'h1-06')).toMatchObject({ n: 6, status: 'locked', lock: 'draft' });
-		expect(row(view, 'h1-06')).not.toHaveProperty('after');
-		expect(row(view, 'h1-40')).toMatchObject({ n: 40, status: 'locked', lock: 'draft' });
-		expect(row(view, 'h1-40')).not.toHaveProperty('after');
+		expect(row(view, 'h1-06')).toMatchObject({ n: 6, status: 'locked', lock: 'after', after: 5 });
+		const drafts = view.groups
+			.flatMap((g) => g.rows)
+			.filter((r) => r.id.startsWith('h1-') && !LESSONS.some((l) => l.id === r.id));
+		for (const draft of drafts) {
+			expect(draft).toMatchObject({ status: 'locked', lock: 'draft' });
+			expect(draft).not.toHaveProperty('after');
+		}
 		expect(row(view, 'h1-01')).not.toHaveProperty('lock');
 		expect(row(view, 'h0-00')).not.toHaveProperty('lock');
 	});
@@ -196,7 +202,10 @@ describe('roadmapLevel', () => {
 		const view = roadmapLevel(reference(), 1);
 
 		// Assert
-		expect(view.exams).toEqual({ note: false, rows: [{ level: 1, last: 5, status: 'locked' }] });
+		expect(view.exams).toEqual({
+			note: false,
+			rows: [{ level: 1, last: lastWritten, status: 'locked' }]
+		});
 	});
 
 	it('Given_Level3_When_View_Then_VietAndNoiLast26WithNote', () => {
@@ -235,7 +244,7 @@ describe('roadmapLevel', () => {
 		const view = roadmapLevel(state, 1);
 
 		// Assert
-		expect(view.exams?.rows).toEqual([{ level: 1, last: 5, status: 'open' }]);
+		expect(view.exams?.rows).toEqual([{ level: 1, last: lastWritten, status: 'open' }]);
 	});
 
 	it('Given_Hsk1LastPassedButLevelAbove_When_Level2_Then_ExamLocked', () => {
@@ -258,28 +267,31 @@ describe('roadmapLevel', () => {
 		// Act
 		const copies = [
 			lockToast(one, row(one, 'h1-02')),
-			lockToast(one, row(one, 'h1-06')),
+			lockToast(one, { ...row(one, 'h1-02'), n: 36, lock: 'draft' }),
 			lockToast(two, row(two, 'h2-01'))
 		];
 
 		// Assert
 		expect(copies).toEqual([
 			'Qua Bài 1 để mở Bài 2',
-			'Bài 6 đang được soạn.',
+			'Bài 36 đang được soạn.',
 			'Học xong HSK 1 để mở HSK 2'
 		]);
 	});
 
 	it('Given_ExamRows_When_ExamToast_Then_LockedAndSoonCopies', () => {
 		// Arrange
-		const locked = { level: 1, last: 5, status: 'locked' } as const;
+		const locked = { level: 1, last: lastWritten, status: 'locked' } as const;
 		const open = { part: 'noi', level: 3, last: 68, status: 'open' } as const;
 
 		// Act
 		const copies = [examToast(locked), examToast(open)];
 
 		// Assert
-		expect(copies).toEqual(['Qua Bài 5 để mở thi thử HSK 1', 'Thi thử HSK 3 sắp ra mắt.']);
+		expect(copies).toEqual([
+			`Qua Bài ${lastWritten} để mở thi thử HSK 1`,
+			'Thi thử HSK 3 sắp ra mắt.'
+		]);
 	});
 
 	it('Given_BuiltLessons_When_Rows_Then_NEqualsLessonsN', () => {

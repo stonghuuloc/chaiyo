@@ -1,0 +1,18 @@
+id: h1-g68
+level: 1
+std:
+  - 34
+title: "Câu cầu khiến: nói thẳng động từ"
+pattern: (你) + động từ + … · 快 + động từ
+explain: |-
+  Muốn bảo ai làm gì, nói thẳng động từ, có thể giữ 你 ở đầu: 去前边的路口打车 = Ra ngã tư phía trước bắt taxi. 你站在这边等车 = Cậu đứng bên này đợi xe.
+
+  Thêm 快 trước động từ để giục: 快上车！ = Lên xe mau! Nói với người lạ hay người lớn thì thêm 请 cho lịch sự.
+examples:
+  - s-h1-30-06
+  - s-h1-30-09
+  - s-h1-30-11
+pitfalls:
+  - wrong: 上车快
+    right: 快上车
+    why: Khi giục, 快 đứng trước động từ.

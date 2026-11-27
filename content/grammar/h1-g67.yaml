@@ -1,0 +1,21 @@
+id: h1-g67
+level: 1
+std:
+  - 22
+title: "Rủ, gợi ý: … 吧"
+pattern: (我们) + động từ + 吧
+explain: |-
+  吧 (ba, ba) đứng cuối câu để rủ hoặc gợi ý nhẹ nhàng: 我们走吧 = Mình đi thôi. 我们打车吧 = Mình đi taxi đi. 你送我去车站吧 = Cậu đưa tớ ra ga nhé.
+
+  Câu có 吧 mềm hơn câu ra lệnh, giống “nhé, đi, thôi” trong tiếng Việt.
+examples:
+  - s-h1-30-02
+  - s-h1-30-12
+  - s-h1-30-14
+pitfalls:
+  - wrong: 吧我们走
+    right: 我们走吧
+    why: 吧 đứng cuối câu.
+  - wrong: 我们打车吧吗
+    right: 我们打车吧
+    why: Câu đã có 吧 thì không thêm 吗.

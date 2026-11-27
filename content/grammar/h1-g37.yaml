@@ -1,0 +1,18 @@
+id: h1-g37
+level: 1
+std:
+  - 21
+  - 41
+title: "Việc đã xong: động từ + 了"
+pattern: 昨天 / 去年 + chủ ngữ + động từ + 了
+explain: |-
+  了 (liễu, le) đặt sau động từ hoặc cuối câu để nói việc đã xong: 我昨天来了. Có số lượng: 我昨天读了三本书. Hỏi: 你来了吗？
+
+  Việc chưa xảy ra không dùng 了: 明天我来.
+examples:
+  - s-h1-16-02
+  - s-h1-16-12
+pitfalls:
+  - wrong: 明天我来了
+    right: 明天我来
+    why: Việc chưa xảy ra không dùng 了.

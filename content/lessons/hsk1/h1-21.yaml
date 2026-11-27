@@ -1,0 +1,691 @@
+id: h1-21
+level: 1
+topic: Ăn uống
+order: 21
+title: Trái cây
+titleHanzi: 水果
+goal: Nói thích gì, thích nhất gì; khen và cảm thán bằng 太…了
+scene:
+  file: lessons/h1-21.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They sit on a sofa with a bowl of fruit; the red panda holds a microphone and the takin holds a ball.
+sentences:
+  - id: s-h1-21-01
+    hanzi: 你喜欢吃水果吗？
+    pinyin: nǐ xǐhuan chī shuǐguǒ ma?
+    vi: Cậu thích ăn trái cây không?
+    speaker: takin
+  - id: s-h1-21-02
+    hanzi: 喜欢，我最喜欢吃水果。
+    pinyin: xǐhuan, wǒ zuì xǐhuan chī shuǐguǒ.
+    vi: Thích, tớ thích ăn trái cây nhất.
+    speaker: redpanda
+  - id: s-h1-21-03
+    hanzi: 你爱喝茶吗？
+    pinyin: nǐ ài hē chá ma?
+    vi: Cậu hay uống trà không?
+    speaker: takin
+  - id: s-h1-21-04
+    hanzi: 我爱喝茶，不爱喝牛奶。
+    pinyin: wǒ ài hē chá, bù ài hē niúnǎi.
+    vi: Tớ hay uống trà, không hay uống sữa.
+    speaker: redpanda
+  - id: s-h1-21-05
+    hanzi: 你喜欢唱歌吗？
+    pinyin: nǐ xǐhuan chànggē ma?
+    vi: Cậu thích hát không?
+    speaker: takin
+  - id: s-h1-21-06
+    hanzi: 喜欢，我很爱唱歌。
+    pinyin: xǐhuan, wǒ hěn ài chànggē.
+    vi: Thích, tớ rất mê hát.
+    speaker: redpanda
+  - id: s-h1-21-07
+    hanzi: 你喜欢打球吗？
+    pinyin: nǐ xǐhuan dǎqiú ma?
+    vi: Cậu thích chơi bóng không?
+    speaker: takin
+  - id: s-h1-21-08
+    hanzi: 我喜欢打球，也喜欢玩儿。
+    pinyin: wǒ xǐhuan dǎqiú, yě xǐhuan wánr.
+    vi: Tớ thích chơi bóng, cũng thích đi chơi.
+    speaker: redpanda
+  - id: s-h1-21-09
+    hanzi: 你喜欢电影吗？
+    pinyin: nǐ xǐhuan diànyǐng ma?
+    vi: Cậu thích phim không?
+    speaker: takin
+  - id: s-h1-21-10
+    hanzi: 我最喜欢电影，太好了！
+    pinyin: wǒ zuì xǐhuan diànyǐng, tài hǎo le!
+    vi: Tớ thích phim nhất, tuyệt quá!
+    speaker: redpanda
+  - id: s-h1-21-11
+    hanzi: 我喜欢唱歌。
+    pinyin: wǒ xǐhuan chànggē.
+    vi: Tôi thích hát.
+  - id: s-h1-21-12
+    hanzi: 他最喜欢打球。
+    pinyin: tā zuì xǐhuan dǎqiú.
+    vi: Anh ấy thích chơi bóng nhất.
+  - id: s-h1-21-13
+    hanzi: 我太喜欢电影了！
+    pinyin: wǒ tài xǐhuan diànyǐng le!
+    vi: Tôi thích phim quá!
+  - id: s-h1-21-14
+    hanzi: 你的汉语太好了！
+    pinyin: nǐ de Hànyǔ tài hǎo le!
+    vi: Tiếng Trung của bạn giỏi quá!
+  - id: s-h1-21-15
+    hanzi: 她爱玩儿，不爱学习。
+    pinyin: tā ài wánr, bù ài xuéxí.
+    vi: Cô ấy thích chơi, không thích học.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 喜欢
+      - 爱
+      - 最
+      - 水果
+      - 唱歌
+      - 打球
+      - 玩儿
+      - 电影
+  grammar:
+    ids:
+      - h1-g46
+      - h1-g47
+      - h1-g48
+    drills:
+      - id: q-h1-21-g01
+        type: choice
+        tests:
+          words:
+            - 喜欢
+            - 唱歌
+          grammar:
+            - h1-g46
+        prompt:
+          kind: vi
+          text: Tớ thích hát.
+        optionKind: hanzi
+        options:
+          - 我喜欢唱歌
+          - 我唱歌喜欢
+          - 喜欢我唱歌
+        answer: 0
+      - id: q-h1-21-g02
+        type: trueFalse
+        tests:
+          words:
+            - 喜欢
+          grammar:
+            - h1-g46
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我喜欢不唱歌。
+        answer: false
+      - id: q-h1-21-g03
+        type: choice
+        tests:
+          words:
+            - 喜欢
+            - 打球
+          grammar:
+            - h1-g46
+        prompt:
+          kind: vi
+          text: Cậu có thích chơi bóng không?
+        optionKind: hanzi
+        options:
+          - 你喜欢打球吗
+          - 你打球喜欢吗
+          - 你喜欢吗打球
+        answer: 0
+      - id: q-h1-21-g04
+        type: choice
+        tests:
+          words:
+            - 最
+            - 电影
+          grammar:
+            - h1-g47
+        prompt:
+          kind: vi
+          text: Tớ thích phim nhất.
+        optionKind: hanzi
+        options:
+          - 我最喜欢电影
+          - 我喜欢最电影
+          - 最我喜欢电影
+        answer: 0
+      - id: q-h1-21-g05
+        type: order
+        tests:
+          words:
+            - 最
+            - 打球
+          grammar:
+            - h1-g47
+        tiles:
+          - 他
+          - 最
+          - 喜欢
+          - 打球
+        answer: s-h1-21-12
+      - id: q-h1-21-g06
+        type: choice
+        tests:
+          words:
+            - 最
+          grammar:
+            - h1-g47
+        prompt:
+          kind: vi
+          text: Cậu thích gì nhất?
+        optionKind: hanzi
+        options:
+          - 你最喜欢什么
+          - 你喜欢最什么
+          - 最你喜欢什么
+        answer: 0
+      - id: q-h1-21-g07
+        type: choice
+        tests:
+          grammar:
+            - h1-g48
+        prompt:
+          kind: vi
+          text: Tuyệt quá!
+        optionKind: hanzi
+        options:
+          - 太好了
+          - 太好
+          - 好太了
+        answer: 0
+      - id: q-h1-21-g08
+        type: trueFalse
+        tests:
+          grammar:
+            - h1-g48
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你的汉语太好。
+        answer: false
+      - id: q-h1-21-g09
+        type: choice
+        tests:
+          grammar:
+            - h1-g48
+        prompt:
+          kind: vi
+          text: Tiếng Trung của cậu giỏi quá!
+        optionKind: hanzi
+        options:
+          - 你的汉语太好了
+          - 你的汉语太好
+          - 你的汉语了太好
+        answer: 0
+  dialogue:
+    parts:
+      - title: Cậu thích gì?
+        lines:
+          - s-h1-21-01
+          - s-h1-21-02
+          - s-h1-21-03
+          - s-h1-21-04
+          - s-h1-21-05
+          - s-h1-21-06
+      - title: Chơi và xem phim
+        lines:
+          - s-h1-21-07
+          - s-h1-21-08
+          - s-h1-21-09
+          - s-h1-21-10
+    questions:
+      - id: q-h1-21-d01
+        type: choice
+        ask: Gấu trúc đỏ thích gì nhất?
+        tests:
+          words:
+            - 最
+            - 电影
+          grammar:
+            - h1-g47
+            - h1-g48
+        prompt:
+          kind: audio
+          ref: s-h1-21-10
+        optionKind: vi
+        options:
+          - phim
+          - hát
+          - chơi bóng
+        answer: 0
+      - id: q-h1-21-d02
+        type: choice
+        ask: Gấu trúc đỏ có thích hát không?
+        tests:
+          words:
+            - 爱
+            - 唱歌
+          grammar:
+            - h1-g46
+        prompt:
+          kind: audio
+          ref: s-h1-21-06
+        optionKind: vi
+        options:
+          - thích
+          - không thích
+          - chưa rõ
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-21-l01
+        type: tone
+        tests:
+          words:
+            - 爱
+          tone: true
+        prompt:
+          kind: audio
+          ref: 爱
+        syllable: 0
+        answer: 4
+      - id: q-h1-21-l02
+        type: choice
+        tests:
+          words:
+            - 打球
+        prompt:
+          kind: audio
+          ref: 打球
+        optionKind: hanzi
+        options:
+          - 打球
+          - 唱歌
+          - 玩儿
+          - 电影
+        answer: 0
+      - id: q-h1-21-l03
+        type: choice
+        tests:
+          words:
+            - 水果
+        prompt:
+          kind: audio
+          ref: 水果
+        optionKind: hanzi
+        options:
+          - 水果
+          - 电影
+          - 喜欢
+          - 最
+        answer: 0
+      - id: q-h1-21-s01
+        type: readAloud
+        tests:
+          words:
+            - 最
+            - 电影
+          grammar:
+            - h1-g47
+          tone: true
+        sentence: s-h1-21-10
+      - id: q-h1-21-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 最
+            - 喜欢
+          grammar:
+            - h1-g47
+        prompt:
+          kind: vi
+          text: Nói bạn thích làm gì nhất.
+        rubric:
+          - Dùng 我最喜欢 + động từ
+        answer: s-h1-21-12
+      - id: q-h1-21-f02
+        type: freeAnswer
+        tests:
+          grammar:
+            - h1-g48
+        prompt:
+          kind: vi
+          text: Khen một người bằng 太…了.
+        rubric:
+          - Dùng 太 + tính từ + 了, ví dụ 太好了！
+        answer: s-h1-21-14
+  writing:
+    chars:
+      - 喜
+      - 欢
+      - 最
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-21-x01
+      type: choice
+      tests:
+        words:
+          - 喜欢
+      prompt:
+        kind: hanzi
+        ref: 喜欢
+      optionKind: vi
+      options:
+        - thích
+        - ghét
+        - uống
+        - mua
+      answer: 0
+    - id: q-h1-21-x02
+      type: choice
+      tests:
+        words:
+          - 爱
+      prompt:
+        kind: hanzi
+        ref: 爱
+      optionKind: vi
+      options:
+        - yêu, thích
+        - ghét
+        - mua
+        - ăn
+      answer: 0
+    - id: q-h1-21-x03
+      type: choice
+      tests:
+        words:
+          - 最
+      prompt:
+        kind: vi
+        text: nhất
+      optionKind: hanzi
+      options:
+        - 最
+        - 很
+        - 太
+        - 真
+      answer: 0
+    - id: q-h1-21-x04
+      type: typePinyin
+      tests:
+        words:
+          - 水果
+      prompt:
+        kind: hanzi
+        ref: 水果
+      answer: shuǐguǒ
+    - id: q-h1-21-x05
+      type: choice
+      tests:
+        words:
+          - 唱歌
+      prompt:
+        kind: audio
+        ref: 唱歌
+      optionKind: vi
+      options:
+        - hát
+        - chơi bóng
+        - xem phim
+        - ngủ
+      answer: 0
+    - id: q-h1-21-x06
+      type: choice
+      tests:
+        words:
+          - 打球
+      prompt:
+        kind: vi
+        text: chơi bóng
+      optionKind: hanzi
+      options:
+        - 打球
+        - 唱歌
+        - 玩儿
+        - 电影
+      answer: 0
+    - id: q-h1-21-x07
+      type: choice
+      tests:
+        words:
+          - 玩儿
+      prompt:
+        kind: hanzi
+        ref: 玩儿
+      optionKind: vi
+      options:
+        - chơi
+        - hát
+        - mua
+        - ăn
+      answer: 0
+    - id: q-h1-21-x08
+      type: choice
+      tests:
+        words:
+          - 电影
+      prompt:
+        kind: audio
+        ref: 电影
+      optionKind: vi
+      options:
+        - phim
+        - bóng
+        - tiền
+        - trà
+      answer: 0
+    - id: q-h1-21-x09
+      type: choice
+      tests:
+        words:
+          - 喜欢
+          - 唱歌
+        grammar:
+          - h1-g46
+      prompt:
+        kind: vi
+        text: Tớ thích hát.
+      optionKind: hanzi
+      options:
+        - 我喜欢唱歌
+        - 我唱歌喜欢
+        - 喜欢我唱歌
+      answer: 0
+    - id: q-h1-21-x10
+      type: trueFalse
+      tests:
+        words:
+          - 喜欢
+        grammar:
+          - h1-g46
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我喜欢不唱歌。
+      answer: false
+    - id: q-h1-21-x11
+      type: choice
+      tests:
+        words:
+          - 喜欢
+          - 打球
+        grammar:
+          - h1-g46
+      prompt:
+        kind: vi
+        text: Cậu có thích chơi bóng không?
+      optionKind: hanzi
+      options:
+        - 你喜欢打球吗
+        - 你打球喜欢吗
+        - 你喜欢吗打球
+      answer: 0
+    - id: q-h1-21-x12
+      type: choice
+      tests:
+        words:
+          - 爱
+          - 玩儿
+        grammar:
+          - h1-g46
+      prompt:
+        kind: vi
+        text: Cô ấy thích chơi, không thích học.
+      optionKind: hanzi
+      options:
+        - 她爱玩儿，不爱学习
+        - 她爱不玩儿，爱学习
+        - 她不玩儿爱，学习
+      answer: 0
+    - id: q-h1-21-x13
+      type: choice
+      tests:
+        words:
+          - 最
+          - 电影
+        grammar:
+          - h1-g47
+      prompt:
+        kind: vi
+        text: Tớ thích phim nhất.
+      optionKind: hanzi
+      options:
+        - 我最喜欢电影
+        - 我喜欢最电影
+        - 最我喜欢电影
+      answer: 0
+    - id: q-h1-21-x14
+      type: order
+      tests:
+        words:
+          - 最
+          - 打球
+        grammar:
+          - h1-g47
+      tiles:
+        - 他
+        - 最
+        - 喜欢
+        - 打球
+      answer: s-h1-21-12
+    - id: q-h1-21-x15
+      type: choice
+      tests:
+        words:
+          - 最
+        grammar:
+          - h1-g47
+      prompt:
+        kind: vi
+        text: Cậu thích gì nhất?
+      optionKind: hanzi
+      options:
+        - 你最喜欢什么
+        - 你喜欢最什么
+        - 最你喜欢什么
+      answer: 0
+    - id: q-h1-21-x16
+      type: trueFalse
+      tests:
+        words:
+          - 最
+          - 电影
+        grammar:
+          - h1-g47
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我喜欢最电影。
+      answer: false
+    - id: q-h1-21-x17
+      type: choice
+      tests:
+        grammar:
+          - h1-g48
+      prompt:
+        kind: vi
+        text: Tuyệt quá!
+      optionKind: hanzi
+      options:
+        - 太好了
+        - 太好
+        - 好太了
+      answer: 0
+    - id: q-h1-21-x18
+      type: trueFalse
+      tests:
+        grammar:
+          - h1-g48
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你的汉语太好。
+      answer: false
+    - id: q-h1-21-x19
+      type: choice
+      tests:
+        grammar:
+          - h1-g48
+      prompt:
+        kind: vi
+        text: Tiếng Trung của cậu giỏi quá!
+      optionKind: hanzi
+      options:
+        - 你的汉语太好了
+        - 你的汉语太好
+        - 你的汉语了太好
+      answer: 0
+    - id: q-h1-21-x20
+      type: choice
+      tests:
+        words:
+          - 喜欢
+          - 电影
+        grammar:
+          - h1-g48
+      prompt:
+        kind: vi
+        text: Tớ thích phim quá!
+      optionKind: hanzi
+      options:
+        - 我太喜欢电影了
+        - 我太喜欢电影
+        - 我喜欢太电影了
+      answer: 0
+    - id: q-h1-21-x21
+      type: tone
+      tests:
+        words:
+          - 最
+        tone: true
+      prompt:
+        kind: audio
+        ref: 最
+      syllable: 0
+      answer: 4
+    - id: q-h1-21-x22
+      type: choice
+      tests:
+        words:
+          - 唱歌
+          - 喜欢
+      prompt:
+        kind: audio
+        ref: s-h1-21-05
+      optionKind: vi
+      options:
+        - Cậu thích hát không?
+        - Cậu thích chơi bóng không?
+        - Cậu thích phim không?
+      answer: 0

@@ -1,0 +1,17 @@
+id: h1-g49
+level: 1
+std:
+  - 36
+title: "Ở đâu: 在 làm động từ"
+pattern: A + 在 + nơi chốn
+explain: |-
+  在 (tại, zài) nghĩa là “ở”. A + 在 + nơi chốn nói A ở đâu: 我的书在书包里 = Sách của tớ ở trong cặp. Hỏi: 你的书在哪儿？
+
+  Phủ định dùng 不在: 老师不在学校.
+examples:
+  - s-h1-22-02
+  - s-h1-22-07
+pitfalls:
+  - wrong: 我的书里在书包
+    right: 我的书在书包里
+    why: 在 + nơi chốn đứng sau vật được nói.

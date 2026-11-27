@@ -1,0 +1,14 @@
+id: h1-g25
+level: 1
+std:
+  - 17
+title: "Cùng ai làm gì: 跟"
+pattern: 跟 + người + động từ
+explain: "跟 (cân, gēn) nghĩa là “cùng, theo”. 跟 + người đứng trước động từ: 我跟老师学习汉语。 = Tớ học tiếng Trung với thầy. 我跟朋友学习汉语。"
+examples:
+  - s-h1-10-02
+  - s-h1-10-12
+pitfalls:
+  - wrong: 我学习汉语跟老师
+    right: 我跟老师学习汉语
+    why: 跟 + người đứng trước động từ.

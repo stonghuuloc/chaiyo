@@ -1,0 +1,689 @@
+id: h1-19
+level: 1
+topic: Ăn uống
+order: 19
+title: Nhà hàng
+titleHanzi: 饭店
+goal: Nói ăn cơm ở đâu; mời, nhờ và gọi món bằng 请
+scene:
+  file: lessons/h1-19.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at the door of a small restaurant with a lantern; the takin holds a menu and the red panda bows to welcome.
+sentences:
+  - id: s-h1-19-01
+    hanzi: 你在哪儿吃饭？
+    pinyin: nǐ zài nǎr chī fàn?
+    vi: Cậu ăn cơm ở đâu?
+    speaker: takin
+  - id: s-h1-19-02
+    hanzi: 我在饭店吃饭。
+    pinyin: wǒ zài fàndiàn chī fàn.
+    vi: Tớ ăn cơm ở nhà hàng.
+    speaker: redpanda
+  - id: s-h1-19-03
+    hanzi: 这个饭店的米饭好吃吗？
+    pinyin: zhège fàndiàn de mǐfàn hǎochī ma?
+    vi: Cơm ở nhà hàng này có ngon không?
+    speaker: takin
+  - id: s-h1-19-04
+    hanzi: 好吃，请进！
+    pinyin: hǎochī, qǐng jìn!
+    vi: Ngon, mời vào!
+    speaker: redpanda
+  - id: s-h1-19-05
+    hanzi: 请给我米饭。
+    pinyin: qǐng gěi wǒ mǐfàn.
+    vi: Làm ơn cho tôi cơm.
+    speaker: takin
+  - id: s-h1-19-06
+    hanzi: 好，请等一下。
+    pinyin: hǎo, qǐng děng yīxià.
+    vi: Được, xin đợi một chút.
+    speaker: redpanda
+  - id: s-h1-19-07
+    hanzi: 你好，请进。
+    pinyin: nǐ hǎo, qǐng jìn.
+    vi: Chào cậu, mời vào.
+    speaker: redpanda
+  - id: s-h1-19-08
+    hanzi: 谢谢，我想吃面条儿。
+    pinyin: xièxie, wǒ xiǎng chī miàntiáor.
+    vi: Cảm ơn, tớ muốn ăn mì.
+    speaker: takin
+  - id: s-h1-19-09
+    hanzi: 好，请等一下。
+    pinyin: hǎo, qǐng děng yīxià.
+    vi: Được, xin đợi một chút.
+    speaker: redpanda
+  - id: s-h1-19-10
+    hanzi: 这个饭店的菜真好吃！
+    pinyin: zhège fàndiàn de cài zhēn hǎochī!
+    vi: Món ở nhà hàng này ngon thật!
+    speaker: takin
+  - id: s-h1-19-11
+    hanzi: 他在饭店工作。
+    pinyin: tā zài fàndiàn gōngzuò.
+    vi: Anh ấy làm việc ở nhà hàng.
+  - id: s-h1-19-12
+    hanzi: 我在学校学习汉语。
+    pinyin: wǒ zài xuéxiào xuéxí Hànyǔ.
+    vi: Tôi học tiếng Trung ở trường.
+  - id: s-h1-19-13
+    hanzi: 请等一下。
+    pinyin: qǐng děng yīxià.
+    vi: Xin đợi một chút.
+  - id: s-h1-19-14
+    hanzi: 请你给我茶。
+    pinyin: qǐng nǐ gěi wǒ chá.
+    vi: Làm ơn cho tôi trà.
+  - id: s-h1-19-15
+    hanzi: 老师在家吃饭。
+    pinyin: lǎoshī zài jiā chī fàn.
+    vi: Cô giáo ăn cơm ở nhà.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 在
+      - 请
+      - 饭店
+      - 给
+      - 好吃
+      - 米饭
+      - 等
+      - 进
+  grammar:
+    ids:
+      - h1-g42
+      - h1-g43
+    drills:
+      - id: q-h1-19-g01
+        type: choice
+        tests:
+          words:
+            - 在
+            - 饭店
+          grammar:
+            - h1-g42
+        prompt:
+          kind: vi
+          text: Tớ ăn cơm ở nhà hàng.
+        optionKind: hanzi
+        options:
+          - 我在饭店吃饭
+          - 我吃饭在饭店
+          - 在我饭店吃饭
+        answer: 0
+      - id: q-h1-19-g02
+        type: trueFalse
+        tests:
+          words:
+            - 在
+          grammar:
+            - h1-g42
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我吃饭在饭店。
+        answer: false
+      - id: q-h1-19-g03
+        type: order
+        tests:
+          words:
+            - 在
+            - 饭店
+          grammar:
+            - h1-g42
+        tiles:
+          - 他
+          - 在
+          - 饭店
+          - 工作
+        answer: s-h1-19-11
+      - id: q-h1-19-g04
+        type: choice
+        tests:
+          words:
+            - 在
+          grammar:
+            - h1-g42
+        prompt:
+          kind: vi
+          text: Tớ học tiếng Trung ở trường.
+        optionKind: hanzi
+        options:
+          - 我在学校学习汉语
+          - 我学习汉语在学校
+          - 我在学习学校汉语
+        answer: 0
+      - id: q-h1-19-g05
+        type: choice
+        tests:
+          words:
+            - 进
+            - 请
+          grammar:
+            - h1-g43
+        prompt:
+          kind: vi
+          text: Mời vào.
+        optionKind: hanzi
+        options:
+          - 请进
+          - 进请
+          - 请请进
+        answer: 0
+      - id: q-h1-19-g06
+        type: choice
+        tests:
+          words:
+            - 等
+            - 请
+          grammar:
+            - h1-g43
+        prompt:
+          kind: vi
+          text: Xin đợi một chút.
+        optionKind: hanzi
+        options:
+          - 请等一下
+          - 等请一下
+          - 一下请等
+        answer: 0
+      - id: q-h1-19-g07
+        type: choice
+        tests:
+          words:
+            - 给
+            - 米饭
+            - 请
+          grammar:
+            - h1-g43
+        prompt:
+          kind: vi
+          text: Làm ơn cho tôi cơm.
+        optionKind: hanzi
+        options:
+          - 请给我米饭
+          - 给请我米饭
+          - 请我给米饭
+        answer: 0
+      - id: q-h1-19-g08
+        type: trueFalse
+        tests:
+          words:
+            - 进
+            - 请
+          grammar:
+            - h1-g43
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: “Mời vào” nói là 进请。
+        answer: false
+  dialogue:
+    parts:
+      - title: Ở nhà hàng
+        lines:
+          - s-h1-19-01
+          - s-h1-19-02
+          - s-h1-19-03
+          - s-h1-19-04
+          - s-h1-19-05
+          - s-h1-19-06
+      - title: Gọi món
+        lines:
+          - s-h1-19-07
+          - s-h1-19-08
+          - s-h1-19-09
+          - s-h1-19-10
+    questions:
+      - id: q-h1-19-d01
+        type: choice
+        ask: Gấu trúc đỏ ăn cơm ở đâu?
+        tests:
+          words:
+            - 饭店
+            - 在
+          grammar:
+            - h1-g42
+        prompt:
+          kind: audio
+          ref: s-h1-19-02
+        optionKind: vi
+        options:
+          - nhà hàng
+          - trường học
+          - ở nhà
+        answer: 0
+      - id: q-h1-19-d02
+        type: choice
+        ask: Takin muốn gì?
+        tests:
+          words:
+            - 给
+            - 米饭
+          grammar:
+            - h1-g43
+        prompt:
+          kind: audio
+          ref: s-h1-19-05
+        optionKind: vi
+        options:
+          - cơm
+          - trà
+          - mì
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-19-l01
+        type: tone
+        tests:
+          words:
+            - 请
+          tone: true
+        prompt:
+          kind: audio
+          ref: 请
+        syllable: 0
+        answer: 3
+      - id: q-h1-19-l02
+        type: choice
+        tests:
+          words:
+            - 等
+        prompt:
+          kind: audio
+          ref: 等
+        optionKind: hanzi
+        options:
+          - 等
+          - 进
+          - 给
+          - 在
+        answer: 0
+      - id: q-h1-19-l03
+        type: choice
+        tests:
+          words:
+            - 好吃
+        prompt:
+          kind: audio
+          ref: 好吃
+        optionKind: hanzi
+        options:
+          - 好吃
+          - 米饭
+          - 饭店
+          - 请
+        answer: 0
+      - id: q-h1-19-s01
+        type: readAloud
+        tests:
+          words:
+            - 给
+            - 米饭
+          grammar:
+            - h1-g43
+          tone: true
+        sentence: s-h1-19-05
+      - id: q-h1-19-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 在
+            - 饭店
+          grammar:
+            - h1-g42
+        prompt:
+          kind: vi
+          text: Nói bạn ăn cơm ở đâu.
+        rubric:
+          - Dùng 我在 + nơi chốn + 吃饭
+        answer: s-h1-19-02
+      - id: q-h1-19-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 等
+          grammar:
+            - h1-g43
+        prompt:
+          kind: vi
+          text: Nói “xin đợi một chút” bằng tiếng Trung.
+        rubric:
+          - Dùng 请等一下
+        answer: s-h1-19-13
+  writing:
+    chars:
+      - 请
+      - 店
+      - 米
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-19-x01
+      type: choice
+      tests:
+        words:
+          - 在
+      prompt:
+        kind: hanzi
+        ref: 在
+      optionKind: vi
+      options:
+        - ở, tại
+        - không
+        - cũng
+        - rất
+      answer: 0
+    - id: q-h1-19-x02
+      type: choice
+      tests:
+        words:
+          - 请
+      prompt:
+        kind: hanzi
+        ref: 请
+      optionKind: vi
+      options:
+        - xin, mời, làm ơn
+        - cảm ơn
+        - xin lỗi
+        - không
+      answer: 0
+    - id: q-h1-19-x03
+      type: typePinyin
+      tests:
+        words:
+          - 饭店
+      prompt:
+        kind: hanzi
+        ref: 饭店
+      answer: fàndiàn
+    - id: q-h1-19-x04
+      type: choice
+      tests:
+        words:
+          - 给
+      prompt:
+        kind: vi
+        text: cho, đưa
+      optionKind: hanzi
+      options:
+        - 给
+        - 等
+        - 进
+        - 请
+      answer: 0
+    - id: q-h1-19-x05
+      type: choice
+      tests:
+        words:
+          - 好吃
+      prompt:
+        kind: audio
+        ref: 好吃
+      optionKind: vi
+      options:
+        - ngon
+        - đắt
+        - bận
+        - mệt
+      answer: 0
+    - id: q-h1-19-x06
+      type: choice
+      tests:
+        words:
+          - 米饭
+      prompt:
+        kind: hanzi
+        ref: 米饭
+      optionKind: vi
+      options:
+        - cơm
+        - mì
+        - bánh mì
+        - thịt
+      answer: 0
+    - id: q-h1-19-x07
+      type: choice
+      tests:
+        words:
+          - 等
+      prompt:
+        kind: vi
+        text: chờ, đợi
+      optionKind: hanzi
+      options:
+        - 等
+        - 进
+        - 给
+        - 在
+      answer: 0
+    - id: q-h1-19-x08
+      type: choice
+      tests:
+        words:
+          - 进
+      prompt:
+        kind: audio
+        ref: 进
+      optionKind: vi
+      options:
+        - vào
+        - ra
+        - về
+        - đến
+      answer: 0
+    - id: q-h1-19-x09
+      type: choice
+      tests:
+        words:
+          - 在
+          - 饭店
+        grammar:
+          - h1-g42
+      prompt:
+        kind: vi
+        text: Tớ ăn cơm ở nhà hàng.
+      optionKind: hanzi
+      options:
+        - 我在饭店吃饭
+        - 我吃饭在饭店
+        - 在我饭店吃饭
+      answer: 0
+    - id: q-h1-19-x10
+      type: trueFalse
+      tests:
+        words:
+          - 在
+        grammar:
+          - h1-g42
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我吃饭在饭店。
+      answer: false
+    - id: q-h1-19-x11
+      type: order
+      tests:
+        words:
+          - 在
+          - 饭店
+        grammar:
+          - h1-g42
+      tiles:
+        - 他
+        - 在
+        - 饭店
+        - 工作
+      answer: s-h1-19-11
+    - id: q-h1-19-x12
+      type: choice
+      tests:
+        words:
+          - 在
+        grammar:
+          - h1-g42
+      prompt:
+        kind: vi
+        text: Tớ học tiếng Trung ở trường.
+      optionKind: hanzi
+      options:
+        - 我在学校学习汉语
+        - 我学习汉语在学校
+        - 我在学习学校汉语
+      answer: 0
+    - id: q-h1-19-x13
+      type: choice
+      tests:
+        words:
+          - 进
+          - 请
+        grammar:
+          - h1-g43
+      prompt:
+        kind: vi
+        text: Mời vào.
+      optionKind: hanzi
+      options:
+        - 请进
+        - 进请
+        - 请请进
+      answer: 0
+    - id: q-h1-19-x14
+      type: choice
+      tests:
+        words:
+          - 等
+          - 请
+        grammar:
+          - h1-g43
+      prompt:
+        kind: vi
+        text: Xin đợi một chút.
+      optionKind: hanzi
+      options:
+        - 请等一下
+        - 等请一下
+        - 一下请等
+      answer: 0
+    - id: q-h1-19-x15
+      type: choice
+      tests:
+        words:
+          - 给
+          - 米饭
+          - 请
+        grammar:
+          - h1-g43
+      prompt:
+        kind: vi
+        text: Làm ơn cho tôi cơm.
+      optionKind: hanzi
+      options:
+        - 请给我米饭
+        - 给请我米饭
+        - 请我给米饭
+      answer: 0
+    - id: q-h1-19-x16
+      type: trueFalse
+      tests:
+        words:
+          - 进
+          - 请
+        grammar:
+          - h1-g43
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: “Mời vào” nói là 进请。
+      answer: false
+    - id: q-h1-19-x17
+      type: choice
+      tests:
+        words:
+          - 好吃
+          - 米饭
+          - 饭店
+      prompt:
+        kind: audio
+        ref: s-h1-19-03
+      optionKind: vi
+      options:
+        - Cơm ở nhà hàng này có ngon không?
+        - Nhà hàng này ở đâu?
+        - Cậu ăn gì?
+      answer: 0
+    - id: q-h1-19-x18
+      type: tone
+      tests:
+        words:
+          - 在
+        tone: true
+      prompt:
+        kind: audio
+        ref: 在
+      syllable: 0
+      answer: 4
+    - id: q-h1-19-x19
+      type: choice
+      tests:
+        words:
+          - 在
+        grammar:
+          - h1-g42
+      prompt:
+        kind: vi
+        text: Cô giáo ăn cơm ở nhà.
+      optionKind: hanzi
+      options:
+        - 老师在家吃饭
+        - 老师吃饭在家
+        - 在家老师吃饭
+      answer: 0
+    - id: q-h1-19-x20
+      type: trueFalse
+      tests:
+        words:
+          - 好吃
+      prompt:
+        kind: hanzi
+        ref: 好吃
+      statement: 好吃 nghĩa là “ngon”.
+      answer: true
+    - id: q-h1-19-x21
+      type: choice
+      tests:
+        words:
+          - 请
+          - 给
+        grammar:
+          - h1-g43
+      prompt:
+        kind: vi
+        text: Làm ơn cho tôi trà.
+      optionKind: hanzi
+      options:
+        - 请你给我茶
+        - 请你我给茶
+        - 给请你我茶
+      answer: 0
+    - id: q-h1-19-x22
+      type: choice
+      tests:
+        words:
+          - 饭店
+          - 好吃
+      prompt:
+        kind: vi
+        text: Món ở nhà hàng này ngon thật!
+      optionKind: hanzi
+      options:
+        - 这个饭店的菜真好吃
+        - 这个饭店菜的真好吃
+        - 饭店这个的菜真好吃
+      answer: 0

@@ -1,0 +1,677 @@
+id: h1-31
+level: 1
+topic: Thời tiết và đi lại
+order: 31
+title: Phương tiện
+titleHanzi: 车
+goal: Hỏi đi bằng gì với 怎么; nói 坐 / 开 + phương tiện; nói ra, vào, về
+scene:
+  file: lessons/h1-31.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand in a busy train station hall in front of a departures board with pictures of a plane, a train and a car; the takin points at the train and the red panda holds two tickets.
+sentences:
+  - id: s-h1-31-01
+    hanzi: 我们明天怎么去北京？
+    pinyin: wǒmen míngtiān zěnme qù Běijīng?
+    vi: Mai tụi mình đi Bắc Kinh bằng gì?
+    speaker: takin
+  - id: s-h1-31-02
+    hanzi: 坐火车去吧。
+    pinyin: zuò huǒchē qù ba.
+    vi: Đi tàu hỏa đi.
+    speaker: redpanda
+  - id: s-h1-31-03
+    hanzi: 坐飞机快，坐火车很慢。
+    pinyin: zuò fēijī kuài, zuò huǒchē hěn màn.
+    vi: Đi máy bay nhanh, đi tàu hỏa chậm lắm.
+    speaker: takin
+  - id: s-h1-31-04
+    hanzi: 坐火车也好，路上能看书。
+    pinyin: zuò huǒchē yě hǎo, lùshang néng kàn shū.
+    vi: Đi tàu hỏa cũng được, trên đường đọc sách được.
+    speaker: redpanda
+  - id: s-h1-31-05
+    hanzi: 你爸爸怎么来车站？
+    pinyin: nǐ bàba zěnme lái chēzhàn?
+    vi: Bố cậu đến ga bằng gì?
+    speaker: takin
+  - id: s-h1-31-06
+    hanzi: 他开车来。
+    pinyin: tā kāichē lái.
+    vi: Bố tớ lái xe đến.
+    speaker: redpanda
+  - id: s-h1-31-07
+    hanzi: 他来了吗？
+    pinyin: tā lái le ma?
+    vi: Bố cậu đến chưa?
+    speaker: takin
+  - id: s-h1-31-08
+    hanzi: 来了！爸爸，你进来吧！
+    pinyin: lái le! bàba, nǐ jìnlái ba!
+    vi: Đến rồi! Bố ơi, bố vào đây đi!
+    speaker: redpanda
+  - id: s-h1-31-09
+    hanzi: 我们什么时候回来？
+    pinyin: wǒmen shénme shíhou huílai?
+    vi: Khi nào tụi mình về lại đây?
+    speaker: takin
+  - id: s-h1-31-10
+    hanzi: 后天回来。
+    pinyin: hòutiān huílai.
+    vi: Ngày kia về.
+    speaker: redpanda
+  - id: s-h1-31-11
+    hanzi: 晚上我们怎么回去？
+    pinyin: wǎnshang wǒmen zěnme huíqu?
+    vi: Tối nay tụi mình về nhà bằng gì?
+    speaker: takin
+  - id: s-h1-31-12
+    hanzi: 打车回去吧。
+    pinyin: dǎchē huíqu ba.
+    vi: Bắt taxi về đi.
+    speaker: redpanda
+  - id: s-h1-31-13
+    hanzi: 他从房间里出来了。
+    pinyin: tā cóng fángjiān lǐ chūlái le.
+    vi: Anh ấy từ trong phòng đi ra.
+  - id: s-h1-31-14
+    hanzi: 外边冷，我们进去吧。
+    pinyin: wàibian lěng, wǒmen jìnqù ba.
+    vi: Ngoài trời lạnh, mình vào trong đi.
+  - id: s-h1-31-15
+    hanzi: 妈妈出去买水果了。
+    pinyin: māma chūqù mǎi shuǐguǒ le.
+    vi: Mẹ ra ngoài mua trái cây rồi.
+  - id: s-h1-31-16
+    hanzi: 你怎么写这个字？
+    pinyin: nǐ zěnme xiě zhège zì?
+    vi: Chữ này cậu viết thế nào?
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 怎么
+      - 路上
+      - 出去
+      - 出来
+      - 回去
+      - 回来
+      - 进去
+      - 进来
+  grammar:
+    ids:
+      - h1-g69
+      - h1-g70
+    drills:
+      - id: q-h1-31-g01
+        type: choice
+        tests:
+          words:
+            - 怎么
+          grammar:
+            - h1-g69
+        prompt:
+          kind: vi
+          text: Mai tụi mình đi Bắc Kinh bằng gì?
+        optionKind: hanzi
+        options:
+          - 我们明天怎么去北京
+          - 我们明天去北京怎么
+          - 怎么我们明天去北京
+        answer: 0
+      - id: q-h1-31-g02
+        type: trueFalse
+        tests:
+          words:
+            - 怎么
+          grammar:
+            - h1-g69
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你写这个字怎么？
+        answer: false
+      - id: q-h1-31-g03
+        type: order
+        tests:
+          words:
+            - 怎么
+          grammar:
+            - h1-g69
+        tiles:
+          - 你
+          - 爸爸
+          - 怎么
+          - 来
+          - 车站
+        answer: s-h1-31-05
+      - id: q-h1-31-g04
+        type: choice
+        tests:
+          words:
+            - 火车
+          grammar:
+            - h1-g70
+        prompt:
+          kind: vi
+          text: Đi tàu hỏa đi.
+        optionKind: hanzi
+        options:
+          - 坐火车去吧
+          - 去火车坐吧
+          - 火车去坐吧
+        answer: 0
+      - id: q-h1-31-g05
+        type: trueFalse
+        tests:
+          words:
+            - 飞机
+          grammar:
+            - h1-g70
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我去北京坐飞机。
+        answer: false
+      - id: q-h1-31-g06
+        type: order
+        tests:
+          words:
+            - 开车
+          grammar:
+            - h1-g70
+        tiles:
+          - 他
+          - 开车
+          - 来
+        answer: s-h1-31-06
+      - id: q-h1-31-g07
+        type: choice
+        tests:
+          words:
+            - 进来
+        prompt:
+          kind: vi
+          text: Bố ơi, bố vào đây đi!
+        optionKind: hanzi
+        options:
+          - 爸爸，你进来吧
+          - 爸爸，你出去吧
+          - 爸爸，你回去吧
+        answer: 0
+      - id: q-h1-31-g08
+        type: choice
+        tests:
+          words:
+            - 出来
+        prompt:
+          kind: vi
+          text: Anh ấy từ trong phòng đi ra.
+        optionKind: hanzi
+        options:
+          - 他从房间里出来了
+          - 他从房间里进来了
+          - 他从房间里回来了
+        answer: 0
+  dialogue:
+    parts:
+      - title: Đi bằng gì?
+        lines:
+          - s-h1-31-01
+          - s-h1-31-02
+          - s-h1-31-03
+          - s-h1-31-04
+      - title: Bố đến ga
+        lines:
+          - s-h1-31-05
+          - s-h1-31-06
+          - s-h1-31-07
+          - s-h1-31-08
+      - title: Về nhà
+        lines:
+          - s-h1-31-09
+          - s-h1-31-10
+          - s-h1-31-11
+          - s-h1-31-12
+    questions:
+      - id: q-h1-31-d01
+        type: choice
+        ask: Gấu trúc đỏ muốn đi Bắc Kinh bằng gì?
+        tests:
+          words:
+            - 火车
+          grammar:
+            - h1-g70
+        prompt:
+          kind: audio
+          ref: s-h1-31-02
+        optionKind: vi
+        options:
+          - tàu hỏa
+          - máy bay
+          - ô tô
+        answer: 0
+      - id: q-h1-31-d02
+        type: choice
+        ask: Linh ngưu hỏi gì?
+        tests:
+          words:
+            - 怎么
+          grammar:
+            - h1-g69
+        prompt:
+          kind: audio
+          ref: s-h1-31-05
+        optionKind: vi
+        options:
+          - Bố cậu đến ga bằng gì?
+          - Bố cậu ở đâu?
+          - Bố cậu tên gì?
+        answer: 0
+      - id: q-h1-31-d03
+        type: choice
+        ask: Khi nào hai bạn về lại?
+        tests:
+          words:
+            - 回来
+        prompt:
+          kind: audio
+          ref: s-h1-31-10
+        optionKind: vi
+        options:
+          - ngày kia
+          - hôm nay
+          - ngày mai
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-31-l01
+        type: tone
+        tests:
+          words:
+            - 怎么
+          tone: true
+        prompt:
+          kind: audio
+          ref: 怎么
+        syllable: 0
+        answer: 3
+      - id: q-h1-31-l02
+        type: choice
+        tests:
+          words:
+            - 路上
+        prompt:
+          kind: audio
+          ref: 路上
+        optionKind: hanzi
+        options:
+          - 路上
+          - 出去
+          - 回来
+          - 进来
+        answer: 0
+      - id: q-h1-31-l03
+        type: choice
+        tests:
+          words:
+            - 回去
+        prompt:
+          kind: audio
+          ref: 回去
+        optionKind: hanzi
+        options:
+          - 回去
+          - 回来
+          - 进去
+          - 出来
+        answer: 0
+      - id: q-h1-31-s01
+        type: readAloud
+        tests:
+          words:
+            - 怎么
+          grammar:
+            - h1-g69
+          tone: true
+        sentence: s-h1-31-01
+      - id: q-h1-31-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 火车
+          grammar:
+            - h1-g70
+        prompt:
+          kind: vi
+          text: Nói cậu đi Bắc Kinh bằng phương tiện gì.
+        rubric:
+          - Dùng 坐… 去… hoặc 开车去…
+        answer: s-h1-31-02
+  writing:
+    chars:
+      - 怎
+      - 出
+      - 进
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-31-x01
+      type: choice
+      tests:
+        words:
+          - 怎么
+      prompt:
+        kind: hanzi
+        ref: 怎么
+      optionKind: vi
+      options:
+        - thế nào, làm sao
+        - trên đường
+        - đi ra ngoài
+        - trở về
+      answer: 0
+    - id: q-h1-31-x02
+      type: choice
+      tests:
+        words:
+          - 路上
+      prompt:
+        kind: vi
+        text: trên đường
+      optionKind: hanzi
+      options:
+        - 路上
+        - 怎么
+        - 出去
+        - 进来
+      answer: 0
+    - id: q-h1-31-x03
+      type: choice
+      tests:
+        words:
+          - 出去
+      prompt:
+        kind: hanzi
+        ref: 出去
+      optionKind: vi
+      options:
+        - đi ra ngoài
+        - đi vào trong
+        - trở về
+        - trên đường
+      answer: 0
+    - id: q-h1-31-x04
+      type: choice
+      tests:
+        words:
+          - 出来
+      prompt:
+        kind: vi
+        text: đi ra (về phía người nói)
+      optionKind: hanzi
+      options:
+        - 出来
+        - 进来
+        - 回来
+        - 路上
+      answer: 0
+    - id: q-h1-31-x05
+      type: choice
+      tests:
+        words:
+          - 回去
+      prompt:
+        kind: hanzi
+        ref: 回去
+      optionKind: vi
+      options:
+        - trở về (đi xa người nói)
+        - đi vào trong
+        - đi ra ngoài
+        - thế nào, làm sao
+      answer: 0
+    - id: q-h1-31-x06
+      type: choice
+      tests:
+        words:
+          - 回来
+      prompt:
+        kind: vi
+        text: trở về (về phía người nói)
+      optionKind: hanzi
+      options:
+        - 回来
+        - 出来
+        - 进来
+        - 怎么
+      answer: 0
+    - id: q-h1-31-x07
+      type: choice
+      tests:
+        words:
+          - 进去
+      prompt:
+        kind: hanzi
+        ref: 进去
+      optionKind: vi
+      options:
+        - đi vào trong
+        - đi ra ngoài
+        - trở về
+        - trên đường
+      answer: 0
+    - id: q-h1-31-x08
+      type: choice
+      tests:
+        words:
+          - 进来
+      prompt:
+        kind: vi
+        text: đi vào (về phía người nói)
+      optionKind: hanzi
+      options:
+        - 进来
+        - 出来
+        - 回来
+        - 路上
+      answer: 0
+    - id: q-h1-31-x09
+      type: choice
+      tests:
+        words:
+          - 怎么
+        grammar:
+          - h1-g69
+      prompt:
+        kind: vi
+        text: Mai tụi mình đi Bắc Kinh bằng gì?
+      optionKind: hanzi
+      options:
+        - 我们明天怎么去北京
+        - 我们明天去北京怎么
+        - 怎么我们明天去北京
+      answer: 0
+    - id: q-h1-31-x10
+      type: trueFalse
+      tests:
+        words:
+          - 怎么
+        grammar:
+          - h1-g69
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你写这个字怎么？
+      answer: false
+    - id: q-h1-31-x11
+      type: order
+      tests:
+        words:
+          - 怎么
+        grammar:
+          - h1-g69
+      tiles:
+        - 你
+        - 爸爸
+        - 怎么
+        - 来
+        - 车站
+      answer: s-h1-31-05
+    - id: q-h1-31-x12
+      type: choice
+      tests:
+        words:
+          - 火车
+        grammar:
+          - h1-g70
+      prompt:
+        kind: vi
+        text: Đi tàu hỏa đi.
+      optionKind: hanzi
+      options:
+        - 坐火车去吧
+        - 去火车坐吧
+        - 火车去坐吧
+      answer: 0
+    - id: q-h1-31-x13
+      type: trueFalse
+      tests:
+        words:
+          - 飞机
+        grammar:
+          - h1-g70
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我去北京坐飞机。
+      answer: false
+    - id: q-h1-31-x14
+      type: order
+      tests:
+        words:
+          - 开车
+        grammar:
+          - h1-g70
+      tiles:
+        - 他
+        - 开车
+        - 来
+      answer: s-h1-31-06
+    - id: q-h1-31-x15
+      type: choice
+      tests:
+        words:
+          - 怎么
+        grammar:
+          - h1-g69
+      prompt:
+        kind: audio
+        ref: s-h1-31-16
+      optionKind: vi
+      options:
+        - Chữ này cậu viết thế nào?
+        - Chữ này là chữ gì?
+        - Cậu viết chữ này ở đâu?
+      answer: 0
+    - id: q-h1-31-x16
+      type: choice
+      tests:
+        words:
+          - 开车
+        grammar:
+          - h1-g70
+      prompt:
+        kind: audio
+        ref: s-h1-31-06
+      optionKind: vi
+      options:
+        - lái xe đến
+        - đi tàu hỏa đến
+        - đi máy bay đến
+      answer: 0
+    - id: q-h1-31-x17
+      type: choice
+      tests:
+        words:
+          - 进来
+      prompt:
+        kind: vi
+        text: Bố ơi, bố vào đây đi!
+      optionKind: hanzi
+      options:
+        - 爸爸，你进来吧
+        - 爸爸，你出去吧
+        - 爸爸，你回去吧
+      answer: 0
+    - id: q-h1-31-x18
+      type: choice
+      tests:
+        words:
+          - 出来
+      prompt:
+        kind: vi
+        text: Anh ấy từ trong phòng đi ra.
+      optionKind: hanzi
+      options:
+        - 他从房间里出来了
+        - 他从房间里进来了
+        - 他从房间里回来了
+      answer: 0
+    - id: q-h1-31-x19
+      type: choice
+      tests:
+        words:
+          - 回去
+          - 怎么
+        grammar:
+          - h1-g69
+      prompt:
+        kind: audio
+        ref: s-h1-31-11
+      optionKind: vi
+      options:
+        - Tối nay tụi mình về nhà bằng gì?
+        - Tối nay tụi mình đi đâu?
+        - Tối nay tụi mình ăn gì?
+      answer: 0
+    - id: q-h1-31-x20
+      type: choice
+      tests:
+        words:
+          - 路上
+        grammar:
+          - h1-g70
+      prompt:
+        kind: audio
+        ref: s-h1-31-04
+      optionKind: vi
+      options:
+        - trên đường đọc sách được
+        - trên đường ngủ được
+        - trên đường ăn cơm được
+      answer: 0
+    - id: q-h1-31-x21
+      type: trueFalse
+      tests:
+        words:
+          - 出去
+      prompt:
+        kind: hanzi
+        ref: 出去
+      statement: 出去 nghĩa là “đi ra ngoài”.
+      answer: true
+    - id: q-h1-31-x22
+      type: order
+      tests:
+        words:
+          - 出去
+      tiles:
+        - 妈妈
+        - 出去
+        - 买
+        - 水果
+        - 了
+      answer: s-h1-31-15

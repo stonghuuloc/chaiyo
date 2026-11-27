@@ -1,0 +1,686 @@
+id: h1-17
+level: 1
+topic: Ăn uống
+order: 17
+title: Đồ uống
+titleHanzi: 喝
+goal: Nói muốn uống gì, muốn lấy gì; nói đói và khát
+scene:
+  file: lessons/h1-17.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They sit at a small café table; the red panda holds a teacup and the takin holds a glass of milk.
+sentences:
+  - id: s-h1-17-01
+    hanzi: 你想喝什么？
+    pinyin: nǐ xiǎng hē shénme?
+    vi: Cậu muốn uống gì?
+    speaker: takin
+  - id: s-h1-17-02
+    hanzi: 我想喝茶。
+    pinyin: wǒ xiǎng hē chá.
+    vi: Tớ muốn uống trà.
+    speaker: redpanda
+  - id: s-h1-17-03
+    hanzi: 你想喝茶还是喝水？
+    pinyin: nǐ xiǎng hē chá háishi hē shuǐ?
+    vi: Cậu muốn uống trà hay uống nước?
+    speaker: takin
+  - id: s-h1-17-04
+    hanzi: 我想喝水，我很渴。
+    pinyin: wǒ xiǎng hē shuǐ, wǒ hěn kě.
+    vi: Tớ muốn uống nước, tớ rất khát.
+    speaker: redpanda
+  - id: s-h1-17-05
+    hanzi: 你要牛奶吗？
+    pinyin: nǐ yào niúnǎi ma?
+    vi: Cậu muốn sữa không?
+    speaker: takin
+  - id: s-h1-17-06
+    hanzi: 不要，我不想喝牛奶。
+    pinyin: bù yào, wǒ bù xiǎng hē niúnǎi.
+    vi: Không, tớ không muốn uống sữa.
+    speaker: redpanda
+  - id: s-h1-17-07
+    hanzi: 你饿吗？
+    pinyin: nǐ è ma?
+    vi: Cậu đói không?
+    speaker: takin
+  - id: s-h1-17-08
+    hanzi: 我不饿，我渴。
+    pinyin: wǒ bù è, wǒ kě.
+    vi: Tớ không đói, tớ khát.
+    speaker: redpanda
+  - id: s-h1-17-09
+    hanzi: 我很饿，我想回家。
+    pinyin: wǒ hěn è, wǒ xiǎng huí jiā.
+    vi: Tớ rất đói, tớ muốn về nhà.
+    speaker: takin
+  - id: s-h1-17-10
+    hanzi: 好，我们回家，喝茶。
+    pinyin: hǎo, wǒmen huí jiā, hē chá.
+    vi: Được, chúng ta về nhà, uống trà.
+    speaker: redpanda
+  - id: s-h1-17-11
+    hanzi: 我想喝水。
+    pinyin: wǒ xiǎng hē shuǐ.
+    vi: Tôi muốn uống nước.
+  - id: s-h1-17-12
+    hanzi: 他不想喝茶。
+    pinyin: tā bù xiǎng hē chá.
+    vi: Anh ấy không muốn uống trà.
+  - id: s-h1-17-13
+    hanzi: 我要一杯茶。
+    pinyin: wǒ yào yī bēi chá.
+    vi: Cho tôi một cốc trà.
+  - id: s-h1-17-14
+    hanzi: 她很渴，想喝水。
+    pinyin: tā hěn kě, xiǎng hē shuǐ.
+    vi: Cô ấy rất khát, muốn uống nước.
+  - id: s-h1-17-15
+    hanzi: 你想喝牛奶吗？
+    pinyin: nǐ xiǎng hē niúnǎi ma?
+    vi: Bạn muốn uống sữa không?
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 想
+      - 要
+      - 喝
+      - 茶
+      - 水
+      - 牛奶
+      - 渴
+      - 饿
+  grammar:
+    ids:
+      - h1-g39
+    drills:
+      - id: q-h1-17-g01
+        type: choice
+        tests:
+          words:
+            - 想
+            - 喝
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Tớ muốn uống trà.
+        optionKind: hanzi
+        options:
+          - 我想喝茶
+          - 我喝想茶
+          - 想我喝茶
+        answer: 0
+      - id: q-h1-17-g02
+        type: trueFalse
+        tests:
+          words:
+            - 想
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我喝想茶。
+        answer: false
+      - id: q-h1-17-g03
+        type: order
+        tests:
+          words:
+            - 想
+            - 喝
+          grammar:
+            - h1-g39
+        tiles:
+          - 我
+          - 想
+          - 喝
+          - 茶
+        answer: s-h1-17-02
+      - id: q-h1-17-g04
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 想
+          grammar:
+            - h1-g39
+        prompt:
+          kind: audio
+          ref: s-h1-17-01
+        optionKind: hanzi
+        options:
+          - 我想喝茶。
+          - 我很饿。
+          - 我是学生。
+        answer: 0
+      - id: q-h1-17-g05
+        type: choice
+        tests:
+          words:
+            - 想
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Anh ấy không muốn uống trà.
+        optionKind: hanzi
+        options:
+          - 他不想喝茶
+          - 他想不喝茶
+          - 他喝不想茶
+        answer: 0
+      - id: q-h1-17-g06
+        type: choice
+        tests:
+          words:
+            - 要
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Tớ muốn một cốc trà.
+        optionKind: hanzi
+        options:
+          - 我要一杯茶
+          - 我要茶一杯
+          - 要我一杯茶
+        answer: 0
+      - id: q-h1-17-g07
+        type: trueFalse
+        tests:
+          words:
+            - 要
+            - 牛奶
+          grammar:
+            - h1-g39
+        prompt:
+          kind: hanzi
+          ref: 要
+        statement: 你要牛奶吗？ nghĩa là “Cậu muốn sữa không?”
+        answer: true
+      - id: q-h1-17-g08
+        type: choice
+        tests:
+          words:
+            - 渴
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Tớ rất khát.
+        optionKind: hanzi
+        options:
+          - 我很渴
+          - 我是渴
+          - 我渴很
+        answer: 0
+  dialogue:
+    parts:
+      - title: Cậu muốn uống gì?
+        lines:
+          - s-h1-17-01
+          - s-h1-17-02
+          - s-h1-17-03
+          - s-h1-17-04
+          - s-h1-17-05
+          - s-h1-17-06
+      - title: Đói và khát
+        lines:
+          - s-h1-17-07
+          - s-h1-17-08
+          - s-h1-17-09
+          - s-h1-17-10
+    questions:
+      - id: q-h1-17-d01
+        type: choice
+        ask: Cuối cùng gấu trúc đỏ muốn uống gì?
+        tests:
+          words:
+            - 水
+            - 渴
+          grammar:
+            - h1-g39
+        prompt:
+          kind: audio
+          ref: s-h1-17-04
+        optionKind: vi
+        options:
+          - nước
+          - trà
+          - sữa
+        answer: 0
+      - id: q-h1-17-d02
+        type: choice
+        ask: Takin hỏi gì?
+        tests:
+          words:
+            - 牛奶
+            - 要
+          grammar:
+            - h1-g39
+        prompt:
+          kind: audio
+          ref: s-h1-17-05
+        optionKind: vi
+        options:
+          - Cậu muốn sữa không?
+          - Cậu muốn uống gì?
+          - Cậu có khát không?
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-17-l01
+        type: tone
+        tests:
+          words:
+            - 渴
+          tone: true
+        prompt:
+          kind: audio
+          ref: 渴
+        syllable: 0
+        answer: 3
+      - id: q-h1-17-l02
+        type: choice
+        tests:
+          words:
+            - 茶
+        prompt:
+          kind: audio
+          ref: 茶
+        optionKind: hanzi
+        options:
+          - 茶
+          - 水
+          - 喝
+          - 想
+        answer: 0
+      - id: q-h1-17-l03
+        type: choice
+        tests:
+          words:
+            - 牛奶
+        prompt:
+          kind: audio
+          ref: 牛奶
+        optionKind: hanzi
+        options:
+          - 牛奶
+          - 茶
+          - 水
+          - 渴
+        answer: 0
+      - id: q-h1-17-s01
+        type: readAloud
+        tests:
+          words:
+            - 想
+            - 喝
+          grammar:
+            - h1-g39
+          tone: true
+        sentence: s-h1-17-01
+      - id: q-h1-17-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 想
+            - 喝
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Nói bạn muốn uống gì.
+        rubric:
+          - Dùng 我想喝 + đồ uống
+        answer: s-h1-17-02
+      - id: q-h1-17-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 想
+            - 喝
+          grammar:
+            - h1-g39
+        prompt:
+          kind: vi
+          text: Hỏi một bạn muốn uống gì.
+        rubric:
+          - Dùng 你想喝什么？
+        answer: s-h1-17-01
+  writing:
+    chars:
+      - 喝
+      - 茶
+      - 水
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-17-x01
+      type: choice
+      tests:
+        words:
+          - 想
+      prompt:
+        kind: hanzi
+        ref: 想
+      optionKind: vi
+      options:
+        - muốn (làm gì)
+        - uống
+        - khát
+        - đói
+      answer: 0
+    - id: q-h1-17-x02
+      type: choice
+      tests:
+        words:
+          - 要
+      prompt:
+        kind: hanzi
+        ref: 要
+      optionKind: vi
+      options:
+        - muốn, cần, xin
+        - uống
+        - khát
+        - đói
+      answer: 0
+    - id: q-h1-17-x03
+      type: typePinyin
+      tests:
+        words:
+          - 喝
+      prompt:
+        kind: hanzi
+        ref: 喝
+      answer: hē
+    - id: q-h1-17-x04
+      type: choice
+      tests:
+        words:
+          - 茶
+      prompt:
+        kind: vi
+        text: trà
+      optionKind: hanzi
+      options:
+        - 茶
+        - 水
+        - 牛奶
+        - 喝
+      answer: 0
+    - id: q-h1-17-x05
+      type: choice
+      tests:
+        words:
+          - 水
+      prompt:
+        kind: audio
+        ref: 水
+      optionKind: vi
+      options:
+        - nước
+        - trà
+        - sữa
+        - cơm
+      answer: 0
+    - id: q-h1-17-x06
+      type: choice
+      tests:
+        words:
+          - 牛奶
+      prompt:
+        kind: hanzi
+        ref: 牛奶
+      optionKind: vi
+      options:
+        - sữa bò
+        - trà
+        - nước
+        - cơm
+      answer: 0
+    - id: q-h1-17-x07
+      type: choice
+      tests:
+        words:
+          - 渴
+      prompt:
+        kind: vi
+        text: khát
+      optionKind: hanzi
+      options:
+        - 渴
+        - 饿
+        - 想
+        - 要
+      answer: 0
+    - id: q-h1-17-x08
+      type: choice
+      tests:
+        words:
+          - 饿
+      prompt:
+        kind: audio
+        ref: 饿
+      optionKind: vi
+      options:
+        - đói
+        - khát
+        - mệt
+        - bận
+      answer: 0
+    - id: q-h1-17-x09
+      type: choice
+      tests:
+        words:
+          - 想
+          - 喝
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Tớ muốn uống trà.
+      optionKind: hanzi
+      options:
+        - 我想喝茶
+        - 我喝想茶
+        - 想我喝茶
+      answer: 0
+    - id: q-h1-17-x10
+      type: trueFalse
+      tests:
+        words:
+          - 想
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我喝想茶。
+      answer: false
+    - id: q-h1-17-x11
+      type: order
+      tests:
+        words:
+          - 想
+          - 喝
+        grammar:
+          - h1-g39
+      tiles:
+        - 我
+        - 想
+        - 喝
+        - 茶
+      answer: s-h1-17-02
+    - id: q-h1-17-x12
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 想
+        grammar:
+          - h1-g39
+      prompt:
+        kind: audio
+        ref: s-h1-17-01
+      optionKind: hanzi
+      options:
+        - 我想喝茶。
+        - 我很饿。
+        - 我是学生。
+      answer: 0
+    - id: q-h1-17-x13
+      type: choice
+      tests:
+        words:
+          - 想
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Anh ấy không muốn uống trà.
+      optionKind: hanzi
+      options:
+        - 他不想喝茶
+        - 他想不喝茶
+        - 他喝不想茶
+      answer: 0
+    - id: q-h1-17-x14
+      type: choice
+      tests:
+        words:
+          - 要
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Tớ muốn một cốc trà.
+      optionKind: hanzi
+      options:
+        - 我要一杯茶
+        - 我要茶一杯
+        - 要我一杯茶
+      answer: 0
+    - id: q-h1-17-x15
+      type: choice
+      tests:
+        words:
+          - 渴
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Tớ rất khát.
+      optionKind: hanzi
+      options:
+        - 我很渴
+        - 我是渴
+        - 我渴很
+      answer: 0
+    - id: q-h1-17-x16
+      type: choice
+      tests:
+        words:
+          - 饿
+          - 渴
+      prompt:
+        kind: vi
+        text: Tớ không đói, tớ khát.
+      optionKind: hanzi
+      options:
+        - 我不饿，我渴
+        - 我饿不，我渴
+        - 不我饿，我渴
+      answer: 0
+    - id: q-h1-17-x17
+      type: choice
+      tests:
+        words:
+          - 饿
+      prompt:
+        kind: audio
+        ref: s-h1-17-07
+      optionKind: vi
+      options:
+        - Cậu đói không?
+        - Cậu khát không?
+        - Cậu mệt không?
+      answer: 0
+    - id: q-h1-17-x18
+      type: tone
+      tests:
+        words:
+          - 喝
+        tone: true
+      prompt:
+        kind: audio
+        ref: 喝
+      syllable: 0
+      answer: 1
+    - id: q-h1-17-x19
+      type: choice
+      tests:
+        words:
+          - 要
+          - 牛奶
+      prompt:
+        kind: audio
+        ref: s-h1-17-05
+      optionKind: vi
+      options:
+        - Cậu muốn sữa không?
+        - Cậu muốn uống gì?
+        - Cậu có khát không?
+      answer: 0
+    - id: q-h1-17-x20
+      type: trueFalse
+      tests:
+        words:
+          - 水
+      prompt:
+        kind: hanzi
+        ref: 水
+      statement: 水 nghĩa là “nước”.
+      answer: true
+    - id: q-h1-17-x21
+      type: choice
+      tests:
+        words:
+          - 渴
+          - 水
+          - 想
+          - 喝
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Cô ấy rất khát, muốn uống nước.
+      optionKind: hanzi
+      options:
+        - 她很渴，想喝水
+        - 她很渴，喝想水
+        - 她渴很，想喝水
+      answer: 0
+    - id: q-h1-17-x22
+      type: choice
+      tests:
+        words:
+          - 牛奶
+          - 想
+        grammar:
+          - h1-g39
+      prompt:
+        kind: vi
+        text: Cậu muốn uống sữa không?
+      optionKind: hanzi
+      options:
+        - 你想喝牛奶吗
+        - 你想牛奶喝吗
+        - 你喝想牛奶吗
+      answer: 0

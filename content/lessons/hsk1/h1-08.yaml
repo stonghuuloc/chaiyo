@@ -1,0 +1,688 @@
+id: h1-08
+level: 1
+topic: Quốc tịch và ngôn ngữ
+order: 8
+title: Quốc tịch
+titleHanzi: 国
+goal: Hỏi và nói mình là người nước nào; nói giáo viên là nam hay nữ
+scene:
+  file: lessons/h1-08.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand before a big world map on a classroom wall; the red panda points at one spot on the map and the takin tilts its head.
+sentences:
+  - id: s-h1-08-01
+    hanzi: 你是哪国人？
+    pinyin: nǐ shì nǎ guó rén?
+    vi: Bạn là người nước nào?
+    speaker: takin
+  - id: s-h1-08-02
+    hanzi: 我是中国人。
+    pinyin: wǒ shì Zhōngguó rén.
+    vi: Tớ là người Trung Quốc.
+    speaker: redpanda
+  - id: s-h1-08-03
+    hanzi: 我也是中国人。
+    pinyin: wǒ yě shì Zhōngguó rén.
+    vi: Tớ cũng là người Trung Quốc.
+    speaker: takin
+  - id: s-h1-08-04
+    hanzi: 你是北京人吗？
+    pinyin: nǐ shì Běijīng rén ma?
+    vi: Cậu là người Bắc Kinh à?
+    speaker: redpanda
+  - id: s-h1-08-05
+    hanzi: 不是，我不是北京人。
+    pinyin: bù shì, wǒ bù shì Běijīng rén.
+    vi: Không, tớ không phải người Bắc Kinh.
+    speaker: takin
+  - id: s-h1-08-06
+    hanzi: 你的老师是哪国人？
+    pinyin: nǐ de lǎoshī shì nǎ guó rén?
+    vi: Giáo viên của cậu là người nước nào?
+    speaker: takin
+  - id: s-h1-08-07
+    hanzi: 他是外国人，不是中国人。
+    pinyin: tā shì wàiguó rén, bù shì Zhōngguó rén.
+    vi: Thầy là người nước ngoài, không phải người Trung Quốc.
+    speaker: redpanda
+  - id: s-h1-08-08
+    hanzi: 他是男老师吗？
+    pinyin: tā shì nán lǎoshī ma?
+    vi: Thầy là giáo viên nam à?
+    speaker: takin
+  - id: s-h1-08-09
+    hanzi: 对，他是男老师。
+    pinyin: duì, tā shì nán lǎoshī.
+    vi: Đúng, thầy là giáo viên nam.
+    speaker: redpanda
+  - id: s-h1-08-10
+    hanzi: 她是外国人。
+    pinyin: tā shì wàiguó rén.
+    vi: Cô ấy là người nước ngoài.
+  - id: s-h1-08-11
+    hanzi: 她是女老师。
+    pinyin: tā shì nǚ lǎoshī.
+    vi: Cô ấy là giáo viên nữ.
+  - id: s-h1-08-12
+    hanzi: 中国是我的国家。
+    pinyin: Zhōngguó shì wǒ de guójiā.
+    vi: Trung Quốc là đất nước của tôi.
+  - id: s-h1-08-13
+    hanzi: 他是哪国人？
+    pinyin: tā shì nǎ guó rén?
+    vi: Anh ấy là người nước nào?
+  - id: s-h1-08-14
+    hanzi: 我是男学生。
+    pinyin: wǒ shì nán xuésheng.
+    vi: Tôi là học sinh nam.
+  - id: s-h1-08-15
+    hanzi: 你的朋友是哪国人？
+    pinyin: nǐ de péngyou shì nǎ guó rén?
+    vi: Bạn của bạn là người nước nào?
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 哪
+      - 中国
+      - 外国
+      - 国家
+      - 北京
+      - 男
+      - 女
+      - 对
+  grammar:
+    ids:
+      - h1-g19
+      - h1-g20
+      - h1-g21
+    drills:
+      - id: q-h1-08-g01
+        type: choice
+        tests:
+          words:
+            - 哪
+          grammar:
+            - h1-g19
+        prompt:
+          kind: vi
+          text: Bạn là người nước nào?
+        optionKind: hanzi
+        options:
+          - 你是哪国人
+          - 你是哪国人吗
+          - 哪国你是人
+        answer: 0
+      - id: q-h1-08-g02
+        type: trueFalse
+        tests:
+          words:
+            - 哪
+          grammar:
+            - h1-g19
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 你是哪国人吗？
+        answer: false
+      - id: q-h1-08-g03
+        type: order
+        tests:
+          words:
+            - 哪
+          grammar:
+            - h1-g19
+        tiles:
+          - 你
+          - 是
+          - 哪
+          - 国
+          - 人
+        answer: s-h1-08-01
+      - id: q-h1-08-g04
+        type: choice
+        tests:
+          words:
+            - 中国
+          grammar:
+            - h1-g20
+        prompt:
+          kind: vi
+          text: Tôi là người Trung Quốc.
+        optionKind: hanzi
+        options:
+          - 我是中国人
+          - 我是中国
+          - 我中国是人
+        answer: 0
+      - id: q-h1-08-g05
+        type: choice
+        tests:
+          words:
+            - 女
+          grammar:
+            - h1-g20
+        prompt:
+          kind: vi
+          text: Cô ấy là giáo viên nữ.
+        optionKind: hanzi
+        options:
+          - 她是女老师
+          - 她是女
+          - 她女是老师
+        answer: 0
+      - id: q-h1-08-g06
+        type: order
+        tests:
+          words:
+            - 女
+          grammar:
+            - h1-g20
+        tiles:
+          - 女
+          - 她
+          - 是
+          - 老师
+        answer: s-h1-08-11
+      - id: q-h1-08-g07
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 对
+          grammar:
+            - h1-g21
+        prompt:
+          kind: audio
+          ref: s-h1-08-04
+        optionKind: hanzi
+        options:
+          - 不是，我不是北京人。
+          - 我是你的老师。
+          - 你是哪国人？
+        answer: 0
+      - id: q-h1-08-g08
+        type: choice
+        tests:
+          words:
+            - 对
+            - 男
+          grammar:
+            - h1-g21
+        prompt:
+          kind: vi
+          text: Đúng, thầy là giáo viên nam.
+        optionKind: hanzi
+        options:
+          - 对，他是男老师
+          - 不是，他是男老师
+          - 对，他不是男老师
+        answer: 0
+      - id: q-h1-08-g09
+        type: trueFalse
+        tests:
+          words:
+            - 对
+          grammar:
+            - h1-g21
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 对，我不是中国人。
+        answer: false
+  dialogue:
+    parts:
+      - title: Bạn là người nước nào?
+        lines:
+          - s-h1-08-01
+          - s-h1-08-02
+          - s-h1-08-03
+          - s-h1-08-04
+          - s-h1-08-05
+      - title: Giáo viên là người nước nào?
+        lines:
+          - s-h1-08-06
+          - s-h1-08-07
+          - s-h1-08-08
+          - s-h1-08-09
+    questions:
+      - id: q-h1-08-d01
+        type: choice
+        ask: Gấu trúc đỏ là người nước nào?
+        tests:
+          words:
+            - 中国
+          grammar:
+            - h1-g19
+            - h1-g20
+        prompt:
+          kind: audio
+          ref: s-h1-08-02
+        optionKind: vi
+        options:
+          - Trung Quốc
+          - nước ngoài
+          - Bắc Kinh
+        answer: 0
+      - id: q-h1-08-d02
+        type: choice
+        ask: Thầy giáo là người nước nào?
+        tests:
+          words:
+            - 外国
+          grammar:
+            - h1-g21
+        prompt:
+          kind: audio
+          ref: s-h1-08-07
+        optionKind: vi
+        options:
+          - nước ngoài
+          - Trung Quốc
+          - Bắc Kinh
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-08-l01
+        type: tone
+        tests:
+          words:
+            - 哪
+          tone: true
+        prompt:
+          kind: audio
+          ref: 哪
+        syllable: 0
+        answer: 3
+      - id: q-h1-08-l02
+        type: choice
+        tests:
+          words:
+            - 男
+        prompt:
+          kind: audio
+          ref: 男
+        optionKind: hanzi
+        options:
+          - 男
+          - 女
+          - 对
+          - 哪
+        answer: 0
+      - id: q-h1-08-l03
+        type: choice
+        tests:
+          words:
+            - 北京
+        prompt:
+          kind: audio
+          ref: 北京
+        optionKind: hanzi
+        options:
+          - 北京
+          - 中国
+          - 外国
+          - 国家
+        answer: 0
+      - id: q-h1-08-s01
+        type: readAloud
+        tests:
+          words:
+            - 哪
+          grammar:
+            - h1-g19
+          tone: true
+        sentence: s-h1-08-01
+      - id: q-h1-08-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 中国
+          grammar:
+            - h1-g20
+        prompt:
+          kind: vi
+          text: Nói bạn là người nước nào.
+        rubric:
+          - Dùng 我是 + 中国人 / 外国人
+        answer: s-h1-08-02
+      - id: q-h1-08-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 哪
+          grammar:
+            - h1-g19
+        prompt:
+          kind: vi
+          text: Hỏi một bạn là người nước nào.
+        rubric:
+          - Dùng 你是哪国人？
+        answer: s-h1-08-01
+  writing:
+    chars:
+      - 中
+      - 外
+      - 男
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-08-x01
+      type: choice
+      tests:
+        words:
+          - 哪
+      prompt:
+        kind: hanzi
+        ref: 哪
+      optionKind: vi
+      options:
+        - nào
+        - ai
+        - gì
+        - bao nhiêu
+      answer: 0
+    - id: q-h1-08-x02
+      type: choice
+      tests:
+        words:
+          - 中国
+      prompt:
+        kind: vi
+        text: Trung Quốc
+      optionKind: hanzi
+      options:
+        - 中国
+        - 外国
+        - 国家
+        - 北京
+      answer: 0
+    - id: q-h1-08-x03
+      type: choice
+      tests:
+        words:
+          - 外国
+      prompt:
+        kind: vi
+        text: nước ngoài
+      optionKind: hanzi
+      options:
+        - 外国
+        - 中国
+        - 国家
+        - 北京
+      answer: 0
+    - id: q-h1-08-x04
+      type: typePinyin
+      tests:
+        words:
+          - 国家
+      prompt:
+        kind: hanzi
+        ref: 国家
+      answer: guójiā
+    - id: q-h1-08-x05
+      type: choice
+      tests:
+        words:
+          - 北京
+      prompt:
+        kind: hanzi
+        ref: 北京
+      optionKind: vi
+      options:
+        - Bắc Kinh
+        - Trung Quốc
+        - nước ngoài
+        - đất nước
+      answer: 0
+    - id: q-h1-08-x06
+      type: choice
+      tests:
+        words:
+          - 男
+      prompt:
+        kind: vi
+        text: nam
+      optionKind: hanzi
+      options:
+        - 男
+        - 女
+        - 对
+        - 哪
+      answer: 0
+    - id: q-h1-08-x07
+      type: choice
+      tests:
+        words:
+          - 女
+      prompt:
+        kind: audio
+        ref: 女
+      optionKind: hanzi
+      options:
+        - 女
+        - 男
+        - 你
+        - 她
+      answer: 0
+    - id: q-h1-08-x08
+      type: choice
+      tests:
+        words:
+          - 对
+      prompt:
+        kind: vi
+        text: đúng
+      optionKind: hanzi
+      options:
+        - 对
+        - 哪
+        - 男
+        - 女
+      answer: 0
+    - id: q-h1-08-x09
+      type: choice
+      tests:
+        words:
+          - 哪
+        grammar:
+          - h1-g19
+      prompt:
+        kind: vi
+        text: Bạn là người nước nào?
+      optionKind: hanzi
+      options:
+        - 你是哪国人
+        - 你是哪国人吗
+        - 哪国你是人
+      answer: 0
+    - id: q-h1-08-x10
+      type: trueFalse
+      tests:
+        words:
+          - 哪
+        grammar:
+          - h1-g19
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 你是哪国人吗？
+      answer: false
+    - id: q-h1-08-x11
+      type: order
+      tests:
+        words:
+          - 哪
+        grammar:
+          - h1-g19
+      tiles:
+        - 你
+        - 是
+        - 哪
+        - 国
+        - 人
+      answer: s-h1-08-01
+    - id: q-h1-08-x12
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 哪
+        grammar:
+          - h1-g19
+      prompt:
+        kind: audio
+        ref: s-h1-08-01
+      optionKind: hanzi
+      options:
+        - 我是中国人。
+        - 我是男老师吗？
+        - 你的朋友是中国人吗？
+      answer: 0
+    - id: q-h1-08-x13
+      type: choice
+      tests:
+        words:
+          - 中国
+        grammar:
+          - h1-g20
+      prompt:
+        kind: vi
+        text: Tôi là người Trung Quốc.
+      optionKind: hanzi
+      options:
+        - 我是中国人
+        - 我是中国
+        - 我中国是人
+      answer: 0
+    - id: q-h1-08-x14
+      type: choice
+      tests:
+        words:
+          - 女
+        grammar:
+          - h1-g20
+      prompt:
+        kind: vi
+        text: Cô ấy là giáo viên nữ.
+      optionKind: hanzi
+      options:
+        - 她是女老师
+        - 她是女
+        - 她女是老师
+      answer: 0
+    - id: q-h1-08-x15
+      type: order
+      tests:
+        words:
+          - 女
+        grammar:
+          - h1-g20
+      tiles:
+        - 女
+        - 她
+        - 是
+        - 老师
+      answer: s-h1-08-11
+    - id: q-h1-08-x16
+      type: trueFalse
+      tests:
+        words:
+          - 外国
+        grammar:
+          - h1-g20
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我是外国。
+      answer: false
+    - id: q-h1-08-x17
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 对
+        grammar:
+          - h1-g21
+      prompt:
+        kind: audio
+        ref: s-h1-08-04
+      optionKind: hanzi
+      options:
+        - 不是，我不是北京人。
+        - 对，我是北京人吗。
+        - 我是你的老师。
+      answer: 0
+    - id: q-h1-08-x18
+      type: choice
+      tests:
+        words:
+          - 对
+          - 男
+        grammar:
+          - h1-g21
+      prompt:
+        kind: vi
+        text: Đúng, thầy là giáo viên nam.
+      optionKind: hanzi
+      options:
+        - 对，他是男老师
+        - 不是，他是男老师
+        - 对，他不是男老师
+      answer: 0
+    - id: q-h1-08-x19
+      type: trueFalse
+      tests:
+        words:
+          - 对
+        grammar:
+          - h1-g21
+      prompt:
+        kind: hanzi
+        ref: 对
+      statement: “对” nghĩa là “đúng”.
+      answer: true
+    - id: q-h1-08-x20
+      type: choice
+      tests:
+        words:
+          - 北京
+        grammar:
+          - h1-g21
+      prompt:
+        kind: vi
+        text: Không, tôi không phải người Bắc Kinh.
+      optionKind: hanzi
+      options:
+        - 不是，我不是北京人
+        - 对，我不是北京人
+        - 不是，我是北京人
+      answer: 0
+    - id: q-h1-08-x21
+      type: choice
+      tests:
+        words:
+          - 国家
+      prompt:
+        kind: audio
+        ref: s-h1-08-12
+      optionKind: vi
+      options:
+        - Trung Quốc là đất nước của tôi
+        - Tôi là người Trung Quốc
+        - Tôi có một người bạn
+      answer: 0
+    - id: q-h1-08-x22
+      type: tone
+      tests:
+        words:
+          - 哪
+        tone: true
+      prompt:
+        kind: audio
+        ref: 哪
+      syllable: 0
+      answer: 3

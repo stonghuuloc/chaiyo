@@ -1,0 +1,22 @@
+id: h1-g66
+level: 1
+std:
+  - 17
+  - 10
+title: "Cùng ai làm gì: 跟 / 和 … 一起"
+pattern: 跟 / 和 + người + 一起 / 一块儿 + động từ
+explain: 一起 (nhất khởi, yīqǐ) và 一块儿 (nhất khối nhi, yīkuàir) nghĩa là “cùng nhau”, đứng ngay trước động từ. Muốn nói làm cùng ai, thêm 跟 hoặc 和 + người ở trước đó. 我跟你一起去 = tớ đi cùng cậu. 我和哥哥一块儿去北京 = tôi đi Bắc Kinh cùng anh trai. Khi chủ ngữ đã gồm nhiều người, có thể bỏ 跟 / 和 phần người đi cùng. 我们一块儿坐汽车去车站。
+examples:
+  - s-h1-29-05
+  - s-h1-29-10
+  - s-h1-29-12
+  - s-h1-29-13
+  - s-h1-29-14
+  - s-h1-29-15
+pitfalls:
+  - wrong: 我一起跟你去
+    right: 我跟你一起去
+    why: 跟 + người đứng trước 一起, rồi mới tới động từ.
+  - wrong: 我和哥哥去北京一块儿
+    right: 我和哥哥一块儿去北京
+    why: 一块儿 đứng trước động từ, không đứng cuối câu.

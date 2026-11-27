@@ -1,0 +1,16 @@
+hanzi: 会
+readings:
+  - pinyin: huì
+    hanviet: hội
+  - pinyin: kuài
+    hanviet: cối
+    rare: true
+radical: 人
+ids: ⿱人云
+strokes: 6
+mnemonic:
+  hinh: 'Người (人) đứng dưới đám mây (云) tụ họp lại — "hội họp", "sẽ" cùng làm gì đó. (Nhớ: chữ gốc 會 thật ra là cái nồi hấp có nắp.)'
+  am: 'Hán-Việt "hội" — 机会 (cơ hội), 社会 (xã hội), 会议 (hội nghị): âm rất quen.'
+  doiThat: '"开会" trên lịch công ty, "我会" trả lời trong chat công việc, nút "会员" (hội viên) trên app mua sắm.'
+  tuongPhan: '合 (hé, hợp — 合适, 合作) — cùng có nét trên giống nắp đậy, cùng gốc "gộp lại" nhưng khác âm khác nghĩa. Lưu ý 会 còn đa âm: đọc kuài trong 会计.'
+  kind: invented

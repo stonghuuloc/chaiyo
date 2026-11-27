@@ -1,0 +1,16 @@
+hanzi: 大
+readings:
+  - pinyin: dà
+    hanviet: đại
+  - pinyin: dài
+    hanviet: đại
+    rare: true
+radical: 大
+ids: ⿻一人
+strokes: 3
+mnemonic:
+  hinh: Người dang hai tay hai chân đứng giữa đất trời — tư thế phóng to nhất có thể = "to lớn".
+  am: đại — đại học, đại ca, vĩ đại, đại dịch.
+  doiThat: 大减价 (đại giảm giá) trên biển sale, size "大" trên menu trà sữa, logo 大众 (Volkswagen).
+  tuongPhan: '≠ 太 (tài, "quá") — 大 thêm 1 chấm bên phải thành 太, viết tay nhanh rất dễ lẫn. Lưu ý 大 còn là chữ đa âm: đọc dài trong 大夫.'
+  kind: etymology

@@ -1,0 +1,16 @@
+id: h1-g46
+level: 1
+std: []
+title: "Thích: 喜欢 · 爱"
+pattern: chủ ngữ + 喜欢 / 爱 + động từ / danh từ
+explain: |-
+  喜欢 (hỷ hoan, xǐhuan) nghĩa là “thích”: 我喜欢唱歌 = Tớ thích hát; 我喜欢水果 = Tớ thích trái cây. 爱 (ái, ài) + động từ cũng nghĩa là “thích, hay”: 我爱喝茶.
+
+  Phủ định đặt 不 trước 喜欢 hoặc 爱: 我不喜欢唱歌.
+examples:
+  - s-h1-21-01
+  - s-h1-21-11
+pitfalls:
+  - wrong: 我喜欢不唱歌
+    right: 我不喜欢唱歌
+    why: 不 đứng trước 喜欢.

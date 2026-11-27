@@ -1,0 +1,17 @@
+id: h1-g22
+level: 1
+std:
+  - 2
+title: "Biết và có thể: 会 · 能"
+pattern: 会 / 能 + động từ
+explain: |-
+  会 (hội, huì) nghĩa là “biết”, nhờ đã học: 我会说汉语。
+
+  能 (năng, néng) nghĩa là “có thể”, đủ khả năng làm: 你能读这个字吗？ Phủ định đặt 不 trước 会 hoặc 能: 我不会说中文。
+examples:
+  - s-h1-09-02
+  - s-h1-09-05
+pitfalls:
+  - wrong: 我会不说汉语
+    right: 我不会说汉语
+    why: Phủ định 不 đứng trước 会 / 能.

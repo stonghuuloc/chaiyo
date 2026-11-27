@@ -1,0 +1,680 @@
+id: h1-11
+level: 1
+topic: Quốc tịch và ngôn ngữ
+order: 11
+title: Làm quen
+titleHanzi: 高兴
+goal: Chào làm quen; nói mình bận, mệt, vui; khen người khác
+scene:
+  file: lessons/h1-11.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They meet on a park bench; the red panda bows slightly with its paws together and the takin smiles with a small wave.
+sentences:
+  - id: s-h1-11-01
+    hanzi: 你好，认识你很高兴。
+    pinyin: nǐ hǎo, rènshi nǐ hěn gāoxìng.
+    vi: Chào cậu, rất vui được quen cậu.
+    speaker: takin
+  - id: s-h1-11-02
+    hanzi: 认识你，我也很高兴。
+    pinyin: rènshi nǐ, wǒ yě hěn gāoxìng.
+    vi: Quen cậu, tớ cũng rất vui.
+    speaker: redpanda
+  - id: s-h1-11-03
+    hanzi: 你忙吗？
+    pinyin: nǐ máng ma?
+    vi: Cậu bận không?
+    speaker: takin
+  - id: s-h1-11-04
+    hanzi: 我很忙。你呢？
+    pinyin: wǒ hěn máng. nǐ ne?
+    vi: Tớ bận. Còn cậu?
+    speaker: redpanda
+  - id: s-h1-11-05
+    hanzi: 我不忙。
+    pinyin: wǒ bù máng.
+    vi: Tớ không bận.
+    speaker: takin
+  - id: s-h1-11-06
+    hanzi: 你累吗？
+    pinyin: nǐ lèi ma?
+    vi: Cậu mệt không?
+    speaker: redpanda
+  - id: s-h1-11-07
+    hanzi: 你的汉语真好！
+    pinyin: nǐ de Hànyǔ zhēn hǎo!
+    vi: Tiếng Trung của cậu thật là tốt!
+    speaker: takin
+  - id: s-h1-11-08
+    hanzi: 谢谢，我的汉语不好。
+    pinyin: xièxie, wǒ de Hànyǔ bù hǎo.
+    vi: Cảm ơn, tiếng Trung của tớ chưa tốt.
+    speaker: redpanda
+  - id: s-h1-11-09
+    hanzi: 你非常忙吗？
+    pinyin: nǐ fēicháng máng ma?
+    vi: Cậu rất bận à?
+    speaker: takin
+  - id: s-h1-11-10
+    hanzi: 对，我非常忙，也很累。
+    pinyin: duì, wǒ fēicháng máng, yě hěn lèi.
+    vi: Đúng, tớ rất bận, cũng rất mệt.
+    speaker: redpanda
+  - id: s-h1-11-11
+    hanzi: 我很高兴。
+    pinyin: wǒ hěn gāoxìng.
+    vi: Tôi rất vui.
+  - id: s-h1-11-12
+    hanzi: 他非常忙。
+    pinyin: tā fēicháng máng.
+    vi: Anh ấy rất bận.
+  - id: s-h1-11-13
+    hanzi: 她真高兴！
+    pinyin: tā zhēn gāoxìng!
+    vi: Cô ấy thật là vui!
+  - id: s-h1-11-14
+    hanzi: 我太累了。
+    pinyin: wǒ tài lèi le.
+    vi: Tôi mệt quá.
+    unknown:
+      - hanzi: 了
+        pinyin: le
+        vi: trợ từ cuối câu (học ở Bài 16)
+  - id: s-h1-11-15
+    hanzi: 老师很忙。
+    pinyin: lǎoshī hěn máng.
+    vi: Cô giáo rất bận.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 很
+      - 非常
+      - 真
+      - 高兴
+      - 认识
+      - 累
+      - 忙
+      - 太
+  grammar:
+    ids:
+      - h1-g26
+      - h1-g27
+    drills:
+      - id: q-h1-11-g01
+        type: choice
+        tests:
+          words:
+            - 忙
+          grammar:
+            - h1-g26
+        prompt:
+          kind: vi
+          text: Tớ bận.
+        optionKind: hanzi
+        options:
+          - 我很忙
+          - 我是忙
+          - 我忙很
+        answer: 0
+      - id: q-h1-11-g02
+        type: trueFalse
+        tests:
+          words:
+            - 高兴
+          grammar:
+            - h1-g26
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我是很高兴。
+        answer: false
+      - id: q-h1-11-g03
+        type: choice
+        tests:
+          words:
+            - 忙
+          grammar:
+            - h1-g26
+        prompt:
+          kind: vi
+          text: Tớ không bận.
+        optionKind: hanzi
+        options:
+          - 我不忙
+          - 我不很忙
+          - 我忙不
+        answer: 0
+      - id: q-h1-11-g04
+        type: order
+        tests:
+          words:
+            - 高兴
+          grammar:
+            - h1-g26
+        tiles:
+          - 很
+          - 我
+          - 高兴
+        answer: s-h1-11-11
+      - id: q-h1-11-g05
+        type: choice
+        tests:
+          words:
+            - 非常
+            - 高兴
+          grammar:
+            - h1-g27
+        prompt:
+          kind: vi
+          text: Tớ rất vui (vô cùng).
+        optionKind: hanzi
+        options:
+          - 我非常高兴
+          - 我高兴非常
+          - 非常我高兴
+        answer: 0
+      - id: q-h1-11-g06
+        type: trueFalse
+        tests:
+          words:
+            - 非常
+            - 很
+          grammar:
+            - h1-g27
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我很非常忙。
+        answer: false
+      - id: q-h1-11-g07
+        type: choice
+        tests:
+          words:
+            - 真
+          grammar:
+            - h1-g27
+        prompt:
+          kind: vi
+          text: Tiếng Trung của cậu thật là tốt!
+        optionKind: hanzi
+        options:
+          - 你的汉语真好
+          - 你的汉语好真
+          - 真你的汉语好
+        answer: 0
+      - id: q-h1-11-g08
+        type: choice
+        tests:
+          words:
+            - 累
+          grammar:
+            - h1-g27
+        prompt:
+          kind: vi
+          text: Tớ rất mệt.
+        optionKind: hanzi
+        options:
+          - 我很累
+          - 我是累
+          - 我累很
+        answer: 0
+  dialogue:
+    parts:
+      - title: Rất vui được quen cậu
+        lines:
+          - s-h1-11-01
+          - s-h1-11-02
+          - s-h1-11-03
+          - s-h1-11-04
+          - s-h1-11-05
+          - s-h1-11-06
+      - title: Khen và hỏi thăm
+        lines:
+          - s-h1-11-07
+          - s-h1-11-08
+          - s-h1-11-09
+          - s-h1-11-10
+    questions:
+      - id: q-h1-11-d01
+        type: choice
+        ask: Con takin có bận không?
+        tests:
+          words:
+            - 忙
+          grammar:
+            - h1-g26
+        prompt:
+          kind: audio
+          ref: s-h1-11-05
+        optionKind: vi
+        options:
+          - không bận
+          - bận
+          - mệt
+        answer: 0
+      - id: q-h1-11-d02
+        type: choice
+        ask: Gấu trúc đỏ thế nào?
+        tests:
+          words:
+            - 非常
+          grammar:
+            - h1-g27
+        prompt:
+          kind: audio
+          ref: s-h1-11-10
+        optionKind: vi
+        options:
+          - rất bận và mệt
+          - không bận
+          - chỉ mệt
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-11-l01
+        type: tone
+        tests:
+          words:
+            - 真
+          tone: true
+        prompt:
+          kind: audio
+          ref: 真
+        syllable: 0
+        answer: 1
+      - id: q-h1-11-l02
+        type: choice
+        tests:
+          words:
+            - 累
+        prompt:
+          kind: audio
+          ref: 累
+        optionKind: hanzi
+        options:
+          - 累
+          - 忙
+          - 很
+          - 太
+        answer: 0
+      - id: q-h1-11-l03
+        type: choice
+        tests:
+          words:
+            - 高兴
+        prompt:
+          kind: audio
+          ref: 高兴
+        optionKind: hanzi
+        options:
+          - 高兴
+          - 认识
+          - 非常
+          - 太
+        answer: 0
+      - id: q-h1-11-s01
+        type: readAloud
+        tests:
+          words:
+            - 认识
+            - 高兴
+          grammar:
+            - h1-g26
+          tone: true
+        sentence: s-h1-11-01
+      - id: q-h1-11-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 忙
+          grammar:
+            - h1-g26
+        prompt:
+          kind: vi
+          text: Nói bạn có bận hay mệt không.
+        rubric:
+          - Dùng 我很忙 / 我不忙 / 我很累
+        answer: s-h1-11-04
+      - id: q-h1-11-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 真
+          grammar:
+            - h1-g27
+        prompt:
+          kind: vi
+          text: Khen tiếng Trung của một bạn.
+        rubric:
+          - Dùng 你的汉语真好！
+        answer: s-h1-11-07
+  writing:
+    chars:
+      - 很
+      - 忙
+      - 太
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-11-x01
+      type: choice
+      tests:
+        words:
+          - 很
+      prompt:
+        kind: hanzi
+        ref: 很
+      optionKind: vi
+      options:
+        - rất
+        - không
+        - cũng
+        - đều
+      answer: 0
+    - id: q-h1-11-x02
+      type: choice
+      tests:
+        words:
+          - 非常
+      prompt:
+        kind: hanzi
+        ref: 非常
+      optionKind: vi
+      options:
+        - rất, vô cùng
+        - không
+        - cũng
+        - đều
+      answer: 0
+    - id: q-h1-11-x03
+      type: choice
+      tests:
+        words:
+          - 真
+      prompt:
+        kind: audio
+        ref: 真
+      optionKind: hanzi
+      options:
+        - 真
+        - 很
+        - 太
+        - 非常
+      answer: 0
+    - id: q-h1-11-x04
+      type: typePinyin
+      tests:
+        words:
+          - 高兴
+      prompt:
+        kind: hanzi
+        ref: 高兴
+      answer: gāoxìng
+    - id: q-h1-11-x05
+      type: choice
+      tests:
+        words:
+          - 认识
+      prompt:
+        kind: hanzi
+        ref: 认识
+      optionKind: vi
+      options:
+        - quen biết
+        - vui
+        - bận
+        - mệt
+      answer: 0
+    - id: q-h1-11-x06
+      type: choice
+      tests:
+        words:
+          - 累
+      prompt:
+        kind: vi
+        text: mệt
+      optionKind: hanzi
+      options:
+        - 累
+        - 忙
+        - 很
+        - 太
+      answer: 0
+    - id: q-h1-11-x07
+      type: choice
+      tests:
+        words:
+          - 忙
+      prompt:
+        kind: vi
+        text: bận
+      optionKind: hanzi
+      options:
+        - 忙
+        - 累
+        - 真
+        - 很
+      answer: 0
+    - id: q-h1-11-x08
+      type: choice
+      tests:
+        words:
+          - 太
+      prompt:
+        kind: vi
+        text: quá
+      optionKind: hanzi
+      options:
+        - 太
+        - 很
+        - 真
+        - 非常
+      answer: 0
+    - id: q-h1-11-x09
+      type: choice
+      tests:
+        words:
+          - 忙
+        grammar:
+          - h1-g26
+      prompt:
+        kind: vi
+        text: Tớ bận.
+      optionKind: hanzi
+      options:
+        - 我很忙
+        - 我是忙
+        - 我忙很
+      answer: 0
+    - id: q-h1-11-x10
+      type: trueFalse
+      tests:
+        words:
+          - 高兴
+        grammar:
+          - h1-g26
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我是很高兴。
+      answer: false
+    - id: q-h1-11-x11
+      type: choice
+      tests:
+        words:
+          - 忙
+        grammar:
+          - h1-g26
+      prompt:
+        kind: vi
+        text: Tớ không bận.
+      optionKind: hanzi
+      options:
+        - 我不忙
+        - 我不很忙
+        - 我忙不
+      answer: 0
+    - id: q-h1-11-x12
+      type: order
+      tests:
+        words:
+          - 高兴
+        grammar:
+          - h1-g26
+      tiles:
+        - 很
+        - 我
+        - 高兴
+      answer: s-h1-11-11
+    - id: q-h1-11-x13
+      type: choice
+      tests:
+        words:
+          - 非常
+          - 高兴
+        grammar:
+          - h1-g27
+      prompt:
+        kind: vi
+        text: Tớ rất vui (vô cùng).
+      optionKind: hanzi
+      options:
+        - 我非常高兴
+        - 我高兴非常
+        - 非常我高兴
+      answer: 0
+    - id: q-h1-11-x14
+      type: trueFalse
+      tests:
+        words:
+          - 非常
+          - 很
+        grammar:
+          - h1-g27
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我很非常忙。
+      answer: false
+    - id: q-h1-11-x15
+      type: choice
+      tests:
+        words:
+          - 真
+        grammar:
+          - h1-g27
+      prompt:
+        kind: vi
+        text: Tiếng Trung của cậu thật là tốt!
+      optionKind: hanzi
+      options:
+        - 你的汉语真好
+        - 你的汉语好真
+        - 真你的汉语好
+      answer: 0
+    - id: q-h1-11-x16
+      type: choice
+      tests:
+        words:
+          - 非常
+          - 忙
+        grammar:
+          - h1-g27
+      prompt:
+        kind: vi
+        text: Anh ấy rất bận.
+      optionKind: hanzi
+      options:
+        - 他非常忙
+        - 他忙非常
+        - 非常他忙
+      answer: 0
+    - id: q-h1-11-x17
+      type: choice
+      tests:
+        words:
+          - 认识
+          - 高兴
+      prompt:
+        kind: audio
+        ref: s-h1-11-01
+      optionKind: vi
+      options:
+        - Rất vui được quen cậu.
+        - Cậu tên gì?
+        - Cậu mấy tuổi?
+      answer: 0
+    - id: q-h1-11-x18
+      type: tone
+      tests:
+        words:
+          - 忙
+        tone: true
+      prompt:
+        kind: audio
+        ref: 忙
+      syllable: 0
+      answer: 2
+    - id: q-h1-11-x19
+      type: choice
+      tests:
+        words:
+          - 真
+          - 高兴
+        grammar:
+          - h1-g27
+      prompt:
+        kind: vi
+        text: Cô ấy thật là vui!
+      optionKind: hanzi
+      options:
+        - 她真高兴
+        - 她高兴真
+        - 真她高兴
+      answer: 0
+    - id: q-h1-11-x20
+      type: trueFalse
+      tests:
+        words:
+          - 累
+      prompt:
+        kind: hanzi
+        ref: 累
+      statement: 累 nghĩa là “mệt”.
+      answer: true
+    - id: q-h1-11-x21
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 忙
+        grammar:
+          - h1-g26
+      prompt:
+        kind: audio
+        ref: s-h1-11-03
+      optionKind: hanzi
+      options:
+        - 我很忙。
+        - 我是中国人。
+        - 对，这是课本。
+      answer: 0
+    - id: q-h1-11-x22
+      type: choice
+      tests:
+        words:
+          - 忙
+        grammar:
+          - h1-g26
+      prompt:
+        kind: vi
+        text: Cô giáo rất bận.
+      optionKind: hanzi
+      options:
+        - 老师很忙
+        - 老师是忙
+        - 老师忙很
+      answer: 0

@@ -1,0 +1,18 @@
+id: h1-g34
+level: 1
+std:
+  - 47
+  - 33
+title: "Hỏi lựa chọn: 还是"
+pattern: A + 还是 + B
+explain: |-
+  还是 (hoàn thị, háishi) nghĩa là “hay là”, nối hai lựa chọn trong câu hỏi: 你上午学习还是下午学习？
+
+  Trả lời bằng cách chọn một: 我上午学习. Câu lựa chọn không thêm 吗.
+examples:
+  - s-h1-14-06
+  - s-h1-14-13
+pitfalls:
+  - wrong: 你是学生还是老师吗？
+    right: 你是学生还是老师？
+    why: Câu lựa chọn không thêm 吗.

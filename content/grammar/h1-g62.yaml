@@ -1,0 +1,22 @@
+id: h1-g62
+level: 1
+std:
+  - 22
+  - 40
+title: "Thay đổi: … + 了"
+pattern: tính từ / động từ + 了 (cuối câu)
+explain: |-
+  了 (liễu, le) cuối câu báo một tình hình mới: trước không như vậy, bây giờ đã như vậy. 天气冷了 = trời lạnh rồi (trước không lạnh). 我饿了 = tớ đói rồi. 八点了 = tám giờ rồi.
+
+  Có 不 thì là “không … nữa”: 不下雨了 = hết mưa rồi, 天气不冷了 = trời hết lạnh rồi.
+examples:
+  - s-h1-27-05
+  - s-h1-27-10
+  - s-h1-27-13
+pitfalls:
+  - wrong: 天气了冷
+    right: 天气冷了
+    why: 了 đứng cuối, sau tính từ hoặc động từ.
+  - wrong: 昨天很热，今天很冷
+    right: 昨天很热，今天冷了
+    why: Muốn nói “đã chuyển sang lạnh” thì cần 了; không có 了 chỉ là tả.

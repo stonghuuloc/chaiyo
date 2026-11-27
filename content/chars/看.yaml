@@ -1,0 +1,16 @@
+hanzi: 看
+readings:
+  - pinyin: kàn
+    hanviet: khán
+  - pinyin: kān
+    hanviet: khán
+    rare: true
+radical: 目
+ids: ⿱龵目
+strokes: 9
+mnemonic:
+  hinh: bàn tay đặt che phía trên con mắt 目 để nhìn cho rõ, nhìn xa — đúng nghĩa gốc chữ tượng hình chỉ động tác che mắt nhìn.
+  am: Hán Việt "khán" — nhớ qua "khán giả" (người xem), "khán đài" (chỗ xem).
+  doiThat: nút 好看/难看 đánh giá trên app mua sắm, 看视频 xem video, 看医生 đi khám bác sĩ ghi trên lịch hẹn.
+  tuongPhan: ≠ 着 (zhe/zháo, trợ từ, không liên quan bộ 目 dù phần trên viết gần giống).
+  kind: etymology

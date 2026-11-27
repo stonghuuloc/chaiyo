@@ -1,0 +1,17 @@
+id: h1-g17
+level: 1
+std:
+  - 14
+title: "Không: 不"
+pattern: 不 + 是 / động từ
+explain: |-
+  不 (bất, bù) đứng trước 是 hoặc động từ để phủ định: 他不是医生 = Anh ấy không phải bác sĩ; 我不做医生 = Tớ không làm bác sĩ.
+
+  不 đọc là bú khi sau nó là âm thanh 4: 不是 đọc bú shì. Riêng 有 phủ định bằng 没有.
+examples:
+  - s-h1-07-04
+  - s-h1-07-14
+pitfalls:
+  - wrong: 他不医生
+    right: 他不是医生
+    why: Câu có 是 thì giữ 是 khi phủ định.

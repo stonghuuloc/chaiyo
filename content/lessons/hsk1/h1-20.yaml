@@ -1,0 +1,685 @@
+id: h1-20
+level: 1
+topic: Ăn uống
+order: 20
+title: Giá tiền
+titleHanzi: 钱
+goal: Mua đồ, hỏi giá, nói tiền bằng 块 và 毛; phân biệt 多少 và 几
+scene:
+  file: lessons/h1-20.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at a market stall with a small price sign; the red panda counts coins in its paws and the takin points at a teapot.
+sentences:
+  - id: s-h1-20-01
+    hanzi: 你想买什么？
+    pinyin: nǐ xiǎng mǎi shénme?
+    vi: Cậu muốn mua gì?
+    speaker: takin
+  - id: s-h1-20-02
+    hanzi: 我想买茶。
+    pinyin: wǒ xiǎng mǎi chá.
+    vi: Tớ muốn mua trà.
+    speaker: redpanda
+  - id: s-h1-20-03
+    hanzi: 茶多少钱？
+    pinyin: chá duōshao qián?
+    vi: Trà bao nhiêu tiền?
+    speaker: takin
+  - id: s-h1-20-04
+    hanzi: 一杯十块。
+    pinyin: yī bēi shí kuài.
+    vi: Một cốc mười đồng.
+    speaker: redpanda
+  - id: s-h1-20-05
+    hanzi: 十块？很贵！
+    pinyin: shí kuài? hěn guì!
+    vi: Mười đồng? Đắt quá!
+    speaker: takin
+  - id: s-h1-20-06
+    hanzi: 不贵，这是好茶。
+    pinyin: bù guì, zhè shì hǎo chá.
+    vi: Không đắt, đây là trà ngon.
+    speaker: redpanda
+  - id: s-h1-20-07
+    hanzi: 我想买票，多少钱？
+    pinyin: wǒ xiǎng mǎi piào, duōshao qián?
+    vi: Tớ muốn mua vé, bao nhiêu tiền?
+    speaker: takin
+  - id: s-h1-20-08
+    hanzi: 票十二块。
+    pinyin: piào shí’èr kuài.
+    vi: Vé mười hai đồng.
+    speaker: redpanda
+  - id: s-h1-20-09
+    hanzi: 我有二十块。
+    pinyin: wǒ yǒu èrshí kuài.
+    vi: Tớ có hai mươi đồng.
+    speaker: takin
+  - id: s-h1-20-10
+    hanzi: 好，给你。
+    pinyin: hǎo, gěi nǐ.
+    vi: Được, đây cho cậu.
+    speaker: redpanda
+  - id: s-h1-20-11
+    hanzi: 这本书多少钱？
+    pinyin: zhè běn shū duōshao qián?
+    vi: Cuốn sách này bao nhiêu tiền?
+  - id: s-h1-20-12
+    hanzi: 这本书三十五元。
+    pinyin: zhè běn shū sānshíwǔ yuán.
+    vi: Cuốn sách này 35 đồng.
+  - id: s-h1-20-13
+    hanzi: 你有几块钱？
+    pinyin: nǐ yǒu jǐ kuài qián?
+    vi: Bạn có mấy đồng?
+  - id: s-h1-20-14
+    hanzi: 一块五毛。
+    pinyin: yī kuài wǔ máo.
+    vi: Một đồng rưỡi.
+  - id: s-h1-20-15
+    hanzi: 水不贵，茶很贵。
+    pinyin: shuǐ bù guì, chá hěn guì.
+    vi: Nước không đắt, trà rất đắt.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 买
+      - 多少-duo1shao5
+      - 钱
+      - 块
+      - 元
+      - 毛
+      - 贵
+      - 票
+  grammar:
+    ids:
+      - h1-g44
+      - h1-g45
+    drills:
+      - id: q-h1-20-g01
+        type: choice
+        tests:
+          words:
+            - 块
+            - 毛
+          grammar:
+            - h1-g44
+        prompt:
+          kind: vi
+          text: một đồng rưỡi (1,5)
+        optionKind: hanzi
+        options:
+          - 一块五毛
+          - 一毛五块
+          - 五毛一块
+        answer: 0
+      - id: q-h1-20-g02
+        type: choice
+        tests:
+          words:
+            - 块
+          grammar:
+            - h1-g44
+        prompt:
+          kind: vi
+          text: mười hai đồng (12)
+        optionKind: hanzi
+        options:
+          - 十二块
+          - 二十一块
+          - 十块二
+        answer: 0
+      - id: q-h1-20-g03
+        type: trueFalse
+        tests:
+          words:
+            - 块
+          grammar:
+            - h1-g44
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: “二块” là 2 đồng.
+        answer: false
+      - id: q-h1-20-g04
+        type: choice
+        tests:
+          words:
+            - 元
+          grammar:
+            - h1-g44
+        prompt:
+          kind: vi
+          text: Cuốn sách này 35 đồng.
+        optionKind: hanzi
+        options:
+          - 这本书三十五元
+          - 这本书三五十元
+          - 书这本三十五元
+        answer: 0
+      - id: q-h1-20-g05
+        type: choice
+        tests:
+          words:
+            - 多少-duo1shao5
+            - 钱
+          grammar:
+            - h1-g45
+        prompt:
+          kind: vi
+          text: Trà bao nhiêu tiền?
+        optionKind: hanzi
+        options:
+          - 茶多少钱
+          - 茶几钱
+          - 茶钱多少
+        answer: 0
+      - id: q-h1-20-g06
+        type: trueFalse
+        tests:
+          words:
+            - 钱
+          grammar:
+            - h1-g45
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 这本书几钱？
+        answer: false
+      - id: q-h1-20-g07
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 多少-duo1shao5
+            - 钱
+          grammar:
+            - h1-g45
+        prompt:
+          kind: audio
+          ref: s-h1-20-11
+        optionKind: hanzi
+        options:
+          - 这本书三十五元。
+          - 我想买茶。
+          - 好，给你。
+        answer: 0
+      - id: q-h1-20-g08
+        type: choice
+        tests:
+          words:
+            - 块
+            - 钱
+          grammar:
+            - h1-g45
+        prompt:
+          kind: vi
+          text: Cậu có mấy đồng?
+        optionKind: hanzi
+        options:
+          - 你有几块钱
+          - 你有块几钱
+          - 几你有块钱
+        answer: 0
+  dialogue:
+    parts:
+      - title: Mua trà
+        lines:
+          - s-h1-20-01
+          - s-h1-20-02
+          - s-h1-20-03
+          - s-h1-20-04
+          - s-h1-20-05
+          - s-h1-20-06
+      - title: Mua vé
+        lines:
+          - s-h1-20-07
+          - s-h1-20-08
+          - s-h1-20-09
+          - s-h1-20-10
+    questions:
+      - id: q-h1-20-d01
+        type: choice
+        ask: Một cốc trà bao nhiêu tiền?
+        tests:
+          words:
+            - 块
+          grammar:
+            - h1-g44
+        prompt:
+          kind: audio
+          ref: s-h1-20-04
+        optionKind: vi
+        options:
+          - 10 đồng
+          - 5 đồng
+          - 12 đồng
+        answer: 0
+      - id: q-h1-20-d02
+        type: choice
+        ask: Vé bao nhiêu tiền?
+        tests:
+          words:
+            - 票
+            - 钱
+          grammar:
+            - h1-g45
+        prompt:
+          kind: audio
+          ref: s-h1-20-08
+        optionKind: vi
+        options:
+          - 12 đồng
+          - 20 đồng
+          - 10 đồng
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-20-l01
+        type: tone
+        tests:
+          words:
+            - 贵
+          tone: true
+        prompt:
+          kind: audio
+          ref: 贵
+        syllable: 0
+        answer: 4
+      - id: q-h1-20-l02
+        type: choice
+        tests:
+          words:
+            - 钱
+        prompt:
+          kind: audio
+          ref: 钱
+        optionKind: hanzi
+        options:
+          - 钱
+          - 块
+          - 元
+          - 毛
+        answer: 0
+      - id: q-h1-20-l03
+        type: choice
+        tests:
+          words:
+            - 票
+        prompt:
+          kind: audio
+          ref: 票
+        optionKind: hanzi
+        options:
+          - 票
+          - 钱
+          - 买
+          - 贵
+        answer: 0
+      - id: q-h1-20-s01
+        type: readAloud
+        tests:
+          words:
+            - 钱
+            - 多少-duo1shao5
+          grammar:
+            - h1-g45
+          tone: true
+        sentence: s-h1-20-03
+      - id: q-h1-20-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 钱
+            - 多少-duo1shao5
+          grammar:
+            - h1-g45
+        prompt:
+          kind: vi
+          text: Hỏi giá một quyển sách.
+        rubric:
+          - Dùng 这本书多少钱？
+        answer: s-h1-20-11
+      - id: q-h1-20-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 块
+          grammar:
+            - h1-g44
+        prompt:
+          kind: vi
+          text: Nói giá 12 đồng.
+        rubric:
+          - Dùng 十二块
+        answer: s-h1-20-08
+  writing:
+    chars:
+      - 买
+      - 钱
+      - 块
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-20-x01
+      type: choice
+      tests:
+        words:
+          - 买
+      prompt:
+        kind: hanzi
+        ref: 买
+      optionKind: vi
+      options:
+        - mua
+        - bán
+        - ăn
+        - uống
+      answer: 0
+    - id: q-h1-20-x02
+      type: choice
+      tests:
+        words:
+          - 多少-duo1shao5
+      prompt:
+        kind: audio
+        ref: 多少-duo1shao5
+      optionKind: vi
+      options:
+        - bao nhiêu
+        - mấy
+        - nhiều
+        - ít
+      answer: 0
+    - id: q-h1-20-x03
+      type: typePinyin
+      tests:
+        words:
+          - 钱
+      prompt:
+        kind: hanzi
+        ref: 钱
+      answer: qián
+    - id: q-h1-20-x04
+      type: choice
+      tests:
+        words:
+          - 块
+      prompt:
+        kind: vi
+        text: đồng (khi nói)
+      optionKind: hanzi
+      options:
+        - 块
+        - 毛
+        - 票
+        - 买
+      answer: 0
+    - id: q-h1-20-x05
+      type: choice
+      tests:
+        words:
+          - 元
+      prompt:
+        kind: hanzi
+        ref: 元
+      optionKind: vi
+      options:
+        - đồng (khi viết)
+        - hào
+        - vé
+        - mua
+      answer: 0
+    - id: q-h1-20-x06
+      type: choice
+      tests:
+        words:
+          - 毛
+      prompt:
+        kind: vi
+        text: hào (một phần mười đồng)
+      optionKind: hanzi
+      options:
+        - 毛
+        - 块
+        - 元
+        - 钱
+      answer: 0
+    - id: q-h1-20-x07
+      type: choice
+      tests:
+        words:
+          - 贵
+      prompt:
+        kind: audio
+        ref: 贵
+      optionKind: vi
+      options:
+        - đắt
+        - rẻ
+        - ngon
+        - bận
+      answer: 0
+    - id: q-h1-20-x08
+      type: choice
+      tests:
+        words:
+          - 票
+      prompt:
+        kind: hanzi
+        ref: 票
+      optionKind: vi
+      options:
+        - vé
+        - tiền
+        - sách
+        - trà
+      answer: 0
+    - id: q-h1-20-x09
+      type: choice
+      tests:
+        words:
+          - 块
+          - 毛
+        grammar:
+          - h1-g44
+      prompt:
+        kind: vi
+        text: một đồng rưỡi (1,5)
+      optionKind: hanzi
+      options:
+        - 一块五毛
+        - 一毛五块
+        - 五毛一块
+      answer: 0
+    - id: q-h1-20-x10
+      type: choice
+      tests:
+        words:
+          - 块
+        grammar:
+          - h1-g44
+      prompt:
+        kind: vi
+        text: mười hai đồng (12)
+      optionKind: hanzi
+      options:
+        - 十二块
+        - 二十一块
+        - 十块二
+      answer: 0
+    - id: q-h1-20-x11
+      type: trueFalse
+      tests:
+        words:
+          - 块
+        grammar:
+          - h1-g44
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: “二块” là 2 đồng.
+      answer: false
+    - id: q-h1-20-x12
+      type: choice
+      tests:
+        words:
+          - 元
+        grammar:
+          - h1-g44
+      prompt:
+        kind: vi
+        text: Cuốn sách này 35 đồng.
+      optionKind: hanzi
+      options:
+        - 这本书三十五元
+        - 这本书三五十元
+        - 书这本三十五元
+      answer: 0
+    - id: q-h1-20-x13
+      type: choice
+      tests:
+        words:
+          - 多少-duo1shao5
+          - 钱
+        grammar:
+          - h1-g45
+      prompt:
+        kind: vi
+        text: Trà bao nhiêu tiền?
+      optionKind: hanzi
+      options:
+        - 茶多少钱
+        - 茶几钱
+        - 茶钱多少
+      answer: 0
+    - id: q-h1-20-x14
+      type: trueFalse
+      tests:
+        words:
+          - 钱
+        grammar:
+          - h1-g45
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 这本书几钱？
+      answer: false
+    - id: q-h1-20-x15
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 多少-duo1shao5
+          - 钱
+        grammar:
+          - h1-g45
+      prompt:
+        kind: audio
+        ref: s-h1-20-11
+      optionKind: hanzi
+      options:
+        - 这本书三十五元。
+        - 我想买茶。
+        - 好，给你。
+      answer: 0
+    - id: q-h1-20-x16
+      type: choice
+      tests:
+        words:
+          - 块
+          - 钱
+        grammar:
+          - h1-g45
+      prompt:
+        kind: vi
+        text: Cậu có mấy đồng?
+      optionKind: hanzi
+      options:
+        - 你有几块钱
+        - 你有块几钱
+        - 几你有块钱
+      answer: 0
+    - id: q-h1-20-x17
+      type: choice
+      tests:
+        words:
+          - 买
+          - 票
+          - 钱
+      prompt:
+        kind: audio
+        ref: s-h1-20-07
+      optionKind: vi
+      options:
+        - Tớ muốn mua vé, bao nhiêu tiền?
+        - Tớ muốn mua trà
+        - Tớ có 20 đồng
+      answer: 0
+    - id: q-h1-20-x18
+      type: tone
+      tests:
+        words:
+          - 买
+        tone: true
+      prompt:
+        kind: audio
+        ref: 买
+      syllable: 0
+      answer: 3
+    - id: q-h1-20-x19
+      type: choice
+      tests:
+        words:
+          - 贵
+      prompt:
+        kind: vi
+        text: Nước không đắt, trà rất đắt.
+      optionKind: hanzi
+      options:
+        - 水不贵，茶很贵
+        - 水很贵，茶不贵
+        - 水不茶贵
+      answer: 0
+    - id: q-h1-20-x20
+      type: trueFalse
+      tests:
+        words:
+          - 毛
+      prompt:
+        kind: hanzi
+        ref: 毛
+      statement: 毛 là “hào”, một phần mười đồng.
+      answer: true
+    - id: q-h1-20-x21
+      type: choice
+      tests:
+        words:
+          - 块
+      prompt:
+        kind: vi
+        text: Tớ có 20 đồng.
+      optionKind: hanzi
+      options:
+        - 我有二十块
+        - 我有二块十
+        - 我有块二十
+      answer: 0
+    - id: q-h1-20-x22
+      type: choice
+      tests:
+        words:
+          - 块
+          - 毛
+      prompt:
+        kind: audio
+        ref: s-h1-20-14
+      optionKind: vi
+      options:
+        - 1,5 đồng
+        - 15 đồng
+        - 5,1 đồng
+      answer: 0

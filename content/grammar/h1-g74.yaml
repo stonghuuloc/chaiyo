@@ -1,0 +1,21 @@
+id: h1-g74
+level: 1
+std:
+  - 4
+title: "Hỏi mức độ: 多 + tính từ"
+pattern: (有) 多 + 大 / 高 / 远
+explain: |-
+  多 (đa, duō) đứng trước tính từ để hỏi “bao nhiêu, cỡ nào”: 多大 = to cỡ nào, 多高 = cao bao nhiêu, 多远 = xa bao nhiêu. Có thể thêm 有 phía trước: 包子有多大？
+
+  Hỏi tuổi dùng 多大了: 你的孩子多大了？ 多少 hỏi số lượng (多少钱), còn 多 + tính từ hỏi mức độ.
+examples:
+  - s-h1-34-05
+  - s-h1-34-13
+  - s-h1-34-15
+pitfalls:
+  - wrong: 你的孩子多大了吗？
+    right: 你的孩子多大了？
+    why: Câu đã có từ hỏi 多 thì không thêm 吗.
+  - wrong: 车站多少远？
+    right: 车站多远？
+    why: Hỏi mức độ dùng 多 + tính từ, không dùng 多少.

@@ -1,0 +1,14 @@
+id: h1-g38
+level: 1
+std:
+  - 41
+title: "Phủ định việc đã xảy ra: 没"
+pattern: 没 + động từ
+explain: "没 (một, méi) phủ định việc không xảy ra hoặc chưa xảy ra trong quá khứ, và bỏ 了: 我昨天没来."
+examples:
+  - s-h1-16-11
+  - s-h1-16-15
+pitfalls:
+  - wrong: 我昨天没来了
+    right: 我昨天没来
+    why: Có 没 thì bỏ 了.

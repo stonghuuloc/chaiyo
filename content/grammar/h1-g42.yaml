@@ -1,0 +1,17 @@
+id: h1-g42
+level: 1
+std:
+  - 16
+title: "Ở đâu làm gì: 在"
+pattern: 在 + nơi chốn + động từ
+explain: |-
+  在 (tại, zài) + nơi chốn đứng trước động từ: 我在饭店吃饭 = Tớ ăn cơm ở nhà hàng. Hỏi: 你在哪儿吃饭？
+
+  Không đặt 在 + nơi chốn sau động từ.
+examples:
+  - s-h1-19-02
+  - s-h1-19-11
+pitfalls:
+  - wrong: 我吃饭在饭店
+    right: 我在饭店吃饭
+    why: 在 + nơi chốn đứng trước động từ.

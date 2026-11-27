@@ -1,0 +1,13 @@
+hanzi: 汉
+readings:
+  - pinyin: hàn
+    hanviet: hán
+radical: 水
+ids: ⿰氵又
+strokes: 5
+mnemonic:
+  hinh: "氵 (nước) bên trái + 又 bên phải (chỉ là nét thay thế giản thể, đừng cố tìm nghĩa) — nhớ qua nguồn gốc: 汉 vốn gắn với sông Hán Thuỷ (汉水), từ đó thành tên triều đại rồi tên dân tộc/ngôn ngữ."
+  am: '"Hán" — giữ nguyên, dùng trong "Hán tộc, Hán ngữ, Hán tự, Hán Việt".'
+  doiThat: sách/app "汉语" (Hán ngữ - tiếng Trung) khi học tiếng Trung; từ "汉字" (chữ Hán) khi nói về chữ viết.
+  tuongPhan: ≠ 双 (đã học, đôi/cặp) — 双 gồm hai chữ 又 chồng cạnh nhau (⿰又又), 汉 chỉ có một 又 đứng cạnh 氵.
+  kind: etymology

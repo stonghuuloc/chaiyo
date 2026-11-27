@@ -1,0 +1,688 @@
+id: h1-28
+level: 1
+topic: Thời tiết và đi lại
+order: 28
+title: Nóng và lạnh
+titleHanzi: 热
+goal: So sánh hơn bằng 比; nói không bằng bằng 没有; nói cao, to, nhỏ, nhiều, ít, chậm
+scene:
+  file: lessons/h1-28.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. On a hot sunny day they sit at a small outdoor table; the takin holds a big glass of cold water and the red panda holds a small cup of hot tea, both comparing their drinks.
+sentences:
+  - id: s-h1-28-01
+    hanzi: 今天比昨天热吗？
+    pinyin: jīntiān bǐ zuótiān rè ma?
+    vi: Hôm nay nóng hơn hôm qua không?
+    speaker: takin
+  - id: s-h1-28-02
+    hanzi: 今天比昨天热。
+    pinyin: jīntiān bǐ zuótiān rè.
+    vi: Hôm nay nóng hơn hôm qua.
+    speaker: redpanda
+  - id: s-h1-28-03
+    hanzi: 我很渴，我想喝冷水。
+    pinyin: wǒ hěn kě, wǒ xiǎng hē lěng shuǐ.
+    vi: Tớ khát quá, tớ muốn uống nước lạnh.
+    speaker: takin
+  - id: s-h1-28-04
+    hanzi: 我没有你渴，我喝热茶。
+    pinyin: wǒ méiyǒu nǐ kě, wǒ hē rè chá.
+    vi: Tớ không khát bằng cậu, tớ uống trà nóng.
+    speaker: redpanda
+  - id: s-h1-28-05
+    hanzi: 你的杯子比我的大吗？
+    pinyin: nǐ de bēizi bǐ wǒ de dà ma?
+    vi: Cốc của cậu to hơn cốc của tớ à?
+    speaker: takin
+  - id: s-h1-28-06
+    hanzi: 我的杯子比你的小，水也比你的少。
+    pinyin: wǒ de bēizi bǐ nǐ de xiǎo, shuǐ yě bǐ nǐ de shǎo.
+    vi: Cốc của tớ nhỏ hơn cốc của cậu, nước cũng ít hơn của cậu.
+    speaker: redpanda
+  - id: s-h1-28-07
+    hanzi: 你哥哥高吗？
+    pinyin: nǐ gēge gāo ma?
+    vi: Anh trai cậu có cao không?
+    speaker: takin
+  - id: s-h1-28-08
+    hanzi: 我哥哥比我高，我没有他高。
+    pinyin: wǒ gēge bǐ wǒ gāo, wǒ méiyǒu tā gāo.
+    vi: Anh trai tớ cao hơn tớ, tớ không cao bằng anh ấy.
+    speaker: redpanda
+  - id: s-h1-28-09
+    hanzi: 我弟弟没有我高，他吃饭比我慢。
+    pinyin: wǒ dìdi méiyǒu wǒ gāo, tā chīfàn bǐ wǒ màn.
+    vi: Em trai tớ không cao bằng tớ, nó ăn cơm chậm hơn tớ.
+    speaker: takin
+  - id: s-h1-28-10
+    hanzi: 我吃饭很快，他吃饭很慢。
+    pinyin: wǒ chīfàn hěn kuài, tā chīfàn hěn màn.
+    vi: Tớ ăn cơm rất nhanh, anh ấy ăn cơm rất chậm.
+    speaker: redpanda
+  - id: s-h1-28-11
+    hanzi: 他比我高。
+    pinyin: tā bǐ wǒ gāo.
+    vi: Anh ấy cao hơn tôi.
+  - id: s-h1-28-12
+    hanzi: 妹妹没有我高。
+    pinyin: mèimei méiyǒu wǒ gāo.
+    vi: Em gái không cao bằng tôi.
+  - id: s-h1-28-13
+    hanzi: 白天比晚上热。
+    pinyin: báitiān bǐ wǎnshang rè.
+    vi: Ban ngày nóng hơn buổi tối.
+  - id: s-h1-28-14
+    hanzi: 我的水没有你的多。
+    pinyin: wǒ de shuǐ méiyǒu nǐ de duō.
+    vi: Nước của tôi không nhiều bằng của cậu.
+  - id: s-h1-28-15
+    hanzi: 他的杯子比我的大。
+    pinyin: tā de bēizi bǐ wǒ de dà.
+    vi: Cốc của anh ấy to hơn cốc của tôi.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 比
+      - 没有
+      - 高
+      - 大
+      - 小
+      - 多
+      - 少
+      - 慢
+  grammar:
+    ids:
+      - h1-g64
+      - h1-g65
+    drills:
+      - id: q-h1-28-g01
+        type: choice
+        tests:
+          words:
+            - 比
+          grammar:
+            - h1-g64
+        prompt:
+          kind: vi
+          text: Hôm nay nóng hơn hôm qua.
+        optionKind: hanzi
+        options:
+          - 今天比昨天热
+          - 今天昨天比热
+          - 比今天昨天热
+        answer: 0
+      - id: q-h1-28-g02
+        type: trueFalse
+        tests:
+          words:
+            - 比
+          grammar:
+            - h1-g64
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 今天热比昨天。
+        answer: false
+      - id: q-h1-28-g03
+        type: order
+        tests:
+          words:
+            - 比
+            - 高
+          grammar:
+            - h1-g64
+        tiles:
+          - 他
+          - 比
+          - 我
+          - 高
+        answer: s-h1-28-11
+      - id: q-h1-28-g04
+        type: choice
+        tests:
+          words:
+            - 没有
+            - 高
+          grammar:
+            - h1-g65
+        prompt:
+          kind: vi
+          text: Em gái không cao bằng tôi.
+        optionKind: hanzi
+        options:
+          - 妹妹没有我高
+          - 妹妹有没我高
+          - 妹妹没有高我
+        answer: 0
+      - id: q-h1-28-g05
+        type: trueFalse
+        tests:
+          words:
+            - 没有
+          grammar:
+            - h1-g65
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 妹妹不有我高。
+        answer: false
+      - id: q-h1-28-g06
+        type: choice
+        tests:
+          words:
+            - 比
+            - 小
+          grammar:
+            - h1-g64
+        prompt:
+          kind: vi
+          text: Cốc của tớ nhỏ hơn cốc của cậu.
+        optionKind: hanzi
+        options:
+          - 我的杯子比你的小
+          - 我的杯子小比你的
+          - 比我的杯子你的小
+        answer: 0
+      - id: q-h1-28-g07
+        type: order
+        tests:
+          words:
+            - 没有
+            - 多
+          grammar:
+            - h1-g65
+        tiles:
+          - 我的
+          - 水
+          - 没有
+          - 你的
+          - 多
+        answer: s-h1-28-14
+      - id: q-h1-28-g08
+        type: choice
+        tests:
+          words:
+            - 慢
+            - 比
+          grammar:
+            - h1-g64
+        prompt:
+          kind: vi
+          text: Anh ấy ăn cơm chậm hơn tôi.
+        optionKind: hanzi
+        options:
+          - 他吃饭比我慢
+          - 他吃饭慢比我
+          - 他比吃饭我慢
+        answer: 0
+  dialogue:
+    parts:
+      - title: Nóng hơn, lạnh hơn
+        lines:
+          - s-h1-28-01
+          - s-h1-28-02
+          - s-h1-28-03
+          - s-h1-28-04
+          - s-h1-28-05
+          - s-h1-28-06
+      - title: Cao hơn, chậm hơn
+        lines:
+          - s-h1-28-07
+          - s-h1-28-08
+          - s-h1-28-09
+          - s-h1-28-10
+    questions:
+      - id: q-h1-28-d01
+        type: choice
+        ask: Cốc của gấu trúc đỏ thế nào so với cốc của bò takin?
+        tests:
+          words:
+            - 比
+            - 小
+          grammar:
+            - h1-g64
+        prompt:
+          kind: audio
+          ref: s-h1-28-06
+        optionKind: vi
+        options:
+          - nhỏ hơn, nước ít hơn
+          - to hơn, nước nhiều hơn
+          - to bằng nhau
+        answer: 0
+      - id: q-h1-28-d02
+        type: choice
+        ask: Gấu trúc đỏ khát thế nào so với bò takin?
+        tests:
+          words:
+            - 没有
+          grammar:
+            - h1-g65
+        prompt:
+          kind: audio
+          ref: s-h1-28-04
+        optionKind: vi
+        options:
+          - không khát bằng bò takin
+          - khát hơn bò takin
+          - khát như bò takin
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-28-l01
+        type: tone
+        tests:
+          words:
+            - 比
+          tone: true
+        prompt:
+          kind: audio
+          ref: 比
+        syllable: 0
+        answer: 3
+      - id: q-h1-28-l02
+        type: choice
+        tests:
+          words:
+            - 慢
+        prompt:
+          kind: audio
+          ref: 慢
+        optionKind: hanzi
+        options:
+          - 慢
+          - 高
+          - 大
+          - 小
+        answer: 0
+      - id: q-h1-28-l03
+        type: choice
+        tests:
+          words:
+            - 没有
+        prompt:
+          kind: audio
+          ref: 没有
+        optionKind: hanzi
+        options:
+          - 没有
+          - 比
+          - 多
+          - 少
+        answer: 0
+      - id: q-h1-28-s01
+        type: readAloud
+        tests:
+          words:
+            - 没有
+          grammar:
+            - h1-g65
+          tone: true
+        sentence: s-h1-28-04
+      - id: q-h1-28-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 比
+          grammar:
+            - h1-g64
+        prompt:
+          kind: vi
+          text: Nói hôm nay nóng hơn hôm qua.
+        rubric:
+          - Dùng 今天比昨天热
+        answer: s-h1-28-02
+      - id: q-h1-28-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 没有
+            - 高
+          grammar:
+            - h1-g65
+        prompt:
+          kind: vi
+          text: Nói bạn không cao bằng anh trai.
+        rubric:
+          - Dùng 我没有哥哥高 hoặc 我没有他高
+        answer: s-h1-28-08
+  writing:
+    chars:
+      - 比
+      - 慢
+      - 高
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-28-x01
+      type: choice
+      tests:
+        words:
+          - 比
+      prompt:
+        kind: hanzi
+        ref: 比
+      optionKind: vi
+      options:
+        - hơn, so với
+        - không bằng
+        - nhiều
+        - chậm
+      answer: 0
+    - id: q-h1-28-x02
+      type: choice
+      tests:
+        words:
+          - 没有
+      prompt:
+        kind: vi
+        text: không có, không bằng
+      optionKind: hanzi
+      options:
+        - 没有
+        - 比
+        - 高
+        - 大
+      answer: 0
+    - id: q-h1-28-x03
+      type: choice
+      tests:
+        words:
+          - 高
+      prompt:
+        kind: hanzi
+        ref: 高
+      optionKind: vi
+      options:
+        - cao
+        - to, lớn
+        - nhỏ, bé
+        - chậm
+      answer: 0
+    - id: q-h1-28-x04
+      type: choice
+      tests:
+        words:
+          - 大
+      prompt:
+        kind: vi
+        text: to, lớn
+      optionKind: hanzi
+      options:
+        - 大
+        - 小
+        - 多
+        - 少
+      answer: 0
+    - id: q-h1-28-x05
+      type: choice
+      tests:
+        words:
+          - 小
+      prompt:
+        kind: hanzi
+        ref: 小
+      optionKind: vi
+      options:
+        - nhỏ, bé
+        - to, lớn
+        - nhiều
+        - ít
+      answer: 0
+    - id: q-h1-28-x06
+      type: choice
+      tests:
+        words:
+          - 多
+      prompt:
+        kind: vi
+        text: nhiều
+      optionKind: hanzi
+      options:
+        - 多
+        - 少
+        - 大
+        - 小
+      answer: 0
+    - id: q-h1-28-x07
+      type: choice
+      tests:
+        words:
+          - 少
+      prompt:
+        kind: hanzi
+        ref: 少
+      optionKind: vi
+      options:
+        - ít
+        - nhiều
+        - cao
+        - chậm
+      answer: 0
+    - id: q-h1-28-x08
+      type: choice
+      tests:
+        words:
+          - 慢
+      prompt:
+        kind: vi
+        text: chậm
+      optionKind: hanzi
+      options:
+        - 慢
+        - 高
+        - 大
+        - 小
+      answer: 0
+    - id: q-h1-28-x09
+      type: choice
+      tests:
+        words:
+          - 比
+        grammar:
+          - h1-g64
+      prompt:
+        kind: vi
+        text: Hôm nay nóng hơn hôm qua.
+      optionKind: hanzi
+      options:
+        - 今天比昨天热
+        - 今天昨天比热
+        - 比今天昨天热
+      answer: 0
+    - id: q-h1-28-x10
+      type: trueFalse
+      tests:
+        words:
+          - 比
+        grammar:
+          - h1-g64
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 今天热比昨天。
+      answer: false
+    - id: q-h1-28-x11
+      type: order
+      tests:
+        words:
+          - 比
+          - 高
+        grammar:
+          - h1-g64
+      tiles:
+        - 他
+        - 比
+        - 我
+        - 高
+      answer: s-h1-28-11
+    - id: q-h1-28-x12
+      type: choice
+      tests:
+        words:
+          - 比
+          - 小
+        grammar:
+          - h1-g64
+      prompt:
+        kind: vi
+        text: Cốc của tớ nhỏ hơn cốc của cậu.
+      optionKind: hanzi
+      options:
+        - 我的杯子比你的小
+        - 我的杯子小比你的
+        - 比我的杯子你的小
+      answer: 0
+    - id: q-h1-28-x13
+      type: choice
+      tests:
+        words:
+          - 慢
+          - 比
+        grammar:
+          - h1-g64
+      prompt:
+        kind: vi
+        text: Anh ấy ăn cơm chậm hơn tôi.
+      optionKind: hanzi
+      options:
+        - 他吃饭比我慢
+        - 他吃饭慢比我
+        - 他比吃饭我慢
+      answer: 0
+    - id: q-h1-28-x14
+      type: choice
+      tests:
+        words:
+          - 没有
+          - 高
+        grammar:
+          - h1-g65
+      prompt:
+        kind: vi
+        text: Em gái không cao bằng tôi.
+      optionKind: hanzi
+      options:
+        - 妹妹没有我高
+        - 妹妹有没我高
+        - 妹妹没有高我
+      answer: 0
+    - id: q-h1-28-x15
+      type: trueFalse
+      tests:
+        words:
+          - 没有
+        grammar:
+          - h1-g65
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 妹妹不有我高。
+      answer: false
+    - id: q-h1-28-x16
+      type: order
+      tests:
+        words:
+          - 没有
+          - 多
+        grammar:
+          - h1-g65
+      tiles:
+        - 我的
+        - 水
+        - 没有
+        - 你的
+        - 多
+      answer: s-h1-28-14
+    - id: q-h1-28-x17
+      type: choice
+      tests:
+        words:
+          - 没有
+        grammar:
+          - h1-g65
+      prompt:
+        kind: audio
+        ref: s-h1-28-04
+      optionKind: vi
+      options:
+        - tớ không khát bằng cậu
+        - tớ khát hơn cậu
+        - tớ không uống nước
+      answer: 0
+    - id: q-h1-28-x18
+      type: choice
+      tests:
+        words:
+          - 小
+          - 少
+        grammar:
+          - h1-g64
+      prompt:
+        kind: audio
+        ref: s-h1-28-06
+      optionKind: vi
+      options:
+        - cốc nhỏ hơn, nước ít hơn
+        - cốc to hơn, nước nhiều hơn
+        - cốc và nước bằng nhau
+      answer: 0
+    - id: q-h1-28-x19
+      type: choice
+      tests:
+        words:
+          - 比
+        grammar:
+          - h1-g64
+      prompt:
+        kind: audio
+        ref: s-h1-28-13
+      optionKind: vi
+      options:
+        - ban ngày nóng hơn buổi tối
+        - buổi tối nóng hơn ban ngày
+        - ban ngày không nóng
+      answer: 0
+    - id: q-h1-28-x20
+      type: trueFalse
+      tests:
+        words:
+          - 高
+      prompt:
+        kind: hanzi
+        ref: 高
+      statement: 高 nghĩa là “cao”.
+      answer: true
+    - id: q-h1-28-x21
+      type: choice
+      tests:
+        words:
+          - 大
+          - 比
+        grammar:
+          - h1-g64
+      prompt:
+        kind: vi
+        text: Cốc của anh ấy to hơn cốc của tôi.
+      optionKind: hanzi
+      options:
+        - 他的杯子比我的大
+        - 他的杯子大比我的
+        - 比他的杯子我的大
+      answer: 0
+    - id: q-h1-28-x22
+      type: trueFalse
+      tests:
+        words:
+          - 没有
+        grammar:
+          - h1-g65
+      prompt:
+        kind: hanzi
+        ref: 没有
+      statement: 没有 nghĩa là “không có, không bằng”.
+      answer: true

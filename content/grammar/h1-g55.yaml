@@ -1,0 +1,17 @@
+id: h1-g55
+level: 1
+std:
+  - 36
+title: "Là nơi nào: 是"
+pattern: nơi chốn + 是 + vật
+explain: |-
+  是 sau nơi chốn nói ở đó chính là gì, thường là toàn bộ nơi đó: 学校前面是大学 = Phía trước trường là đại học.
+
+  有 nói “có”, có thể còn thứ khác; 是 nói “chính là”.
+examples:
+  - s-h1-24-10
+  - s-h1-24-11
+pitfalls:
+  - wrong: 学校前面有大学是
+    right: 学校前面是大学
+    why: Nơi chốn + 是 + vật.

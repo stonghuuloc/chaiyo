@@ -1,0 +1,13 @@
+hanzi: 票
+readings:
+  - pinyin: piào
+    hanviet: phiếu
+radical: 示
+ids: ⿱覀示
+strokes: 11
+mnemonic:
+  hinh: 覀 + 示 → tờ giấy báo hiệu có quyền, tức vé, phiếu
+  am: phiếu — "phiếu", "bỏ phiếu"
+  doiThat: 车票, 门票
+  tuongPhan: "≠ 示 (shì): 票 thêm 覀 ở trên"
+  kind: invented

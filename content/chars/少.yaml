@@ -1,0 +1,16 @@
+hanzi: 少
+readings:
+  - pinyin: shǎo
+    hanviet: thiểu
+  - pinyin: shào
+    hanviet: thiếu
+    rare: true
+radical: 小
+ids: ⿱小丿
+strokes: 4
+mnemonic:
+  hinh: 小 (nhỏ) thêm một nét phẩy — đã nhỏ rồi còn bớt thêm = ít.
+  am: thiểu — thiểu số, giảm thiểu.
+  doiThat: Biểu đồ 减少 (giảm), câu hỏi 多少钱, cân thiếu 缺斤少两.
+  tuongPhan: ≠ 小 (小 là kích thước, 少 là số lượng) — chọn 小 vì gần hình nhất.
+  kind: invented

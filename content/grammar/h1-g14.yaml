@@ -1,0 +1,17 @@
+id: h1-g14
+level: 1
+std:
+  - 37
+title: "Có: 有"
+pattern: A + 有 + B · A + 没有 + B
+explain: |-
+  有 (hữu, yǒu) nghĩa là “có”: 我有弟弟 = Tớ có em trai. Hỏi thêm 吗: 你有弟弟吗？
+
+  Phủ định của 有 là 没有, không dùng 不: 我没有弟弟 = Tớ không có em trai.
+examples:
+  - s-h1-06-02
+  - s-h1-06-05
+pitfalls:
+  - wrong: 我不有弟弟
+    right: 我没有弟弟
+    why: 有 chỉ phủ định bằng 没.

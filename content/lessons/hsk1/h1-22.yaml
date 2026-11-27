@@ -1,0 +1,686 @@
+id: h1-22
+level: 1
+topic: Nơi chốn
+order: 22
+title: Vị trí
+titleHanzi: 在
+goal: Nói vật ở đâu bằng 在 và các từ chỉ phương vị; dùng 这儿 và 那儿
+scene:
+  file: lessons/h1-22.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand in a school yard; the red panda holds a bag and the takin points to a building behind them.
+sentences:
+  - id: s-h1-22-01
+    hanzi: 你的书在哪儿？
+    pinyin: nǐ de shū zài nǎr?
+    vi: Sách của cậu ở đâu?
+    speaker: takin
+  - id: s-h1-22-02
+    hanzi: 我的书在书包里。
+    pinyin: wǒ de shū zài shūbāo lǐ.
+    vi: Sách của tớ ở trong cặp.
+    speaker: redpanda
+  - id: s-h1-22-03
+    hanzi: 你的杯子在哪儿？
+    pinyin: nǐ de bēizi zài nǎr?
+    vi: Cái cốc của cậu ở đâu?
+    speaker: takin
+  - id: s-h1-22-04
+    hanzi: 我的杯子在你的左边。
+    pinyin: wǒ de bēizi zài nǐ de zuǒbiān.
+    vi: Cái cốc của tớ ở bên trái cậu.
+    speaker: redpanda
+    unknown: &a1
+      - hanzi: 边
+        pinyin: bian
+        vi: bên (học ở Bài 23)
+  - id: s-h1-22-05
+    hanzi: 不在左边，在右边。
+    pinyin: bù zài zuǒbiān, zài yòubiān.
+    vi: Không ở bên trái, ở bên phải.
+    speaker: takin
+    unknown: *a1
+  - id: s-h1-22-06
+    hanzi: 老师在哪儿？
+    pinyin: lǎoshī zài nǎr?
+    vi: Cô giáo ở đâu?
+    speaker: redpanda
+  - id: s-h1-22-07
+    hanzi: 老师在学校里。
+    pinyin: lǎoshī zài xuéxiào lǐ.
+    vi: Cô giáo ở trong trường.
+    speaker: takin
+  - id: s-h1-22-08
+    hanzi: 医院在学校前面。
+    pinyin: yīyuàn zài xuéxiào qiánmian.
+    vi: Bệnh viện ở phía trước trường.
+    speaker: redpanda
+  - id: s-h1-22-09
+    hanzi: 饭店在学校后面。
+    pinyin: fàndiàn zài xuéxiào hòumian.
+    vi: Nhà hàng ở phía sau trường.
+    speaker: takin
+  - id: s-h1-22-10
+    hanzi: 这儿是学校，那儿是医院。
+    pinyin: zhèr shì xuéxiào, nàr shì yīyuàn.
+    vi: Đây là trường, kia là bệnh viện.
+    speaker: redpanda
+  - id: s-h1-22-11
+    hanzi: 我的钱在书上。
+    pinyin: wǒ de qián zài shū shàng.
+    vi: Tiền của tôi ở trên sách.
+  - id: s-h1-22-12
+    hanzi: 你的杯子在书下面。
+    pinyin: nǐ de bēizi zài shū xiàmian.
+    vi: Cái cốc của bạn ở dưới sách.
+  - id: s-h1-22-13
+    hanzi: 你的朋友在学校外面。
+    pinyin: nǐ de péngyou zài xuéxiào wàimian.
+    vi: Bạn của bạn ở ngoài trường.
+  - id: s-h1-22-14
+    hanzi: 这儿是我家，那儿是饭店。
+    pinyin: zhèr shì wǒ jiā, nàr shì fàndiàn.
+    vi: Đây là nhà tôi, kia là nhà hàng.
+  - id: s-h1-22-15
+    hanzi: 爸爸在医院里工作。
+    pinyin: bàba zài yīyuàn lǐ gōngzuò.
+    vi: Bố làm việc trong bệnh viện.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 里
+      - 上
+      - 下
+      - 外
+      - 前
+      - 后
+      - 左
+      - 右
+  grammar:
+    ids:
+      - h1-g49
+      - h1-g50
+      - h1-g51
+    drills:
+      - id: q-h1-22-g01
+        type: choice
+        tests:
+          words:
+            - 里
+          grammar:
+            - h1-g49
+        prompt:
+          kind: vi
+          text: Sách của tớ ở trong cặp.
+        optionKind: hanzi
+        options:
+          - 我的书在书包里
+          - 我的书里在书包
+          - 在我的书书包里
+        answer: 0
+      - id: q-h1-22-g02
+        type: trueFalse
+        tests:
+          words:
+            - 里
+          grammar:
+            - h1-g49
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 老师在里学校。
+        answer: false
+      - id: q-h1-22-g03
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 里
+          grammar:
+            - h1-g49
+        prompt:
+          kind: audio
+          ref: s-h1-22-01
+        optionKind: hanzi
+        options:
+          - 我的书在书包里。
+          - 老师在学校里。
+          - 这儿是学校。
+        answer: 0
+      - id: q-h1-22-g04
+        type: choice
+        tests:
+          words:
+            - 前
+          grammar:
+            - h1-g50
+        prompt:
+          kind: vi
+          text: Bệnh viện ở phía trước trường.
+        optionKind: hanzi
+        options:
+          - 医院在学校前面
+          - 医院学校在前面
+          - 前面医院在学校
+        answer: 0
+      - id: q-h1-22-g05
+        type: order
+        tests:
+          words:
+            - 后
+          grammar:
+            - h1-g50
+        tiles:
+          - 饭店
+          - 在
+          - 学校
+          - 后面
+        answer: s-h1-22-09
+      - id: q-h1-22-g06
+        type: choice
+        tests:
+          words:
+            - 上
+            - 下
+          grammar:
+            - h1-g50
+        prompt:
+          kind: vi
+          text: Cái cốc của bạn ở dưới sách.
+        optionKind: hanzi
+        options:
+          - 你的杯子在书下面
+          - 你的杯子在下书面
+          - 在书下面你的杯子
+        answer: 0
+      - id: q-h1-22-g07
+        type: choice
+        tests:
+          words:
+            - 外
+          grammar:
+            - h1-g51
+        prompt:
+          kind: vi
+          text: Đây là trường, kia là bệnh viện.
+        optionKind: hanzi
+        options:
+          - 这儿是学校，那儿是医院
+          - 这儿学校，那儿医院
+          - 学校是这儿，医院是那儿
+        answer: 0
+      - id: q-h1-22-g08
+        type: trueFalse
+        tests:
+          grammar:
+            - h1-g51
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 这儿学校，那儿是医院。
+        answer: false
+  dialogue:
+    parts:
+      - title: Sách và cốc ở đâu?
+        lines:
+          - s-h1-22-01
+          - s-h1-22-02
+          - s-h1-22-03
+          - s-h1-22-04
+          - s-h1-22-05
+      - title: Trường và bệnh viện
+        lines:
+          - s-h1-22-06
+          - s-h1-22-07
+          - s-h1-22-08
+          - s-h1-22-09
+          - s-h1-22-10
+    questions:
+      - id: q-h1-22-d01
+        type: choice
+        ask: Sách của gấu trúc đỏ ở đâu?
+        tests:
+          words:
+            - 里
+          grammar:
+            - h1-g49
+        prompt:
+          kind: audio
+          ref: s-h1-22-02
+        optionKind: vi
+        options:
+          - trong cặp
+          - trên bàn
+          - ngoài trường
+        answer: 0
+      - id: q-h1-22-d02
+        type: choice
+        ask: Cái cốc ở bên nào?
+        tests:
+          words:
+            - 左
+            - 右
+          grammar:
+            - h1-g50
+        prompt:
+          kind: audio
+          ref: s-h1-22-05
+        optionKind: vi
+        options:
+          - bên phải
+          - bên trái
+          - phía sau
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-22-l01
+        type: tone
+        tests:
+          words:
+            - 里
+          tone: true
+        prompt:
+          kind: audio
+          ref: 里
+        syllable: 0
+        answer: 3
+      - id: q-h1-22-l02
+        type: choice
+        tests:
+          words:
+            - 里
+        prompt:
+          kind: audio
+          ref: 里
+        optionKind: hanzi
+        options:
+          - 里
+          - 上
+          - 下
+          - 外
+        answer: 0
+      - id: q-h1-22-l03
+        type: choice
+        tests:
+          words:
+            - 前
+        prompt:
+          kind: audio
+          ref: 前
+        optionKind: hanzi
+        options:
+          - 前
+          - 后
+          - 左
+          - 右
+        answer: 0
+      - id: q-h1-22-s01
+        type: readAloud
+        tests:
+          words:
+            - 里
+          grammar:
+            - h1-g49
+          tone: true
+        sentence: s-h1-22-02
+      - id: q-h1-22-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 里
+          grammar:
+            - h1-g49
+        prompt:
+          kind: vi
+          text: Nói sách của bạn ở đâu.
+        rubric:
+          - Dùng 我的书在 + nơi chốn
+        answer: s-h1-22-02
+      - id: q-h1-22-f02
+        type: freeAnswer
+        tests:
+          grammar:
+            - h1-g51
+        prompt:
+          kind: vi
+          text: Chỉ cho một bạn đây là đâu và kia là đâu.
+        rubric:
+          - Dùng 这儿是…，那儿是…
+        answer: s-h1-22-10
+  writing:
+    chars:
+      - 里
+      - 左
+      - 右
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-22-x01
+      type: choice
+      tests:
+        words:
+          - 里
+      prompt:
+        kind: hanzi
+        ref: 里
+      optionKind: vi
+      options:
+        - trong
+        - trên
+        - dưới
+        - ngoài
+      answer: 0
+    - id: q-h1-22-x02
+      type: choice
+      tests:
+        words:
+          - 上
+      prompt:
+        kind: vi
+        text: trên
+      optionKind: hanzi
+      options:
+        - 上
+        - 里
+        - 下
+        - 外
+      answer: 0
+    - id: q-h1-22-x03
+      type: choice
+      tests:
+        words:
+          - 下
+      prompt:
+        kind: hanzi
+        ref: 下
+      optionKind: vi
+      options:
+        - dưới
+        - trong
+        - trên
+        - ngoài
+      answer: 0
+    - id: q-h1-22-x04
+      type: choice
+      tests:
+        words:
+          - 外
+      prompt:
+        kind: vi
+        text: ngoài
+      optionKind: hanzi
+      options:
+        - 外
+        - 里
+        - 上
+        - 下
+      answer: 0
+    - id: q-h1-22-x05
+      type: choice
+      tests:
+        words:
+          - 前
+      prompt:
+        kind: hanzi
+        ref: 前
+      optionKind: vi
+      options:
+        - trước
+        - trong
+        - trên
+        - dưới
+      answer: 0
+    - id: q-h1-22-x06
+      type: choice
+      tests:
+        words:
+          - 后
+      prompt:
+        kind: vi
+        text: sau
+      optionKind: hanzi
+      options:
+        - 后
+        - 里
+        - 上
+        - 下
+      answer: 0
+    - id: q-h1-22-x07
+      type: choice
+      tests:
+        words:
+          - 左
+      prompt:
+        kind: hanzi
+        ref: 左
+      optionKind: vi
+      options:
+        - trái
+        - trong
+        - trên
+        - dưới
+      answer: 0
+    - id: q-h1-22-x08
+      type: choice
+      tests:
+        words:
+          - 右
+      prompt:
+        kind: vi
+        text: phải
+      optionKind: hanzi
+      options:
+        - 右
+        - 里
+        - 上
+        - 下
+      answer: 0
+    - id: q-h1-22-x09
+      type: choice
+      tests:
+        words:
+          - 里
+        grammar:
+          - h1-g49
+      prompt:
+        kind: vi
+        text: Sách của tớ ở trong cặp.
+      optionKind: hanzi
+      options:
+        - 我的书在书包里
+        - 我的书里在书包
+        - 在我的书书包里
+      answer: 0
+    - id: q-h1-22-x10
+      type: trueFalse
+      tests:
+        words:
+          - 里
+        grammar:
+          - h1-g49
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 老师在里学校。
+      answer: false
+    - id: q-h1-22-x11
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 里
+        grammar:
+          - h1-g49
+      prompt:
+        kind: audio
+        ref: s-h1-22-01
+      optionKind: hanzi
+      options:
+        - 我的书在书包里。
+        - 老师在学校里。
+        - 这儿是学校。
+      answer: 0
+    - id: q-h1-22-x12
+      type: choice
+      tests:
+        words:
+          - 前
+        grammar:
+          - h1-g50
+      prompt:
+        kind: vi
+        text: Bệnh viện ở phía trước trường.
+      optionKind: hanzi
+      options:
+        - 医院在学校前面
+        - 医院学校在前面
+        - 前面医院在学校
+      answer: 0
+    - id: q-h1-22-x13
+      type: order
+      tests:
+        words:
+          - 后
+        grammar:
+          - h1-g50
+      tiles:
+        - 饭店
+        - 在
+        - 学校
+        - 后面
+      answer: s-h1-22-09
+    - id: q-h1-22-x14
+      type: choice
+      tests:
+        words:
+          - 上
+          - 下
+        grammar:
+          - h1-g50
+      prompt:
+        kind: vi
+        text: Cái cốc của bạn ở dưới sách.
+      optionKind: hanzi
+      options:
+        - 你的杯子在书下面
+        - 你的杯子在下书面
+        - 在书下面你的杯子
+      answer: 0
+    - id: q-h1-22-x15
+      type: choice
+      tests:
+        words:
+          - 外
+        grammar:
+          - h1-g51
+      prompt:
+        kind: vi
+        text: Đây là trường, kia là bệnh viện.
+      optionKind: hanzi
+      options:
+        - 这儿是学校，那儿是医院
+        - 这儿学校，那儿医院
+        - 学校是这儿，医院是那儿
+      answer: 0
+    - id: q-h1-22-x16
+      type: trueFalse
+      tests:
+        grammar:
+          - h1-g51
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 这儿学校，那儿是医院。
+      answer: false
+    - id: q-h1-22-x17
+      type: choice
+      tests:
+        words:
+          - 外
+        grammar:
+          - h1-g50
+      prompt:
+        kind: vi
+        text: Bạn của bạn ở ngoài trường.
+      optionKind: hanzi
+      options:
+        - 你的朋友在学校外面
+        - 你的朋友外面在学校
+        - 朋友你在学校外面
+      answer: 0
+    - id: q-h1-22-x18
+      type: choice
+      tests:
+        words:
+          - 左
+          - 右
+        grammar:
+          - h1-g50
+      prompt:
+        kind: audio
+        ref: s-h1-22-05
+      optionKind: vi
+      options:
+        - không ở bên trái, ở bên phải
+        - ở bên trái
+        - ở bên phải
+      answer: 0
+    - id: q-h1-22-x19
+      type: trueFalse
+      tests:
+        words:
+          - 上
+        grammar:
+          - h1-g50
+      prompt:
+        kind: hanzi
+        ref: 上
+      statement: “书上” nghĩa là “trên sách”.
+      answer: true
+    - id: q-h1-22-x20
+      type: choice
+      tests:
+        words:
+          - 里
+        grammar:
+          - h1-g49
+      prompt:
+        kind: vi
+        text: Bố làm việc trong bệnh viện.
+      optionKind: hanzi
+      options:
+        - 爸爸在医院里工作
+        - 爸爸在工作医院里
+        - 爸爸医院在里工作
+      answer: 0
+    - id: q-h1-22-x21
+      type: choice
+      tests:
+        words:
+          - 前
+        grammar:
+          - h1-g50
+      prompt:
+        kind: audio
+        ref: s-h1-22-08
+      optionKind: vi
+      options:
+        - Bệnh viện ở phía trước trường
+        - Nhà hàng ở phía sau trường
+        - Cô giáo ở trong trường
+      answer: 0
+    - id: q-h1-22-x22
+      type: trueFalse
+      tests:
+        words:
+          - 右
+        grammar:
+          - h1-g50
+      prompt:
+        kind: hanzi
+        ref: 右
+      statement: “右” nghĩa là “bên phải”.
+      answer: true

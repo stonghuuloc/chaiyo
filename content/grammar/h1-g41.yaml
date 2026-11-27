@@ -1,0 +1,17 @@
+id: h1-g41
+level: 1
+std:
+  - 47
+title: "Hỏi chọn món: 还是"
+pattern: A + 还是 + B
+explain: |-
+  还是 (hoàn thị, háishi) nối hai lựa chọn trong câu hỏi: 你吃饭还是吃面包？ Trả lời bằng cách chọn một: 我吃面包.
+
+  Câu kể nối danh từ dùng 和, câu hỏi chọn một trong hai dùng 还是.
+examples:
+  - s-h1-18-06
+  - s-h1-18-13
+pitfalls:
+  - wrong: 你吃饭和面包？
+    right: 你吃饭还是面包？
+    why: Hỏi chọn một trong hai thì dùng 还是, không dùng 和.

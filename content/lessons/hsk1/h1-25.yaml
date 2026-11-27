@@ -1,0 +1,705 @@
+id: h1-25
+level: 1
+topic: Nơi chốn
+order: 25
+title: Bệnh viện
+titleHanzi: 医院
+goal: Nói đi đâu làm gì, từ đâu đến, làm việc nào trước, việc nào sau
+scene:
+  file: lessons/h1-25.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They walk toward a small hospital; the takin holds its stomach and the red panda points ahead along the road.
+sentences:
+  - id: s-h1-25-01
+    hanzi: 你去哪儿？
+    pinyin: nǐ qù nǎr?
+    vi: Cậu đi đâu?
+    speaker: takin
+  - id: s-h1-25-02
+    hanzi: 我去医院看病。
+    pinyin: wǒ qù yīyuàn kànbìng.
+    vi: Tớ đi bệnh viện khám bệnh.
+    speaker: redpanda
+  - id: s-h1-25-03
+    hanzi: 你生病了吗？
+    pinyin: nǐ shēngbìng le ma?
+    vi: Cậu bị ốm à?
+    speaker: takin
+  - id: s-h1-25-04
+    hanzi: 我生病了，请你和我去医院。
+    pinyin: wǒ shēngbìng le, qǐng nǐ hé wǒ qù yīyuàn.
+    vi: Tớ bị ốm, nhờ cậu cùng tớ đến bệnh viện.
+    speaker: redpanda
+    unknown: &a1
+      - hanzi: 了
+        pinyin: le
+        vi: trợ từ cuối câu
+  - id: s-h1-25-05
+    hanzi: 好，我们先回家，再去医院。
+    pinyin: hǎo, wǒmen xiān huí jiā, zài qù yīyuàn.
+    vi: Được, chúng ta về nhà trước, rồi đi bệnh viện.
+    speaker: takin
+  - id: s-h1-25-06
+    hanzi: 你从哪儿来？
+    pinyin: nǐ cóng nǎr lái?
+    vi: Cậu từ đâu đến?
+    speaker: redpanda
+  - id: s-h1-25-07
+    hanzi: 我从学校来。
+    pinyin: wǒ cóng xuéxiào lái.
+    vi: Tớ từ trường đến.
+    speaker: takin
+  - id: s-h1-25-08
+    hanzi: 从学校走到医院，你先走。
+    pinyin: cóng xuéxiào zǒu dào yīyuàn, nǐ xiān zǒu.
+    vi: Từ trường đi bộ đến bệnh viện, cậu đi trước.
+    speaker: redpanda
+  - id: s-h1-25-09
+    hanzi: 我先去图书馆，再去医院。
+    pinyin: wǒ xiān qù túshūguǎn, zài qù yīyuàn.
+    vi: Tớ đi thư viện trước, rồi đến bệnh viện.
+    speaker: takin
+  - id: s-h1-25-10
+    hanzi: 好，我们医院见。
+    pinyin: hǎo, wǒmen yīyuàn jiàn.
+    vi: Được, gặp ở bệnh viện.
+    speaker: redpanda
+  - id: s-h1-25-11
+    hanzi: 他生病了，不去学校。
+    pinyin: tā shēngbìng le, bù qù xuéxiào.
+    vi: Anh ấy bị ốm, không đi học.
+    unknown: *a1
+  - id: s-h1-25-12
+    hanzi: 我先吃饭，再去看病。
+    pinyin: wǒ xiān chī fàn, zài qù kànbìng.
+    vi: Tôi ăn cơm trước, rồi đi khám bệnh.
+  - id: s-h1-25-13
+    hanzi: 她从家去学校。
+    pinyin: tā cóng jiā qù xuéxiào.
+    vi: Cô ấy từ nhà đến trường.
+  - id: s-h1-25-14
+    hanzi: 我们先喝茶，再走。
+    pinyin: wǒmen xiān hē chá, zài zǒu.
+    vi: Chúng ta uống trà trước, rồi đi.
+  - id: s-h1-25-15
+    hanzi: 我想去图书馆看书。
+    pinyin: wǒ xiǎng qù túshūguǎn kàn shū.
+    vi: Tôi muốn đi thư viện đọc sách.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 去
+      - 从
+      - 先
+      - 再
+      - 到
+      - 看病
+      - 生病
+      - 走
+  grammar:
+    ids:
+      - h1-g56
+      - h1-g57
+      - h1-g58
+    drills:
+      - id: q-h1-25-g01
+        type: choice
+        tests:
+          words:
+            - 去
+            - 看病
+          grammar:
+            - h1-g56
+        prompt:
+          kind: vi
+          text: Tớ đi bệnh viện khám bệnh.
+        optionKind: hanzi
+        options:
+          - 我去医院看病
+          - 我看病去医院
+          - 去我医院看病
+        answer: 0
+      - id: q-h1-25-g02
+        type: trueFalse
+        tests:
+          words:
+            - 去
+          grammar:
+            - h1-g56
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我看书去图书馆。
+        answer: false
+      - id: q-h1-25-g03
+        type: choice
+        tests:
+          words:
+            - 去
+          grammar:
+            - h1-g56
+        prompt:
+          kind: vi
+          text: Tôi muốn đi thư viện đọc sách.
+        optionKind: hanzi
+        options:
+          - 我想去图书馆看书
+          - 我想看书去图书馆
+          - 我去想图书馆看书
+        answer: 0
+      - id: q-h1-25-g04
+        type: choice
+        tests:
+          words:
+            - 从
+          grammar:
+            - h1-g57
+        prompt:
+          kind: vi
+          text: Tớ từ trường đến.
+        optionKind: hanzi
+        options:
+          - 我从学校来
+          - 我学校从来
+          - 从我学校来
+        answer: 0
+      - id: q-h1-25-g05
+        type: order
+        tests:
+          words:
+            - 从
+          grammar:
+            - h1-g57
+        tiles:
+          - 她
+          - 从
+          - 家
+          - 去
+          - 学校
+        answer: s-h1-25-13
+      - id: q-h1-25-g06
+        type: choice
+        tests:
+          words:
+            - 先
+            - 再
+          grammar:
+            - h1-g58
+        prompt:
+          kind: vi
+          text: Tôi ăn cơm trước, rồi đi khám bệnh.
+        optionKind: hanzi
+        options:
+          - 我先吃饭，再去看病
+          - 我再吃饭，先去看病
+          - 先我吃饭，去再看病
+        answer: 0
+      - id: q-h1-25-g07
+        type: order
+        tests:
+          words:
+            - 先
+            - 再
+          grammar:
+            - h1-g58
+        tiles:
+          - 我们
+          - 先
+          - 喝茶
+          - ，
+          - 再
+          - 走
+        answer: s-h1-25-14
+      - id: q-h1-25-g08
+        type: trueFalse
+        tests:
+          words:
+            - 先
+            - 再
+          grammar:
+            - h1-g58
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: 我再吃饭，先去看病。
+        answer: false
+  dialogue:
+    parts:
+      - title: Đi bệnh viện
+        lines:
+          - s-h1-25-01
+          - s-h1-25-02
+          - s-h1-25-03
+          - s-h1-25-04
+          - s-h1-25-05
+      - title: Từ đâu đến
+        lines:
+          - s-h1-25-06
+          - s-h1-25-07
+          - s-h1-25-08
+          - s-h1-25-09
+          - s-h1-25-10
+    questions:
+      - id: q-h1-25-d01
+        type: choice
+        ask: Gấu trúc đỏ đi đâu làm gì?
+        tests:
+          words:
+            - 去
+            - 看病
+          grammar:
+            - h1-g56
+        prompt:
+          kind: audio
+          ref: s-h1-25-02
+        optionKind: vi
+        options:
+          - đi khám bệnh
+          - đi học
+          - đi chơi
+        answer: 0
+      - id: q-h1-25-d02
+        type: choice
+        ask: Hai bạn làm gì trước?
+        tests:
+          words:
+            - 先
+            - 再
+          grammar:
+            - h1-g58
+        prompt:
+          kind: audio
+          ref: s-h1-25-05
+        optionKind: vi
+        options:
+          - về nhà trước, rồi đến bệnh viện
+          - đến bệnh viện trước
+          - chỉ về nhà
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-25-l01
+        type: tone
+        tests:
+          words:
+            - 去
+          tone: true
+        prompt:
+          kind: audio
+          ref: 去
+        syllable: 0
+        answer: 4
+      - id: q-h1-25-l02
+        type: choice
+        tests:
+          words:
+            - 去
+        prompt:
+          kind: audio
+          ref: 去
+        optionKind: hanzi
+        options:
+          - 去
+          - 从
+          - 先
+          - 再
+        answer: 0
+      - id: q-h1-25-l03
+        type: choice
+        tests:
+          words:
+            - 到
+        prompt:
+          kind: audio
+          ref: 到
+        optionKind: hanzi
+        options:
+          - 到
+          - 看病
+          - 生病
+          - 走
+        answer: 0
+      - id: q-h1-25-s01
+        type: readAloud
+        tests:
+          words:
+            - 去
+            - 看病
+          grammar:
+            - h1-g56
+          tone: true
+        sentence: s-h1-25-02
+      - id: q-h1-25-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 从
+          grammar:
+            - h1-g57
+        prompt:
+          kind: vi
+          text: Nói bạn từ đâu đến.
+        rubric:
+          - Dùng 我从 + nơi chốn + 来
+        answer: s-h1-25-07
+      - id: q-h1-25-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 先
+            - 再
+          grammar:
+            - h1-g58
+        prompt:
+          kind: vi
+          text: Nói hai việc, việc nào trước việc nào sau.
+        rubric:
+          - Dùng 我先…，再…
+        answer: s-h1-25-12
+  writing:
+    chars:
+      - 去
+      - 从
+      - 病
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-25-x01
+      type: choice
+      tests:
+        words:
+          - 去
+      prompt:
+        kind: hanzi
+        ref: 去
+      optionKind: vi
+      options:
+        - đi
+        - từ
+        - trước tiên
+        - rồi (sau đó)
+      answer: 0
+    - id: q-h1-25-x02
+      type: choice
+      tests:
+        words:
+          - 从
+      prompt:
+        kind: vi
+        text: từ
+      optionKind: hanzi
+      options:
+        - 从
+        - 去
+        - 先
+        - 再
+      answer: 0
+    - id: q-h1-25-x03
+      type: choice
+      tests:
+        words:
+          - 先
+      prompt:
+        kind: hanzi
+        ref: 先
+      optionKind: vi
+      options:
+        - trước tiên
+        - đi
+        - từ
+        - rồi (sau đó)
+      answer: 0
+    - id: q-h1-25-x04
+      type: choice
+      tests:
+        words:
+          - 再
+      prompt:
+        kind: vi
+        text: rồi (sau đó)
+      optionKind: hanzi
+      options:
+        - 再
+        - 去
+        - 从
+        - 先
+      answer: 0
+    - id: q-h1-25-x05
+      type: choice
+      tests:
+        words:
+          - 到
+      prompt:
+        kind: hanzi
+        ref: 到
+      optionKind: vi
+      options:
+        - đến
+        - đi
+        - từ
+        - trước tiên
+      answer: 0
+    - id: q-h1-25-x06
+      type: choice
+      tests:
+        words:
+          - 看病
+      prompt:
+        kind: vi
+        text: khám bệnh
+      optionKind: hanzi
+      options:
+        - 看病
+        - 去
+        - 从
+        - 先
+      answer: 0
+    - id: q-h1-25-x07
+      type: choice
+      tests:
+        words:
+          - 生病
+      prompt:
+        kind: hanzi
+        ref: 生病
+      optionKind: vi
+      options:
+        - bị ốm
+        - đi
+        - từ
+        - trước tiên
+      answer: 0
+    - id: q-h1-25-x08
+      type: choice
+      tests:
+        words:
+          - 走
+      prompt:
+        kind: vi
+        text: đi bộ
+      optionKind: hanzi
+      options:
+        - 走
+        - 去
+        - 从
+        - 先
+      answer: 0
+    - id: q-h1-25-x09
+      type: choice
+      tests:
+        words:
+          - 去
+          - 看病
+        grammar:
+          - h1-g56
+      prompt:
+        kind: vi
+        text: Tớ đi bệnh viện khám bệnh.
+      optionKind: hanzi
+      options:
+        - 我去医院看病
+        - 我看病去医院
+        - 去我医院看病
+      answer: 0
+    - id: q-h1-25-x10
+      type: trueFalse
+      tests:
+        words:
+          - 去
+        grammar:
+          - h1-g56
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我看书去图书馆。
+      answer: false
+    - id: q-h1-25-x11
+      type: choice
+      tests:
+        words:
+          - 去
+        grammar:
+          - h1-g56
+      prompt:
+        kind: vi
+        text: Tôi muốn đi thư viện đọc sách.
+      optionKind: hanzi
+      options:
+        - 我想去图书馆看书
+        - 我想看书去图书馆
+        - 我去想图书馆看书
+      answer: 0
+    - id: q-h1-25-x12
+      type: choice
+      tests:
+        words:
+          - 从
+        grammar:
+          - h1-g57
+      prompt:
+        kind: vi
+        text: Tớ từ trường đến.
+      optionKind: hanzi
+      options:
+        - 我从学校来
+        - 我学校从来
+        - 从我学校来
+      answer: 0
+    - id: q-h1-25-x13
+      type: order
+      tests:
+        words:
+          - 从
+        grammar:
+          - h1-g57
+      tiles:
+        - 她
+        - 从
+        - 家
+        - 去
+        - 学校
+      answer: s-h1-25-13
+    - id: q-h1-25-x14
+      type: choice
+      tests:
+        words:
+          - 先
+          - 再
+        grammar:
+          - h1-g58
+      prompt:
+        kind: vi
+        text: Tôi ăn cơm trước, rồi đi khám bệnh.
+      optionKind: hanzi
+      options:
+        - 我先吃饭，再去看病
+        - 我再吃饭，先去看病
+        - 先我吃饭，去再看病
+      answer: 0
+    - id: q-h1-25-x15
+      type: order
+      tests:
+        words:
+          - 先
+          - 再
+        grammar:
+          - h1-g58
+      tiles:
+        - 我们
+        - 先
+        - 喝茶
+        - ，
+        - 再
+        - 走
+      answer: s-h1-25-14
+    - id: q-h1-25-x16
+      type: trueFalse
+      tests:
+        words:
+          - 先
+          - 再
+        grammar:
+          - h1-g58
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: 我再吃饭，先去看病。
+      answer: false
+    - id: q-h1-25-x17
+      type: choice
+      tests:
+        words:
+          - 生病
+        grammar:
+          - h1-g56
+      prompt:
+        kind: audio
+        ref: s-h1-25-03
+      optionKind: vi
+      options:
+        - Cậu bị ốm à?
+        - Cậu đi đâu?
+        - Cậu từ đâu đến?
+      answer: 0
+    - id: q-h1-25-x18
+      type: choice
+      tests:
+        words:
+          - 走
+          - 到
+        grammar:
+          - h1-g57
+      prompt:
+        kind: audio
+        ref: s-h1-25-08
+      optionKind: vi
+      options:
+        - đi bộ từ trường đến bệnh viện
+        - đi xe đến trường
+        - ở nhà
+      answer: 0
+    - id: q-h1-25-x19
+      type: choice
+      tests:
+        words:
+          - 生病
+        grammar:
+          - h1-g56
+      prompt:
+        kind: vi
+        text: Anh ấy bị ốm, không đi học.
+      optionKind: hanzi
+      options:
+        - 他生病了，不去学校
+        - 他生病不了，去学校
+        - 他不去学校，生病了
+      answer: 0
+    - id: q-h1-25-x20
+      type: trueFalse
+      tests:
+        words:
+          - 到
+        grammar:
+          - h1-g57
+      prompt:
+        kind: hanzi
+        ref: 到
+      statement: 到 nghĩa là “đến”.
+      answer: true
+    - id: q-h1-25-x21
+      type: choice
+      tests:
+        words:
+          - 先
+          - 去
+        grammar:
+          - h1-g58
+      prompt:
+        kind: audio
+        ref: s-h1-25-09
+      optionKind: vi
+      options:
+        - thư viện trước, bệnh viện sau
+        - bệnh viện trước, thư viện sau
+        - chỉ đi thư viện
+      answer: 0
+    - id: q-h1-25-x22
+      type: choice
+      tests:
+        words:
+          - 去
+          - 从
+        grammar:
+          - h1-g57
+      prompt:
+        kind: vi
+        text: Bạn từ đâu đến?
+      optionKind: hanzi
+      options:
+        - 你从哪儿来
+        - 你哪儿从来
+        - 从你哪儿来
+      answer: 0

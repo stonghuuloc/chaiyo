@@ -1,0 +1,22 @@
+id: h1-g73
+level: 1
+std:
+  - 8
+  - 23
+title: "Chọn lượng từ: 杯 · 块 · 本 · 页"
+pattern: số + 杯 / 块 / 本 / 页 + danh từ
+explain: |-
+  Mỗi danh từ đi với lượng từ của nó. 杯 (bôi, bēi) là “cốc”, đong đồ uống: 一杯茶, 两杯水, 一杯牛奶. 块 (khối, kuài) ngoài nghĩa “đồng” còn là “miếng”: 两块面包 = hai miếng bánh mì. 本 đếm sách: 一本书. 页 đếm trang: 这本书有一百页.
+
+  Số + lượng từ đứng liền trước danh từ: 我要一杯茶。
+examples:
+  - s-h1-34-03
+  - s-h1-34-14
+  - s-h1-34-16
+pitfalls:
+  - wrong: 我要一个茶
+    right: 我要一杯茶
+    why: Đồ uống đếm bằng 杯 (cốc), không dùng 个.
+  - wrong: 一个杯子茶
+    right: 一杯茶
+    why: 一杯茶 là “một cốc trà”; 一个杯子 là “một cái cốc” (đếm chính cái cốc).

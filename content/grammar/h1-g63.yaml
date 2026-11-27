@@ -1,0 +1,21 @@
+id: h1-g63
+level: 1
+std:
+  - 31
+title: "Câu không chủ ngữ: 下雨了"
+pattern: (thời gian) + 下雨 / 有风 / tính từ
+explain: |-
+  Nói về thời tiết, tiếng Trung thường không cần chủ ngữ. 下雨了！ = Mưa rồi! 明天下雨 = Mai mưa. 太冷了！ = Lạnh quá!
+
+  Tiếng Việt nói “trời mưa”, nhưng tiếng Trung không thêm “trời” vào trước 下雨. Từ chỉ thời gian như 今天, 明天 có thể đứng đầu câu.
+examples:
+  - s-h1-27-02
+  - s-h1-27-12
+  - s-h1-27-15
+pitfalls:
+  - wrong: 天气下雨了
+    right: 下雨了
+    why: 下雨 không cần chủ ngữ; 天气 không làm chủ ngữ của 下雨.
+  - wrong: 下雨明天
+    right: 明天下雨
+    why: Từ chỉ thời gian đứng trước 下雨.

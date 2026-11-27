@@ -1,0 +1,13 @@
+hanzi: 车
+readings:
+  - pinyin: chē
+    hanviet: xa
+radical: 車
+ids: 车
+strokes: 4
+mnemonic:
+  hinh: nét ngang cắt dọc qua khung chữ nhật — hình bánh xe và trục xe nhìn từ trên, giản thể của 車
+  am: xa — "hỏa xa" (tàu hỏa), "công xa", "xa lộ"; đọc nôm hàng ngày là "xe"
+  doiThat: app gọi xe (打车, 叫车), biển "停车" (đỗ xe), tin nhắn "堵车了" (kẹt xe rồi)
+  tuongPhan: dễ lẫn 东 (dōng, "đông") — 东 có thêm nét phẩy/mác phức tạp hơn, nghĩa là phương hướng
+  kind: etymology

@@ -1,0 +1,17 @@
+id: h1-g28
+level: 1
+std:
+  - 7
+title: "Số đến 100: 十 · 百 · 零"
+pattern: số + 百 + (零) + số
+explain: |-
+  Một trăm là 一百. Số có trăm đọc từ lớn đến nhỏ: 一百一十 = 110, 一百二十 = 120.
+
+  Nếu hàng chục trống, đọc 零 (linh, líng) thay chỗ trống: 一百零五 = 105.
+examples:
+  - s-h1-12-11
+  - s-h1-12-13
+pitfalls:
+  - wrong: 一百五
+    right: 一百零五
+    why: Hàng chục trống thì đọc 零; 一百五 là 150.

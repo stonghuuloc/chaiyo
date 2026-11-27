@@ -1,0 +1,19 @@
+id: h1-g72
+level: 1
+std:
+  - 27
+  - 9
+title: "Tính từ + 的 làm định ngữ: 很好看的衣服"
+pattern: 很 / 非常 + tính từ + 的 + danh từ
+explain: Muốn tả một danh từ, đặt cụm tính từ trước danh từ và thêm 的 ở giữa. 很好看的衣服 = quần áo rất đẹp; 非常新的手机 = điện thoại rất mới. Có phó từ chỉ mức độ 很 / 非常 trước tính từ thì phải có 的. Tính từ một chữ đứng một mình thường bỏ 的 - 新手机, 白衣服. 太 và 真 thường đứng ở vị ngữ - 衣服太贵了, 手机真好看.
+examples:
+  - s-h1-33-05
+  - s-h1-33-06
+  - s-h1-33-14
+pitfalls:
+  - wrong: 我想买很好看衣服。
+    right: 我想买很好看的衣服。
+    why: Có 很 / 非常 trước tính từ thì phải thêm 的 trước danh từ.
+  - wrong: 我想买衣服的很好看。
+    right: 我想买很好看的衣服。
+    why: Cụm tính từ + 的 đứng trước danh từ, không đứng sau.

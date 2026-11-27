@@ -1,0 +1,21 @@
+id: h1-g75
+level: 1
+std:
+  - 21
+  - 41
+title: "Đã làm bao nhiêu: động từ + 了 + số lượng"
+pattern: chủ ngữ + động từ + 了 + số + lượng từ + danh từ
+explain: |-
+  了 (liễu, le) đứng ngay sau động từ khi tân ngữ có số lượng: 我买了三本书 = tớ đã mua ba quyển sách. Hỏi: 你买了几本书？
+
+  Khác bài h1-16: ở đó 了 chỉ báo việc đã xảy ra, hay đứng cuối câu (我买书了). Ở đây câu nói rõ làm bao nhiêu: 了 đứng sau động từ, trước số + lượng từ, không đặt sau danh từ. Phủ định dùng 没 và bỏ 了: 我没买书.
+examples:
+  - s-h1-35-02
+  - s-h1-35-14
+pitfalls:
+  - wrong: 我买书了三本
+    right: 我买了三本书
+    why: 了 đứng ngay sau động từ, trước số + lượng từ.
+  - wrong: 我了买三本书
+    right: 我买了三本书
+    why: 了 đứng sau động từ, không đứng trước.

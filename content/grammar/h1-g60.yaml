@@ -1,0 +1,18 @@
+id: h1-g60
+level: 1
+std:
+  - 11
+  - 12
+title: "Đôi khi, thường xuyên: 有时 · 常常"
+pattern: 有时 / 常常 + động từ
+explain: |-
+  常常 (thường thường, chángcháng) là “thường xuyên”, 有时 (hữu thời, yǒushí) là “đôi khi”. Cả hai đứng trước động từ: 我常常看电视，有时看电影.
+
+  Dùng 有时…，有时… để nói hai việc luân phiên.
+examples:
+  - s-h1-26-06
+  - s-h1-26-12
+pitfalls:
+  - wrong: 我看电视常常
+    right: 我常常看电视
+    why: 常常 đứng trước động từ.

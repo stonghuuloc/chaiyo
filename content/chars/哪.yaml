@@ -1,0 +1,16 @@
+hanzi: 哪
+readings:
+  - pinyin: nǎ
+    hanviet: nả
+  - pinyin: něi
+    hanviet: nả
+    rare: true
+radical: 口
+ids: ⿰口那
+strokes: 9
+mnemonic:
+  hinh: '口 (miệng, để hỏi) + 那 (gợi âm "na" → "nǎ") — chữ hình thanh chuẩn: nghĩa từ 口, âm từ 那.'
+  am: Hán-Việt **na** — chính là chữ 哪 trong 哪吒 = **Na Tra**, nhân vật quen thuộc trong truyện Phong Thần/Tây Du. Nhớ Na Tra là ra mặt chữ 哪.
+  doiThat: '"你在哪" tin nhắn hỏi vị trí hằng ngày, "哪里/哪儿" hỏi đường, nút "选哪个" khi phải chọn 1 trong nhiều lựa chọn.'
+  tuongPhan: dễ lẫn với 那 (nà — kia, đó, không có 口 bên trái); 哪 dùng để HỎI, 那 dùng để CHỈ.
+  kind: etymology

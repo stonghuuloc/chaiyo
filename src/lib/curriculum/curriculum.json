@@ -22,8 +22,8 @@
 		"id": "h1-02",
 		"level": 1,
 		"n": 2,
-		"title": "Bạn tên gì?",
-		"titleHanzi": "你叫什么名字",
+		"title": "Hỏi tên",
+		"titleHanzi": "名字",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["我", "他", "她", "我们", "他们", "她们", "叫", "什么", "名字"]
 	},
@@ -31,8 +31,8 @@
 		"id": "h1-03",
 		"level": 1,
 		"n": 3,
-		"title": "Đây là ai?",
-		"titleHanzi": "这是谁",
+		"title": "Hỏi người",
+		"titleHanzi": "谁",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["这", "那", "是", "谁", "爸爸", "妈妈", "哥哥", "姐姐", "朋友", "老师"]
 	},
@@ -41,7 +41,7 @@
 		"level": 1,
 		"n": 4,
 		"title": "Gia đình",
-		"titleHanzi": "我的家",
+		"titleHanzi": "家",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["的", "也", "家", "弟弟", "妹妹", "同学", "学生", "医生"]
 	},
@@ -49,10 +49,280 @@
 		"id": "h1-05",
 		"level": 1,
 		"n": 5,
-		"title": "Bạn mấy tuổi?",
-		"titleHanzi": "你几岁",
+		"title": "Tuổi tác",
+		"titleHanzi": "岁",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "几", "岁", "吗", "呢"]
+	},
+	{
+		"id": "h1-06",
+		"level": 1,
+		"n": 6,
+		"title": "Số người trong nhà",
+		"titleHanzi": "口",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["有", "口", "人", "两", "个", "儿子", "女儿", "孩子"]
+	},
+	{
+		"id": "h1-07",
+		"level": 1,
+		"n": 7,
+		"title": "Nghề nghiệp",
+		"titleHanzi": "工作",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["不", "都", "工作", "工人", "做", "医院", "先生", "老人"]
+	},
+	{
+		"id": "h1-08",
+		"level": 1,
+		"n": 8,
+		"title": "Quốc tịch",
+		"titleHanzi": "国",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["哪", "中国", "外国", "国家", "北京", "男", "女", "对"]
+	},
+	{
+		"id": "h1-09",
+		"level": 1,
+		"n": 9,
+		"title": "Ngôn ngữ",
+		"titleHanzi": "汉语",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["会", "能", "说", "汉语", "中文", "汉字", "写", "读"]
+	},
+	{
+		"id": "h1-10",
+		"level": 1,
+		"n": 10,
+		"title": "Giáo viên",
+		"titleHanzi": "老师",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["跟", "学习", "学校", "教-jiao1", "课本", "书", "小学", "中学"]
+	},
+	{
+		"id": "h1-11",
+		"level": 1,
+		"n": 11,
+		"title": "Làm quen",
+		"titleHanzi": "高兴",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["很", "非常", "真", "高兴", "认识", "累", "忙", "太"]
+	},
+	{
+		"id": "h1-12",
+		"level": 1,
+		"n": 12,
+		"title": "Số đếm",
+		"titleHanzi": "十",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["百", "零", "半", "杯子", "本", "页", "次", "一些"]
+	},
+	{
+		"id": "h1-13",
+		"level": 1,
+		"n": 13,
+		"title": "Ngày tháng",
+		"titleHanzi": "号",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["年", "月", "日", "号", "今天", "生日", "前天", "后天"]
+	},
+	{
+		"id": "h1-14",
+		"level": 1,
+		"n": 14,
+		"title": "Thứ trong tuần",
+		"titleHanzi": "星期",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["星期", "天", "还是", "上午", "下午", "中午", "早上", "晚上"]
+	},
+	{
+		"id": "h1-15",
+		"level": 1,
+		"n": 15,
+		"title": "Giờ giấc",
+		"titleHanzi": "点",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["点", "分", "现在", "时候", "时间", "小时", "起床", "睡觉"]
+	},
+	{
+		"id": "h1-16",
+		"level": 1,
+		"n": 16,
+		"title": "Hôm qua và ngày mai",
+		"titleHanzi": "昨天",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["昨天", "明天", "了", "没", "来", "回", "去年", "明年"]
+	},
+	{
+		"id": "h1-17",
+		"level": 1,
+		"n": 17,
+		"title": "Đồ uống",
+		"titleHanzi": "喝",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["想", "要", "喝", "茶", "水", "牛奶", "渴", "饿"]
+	},
+	{
+		"id": "h1-18",
+		"level": 1,
+		"n": 18,
+		"title": "Món ăn",
+		"titleHanzi": "吃",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["吃", "饭", "菜", "肉", "鸡蛋", "面包", "面条儿", "和"]
+	},
+	{
+		"id": "h1-19",
+		"level": 1,
+		"n": 19,
+		"title": "Nhà hàng",
+		"titleHanzi": "饭店",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["在", "请", "饭店", "给", "好吃", "米饭", "等", "进"]
+	},
+	{
+		"id": "h1-20",
+		"level": 1,
+		"n": 20,
+		"title": "Giá tiền",
+		"titleHanzi": "钱",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["买", "多少-duo1shao5", "钱", "块", "元", "毛", "贵", "票"]
+	},
+	{
+		"id": "h1-21",
+		"level": 1,
+		"n": 21,
+		"title": "Trái cây",
+		"titleHanzi": "水果",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["喜欢", "爱", "最", "水果", "唱歌", "打球", "玩儿", "电影"]
+	},
+	{
+		"id": "h1-22",
+		"level": 1,
+		"n": 22,
+		"title": "Vị trí",
+		"titleHanzi": "在",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["里", "上", "下", "外", "前", "后", "左", "右"]
+	},
+	{
+		"id": "h1-23",
+		"level": 1,
+		"n": 23,
+		"title": "Chỗ ngồi",
+		"titleHanzi": "坐",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["坐", "这边", "别", "这儿", "那儿", "这里", "那里", "旁边"]
+	},
+	{
+		"id": "h1-24",
+		"level": 1,
+		"n": 24,
+		"title": "Trường học",
+		"titleHanzi": "学校",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["大学", "大学生", "图书馆", "桌子", "书包", "中间", "地方", "里边"]
+	},
+	{
+		"id": "h1-25",
+		"level": 1,
+		"n": 25,
+		"title": "Bệnh viện",
+		"titleHanzi": "医院",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["去", "从", "先", "再", "到", "看病", "生病", "走"]
+	},
+	{
+		"id": "h1-26",
+		"level": 1,
+		"n": 26,
+		"title": "Nhà",
+		"titleHanzi": "家",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["还", "有时", "常常", "房间", "房子", "电视", "电脑", "休息"]
+	},
+	{
+		"id": "h1-27",
+		"level": 1,
+		"n": 27,
+		"title": "Thời tiết",
+		"titleHanzi": "天气",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["天气", "下雨", "风", "冷", "热", "白天", "晚", "快"]
+	},
+	{
+		"id": "h1-28",
+		"level": 1,
+		"n": 28,
+		"title": "Nóng và lạnh",
+		"titleHanzi": "热",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["比", "没有", "高", "大", "小", "多", "少", "慢"]
+	},
+	{
+		"id": "h1-29",
+		"level": 1,
+		"n": 29,
+		"title": "Máy bay",
+		"titleHanzi": "飞机",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["一起", "一块儿", "飞机", "火车", "汽车", "开车", "车站", "车票"]
+	},
+	{
+		"id": "h1-30",
+		"level": 1,
+		"n": 30,
+		"title": "Taxi",
+		"titleHanzi": "出租车",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["吧", "打车", "马路", "路口", "走路", "远", "送", "站"]
+	},
+	{
+		"id": "h1-31",
+		"level": 1,
+		"n": 31,
+		"title": "Phương tiện",
+		"titleHanzi": "车",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["怎么", "路上", "出去", "出来", "回去", "回来", "进去", "进来"]
+	},
+	{
+		"id": "h1-32",
+		"level": 1,
+		"n": 32,
+		"title": "Ôn mua sắm",
+		"titleHanzi": "买",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["买", "要", "钱", "贵", "想", "喜欢", "还是", "好吃"]
+	},
+	{
+		"id": "h1-33",
+		"level": 1,
+		"n": 33,
+		"title": "Miêu tả đồ vật",
+		"titleHanzi": "漂亮",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["衣服", "好看", "新", "白", "穿", "洗", "手机", "一样"]
+	},
+	{
+		"id": "h1-34",
+		"level": 1,
+		"n": 34,
+		"title": "Mua bao nhiêu",
+		"titleHanzi": "多",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["包子", "一点儿", "一下儿", "用", "找", "拿", "放", "帮"]
+	},
+	{
+		"id": "h1-35",
+		"level": 1,
+		"n": 35,
+		"title": "Cửa hàng",
+		"titleHanzi": "商店",
+		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
+		"words": ["商店", "商场", "书店", "钱包", "门口", "关", "开", "门票"]
 	},
 	{
 		"id": "h2-01",

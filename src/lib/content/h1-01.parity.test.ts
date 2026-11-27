@@ -302,7 +302,7 @@ describe('h1-01 prototype parity', () => {
 		if (!('sha' in r)) throw new Error(JSON.stringify(r.errors, null, 2));
 		if (!sink.content) throw new Error('import wrote no content');
 		b = buildBundle(sink.content, 'h1-01');
-	});
+	}, 60_000);
 	afterAll(() => vi.unstubAllEnvs());
 
 	it('compares the full prototype surface', () => {

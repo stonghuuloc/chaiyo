@@ -1,0 +1,694 @@
+id: h1-12
+level: 1
+topic: Số và thời gian
+order: 12
+title: Số đếm
+titleHanzi: 十
+goal: Đếm đến một trăm; đếm sách, cốc, trang, lần; nói một nửa
+scene:
+  file: lessons/h1-12.png
+  cast:
+    - redpanda
+    - takin
+  prompt: Only the red panda and the takin. They stand at a library shelf stacked with books; the red panda holds one thick book and the takin holds a cup.
+sentences:
+  - id: s-h1-12-01
+    hanzi: 这是你的书吗？
+    pinyin: zhè shì nǐ de shū ma?
+    vi: Đây là sách của cậu à?
+    speaker: takin
+  - id: s-h1-12-02
+    hanzi: 对，这本书有一百页。
+    pinyin: duì, zhè běn shū yǒu yī bǎi yè.
+    vi: Đúng, cuốn sách này có một trăm trang.
+    speaker: redpanda
+  - id: s-h1-12-03
+    hanzi: 你有几本书？
+    pinyin: nǐ yǒu jǐ běn shū?
+    vi: Cậu có mấy quyển sách?
+    speaker: takin
+  - id: s-h1-12-04
+    hanzi: 我有三十本书。
+    pinyin: wǒ yǒu sānshí běn shū.
+    vi: Tớ có ba mươi quyển sách.
+    speaker: redpanda
+  - id: s-h1-12-05
+    hanzi: 你读这本书吗？
+    pinyin: nǐ dú zhè běn shū ma?
+    vi: Cậu đọc cuốn sách này không?
+    speaker: takin
+  - id: s-h1-12-06
+    hanzi: 我读半本，你读半本。
+    pinyin: wǒ dú bàn běn, nǐ dú bàn běn.
+    vi: Tớ đọc nửa quyển, cậu đọc nửa quyển.
+    speaker: redpanda
+  - id: s-h1-12-07
+    hanzi: 这个杯子是你的吗？
+    pinyin: zhège bēizi shì nǐ de ma?
+    vi: Cái cốc này là của cậu à?
+    speaker: takin
+  - id: s-h1-12-08
+    hanzi: 不是，是老师的。
+    pinyin: bù shì, shì lǎoshī de.
+    vi: Không, là của cô giáo.
+    speaker: redpanda
+  - id: s-h1-12-09
+    hanzi: 我有一些杯子。
+    pinyin: wǒ yǒu yīxiē bēizi.
+    vi: Tớ có vài cái cốc.
+    speaker: takin
+  - id: s-h1-12-10
+    hanzi: 老师说一次，我们写一次。
+    pinyin: lǎoshī shuō yī cì, wǒmen xiě yī cì.
+    vi: Cô giáo nói một lần, chúng ta viết một lần.
+    speaker: redpanda
+  - id: s-h1-12-11
+    hanzi: 我的朋友有一百零五本书。
+    pinyin: wǒ de péngyou yǒu yī bǎi líng wǔ běn shū.
+    vi: Bạn tôi có 105 quyển sách.
+  - id: s-h1-12-12
+    hanzi: 我有半本书。
+    pinyin: wǒ yǒu bàn běn shū.
+    vi: Tôi có nửa quyển sách.
+  - id: s-h1-12-13
+    hanzi: 这本书有一百一十页。
+    pinyin: zhè běn shū yǒu yī bǎi yī shí yè.
+    vi: Cuốn sách này có 110 trang.
+  - id: s-h1-12-14
+    hanzi: 他有三个杯子。
+    pinyin: tā yǒu sān gè bēizi.
+    vi: Anh ấy có ba cái cốc.
+  - id: s-h1-12-15
+    hanzi: 老师说两次。
+    pinyin: lǎoshī shuō liǎng cì.
+    vi: Cô giáo nói hai lần.
+sections:
+  warmup: {}
+  words:
+    ids:
+      - 百
+      - 零
+      - 半
+      - 杯子
+      - 本
+      - 页
+      - 次
+      - 一些
+  grammar:
+    ids:
+      - h1-g28
+      - h1-g29
+      - h1-g30
+    drills:
+      - id: q-h1-12-g01
+        type: choice
+        tests:
+          words:
+            - 百
+            - 零
+          grammar:
+            - h1-g28
+        prompt:
+          kind: vi
+          text: một trăm linh năm (105)
+        optionKind: hanzi
+        options:
+          - 一百零五
+          - 一百五
+          - 一百五十
+        answer: 0
+      - id: q-h1-12-g02
+        type: choice
+        tests:
+          words:
+            - 百
+          grammar:
+            - h1-g28
+        prompt:
+          kind: vi
+          text: một trăm mười (110)
+        optionKind: hanzi
+        options:
+          - 一百一十
+          - 一百零一
+          - 一百零十
+        answer: 0
+      - id: q-h1-12-g03
+        type: trueFalse
+        tests:
+          words:
+            - 百
+          grammar:
+            - h1-g28
+        prompt:
+          kind: vi
+          text: Câu này đúng không?
+        statement: “一百五” là 105.
+        answer: false
+      - id: q-h1-12-g04
+        type: choice
+        tests:
+          words:
+            - 本
+          grammar:
+            - h1-g29
+        prompt:
+          kind: vi
+          text: Tớ có ba quyển sách.
+        optionKind: hanzi
+        options:
+          - 我有三本书
+          - 我有三书
+          - 我有书三本
+        answer: 0
+      - id: q-h1-12-g05
+        type: choice
+        tests:
+          words:
+            - 百
+            - 页
+          grammar:
+            - h1-g29
+        prompt:
+          kind: vi
+          text: Cuốn sách này có một trăm trang.
+        optionKind: hanzi
+        options:
+          - 这本书有一百页
+          - 这本书有一百本
+          - 这页书有一百本
+        answer: 0
+      - id: q-h1-12-g06
+        type: choice
+        ask: Chọn câu đáp
+        tests:
+          words:
+            - 本
+          grammar:
+            - h1-g29
+        prompt:
+          kind: audio
+          ref: s-h1-12-03
+        optionKind: hanzi
+        options:
+          - 我有三十本书。
+          - 我是老师。
+          - 我读半本。
+        answer: 0
+      - id: q-h1-12-g07
+        type: choice
+        tests:
+          words:
+            - 半
+          grammar:
+            - h1-g30
+        prompt:
+          kind: vi
+          text: Tớ đọc nửa quyển.
+        optionKind: hanzi
+        options:
+          - 我读半本
+          - 我读本半
+          - 半我读本
+        answer: 0
+      - id: q-h1-12-g08
+        type: order
+        tests:
+          words:
+            - 半
+            - 本
+          grammar:
+            - h1-g30
+        tiles:
+          - 半
+          - 我
+          - 本
+          - 有
+          - 书
+        answer: s-h1-12-12
+  dialogue:
+    parts:
+      - title: Sách của cậu
+        lines:
+          - s-h1-12-01
+          - s-h1-12-02
+          - s-h1-12-03
+          - s-h1-12-04
+          - s-h1-12-05
+          - s-h1-12-06
+      - title: Cốc và vài thứ khác
+        lines:
+          - s-h1-12-07
+          - s-h1-12-08
+          - s-h1-12-09
+          - s-h1-12-10
+    questions:
+      - id: q-h1-12-d01
+        type: choice
+        ask: Cuốn sách có bao nhiêu trang?
+        tests:
+          words:
+            - 百
+            - 页
+          grammar:
+            - h1-g28
+            - h1-g29
+        prompt:
+          kind: audio
+          ref: s-h1-12-02
+        optionKind: vi
+        options:
+          - 100 trang
+          - 10 trang
+          - 105 trang
+        answer: 0
+      - id: q-h1-12-d02
+        type: choice
+        ask: Gấu trúc đỏ đọc bao nhiêu?
+        tests:
+          words:
+            - 半
+          grammar:
+            - h1-g30
+        prompt:
+          kind: audio
+          ref: s-h1-12-06
+        optionKind: vi
+        options:
+          - nửa quyển
+          - cả quyển
+          - một trang
+        answer: 0
+  listenSpeak:
+    items:
+      - id: q-h1-12-l01
+        type: tone
+        tests:
+          words:
+            - 百
+          tone: true
+        prompt:
+          kind: audio
+          ref: 百
+        syllable: 0
+        answer: 3
+      - id: q-h1-12-l02
+        type: choice
+        tests:
+          words:
+            - 零
+        prompt:
+          kind: audio
+          ref: 零
+        optionKind: hanzi
+        options:
+          - 零
+          - 百
+          - 半
+          - 次
+        answer: 0
+      - id: q-h1-12-l03
+        type: choice
+        tests:
+          words:
+            - 杯子
+        prompt:
+          kind: audio
+          ref: 杯子
+        optionKind: hanzi
+        options:
+          - 杯子
+          - 本
+          - 页
+          - 一些
+        answer: 0
+      - id: q-h1-12-s01
+        type: readAloud
+        tests:
+          words:
+            - 百
+            - 页
+          grammar:
+            - h1-g28
+          tone: true
+        sentence: s-h1-12-02
+      - id: q-h1-12-f01
+        type: freeAnswer
+        tests:
+          words:
+            - 本
+          grammar:
+            - h1-g29
+        prompt:
+          kind: vi
+          text: Nói bạn có bao nhiêu quyển sách.
+        rubric:
+          - Dùng 我有 + số + 本书
+        answer: s-h1-12-04
+      - id: q-h1-12-f02
+        type: freeAnswer
+        tests:
+          words:
+            - 零
+          grammar:
+            - h1-g28
+        prompt:
+          kind: vi
+          text: Đọc to số 105 bằng tiếng Trung.
+        rubric:
+          - Đọc 一百零五, có 零 ở giữa
+  writing:
+    chars:
+      - 百
+      - 半
+      - 次
+gate:
+  draw: 10
+  pool:
+    - id: q-h1-12-x01
+      type: choice
+      tests:
+        words:
+          - 百
+      prompt:
+        kind: hanzi
+        ref: 百
+      optionKind: vi
+      options:
+        - trăm
+        - nghìn
+        - mười
+        - nửa
+      answer: 0
+    - id: q-h1-12-x02
+      type: typePinyin
+      tests:
+        words:
+          - 零
+      prompt:
+        kind: hanzi
+        ref: 零
+      answer: líng
+    - id: q-h1-12-x03
+      type: choice
+      tests:
+        words:
+          - 半
+      prompt:
+        kind: vi
+        text: nửa
+      optionKind: hanzi
+      options:
+        - 半
+        - 百
+        - 页
+        - 次
+      answer: 0
+    - id: q-h1-12-x04
+      type: choice
+      tests:
+        words:
+          - 杯子
+      prompt:
+        kind: hanzi
+        ref: 杯子
+      optionKind: vi
+      options:
+        - cốc
+        - sách
+        - trang
+        - bạn
+      answer: 0
+    - id: q-h1-12-x05
+      type: choice
+      tests:
+        words:
+          - 本
+      prompt:
+        kind: vi
+        text: quyển (sách)
+      optionKind: hanzi
+      options:
+        - 本
+        - 页
+        - 次
+        - 个
+      answer: 0
+    - id: q-h1-12-x06
+      type: choice
+      tests:
+        words:
+          - 页
+      prompt:
+        kind: audio
+        ref: 页
+      optionKind: vi
+      options:
+        - trang
+        - quyển
+        - lần
+        - vài
+      answer: 0
+    - id: q-h1-12-x07
+      type: choice
+      tests:
+        words:
+          - 次
+      prompt:
+        kind: vi
+        text: lần
+      optionKind: hanzi
+      options:
+        - 次
+        - 页
+        - 本
+        - 半
+      answer: 0
+    - id: q-h1-12-x08
+      type: choice
+      tests:
+        words:
+          - 一些
+      prompt:
+        kind: hanzi
+        ref: 一些
+      optionKind: vi
+      options:
+        - vài, một ít
+        - một nửa
+        - một trăm
+        - một lần
+      answer: 0
+    - id: q-h1-12-x09
+      type: choice
+      tests:
+        words:
+          - 百
+          - 零
+        grammar:
+          - h1-g28
+      prompt:
+        kind: vi
+        text: một trăm linh năm (105)
+      optionKind: hanzi
+      options:
+        - 一百零五
+        - 一百五
+        - 一百五十
+      answer: 0
+    - id: q-h1-12-x10
+      type: choice
+      tests:
+        words:
+          - 百
+        grammar:
+          - h1-g28
+      prompt:
+        kind: vi
+        text: một trăm mười (110)
+      optionKind: hanzi
+      options:
+        - 一百一十
+        - 一百零一
+        - 一百零十
+      answer: 0
+    - id: q-h1-12-x11
+      type: trueFalse
+      tests:
+        words:
+          - 百
+        grammar:
+          - h1-g28
+      prompt:
+        kind: vi
+        text: Câu này đúng không?
+      statement: “一百五” là 105.
+      answer: false
+    - id: q-h1-12-x12
+      type: choice
+      tests:
+        words:
+          - 百
+          - 零
+        grammar:
+          - h1-g28
+      prompt:
+        kind: audio
+        ref: s-h1-12-11
+      optionKind: vi
+      options:
+        - Bạn tôi có 105 quyển sách
+        - Bạn tôi có 150 quyển sách
+        - Bạn tôi có 15 quyển sách
+      answer: 0
+    - id: q-h1-12-x13
+      type: choice
+      tests:
+        words:
+          - 本
+        grammar:
+          - h1-g29
+      prompt:
+        kind: vi
+        text: Tớ có ba quyển sách.
+      optionKind: hanzi
+      options:
+        - 我有三本书
+        - 我有三书
+        - 我有书三本
+      answer: 0
+    - id: q-h1-12-x14
+      type: choice
+      tests:
+        words:
+          - 百
+          - 页
+        grammar:
+          - h1-g29
+      prompt:
+        kind: vi
+        text: Cuốn sách này có một trăm trang.
+      optionKind: hanzi
+      options:
+        - 这本书有一百页
+        - 这本书有一百本
+        - 这页书有一百本
+      answer: 0
+    - id: q-h1-12-x15
+      type: choice
+      ask: Chọn câu đáp
+      tests:
+        words:
+          - 本
+        grammar:
+          - h1-g29
+      prompt:
+        kind: audio
+        ref: s-h1-12-03
+      optionKind: hanzi
+      options:
+        - 我有三十本书。
+        - 我是老师。
+        - 我读半本。
+      answer: 0
+    - id: q-h1-12-x16
+      type: choice
+      tests:
+        words:
+          - 次
+        grammar:
+          - h1-g29
+      prompt:
+        kind: vi
+        text: Cô giáo nói hai lần.
+      optionKind: hanzi
+      options:
+        - 老师说两次
+        - 老师两说次
+        - 老师说二次
+      answer: 0
+    - id: q-h1-12-x17
+      type: choice
+      tests:
+        words:
+          - 半
+        grammar:
+          - h1-g30
+      prompt:
+        kind: vi
+        text: Tớ đọc nửa quyển.
+      optionKind: hanzi
+      options:
+        - 我读半本
+        - 我读本半
+        - 半我读本
+      answer: 0
+    - id: q-h1-12-x18
+      type: order
+      tests:
+        words:
+          - 半
+          - 本
+        grammar:
+          - h1-g30
+      tiles:
+        - 半
+        - 我
+        - 本
+        - 有
+        - 书
+      answer: s-h1-12-12
+    - id: q-h1-12-x19
+      type: trueFalse
+      tests:
+        words:
+          - 半
+        grammar:
+          - h1-g30
+      prompt:
+        kind: hanzi
+        ref: 半
+      statement: 半本书 nghĩa là “nửa quyển sách”.
+      answer: true
+    - id: q-h1-12-x20
+      type: tone
+      tests:
+        words:
+          - 半
+        tone: true
+      prompt:
+        kind: audio
+        ref: 半
+      syllable: 0
+      answer: 4
+    - id: q-h1-12-x21
+      type: choice
+      tests:
+        words:
+          - 一些
+          - 杯子
+      prompt:
+        kind: audio
+        ref: s-h1-12-09
+      optionKind: vi
+      options:
+        - Tớ có vài cái cốc
+        - Tớ có một cái cốc
+        - Tớ không có cốc
+      answer: 0
+    - id: q-h1-12-x22
+      type: choice
+      tests:
+        words:
+          - 杯子
+        grammar:
+          - h1-g29
+      prompt:
+        kind: vi
+        text: ba cái cốc
+      optionKind: hanzi
+      options:
+        - 三个杯子
+        - 三杯子
+        - 杯子三个
+      answer: 0
