@@ -40,7 +40,7 @@ begin
 			count(s.opened_at) as opened,
 			count(s.id) filter (where exists (
 				select 1 from public.attempts a
-				where a.learner_id = s.learner_id and a.at >= s.sent_at
+				where a.learner_id = s.learner_id and a.step is not null and a.at >= s.sent_at
 					and a.at < s.sent_at + interval '24 hours'
 			)) as studied
 		from (values ('email', 1), ('telegram', 2), ('push', 3)) c(channel, ord)
