@@ -3,7 +3,8 @@ import { initialState } from '#lib/study/index.js';
 import type { Channel, ChannelName } from './channel';
 import { fakeChannel } from './fake-channel';
 import { memoryMarks } from './marks';
-import { sendReminders } from './remind';
+import { sendReminders, type SendLog, type SendRow } from './remind';
+import { failedLines } from './channels';
 import { webPushChannel } from './web-push';
 import type { Rolled } from './tick';
 
@@ -653,5 +654,108 @@ describe('sendReminders', () => {
 			expect(result.failed).toEqual([]);
 			expect(result.skipped).toEqual([{ id: 'minh', reason: 'no-channel' }]);
 		});
+	});
+});
+
+describe('sendReminders log', () => {
+	const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+	const memoryLog = (fail = false): SendLog & { rows: SendRow[] } => {
+		const rows: SendRow[] = [];
+		return {
+			rows,
+			async record(r) {
+				if (fail) throw new Error('log down');
+				rows.push(...r);
+			}
+		};
+	};
+	const counter = () => {
+		let n = 0;
+		return () => `tok-${++n}`;
+	};
+	const lan = () => [rolledFor('lan', '2026-11-22', ['push', 'email', 'telegram'])];
+	const throwing = (name: ChannelName): Channel => ({
+		name,
+		send: async () => {
+			throw new Error(`${name} down`);
+		}
+	});
+	const skipping = (name: ChannelName): Channel => ({ name, send: async () => 'skipped' });
+
+	it('Given_PushThrowsEmailOkTelegramSkipped_When_Send_Then_LogsOneEmailRowWithEmailToken', async () => {
+		const email = fakeChannel('email');
+		const log = memoryLog();
+		const marks = memoryMarks();
+
+		const result = await sendReminders(
+			NOW,
+			lan(),
+			[throwing('push'), email, skipping('telegram')],
+			marks,
+			{ log, newId: counter() }
+		);
+
+		expect(log.rows).toEqual([
+			{ id: email.sent[0].open, learnerId: 'lan', day: '2026-11-23', channel: 'email' }
+		]);
+		expect(email.sent[0].open).toBeDefined();
+		expect(result.sent).toEqual(['lan']);
+		expect(marks.keys.has('lan|2026-11-23')).toBe(true);
+	});
+
+	it('Given_LogThrows_Then_SentKeptClaimHeldLogDelivery', async () => {
+		const marks = memoryMarks();
+
+		const result = await sendReminders(NOW, lan(), [fakeChannel('email')], marks, {
+			log: memoryLog(true),
+			newId: counter()
+		});
+
+		expect(result.sent).toEqual(['lan']);
+		expect(result.failed).toEqual([]);
+		expect(marks.keys.has('lan|2026-11-23')).toBe(true);
+		expect(result.deliveries).toContainEqual({
+			id: 'lan',
+			channel: 'log',
+			ok: false,
+			error: 'log down'
+		});
+		expect(failedLines(result)).toContain('remind lan log: log down');
+	});
+
+	it('Given_AllFail_Then_NoLogAndReleased', async () => {
+		const log = memoryLog();
+		const marks = memoryMarks();
+
+		const result = await sendReminders(
+			NOW,
+			lan(),
+			[throwing('push'), throwing('email'), skipping('telegram')],
+			marks,
+			{ log, newId: counter() }
+		);
+
+		expect(log.rows).toEqual([]);
+		expect(result.failed).toEqual(['lan']);
+		expect(marks.keys.size).toBe(0);
+	});
+
+	it('Given_NoLog_Then_ReminderHasNoOpen', async () => {
+		const email = fakeChannel('email');
+
+		await sendReminders(NOW, lan(), [email], memoryMarks());
+
+		expect(email.sent).toEqual([{ learnerId: 'lan', day: '2026-11-23' }]);
+	});
+
+	it('Given_LogWithoutNewId_Then_DefaultUuidToken', async () => {
+		const email = fakeChannel('email');
+		const log = memoryLog();
+
+		await sendReminders(NOW, lan(), [email], memoryMarks(), { log });
+
+		expect(log.rows).toHaveLength(1);
+		expect(log.rows[0].id).toMatch(UUID);
+		expect(log.rows[0].id).toBe(email.sent[0].open);
 	});
 });
