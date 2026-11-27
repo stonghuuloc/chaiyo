@@ -46,7 +46,7 @@ begin
 			case when jsonb_typeof(a.step->'of') = 'number' then (a.step->>'of')::numeric end as of_n
 		from public.attempts a
 		join k on k.learner_id = a.learner_id and k.run = a.step->>'run'
-		where a.step->>'kind' = 'gate' and a.at >= v_from - interval '1 day'
+		where a.step->>'kind' = 'gate' and a.at >= v_d30 - interval '30 days'
 			and a.at < v_d1 + interval '1 day'
 	),
 	first_answer as (
@@ -55,14 +55,22 @@ begin
 		where g.of_n is not null and g.of_n >= 1
 		order by g.learner_id, g.run, g.question_id, g.at, g.id
 	),
-	runs as (
-		select f.learner_id, f.run, f.lesson,
-			max(f.of_n) as of_n,
-			count(*) as n,
-			count(*) filter (where f.correct is true) as right_n,
-			max(f.at) as last_at
+	ranked as (
+		select f.*,
+			first_value(f.of_n) over w as run_of,
+			first_value(f.lesson) over w as run_lesson,
+			row_number() over w as rn
 		from first_answer f
-		group by f.learner_id, f.run, f.lesson
+		window w as (partition by f.learner_id, f.run order by f.at, f.id)
+	),
+	runs as (
+		select r.learner_id, r.run, r.run_lesson as lesson, max(r.run_of) as of_n,
+			count(*) as n,
+			count(*) filter (where r.correct is true) as right_n,
+			max(r.at) as last_at
+		from ranked r
+		where r.of_n = r.run_of and r.lesson = r.run_lesson and r.rn <= r.run_of
+		group by r.learner_id, r.run, r.run_lesson
 	),
 	closed as (
 		select r.lesson, r.right_n, r.of_n

@@ -214,6 +214,11 @@ describe('gate edges', () => {
 		expect(v.gates).toEqual([]);
 	});
 
+	it('Given_ExtraAnswerAfterClose_Then_ScoredThroughClosingAnswerOnly', async () => {
+		await gateRun(LAN, 'gx', T, [...right(7), false, false, false, true]);
+		expect((await usage(7)).gates).toEqual([{ lesson: 'h1-01', runs: 1, fails: 1 }]);
+	});
+
 	it('Given_RepeatAnswer_Then_FirstAnswerWins', async () => {
 		await gateRun(
 			LAN,
