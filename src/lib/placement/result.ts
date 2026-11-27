@@ -29,7 +29,7 @@ export function resultView(cleared: number, lessons: CurriculumLesson[]) {
 	}
 
 	const opened = lessons.filter((l) => l.level <= cleared);
-	const words = opened.reduce((sum, l) => sum + l.words.length, 0);
+	const words = new Set(opened.flatMap((l) => l.words)).size;
 	const rows = [
 		{
 			label: m.placement_result_open_label(),

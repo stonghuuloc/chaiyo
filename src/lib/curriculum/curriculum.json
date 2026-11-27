@@ -292,8 +292,8 @@
 		"id": "h1-32",
 		"level": 1,
 		"n": 32,
-		"title": "Quần áo",
-		"titleHanzi": "衣服",
+		"title": "Ôn mua sắm",
+		"titleHanzi": "买",
 		"sections": ["words", "grammar", "dialogue", "listenSpeak", "writing"],
 		"words": ["买", "要", "钱", "贵", "想", "喜欢", "还是", "好吃"]
 	},

@@ -1,9 +1,16 @@
 import { flushSync, mount, tick, unmount } from 'svelte';
-import { CURRICULUM } from '#lib/curriculum/index.js';
+import { CURRICULUM, LESSONS, LEVELS } from '#lib/curriculum/index.js';
+import { outlineNumbers } from '#lib/curriculum/numbers.js';
 import type { Ledger } from '#lib/ledger/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import Page from './+page.svelte';
+
+const draft = LEVELS.find((o) => o.level === 1)
+	?.topics.flatMap((t) => t.lessons)
+	.find((l) => !LESSONS.some((x) => x.id === l.id))?.id;
+const lastWritten = Math.max(...LESSONS.filter((l) => l.level === 1).map((l) => l.n));
+const draftN = draft ? outlineNumbers(LEVELS).get(draft) : undefined;
 
 const reference = (): State => {
 	const state = initialState({ curriculum: CURRICULUM });
@@ -267,18 +274,18 @@ describe('/roadmap', () => {
 		expect(location.href).toBe(href);
 	});
 
-	it('Given_ReferenceLearner_When_TapH106_Then_DraftToastAndNote', async () => {
+	it.skipIf(!draft)('Given_ReferenceLearner_When_TapDraftRow_Then_DraftToastAndNote', async () => {
 		// Arrange
 		hoisted.load.mockResolvedValue(ledger);
 		const page = await mountPage();
 
 		// Act
-		page.row('h1-06')!.querySelector<HTMLButtonElement>('button')!.click();
+		page.row(draft!)!.querySelector<HTMLButtonElement>('button')!.click();
 		flushSync();
 
 		// Assert
-		expect(page.toast()).toBe('Bài 6 đang được soạn.');
-		expect(page.rowNote('h1-06')).toBe('Đang soạn');
+		expect(page.toast()).toBe(`Bài ${draftN} đang được soạn.`);
+		expect(page.rowNote(draft!)).toBe('Đang soạn');
 	});
 
 	it('Given_ReferenceLearner_When_OpenCuoiCap_Then_ThiThuHsk1Row', async () => {
@@ -302,10 +309,10 @@ describe('/roadmap', () => {
 			'Thi thử HSK 1'
 		]);
 		expect(text(rows[0].querySelector('[data-part=exam-note]'))).toBe(
-			'nghe · đọc · viết · mở khi qua Bài 5'
+			`nghe · đọc · viết · mở khi qua Bài ${lastWritten}`
 		);
 		expect(exams.querySelector('[data-part=exam-end]')).toBeNull();
-		expect(page.toast()).toBe('Qua Bài 5 để mở thi thử HSK 1');
+		expect(page.toast()).toBe(`Qua Bài ${lastWritten} để mở thi thử HSK 1`);
 	});
 
 	it('Given_NextStatePublished_When_Render_Then_TextsUpdate', async () => {

@@ -63,6 +63,12 @@ describe('resultView', () => {
 		expect(row(v, 2).value).toBe('~20 từ mỗi ngày');
 	});
 
+	it('counts a word once when a review lesson repeats it', () => {
+		const review = { ...lesson(2, 1, 'Ôn tập', '买', 0), words: ['w1-0', 'w1-1'] };
+		const v = resultView(1, [...LESSONS.slice(0, 2), review, ...LESSONS.slice(2)]);
+		expect(row(v, 1).value).toBe('+10 từ đang chờ ôn');
+	});
+
 	it('4 cleared starts at HSK 5 with a big burst', () => {
 		const v = resultView(4, LESSONS);
 		expect(v).toMatchObject({ title: 'HSK 5 · Bài 5', cta: 'Bắt đầu Bài 5', confetti: 'big' });

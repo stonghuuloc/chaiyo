@@ -109,8 +109,6 @@ sections:
       - id: q-h1-35-g01
         type: choice
         tests:
-          words:
-            - 书店
           grammar:
             - h1-g75
         prompt:
@@ -125,8 +123,6 @@ sections:
       - id: q-h1-35-g02
         type: trueFalse
         tests:
-          words:
-            - 书店
           grammar:
             - h1-g75
         prompt:
@@ -246,8 +242,6 @@ sections:
         type: choice
         ask: Gấu trúc đỏ mua mấy quyển sách?
         tests:
-          words:
-            - 书店
           grammar:
             - h1-g75
         prompt:
@@ -488,8 +482,6 @@ gate:
     - id: q-h1-35-x09
       type: choice
       tests:
-        words:
-          - 书店
         grammar:
           - h1-g75
       prompt:
@@ -504,8 +496,6 @@ gate:
     - id: q-h1-35-x10
       type: trueFalse
       tests:
-        words:
-          - 书店
         grammar:
           - h1-g75
       prompt:
@@ -574,8 +564,6 @@ gate:
     - id: q-h1-35-x15
       type: choice
       tests:
-        words:
-          - 书店
         grammar:
           - h1-g75
           - h1-g38

@@ -124,8 +124,6 @@ sections:
       - id: q-h1-34-g02
         type: trueFalse
         tests:
-          words:
-            - 杯子
           grammar:
             - h1-g73
         prompt:
@@ -504,8 +502,6 @@ gate:
     - id: q-h1-34-x10
       type: trueFalse
       tests:
-        words:
-          - 杯子
         grammar:
           - h1-g73
       prompt:

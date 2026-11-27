@@ -176,8 +176,8 @@ topics:
   - title: Mua sắm
     lessons:
       - id: h1-32
-        title: "Quần áo"
-        titleHanzi: 衣服
+        title: "Ôn mua sắm"
+        titleHanzi: 买
         std: [ 19, 47, 48 ]
         grammar: "还是 · câu hỏi chính phản 要不要"
       - id: h1-33

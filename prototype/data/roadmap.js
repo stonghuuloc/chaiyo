@@ -13,7 +13,7 @@ export const LEVELS = [
       { title: 'Ăn uống', lessons: [['Đồ uống', '喝'], ['Món ăn', '吃'], ['Nhà hàng', '饭店'], ['Giá tiền', '钱'], ['Trái cây', '水果']] },
       { title: 'Nơi chốn', lessons: [['Vị trí', '在'], ['Chỗ ngồi', '坐'], ['Trường học', '学校'], ['Bệnh viện', '医院'], ['Nhà', '家']] },
       { title: 'Thời tiết và đi lại', lessons: [['Thời tiết', '天气'], ['Nóng và lạnh', '热'], ['Máy bay', '飞机'], ['Taxi', '出租车'], ['Phương tiện', '车']] },
-      { title: 'Mua sắm', lessons: [['Quần áo', '衣服'], ['Miêu tả đồ vật', '漂亮'], ['Mua bao nhiêu', '多'], ['Cửa hàng', '商店']] },
+      { title: 'Mua sắm', lessons: [['Ôn mua sắm', '买'], ['Miêu tả đồ vật', '漂亮'], ['Mua bao nhiêu', '多'], ['Cửa hàng', '商店']] },
       { title: 'Sinh hoạt', lessons: [['Điện thoại', '电话'], ['Nấu ăn', '做'], ['Xem phim', '电影'], ['Buổi tối', '睡'], ['Hoạt động hằng ngày', '忙']] },
     ],
   },

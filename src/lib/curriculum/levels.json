@@ -72,7 +72,7 @@
 			{
 				"title": "Mua sắm",
 				"lessons": [
-					{ "id": "h1-32", "title": "Quần áo", "titleHanzi": "衣服" },
+					{ "id": "h1-32", "title": "Ôn mua sắm", "titleHanzi": "买" },
 					{ "id": "h1-33", "title": "Miêu tả đồ vật", "titleHanzi": "漂亮" },
 					{ "id": "h1-34", "title": "Mua bao nhiêu", "titleHanzi": "多" },
 					{ "id": "h1-35", "title": "Cửa hàng", "titleHanzi": "商店" }
