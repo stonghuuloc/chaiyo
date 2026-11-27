@@ -332,8 +332,6 @@ sections:
       - id: q-h1-35-s01
         type: readAloud
         tests:
-          words:
-            - 书店
           grammar:
             - h1-g75
           tone: true

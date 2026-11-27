@@ -82,14 +82,15 @@ describe('roadmapSlice', () => {
 
 	it('Given_LastLessonOpen_When_Slice_Then_ShiftLeftToFitEnd', () => {
 		// Arrange
-		const state = build(ids.length - 1, [ids.length - 1]);
+		const state = build(ids.length - 2, [ids.length - 2]);
 
 		// Act
 		const rows = roadmapSlice(state);
 
 		// Assert
 		expect(rows.map((r) => r.id)).toEqual(ids.slice(-4));
-		expect(rows.map((r) => r.status)).toEqual(['done', 'done', 'done', 'now']);
+		expect(rows.map((r) => r.status)).toEqual(['done', 'done', 'now', 'locked']);
+		expect(rows[3].after).toBe(CURRICULUM.lessons.find((l) => l.id === ids.at(-2))!.n);
 	});
 
 	it('Given_PlacementUnlockedTwo_When_Slice_Then_SecondIsOpen', () => {

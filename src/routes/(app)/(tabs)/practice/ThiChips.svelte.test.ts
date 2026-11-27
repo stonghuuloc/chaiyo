@@ -1,9 +1,11 @@
 import { flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it } from 'vitest';
+import { LESSONS } from '#lib/curriculum/index.js';
 import { initialState, type State } from '#lib/study/index.js';
 import ThiChips from './ThiChips.svelte';
 import { thiChips } from './thi';
 
+const lastWritten = Math.max(...LESSONS.filter((l) => l.level === 1).map((l) => l.n));
 const curriculum = {
 	lessons: ['a', 'b', 'c', 'd', 'e'].map((id, i) => ({
 		id,
@@ -74,13 +76,13 @@ describe('ThiChips', () => {
 		]);
 	});
 
-	it('Given_Level1_When_Mount_Then_RowMoKhiQuaBai5HrefLv1', () => {
+	it('Given_Level1_When_Mount_Then_RowMoKhiQuaLastLessonHrefLv1', () => {
 		// Arrange
 		// Act
 		const view = render(build(1));
 		// Assert
 		expect(view.row().textContent).toContain('Thi thử HSK 1');
-		expect(view.row().textContent).toContain('mở khi qua Bài 5');
+		expect(view.row().textContent).toContain(`mở khi qua Bài ${lastWritten}`);
 		expect(view.row().getAttribute('href')).toMatch(/\?k=thi&lv=1$/);
 	});
 
