@@ -8,6 +8,15 @@ create table public.notify_sends (
 	unique (learner_id, day, channel)
 );
 
+create table public.notify_opens (
+	id uuid primary key,
+	learner_id uuid not null references auth.users on delete cascade,
+	opened_at timestamptz not null default now()
+);
+
+alter table public.notify_opens enable row level security;
+revoke all on public.notify_opens from anon, authenticated;
+
 create index notify_sends_sent_at on public.notify_sends (sent_at);
 
 alter table public.notify_sends enable row level security;
@@ -37,7 +46,9 @@ begin
 	from (
 		select c.channel, c.ord,
 			count(s.id) as sent,
-			count(s.opened_at) as opened,
+			count(s.id) filter (where s.opened_at is not null or exists (
+				select 1 from public.notify_opens o where o.id = s.id and o.learner_id = s.learner_id
+			)) as opened,
 			count(s.id) filter (where exists (
 				select 1 from public.attempts a
 				where a.learner_id = s.learner_id and a.step is not null and a.at >= s.sent_at
@@ -55,6 +66,7 @@ end $$;
 create function public.mark_reminder_opened(p_id uuid) returns void
 language plpgsql security definer set search_path = '' as $$
 begin
+	insert into public.notify_opens (id, learner_id) values (p_id, auth.uid()) on conflict do nothing;
 	update public.notify_sends set opened_at = now()
 	where id = p_id and learner_id = auth.uid() and opened_at is null;
 end $$;

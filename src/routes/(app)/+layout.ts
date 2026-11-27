@@ -1,19 +1,19 @@
 import { learnerLedger } from '#lib/learner/index.js';
-import { markReminderOpened } from '#lib/notify/opened.js';
+import { markReminderOpened, rememberReminder, takeReminder } from '#lib/notify/opened.js';
 import { openReports } from '#lib/report/index.js';
 import { supabase } from '#lib/supabase.js';
 import { requireSession } from '#lib/shell/guard.js';
 
-export const load = ({ url, untrack }) =>
-	requireSession(async () => {
+export const load = ({ url, untrack }) => {
+	const remind = untrack(() => url.searchParams.get('remind'));
+	return requireSession(async () => {
 		const { data, error } = await supabase.auth.getSession();
 		if (data.session) {
 			void learnerLedger(data.session).catch(() => undefined);
 			void openReports(data.session).catch(() => undefined);
-			void markReminderOpened(
-				supabase,
-				untrack(() => url.searchParams.get('remind'))
-			).catch(() => undefined);
-		}
+			const stored = takeReminder(localStorage);
+			void markReminderOpened(supabase, remind ?? stored).catch(() => undefined);
+		} else rememberReminder(localStorage, remind);
 		return { session: data.session, error };
 	});
+};

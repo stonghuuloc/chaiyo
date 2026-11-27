@@ -197,6 +197,38 @@ describe('reference', () => {
 		expect((await opened(S2))?.getTime()).toBe(first?.getTime());
 	});
 
+	it('Given_OpenBeforeRowExists_When_RowLogged_Then_StillCounted', async () => {
+		const early = '00000000-0000-4000-8000-0000000000ee';
+		await asLearner(db, LAN);
+		const before = JSON.stringify(await reminders(30));
+		await db.query('select public.mark_reminder_opened($1)', [early]);
+		await asOwner(db);
+		await db.query(
+			`insert into notify_sends (id, learner_id, day, channel, sent_at)
+			 values ($1, $2, ${"(now() at time zone 'Asia/Ho_Chi_Minh')::date"}, 'telegram', now())
+			 on conflict do nothing`,
+			[early, LAN]
+		);
+		expect(JSON.stringify(await reminders(30))).not.toBe(before);
+	});
+
+	it('Given_OtherLearnerOpenBeforeRow_Then_NotCounted', async () => {
+		const early = '00000000-0000-4000-8000-0000000000ef';
+		await asLearner(db, MINH);
+		await db.query('select public.mark_reminder_opened($1)', [early]);
+		await asOwner(db);
+		await db.query(
+			`insert into notify_sends (id, learner_id, day, channel, sent_at)
+			 values ($1, $2, ${"(now() at time zone 'Asia/Ho_Chi_Minh')::date"}, 'telegram', now())
+			 on conflict do nothing`,
+			[early, LAN]
+		);
+		const telegram = ((await reminders(30)) as { channel: string; opened: number }[]).find(
+			(r) => r.channel === 'telegram'
+		);
+		expect(telegram?.opened).toBe(1);
+	});
+
 	it('Given_OtherLearnerRow_Then_Unchanged', async () => {
 		await asLearner(db, MINH);
 		await db.query('select public.mark_reminder_opened($1)', [S2]);
@@ -228,9 +260,9 @@ describe('rpc sources', () => {
 		const used = new Set(
 			rows.flatMap((r) => [...r.prosrc.matchAll(/public\.(\w+)/g)].map((m) => m[1]))
 		);
-		expect([...used].filter((n) => !['notify_sends', 'attempts', 'is_admin'].includes(n))).toEqual(
-			[]
-		);
+		expect(
+			[...used].filter((n) => !['notify_sends', 'notify_opens', 'attempts', 'is_admin'].includes(n))
+		).toEqual([]);
 		expect(used.has('notify_sends')).toBe(true);
 	});
 });

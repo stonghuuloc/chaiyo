@@ -21,7 +21,15 @@ const event = (search: string) =>
 	}) as unknown as Parameters<typeof load>[0];
 const session = { user: { id: 'lan' } };
 
+const store = new Map<string, string>();
+vi.stubGlobal('localStorage', {
+	getItem: (k: string) => store.get(k) ?? null,
+	setItem: (k: string, v: string) => void store.set(k, v),
+	removeItem: (k: string) => void store.delete(k)
+});
+
 beforeEach(() => {
+	store.clear();
 	mocks.getSession.mockReset();
 	mocks.rpc.mockReset();
 	mocks.rpc.mockResolvedValue({ data: null, error: null });
@@ -57,5 +65,18 @@ describe('(app) layout load', () => {
 		mocks.rpc.mockRejectedValue(new Error('network'));
 
 		await expect(load(event(`?remind=${UUID}`))).resolves.toEqual({ session });
+	});
+
+	it('Given_NoSessionWithRemind_When_LaterSignedIn_Then_MarkedOnce', async () => {
+		mocks.getSession.mockResolvedValue({ data: { session: null }, error: null });
+		await load(event(`?remind=${UUID}`)).catch(() => undefined);
+		expect(mocks.rpc).not.toHaveBeenCalled();
+
+		mocks.getSession.mockResolvedValue({ data: { session }, error: null });
+		await load(event(''));
+		await load(event(''));
+
+		expect(mocks.rpc).toHaveBeenCalledTimes(1);
+		expect(mocks.rpc).toHaveBeenCalledWith('mark_reminder_opened', { p_id: UUID });
 	});
 });
