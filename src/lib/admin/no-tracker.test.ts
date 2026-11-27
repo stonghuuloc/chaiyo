@@ -21,7 +21,7 @@ describe('analytics guard', () => {
 		const files = globSync('src/**/*.{ts,svelte,html}').filter((f) => !f.endsWith('.test.ts'));
 		expect(files.length).toBeGreaterThan(100);
 		const hits = [
-			...deps.flatMap((d) => TRACKERS.filter((t) => d.includes(t)).map((t) => `package.json ${d}`)),
+			...deps.filter((d) => TRACKERS.some((t) => d.includes(t))).map((d) => `package.json ${d}`),
 			...files.flatMap((f) => {
 				const text = readFileSync(f, 'utf8').toLowerCase();
 				return TRACKERS.filter((t) => text.includes(t)).map((t) => `${f} ${t}`);
