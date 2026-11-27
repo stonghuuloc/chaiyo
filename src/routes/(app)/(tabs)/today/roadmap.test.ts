@@ -80,7 +80,7 @@ describe('roadmapSlice', () => {
 		expect(rows.map((r) => r.status)).toEqual(['done', 'now', 'locked', 'locked']);
 	});
 
-	it('Given_LastLessonOpen_When_Slice_Then_ShiftLeftToFitEnd', () => {
+	it('Given_SecondLastLessonOpen_When_Slice_Then_ShiftLeftToFitEnd', () => {
 		// Arrange
 		const state = build(ids.length - 2, [ids.length - 2]);
 
