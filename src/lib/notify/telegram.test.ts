@@ -135,3 +135,33 @@ describe('telegramFromEnv', () => {
 		}
 	);
 });
+
+describe('telegramChannel reminder token', () => {
+	const sentText = async (r: { learnerId: string; day: string; open?: string }) => {
+		const fetch = vi.fn(async () => json({ ok: true }, 200));
+		await channelWith(fetch).send(r);
+		const [, init] = fetch.mock.calls[0] as unknown as [string, RequestInit];
+		return JSON.parse(init.body as string).text as string;
+	};
+	const TODAY = 'https://chaiyo.vercel.app/today';
+
+	it('Given_OpenToken_When_Send_Then_UrlHasRemindParam', async () => {
+		const text = await sentText({ ...minh, open: 'u-1' });
+
+		expect(text.endsWith(`\n${TODAY}?remind=u-1`)).toBe(true);
+	});
+
+	it('Given_NoToken_When_Send_Then_BodyUnchanged', async () => {
+		expect(await sentText(minh)).toBe(
+			`Hôm nay bạn chưa học. Vài phút thôi để giữ chuỗi nhé!\n${TODAY}`
+		);
+	});
+
+	it('Given_Message_Then_EveryUrlOnAppOriginOrRelative', async () => {
+		const text = await sentText({ ...minh, open: 'u-1' });
+
+		const urls = text.match(/https?:\/\/\S+/g)!;
+		expect(urls).toHaveLength(1);
+		expect(new URL(urls[0]).origin).toBe('https://chaiyo.vercel.app');
+	});
+});

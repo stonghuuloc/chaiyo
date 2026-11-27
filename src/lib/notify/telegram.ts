@@ -1,8 +1,9 @@
-import type { Channel } from './channel';
+import { remindUrl, type Channel } from './channel';
 import { REMINDER_EMAIL } from './email';
 import { REMINDER_PUSH } from './web-push';
 
-export const REMINDER_TELEGRAM = `${REMINDER_PUSH.body}\n${REMINDER_EMAIL.url}`;
+const reminderTelegram = (open?: string) =>
+	`${REMINDER_PUSH.body}\n${remindUrl(REMINDER_EMAIL.url, open)}`;
 
 type TelegramDeps = {
 	chatOf(learnerId: string): Promise<number | null>;
@@ -36,13 +37,13 @@ export function telegramChannel(o: TelegramDeps & { token: string }): Channel {
 	const send = telegramSend(o.token, o.fetch);
 	return {
 		name: 'telegram',
-		async send({ learnerId }) {
+		async send({ learnerId, open }) {
 			const chat = await o.chatOf(learnerId);
 			if (chat === null) {
 				if (o.skipUnlinked) return 'skipped';
 				throw new Error('telegram: not linked');
 			}
-			await send(chat, REMINDER_TELEGRAM);
+			await send(chat, reminderTelegram(open));
 		}
 	};
 }

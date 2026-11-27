@@ -1,4 +1,4 @@
-import type { Channel } from './channel';
+import { remindUrl, type Channel } from './channel';
 import { REMINDER_PUSH } from './web-push';
 
 const RESEND_URL = 'https://api.resend.com/emails';
@@ -15,12 +15,13 @@ type EmailDeps = {
 };
 
 export function emailChannel(o: EmailDeps & { apiKey: string; from: string }): Channel {
-	const { subject, body, url } = REMINDER_EMAIL;
-	const text = `${body}\n\n${url}`;
-	const html = `<p>${body}</p><p><a href="${url}">Học ngay</a></p>`;
+	const { subject, body } = REMINDER_EMAIL;
 	return {
 		name: 'email',
-		async send({ learnerId }) {
+		async send({ learnerId, open }) {
+			const url = remindUrl(REMINDER_EMAIL.url, open);
+			const text = `${body}\n\n${url}`;
+			const html = `<p>${body}</p><p><a href="${url}">Học ngay</a></p>`;
 			const address = await o.addressOf(learnerId);
 			if (!address) throw new Error('email: no address');
 			const res = await (o.fetch ?? fetch)(RESEND_URL, {

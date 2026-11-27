@@ -137,3 +137,30 @@ describe('webPushChannel', () => {
 			expect(isPushEndpoint(e)).toBe(true);
 	});
 });
+
+describe('webPushChannel reminder token', () => {
+	const sentBody = async (r: { learnerId: string; day: string; open?: string }) => {
+		const { subs } = inMemory({ lan: [sub('e1')] });
+		const post = script({});
+		await webPushChannel({ subs, post }).send(r);
+		return post.mock.calls[0][1];
+	};
+
+	it('Given_OpenToken_When_Send_Then_UrlHasRemindParam', async () => {
+		const body = await sentBody({ ...reminder, open: 'u-1' });
+
+		expect(JSON.parse(body)).toEqual({ ...REMINDER_PUSH, url: '/today?remind=u-1' });
+	});
+
+	it('Given_NoToken_When_Send_Then_BodyUnchanged', async () => {
+		expect(await sentBody(reminder)).toBe(
+			'{"title":"Chaiyo!","body":"Hôm nay bạn chưa học. Vài phút thôi để giữ chuỗi nhé!","url":"/today"}'
+		);
+	});
+
+	it('Given_Message_Then_EveryUrlOnAppOriginOrRelative', async () => {
+		const { url } = JSON.parse(await sentBody({ ...reminder, open: 'u-1' }));
+
+		expect(new URL(url, 'https://chaiyo.vercel.app').origin).toBe('https://chaiyo.vercel.app');
+	});
+});

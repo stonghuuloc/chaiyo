@@ -117,3 +117,44 @@ describe('emailFromEnv', () => {
 		expect(channel?.name).toBe('email');
 	});
 });
+
+describe('emailChannel reminder token', () => {
+	const sentBody = async (r: { learnerId: string; day: string; open?: string }) => {
+		const fetch = vi.fn(async () => json({ id: 'e1' }, 200));
+		await channelWith(fetch).send(r);
+		const [, init] = fetch.mock.calls[0] as unknown as [string, RequestInit];
+		return JSON.parse(init.body as string) as { text: string; html: string };
+	};
+
+	it('Given_OpenToken_When_Send_Then_UrlHasRemindParam', async () => {
+		const body = await sentBody({ ...lan, open: 'u-1' });
+
+		expect(body.text).toBe(`${BODY}\n\n${URL_TODAY}?remind=u-1`);
+		expect(body.html).toContain(`<a href="${URL_TODAY}?remind=u-1">`);
+	});
+
+	it('Given_NoToken_When_Send_Then_BodyUnchanged', async () => {
+		const body = await sentBody(lan);
+
+		expect(body.text).toBe(`${BODY}\n\n${URL_TODAY}`);
+		expect(body.html).toBe(`<p>${BODY}</p><p><a href="${URL_TODAY}">Học ngay</a></p>`);
+	});
+
+	it('Given_Message_Then_EveryUrlOnAppOriginOrRelative', async () => {
+		const body = await sentBody({ ...lan, open: 'u-1' });
+
+		const urls = [
+			...body.text.match(/https?:\/\/\S+/g)!,
+			...[...body.html.matchAll(/href="([^"]+)"/g)].map((m) => m[1])
+		];
+		expect(urls.length).toBeGreaterThan(1);
+		for (const u of urls)
+			expect(new URL(u, 'https://chaiyo.vercel.app').origin).toBe('https://chaiyo.vercel.app');
+	});
+
+	it('Given_Html_Then_NoImg', async () => {
+		const body = await sentBody({ ...lan, open: 'u-1' });
+
+		expect(body.html).not.toContain('<img');
+	});
+});
